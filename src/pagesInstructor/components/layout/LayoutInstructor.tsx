@@ -1,9 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import scss from './LayoutAdmin.module.scss';
 import Header from './header/Header';
+import scss from './LayoutInstructor.module.scss';
 import HomePage from '../pages/HomePage';
-
-const LayoutAdmin = () => {
+const LayoutInstructor = () => {
 	return (
 		<>
 			<div className={scss.Layout}>
@@ -18,4 +17,4 @@ const LayoutAdmin = () => {
 	);
 };
 
-export default LayoutAdmin;
+export default LayoutInstructor;
