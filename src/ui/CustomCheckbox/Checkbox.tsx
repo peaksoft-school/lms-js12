@@ -1,21 +1,21 @@
-import { Checkbox } from "@mui/material";
-import { FC } from "react";
-import scss from "./Checkbox.module.scss";
+import { Checkbox } from '@mui/material';
+import { FC } from 'react';
+import scss from './Checkbox.module.scss';
 
 interface CheckboxProps {
-  disabled: boolean;
+	disabled: boolean;
 }
 
-const Checkboxs: FC<CheckboxProps> = ({disabled }) => {
-  return (
-    <>
-      <Checkbox
-        className={scss.HoverForCheck}
-        disabled={disabled}
-        inputProps={{ "aria-label": "Checkbox demo" }}
-      />
-    </>
-  );
+const CheckBox: FC<CheckboxProps> = ({ disabled }) => {
+	return (
+		<>
+			<Checkbox
+				className={scss.HoverForCheck}
+				disabled={disabled}
+				inputProps={{ 'aria-label': 'Checkbox demo' }}
+			/>
+		</>
+	);
 };
 
-export default Checkboxs;
+export default CheckBox;
