@@ -30,7 +30,7 @@ dependencies:
     specifier: ^6.22.3
     version: 6.22.3(react-dom@18.2.0)(react@18.2.0)
   sass:
-    specifier: ^1.72.0
+    specifier: ^1.74.1
     version: 1.74.1
 
 devDependencies:
