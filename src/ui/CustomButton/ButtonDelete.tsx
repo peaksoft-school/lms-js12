@@ -5,15 +5,21 @@ import scss from './CustomButton.module.scss';
 interface ButtonDeleteProps {
 	children: ReactNode;
 	disabled: boolean;
+	onClick: () => void;
 }
 
-const ButtonDelete: FC<ButtonDeleteProps> = ({ children, disabled }) => {
+const ButtonDelete: FC<ButtonDeleteProps> = ({
+	children,
+	disabled,
+	onClick
+}) => {
 	return (
 		<>
 			<Button
 				className={scss.DeleteButton}
 				disabled={disabled}
 				variant="contained"
+				onClick={onClick}
 			>
 				{children}
 			</Button>
