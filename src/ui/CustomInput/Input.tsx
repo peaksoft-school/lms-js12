@@ -6,10 +6,17 @@ interface InputProps {
 	placeholder: string;
 	width: string;
 	value: string;
+	type: string;
 	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: FC<InputProps> = ({ placeholder, width, value, onChange }) => {
+const Input: FC<InputProps> = ({
+	placeholder,
+	width,
+	value,
+	onChange,
+	type
+}) => {
 	return (
 		<>
 			<TextField
@@ -19,6 +26,12 @@ const Input: FC<InputProps> = ({ placeholder, width, value, onChange }) => {
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
+				type={type}
+				InputProps={{
+					style: {
+						borderRadius: '20px'
+					}
+				}}
 			/>
 		</>
 	);

@@ -1,8 +1,9 @@
-.InputBackground {
-    width: 491px !important;
-    height: 42px !important;
-    border: 1px !important;
-    border-radius: 10px !important;
-    padding: 10px 8px !important;
-  }
-  
+.inputBackground {
+	@media (max-width: 596px) {
+		width: 100%;
+		// max-width: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}

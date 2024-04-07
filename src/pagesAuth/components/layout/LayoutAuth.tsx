@@ -1,13 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutAuth.module.scss';
-import LoginPage from './login/Login';
+import Login from './login/Login';
+import NewPassword from './newPassword/NewPassword';
 const LayoutAuth = () => {
 	return (
 		<>
 			<div className={scss.Layout}>
 				<main>
 					<Routes>
-						<Route path="/login" element={<LoginPage />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/newPassword" element={<NewPassword />} />
 					</Routes>
 				</main>
 			</div>
