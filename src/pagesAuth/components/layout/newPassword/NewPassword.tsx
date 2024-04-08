@@ -1,7 +1,7 @@
 import scss from './NewPassword.module.scss';
 import Logo from '@/src/assets/authPhotos/Logo.svg';
 import MenLogo from '@/src/assets/authPhotos/XMLID_1207_.svg';
-import { IconClosed, IconOpeneye } from '@/src/assets/icons';
+import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ButtonSave from '@/src/ui/CustomButton/ButtonSave';
 import { IconButton, InputAdornment, InputLabel } from '@mui/material';
 import { useState } from 'react';
@@ -36,7 +36,7 @@ const NewPassword = () => {
 			{/* //! White */}
 			<div className={scss.LoginElementsWhite}>
 				<div className={scss.LoginWhiteElements}>
-					<h1>Создать пароль</h1>
+					<h1 className={scss.CreatePassword}>Создать пароль</h1>
 					<div className={scss.Parent_element_inputs}>
 						<div className={scss.Element_inputs_newPassword}>
 							<div className={scss.Element_inputs_password}>
@@ -56,7 +56,7 @@ const NewPassword = () => {
 												onMouseDown={handleMouseDownPassword}
 												edge="end"
 											>
-												{showPassword ? <IconOpeneye /> : <IconClosed />}
+												{showPassword ? <IconOpen_Eye /> : <IconClosed />}
 											</IconButton>
 										</InputAdornment>
 									}
@@ -78,7 +78,7 @@ const NewPassword = () => {
 												onMouseDown={handleMouseDownSecondPassword1}
 												edge="end"
 											>
-												{showSecondPassword ? <IconOpeneye /> : <IconClosed />}
+												{showSecondPassword ? <IconOpen_Eye /> : <IconClosed />}
 											</IconButton>
 										</InputAdornment>
 									}

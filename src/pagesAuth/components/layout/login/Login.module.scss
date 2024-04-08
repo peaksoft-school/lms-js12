@@ -33,6 +33,7 @@
 		background: rgb(255, 255, 255);
 
 		.LoginWhiteElements {
+			width: 100%;
 			height: 100vh;
 			display: flex;
 			flex-direction: column;
@@ -43,34 +44,10 @@
 				color: rgb(250, 35, 73);
 			}
 
-			.Element_inputs_login {
-				width: 100%;
-				margin-top: 54px;
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				p {
-					font-weight: 400;
-					font-size: 16px;
-					color: rgb(106, 106, 106);
-				}
-			}
 			.OutlinedInputEyes {
 				width: 540px;
 				border-radius: 20px;
-			}
-
-			.Element_inputs_password {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-
-				p {
-					margin-top: 18px;
-					font-weight: 400;
-					font-size: 16px;
-					color: rgb(106, 106, 106);
-				}
+				width: 100%;
 			}
 
 			&::placeholder {
@@ -80,7 +57,7 @@
 
 			.Link_Element {
 				position: relative;
-				left: 230px;
+				left: 20%;
 				margin-top: 14px;
 			}
 
@@ -91,37 +68,78 @@
 				margin-top: 35px;
 			}
 
-			.InputMedia {
-				@media (max-width: 550px ) {
+			.Parent_element_inputs {
+				max-width: 540px;
+				padding: 20px;
+				width: 100%;
+
+				.Element_inputs_login {
+					margin-top: 54px;
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
 					width: 100%;
-					max-width: 200px;
+					p {
+						font-weight: 400;
+						font-size: 16px;
+						color: rgb(106, 106, 106);
+					}
+
+					.InputMedia {
+						max-width: 540px;
+					}
+				}
+
+				.Element_inputs_password {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+					width: 100%;
+					p {
+						margin-top: 18px;
+						font-weight: 400;
+						font-size: 16px;
+						color: rgb(106, 106, 106);
+					}
 				}
 			}
+
+	
 		}
 
 		.LoginWhiteElements {
 			h1 {
 				@media (max-width: 320px) {
 					display: flex;
-					// justify-content: center;
-					// align-items: center;
 					padding: 0 10px;
 					width: 100%;
+				}
+			}
+
+			.WelcomeMedia {
+				@media (max-width: 320px) {
+					display: flex;
+					font-size: 29px;
+					position: relative;
+					top: 50px;
+				}
+			}
+
+			.PeakSoftMedia {
+				@media (max-width: 320px) {
+					display: flex;
+					font-size: 33px;
+					gap: 10px;
+					position: relative;
+					top: 57px;
 				}
 			}
 		}
 	}
 
 	.LoginLogoBlue {
-		@media (max-width: 1186px) {
+		@media (max-width: 1040px) {
 			display: none;
 		}
 	}
-
-	// .LoginElementsWhite {
-	// 	@media (max-width: 547px) {
-	// 		width: 100%;
-	// 		overflow: hidden;
-	// 	}
-	// }
 }

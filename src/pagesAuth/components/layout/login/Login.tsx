@@ -8,7 +8,7 @@ import {
 	InputLabel,
 	OutlinedInput
 } from '@mui/material';
-import { IconClosed, IconOpeneye } from '@/src/assets/icons';
+import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ButtonSave from '@/src/ui/CustomButton/ButtonSave';
 import Input from '@/src/ui/CustomInput/Input';
 import { Link } from 'react-router-dom';
@@ -35,11 +35,12 @@ const Login = () => {
 						<img src={MenLogo} alt="#" />
 					</div>
 				</div>
+
 				{/* //! White */}
 				<div className={scss.LoginElementsWhite}>
 					<div className={scss.LoginWhiteElements}>
-						<h1>Добро пожаловать:</h1>
-						<h1>
+						<h1 className={scss.WelcomeMedia}>Добро пожаловать:</h1>
+						<h1 className={scss.PeakSoftMedia}>
 							в <span className={scss.title_red}>PEAKSOFT LMS</span>!
 						</h1>
 						<div className={scss.Parent_element_inputs}>
@@ -47,15 +48,14 @@ const Login = () => {
 								<p>Логин :</p>
 								<div className={scss.InputMedia}>
 									<Input
+										width="100%"
 										placeholder="Введите логин"
-										width="540px"
 										value={inputValue}
 										type="text"
 										onChange={handleInputChange}
 									/>
 								</div>
 							</div>
-
 							<div className={scss.Element_inputs_password}>
 								<InputLabel htmlFor="outlined-adornment-password">
 									<p>Пароль : </p>
@@ -73,7 +73,7 @@ const Login = () => {
 												onMouseDown={handleMouseDownPassword}
 												edge="end"
 											>
-												{showPassword ? <IconOpeneye /> : <IconClosed />}
+												{showPassword ? <IconOpen_Eye /> : <IconClosed />}
 											</IconButton>
 										</InputAdornment>
 									}
