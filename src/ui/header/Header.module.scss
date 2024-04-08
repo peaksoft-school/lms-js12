@@ -1,0 +1,126 @@
+.Header {
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+	margin: 0;
+	border-bottom: 1px solid rgb(168, 169, 172);
+	.container {
+		width: 100%;
+		padding: 15px;
+		background-color: rgb(239, 240, 244);
+		.content {
+			gap: 20px;
+			// padding: 8px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			@media (max-width: 767px) {
+				position: relative;
+				left: 40px;
+			}
+			.headerCard {
+				gap: 14px;
+				padding: 8px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+
+				.Exit {
+					position: absolute;
+					top: 60px;
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					right: 2px;
+					width: 228px;
+					height: 38px;
+					padding: 5px 10px;
+					border: none;
+					cursor: pointer;
+					z-index: 1;
+					border-radius: 9px;
+					box-shadow: 0px 0px 10px 3px rgb(190, 187, 187);
+				}
+			}
+
+			p {
+				font-size: 16px;
+				font-weight: 400;
+				color: rgb(35, 35, 35);
+
+				@media (max-width: 767px) {
+					display: none;
+				}
+			}
+			.icon {
+				position: relative;
+				right: 30px;
+				@media (max-width: 767px) {
+					display: none;
+				}
+			}
+		}
+	}
+	.changeBack {
+		width: 100%;
+		padding: 15px;
+		background: rgba(0, 0, 0, 0.4);
+		.container {
+			width: 100%;
+			padding: 15px;
+			background-color: rgb(239, 240, 244);
+			.content {
+				gap: 20px;
+				// padding: 8px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				@media (max-width: 767px) {
+					position: relative;
+					left: 40px;
+				}
+				.headerCard {
+					gap: 14px;
+					padding: 8px;
+					display: flex;
+					justify-content: flex-end;
+					align-items: center;
+
+					.Exit {
+						position: absolute;
+						top: 60px;
+						display: flex;
+						align-items: center;
+						justify-content: flex-start;
+						right: 2px;
+						width: 228px;
+						height: 38px;
+						padding: 5px 10px;
+						border: none;
+						cursor: pointer;
+						z-index: 1;
+						border-radius: 9px;
+						box-shadow: 0px 0px 10px 3px rgb(190, 187, 187);
+					}
+				}
+
+				p {
+					font-size: 16px;
+					font-weight: 400;
+					color: rgb(35, 35, 35);
+
+					@media (max-width: 767px) {
+						display: none;
+					}
+				}
+				.icon {
+					position: relative;
+					right: 30px;
+					@media (max-width: 767px) {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
