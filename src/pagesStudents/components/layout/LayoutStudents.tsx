@@ -5,10 +5,6 @@ import NavBar from '@/src/ui/navBar/NavBar';
 import HomePage from '../pages/HomePage';
 import { useState } from 'react';
 
-// interface LayoutStudentsProps {
-// 	toggleDrawer: boolean;
-// }
-
 const LayoutStudents = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
