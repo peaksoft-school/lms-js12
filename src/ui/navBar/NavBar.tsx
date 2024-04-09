@@ -1,11 +1,14 @@
 import { useLocation } from 'react-router-dom';
 import scss from './Navbar.module.scss';
 import peaksoft from '@/src/assets/png/Header.png';
-import Course from '@/src/assets/icons2/Course';
-import Groups from '@/src/assets/icons2/Groups';
-import Teacher from '@/src/assets/icons2/Teacher';
-import Students from '@/src/assets/icons2/Students';
 import { FC, useState } from 'react';
+import {
+	IconCourse,
+	IconGroups,
+	IconStudents,
+	IconTeacher
+} from '@/src/assets/icons';
+import calendar from '@/src/assets/png/calendar-symbol.svg';
 
 interface BackProps {
 	toggleDrawer: (value: boolean) => void;
@@ -26,38 +29,50 @@ const NavBar: FC<BackProps> = ({ toggleDrawer }) => {
 						{pathname === '/admin' ? (
 							<ul className={scss.MainPart}>
 								<li className={scss.part}>
-									<Groups />
+									<IconGroups />
 									<p>Группы</p>
 								</li>
 								<li className={scss.part}>
-									<Course />
+									<IconCourse />
 									<p>Курсы </p>
 								</li>
 								<li className={scss.part}>
-									<Teacher />
+									<IconTeacher />
 									<p>Учителя</p>
 								</li>
 								<li className={scss.part}>
-									<Students />
+									<IconStudents />
 									<p>Студенты</p>
+								</li>
+								<li className={scss.part}>
+									<img className={scss.calendar} src={calendar} alt="" />
+									<p>Расписание </p>
 								</li>
 							</ul>
 						) : null}
 						{pathname === '/' ? (
-							<div className={scss.MainPart}>
-								<div className={scss.part}>
-									<Course />
+							<ul className={scss.MainPart}>
+								<li className={scss.part}>
+									<IconCourse />
 									<p>Мои Курсы </p>
-								</div>
-							</div>
+								</li>
+								<li className={scss.part}>
+									<img className={scss.calendar} src={calendar} alt="" />
+									<p>Расписание </p>
+								</li>
+							</ul>
 						) : null}
 						{pathname === '/instructor' ? (
-							<div className={scss.MainPart}>
-								<div className={scss.part}>
-									<Course />
+							<ul className={scss.MainPart}>
+								<li className={scss.part}>
+									<IconCourse />
 									<p> Мои Курсы </p>
-								</div>
-							</div>
+								</li>
+								<li className={scss.part}>
+									<img className={scss.calendar} src={calendar} alt="" />
+									<p>Расписание </p>
+								</li>
+							</ul>
 						) : null}
 					</div>
 				</div>
@@ -93,38 +108,50 @@ const NavBar: FC<BackProps> = ({ toggleDrawer }) => {
 							{pathname === '/admin' ? (
 								<ul className={scss.MainPart}>
 									<li className={scss.part}>
-										<Groups />
+										<IconGroups />
 										<p>Группы</p>
 									</li>
 									<li className={scss.part}>
-										<Course />
+										<IconCourse />
 										<p>Курсы </p>
 									</li>
 									<li className={scss.part}>
-										<Teacher />
+										<IconTeacher />
 										<p>Учителя</p>
 									</li>
 									<li className={scss.part}>
-										<Students />
+										<IconStudents />
 										<p>Студенты</p>
+									</li>
+									<li className={scss.part}>
+										<img className={scss.calendar} src={calendar} alt="" />
+										<p>Расписание </p>
 									</li>
 								</ul>
 							) : null}
 							{pathname === '/' ? (
 								<div className={scss.MainPart}>
 									<div className={scss.part}>
-										<Course />
+										<IconCourse />
 										<p>Мои Курсы </p>
 									</div>
+									<li className={scss.part}>
+										<img className={scss.calendar} src={calendar} alt="" />
+										<p>Расписание </p>
+									</li>
 								</div>
 							) : null}
 							{pathname === '/instructor' ? (
-								<div className={scss.MainPart}>
-									<div className={scss.part}>
-										<Course />
+								<ul className={scss.MainPart}>
+									<li className={scss.part}>
+										<IconCourse />
 										<p> Мои Курсы </p>
-									</div>
-								</div>
+									</li>
+									<li className={scss.part}>
+										<img className={scss.calendar} src={calendar} alt="" />
+										<p>Расписание </p>
+									</li>
+								</ul>
 							) : null}
 						</div>
 					</div>

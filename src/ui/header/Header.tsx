@@ -1,4 +1,3 @@
-import { IconDropdrown } from '@/src/assets/icons';
 import user from '@/src/assets/png/Profile.png';
 import scss from './Header.module.scss';
 import { useLocation } from 'react-router-dom';
@@ -6,6 +5,7 @@ import bill from '@/src/assets/png/Header icons.png';
 import React from 'react';
 import { Fade, Menu, MenuItem } from '@mui/material';
 import Logout from '@/src/assets/png/logout.svg';
+import { IconDropdown } from '@/src/assets/icons';
 
 const Header = () => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -58,7 +58,7 @@ const Header = () => {
 							aria-expanded={open ? 'true' : undefined}
 							onClick={handleClick}
 						>
-							<IconDropdrown />
+							<IconDropdown />
 						</div>
 						<Menu
 							id="fade-menu"
