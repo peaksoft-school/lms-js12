@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import scss from './Navbar.module.scss';
 import peaksoft from '@/src/assets/png/Header.png';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import {
 	IconCourse,
 	IconGroups,
@@ -10,11 +10,7 @@ import {
 } from '@/src/assets/icons';
 import calendar from '@/src/assets/png/calendar-symbol.svg';
 
-interface BackProps {
-	toggleDrawer: (value: boolean) => void;
-}
-
-const NavBar: FC<BackProps> = ({ toggleDrawer }) => {
+const NavBar = () => {
 	const { pathname } = useLocation();
 	const [isBurgetMenu, setIsBurgetMenu] = useState<boolean>(false);
 
@@ -85,7 +81,6 @@ const NavBar: FC<BackProps> = ({ toggleDrawer }) => {
 							checked={isBurgetMenu}
 							onChange={() => {
 								setIsBurgetMenu(!isBurgetMenu);
-								toggleDrawer(!isBurgetMenu);
 							}}
 						/>
 						<span></span>

@@ -3,16 +3,13 @@ import scss from './LayoutStudents.module.scss';
 import Header from '@/src/ui/header/Header';
 import NavBar from '@/src/ui/navBar/NavBar';
 import HomePage from '../pages/HomePage';
-import { useState } from 'react';
 
 const LayoutStudents = () => {
-	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-
 	return (
 		<>
-			<div className={!isDrawerOpen ? scss.Layout : scss.DrawerOpen}>
+			<div className={scss.Layout}>
 				<div className={scss.container}>
-					<NavBar toggleDrawer={setIsDrawerOpen} />
+					<NavBar />
 					<div className={scss.content}>
 						<Header />
 						<main>

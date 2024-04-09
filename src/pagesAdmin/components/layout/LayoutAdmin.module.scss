@@ -18,25 +18,3 @@
 		}
 	}
 }
-
-.DrawerOpen {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	min-height: 100vh;
-	background: rgba(0, 0, 0, 0.4);
-
-	.container {
-		width: 100%;
-		display: flex;
-
-		.content {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			main {
-				padding-left: 100px;
-			}
-		}
-	}
-}
