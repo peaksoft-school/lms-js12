@@ -16,7 +16,7 @@ const ButtonSave: FC<ButtonSaveProps> = ({ children, disabled, onClick }) => {
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
-
+				type='submit'
 			>
 				{children}
 			</Button>
