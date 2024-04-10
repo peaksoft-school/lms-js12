@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutStudents.module.scss';
-import Header from './header/Header';
+import Header from '@/src/ui/header/Header';
+import NavBar from '@/src/ui/navBar/NavBar';
 import HomePage from '../pages/HomePage';
 import ModalParol from '@/src/modal/ModalParol';
 import ModalAddLesson from '@/src/modal/InstructorModal/ModalAddLesson';
@@ -18,6 +19,7 @@ const LayoutStudents = () => {
 	return (
 		<>
 			<div className={scss.Layout}>
+<<<<<<< HEAD
 				<Header />
 				<main>
 					<Routes>
@@ -34,6 +36,19 @@ const LayoutStudents = () => {
 				<ModalAddTeacher />
 				<ModalImport />
 				<ModalAddStudent />
+=======
+				<div className={scss.container}>
+					<NavBar />
+					<div className={scss.content}>
+						<Header />
+						<main>
+							<Routes>
+								<Route path="/" element={<HomePage />} />
+							</Routes>
+						</main>
+					</div>
+				</div>
+>>>>>>> e1ce7680b2f76076c1e4f593f811f04e4ea9a0ef
 			</div>
 		</>
 	);

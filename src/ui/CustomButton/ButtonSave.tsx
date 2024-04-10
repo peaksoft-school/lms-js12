@@ -11,11 +11,18 @@ interface ButtonSaveProps {
 }
 
 const ButtonSave: FC<ButtonSaveProps> = ({
+<<<<<<< HEAD
 	children,
 	disabled,
 	onClick,
 	width,
 	type
+=======
+	width,
+	children,
+	disabled,
+	onClick
+>>>>>>> e1ce7680b2f76076c1e4f593f811f04e4ea9a0ef
 }) => {
 	return (
 		<>
@@ -25,7 +32,10 @@ const ButtonSave: FC<ButtonSaveProps> = ({
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
+<<<<<<< HEAD
 				type={type}
+=======
+>>>>>>> e1ce7680b2f76076c1e4f593f811f04e4ea9a0ef
 			>
 				{children}
 			</Button>

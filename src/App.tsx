@@ -4,7 +4,7 @@ import LayoutStudents from './pagesStudents/components/layout/LayoutStudents';
 import LayoutInstructor from './pagesInstructor/components/layout/LayoutInstructor';
 import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
 
-function App() {
+const App = () => {
 	return (
 		<>
 			<Routes>
@@ -15,6 +15,6 @@ function App() {
 			</Routes>
 		</>
 	);
-}
+};
 
 export default App;

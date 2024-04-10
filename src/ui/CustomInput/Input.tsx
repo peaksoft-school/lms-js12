@@ -1,3 +1,4 @@
+// Input.tsx
 import { TextField } from '@mui/material';
 import scss from './Input.module.scss';
 import { FC, ChangeEvent } from 'react';
@@ -8,6 +9,7 @@ interface InputProps {
 	value: string;
 	type: string;
 	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	error?: boolean;
 }
 
 const Input: FC<InputProps> = ({
@@ -15,7 +17,8 @@ const Input: FC<InputProps> = ({
 	width,
 	value,
 	onChange,
-	type
+	type,
+	error
 }) => {
 	return (
 		<>
@@ -27,6 +30,7 @@ const Input: FC<InputProps> = ({
 				value={value}
 				onChange={onChange}
 				type={type}
+				error={error}
 				InputProps={{
 					style: {
 						borderRadius: '20px'
