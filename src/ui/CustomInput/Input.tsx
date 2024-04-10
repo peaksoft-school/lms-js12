@@ -9,7 +9,7 @@ interface InputProps {
 	value: string;
 	type: string;
 	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-	error?: boolean; 
+	error?: boolean;
 }
 
 const Input: FC<InputProps> = ({
@@ -18,7 +18,7 @@ const Input: FC<InputProps> = ({
 	value,
 	onChange,
 	type,
-	error 
+	error
 }) => {
 	return (
 		<>

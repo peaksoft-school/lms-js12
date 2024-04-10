@@ -3,9 +3,8 @@ import LayoutAdmin from './pagesAdmin/components/layout/LayoutAdmin';
 import LayoutStudents from './pagesStudents/components/layout/LayoutStudents';
 import LayoutInstructor from './pagesInstructor/components/layout/LayoutInstructor';
 import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
-// import Cards from './ui/CustomCards/Cards';
 
-function App() {
+const App = () => {
 	return (
 		<>
 			<Routes>
@@ -14,9 +13,8 @@ function App() {
 				<Route path="/instructor/*" element={<LayoutInstructor />} />
 				<Route path="/auth/*" element={<LayoutAuth />} />
 			</Routes>
-			{/* <Cards/> */}
 		</>
 	);
-}
+};
 
 export default App;
