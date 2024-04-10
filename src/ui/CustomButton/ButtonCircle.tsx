@@ -7,12 +7,14 @@ interface CircleButtonProps {
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
+	type: 'button' | 'submit';
 }
 
 const ButtonCircle: FC<CircleButtonProps> = ({
 	children,
 	disabled,
-	onClick
+	onClick,
+	type
 }) => {
 	return (
 		<>
@@ -21,6 +23,7 @@ const ButtonCircle: FC<CircleButtonProps> = ({
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
+				type={type}
 			>
 				{children}
 				<img className={scss.PlusIcon} src={PlusIcon} alt="#" />

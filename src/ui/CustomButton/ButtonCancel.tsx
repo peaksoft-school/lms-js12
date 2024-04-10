@@ -6,12 +6,14 @@ interface CancelButtonPlusProps {
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
+	type: 'button' | 'submit';
 }
 
 const ButtonCancel: FC<CancelButtonPlusProps> = ({
 	children,
 	disabled,
-	onClick
+	onClick,
+	type
 }) => {
 	return (
 		<>
@@ -20,6 +22,7 @@ const ButtonCancel: FC<CancelButtonPlusProps> = ({
 				onClick={onClick}
 				disabled={disabled}
 				variant="contained"
+				type={type}
 			>
 				{children}
 			</Button>

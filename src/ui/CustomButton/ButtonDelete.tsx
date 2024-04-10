@@ -6,12 +6,14 @@ interface ButtonDeleteProps {
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
+	type: 'button' | 'submit';
 }
 
 const ButtonDelete: FC<ButtonDeleteProps> = ({
 	children,
 	disabled,
-	onClick
+	onClick,
+	type
 }) => {
 	return (
 		<>
@@ -20,6 +22,7 @@ const ButtonDelete: FC<ButtonDeleteProps> = ({
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
+				type={type}
 			>
 				{children}
 			</Button>

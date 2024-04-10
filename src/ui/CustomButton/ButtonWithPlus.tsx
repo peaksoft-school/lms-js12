@@ -7,12 +7,14 @@ interface ButtonWithPlusProps {
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
+	type: 'button' | 'submit';
 }
 
 const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
 	children,
 	disabled,
-	onClick
+	onClick,
+	type
 }) => {
 	return (
 		<>
@@ -21,6 +23,7 @@ const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
+				type={type}
 			>
 				<img className={scss.PlusIcon} src={PlusIcon} alt="#" />
 				{children}

@@ -84,7 +84,12 @@ const Login = () => {
 							<Link to="/auth/newPassword">Забыли пароль?</Link>
 						</div>
 						<div className={scss.Button_Element}>
-							<ButtonSave onClick={() => {}} disabled={false}>
+							<ButtonSave
+								width="100%"
+								type="submit"
+								onClick={() => {}}
+								disabled={false}
+							>
 								Войти
 							</ButtonSave>
 						</div>
