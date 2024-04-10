@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 .Card {
+	width: 100%;
+	max-width: 1600px;
 	display: flex;
-	flex-wrap: wrap;
+	// flex-wrap: wrap;
 	align-items: flex-start;
-	justify-content: center;
-	gap: 60px;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	gap: 20px;
 
 	.firstBlockContainer {
 		width: 270px;
