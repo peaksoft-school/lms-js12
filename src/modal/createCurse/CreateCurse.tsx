@@ -53,7 +53,9 @@ export default function CreateCuse() {
 			reader.readAsDataURL(file);
 		}
 	};
-	const CurentFunc = () => {};
+	const CurentFunc = () => {
+		setOpen(false);
+	};
 	return (
 		<>
 			<Button onClick={handleOpen}>Open modal</Button>
