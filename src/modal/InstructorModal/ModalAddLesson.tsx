@@ -75,6 +75,7 @@ const ModalAddLesson = () => {
 								type="submit"
 								onClick={handleClose}
 								disabled={false}
+								width='117px'
 							>
 								Отмена
 							</ButtonCancel>
