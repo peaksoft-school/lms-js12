@@ -45,8 +45,3 @@ const Cards: FC = () => {
 };
 
 export default Cards;
-
-
-
-
-
