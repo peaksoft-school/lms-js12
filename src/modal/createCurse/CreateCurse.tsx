@@ -25,7 +25,7 @@ const style = {
 	}
 };
 
-export default function CreateCuse() {
+export default function CreateCourse() {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
