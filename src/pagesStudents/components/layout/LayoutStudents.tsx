@@ -5,6 +5,7 @@ import NavBar from '@/src/ui/navBar/NavBar';
 import HomePage from '../pages/HomePage';
 
 const LayoutStudents = () => {
+	
 	return (
 		<>
 			<div className={scss.Layout}>
