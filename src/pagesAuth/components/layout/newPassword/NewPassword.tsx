@@ -162,7 +162,7 @@ const NewPassword: FC = () => {
 								<Link to="/auth/login">Уже есть аккаунт!</Link>
 							</div>
 							<div className={scss.Button_Element}>
-								<ButtonSave width="100%" onClick={() => {}} disabled={false}>
+								<ButtonSave width="214px" onClick={() => {}} disabled={false}>
 									Создать
 								</ButtonSave>
 							</div>
