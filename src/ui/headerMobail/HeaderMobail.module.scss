@@ -1,0 +1,44 @@
+.HeaderMobile {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+
+	ul {
+		display: flex;
+		background: #fff;
+		padding-block: 20px;
+		align-items: center;
+		justify-content: center;
+		gap: 40px;
+		li {
+			display: flex;
+			gap: 20px;
+			align-items: center;
+			justify-content: center;
+			font-weight: 600;
+			font-size: 16px;
+
+			a {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				color: #12171e;
+				border-radius: 0.8rem;
+				transition: all 0.2s ease;
+				width: 110px;
+				&:hover {
+					background: rgb(221, 233, 249);
+					color: rgb(31, 110, 212);
+				}
+				.icon {
+					svg {
+						width: 27px;
+						height: 27px;
+					}
+				}
+			}
+		}
+	}
+}
