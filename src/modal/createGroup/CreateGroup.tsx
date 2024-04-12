@@ -4,10 +4,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Input from '@/src/ui/CustomInput/Input';
+import Input from '@/src/ui/customInput/Input';
 import galerry from '@/src/assets/png/Group 35 (1).png';
-import ButtonCancel from '@/src/ui/CustomButton/ButtonCancel';
-import ButtonSave from '@/src/ui/CustomButton/ButtonSave';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
 
 const style = {
 	position: 'absolute',
@@ -21,7 +21,7 @@ const style = {
 	p: 4,
 	sx: {
 		bgcolor: 'background.paper',
-		padding: '0px'
+				padding: '0px'
 	}
 };
 

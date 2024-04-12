@@ -1,4 +1,4 @@
-import Cards from '@/src/ui/CustomCards/Cards';
+import Cards from '@/src/ui/customCards/Cards';
 import scss from './Welcome.module.scss';
 const Welcome = () => {
 	return (

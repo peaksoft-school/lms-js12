@@ -2,6 +2,10 @@ import React, { FC, useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import scss from './Login.module.scss';
 import Logo from '@/src/assets/authPhotos/Logo.svg';
+import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import Input from '@/src/ui/customInput/Input';
+import { Link } from 'react-router-dom';
 import MenLogo from '@/src/assets/authPhotos/XMLID_1207_.svg';
 import {
 	IconButton,
@@ -9,10 +13,6 @@ import {
 	InputLabel,
 	OutlinedInput
 } from '@mui/material';
-import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
-import ButtonSave from '@/src/ui/CustomButton/ButtonSave';
-import Input from '@/src/ui/CustomInput/Input';
-import { Link } from 'react-router-dom';
 
 type FormData = {
 	login: string;
