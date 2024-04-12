@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import scss from './Cards.module.scss';
 import { useGetCardQuery } from '@/src/redux/api/lesson/cards';
+import Skeleton from '@mui/material/Skeleton';
 
 const Cards: FC = () => {
 	const { data, isLoading } = useGetCardQuery();
 
 	return (
-		<div className={scss.Card}>
+		<div className={scss.Cards}>
 			{!isLoading ? (
 				<>
 					{data &&
@@ -41,7 +42,48 @@ const Cards: FC = () => {
 						))}
 				</>
 			) : (
-				<div>Loading...</div>
+				<div className={scss.skeleton}>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={147} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={147} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+				</div>
 			)}
 		</div>
 	);
