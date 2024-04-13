@@ -51,7 +51,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 							alt=""
 						/>
 					</div>
-					{pathname === '/admin' && (
+					{pathname.startsWith('/admin') && (
 						<>
 							{links.admin.map((item, index) => (
 								<li key={index + 1}>
@@ -95,7 +95,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 						</>
 					)}
 
-					{pathname === '/instructor' && (
+					{pathname.startsWith('/instructor') && (
 						<>
 							{links.instructor.map((item, index) => (
 								<li key={index + 1}>

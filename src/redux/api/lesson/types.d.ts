@@ -10,4 +10,11 @@ namespace LESSON {
 
 	type GetCardsResponse = LessonType[];
 	type GetCardsRequest = string | void;
+	interface GetLessonType {
+		_id: number;
+		title: string;
+	}
+
+	type GetLessonsResponse = GetLessonType[];
+	type GetLessonssRequest = string | void;
 }
