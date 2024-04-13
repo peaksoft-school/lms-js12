@@ -1,7 +1,6 @@
 import { links } from '@/src/utils/routes';
 import scss from './Header.module.scss';
 import { FC } from 'react';
-
 import { useLocation } from 'react-router-dom';
 import peaksoft from '@/src/assets/png/Header.png';
 import peaksoft2 from '@/src/assets/png/pealsoft.jpg';
@@ -32,27 +31,27 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 					<i className="bx bx-menu" id="btn"></i>
 				</button>
 				<ul>
-				<div className={scss.peaksoft_img}>
-					<img
-						className={
-							isOpen
-								? `${scss.peaksoft1_url} `
-								: `${scss.peaksoft1_url} ${scss.active} `
-						}
-						src={peaksoft}
-						alt=""
-					/>
-					<img
-						className={
-							!isOpen
-								? `${scss.peaksoft2_url} `
-								: `${scss.peaksoft2_url} ${scss.active} `
-						}
-						src={peaksoft2}
-						alt=""
-					/>
-				</div>
-					{pathname === '/admin' && (
+					<div className={scss.peaksoft_img}>
+						<img
+							className={
+								isOpen
+									? `${scss.peaksoft1_url} `
+									: `${scss.peaksoft1_url} ${scss.active} `
+							}
+							src={peaksoft}
+							alt=""
+						/>
+						<img
+							className={
+								!isOpen
+									? `${scss.peaksoft2_url} `
+									: `${scss.peaksoft2_url} ${scss.active} `
+							}
+							src={peaksoft2}
+							alt=""
+						/>
+					</div>
+					{pathname.startsWith('/admin') && (
 						<>
 							{links.admin.map((item, index) => (
 								<li key={index + 1}>
@@ -96,7 +95,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 						</>
 					)}
 
-					{pathname === '/instructor' && (
+					{pathname.startsWith('/instructor') && (
 						<>
 							{links.instructor.map((item, index) => (
 								<li key={index + 1}>
