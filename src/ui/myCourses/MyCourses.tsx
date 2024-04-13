@@ -18,8 +18,8 @@ const MyCourses = () => {
 	const [course, setCourse] = useState<LessonType>();
 
 	useEffect(() => {
-		const filtedData = data?.find((item) => item._id === +coursesId!);
-		setCourse(filtedData!);
+		const filterData = data?.find((item) => item._id === +coursesId!);
+		setCourse(filterData!);
 	}, [data]);
 
 	return (
