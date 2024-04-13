@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import scss from './Cards.module.scss';
-
+import Skeleton from '@mui/material/Skeleton';
 import { Link, useLocation } from 'react-router-dom';
 import { useGetCardQuery } from '@/src/redux/api/lesson';
 
@@ -56,7 +56,48 @@ const Cards: FC = () => {
 					})}
 				</>
 			) : (
-				<div className={scss.skeleton}></div>
+				<div className={scss.skeleton}>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={147} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={147} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+					<div className={scss.mini_sceleton}>
+						<Skeleton variant="rectangular" width={270} height={171} />
+						<Skeleton />
+						<Skeleton width="60%" />
+					</div>
+				</div>
 			)}
 		</div>
 	);

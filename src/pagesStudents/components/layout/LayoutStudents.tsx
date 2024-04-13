@@ -5,9 +5,9 @@ import Header from '@/src/ui/header/Header';
 import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
 import HeaderMobail from '@/src/ui/headerMobail/HeaderMobail';
+import Material from '@/src/ui/material/Material';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Cards from '@/src/ui/customCards/Cards';
-import Material from '@/src/ui/material/Material';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +46,7 @@ const LayoutStudents = () => {
 				)}
 				<main>
 					<Routes>
-						<Route path="/" element={<HomePage />} />
+						<Route path="" element={<HomePage />} />
 						<Route path="/courses" element={<Cards />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route

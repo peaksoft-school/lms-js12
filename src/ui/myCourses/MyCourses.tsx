@@ -1,28 +1,13 @@
 import { useGetLessonQuery } from '@/src/redux/api/lesson';
-// import { useState, useEffect } from 'react';
+
 import { Link, useLocation, useParams } from 'react-router-dom';
 import BasicBreadcrumbs from '../breadCrumbs/BreadCrumbs';
-
-// interface LessonType {
-// 	_id: number;
-// 	title: string;
-// 	date: string;
-// 	text: string;
-// 	img: string;
-// }
 
 const MyCourses = () => {
 	const { coursesId } = useParams();
 	console.log(coursesId!);
 	const { data } = useGetLessonQuery();
 	const { pathname } = useLocation();
-
-	// const [course, setCourse] = useState<LessonType>();
-
-	// useEffect(() => {
-	// 	const filterData = data?.find((item) => item._id === +coursesId!);
-	// 	setCourse(filterData!);
-	// }, [data]);
 
 	return (
 		<div>
