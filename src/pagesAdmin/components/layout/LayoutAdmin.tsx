@@ -4,6 +4,12 @@ import Header from '@/src/ui/header/Header';
 import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
 import HeaderMobail from '@/src/ui/headerMobail/HeaderMobail';
+import MyCourses from '@/src/ui/myCourses/MyCourses';
+import Groups from '@/src/ui/group/Groups';
+import Announcement from '@/src/ui/announcement/Announcement';
+import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
+import Cards from '@/src/ui/customCards/Cards';
+
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -40,8 +46,13 @@ const LayoutAdmin = () => {
 					</>
 				)}
 				<main>
+					<BasicBreadcrumbs />
 					<Routes>
 						<Route path="/" element={<HomePage />} />
+						<Route path="admin/courses" element={<Cards />} />
+						<Route path="admin/groups" element={<Groups />} />
+						<Route path="admin/announcement" element={<Announcement />} />
+						<Route path="/admin/courses/:coursesId" element={<MyCourses />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobail />}
