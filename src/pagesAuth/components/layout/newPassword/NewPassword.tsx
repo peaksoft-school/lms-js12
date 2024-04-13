@@ -2,12 +2,12 @@ import scss from './NewPassword.module.scss';
 import Logo from '@/src/assets/authPhotos/Logo.svg';
 import MenLogo from '@/src/assets/authPhotos/XMLID_1207_.svg';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { IconButton, InputAdornment, InputLabel } from '@mui/material';
 import { FC, useState } from 'react';
 import { OutlinedInput } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
 
 interface FormData {
 	password: string;

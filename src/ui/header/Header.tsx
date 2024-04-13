@@ -31,26 +31,26 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 					<i className="bx bx-menu" id="btn"></i>
 				</button>
 				<ul>
-				<div className={scss.peaksoft_img}>
-					<img
-						className={
-							isOpen
-								? `${scss.peaksoft1_url} `
-								: `${scss.peaksoft1_url} ${scss.active} `
-						}
-						src={peaksoft}
-						alt=""
-					/>
-					<img
-						className={
-							!isOpen
-								? `${scss.peaksoft2_url} `
-								: `${scss.peaksoft2_url} ${scss.active} `
-						}
-						src={peaksoft2}
-						alt=""
-					/>
-				</div>
+					<div className={scss.peaksoft_img}>
+						<img
+							className={
+								isOpen
+									? `${scss.peaksoft1_url} `
+									: `${scss.peaksoft1_url} ${scss.active} `
+							}
+							src={peaksoft}
+							alt=""
+						/>
+						<img
+							className={
+								!isOpen
+									? `${scss.peaksoft2_url} `
+									: `${scss.peaksoft2_url} ${scss.active} `
+							}
+							src={peaksoft2}
+							alt=""
+						/>
+					</div>
 					{pathname === '/admin' && (
 						<>
 							{links.admin.map((item, index) => (

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace  LESSON{
+namespace LESSON {
 	interface LessonType {
 		id: number;
 		title: string;
@@ -7,7 +7,7 @@ namespace  LESSON{
 		text: string;
 		img: string;
 	}
-	
+
 	type GetCardsResponse = LessonType[];
 	type GetCardsRequest = string | void;
 }

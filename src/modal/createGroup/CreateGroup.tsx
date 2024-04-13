@@ -21,7 +21,7 @@ const style = {
 	p: 4,
 	sx: {
 		bgcolor: 'background.paper',
-				padding: '0px'
+		padding: '0px'
 	}
 };
 

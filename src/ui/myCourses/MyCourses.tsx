@@ -1,5 +1,5 @@
 import { useGetCardQuery } from '@/src/redux/api/lesson';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 interface LessonType {
@@ -13,12 +13,12 @@ interface LessonType {
 const MyCourses = () => {
 	const { coursesId } = useParams();
 	const { data } = useGetCardQuery(coursesId!);
-	const [course, setCourse] = useState<LessonType>()
-	
-	useEffect(()=> {
-		const filtedData = data?.find((item)=> item.id === +coursesId!)
-		setCourse(filtedData!)
-	},[data])
+	const [course, setCourse] = useState<LessonType>();
+
+	useEffect(() => {
+		const filtedData = data?.find((item) => item.id === +coursesId!);
+		setCourse(filtedData!);
+	}, [data]);
 
 	return (
 		<div>
