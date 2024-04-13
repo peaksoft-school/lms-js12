@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace LESSON {
 	interface LessonType {
-		id: number;
+		_id: number;
 		title: string;
 		date: string;
 		text: string;

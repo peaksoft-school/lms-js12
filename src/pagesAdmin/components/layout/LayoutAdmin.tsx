@@ -49,10 +49,10 @@ const LayoutAdmin = () => {
 					<BasicBreadcrumbs />
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-						<Route path="admin/courses" element={<Cards />} />
-						<Route path="admin/groups" element={<Groups />} />
-						<Route path="admin/announcement" element={<Announcement />} />
-						<Route path="/admin/courses/:coursesId" element={<MyCourses />} />
+						<Route path="/courses" element={<Cards />} />
+						<Route path="/courses/:coursesId" element={<MyCourses />} />
+						<Route path="/groups" element={<Groups />} />
+						<Route path="/announcement" element={<Announcement />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobail />}

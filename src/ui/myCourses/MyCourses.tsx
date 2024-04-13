@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 interface LessonType {
-	id: number;
+	_id: number;
 	title: string;
 	date: string;
 	text: string;
@@ -12,11 +12,13 @@ interface LessonType {
 
 const MyCourses = () => {
 	const { coursesId } = useParams();
+	console.log(coursesId!);
+
 	const { data } = useGetCardQuery(coursesId!);
 	const [course, setCourse] = useState<LessonType>();
 
 	useEffect(() => {
-		const filtedData = data?.find((item) => item.id === +coursesId!);
+		const filtedData = data?.find((item) => item._id === +coursesId!);
 		setCourse(filtedData!);
 	}, [data]);
 
