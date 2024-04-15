@@ -47,7 +47,7 @@ const Cards: FC = () => {
 									</div>
 									<div className={scss.BlockButtonDiv}>
 										<button className={scss.BlockButton}>
-											<img src="../../assets/svgs/dots.svg" alt="Dots" />
+											<img src="src/assets/dots.svg" alt="Dots" />
 										</button>
 									</div>
 								</div>

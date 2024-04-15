@@ -7,7 +7,7 @@ const Block = () => {
 				<div className={scss.content}>
 					<img
 						className={scss.BlockImage}
-						src="../../assets/svgs/block.svg"
+						src="src/assets/353 1.svg"
 						alt="BlockImage"
 					/>
 
