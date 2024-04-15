@@ -2,8 +2,8 @@ import { links } from '@/src/utils/routes';
 import scss from './Header.module.scss';
 import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
-import peaksoft from '@/src/assets/png/Header.png';
-import peaksoft2 from '@/src/assets/png/pealsoft.jpg';
+import peaksoft from '@/src/assets/header.png';
+import peaksoft2 from '@/src/assets/pealsoft.jpg';
 
 interface LayoutProps {
 	isOpen: boolean;
