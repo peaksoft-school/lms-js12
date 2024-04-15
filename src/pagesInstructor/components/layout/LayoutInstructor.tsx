@@ -1,24 +1,62 @@
-import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutInstructor.module.scss';
-import HomePage from '../pages/HomePage';
+import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Header from '@/src/ui/header/Header';
-import NavBar from '@/src/ui/navBar/NavBar';
+import HomePage from '../pages/HomePage';
+import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
+import Material from '@/src/ui/material/Material';
+import Cards from '@/src/ui/customCards/Cards';
+import MyCourses from '@/src/ui/myCourses/MyCourses';
+import CalendarPage from '@/src/pagesAdmin/components/pages/CalendarPage';
 
 const LayoutInstructor = () => {
+	const [isOpen, setIsOpen] = useState(false);
+	const [isMobile, setIsMobile] = useState(true);
+	useEffect(() => {
+		const changeIsMobile = () => {
+			if (window.innerWidth < 1000) {
+				setIsMobile(true);
+			} else {
+				setIsMobile(false);
+			}
+		};
+
+		changeIsMobile();
+		window.addEventListener('resize', changeIsMobile);
+
+		return () => {
+			window.removeEventListener('resize', changeIsMobile);
+		};
+	}, []);
+	useEffect(() => {
+		if (localStorage.getItem('isOpenNavBar') === 'false') {
+			setIsOpen(false);
+		} else {
+			setIsOpen(true);
+		}
+	}, []);
+
 	return (
 		<>
 			<div className={scss.Layout}>
-				<div className={scss.container}>
-					<NavBar />
-					<div className={scss.content}>
-						<Header />
-						<main>
-							<Routes>
-								<Route path="/" element={<HomePage />} />
-							</Routes>
-						</main>
-					</div>
-				</div>
+				{!isMobile && (
+					<>
+						<Header isOpen={isOpen} setIsOpen={setIsOpen} />
+					</>
+				)}
+				<main>
+					<Routes>
+						<Route path="/" element={<HomePage />} />
+						<Route path="/calendar" element={<CalendarPage />} />
+						<Route path="/courses" element={<Cards />} />
+						<Route path="/courses/:coursesId" element={<MyCourses />} />
+						<Route
+							path="/courses/:coursesId/:matelials"
+							element={<Material />}
+						/>
+					</Routes>
+				</main>
+				{isMobile && <HeaderMobile />}
 			</div>
 		</>
 	);

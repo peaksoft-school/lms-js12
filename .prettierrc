@@ -6,10 +6,7 @@
 	"singleQuote": true,
 	"overrides": [
 		{
-			"files": [
-				"*.scss",
-				"*.css"
-			],
+			"files": ["*.scss", "*.css"],
 			"options": {
 				"tabWidth": 2
 			}

@@ -27,10 +27,10 @@ a {
 
 body {
 	font-family: 'Open Sans', sans-serif !important;
+	background: rgb(239, 240, 244);
 }
 .container {
 	width: 100%;
-	max-width: 1280px;
-	margin-inline: auto;
-	padding-inline: 20px;
+	min-height: 100vh;
+	padding: 30px 20px;
 }
