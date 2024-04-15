@@ -1,13 +1,13 @@
 import * as React from 'react';
-import scss from './CreateGroup.module.scss';
+import scss from './CreateCurse.module.scss';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Input from '@/src/ui/customInput/Input';
+import Input from '@/src/ui/customInput/Input.tsx';
 import galerry from '@/src/assets/png/Group 35 (1).png';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
+import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 
 const style = {
 	position: 'absolute',
@@ -25,7 +25,7 @@ const style = {
 	}
 };
 
-export default function CreateGroup() {
+export default function CreateCourse() {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -72,7 +72,7 @@ export default function CreateGroup() {
 						variant="h6"
 						component="h2"
 					>
-						<p> Создание группы</p>
+						<p>Создать курс</p>
 					</Typography>
 					<Typography
 						className={scss.textPart}

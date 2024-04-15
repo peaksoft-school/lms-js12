@@ -1,10 +1,9 @@
-import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutStudents.module.scss';
-import Header from '@/src/ui/header/Header';
-// import NavBar from '@/src/ui/navBar/NavBar';
-import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
-import HeaderMobail from '@/src/ui/headerMobail/HeaderMobail';
+import { Route, Routes } from 'react-router-dom';
+import Header from '@/src/ui/header/Header';
+import HomePage from '../pages/HomePage';
+import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import Material from '@/src/ui/material/Material';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Cards from '@/src/ui/customCards/Cards';
@@ -55,7 +54,7 @@ const LayoutStudents = () => {
 						/>
 					</Routes>
 				</main>
-				{isMobile && <HeaderMobail />}
+				{isMobile && <HeaderMobile />}
 			</div>
 		</>
 	);

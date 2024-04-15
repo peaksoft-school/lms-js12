@@ -1,12 +1,13 @@
-import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutInstructor.module.scss';
+import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Header from '@/src/ui/header/Header';
 import HomePage from '../pages/HomePage';
-import { useEffect, useState } from 'react';
-import HeaderMobail from '@/src/ui/headerMobail/HeaderMobail';
+import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import Material from '@/src/ui/material/Material';
 import Cards from '@/src/ui/customCards/Cards';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
+
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -53,7 +54,7 @@ const LayoutInstructor = () => {
 						/>
 					</Routes>
 				</main>
-				{isMobile && <HeaderMobail />}
+				{isMobile && <HeaderMobile />}
 			</div>
 		</>
 	);
