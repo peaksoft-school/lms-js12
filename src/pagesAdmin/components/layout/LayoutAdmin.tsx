@@ -5,8 +5,8 @@ import Header from '@/src/ui/header/Header';
 import HomePage from '../pages/HomePage';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
-import Cards from '@/src/ui/customCards/Cards';
 import Material from '@/src/ui/material/Material';
+import Cards from '@/src/ui/customCards/Cards';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
