@@ -3,6 +3,8 @@ import scss from './CustomButton.module.scss';
 import Button from '@mui/material/Button';
 
 interface CancelButtonPlusProps {
+	type: 'button' | 'submit' | 'reset';
+
 	width: string;
 	children: ReactNode;
 	disabled: boolean;
@@ -10,6 +12,7 @@ interface CancelButtonPlusProps {
 }
 
 const ButtonCancel: FC<CancelButtonPlusProps> = ({
+	type,
 	width,
 	children,
 	disabled,
@@ -18,6 +21,7 @@ const ButtonCancel: FC<CancelButtonPlusProps> = ({
 	return (
 		<>
 			<Button
+				type={type}
 				className={scss.CancelButton}
 				style={{ width }}
 				onClick={onClick}

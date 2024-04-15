@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import scss from './HeaderMobail.module.scss';
 import { links } from '@/src/utils/routes';
 import { useKeenSlider } from 'keen-slider/react';
@@ -18,38 +18,62 @@ const HeaderMobile = () => {
 		<>
 			<header className={scss.HeaderMobile}>
 				<ul ref={sliderRef} className="keen-slider">
+					{/* //! admin */}
 					{pathname === '/admin' && (
 						<>
 							{links.admin.map((item, index) => (
 								<li className="keen-slider__slide number-slide1" key={index}>
-									<a href="#">
+									<Link
+										to={`/admin/${item.link!}`}
+										className={
+											pathname === `/admin/${item.link!}`
+												? `${scss.nav_item} ${scss.active}`
+												: `${scss.nav_item}`
+										}
+									>
 										<span className={scss.icon}>{item.icon}</span>
 										<span>{item.name}</span>
-									</a>
+									</Link>
 								</li>
 							))}
 						</>
 					)}
+					{/* //! student */}
 					{pathname === '/' && (
 						<>
 							{links.student.map((item, index) => (
 								<li key={index}>
-									<a href="#">
+									<Link
+										to={`/${item.link!}`}
+										className={
+											pathname === `/${item.link!}`
+												? `${scss.nav_item} ${scss.active}`
+												: `${scss.nav_item}`
+										}
+									>
 										<span className={scss.icon}>{item.icon}</span>
 										<span>{item.name}</span>
-									</a>
+									</Link>
 								</li>
 							))}
 						</>
 					)}
+					{/* //! instructor */}
 					{pathname === '/instructor' && (
 						<>
 							{links.instructor.map((item, index) => (
 								<li key={index}>
-									<a href="#">
+									<Link
+										to={`/instructor/${item.link!}`}
+										className={
+											pathname === `/instructor/${item.link!}`
+												? `${scss.nav_item} ${scss.active}`
+												: `${scss.nav_item}`
+										}
+									>
 										<span className={scss.icon}>{item.icon}</span>
 										<span>{item.name}</span>
-									</a>
+									</Link>
 								</li>
 							))}
 						</>

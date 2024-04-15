@@ -74,7 +74,7 @@
 			width: 90%;
 			margin: 0.8rem auto;
 			line-height: 50px;
-			a {
+			.nav_item {
 				overflow: hidden;
 				position: relative;
 				color: #12171e;
@@ -84,6 +84,10 @@
 				border-radius: 0.8rem;
 				transition: all 0.2s ease;
 				&:hover {
+					background: rgb(221, 233, 249);
+					color: rgb(31, 110, 212);
+				}
+				&.active {
 					background: rgb(221, 233, 249);
 					color: rgb(31, 110, 212);
 				}
@@ -98,11 +102,11 @@
 					align-items: center;
 				}
 
-				.nav_item {
+				.label {
 					margin-left: 45px;
-					opacity: 0;
+					transition: 0.2s;
 					&.active {
-						opacity: 1;
+						opacity: 0;
 					}
 				}
 			}

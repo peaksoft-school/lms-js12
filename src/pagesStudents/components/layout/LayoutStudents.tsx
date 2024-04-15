@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutStudents.module.scss';
 import Header from '@/src/ui/header/Header';
-// import NavBar from '@/src/ui/navBar/NavBar';
 import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
-import HeaderMobail from '@/src/ui/headerMobail/HeaderMobail';
+import HeaderMobile from '@/src/ui/headerMobail/HeaderMobail';
+import CalendarPage from '@/src/pagesAdmin/components/pages/CalendarPage';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -41,12 +41,13 @@ const LayoutStudents = () => {
 						<Header isOpen={isOpen} setIsOpen={setIsOpen} />
 					</>
 				)}
-				<main>
+				<main style={{ width: '100%' }}>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
+						<Route path="/calendar" element={<CalendarPage />} />
 					</Routes>
 				</main>
-				{isMobile && <HeaderMobail />}
+				{isMobile && <HeaderMobile />}
 			</div>
 		</>
 	);
