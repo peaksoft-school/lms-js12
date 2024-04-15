@@ -4,12 +4,15 @@ import Button from '@mui/material/Button';
 import PlusIcon from '@/src/assets/svgs/plus.svg';
 
 interface ButtonWithPlusProps {
+	type: 'button' | 'submit' | 'reset';
+
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
 }
 
 const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
+	type,
 	children,
 	disabled,
 	onClick
@@ -17,6 +20,7 @@ const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
 	return (
 		<>
 			<Button
+				type={type}
 				className={scss.PlusButton}
 				disabled={disabled}
 				variant="contained"

@@ -5,6 +5,7 @@ import Header from '@/src/ui/header/Header';
 import HomePage from '../pages/HomePage';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
+import CalendarPage from '../pages/CalendarPage';
 import Cards from '@/src/ui/customCards/Cards';
 import Material from '@/src/ui/material/Material';
 
@@ -45,7 +46,8 @@ const LayoutAdmin = () => {
 				)}
 				<main>
 					<Routes>
-						<Route path="" element={<HomePage />} />
+						<Route path="/" element={<HomePage />} />
+						<Route path="/calendar" element={<CalendarPage />} />
 						<Route path="/courses" element={<Cards />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route

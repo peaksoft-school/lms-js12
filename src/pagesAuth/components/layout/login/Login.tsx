@@ -143,7 +143,12 @@ const Login: FC = () => {
 									<Link to="/auth/newPassword">Забыли пароль?</Link>
 								</div>
 								<div className={scss.Button_Element}>
-									<ButtonSave width="214px" onClick={() => {}} disabled={false}>
+									<ButtonSave
+										type="submit"
+										width="214px"
+										onClick={() => {}}
+										disabled={false}
+									>
 										Войти
 									</ButtonSave>
 								</div>

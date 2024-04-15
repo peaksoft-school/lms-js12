@@ -4,12 +4,15 @@ import Button from '@mui/material/Button';
 import PlusIcon from '@/src/assets/svgs/plus.svg';
 
 interface CircleButtonProps {
+	type: 'button' | 'submit' | 'reset';
+
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
 }
 
 const ButtonCircle: FC<CircleButtonProps> = ({
+	type,
 	children,
 	disabled,
 	onClick
@@ -17,6 +20,7 @@ const ButtonCircle: FC<CircleButtonProps> = ({
 	return (
 		<>
 			<Button
+				type={type}
 				className={scss.CircleButton}
 				disabled={disabled}
 				variant="contained"

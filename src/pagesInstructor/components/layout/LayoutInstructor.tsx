@@ -7,6 +7,7 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import Material from '@/src/ui/material/Material';
 import Cards from '@/src/ui/customCards/Cards';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
+import CalendarPage from '@/src/pagesAdmin/components/pages/CalendarPage';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +47,7 @@ const LayoutInstructor = () => {
 				<main>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
+						<Route path="/calendar" element={<CalendarPage />} />
 						<Route path="/courses" element={<Cards />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route

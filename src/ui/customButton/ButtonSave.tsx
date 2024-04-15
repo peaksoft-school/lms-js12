@@ -3,6 +3,8 @@ import scss from './CustomButton.module.scss';
 import Button from '@mui/material/Button';
 
 interface ButtonSaveProps {
+	type: 'button' | 'submit' | 'reset';
+
 	width: string;
 	children: ReactNode;
 	disabled: boolean;
@@ -10,6 +12,7 @@ interface ButtonSaveProps {
 }
 
 const ButtonSave: FC<ButtonSaveProps> = ({
+	type,
 	width,
 	children,
 	disabled,
@@ -18,6 +21,7 @@ const ButtonSave: FC<ButtonSaveProps> = ({
 	return (
 		<>
 			<Button
+				type={type}
 				style={{ width }}
 				className={scss.SaveButton}
 				disabled={disabled}

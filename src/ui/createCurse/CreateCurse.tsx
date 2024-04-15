@@ -126,6 +126,7 @@ export default function CreateCourse() {
 						<div className={scss.buttons}>
 							<div className={scss.Cancel}>
 								<ButtonCancel
+									type="submit"
 									onClick={CurentFunc}
 									disabled={false}
 									width="103px"
@@ -134,7 +135,12 @@ export default function CreateCourse() {
 								</ButtonCancel>
 							</div>
 							<div className={scss.Cancel}>
-								<ButtonSave onClick={CurentFunc} disabled={false} width="117px">
+								<ButtonSave
+									type="submit"
+									onClick={CurentFunc}
+									disabled={false}
+									width="117px"
+								>
 									Добавить
 								</ButtonSave>
 							</div>
