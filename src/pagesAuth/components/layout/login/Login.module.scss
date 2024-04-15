@@ -1,3 +1,164 @@
+// .Login {
+// 	.content {
+// 		width: 100%;
+// 		height: 100vh;
+// 		display: flex;
+// 		font-family: 'Open Sans', sans-serif !important;
+
+// 		// ! login Blue
+// 		.LoginLogoBlue {
+// 			width: 100%;
+// 			max-width: 800px;
+// 			height: 100vh;
+// 			background: rgb(55, 114, 255);
+
+// 			.Logos {
+// 				display: flex;
+// 				gap: 90px;
+// 				flex-direction: column;
+// 				justify-content: center;
+// 				align-items: center;
+// 				height: 100vh;
+// 				img {
+// 					width: 100%;
+// 					height: auto;
+// 					max-width: 260px;
+// 				}
+// 			}
+// 		}
+
+// 		// ! login White
+// 		.LoginElementsWhite {
+// 			padding-inline: 20px;
+// 			width: 100%;
+// 			height: 100vh;
+// 			background: rgb(255, 255, 255);
+
+// 			.LoginWhiteElements {
+// 				width: 100%;
+// 				height: 100vh;
+// 				display: flex;
+// 				flex-direction: column;
+// 				justify-content: center;
+// 				align-items: center;
+
+// 				.title_red {
+// 					color: rgb(250, 35, 73);
+// 				}
+
+// 				.OutlinedInputEyes {
+// 					width: 540px;
+// 					border-radius: 20px;
+// 					width: 100%;
+// 				}
+
+// 				&::placeholder {
+// 					color: rgb(106, 106, 106);
+// 					padding: 10px 8px 10px 22px;
+// 				}
+
+// 				.Link_Element {
+// 					text-align: end;
+// 					margin-top: 20px;
+// 				}
+
+// 				.Button_Element {
+// 					display: flex;
+// 					justify-content: center;
+// 					align-items: center;
+// 					margin-top: 35px;
+// 				}
+
+// 				.Parent_element_inputs {
+// 					max-width: 540px;
+// 					padding: 20px;
+// 					width: 100%;
+
+// 					.Element_inputs_login {
+// 						margin-top: 54px;
+// 						display: flex;
+// 						flex-direction: column;
+// 						gap: 10px;
+// 						width: 100%;
+// 						p {
+// 							font-weight: 400;
+// 							font-size: 16px;
+// 							color: rgb(106, 106, 106);
+// 						}
+
+// 						.InputMedia {
+// 							max-width: 540px;
+// 						}
+// 					}
+
+// 					.Element_inputs_password {
+// 						display: flex;
+// 						flex-direction: column;
+// 						gap: 10px;
+// 						width: 100%;
+// 						p {
+// 							margin-top: 18px;
+// 							font-weight: 400;
+// 							font-size: 16px;
+// 							color: rgb(106, 106, 106);
+// 						}
+// 					}
+// 				}
+// 			}
+// <<<<<<< HEAD
+// 		}
+
+// 		.LoginWhiteElements {
+// 			h1 {
+// 				@media (max-width: 320px) {
+// 					display: flex;
+// 					padding: 0 10px;
+// 					width: 100%;
+// =======
+
+// 			.LoginWhiteElements {
+// 				h1 {
+// 					@media (max-width: 320px) {
+// 						display: flex;
+// 						padding: 0 10px;
+// 						width: 100%;
+// 					}
+// >>>>>>> e1ce7680b2f76076c1e4f593f811f04e4ea9a0ef
+// 				}
+
+// 				.WelcomeMedia {
+// 					@media (max-width: 320px) {
+// 						display: flex;
+// 						position: relative;
+// 						justify-content: center;
+// 						align-items: center;
+// 						top: 40px;
+// 						font-size: 25px;
+// 					}
+// 				}
+
+// 				.PeakSoftMedia {
+// 					@media (max-width: 320px) {
+// 						display: flex;
+// 						font-size: 29px;
+// 						gap: 10px;
+// 						position: relative;
+// 						top: 41px;
+// 						justify-content: center;
+// 						align-items: center;
+// 					}
+// 				}
+// 			}
+// 		}
+
+// 		.LoginLogoBlue {
+// 			@media (max-width: 1040px) {
+// 				display: none;
+// 			}
+// 		}
+// 	}
+// }
+
 .Login {
 	.content {
 		width: 100%;
@@ -19,6 +180,7 @@
 				justify-content: center;
 				align-items: center;
 				height: 100vh;
+
 				img {
 					width: 100%;
 					height: auto;
@@ -80,6 +242,7 @@
 						flex-direction: column;
 						gap: 10px;
 						width: 100%;
+
 						p {
 							font-weight: 400;
 							font-size: 16px;
@@ -96,6 +259,7 @@
 						flex-direction: column;
 						gap: 10px;
 						width: 100%;
+
 						p {
 							margin-top: 18px;
 							font-weight: 400;
@@ -105,37 +269,37 @@
 					}
 				}
 			}
+		}
 
-			.LoginWhiteElements {
-				h1 {
-					@media (max-width: 320px) {
-						display: flex;
-						padding: 0 10px;
-						width: 100%;
-					}
+		.LoginWhiteElements {
+			h1 {
+				@media (max-width: 320px) {
+					display: flex;
+					padding: 0 10px;
+					width: 100%;
 				}
+			}
 
-				.WelcomeMedia {
-					@media (max-width: 320px) {
-						display: flex;
-						position: relative;
-						justify-content: center;
-						align-items: center;
-						top: 40px;
-						font-size: 25px;
-					}
+			.WelcomeMedia {
+				@media (max-width: 320px) {
+					display: flex;
+					position: relative;
+					justify-content: center;
+					align-items: center;
+					top: 40px;
+					font-size: 25px;
 				}
+			}
 
-				.PeakSoftMedia {
-					@media (max-width: 320px) {
-						display: flex;
-						font-size: 29px;
-						gap: 10px;
-						position: relative;
-						top: 41px;
-						justify-content: center;
-						align-items: center;
-					}
+			.PeakSoftMedia {
+				@media (max-width: 320px) {
+					display: flex;
+					font-size: 29px;
+					gap: 10px;
+					position: relative;
+					top: 41px;
+					justify-content: center;
+					align-items: center;
 				}
 			}
 		}

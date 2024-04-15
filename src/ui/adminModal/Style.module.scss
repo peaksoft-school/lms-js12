@@ -1,0 +1,98 @@
+.MainModal {
+	border-radius: 20px;
+	max-width: 541px;
+	padding: 0px 0px !important;
+	@media (max-width: 600px) {
+		width: 80% !important;
+	}
+	.text {
+		color: white;
+		width: 100%;
+		height: 68px;
+		padding: 20px;
+		background: #3772ff;
+		border-top-right-radius: 10px !important;
+		border-top-left-radius: 10px !important;
+		margin-bottom: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.comText {
+			padding: 20px;
+			text-align: center;
+			padding: 0px;
+		}
+	}
+
+	.textarea {
+		font-size: 15px;
+		color: #87898e;
+		padding-left: 20px;
+	}
+	.input_buttonCard {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+		padding: 20px;
+		.input {
+			width: 470px;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.selectDiv {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			.select {
+				border-radius: 20px;
+				width: 100%;
+			}
+		}
+
+		.buttonAdd {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			width: 100%;
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			padding-bottom: 10px;
+			// padding-top: 13px;
+
+			@media (max-width: 600px) {
+				width: 80% !important;
+			}
+		}
+
+		.buttony {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			width: 100%;
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			padding-bottom: 10px;
+			padding-top: 13px;
+
+			@media (max-width: 600px) {
+				width: 80% !important;
+			}
+		}
+
+		.containInput {
+			display: flex;
+			gap: 10px;
+			width: 500px;
+			@media (max-width: 600px) {
+				width: 80% !important;
+			}
+		}
+	}
+}

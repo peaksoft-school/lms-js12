@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import scss from './CustomButton.module.scss';
+import scss from './Style.module.scss';
 import Button from '@mui/material/Button';
 import PlusIcon from '@/src/assets/svgs/plus.svg';
 
@@ -9,13 +9,15 @@ interface ButtonWithPlusProps {
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
+	type: 'button' | 'submit';
 }
 
 const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
 	type,
 	children,
 	disabled,
-	onClick
+	onClick,
+	type
 }) => {
 	return (
 		<>
@@ -25,6 +27,7 @@ const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
+				type={type}
 			>
 				<img className={scss.PlusIcon} src={PlusIcon} alt="#" />
 				{children}

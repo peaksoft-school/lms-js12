@@ -1,0 +1,134 @@
+.MainModal {
+	border-radius: 20px;
+	max-width: 541px;
+	padding: 0px 0px !important;
+	@media (max-width: 600px) {
+		width: 80% !important;
+	}
+	.text {
+		color: white;
+		width: 100%;
+		height: 68px;
+		padding: 20px;
+		background: #3772ff;
+		border-top-right-radius: 10px !important;
+		border-top-left-radius: 10px !important;
+		margin-bottom: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.comText {
+			padding: 20px;
+			text-align: center;
+			padding: 0px;
+		}
+	}
+
+	.textarea {
+		font-size: 15px;
+		color: #87898e;
+		padding-left: 20px;
+	}
+	.input_buttonCard {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 20px;
+		padding: 20px;
+		.input {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			align-items: flex-end;
+		}
+		.selectDiv {
+			width: 100%;
+			display: flex;
+			gap: 10px;
+			align-items: flex-end;
+			.select {
+				border-radius: 20px;
+			}
+		}
+
+		.buttonAdd {
+			display: flex;
+			justify-content: flex-end;
+			display: flex;
+			height: 100%;
+			width: 100%;
+			gap: 10px;
+
+			@media (max-width: 600px) {
+				width: 80% !important;
+			}
+		}
+
+		.buttonreview {
+			display: flex;
+			gap: 10px;
+			width: 500px;
+			@media (max-width: 600px) {
+				width: 80% !important;
+			}
+		}
+	}
+}
+
+.ModalMain {
+	border-radius: 20px;
+	max-width: 541px;
+	padding: 0px 0px !important;
+	@media (max-width: 600px) {
+		width: 80% !important;
+	}
+	.Addtext {
+		color: white;
+		width: 100%;
+		height: 68px;
+		padding: 20px;
+		background: #3772ff;
+		border-top-right-radius: 10px !important;
+		border-top-left-radius: 10px !important;
+		margin-bottom: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.comtext {
+			padding: 20px;
+			text-align: center;
+			padding: 0px;
+		}
+	}
+
+	.textarea {
+		font-size: 15px;
+		color: #87898e;
+		padding-left: 20px;
+	}
+	.input_buttonCard {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		padding: 20px;
+		.input {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.buttonAdd {
+			display: flex;
+			justify-content: flex-end;
+			display: flex;
+			height: 100%;
+			width: 100%;
+			gap: 10px;
+		}
+	}
+}
