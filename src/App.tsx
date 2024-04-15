@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Preloader } from './ui/preloader/Preloader';
 import LayoutAdmin from './pagesAdmin/components/layout/LayoutAdmin';
 import LayoutStudents from './pagesStudents/components/layout/LayoutStudents';
 import LayoutInstructor from './pagesInstructor/components/layout/LayoutInstructor';
 import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
+import { Preloader } from './ui/preloader/Preloader';
+import { useEffect, useState } from 'react';
 
 const App = () => {
 	const [isPreLoaded, setPreLoader] = useState(true);
