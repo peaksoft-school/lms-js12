@@ -5,8 +5,8 @@ import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
 import HeaderMobail from '@/src/ui/headerMobail/HeaderMobail';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
-import Cards from '@/src/ui/customCards/Cards';
 import Material from '@/src/ui/material/Material';
+import Cards from '@/src/ui/customCards/Cards';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
