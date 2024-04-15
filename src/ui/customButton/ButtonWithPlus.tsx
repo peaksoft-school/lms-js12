@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react';
 import scss from './CustomButton.module.scss';
 import Button from '@mui/material/Button';
-import PlusIcon from '@/src/assets/buttonPlus/Без заливки.svg';
+import PlusIcon from '@/src/assets/svgs/plus.svg';
 
-interface CircleButtonProps {
+interface ButtonWithPlusProps {
 	type: 'button' | 'submit' | 'reset';
 
 	children: ReactNode;
@@ -11,7 +11,7 @@ interface CircleButtonProps {
 	onClick: () => void;
 }
 
-const ButtonCircle: FC<CircleButtonProps> = ({
+const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
 	type,
 	children,
 	disabled,
@@ -21,16 +21,16 @@ const ButtonCircle: FC<CircleButtonProps> = ({
 		<>
 			<Button
 				type={type}
-				className={scss.CircleButton}
+				className={scss.PlusButton}
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
 			>
-				{children}
 				<img className={scss.PlusIcon} src={PlusIcon} alt="#" />
+				{children}
 			</Button>
 		</>
 	);
 };
 
-export default ButtonCircle;
+export default ButtonWithPlus;

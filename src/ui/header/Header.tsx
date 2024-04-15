@@ -1,14 +1,9 @@
 import { links } from '@/src/utils/routes';
 import scss from './Header.module.scss';
 import { FC } from 'react';
-<<<<<<< HEAD
-
-import { Link, useLocation } from 'react-router-dom';
-=======
 import { useLocation } from 'react-router-dom';
->>>>>>> dev
-import peaksoft from '@/src/assets/png/Header.png';
-import peaksoft2 from '@/src/assets/png/pealsoft.jpg';
+import peaksoft from '@/src/assets/header.png';
+import peaksoft2 from '@/src/assets/pealsoft.jpg';
 
 interface LayoutProps {
 	isOpen: boolean;
@@ -56,97 +51,66 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 							alt=""
 						/>
 					</div>
-<<<<<<< HEAD
-					{pathname === '/admin' && (
-=======
 					{pathname.startsWith('/admin') && (
->>>>>>> dev
 						<>
 							{links.admin.map((item, index) => (
 								<li key={index + 1}>
-									<Link
-										to={`/admin/${item.link!}`}
-										className={
-											pathname === `/admin/${item.link!}`
-												? `${scss.nav_item} ${scss.active}`
-												: `${scss.nav_item}`
-										}
-									>
+									<a href="#">
 										<span className={scss.icon}>{item.icon}</span>
 										<span
 											className={
-												!isOpen
-													? `${scss.label} ${scss.active}`
-													: `${scss.label}`
+												isOpen
+													? `${scss.nav_item} ${scss.active}`
+													: `${scss.nav_item}`
 											}
 										>
 											{item.name}
 										</span>
-									</Link>
+									</a>
 									{!isOpen && <span className={scss.tooltip}>{item.name}</span>}
 								</li>
 							))}
 						</>
 					)}
 
-					{/* //! student */}
 					{pathname === '/' && (
 						<>
 							{links.student.map((item, index) => (
 								<li key={index + 1}>
-									<Link
-										to={`/${item.link!}`}
-										className={
-											pathname === `/${item.link!}`
-												? `${scss.nav_item} ${scss.active}`
-												: `${scss.nav_item}`
-										}
-									>
+									<a href="#">
 										<span className={scss.icon}>{item.icon}</span>
 										<span
 											className={
-												!isOpen
-													? `${scss.label} ${scss.active}`
-													: `${scss.label}`
+												isOpen
+													? `${scss.nav_item} ${scss.active}`
+													: `${scss.nav_item}`
 											}
 										>
 											{item.name}
 										</span>
-									</Link>
+									</a>
 									{!isOpen && <span className={scss.tooltip}>{item.name}</span>}
 								</li>
 							))}
 						</>
 					)}
 
-<<<<<<< HEAD
-					{/* //! instructor */}
-					{pathname === '/instructor' && (
-=======
 					{pathname.startsWith('/instructor') && (
->>>>>>> dev
 						<>
 							{links.instructor.map((item, index) => (
 								<li key={index + 1}>
-									<Link
-										to={`/instructor/${item.link!}`}
-										className={
-											pathname === `/instructor/${item.link!}`
-												? `${scss.nav_item} ${scss.active}`
-												: `${scss.nav_item}`
-										}
-									>
+									<a href="#">
 										<span className={scss.icon}>{item.icon}</span>
 										<span
 											className={
-												!isOpen
-													? `${scss.label} ${scss.active}`
-													: `${scss.label}`
+												isOpen
+													? `${scss.nav_item} ${scss.active}`
+													: `${scss.nav_item}`
 											}
 										>
 											{item.name}
 										</span>
-									</Link>
+									</a>
 									{!isOpen && <span className={scss.tooltip}>{item.name}</span>}
 								</li>
 							))}
