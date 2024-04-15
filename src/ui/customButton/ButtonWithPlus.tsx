@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import scss from './CustomButton.module.scss';
 import Button from '@mui/material/Button';
-import PlusIcon from '@/src/assets/buttonPlus/Без заливки.svg';
+import PlusIcon from '@/src/assets/svgs/plus.svg';
 
 interface ButtonWithPlusProps {
 	type: 'button' | 'submit' | 'reset';
