@@ -1,586 +1,1708 @@
-<!DOCTYPE html>
+<!doctype html>
 <!-- saved from url=(0038)http://localhost:5173/auth/newPassword -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
-injectIntoGlobalHook(window);
-window.$RefreshReg$ = () => {};
-window.$RefreshSig$ = () => (type) => type;</script>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script type="module">
+			import { injectIntoGlobalHook } from '/@react-refresh';
+			injectIntoGlobalHook(window);
+			window.$RefreshReg$ = () => {};
+			window.$RefreshSig$ = () => (type) => type;
+		</script>
 
-    <script type="module" src="./LMS_files/client"></script>
+		<script type="module" src="./LMS_files/client"></script>
 
-    
-    <link rel="icon" type="image/svg+xml" href="http://localhost:5173/vite.svg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LMS</title>
-  <style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAdmin/components/layout/LayoutAdmin.module.scss">._Layout_1owtg_1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}
-._Layout_1owtg_1 ._container_1owtg_7 {
-  width: 100%;
-  display: flex;
-}
-._Layout_1owtg_1 ._container_1owtg_7 ._content_1owtg_11 {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-._Layout_1owtg_1 main {
-  margin-top: 150px;
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAdmin/components/pages/homeSection/Welcome.module.scss"></style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/header/Header.module.scss">._Header_yhslw_1 {
-  display: flex;
-  justify-content: flex-end;
-  margin: 0;
-  border-bottom: 1px solid rgb(168, 169, 172);
-}
-._Header_yhslw_1 ._container_yhslw_7 {
-  width: 100%;
-  padding: 15px;
-  background-color: rgb(239, 240, 244);
-}
-._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 {
-  gap: 31px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 ._headerCard_yhslw_18 {
-  gap: 14px;
-  padding: 8px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 ._headerCard_yhslw_18 ._Exit_yhslw_25 {
-  position: absolute;
-  top: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  right: 2px;
-  width: 228px;
-  height: 38px;
-  padding: 5px 10px;
-  background: rgba(206, 206, 206, 0.2392156863);
-  border: none;
-  cursor: pointer;
-  z-index: 1;
-  border-radius: 9px;
-  box-shadow: 0px 0px 10px 3px rgb(190, 187, 187);
-}
-._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 p {
-  font-size: 16px;
-  font-weight: 400;
-  color: rgb(35, 35, 35);
-}
-@media (max-width: 767px) {
-  ._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 p {
-    display: none;
-  }
-}
-@media (max-width: 767px) {
-  ._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 ._icon_yhslw_53 {
-    display: none;
-  }
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/navBar/Navbar.module.scss">._NavBar_qkkkq_1 ._content_qkkkq_1 {
-  max-width: 240px;
-  height: 875px;
-  display: flex;
-  flex-direction: column;
-  gap: 79px;
-}
-._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 {
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  gap: 66px;
-}
-@media (max-width: 767px) {
-  ._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 {
-    display: none;
-  }
-}
-._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 ._navBar_img_qkkkq_19 {
-  padding: 32px 49px 0px 49px;
-}
-._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 ._MainPart_qkkkq_22 {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 ._MainPart_qkkkq_22 ._part_qkkkq_27 {
-  padding: 13px 79px 13px 40px;
-  display: flex;
-  gap: 16px;
-  font-weight: 600;
-  transition: 0.5s;
-  cursor: pointer;
-}
-._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 ._MainPart_qkkkq_22 ._part_qkkkq_27:hover {
-  background-color: rgb(221, 233, 249);
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  color: rgb(31, 110, 212);
-}
-._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 ._MainPart_qkkkq_22 ._part_qkkkq_27 p {
-  width: 120px;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 {
-  position: relative;
-  bottom: 876px;
-  left: 40px;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 {
-  position: absolute;
-  right: -30px;
-  overflow: hidden;
-  top: 8px;
-  display: none;
-  transition: 1s;
-  transform: scale(0.47);
-}
-@media (max-width: 767px) {
-  ._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 {
-    display: block;
-  }
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 label {
-  display: flex;
-  flex-direction: column;
-  width: 70px;
-  cursor: pointer;
-  transition: 2s;
-}
-@media (max-width: 700px) {
-  ._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 label {
-    cursor: default;
-  }
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 label span {
-  background: #000;
-  border-radius: 10px;
-  height: 7px;
-  margin: 7px 0;
-  transition: 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 span:nth-of-type(1) {
-  transition: 0.5s;
-  width: 50%;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 span:nth-of-type(2) {
-  transition: 0.5s;
-  width: 100%;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 span:nth-of-type(3) {
-  transition: 0.5s;
-  width: 75%;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 input[type=checkbox] {
-  display: none;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 input[type=checkbox]:checked ~ span:nth-of-type(1) {
-  transform-origin: bottom;
-  transform: rotatez(45deg) translate(8px, 0px);
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 input[type=checkbox]:checked ~ span:nth-of-type(2) {
-  transform-origin: top;
-  transform: rotatez(-45deg);
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 input[type=checkbox]:checked ~ span:nth-of-type(3) {
-  transform-origin: bottom;
-  width: 50%;
-  transform: translate(30px, -11px) rotatez(45deg);
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 {
-  transition: 0.5s;
-  display: none;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110._active_qkkkq_114 {
-  display: block;
-}
-@media (min-width: 767px) {
-  ._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110._active_qkkkq_114 {
-    display: none;
-  }
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 ._nav_Burger_qkkkq_122 {
-  background: #ffffff;
-  transition: 0.5s;
-  display: flex;
-  flex-direction: column;
-  gap: 66px;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 ._nav_Burger_qkkkq_122 ._navBar_img_qkkkq_19 {
-  padding: 32px 49px 0px 49px;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 ._nav_Burger_qkkkq_122 ._MainPart_qkkkq_22 {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 0;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 ._nav_Burger_qkkkq_122 ._MainPart_qkkkq_22 ._part_qkkkq_27 {
-  padding: 13px 79px 13px 40px;
-  display: flex;
-  gap: 16px;
-  font-weight: 600;
-  transition: 0.5s;
-  cursor: pointer;
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 ._nav_Burger_qkkkq_122 ._MainPart_qkkkq_22 ._part_qkkkq_27:hover {
-  background-color: rgb(221, 233, 249);
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  color: rgb(31, 110, 212);
-}
-._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 ._nav_Burger_qkkkq_122 ._MainPart_qkkkq_22 ._part_qkkkq_27 p {
-  width: 120px;
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesStudents/components/layout/LayoutStudents.module.scss">._Layout_ziyjp_1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}
-._Layout_ziyjp_1 ._container_ziyjp_7 {
-  width: 100%;
-  display: flex;
-}
-._Layout_ziyjp_1 ._container_ziyjp_7 ._content_ziyjp_11 {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-._Layout_ziyjp_1 ._container_ziyjp_7 ._content_ziyjp_11 main {
-  padding-left: 100px;
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesStudents/components/pages/homeSection/Welcome.module.scss"></style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesInstructor/components/layout/LayoutInstructor.module.scss">._Layout_1owtg_1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}
-._Layout_1owtg_1 ._container_1owtg_7 {
-  width: 100%;
-  display: flex;
-}
-._Layout_1owtg_1 ._container_1owtg_7 ._content_1owtg_11 {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-._Layout_1owtg_1 main {
-  margin-top: 150px;
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesInstructor/components/pages/homeSection/Welcome.module.scss"></style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAuth/components/layout/LayoutAuth.module.scss">._Layout_sxlv7_1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAuth/components/layout/login/Login.module.scss">._Login_1itcq_1 {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  font-family: "Open Sans", sans-serif !important;
-}
-._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 {
-  width: 100%;
-  max-width: 800px;
-  height: 100vh;
-  background: rgb(55, 114, 255);
-}
-._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 ._Logos_1itcq_13 {
-  display: flex;
-  gap: 90px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 ._Logos_1itcq_13 img {
-  width: 100%;
-  height: auto;
-  max-width: 260px;
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 {
-  width: 100%;
-  height: 100vh;
-  background: rgb(255, 255, 255);
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._title_red_1itcq_38 {
-  color: rgb(250, 35, 73);
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._Element_inputs_login_1itcq_41 {
-  width: 100%;
-  margin-top: 54px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._Element_inputs_login_1itcq_41 p {
-  font-weight: 400;
-  font-size: 16px;
-  color: rgb(106, 106, 106);
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._OutlinedInputEyes_1itcq_53 {
-  width: 540px;
-  border-radius: 20px;
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._Element_inputs_password_1itcq_57 {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._Element_inputs_password_1itcq_57 p {
-  margin-top: 18px;
-  font-weight: 400;
-  font-size: 16px;
-  color: rgb(106, 106, 106);
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31::placeholder {
-  color: rgb(106, 106, 106);
-  padding: 10px 8px 10px 22px;
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._Link_Element_1itcq_72 {
-  position: relative;
-  left: 230px;
-  margin-top: 14px;
-}
-._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._Button_Element_1itcq_77 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 35px;
-}
-@media (max-width: 550px) {
-  ._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 ._InputMedia_1itcq_84 {
-    width: 100%;
-    max-width: 200px;
-  }
-}
-@media (max-width: 320px) {
-  ._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 ._LoginWhiteElements_1itcq_31 h1 {
-    display: flex;
-    padding: 0 10px;
-    width: 100%;
-  }
-}
-@media (max-width: 1186px) {
-  ._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 {
-    display: none;
-  }
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/CustomButton/CustomButton.module.scss">._PlusButton_1mcur_1 {
-  text-transform: capitalize !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  background: #3772ff !important;
-  border-radius: 8px !important;
-  padding: 14px 24px !important;
-}
-._PlusButton_1mcur_1:hover {
-  background: #1d60ff !important;
-}
-._PlusButton_1mcur_1:disabled {
-  background: #e3e3e4 !important;
-  color: #989799 !important;
-}
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="http://localhost:5173/vite.svg"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>LMS</title>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAdmin/components/layout/LayoutAdmin.module.scss"
+		>
+			._Layout_1owtg_1 {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				min-height: 100vh;
+			}
+			._Layout_1owtg_1 ._container_1owtg_7 {
+				width: 100%;
+				display: flex;
+			}
+			._Layout_1owtg_1 ._container_1owtg_7 ._content_1owtg_11 {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+			._Layout_1owtg_1 main {
+				margin-top: 150px;
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAdmin/components/pages/homeSection/Welcome.module.scss"
+		></style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/header/Header.module.scss"
+		>
+			._Header_yhslw_1 {
+				display: flex;
+				justify-content: flex-end;
+				margin: 0;
+				border-bottom: 1px solid rgb(168, 169, 172);
+			}
+			._Header_yhslw_1 ._container_yhslw_7 {
+				width: 100%;
+				padding: 15px;
+				background-color: rgb(239, 240, 244);
+			}
+			._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 {
+				gap: 31px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+			}
+			._Header_yhslw_1
+				._container_yhslw_7
+				._content_yhslw_12
+				._headerCard_yhslw_18 {
+				gap: 14px;
+				padding: 8px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+			}
+			._Header_yhslw_1
+				._container_yhslw_7
+				._content_yhslw_12
+				._headerCard_yhslw_18
+				._Exit_yhslw_25 {
+				position: absolute;
+				top: 60px;
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				right: 2px;
+				width: 228px;
+				height: 38px;
+				padding: 5px 10px;
+				background: rgba(206, 206, 206, 0.2392156863);
+				border: none;
+				cursor: pointer;
+				z-index: 1;
+				border-radius: 9px;
+				box-shadow: 0px 0px 10px 3px rgb(190, 187, 187);
+			}
+			._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 p {
+				font-size: 16px;
+				font-weight: 400;
+				color: rgb(35, 35, 35);
+			}
+			@media (max-width: 767px) {
+				._Header_yhslw_1 ._container_yhslw_7 ._content_yhslw_12 p {
+					display: none;
+				}
+			}
+			@media (max-width: 767px) {
+				._Header_yhslw_1
+					._container_yhslw_7
+					._content_yhslw_12
+					._icon_yhslw_53 {
+					display: none;
+				}
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/navBar/Navbar.module.scss"
+		>
+			._NavBar_qkkkq_1 ._content_qkkkq_1 {
+				max-width: 240px;
+				height: 875px;
+				display: flex;
+				flex-direction: column;
+				gap: 79px;
+			}
+			._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 {
+				background: #ffffff;
+				display: flex;
+				flex-direction: column;
+				gap: 66px;
+			}
+			@media (max-width: 767px) {
+				._NavBar_qkkkq_1 ._content_qkkkq_1 ._nav_card_qkkkq_8 {
+					display: none;
+				}
+			}
+			._NavBar_qkkkq_1
+				._content_qkkkq_1
+				._nav_card_qkkkq_8
+				._navBar_img_qkkkq_19 {
+				padding: 32px 49px 0px 49px;
+			}
+			._NavBar_qkkkq_1
+				._content_qkkkq_1
+				._nav_card_qkkkq_8
+				._MainPart_qkkkq_22 {
+				display: flex;
+				flex-direction: column;
+				gap: 24px;
+			}
+			._NavBar_qkkkq_1
+				._content_qkkkq_1
+				._nav_card_qkkkq_8
+				._MainPart_qkkkq_22
+				._part_qkkkq_27 {
+				padding: 13px 79px 13px 40px;
+				display: flex;
+				gap: 16px;
+				font-weight: 600;
+				transition: 0.5s;
+				cursor: pointer;
+			}
+			._NavBar_qkkkq_1
+				._content_qkkkq_1
+				._nav_card_qkkkq_8
+				._MainPart_qkkkq_22
+				._part_qkkkq_27:hover {
+				background-color: rgb(221, 233, 249);
+				border-top-right-radius: 10px;
+				border-bottom-right-radius: 10px;
+				color: rgb(31, 110, 212);
+			}
+			._NavBar_qkkkq_1
+				._content_qkkkq_1
+				._nav_card_qkkkq_8
+				._MainPart_qkkkq_22
+				._part_qkkkq_27
+				p {
+				width: 120px;
+			}
+			._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 {
+				position: relative;
+				bottom: 876px;
+				left: 40px;
+			}
+			._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 {
+				position: absolute;
+				right: -30px;
+				overflow: hidden;
+				top: 8px;
+				display: none;
+				transition: 1s;
+				transform: scale(0.47);
+			}
+			@media (max-width: 767px) {
+				._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 {
+					display: block;
+				}
+			}
+			._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger__button_qkkkq_49 label {
+				display: flex;
+				flex-direction: column;
+				width: 70px;
+				cursor: pointer;
+				transition: 2s;
+			}
+			@media (max-width: 700px) {
+				._NavBar_qkkkq_1
+					._Main_burger_qkkkq_44
+					._burger__button_qkkkq_49
+					label {
+					cursor: default;
+				}
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				label
+				span {
+				background: #000;
+				border-radius: 10px;
+				height: 7px;
+				margin: 7px 0;
+				transition: 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				span:nth-of-type(1) {
+				transition: 0.5s;
+				width: 50%;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				span:nth-of-type(2) {
+				transition: 0.5s;
+				width: 100%;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				span:nth-of-type(3) {
+				transition: 0.5s;
+				width: 75%;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				input[type='checkbox'] {
+				display: none;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				input[type='checkbox']:checked
+				~ span:nth-of-type(1) {
+				transform-origin: bottom;
+				transform: rotatez(45deg) translate(8px, 0px);
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				input[type='checkbox']:checked
+				~ span:nth-of-type(2) {
+				transform-origin: top;
+				transform: rotatez(-45deg);
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger__button_qkkkq_49
+				input[type='checkbox']:checked
+				~ span:nth-of-type(3) {
+				transform-origin: bottom;
+				width: 50%;
+				transform: translate(30px, -11px) rotatez(45deg);
+			}
+			._NavBar_qkkkq_1 ._Main_burger_qkkkq_44 ._burger_menu_qkkkq_110 {
+				transition: 0.5s;
+				display: none;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger_menu_qkkkq_110._active_qkkkq_114 {
+				display: block;
+			}
+			@media (min-width: 767px) {
+				._NavBar_qkkkq_1
+					._Main_burger_qkkkq_44
+					._burger_menu_qkkkq_110._active_qkkkq_114 {
+					display: none;
+				}
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger_menu_qkkkq_110
+				._nav_Burger_qkkkq_122 {
+				background: #ffffff;
+				transition: 0.5s;
+				display: flex;
+				flex-direction: column;
+				gap: 66px;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger_menu_qkkkq_110
+				._nav_Burger_qkkkq_122
+				._navBar_img_qkkkq_19 {
+				padding: 32px 49px 0px 49px;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger_menu_qkkkq_110
+				._nav_Burger_qkkkq_122
+				._MainPart_qkkkq_22 {
+				display: flex;
+				flex-direction: column;
+				gap: 24px;
+				padding: 0;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger_menu_qkkkq_110
+				._nav_Burger_qkkkq_122
+				._MainPart_qkkkq_22
+				._part_qkkkq_27 {
+				padding: 13px 79px 13px 40px;
+				display: flex;
+				gap: 16px;
+				font-weight: 600;
+				transition: 0.5s;
+				cursor: pointer;
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger_menu_qkkkq_110
+				._nav_Burger_qkkkq_122
+				._MainPart_qkkkq_22
+				._part_qkkkq_27:hover {
+				background-color: rgb(221, 233, 249);
+				border-top-right-radius: 10px;
+				border-bottom-right-radius: 10px;
+				color: rgb(31, 110, 212);
+			}
+			._NavBar_qkkkq_1
+				._Main_burger_qkkkq_44
+				._burger_menu_qkkkq_110
+				._nav_Burger_qkkkq_122
+				._MainPart_qkkkq_22
+				._part_qkkkq_27
+				p {
+				width: 120px;
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesStudents/components/layout/LayoutStudents.module.scss"
+		>
+			._Layout_ziyjp_1 {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				min-height: 100vh;
+			}
+			._Layout_ziyjp_1 ._container_ziyjp_7 {
+				width: 100%;
+				display: flex;
+			}
+			._Layout_ziyjp_1 ._container_ziyjp_7 ._content_ziyjp_11 {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+			._Layout_ziyjp_1 ._container_ziyjp_7 ._content_ziyjp_11 main {
+				padding-left: 100px;
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesStudents/components/pages/homeSection/Welcome.module.scss"
+		></style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesInstructor/components/layout/LayoutInstructor.module.scss"
+		>
+			._Layout_1owtg_1 {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				min-height: 100vh;
+			}
+			._Layout_1owtg_1 ._container_1owtg_7 {
+				width: 100%;
+				display: flex;
+			}
+			._Layout_1owtg_1 ._container_1owtg_7 ._content_1owtg_11 {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+			._Layout_1owtg_1 main {
+				margin-top: 150px;
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesInstructor/components/pages/homeSection/Welcome.module.scss"
+		></style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAuth/components/layout/LayoutAuth.module.scss"
+		>
+			._Layout_sxlv7_1 {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				min-height: 100vh;
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAuth/components/layout/login/Login.module.scss"
+		>
+			._Login_1itcq_1 {
+				width: 100%;
+				height: 100vh;
+				display: flex;
+				font-family: 'Open Sans', sans-serif !important;
+			}
+			._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 {
+				width: 100%;
+				max-width: 800px;
+				height: 100vh;
+				background: rgb(55, 114, 255);
+			}
+			._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 ._Logos_1itcq_13 {
+				display: flex;
+				gap: 90px;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+			}
+			._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 ._Logos_1itcq_13 img {
+				width: 100%;
+				height: auto;
+				max-width: 260px;
+			}
+			._Login_1itcq_1 ._LoginElementsWhite_1itcq_26 {
+				width: 100%;
+				height: 100vh;
+				background: rgb(255, 255, 255);
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31 {
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._title_red_1itcq_38 {
+				color: rgb(250, 35, 73);
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._Element_inputs_login_1itcq_41 {
+				width: 100%;
+				margin-top: 54px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._Element_inputs_login_1itcq_41
+				p {
+				font-weight: 400;
+				font-size: 16px;
+				color: rgb(106, 106, 106);
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._OutlinedInputEyes_1itcq_53 {
+				width: 540px;
+				border-radius: 20px;
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._Element_inputs_password_1itcq_57 {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._Element_inputs_password_1itcq_57
+				p {
+				margin-top: 18px;
+				font-weight: 400;
+				font-size: 16px;
+				color: rgb(106, 106, 106);
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31::placeholder {
+				color: rgb(106, 106, 106);
+				padding: 10px 8px 10px 22px;
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._Link_Element_1itcq_72 {
+				position: relative;
+				left: 230px;
+				margin-top: 14px;
+			}
+			._Login_1itcq_1
+				._LoginElementsWhite_1itcq_26
+				._LoginWhiteElements_1itcq_31
+				._Button_Element_1itcq_77 {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 35px;
+			}
+			@media (max-width: 550px) {
+				._Login_1itcq_1
+					._LoginElementsWhite_1itcq_26
+					._LoginWhiteElements_1itcq_31
+					._InputMedia_1itcq_84 {
+					width: 100%;
+					max-width: 200px;
+				}
+			}
+			@media (max-width: 320px) {
+				._Login_1itcq_1
+					._LoginElementsWhite_1itcq_26
+					._LoginWhiteElements_1itcq_31
+					h1 {
+					display: flex;
+					padding: 0 10px;
+					width: 100%;
+				}
+			}
+			@media (max-width: 1186px) {
+				._Login_1itcq_1 ._LoginLogoBlue_1itcq_7 {
+					display: none;
+				}
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/CustomButton/CustomButton.module.scss"
+		>
+			._PlusButton_1mcur_1 {
+				text-transform: capitalize !important;
+				display: flex !important;
+				align-items: center !important;
+				gap: 8px !important;
+				background: #3772ff !important;
+				border-radius: 8px !important;
+				padding: 14px 24px !important;
+			}
+			._PlusButton_1mcur_1:hover {
+				background: #1d60ff !important;
+			}
+			._PlusButton_1mcur_1:disabled {
+				background: #e3e3e4 !important;
+				color: #989799 !important;
+			}
 
-._DeleteButton_1mcur_18 {
-  background: #c91e1e !important;
-  padding: 10px 24px !important;
-  border-radius: 8px !important;
-  text-transform: capitalize !important;
-}
-._DeleteButton_1mcur_18:hover {
-  background: #b62727 !important;
-}
-._DeleteButton_1mcur_18:disabled {
-  background: #e3e3e4 !important;
-  color: #989799 !important;
-}
+			._DeleteButton_1mcur_18 {
+				background: #c91e1e !important;
+				padding: 10px 24px !important;
+				border-radius: 8px !important;
+				text-transform: capitalize !important;
+			}
+			._DeleteButton_1mcur_18:hover {
+				background: #b62727 !important;
+			}
+			._DeleteButton_1mcur_18:disabled {
+				background: #e3e3e4 !important;
+				color: #989799 !important;
+			}
 
-._CircleButton_1mcur_32 {
-  background: #fa2b56 !important;
-  border-radius: 100% !important;
-  padding: 35px !important;
-  width: 58px !important;
-  height: 58px !important;
-  text-transform: capitalize !important;
-}
-._CircleButton_1mcur_32 ._PlusIcon_1mcur_40 {
-  width: 41px !important;
-  height: 41px !important;
-}
-._CircleButton_1mcur_32:hover {
-  background: #ee0a2c 100% !important;
-}
-._CircleButton_1mcur_32:disabled {
-  background: #e3e3e4 !important;
-}
-._CircleButton_1mcur_32:disabled img {
-  filter: drop-shadow(#c6c6c7);
-}
+			._CircleButton_1mcur_32 {
+				background: #fa2b56 !important;
+				border-radius: 100% !important;
+				padding: 35px !important;
+				width: 58px !important;
+				height: 58px !important;
+				text-transform: capitalize !important;
+			}
+			._CircleButton_1mcur_32 ._PlusIcon_1mcur_40 {
+				width: 41px !important;
+				height: 41px !important;
+			}
+			._CircleButton_1mcur_32:hover {
+				background: #ee0a2c 100% !important;
+			}
+			._CircleButton_1mcur_32:disabled {
+				background: #e3e3e4 !important;
+			}
+			._CircleButton_1mcur_32:disabled img {
+				filter: drop-shadow(#c6c6c7);
+			}
 
-._SaveButton_1mcur_54 {
-  background: #3772ff !important;
-  border-radius: 8px !important;
-  padding: 10px 78px !important;
-  text-transform: capitalize !important;
-}
-._SaveButton_1mcur_54:hover {
-  background: #1d60ff !important;
-}
-._SaveButton_1mcur_54:disabled {
-  background: #e3e3e4 !important;
-  color: #989799 !important;
-}
+			._SaveButton_1mcur_54 {
+				background: #3772ff !important;
+				border-radius: 8px !important;
+				padding: 10px 78px !important;
+				text-transform: capitalize !important;
+			}
+			._SaveButton_1mcur_54:hover {
+				background: #1d60ff !important;
+			}
+			._SaveButton_1mcur_54:disabled {
+				background: #e3e3e4 !important;
+				color: #989799 !important;
+			}
 
-._CancelButton_1mcur_68 {
-  padding: 10px 14px !important;
-  background: #ffffff !important;
-  border: 1.5px solid #3772ff !important;
-  color: #3772ff !important;
-  border-radius: 8px !important;
-  text-transform: capitalize !important;
-}
-._CancelButton_1mcur_68:hover {
-  border: 1.5px solid #1d60ff !important;
-  color: #1d60ff !important;
-}
-._CancelButton_1mcur_68:disabled {
-  background: #ffffff !important;
-  border: 1px solid #e4e4e4 !important;
-  color: #a9a8aa !important;
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/CustomInput/Input.module.scss">@media (max-width: 596px) {
-  ._inputBackground_e69y1_2 {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAuth/components/layout/newPassword/NewPassword.module.scss">._NewPassword_101dy_1 {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  font-family: "Open Sans", sans-serif !important;
-}
-._NewPassword_101dy_1 ._LoginLogoBlue_101dy_7 {
-  width: 100%;
-  max-width: 800px;
-  height: 100vh;
-  background: rgb(55, 114, 255);
-}
-._NewPassword_101dy_1 ._LoginLogoBlue_101dy_7 ._Logos_101dy_13 {
-  display: flex;
-  gap: 90px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-._NewPassword_101dy_1 ._LoginLogoBlue_101dy_7 ._Logos_101dy_13 img {
-  width: 100%;
-  height: auto;
-  max-width: 260px;
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 {
-  width: 100%;
-  height: 100vh;
-  background: rgb(255, 255, 255);
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 ._Element_inputs_newPassword_101dy_38 {
-  width: 100%;
-  margin-top: 54px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 ._Element_inputs_newPassword_101dy_38 p {
-  font-weight: 400;
-  font-size: 16px;
-  color: rgb(106, 106, 106);
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 ._Element_inputs_newPassword_101dy_38 ._OutlinedInputEyes_101dy_50 {
-  width: 540px;
-  border-radius: 20px;
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 ._Element_inputs_password_101dy_54 {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 ._Element_inputs_password_101dy_54 p {
-  margin-top: 18px;
-  font-weight: 400;
-  font-size: 16px;
-  color: rgb(106, 106, 106);
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31::placeholder {
-  color: rgb(106, 106, 106);
-  padding: 10px 8px 10px 22px;
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 ._Link_Element_101dy_69 {
-  position: relative;
-  left: 230px;
-  margin-top: 14px;
-}
-._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 ._LoginWhiteElements_101dy_31 ._Button_Element_101dy_74 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 35px;
-}</style><style type="text/css" data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/index.scss">@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #000000;
-}
-::-webkit-scrollbar-thumb {
-  background: #6741d9;
-  border-radius: 10px;
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-ul,
-ol {
-  padding: 0;
-}
-li {
-  list-style: none;
-}
-a {
-  text-decoration: none;
-}
-body {
-  font-family: "Open Sans", sans-serif !important;
-}
-.container {
-  width: 100%;
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: 20px;
-}</style><style data-emotion="css-global" data-s="">@-webkit-keyframes mui-auto-fill{from{display:block;}}</style><style data-emotion="css-global" data-s="">@keyframes mui-auto-fill{from{display:block;}}</style><style data-emotion="css-global" data-s="">@-webkit-keyframes mui-auto-fill-cancel{from{display:block;}}</style><style data-emotion="css-global" data-s="">@keyframes mui-auto-fill-cancel{from{display:block;}}</style><style data-emotion="css-global" data-s="">@-webkit-keyframes mui-auto-fill{from{display:block;}}</style><style data-emotion="css-global" data-s="">@keyframes mui-auto-fill{from{display:block;}}</style><style data-emotion="css-global" data-s="">@-webkit-keyframes mui-auto-fill-cancel{from{display:block;}}</style><style data-emotion="css-global" data-s="">@keyframes mui-auto-fill-cancel{from{display:block;}}</style><style data-emotion="css" data-s="">.css-ymudgf-MuiInputLabel-root{display:block;transform-origin:top left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;-webkit-transition:color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,-webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;transition:color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;}</style><style data-emotion="css" data-s="">.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root{color:rgba(0, 0, 0, 0.6);font-family:"Roboto","Helvetica","Arial",sans-serif;font-weight:400;font-size:1rem;line-height:1.4375em;letter-spacing:0.00938em;padding:0;position:relative;display:block;transform-origin:top left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;-webkit-transition:color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,-webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;transition:color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;}</style><style data-emotion="css" data-s="">.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root.Mui-focused{color:#1976d2;}</style><style data-emotion="css" data-s="">.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root.Mui-disabled{color:rgba(0, 0, 0, 0.38);}</style><style data-emotion="css" data-s="">.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root.Mui-error{color:#d32f2f;}</style><style data-emotion="css" data-s="">.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{font-family:"Roboto","Helvetica","Arial",sans-serif;font-weight:400;font-size:1rem;line-height:1.4375em;letter-spacing:0.00938em;color:rgba(0, 0, 0, 0.87);box-sizing:border-box;position:relative;cursor:text;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:relative;border-radius:4px;padding-right:14px;}</style><style data-emotion="css" data-s="">.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled{color:rgba(0, 0, 0, 0.38);cursor:default;}</style><style data-emotion="css" data-s="">.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline{border-color:rgba(0, 0, 0, 0.87);}</style><style data-emotion="css" data-s="">@media (hover: none){.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline{border-color:rgba(0, 0, 0, 0.23);}}</style><style data-emotion="css" data-s="">.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{border-color:#1976d2;border-width:2px;}</style><style data-emotion="css" data-s="">.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline{border-color:#d32f2f;}</style><style data-emotion="css" data-s="">.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline{border-color:rgba(0, 0, 0, 0.26);}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{font:inherit;letter-spacing:inherit;color:currentColor;padding:4px 0 5px;border:0;box-sizing:content-box;background:none;height:1.4375em;margin:0;-webkit-tap-highlight-color:transparent;display:block;min-width:0;width:100%;-webkit-animation-name:mui-auto-fill-cancel;animation-name:mui-auto-fill-cancel;-webkit-animation-duration:10ms;animation-duration:10ms;padding:16.5px 14px;padding-right:0;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-webkit-input-placeholder{color:currentColor;opacity:0.42;-webkit-transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-moz-placeholder{color:currentColor;opacity:0.42;-webkit-transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-ms-input-placeholder{color:currentColor;opacity:0.42;-webkit-transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-ms-input-placeholder{color:currentColor;opacity:0.42;-webkit-transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus{outline:0;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:invalid{box-shadow:none;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-webkit-search-decoration{-webkit-appearance:none;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-webkit-input-placeholder{opacity:0!important;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-moz-placeholder{opacity:0!important;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-ms-input-placeholder{opacity:0!important;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-ms-input-placeholder{opacity:0!important;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus::-webkit-input-placeholder{opacity:0.42;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus::-moz-placeholder{opacity:0.42;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus:-ms-input-placeholder{opacity:0.42;}</style><style data-emotion="css" data-s="">label[data-shrink=false]+.MuiInputBase-formControl .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus::-ms-input-placeholder{opacity:0.42;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled{opacity:1;-webkit-text-fill-color:rgba(0, 0, 0, 0.38);}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill{-webkit-animation-duration:5000s;animation-duration:5000s;-webkit-animation-name:mui-auto-fill;animation-name:mui-auto-fill;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill{border-radius:inherit;}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill WebkitBoxShadow{}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill WebkitTextFillColor{}</style><style data-emotion="css" data-s="">.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill caretColor{}</style><style data-emotion="css" data-s="">.css-1laqsz7-MuiInputAdornment-root{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:0.01em;max-height:2em;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;white-space:nowrap;color:rgba(0, 0, 0, 0.54);margin-left:8px;}</style><style data-emotion="css" data-s="">.css-do3kej-MuiIconButton-root{text-align:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;font-size:1.5rem;padding:8px;border-radius:50%;overflow:visible;color:rgba(0, 0, 0, 0.54);-webkit-transition:background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;margin-right:-12px;}</style><style data-emotion="css" data-s="">.css-do3kej-MuiIconButton-root:hover{background-color:rgba(0, 0, 0, 0.04);}</style><style data-emotion="css" data-s="">@media (hover: none){.css-do3kej-MuiIconButton-root:hover{background-color:transparent;}}</style><style data-emotion="css" data-s="">.css-do3kej-MuiIconButton-root.Mui-disabled{background-color:transparent;color:rgba(0, 0, 0, 0.26);}</style><style data-emotion="css" data-s="">.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;border-radius:0;padding:0;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;vertical-align:middle;-moz-appearance:none;-webkit-appearance:none;-webkit-text-decoration:none;text-decoration:none;color:inherit;text-align:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;font-size:1.5rem;padding:8px;border-radius:50%;overflow:visible;color:rgba(0, 0, 0, 0.54);-webkit-transition:background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;margin-right:-12px;}</style><style data-emotion="css" data-s="">.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root::-moz-focus-inner{border-style:none;}</style><style data-emotion="css" data-s="">.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root.Mui-disabled{pointer-events:none;cursor:default;}</style><style data-emotion="css" data-s="">@media print{.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root{-webkit-print-color-adjust:exact;color-adjust:exact;}}</style><style data-emotion="css" data-s="">.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root:hover{background-color:rgba(0, 0, 0, 0.04);}</style><style data-emotion="css" data-s="">@media (hover: none){.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root:hover{background-color:transparent;}}</style><style data-emotion="css" data-s="">.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root.Mui-disabled{background-color:transparent;color:rgba(0, 0, 0, 0.26);}</style><style data-emotion="css" data-s="">.css-rki20w-MuiOutlinedInput-notchedOutline{border-color:rgba(0, 0, 0, 0.23);}</style><style data-emotion="css" data-s="">.css-1d3z3hw-MuiOutlinedInput-notchedOutline{text-align:left;position:absolute;bottom:0;right:0;top:-5px;left:0;margin:0;padding:0 8px;pointer-events:none;border-radius:inherit;border-style:solid;border-width:1px;overflow:hidden;min-width:0%;border-color:rgba(0, 0, 0, 0.23);}</style><style data-emotion="css" data-s="">.css-ihdtdm{float:unset;width:auto;overflow:hidden;padding:0;line-height:11px;-webkit-transition:width 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;transition:width 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;}</style><style data-emotion="css" data-s="">.css-1yu95zv-MuiButton-root{font-family:"Roboto","Helvetica","Arial",sans-serif;font-weight:500;font-size:0.875rem;line-height:1.75;letter-spacing:0.02857em;text-transform:uppercase;min-width:64px;padding:6px 16px;border-radius:4px;-webkit-transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;color:#fff;background-color:#1976d2;box-shadow:0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">.css-1yu95zv-MuiButton-root:hover{-webkit-text-decoration:none;text-decoration:none;background-color:#1565c0;box-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">@media (hover: none){.css-1yu95zv-MuiButton-root:hover{background-color:#1976d2;}}</style><style data-emotion="css" data-s="">.css-1yu95zv-MuiButton-root:active{box-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">.css-1yu95zv-MuiButton-root.Mui-focusVisible{box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">.css-1yu95zv-MuiButton-root.Mui-disabled{color:rgba(0, 0, 0, 0.26);box-shadow:none;background-color:rgba(0, 0, 0, 0.12);}</style><style data-emotion="css" data-s="">.css-sghohy-MuiButtonBase-root-MuiButton-root{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;border-radius:0;padding:0;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;vertical-align:middle;-moz-appearance:none;-webkit-appearance:none;-webkit-text-decoration:none;text-decoration:none;color:inherit;font-family:"Roboto","Helvetica","Arial",sans-serif;font-weight:500;font-size:0.875rem;line-height:1.75;letter-spacing:0.02857em;text-transform:uppercase;min-width:64px;padding:6px 16px;border-radius:4px;-webkit-transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;color:#fff;background-color:#1976d2;box-shadow:0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">.css-sghohy-MuiButtonBase-root-MuiButton-root::-moz-focus-inner{border-style:none;}</style><style data-emotion="css" data-s="">.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-disabled{pointer-events:none;cursor:default;}</style><style data-emotion="css" data-s="">@media print{.css-sghohy-MuiButtonBase-root-MuiButton-root{-webkit-print-color-adjust:exact;color-adjust:exact;}}</style><style data-emotion="css" data-s="">.css-sghohy-MuiButtonBase-root-MuiButton-root:hover{-webkit-text-decoration:none;text-decoration:none;background-color:#1565c0;box-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">@media (hover: none){.css-sghohy-MuiButtonBase-root-MuiButton-root:hover{background-color:#1976d2;}}</style><style data-emotion="css" data-s="">.css-sghohy-MuiButtonBase-root-MuiButton-root:active{box-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-focusVisible{box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}</style><style data-emotion="css" data-s="">.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-disabled{color:rgba(0, 0, 0, 0.26);box-shadow:none;background-color:rgba(0, 0, 0, 0.12);}</style><style data-emotion="css" data-s="">.css-8je8zh-MuiTouchRipple-root{overflow:hidden;pointer-events:none;position:absolute;z-index:0;top:0;right:0;bottom:0;left:0;border-radius:inherit;}</style></head>
-  <body>
-    <div id="root"><div class="_Layout_sxlv7_1"><main><div class="_NewPassword_101dy_1"><div class="_LoginLogoBlue_101dy_7"><div class="_Logos_101dy_13"><img src="./LMS_files/Logo.svg" alt="#"><img src="./LMS_files/XMLID_1207_.svg" alt="#"></div></div><div class="_LoginElementsWhite_101dy_26"><div class="_LoginWhiteElements_101dy_31"><h1>Создать пароль</h1><div><div class="_Element_inputs_newPassword_101dy_38"><div class="_Element_inputs_password_101dy_54"><label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root" for="outlined-adornment-password"><p>Новый пароль : </p></label><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd _OutlinedInputEyes_101dy_50 css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"><input id="outlined-adornment-password" placeholder="Введите новый пароль" type="password" class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" value=""><div class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"><button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root" tabindex="0" type="button" aria-label="toggle password visibility"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3_3577)"><path d="M17.882 19.297C16.1232 20.4126 14.0827 21.0033 12 21C6.608 21 2.122 17.12 1.181 12C1.61103 9.67072 2.78263 7.5429 4.521 5.93401L2.09978 3.51511C1.70894 3.12464 1.709 2.491 2.09966 2.10034C2.49019 1.70981 3.12358 1.70961 3.51411 2.10015L21.8987 20.4857C22.2893 20.8763 22.2891 21.5097 21.8983 21.9002C21.5077 22.2905 20.8746 22.2905 20.4841 21.8999L17.882 19.297ZM5.935 7.35001C4.576 8.5856 3.62932 10.2088 3.223 12C3.53529 13.3665 4.16226 14.6411 5.054 15.7226C5.94574 16.804 7.07763 17.6624 8.35955 18.2293C9.64148 18.7962 11.038 19.0561 12.4381 18.9881C13.8381 18.9202 15.203 18.5264 16.424 17.838L14.396 15.81C13.5327 16.3538 12.5102 16.5881 11.4962 16.4744C10.4823 16.3608 9.53704 15.9059 8.81557 15.1844C8.0941 14.463 7.63923 13.5177 7.52556 12.5038C7.4119 11.4898 7.64618 10.4673 8.19 9.60401L5.935 7.35001ZM12.914 14.328L9.672 11.086C9.49406 11.5389 9.45219 12.034 9.55151 12.5104C9.65082 12.9867 9.88702 13.4238 10.2311 13.7679C10.5752 14.112 11.0123 14.3482 11.4887 14.4475C11.965 14.5468 12.4601 14.5049 12.913 14.327L12.914 14.328ZM21.449 15.6361C21.1369 16.1581 20.4223 16.2076 19.9921 15.7777L19.9703 15.7559C19.6267 15.4125 19.5851 14.8746 19.8256 14.4525C20.2612 13.6878 20.5823 12.8615 20.777 12C20.5052 10.8097 19.9943 9.68715 19.2751 8.7005C18.556 7.71385 17.6438 6.88373 16.5939 6.26061C15.544 5.63749 14.3783 5.23437 13.1677 5.07577C12.1512 4.94259 11.1209 4.98415 10.121 5.19724C9.76692 5.2727 9.39345 5.17946 9.13747 4.92347L9.0535 4.83951C8.544 4.33001 8.72841 3.47013 9.42914 3.30236C10.2542 3.10482 11.1153 3.00001 12 3.00001C17.392 3.00001 21.878 6.88001 22.819 12C22.5822 13.287 22.1172 14.5181 21.449 15.6361ZM11.723 7.50801C12.3595 7.46867 12.9971 7.56507 13.5935 7.79082C14.19 8.01657 14.7316 8.36652 15.1825 8.81746C15.6335 9.2684 15.9834 9.81003 16.2092 10.4065C16.4349 11.0029 16.5313 11.6405 16.492 12.277L11.723 7.50801Z" fill="black"></path></g><defs><clippath id="clip0_3_3577"><rect width="24" height="24" fill="white"></rect></clippath></defs></svg><span class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"></span></button></div><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div><label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root" for="outlined-adornment-password"><p>Подверждение : </p></label><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd _OutlinedInputEyes_101dy_50 css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"><input id="outlined-adornment-password" placeholder="Подвердите пароль" type="password" class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" value=""><div class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"><button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root" tabindex="0" type="button" aria-label="toggle password visibility"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3_3577)"><path d="M17.882 19.297C16.1232 20.4126 14.0827 21.0033 12 21C6.608 21 2.122 17.12 1.181 12C1.61103 9.67072 2.78263 7.5429 4.521 5.93401L2.09978 3.51511C1.70894 3.12464 1.709 2.491 2.09966 2.10034C2.49019 1.70981 3.12358 1.70961 3.51411 2.10015L21.8987 20.4857C22.2893 20.8763 22.2891 21.5097 21.8983 21.9002C21.5077 22.2905 20.8746 22.2905 20.4841 21.8999L17.882 19.297ZM5.935 7.35001C4.576 8.5856 3.62932 10.2088 3.223 12C3.53529 13.3665 4.16226 14.6411 5.054 15.7226C5.94574 16.804 7.07763 17.6624 8.35955 18.2293C9.64148 18.7962 11.038 19.0561 12.4381 18.9881C13.8381 18.9202 15.203 18.5264 16.424 17.838L14.396 15.81C13.5327 16.3538 12.5102 16.5881 11.4962 16.4744C10.4823 16.3608 9.53704 15.9059 8.81557 15.1844C8.0941 14.463 7.63923 13.5177 7.52556 12.5038C7.4119 11.4898 7.64618 10.4673 8.19 9.60401L5.935 7.35001ZM12.914 14.328L9.672 11.086C9.49406 11.5389 9.45219 12.034 9.55151 12.5104C9.65082 12.9867 9.88702 13.4238 10.2311 13.7679C10.5752 14.112 11.0123 14.3482 11.4887 14.4475C11.965 14.5468 12.4601 14.5049 12.913 14.327L12.914 14.328ZM21.449 15.6361C21.1369 16.1581 20.4223 16.2076 19.9921 15.7777L19.9703 15.7559C19.6267 15.4125 19.5851 14.8746 19.8256 14.4525C20.2612 13.6878 20.5823 12.8615 20.777 12C20.5052 10.8097 19.9943 9.68715 19.2751 8.7005C18.556 7.71385 17.6438 6.88373 16.5939 6.26061C15.544 5.63749 14.3783 5.23437 13.1677 5.07577C12.1512 4.94259 11.1209 4.98415 10.121 5.19724C9.76692 5.2727 9.39345 5.17946 9.13747 4.92347L9.0535 4.83951C8.544 4.33001 8.72841 3.47013 9.42914 3.30236C10.2542 3.10482 11.1153 3.00001 12 3.00001C17.392 3.00001 21.878 6.88001 22.819 12C22.5822 13.287 22.1172 14.5181 21.449 15.6361ZM11.723 7.50801C12.3595 7.46867 12.9971 7.56507 13.5935 7.79082C14.19 8.01657 14.7316 8.36652 15.1825 8.81746C15.6335 9.2684 15.9834 9.81003 16.2092 10.4065C16.4349 11.0029 16.5313 11.6405 16.492 12.277L11.723 7.50801Z" fill="black"></path></g><defs><clippath id="clip0_3_3577"><rect width="24" height="24" fill="white"></rect></clippath></defs></svg><span class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"></span></button></div><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"><legend class="css-ihdtdm"><span class="notranslate">​</span></legend></fieldset></div></div></div></div><div class="_Link_Element_101dy_69"><a href="http://localhost:5173/auth/login">Уже есть аккаунт!</a></div><div class="_Button_Element_101dy_74"><button class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary _SaveButton_1mcur_54 css-sghohy-MuiButtonBase-root-MuiButton-root" tabindex="0" type="button">Создать<span class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"></span></button></div></div></div></div></main></div></div>
-    <script type="module" src="./LMS_files/main.tsx"></script>
-  
-
-</body></html>
+			._CancelButton_1mcur_68 {
+				padding: 10px 14px !important;
+				background: #ffffff !important;
+				border: 1.5px solid #3772ff !important;
+				color: #3772ff !important;
+				border-radius: 8px !important;
+				text-transform: capitalize !important;
+			}
+			._CancelButton_1mcur_68:hover {
+				border: 1.5px solid #1d60ff !important;
+				color: #1d60ff !important;
+			}
+			._CancelButton_1mcur_68:disabled {
+				background: #ffffff !important;
+				border: 1px solid #e4e4e4 !important;
+				color: #a9a8aa !important;
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/ui/CustomInput/Input.module.scss"
+		>
+			@media (max-width: 596px) {
+				._inputBackground_e69y1_2 {
+					width: 100%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/pagesAuth/components/layout/newPassword/NewPassword.module.scss"
+		>
+			._NewPassword_101dy_1 {
+				width: 100%;
+				height: 100vh;
+				display: flex;
+				font-family: 'Open Sans', sans-serif !important;
+			}
+			._NewPassword_101dy_1 ._LoginLogoBlue_101dy_7 {
+				width: 100%;
+				max-width: 800px;
+				height: 100vh;
+				background: rgb(55, 114, 255);
+			}
+			._NewPassword_101dy_1 ._LoginLogoBlue_101dy_7 ._Logos_101dy_13 {
+				display: flex;
+				gap: 90px;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+			}
+			._NewPassword_101dy_1 ._LoginLogoBlue_101dy_7 ._Logos_101dy_13 img {
+				width: 100%;
+				height: auto;
+				max-width: 260px;
+			}
+			._NewPassword_101dy_1 ._LoginElementsWhite_101dy_26 {
+				width: 100%;
+				height: 100vh;
+				background: rgb(255, 255, 255);
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31 {
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31
+				._Element_inputs_newPassword_101dy_38 {
+				width: 100%;
+				margin-top: 54px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31
+				._Element_inputs_newPassword_101dy_38
+				p {
+				font-weight: 400;
+				font-size: 16px;
+				color: rgb(106, 106, 106);
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31
+				._Element_inputs_newPassword_101dy_38
+				._OutlinedInputEyes_101dy_50 {
+				width: 540px;
+				border-radius: 20px;
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31
+				._Element_inputs_password_101dy_54 {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31
+				._Element_inputs_password_101dy_54
+				p {
+				margin-top: 18px;
+				font-weight: 400;
+				font-size: 16px;
+				color: rgb(106, 106, 106);
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31::placeholder {
+				color: rgb(106, 106, 106);
+				padding: 10px 8px 10px 22px;
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31
+				._Link_Element_101dy_69 {
+				position: relative;
+				left: 230px;
+				margin-top: 14px;
+			}
+			._NewPassword_101dy_1
+				._LoginElementsWhite_101dy_26
+				._LoginWhiteElements_101dy_31
+				._Button_Element_101dy_74 {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 35px;
+			}
+		</style>
+		<style
+			type="text/css"
+			data-vite-dev-id="C:/Users/Nuraiym/Desktop/lms-js12/src/index.scss"
+		>
+			@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+			::-webkit-scrollbar {
+				width: 4px;
+				height: 4px;
+			}
+			::-webkit-scrollbar-track {
+				background: #000000;
+			}
+			::-webkit-scrollbar-thumb {
+				background: #6741d9;
+				border-radius: 10px;
+			}
+			* {
+				box-sizing: border-box;
+				margin: 0;
+			}
+			ul,
+			ol {
+				padding: 0;
+			}
+			li {
+				list-style: none;
+			}
+			a {
+				text-decoration: none;
+			}
+			body {
+				font-family: 'Open Sans', sans-serif !important;
+			}
+			.container {
+				width: 100%;
+				max-width: 1280px;
+				margin-inline: auto;
+				padding-inline: 20px;
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@-webkit-keyframes mui-auto-fill {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@keyframes mui-auto-fill {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@-webkit-keyframes mui-auto-fill-cancel {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@keyframes mui-auto-fill-cancel {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@-webkit-keyframes mui-auto-fill {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@keyframes mui-auto-fill {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@-webkit-keyframes mui-auto-fill-cancel {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css-global" data-s="">
+			@keyframes mui-auto-fill-cancel {
+				from {
+					display: block;
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-ymudgf-MuiInputLabel-root {
+				display: block;
+				transform-origin: top left;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 100%;
+				-webkit-transition:
+					color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					-webkit-transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+				transition:
+					color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root {
+				color: rgba(0, 0, 0, 0.6);
+				font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+				font-weight: 400;
+				font-size: 1rem;
+				line-height: 1.4375em;
+				letter-spacing: 0.00938em;
+				padding: 0;
+				position: relative;
+				display: block;
+				transform-origin: top left;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 100%;
+				-webkit-transition:
+					color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					-webkit-transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+				transition:
+					color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+					max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+				color: #1976d2;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root.Mui-disabled {
+				color: rgba(0, 0, 0, 0.38);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-9npbnl-MuiFormLabel-root-MuiInputLabel-root.Mui-error {
+				color: #d32f2f;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+				font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+				font-weight: 400;
+				font-size: 1rem;
+				line-height: 1.4375em;
+				letter-spacing: 0.00938em;
+				color: rgba(0, 0, 0, 0.87);
+				box-sizing: border-box;
+				position: relative;
+				cursor: text;
+				display: -webkit-inline-box;
+				display: -webkit-inline-flex;
+				display: -ms-inline-flexbox;
+				display: inline-flex;
+				-webkit-align-items: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				position: relative;
+				border-radius: 4px;
+				padding-right: 14px;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled {
+				color: rgba(0, 0, 0, 0.38);
+				cursor: default;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root:hover
+				.MuiOutlinedInput-notchedOutline {
+				border-color: rgba(0, 0, 0, 0.87);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			@media (hover: none) {
+				.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root:hover
+					.MuiOutlinedInput-notchedOutline {
+					border-color: rgba(0, 0, 0, 0.23);
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
+				.MuiOutlinedInput-notchedOutline {
+				border-color: #1976d2;
+				border-width: 2px;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-error
+				.MuiOutlinedInput-notchedOutline {
+				border-color: #d32f2f;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-disabled
+				.MuiOutlinedInput-notchedOutline {
+				border-color: rgba(0, 0, 0, 0.26);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+				font: inherit;
+				letter-spacing: inherit;
+				color: currentColor;
+				padding: 4px 0 5px;
+				border: 0;
+				box-sizing: content-box;
+				background: none;
+				height: 1.4375em;
+				margin: 0;
+				-webkit-tap-highlight-color: transparent;
+				display: block;
+				min-width: 0;
+				width: 100%;
+				-webkit-animation-name: mui-auto-fill-cancel;
+				animation-name: mui-auto-fill-cancel;
+				-webkit-animation-duration: 10ms;
+				animation-duration: 10ms;
+				padding: 16.5px 14px;
+				padding-right: 0;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-webkit-input-placeholder {
+				color: currentColor;
+				opacity: 0.42;
+				-webkit-transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-moz-placeholder {
+				color: currentColor;
+				opacity: 0.42;
+				-webkit-transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-ms-input-placeholder {
+				color: currentColor;
+				opacity: 0.42;
+				-webkit-transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-ms-input-placeholder {
+				color: currentColor;
+				opacity: 0.42;
+				-webkit-transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus {
+				outline: 0;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:invalid {
+				box-shadow: none;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-webkit-search-decoration {
+				-webkit-appearance: none;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-webkit-input-placeholder {
+				opacity: 0 !important;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-moz-placeholder {
+				opacity: 0 !important;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-ms-input-placeholder {
+				opacity: 0 !important;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::-ms-input-placeholder {
+				opacity: 0 !important;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus::-webkit-input-placeholder {
+				opacity: 0.42;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus::-moz-placeholder {
+				opacity: 0.42;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus:-ms-input-placeholder {
+				opacity: 0.42;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			label[data-shrink='false']
+				+ .MuiInputBase-formControl
+				.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:focus::-ms-input-placeholder {
+				opacity: 0.42;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {
+				opacity: 1;
+				-webkit-text-fill-color: rgba(0, 0, 0, 0.38);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
+				-webkit-animation-duration: 5000s;
+				animation-duration: 5000s;
+				-webkit-animation-name: mui-auto-fill;
+				animation-name: mui-auto-fill;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
+				border-radius: inherit;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill
+				WebkitBoxShadow {
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill
+				WebkitTextFillColor {
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill
+				caretColor {
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1laqsz7-MuiInputAdornment-root {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				height: 0.01em;
+				max-height: 2em;
+				-webkit-align-items: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				white-space: nowrap;
+				color: rgba(0, 0, 0, 0.54);
+				margin-left: 8px;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-do3kej-MuiIconButton-root {
+				text-align: center;
+				-webkit-flex: 0 0 auto;
+				-ms-flex: 0 0 auto;
+				flex: 0 0 auto;
+				font-size: 1.5rem;
+				padding: 8px;
+				border-radius: 50%;
+				overflow: visible;
+				color: rgba(0, 0, 0, 0.54);
+				-webkit-transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1)
+					0ms;
+				transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				margin-right: -12px;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-do3kej-MuiIconButton-root:hover {
+				background-color: rgba(0, 0, 0, 0.04);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			@media (hover: none) {
+				.css-do3kej-MuiIconButton-root:hover {
+					background-color: transparent;
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-do3kej-MuiIconButton-root.Mui-disabled {
+				background-color: transparent;
+				color: rgba(0, 0, 0, 0.26);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root {
+				display: -webkit-inline-box;
+				display: -webkit-inline-flex;
+				display: -ms-inline-flexbox;
+				display: inline-flex;
+				-webkit-align-items: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				position: relative;
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+				background-color: transparent;
+				outline: 0;
+				border: 0;
+				margin: 0;
+				border-radius: 0;
+				padding: 0;
+				cursor: pointer;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				vertical-align: middle;
+				-moz-appearance: none;
+				-webkit-appearance: none;
+				-webkit-text-decoration: none;
+				text-decoration: none;
+				color: inherit;
+				text-align: center;
+				-webkit-flex: 0 0 auto;
+				-ms-flex: 0 0 auto;
+				flex: 0 0 auto;
+				font-size: 1.5rem;
+				padding: 8px;
+				border-radius: 50%;
+				overflow: visible;
+				color: rgba(0, 0, 0, 0.54);
+				-webkit-transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1)
+					0ms;
+				transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				margin-right: -12px;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root::-moz-focus-inner {
+				border-style: none;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
+				pointer-events: none;
+				cursor: default;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			@media print {
+				.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root {
+					-webkit-print-color-adjust: exact;
+					color-adjust: exact;
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root:hover {
+				background-color: rgba(0, 0, 0, 0.04);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			@media (hover: none) {
+				.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root:hover {
+					background-color: transparent;
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
+				background-color: transparent;
+				color: rgba(0, 0, 0, 0.26);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-rki20w-MuiOutlinedInput-notchedOutline {
+				border-color: rgba(0, 0, 0, 0.23);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+				text-align: left;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				top: -5px;
+				left: 0;
+				margin: 0;
+				padding: 0 8px;
+				pointer-events: none;
+				border-radius: inherit;
+				border-style: solid;
+				border-width: 1px;
+				overflow: hidden;
+				min-width: 0%;
+				border-color: rgba(0, 0, 0, 0.23);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-ihdtdm {
+				float: unset;
+				width: auto;
+				overflow: hidden;
+				padding: 0;
+				line-height: 11px;
+				-webkit-transition: width 150ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+				transition: width 150ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yu95zv-MuiButton-root {
+				font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+				font-weight: 500;
+				font-size: 0.875rem;
+				line-height: 1.75;
+				letter-spacing: 0.02857em;
+				text-transform: uppercase;
+				min-width: 64px;
+				padding: 6px 16px;
+				border-radius: 4px;
+				-webkit-transition:
+					background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				transition:
+					background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				color: #fff;
+				background-color: #1976d2;
+				box-shadow:
+					0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+					0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+					0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yu95zv-MuiButton-root:hover {
+				-webkit-text-decoration: none;
+				text-decoration: none;
+				background-color: #1565c0;
+				box-shadow:
+					0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+					0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+					0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			@media (hover: none) {
+				.css-1yu95zv-MuiButton-root:hover {
+					background-color: #1976d2;
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yu95zv-MuiButton-root:active {
+				box-shadow:
+					0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+					0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+					0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yu95zv-MuiButton-root.Mui-focusVisible {
+				box-shadow:
+					0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+					0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+					0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-1yu95zv-MuiButton-root.Mui-disabled {
+				color: rgba(0, 0, 0, 0.26);
+				box-shadow: none;
+				background-color: rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-sghohy-MuiButtonBase-root-MuiButton-root {
+				display: -webkit-inline-box;
+				display: -webkit-inline-flex;
+				display: -ms-inline-flexbox;
+				display: inline-flex;
+				-webkit-align-items: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				position: relative;
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+				background-color: transparent;
+				outline: 0;
+				border: 0;
+				margin: 0;
+				border-radius: 0;
+				padding: 0;
+				cursor: pointer;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				vertical-align: middle;
+				-moz-appearance: none;
+				-webkit-appearance: none;
+				-webkit-text-decoration: none;
+				text-decoration: none;
+				color: inherit;
+				font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+				font-weight: 500;
+				font-size: 0.875rem;
+				line-height: 1.75;
+				letter-spacing: 0.02857em;
+				text-transform: uppercase;
+				min-width: 64px;
+				padding: 6px 16px;
+				border-radius: 4px;
+				-webkit-transition:
+					background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				transition:
+					background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				color: #fff;
+				background-color: #1976d2;
+				box-shadow:
+					0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+					0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+					0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-sghohy-MuiButtonBase-root-MuiButton-root::-moz-focus-inner {
+				border-style: none;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-disabled {
+				pointer-events: none;
+				cursor: default;
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			@media print {
+				.css-sghohy-MuiButtonBase-root-MuiButton-root {
+					-webkit-print-color-adjust: exact;
+					color-adjust: exact;
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-sghohy-MuiButtonBase-root-MuiButton-root:hover {
+				-webkit-text-decoration: none;
+				text-decoration: none;
+				background-color: #1565c0;
+				box-shadow:
+					0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+					0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+					0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			@media (hover: none) {
+				.css-sghohy-MuiButtonBase-root-MuiButton-root:hover {
+					background-color: #1976d2;
+				}
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-sghohy-MuiButtonBase-root-MuiButton-root:active {
+				box-shadow:
+					0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+					0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+					0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-focusVisible {
+				box-shadow:
+					0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+					0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+					0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-disabled {
+				color: rgba(0, 0, 0, 0.26);
+				box-shadow: none;
+				background-color: rgba(0, 0, 0, 0.12);
+			}
+		</style>
+		<style data-emotion="css" data-s="">
+			.css-8je8zh-MuiTouchRipple-root {
+				overflow: hidden;
+				pointer-events: none;
+				position: absolute;
+				z-index: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				border-radius: inherit;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="root">
+			<div class="_Layout_sxlv7_1">
+				<main>
+					<div class="_NewPassword_101dy_1">
+						<div class="_LoginLogoBlue_101dy_7">
+							<div class="_Logos_101dy_13">
+								<img src="./LMS_files/Logo.svg" alt="#" /><img
+									src="./LMS_files/XMLID_1207_.svg"
+									alt="#"
+								/>
+							</div>
+						</div>
+						<div class="_LoginElementsWhite_101dy_26">
+							<div class="_LoginWhiteElements_101dy_31">
+								<h1>Создать пароль</h1>
+								<div>
+									<div class="_Element_inputs_newPassword_101dy_38">
+										<div class="_Element_inputs_password_101dy_54">
+											<label
+												class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root"
+												for="outlined-adornment-password"
+												><p>Новый пароль :</p></label
+											>
+											<div
+												class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd _OutlinedInputEyes_101dy_50 css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"
+											>
+												<input
+													id="outlined-adornment-password"
+													placeholder="Введите новый пароль"
+													type="password"
+													class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
+													value=""
+												/>
+												<div
+													class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"
+												>
+													<button
+														class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+														tabindex="0"
+														type="button"
+														aria-label="toggle password visibility"
+													>
+														<svg
+															width="24"
+															height="24"
+															viewBox="0 0 24 24"
+															fill="none"
+															xmlns="http://www.w3.org/2000/svg"
+														>
+															<g clip-path="url(#clip0_3_3577)">
+																<path
+																	d="M17.882 19.297C16.1232 20.4126 14.0827 21.0033 12 21C6.608 21 2.122 17.12 1.181 12C1.61103 9.67072 2.78263 7.5429 4.521 5.93401L2.09978 3.51511C1.70894 3.12464 1.709 2.491 2.09966 2.10034C2.49019 1.70981 3.12358 1.70961 3.51411 2.10015L21.8987 20.4857C22.2893 20.8763 22.2891 21.5097 21.8983 21.9002C21.5077 22.2905 20.8746 22.2905 20.4841 21.8999L17.882 19.297ZM5.935 7.35001C4.576 8.5856 3.62932 10.2088 3.223 12C3.53529 13.3665 4.16226 14.6411 5.054 15.7226C5.94574 16.804 7.07763 17.6624 8.35955 18.2293C9.64148 18.7962 11.038 19.0561 12.4381 18.9881C13.8381 18.9202 15.203 18.5264 16.424 17.838L14.396 15.81C13.5327 16.3538 12.5102 16.5881 11.4962 16.4744C10.4823 16.3608 9.53704 15.9059 8.81557 15.1844C8.0941 14.463 7.63923 13.5177 7.52556 12.5038C7.4119 11.4898 7.64618 10.4673 8.19 9.60401L5.935 7.35001ZM12.914 14.328L9.672 11.086C9.49406 11.5389 9.45219 12.034 9.55151 12.5104C9.65082 12.9867 9.88702 13.4238 10.2311 13.7679C10.5752 14.112 11.0123 14.3482 11.4887 14.4475C11.965 14.5468 12.4601 14.5049 12.913 14.327L12.914 14.328ZM21.449 15.6361C21.1369 16.1581 20.4223 16.2076 19.9921 15.7777L19.9703 15.7559C19.6267 15.4125 19.5851 14.8746 19.8256 14.4525C20.2612 13.6878 20.5823 12.8615 20.777 12C20.5052 10.8097 19.9943 9.68715 19.2751 8.7005C18.556 7.71385 17.6438 6.88373 16.5939 6.26061C15.544 5.63749 14.3783 5.23437 13.1677 5.07577C12.1512 4.94259 11.1209 4.98415 10.121 5.19724C9.76692 5.2727 9.39345 5.17946 9.13747 4.92347L9.0535 4.83951C8.544 4.33001 8.72841 3.47013 9.42914 3.30236C10.2542 3.10482 11.1153 3.00001 12 3.00001C17.392 3.00001 21.878 6.88001 22.819 12C22.5822 13.287 22.1172 14.5181 21.449 15.6361ZM11.723 7.50801C12.3595 7.46867 12.9971 7.56507 13.5935 7.79082C14.19 8.01657 14.7316 8.36652 15.1825 8.81746C15.6335 9.2684 15.9834 9.81003 16.2092 10.4065C16.4349 11.0029 16.5313 11.6405 16.492 12.277L11.723 7.50801Z"
+																	fill="black"
+																></path>
+															</g>
+															<defs>
+																<clippath id="clip0_3_3577">
+																	<rect
+																		width="24"
+																		height="24"
+																		fill="white"
+																	></rect>
+																</clippath>
+															</defs></svg
+														><span
+															class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+														></span>
+													</button>
+												</div>
+												<fieldset
+													aria-hidden="true"
+													class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+												>
+													<legend class="css-ihdtdm">
+														<span class="notranslate">​</span>
+													</legend>
+												</fieldset>
+											</div>
+											<label
+												class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-9npbnl-MuiFormLabel-root-MuiInputLabel-root"
+												for="outlined-adornment-password"
+												><p>Подверждение :</p></label
+											>
+											<div
+												class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd _OutlinedInputEyes_101dy_50 css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"
+											>
+												<input
+													id="outlined-adornment-password"
+													placeholder="Подвердите пароль"
+													type="password"
+													class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
+													value=""
+												/>
+												<div
+													class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"
+												>
+													<button
+														class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+														tabindex="0"
+														type="button"
+														aria-label="toggle password visibility"
+													>
+														<svg
+															width="24"
+															height="24"
+															viewBox="0 0 24 24"
+															fill="none"
+															xmlns="http://www.w3.org/2000/svg"
+														>
+															<g clip-path="url(#clip0_3_3577)">
+																<path
+																	d="M17.882 19.297C16.1232 20.4126 14.0827 21.0033 12 21C6.608 21 2.122 17.12 1.181 12C1.61103 9.67072 2.78263 7.5429 4.521 5.93401L2.09978 3.51511C1.70894 3.12464 1.709 2.491 2.09966 2.10034C2.49019 1.70981 3.12358 1.70961 3.51411 2.10015L21.8987 20.4857C22.2893 20.8763 22.2891 21.5097 21.8983 21.9002C21.5077 22.2905 20.8746 22.2905 20.4841 21.8999L17.882 19.297ZM5.935 7.35001C4.576 8.5856 3.62932 10.2088 3.223 12C3.53529 13.3665 4.16226 14.6411 5.054 15.7226C5.94574 16.804 7.07763 17.6624 8.35955 18.2293C9.64148 18.7962 11.038 19.0561 12.4381 18.9881C13.8381 18.9202 15.203 18.5264 16.424 17.838L14.396 15.81C13.5327 16.3538 12.5102 16.5881 11.4962 16.4744C10.4823 16.3608 9.53704 15.9059 8.81557 15.1844C8.0941 14.463 7.63923 13.5177 7.52556 12.5038C7.4119 11.4898 7.64618 10.4673 8.19 9.60401L5.935 7.35001ZM12.914 14.328L9.672 11.086C9.49406 11.5389 9.45219 12.034 9.55151 12.5104C9.65082 12.9867 9.88702 13.4238 10.2311 13.7679C10.5752 14.112 11.0123 14.3482 11.4887 14.4475C11.965 14.5468 12.4601 14.5049 12.913 14.327L12.914 14.328ZM21.449 15.6361C21.1369 16.1581 20.4223 16.2076 19.9921 15.7777L19.9703 15.7559C19.6267 15.4125 19.5851 14.8746 19.8256 14.4525C20.2612 13.6878 20.5823 12.8615 20.777 12C20.5052 10.8097 19.9943 9.68715 19.2751 8.7005C18.556 7.71385 17.6438 6.88373 16.5939 6.26061C15.544 5.63749 14.3783 5.23437 13.1677 5.07577C12.1512 4.94259 11.1209 4.98415 10.121 5.19724C9.76692 5.2727 9.39345 5.17946 9.13747 4.92347L9.0535 4.83951C8.544 4.33001 8.72841 3.47013 9.42914 3.30236C10.2542 3.10482 11.1153 3.00001 12 3.00001C17.392 3.00001 21.878 6.88001 22.819 12C22.5822 13.287 22.1172 14.5181 21.449 15.6361ZM11.723 7.50801C12.3595 7.46867 12.9971 7.56507 13.5935 7.79082C14.19 8.01657 14.7316 8.36652 15.1825 8.81746C15.6335 9.2684 15.9834 9.81003 16.2092 10.4065C16.4349 11.0029 16.5313 11.6405 16.492 12.277L11.723 7.50801Z"
+																	fill="black"
+																></path>
+															</g>
+															<defs>
+																<clippath id="clip0_3_3577">
+																	<rect
+																		width="24"
+																		height="24"
+																		fill="white"
+																	></rect>
+																</clippath>
+															</defs></svg
+														><span
+															class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+														></span>
+													</button>
+												</div>
+												<fieldset
+													aria-hidden="true"
+													class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+												>
+													<legend class="css-ihdtdm">
+														<span class="notranslate">​</span>
+													</legend>
+												</fieldset>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="_Link_Element_101dy_69">
+									<a href="http://localhost:5173/auth/login"
+										>Уже есть аккаунт!</a
+									>
+								</div>
+								<div class="_Button_Element_101dy_74">
+									<button
+										class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary _SaveButton_1mcur_54 css-sghohy-MuiButtonBase-root-MuiButton-root"
+										tabindex="0"
+										type="button"
+									>
+										Создать<span
+											class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+										></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+			</div>
+		</div>
+		<script type="module" src="./LMS_files/main.tsx"></script>
+	</body>
+</html>

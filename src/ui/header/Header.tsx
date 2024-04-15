@@ -1,8 +1,12 @@
 import { links } from '@/src/utils/routes';
 import scss from './Header.module.scss';
 import { FC } from 'react';
+<<<<<<< HEAD
 
 import { Link, useLocation } from 'react-router-dom';
+=======
+import { useLocation } from 'react-router-dom';
+>>>>>>> dev
 import peaksoft from '@/src/assets/png/Header.png';
 import peaksoft2 from '@/src/assets/png/pealsoft.jpg';
 
@@ -52,7 +56,11 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 							alt=""
 						/>
 					</div>
+<<<<<<< HEAD
 					{pathname === '/admin' && (
+=======
+					{pathname.startsWith('/admin') && (
+>>>>>>> dev
 						<>
 							{links.admin.map((item, index) => (
 								<li key={index + 1}>
@@ -111,8 +119,12 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 						</>
 					)}
 
+<<<<<<< HEAD
 					{/* //! instructor */}
 					{pathname === '/instructor' && (
+=======
+					{pathname.startsWith('/instructor') && (
+>>>>>>> dev
 						<>
 							{links.instructor.map((item, index) => (
 								<li key={index + 1}>

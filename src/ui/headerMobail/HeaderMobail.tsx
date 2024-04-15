@@ -18,8 +18,12 @@ const HeaderMobile = () => {
 		<>
 			<header className={scss.HeaderMobile}>
 				<ul ref={sliderRef} className="keen-slider">
+<<<<<<< HEAD
 					{/* //! admin */}
 					{pathname === '/admin' && (
+=======
+					{pathname.startsWith('/admin') && (
+>>>>>>> dev
 						<>
 							{links.admin.map((item, index) => (
 								<li className="keen-slider__slide number-slide1" key={index}>
@@ -58,6 +62,7 @@ const HeaderMobile = () => {
 							))}
 						</>
 					)}
+<<<<<<< HEAD
 					{/* //! instructor */}
 					{pathname === '/instructor' && (
 						<>
@@ -71,6 +76,13 @@ const HeaderMobile = () => {
 												: `${scss.nav_item}`
 										}
 									>
+=======
+					{pathname.startsWith('/instructor') && (
+						<>
+							{links.instructor.map((item, index) => (
+								<li className="keen-slider__slide number-slide1" key={index}>
+									<a href="#">
+>>>>>>> dev
 										<span className={scss.icon}>{item.icon}</span>
 										<span>{item.name}</span>
 									</Link>

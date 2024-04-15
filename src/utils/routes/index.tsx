@@ -4,7 +4,8 @@ import {
 	IconUsersGroup,
 	IconUserCheck,
 	IconCalendar,
-	IconTrash
+	IconTrash,
+	IconBellRinging2
 } from '@tabler/icons-react';
 
 export const links = {
@@ -29,6 +30,10 @@ export const links = {
 			name: 'Расписание',
 			link: 'calendar',
 			icon: <IconCalendar stroke={2} />
+		},
+		{
+			name: 'Объявление',
+			icon: <IconBellRinging2 stroke={2} />
 		}
 	],
 	student: [
@@ -40,6 +45,10 @@ export const links = {
 			name: 'Расписание',
 			link: 'calendar',
 			icon: <IconCalendar stroke={2} />
+		},
+		{
+			name: 'Объявление',
+			icon: <IconBellRinging2 stroke={2} />
 		}
 	],
 	instructor: [
@@ -55,6 +64,10 @@ export const links = {
 			name: 'Расписание',
 			link: 'calendar',
 			icon: <IconCalendar stroke={2} />
+		},
+		{
+			name: 'Объявление',
+			icon: <IconBellRinging2 stroke={2} />
 		}
 	]
 };
