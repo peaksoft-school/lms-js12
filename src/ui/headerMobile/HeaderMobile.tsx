@@ -40,7 +40,7 @@ const HeaderMobile = () => {
 					)}
 					{/* //! student */}
 
-					{!pathname.startsWith('/admin') ||
+					{!pathname.startsWith('/admin') ===
 						(!pathname.startsWith('/instructor') && (
 							<>
 								{pathname.startsWith('/') && (
