@@ -81,40 +81,41 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 					)}
 
 					{/* //! student */}
-					{!pathname.startsWith('/admin') && (
-						<>
-							{pathname.startsWith('/') && (
-								<>
-									{links.student.map((item, index) => (
-										<li key={index + 1}>
-											<Link
-												to={`/${item.link!}`}
-												className={
-													pathname === `/${item.link!}`
-														? `${scss.nav_item} ${scss.active}`
-														: `${scss.nav_item}`
-												}
-											>
-												<span className={scss.icon}>{item.icon}</span>
-												<span
+					{!pathname.startsWith('/admin') ||
+						(!pathname.startsWith('/instructor') && (
+							<>
+								{pathname.startsWith('/') && (
+									<>
+										{links.student.map((item, index) => (
+											<li key={index + 1}>
+												<Link
+													to={`/${item.link!}`}
 													className={
-														!isOpen
-															? `${scss.label} ${scss.active}`
-															: `${scss.label}`
+														pathname === `/${item.link!}`
+															? `${scss.nav_item} ${scss.active}`
+															: `${scss.nav_item}`
 													}
 												>
-													{item.name}
-												</span>
-											</Link>
-											{!isOpen && (
-												<span className={scss.tooltip}>{item.name}</span>
-											)}
-										</li>
-									))}
-								</>
-							)}
-						</>
-					)}
+													<span className={scss.icon}>{item.icon}</span>
+													<span
+														className={
+															!isOpen
+																? `${scss.label} ${scss.active}`
+																: `${scss.label}`
+														}
+													>
+														{item.name}
+													</span>
+												</Link>
+												{!isOpen && (
+													<span className={scss.tooltip}>{item.name}</span>
+												)}
+											</li>
+										))}
+									</>
+								)}
+							</>
+						))}
 
 					{/* //! instructor */}
 					{pathname.startsWith('/instructor') && (
