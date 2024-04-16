@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import {
 	Button,
 	Modal,
@@ -20,7 +20,7 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	width: 542,
 	height: 305,
-	bgcolor: 'background.paper',
+	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
