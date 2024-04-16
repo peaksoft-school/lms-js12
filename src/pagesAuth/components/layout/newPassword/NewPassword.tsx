@@ -1,6 +1,6 @@
 import scss from './NewPassword.module.scss';
-import Logo from '@/src/assets/svgs/logo-peaksoft.svg';
-import MenLogo from '@/src/assets/svgs/boy-programmer.svg';
+import Logo from '@/src/assets/svgs/logo.svg';
+import MenLogo from '@/src/assets/svgs/boy-proger.svg';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import { IconButton, InputAdornment, InputLabel } from '@mui/material';
 import { FC, useState } from 'react';

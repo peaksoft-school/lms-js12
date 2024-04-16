@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import scss from './Style.module.scss';
+import scss from './CustomButton.module.scss';
 import Button from '@mui/material/Button';
 
 interface CancelButtonPlusProps {
@@ -9,7 +9,6 @@ interface CancelButtonPlusProps {
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
-	type: 'button' | 'submit';
 }
 
 const ButtonCancel: FC<CancelButtonPlusProps> = ({
@@ -17,8 +16,7 @@ const ButtonCancel: FC<CancelButtonPlusProps> = ({
 	width,
 	children,
 	disabled,
-	onClick,
-	type
+	onClick
 }) => {
 	return (
 		<>
@@ -29,7 +27,6 @@ const ButtonCancel: FC<CancelButtonPlusProps> = ({
 				onClick={onClick}
 				disabled={disabled}
 				variant="contained"
-				type={type}
 			>
 				{children}
 			</Button>

@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.TableContainer {
+	border-radius: 10px;
+	background: #ffffff;
+	border: 1px solid #d4d4d4;
+	margin: 24px 40px 77px 20px;
+	min-height: 100vh;
+	@media (max-width: 960px) {
+		overflow: scroll;
+	}
+	.Table {
+		width: 100%;
+		border-collapse: collapse;
+
+		thead {
+			border-bottom: 1px solid rgba(131, 122, 122, 0.078);
+			height: 50px;
+			th {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 14px;
+				font-weight: 600;
+				line-height: 19.07px;
+				text-align: center;
+			}
+			.TableTh {
+			}
+		}
+	}
+	.TableAlternateRow {
+		background-color: #1a237e12;
+	}
+	.TableContainerSecond {
+		width: 1140px;
+		height: 50px;
+		.TableCell {
+			.TableImage {
+				text-align: end;
+			}
+		}
+	}
+	.Table td {
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 21.79px;
+		letter-spacing: 0.02em;
+		text-align: center;
+	}
+}

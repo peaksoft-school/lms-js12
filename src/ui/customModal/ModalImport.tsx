@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import {
 	Button,
 	Modal,
@@ -8,9 +8,9 @@ import {
 	MenuItem
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import Input from '@/src/ui/customInput/Input';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import Input from '@/src/ui/customInput/Input.tsx';
+import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './Style.module.scss';
 
 const style = {
@@ -20,7 +20,7 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	width: 542,
 	height: 305,
-	bgcolor: 'background.paper',
+	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'

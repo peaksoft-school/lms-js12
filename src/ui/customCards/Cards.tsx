@@ -3,6 +3,7 @@ import scss from './Cards.module.scss';
 import Skeleton from '@mui/material/Skeleton';
 import { Link, useLocation } from 'react-router-dom';
 import { useGetCardQuery } from '@/src/redux/api/lesson';
+import { IconDots } from '@tabler/icons-react';
 
 const Cards: FC = () => {
 	const { pathname } = useLocation();
@@ -47,7 +48,7 @@ const Cards: FC = () => {
 									</div>
 									<div className={scss.BlockButtonDiv}>
 										<button className={scss.BlockButton}>
-											<img src="../../assets/svgs/dots.svg" alt="Dots" />
+											<IconDots stroke={2} />
 										</button>
 									</div>
 								</div>

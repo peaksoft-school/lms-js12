@@ -20,7 +20,8 @@ export const links = {
 		},
 		{
 			name: 'Учителя',
-			icon: <IconUserCheck stroke={2} />
+			icon: <IconUserCheck stroke={2} />,
+			link: 'theacher'
 		},
 		{
 			name: 'Студенты',
@@ -28,8 +29,8 @@ export const links = {
 		},
 		{
 			name: 'Расписание',
-			link: 'calendar',
-			icon: <IconCalendar stroke={2} />
+			icon: <IconCalendar stroke={2} />,
+			link: 'calendar'
 		},
 		{
 			name: 'Объявление',
@@ -38,13 +39,14 @@ export const links = {
 	],
 	student: [
 		{
-			name: 'Группы',
-			icon: <IconUsersGroup stroke={2} />
+			name: 'Курсы',
+			icon: <IconDeviceDesktop stroke={2} />,
+			link: ''
 		},
 		{
 			name: 'Расписание',
-			link: 'calendar',
-			icon: <IconCalendar stroke={2} />
+			icon: <IconCalendar stroke={2} />,
+			link: 'calendar'
 		},
 		{
 			name: 'Объявление',
@@ -62,8 +64,8 @@ export const links = {
 		},
 		{
 			name: 'Расписание',
-			link: 'calendar',
-			icon: <IconCalendar stroke={2} />
+			icon: <IconCalendar stroke={2} />,
+			link: 'calendar'
 		},
 		{
 			name: 'Объявление',

@@ -29,7 +29,7 @@ const CardsLesson = () => {
 						</div>
 						<div>
 							<a href="#">
-								<img src="../../assets/svgs/delete.svg" alt="" />
+								<img src="../../assets/svgs/delete-red.svg" alt="" />
 							</a>
 						</div>
 					</div>
@@ -48,7 +48,7 @@ const CardsLesson = () => {
 							</a>
 						</div>
 						<div className={scss.btn_screen2}>
-							<img src="../../assets/svgs/delete.svg" alt="" />
+							<img src="../../assets/svgs/delete-red.svg" alt="" />
 							<a className={scss.pen_edit_del} href="#">
 								Удалить
 							</a>
@@ -67,7 +67,7 @@ const CardsLesson = () => {
 							</a>
 						</div>
 						<div className={scss.btn_screen2}>
-							<img src="../../assets/svgs/delete.svg" alt="" />
+							<img src="../../assets/svgs/delete-red.svg" alt="" />
 							<a className={scss.pen_edit_del} href="#">
 								Удалить
 							</a>

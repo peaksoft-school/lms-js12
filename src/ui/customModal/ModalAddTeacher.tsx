@@ -4,10 +4,10 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Input from '@/src/ui/customInput/Input';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import Input from '@/src/ui/customInput/Input.tsx';
+import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './Style.module.scss';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 
 const style = {
 	position: 'absolute',
@@ -16,7 +16,7 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	width: 581,
 	height: 550,
-	bgcolor: 'background.paper',
+	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '12px'
