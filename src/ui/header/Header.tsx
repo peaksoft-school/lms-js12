@@ -2,8 +2,8 @@ import { links } from '@/src/utils/routes';
 import scss from './Header.module.scss';
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import peaksoft from '@/src/assets/png/Header.png';
-import peaksoft2 from '@/src/assets/png/pealsoft.jpg';
+import peaksoft from '@/src/assets/header-logo.png';
+import peaksoft2 from '@/src/assets/pealsoft.jpg';
 
 interface LayoutProps {
 	isOpen: boolean;
@@ -81,32 +81,38 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 					)}
 
 					{/* //! student */}
-					{pathname === '/' && (
+					{!pathname.startsWith('/admin') && (
 						<>
-							{links.student.map((item, index) => (
-								<li key={index + 1}>
-									<Link
-										to={`/${item.link!}`}
-										className={
-											pathname === `/${item.link!}`
-												? `${scss.nav_item} ${scss.active}`
-												: `${scss.nav_item}`
-										}
-									>
-										<span className={scss.icon}>{item.icon}</span>
-										<span
-											className={
-												!isOpen
-													? `${scss.label} ${scss.active}`
-													: `${scss.label}`
-											}
-										>
-											{item.name}
-										</span>
-									</Link>
-									{!isOpen && <span className={scss.tooltip}>{item.name}</span>}
-								</li>
-							))}
+							{pathname.startsWith('/') && (
+								<>
+									{links.student.map((item, index) => (
+										<li key={index + 1}>
+											<Link
+												to={`/${item.link!}`}
+												className={
+													pathname === `/${item.link!}`
+														? `${scss.nav_item} ${scss.active}`
+														: `${scss.nav_item}`
+												}
+											>
+												<span className={scss.icon}>{item.icon}</span>
+												<span
+													className={
+														!isOpen
+															? `${scss.label} ${scss.active}`
+															: `${scss.label}`
+													}
+												>
+													{item.name}
+												</span>
+											</Link>
+											{!isOpen && (
+												<span className={scss.tooltip}>{item.name}</span>
+											)}
+										</li>
+									))}
+								</>
+							)}
 						</>
 					)}
 

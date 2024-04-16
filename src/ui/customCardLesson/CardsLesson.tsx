@@ -13,7 +13,7 @@ const CardsLesson = () => {
 					<div className={scss.pen}>
 						<img
 							className={scss.pen_img}
-							src="src/assets/pen.svg"
+							src="../../assets/svgs/pen.svg"
 							alt="penImg"
 						/>
 						<h1 className={scss.text_lesson}>Lesson_1</h1>
@@ -29,7 +29,7 @@ const CardsLesson = () => {
 						</div>
 						<div>
 							<a href="#">
-								<img src="src/assets/delete-red.svg" alt="" />
+								<img src="../../assets/svgs/delete-red.svg" alt="" />
 							</a>
 						</div>
 					</div>
@@ -42,13 +42,13 @@ const CardsLesson = () => {
 						</a>
 
 						<div className={scss.btn_screen1}>
-							<img src="src/assets/pen-green.svg" alt="" />
+							<img src="../../assets/svgs/pen-green.svg" alt="" />
 							<a className={scss.pen_edit_del} href="#">
 								Редактировать
 							</a>
 						</div>
 						<div className={scss.btn_screen2}>
-							<img src="src/assets/delete-red.svg" alt="" />
+							<img src="../../assets/svgs/delete-red.svg" alt="" />
 							<a className={scss.pen_edit_del} href="#">
 								Удалить
 							</a>
@@ -61,13 +61,13 @@ const CardsLesson = () => {
 							Презентация
 						</a>
 						<div className={scss.btn_screen1}>
-							<img src="src/assets/pen-green.svg" alt="" />
+							<img src="../../assets/svgs/pen-green.svg" alt="" />
 							<a className={scss.pen_edit_del} href="#">
 								Редактировать
 							</a>
 						</div>
 						<div className={scss.btn_screen2}>
-							<img src="src/assets/delete-red.svg" alt="" />
+							<img src="../../assets/svgs/delete-red.svg" alt="" />
 							<a className={scss.pen_edit_del} href="#">
 								Удалить
 							</a>
@@ -86,7 +86,7 @@ const CardsLesson = () => {
 						</a>
 					</div>
 					<div className={scss.screen_content}>
-						<img src="src/assets/letter-BA.svg" alt="letter-BA" />
+						<img src="../../assets/svgs/letter-BA.svg" alt="letter-BA" />
 						<a className={scss.text_screen} href="#">
 							Тест
 						</a>

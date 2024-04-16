@@ -8,9 +8,9 @@ import {
 	MenuItem
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import Input from '@/src/ui/customInput/Input';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import Input from '@/src/ui/customInput/Input.tsx';
+import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './Style.module.scss';
 
 const style = {
