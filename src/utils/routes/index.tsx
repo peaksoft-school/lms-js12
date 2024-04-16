@@ -20,7 +20,8 @@ export const links = {
 		},
 		{
 			name: 'Учителя',
-			icon: <IconUserCheck stroke={2} />
+			icon: <IconUserCheck stroke={2} />,
+			link: 'theacher'
 		},
 		{
 			name: 'Студенты',

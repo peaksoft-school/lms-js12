@@ -1,9 +1,10 @@
 import { FC, ReactNode } from 'react';
-import scss from './Style.module.scss';
+import scss from './CustomButton.module.scss';
 import Button from '@mui/material/Button';
 
 interface ButtonSaveProps {
 	type: 'button' | 'submit' | 'reset';
+
 	width: string;
 	children: ReactNode;
 	disabled: boolean;

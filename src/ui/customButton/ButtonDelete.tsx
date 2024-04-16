@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import Button from '@mui/material/Button';
-import scss from './Style.module.scss';
+import scss from './CustomButton.module.scss';
 
 interface ButtonDeleteProps {
 	type: 'button' | 'submit' | 'reset';
@@ -8,15 +8,13 @@ interface ButtonDeleteProps {
 	children: ReactNode;
 	disabled: boolean;
 	onClick: () => void;
-	type: 'button' | 'submit';
 }
 
 const ButtonDelete: FC<ButtonDeleteProps> = ({
 	type,
 	children,
 	disabled,
-	onClick,
-	type
+	onClick
 }) => {
 	return (
 		<>
@@ -26,7 +24,6 @@ const ButtonDelete: FC<ButtonDeleteProps> = ({
 				disabled={disabled}
 				variant="contained"
 				onClick={onClick}
-				type={type}
 			>
 				{children}
 			</Button>
