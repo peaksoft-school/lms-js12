@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import scss from './HeaderMobail.module.scss';
+import scss from './HeaderMobile.module.scss';
 import { links } from '@/src/utils/routes';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';

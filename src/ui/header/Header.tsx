@@ -35,8 +35,8 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 						<img
 							className={
 								isOpen
-									? `${scss.peaksoft1_url} `
-									: `${scss.peaksoft1_url} ${scss.active} `
+									? `${scss.peaksoft1_url}`
+									: `${scss.peaksoft1_url} ${scss.active}`
 							}
 							src={peaksoft}
 							alt=""
@@ -81,7 +81,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 					)}
 
 					{/* //! student */}
-					{pathname.startsWith('/') && (
+					{pathname === '/' && (
 						<>
 							{links.student.map((item, index) => (
 								<li key={index + 1}>

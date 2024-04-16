@@ -3,7 +3,7 @@ import scss from './LayoutAdmin.module.scss';
 import Header from '@/src/ui/header/Header';
 import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
-import HeaderMobail from '@/src/ui/headerMobail/HeaderMobail';
+import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Cards from '@/src/ui/customCards/Cards';
 import Material from '@/src/ui/material/Material';
@@ -60,7 +60,7 @@ const LayoutAdmin = () => {
 						/>
 					</Routes>
 				</main>
-				{isMobile && <HeaderMobail />}
+				{isMobile && <HeaderMobile />}
 			</div>
 		</>
 	);

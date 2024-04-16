@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Material from '@/src/ui/material/Material';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
 import CalendarPage from '../pages/CalendarPage';
-import HeaderMobile from '@/src/ui/headerMobail/HeaderMobail';
+import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import Cards from '@/src/ui/customCards/Cards';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);

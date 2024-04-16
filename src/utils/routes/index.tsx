@@ -29,8 +29,8 @@ export const links = {
 		},
 		{
 			name: 'Расписание',
-			link: 'calendar',
-			icon: <IconCalendar stroke={2} />
+			icon: <IconCalendar stroke={2} />,
+			link: 'calendar'
 		},
 		{
 			name: 'Объявление',
@@ -44,8 +44,8 @@ export const links = {
 		},
 		{
 			name: 'Расписание',
-			link: 'calendar',
-			icon: <IconCalendar stroke={2} />
+			icon: <IconCalendar stroke={2} />,
+			link: 'calendar'
 		},
 		{
 			name: 'Объявление',
@@ -63,8 +63,8 @@ export const links = {
 		},
 		{
 			name: 'Расписание',
-			link: 'calendar',
-			icon: <IconCalendar stroke={2} />
+			icon: <IconCalendar stroke={2} />,
+			link: 'calendar'
 		},
 		{
 			name: 'Объявление',
