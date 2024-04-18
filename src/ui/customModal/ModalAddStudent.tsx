@@ -8,10 +8,10 @@ import {
 	MenuItem
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './Style.module.scss';
+import Input from '../customInput/Input';
 
 const style = {
 	position: 'absolute',
@@ -19,7 +19,7 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 581,
-	height: 555,
+	height: 600,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,

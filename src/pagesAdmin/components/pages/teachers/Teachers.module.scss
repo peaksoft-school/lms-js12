@@ -5,9 +5,8 @@
 	background: #ffffff;
 	border: 1px solid #d4d4d4;
 	margin: 24px 40px 77px 20px;
-	min-height: 100vh;
 	@media (max-width: 960px) {
-		overflow: scroll;
+		overflow: auto;
 	}
 	.Table {
 		width: 100%;
@@ -22,8 +21,6 @@
 				font-weight: 600;
 				line-height: 19.07px;
 				text-align: center;
-			}
-			.TableTh {
 			}
 		}
 	}
@@ -47,4 +44,12 @@
 		letter-spacing: 0.02em;
 		text-align: center;
 	}
+}
+
+.modal {
+	padding: 20px 40px 20px 20px;
+}
+.dropdawn {
+	display: flex;
+	gap: 20px;
 }

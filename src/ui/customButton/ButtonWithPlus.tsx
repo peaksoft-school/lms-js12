@@ -8,7 +8,7 @@ interface ButtonWithPlusProps {
 
 	children: ReactNode;
 	disabled: boolean;
-	onClick: () => void;
+	onClick?: () => void;
 }
 
 const ButtonWithPlus: FC<ButtonWithPlusProps> = ({
