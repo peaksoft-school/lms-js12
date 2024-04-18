@@ -14,6 +14,20 @@ const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
 
+	// const [open, setOpen] = useState<boolean>(false);
+
+	// const handleOpen = () => {
+	// 	setOpen(true);
+	// };
+
+	// const handleClose = () => {
+	// 	setOpen(false);
+	// };
+
+	// const onSubmit = () => {
+	// 	handleClose();
+	// };
+
 	useEffect(() => {
 		const changeIsMobile = () => {
 			if (window.innerWidth < 1000) {
@@ -50,7 +64,7 @@ const LayoutAdmin = () => {
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
-						<Route path="/theacher" element={<Teacher />} />
+						<Route path="/teacher" element={<Teacher />} />
 						<Route path="" element={<HomePage />} />
 						<Route path="/courses" element={<Cards />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />

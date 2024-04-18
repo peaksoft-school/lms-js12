@@ -1,33 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+
+import { Controller, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './Style.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
-import ButtonWithPlus from '../customButton/ButtonWithPlus';
-import { usePostTeacherMutation } from '@/src/redux/api/teacher';
+import {
+	useGetTeacherQuery,
+	usePatchTeacherMutation
+} from '@/src/redux/api/teacher';
 import Input from '../customInput/Input';
 import * as React from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-
-interface IFormInputs {
-	firstName: string;
-	lastName: string;
-	email: string;
-	phoneNumber: string;
-	login: string;
-	specialization: string;
-	group: string[];
-}
+import {
+	Checkbox,
+	FormControl,
+	InputLabel,
+	ListItemText,
+	MenuItem,
+	OutlinedInput,
+	Select,
+	SelectChangeEvent
+} from '@mui/material';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -42,16 +37,25 @@ const MenuProps = {
 
 const names = [
 	'js-12',
-	'java-12',
 	'js-13',
+	'java-12',
 	'java-13',
-	'js-14',
-	'java-14',
-	'js-15',
-	'java-15',
+	'Omar Alexander',
+	'Carlos Abbott',
+	'Miriam Wagner',
+	'Bradley Wilkerson',
 	'Virginia Andrews',
 	'Kelly Snyder'
 ];
+interface IFormInputs {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	login: string;
+	specialization: string;
+	group: string;
+}
 
 const style = {
 	position: 'absolute',
@@ -59,31 +63,31 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 581,
-	height: 650,
+	height: 700,
 	backgroundColor: '#ffffff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '12px'
 };
+interface modalProps {
+	openModalEdit: boolean;
+	closeModalEdit: (openModalEdit: boolean) => void;
+	deleteById: number | null;
+}
+const ModalEditTeacher: React.FC<modalProps> = ({
+	openModalEdit,
+	closeModalEdit,
+	deleteById
+}) => {
+	const { control, handleSubmit } = useForm<IFormInputs>();
+	const [patchTeacher] = usePatchTeacherMutation();
+	const { data } = useGetTeacherQuery();
+	const find = data?.find((id) => id._id === deleteById);
+	const [personName, setPersonName] = React.useState<string[]>(find?.group);
 
-const ModalAddTeacher = () => {
-	const { control, handleSubmit, reset } = useForm<IFormInputs>();
-	const [open, setOpen] = useState<boolean>(false);
-	const [postTeacher] = usePostTeacherMutation();
-	const [personName, setPersonName] = React.useState<string[]>([]);
-	const handleOpen = (e: React.MouseEvent<HTMLFormElement>) => {
-		setOpen(true);
-		e.preventDefault();
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-		setOpen(false);
-	};
-
-	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-		const postData = {
+	const onSubmit = async (data: IFormInputs) => {
+		const updateTeacher = { 
 			firstName: data.firstName,
 			lastName: data.lastName,
 			email: data.email,
@@ -92,11 +96,8 @@ const ModalAddTeacher = () => {
 			specialization: data.specialization,
 			group: personName
 		};
-
-		postTeacher(postData);
-		handleClose();
-		reset();
-		setPersonName([]);
+		await patchTeacher({ updateTeacher, deleteById });
+		closeModalEdit(false);
 	};
 
 	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
@@ -107,15 +108,9 @@ const ModalAddTeacher = () => {
 	};
 
 	return (
-		<form onSubmit={handleOpen} className={scss.form}>
-			<div className={scss.button}>
-				<ButtonWithPlus type="submit" disabled={false}>
-					Добавить учителя
-				</ButtonWithPlus>
-			</div>
+		<form onSubmit={close} className={scss.form}>
 			<Modal
-				open={open}
-				onClose={handleClose}
+				open={openModalEdit}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -134,7 +129,7 @@ const ModalAddTeacher = () => {
 							<Controller
 								name="firstName"
 								control={control}
-								defaultValue=""
+								defaultValue={find?.firstName}
 								render={({ field }) => (
 									<Input
 										{...field}
@@ -147,7 +142,7 @@ const ModalAddTeacher = () => {
 							<Controller
 								name="lastName"
 								control={control}
-								defaultValue=""
+								defaultValue={find?.lastName}
 								render={({ field }) => (
 									<Input
 										{...field}
@@ -160,7 +155,7 @@ const ModalAddTeacher = () => {
 							<Controller
 								name="phoneNumber"
 								control={control}
-								defaultValue=""
+								defaultValue={find?.phoneNumber}
 								render={({ field }) => (
 									<Input
 										{...field}
@@ -173,7 +168,7 @@ const ModalAddTeacher = () => {
 							<Controller
 								name="email"
 								control={control}
-								defaultValue=""
+								defaultValue={find?.email}
 								render={({ field }) => (
 									<Input
 										{...field}
@@ -186,7 +181,7 @@ const ModalAddTeacher = () => {
 							<Controller
 								name="login"
 								control={control}
-								defaultValue=""
+								defaultValue={find?.login}
 								render={({ field }) => (
 									<Input
 										{...field}
@@ -199,7 +194,7 @@ const ModalAddTeacher = () => {
 							<Controller
 								name="specialization"
 								control={control}
-								defaultValue=""
+								defaultValue={find?.specialization}
 								render={({ field }) => (
 									<Input
 										{...field}
@@ -210,7 +205,7 @@ const ModalAddTeacher = () => {
 								)}
 							/>
 						</div>
-						<div>
+						<div style={{ width: '470px' }}>
 							<FormControl sx={{ m: 1, width: 470 }}>
 								<InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
 								<Select
@@ -233,12 +228,11 @@ const ModalAddTeacher = () => {
 								</Select>
 							</FormControl>
 						</div>
-						;
 						<div className={scss.buttonAdd}>
 							<ButtonCancel
 								type="submit"
 								disabled={false}
-								onClick={handleClose}
+								onClick={closeModalEdit(false)}
 								width="117px"
 							>
 								Отмена
@@ -259,4 +253,4 @@ const ModalAddTeacher = () => {
 	);
 };
 
-export default ModalAddTeacher;
+export default ModalEditTeacher;
