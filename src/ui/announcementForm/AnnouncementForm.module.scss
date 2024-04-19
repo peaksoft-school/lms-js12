@@ -1,0 +1,70 @@
+.AnnouncementForm {
+	.container {
+		margin: 0 auto;
+		margin-left: 300px;
+		width: 541px;
+		height: 265px;
+		border: 1px solid #696767;
+		border-bottom-right-radius: 8px;
+		border-bottom-left-radius: 8px;
+		background-color: #fff;
+
+		.title {
+			display: flex;
+			justify-content: center;
+			width: 541px;
+			height: 68px;
+			align-items: center;
+			font-size: 20px;
+			background-color: #3772ff;
+			margin-top: 0;
+			color: #fff;
+		}
+
+		.announce_form {
+			display: flex;
+			flex-direction: column;
+			margin-top: 18px;
+
+			.input {
+				width: 491px;
+				height: 42px;
+				border: 1px solid #d4d4d4;
+				border-radius: 8px;
+				margin: 0 auto;
+				margin-bottom: 12px;
+				font-size: 16px;
+				padding-left: 18px;
+				outline: none;
+
+				.input .option {
+					width: 230px;
+					height: 42px;
+					border-radius: 8px;
+				}
+			}
+		}
+
+		.btn_announce {
+			display: flex;
+			justify-content: flex-end;
+			margin-left: 300px;
+			gap: 10px;
+
+			.btn_link {
+				align-items: center;
+				text-align: center;
+				width: 103px;
+				height: 40px;
+				border: 1px solid #3772ff;
+				border-radius: 8px;
+				color: #3772ff;
+			}
+
+			.btn_link:nth-child(2) {
+				background-color: #3772ff;
+				color: #fff;
+			}
+		}
+	}
+}
