@@ -9,6 +9,7 @@ import Cards from '@/src/ui/customCards/Cards';
 import Material from '@/src/ui/material/Material';
 import CalendarPage from '../pages/CalendarPage';
 import Teacher from '@/src/pagesAdmin/components/pages/teachers/Teacher';
+import Groups from '@/src/ui/analytics/Analytics';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,7 @@ const LayoutAdmin = () => {
 						<Route path="/" element={<HomePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
 						<Route path="/theacher" element={<Teacher />} />
+						<Route path="/group" element={<Groups />} />
 						<Route path="" element={<HomePage />} />
 						<Route path="/courses" element={<Cards />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
