@@ -5,7 +5,6 @@ import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
 import Material from '@/src/ui/material/Material';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
-import Cards from '@/src/ui/customCards/Cards';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import CalendarPage from '../pages/CalendarPage';
 
@@ -49,7 +48,6 @@ const LayoutStudents = () => {
 						<Route path="/" element={<HomePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
 						<Route path="" element={<HomePage />} />
-						<Route path="/courses" element={<Cards />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
 							path="/courses/:coursesId/:matelials"
