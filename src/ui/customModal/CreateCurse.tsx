@@ -124,7 +124,7 @@ export default function CreateCourse() {
 						</div>
 						<textarea placeholder="Описание группы"></textarea>
 						<div className={scss.buttons}>
-							<div className={scss.Cancel}>
+							<div>
 								<ButtonCancel
 									type="submit"
 									onClick={CurentFunc}
@@ -134,7 +134,7 @@ export default function CreateCourse() {
 									Отмена
 								</ButtonCancel>
 							</div>
-							<div className={scss.Cancel}>
+							<div>
 								<ButtonSave
 									type="submit"
 									onClick={CurentFunc}

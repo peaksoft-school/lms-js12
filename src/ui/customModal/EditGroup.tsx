@@ -3,14 +3,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
-import gallery from '@/src/assets/photo-bg.png';
+import galerry from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { useRef, useState } from 'react';
-import { useCreateGroupMutation } from '@/src/redux/api/admin/groups';
-import ButtonWithPlus from '../customButton/ButtonWithPlus';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { FC, useRef, useState } from 'react';
+import {
+	useGetGroupQuery,
+	useUpdateGroupMutation
+} from '@/src/redux/api/admin/groups';
 
 const style = {
 	position: 'absolute',
@@ -27,23 +27,30 @@ const style = {
 	}
 };
 
-export default function CreateGroup() {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
-	const [value, setValue] = useState('');
-	const [data, setData] = useState('');
-	const [text, setText] = useState('');
-	const [hidePhoto, setHidePhoto] = useState(false);
-	const [image, setImage] = useState<string>('');
+interface EditModalProps {
+	open: boolean;
+	handleClose: () => void;
+	saveId: number | null;
+}
+
+const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
+	const { data } = useGetGroupQuery();
+	const find = data?.find((id) => id._id === saveId);
+	const [value, setValue] = useState<string>(find?.title || '');
+	const [date, setData] = useState<string>(find?.date || '');
+	const [text, setText] = useState<string>(find?.text || '');
+	const [hidePhoto, setHidePhoto] = useState<boolean>(false);
+	const [image, setImage] = useState<string>(find?.img || '');
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [createGroup] = useCreateGroupMutation();
+	const [updateGroup] = useUpdateGroupMutation();
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
+
+	console.log(saveId);
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -59,39 +66,19 @@ export default function CreateGroup() {
 		}
 	};
 
-	const notifySuccess = () => toast.success('Группа успешно создана !');
-	const notifyError = () => toast.error('Произошла ошибка при создании группы');
-
-	const handleCreateGroup = () => {
+	const updateGroupFunc = async () => {
 		const newGroup = {
 			title: value,
 			img: image,
-			date: data,
+			date: date,
 			text: text
 		};
-		createGroup(newGroup)
-			.unwrap()
-			.then(() => {
-				notifySuccess();
-				setOpen(false);
-				setData('');
-				setText('');
-				setImage('');
-				setValue('');
-			})
-			.catch(() => {
-				notifyError();
-			});
+		await updateGroup({ newGroup, saveId });
+		handleClose();
 	};
 
 	return (
-		<div className={scss.forButton}>
-			<ToastContainer />
-			<div className={scss.ButtonCont}>
-				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
-					Добавить Группу
-				</ButtonWithPlus>
-			</div>
+		<>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -122,7 +109,7 @@ export default function CreateGroup() {
 							<div
 								onClick={handleButtonClick}
 								className={hidePhoto ? scss.backgroundNone : scss.background}
-								style={{ backgroundImage: `url(${image || gallery})` }}
+								style={{ backgroundImage: `url(${image || galerry})` }}
 							></div>
 							<p className={hidePhoto ? scss.hideText : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
@@ -141,7 +128,7 @@ export default function CreateGroup() {
 							<div className={scss.second_input}>
 								<Input
 									placeholder="Название группы"
-									value={data}
+									value={date}
 									onChange={(e) => setData(e.target.value)}
 									width="100%"
 									type="date"
@@ -167,7 +154,7 @@ export default function CreateGroup() {
 							<div>
 								<ButtonSave
 									type="submit"
-									onClick={handleCreateGroup}
+									onClick={updateGroupFunc}
 									disabled={false}
 									width="117px"
 								>
@@ -178,6 +165,8 @@ export default function CreateGroup() {
 					</Typography>
 				</Box>
 			</Modal>
-		</div>
+		</>
 	);
-}
+};
+
+export default EditGroup;

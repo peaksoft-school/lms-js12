@@ -1,29 +1,14 @@
-.ButtonCont {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-}
-
-.forButton {
-	display: flex;
-	padding-right: 207px;
-	padding-top: 30px;
-	padding-bottom: 30px;
-	@media (max-width: 600px) {
-		padding-right: 60px;
-	}
-}
-
 .mainModal {
 	border-radius: 20px;
 	width: 541px !important;
 	padding: 0px 0px !important;
+
 	@media (max-width: 600px) {
 		width: 90% !important;
 		height: 90% !important;
 		border-radius: 10px;
 	}
+
 	.Curse {
 		border-top-right-radius: 12px;
 		border-top-left-radius: 12px;
@@ -41,18 +26,22 @@
 		justify-content: flex-end;
 		gap: 20px;
 		padding: 20px;
+
 		p {
 			font-size: 20px !important;
 		}
+
 		.background {
 			width: 173px;
 			height: 145px;
 			background: url('../../assets/photo-bg.png');
 		}
+
 		.backgroundNone {
 			width: 173px;
 			height: 145px;
 		}
+
 		.imgPart {
 			display: flex;
 			flex-direction: column;
@@ -61,14 +50,17 @@
 			max-width: 309px;
 			gap: 10px;
 			width: 100%;
+
 			img {
 				width: 173px;
 				height: 145px;
 			}
+
 			p {
 				color: rgb(141, 148, 158) !important;
 				font-size: 18px !important;
 			}
+
 			.hideText {
 				display: none;
 			}
@@ -77,6 +69,7 @@
 		.fileInput {
 			display: none;
 		}
+
 		.inputs {
 			max-width: 541px !important;
 			width: 100% !important;
@@ -85,6 +78,7 @@
 			justify-content: space-between;
 			padding-left: 10px;
 			padding-right: 10px;
+
 			@media (max-width: 600px) {
 				padding: 0;
 				flex-direction: column;
@@ -110,13 +104,16 @@
 			padding-right: 25px;
 			height: 123px;
 			resize: none;
+
 			&::placeholder {
 				font-size: 16px;
 				padding: 10px;
 				color: rgb(141, 148, 158);
 				font-weight: 400;
 			}
+
 			border: 1px solid rgb(194, 193, 193);
+
 			@media (max-width: 600px) {
 				padding: 20px;
 				flex-direction: column;

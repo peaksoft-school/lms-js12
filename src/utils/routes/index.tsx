@@ -12,7 +12,8 @@ export const links = {
 	admin: [
 		{
 			name: 'Группы',
-			icon: <IconUsersGroup stroke={2} />
+			icon: <IconUsersGroup stroke={2} />,
+			link: 'groups'
 		},
 		{
 			name: 'Курсы ',

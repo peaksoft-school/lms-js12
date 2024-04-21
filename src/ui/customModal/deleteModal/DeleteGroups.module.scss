@@ -1,0 +1,11 @@
+.dialogPaper {
+	width: 500px;
+	height: 190px;
+	
+	.Buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+	}
+}
