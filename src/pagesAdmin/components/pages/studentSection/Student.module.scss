@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+.StudentParentContainer {
+	.TitleStudent {
+		width: 100%;
+		display: flex;
+		padding: 0px 2px 0px 20px;
+		margin-top: 3px;
+	}
+	.sectionLogics {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		width: 100%;
+		padding: 0px 2px 0px 20px;
+		margin-top: 14px;
+		padding-inline: 20px;
+
+		@media (max-width: 1600px) {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.Parent_second_btn {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+			width: 100%;
+			padding-right: 30px;
+
+			@media (max-width: 797px) {
+				display: flex;
+				flex-direction: column;
+				justify-content: center !important;
+				align-items: center !important;
+				width: 100%;
+			}
+
+			.Button_UI {
+				width: 100%;
+				height: auto !important;
+			}
+
+			:global {
+				.MuiButtonBase-root {
+					max-width: 360px !important;
+					width: 100% !important ;
+				}
+				.MuiButton-outlinedPrimary {
+					max-width: 360px !important;
+					width: 100% !important ;
+				}
+			}
+
+			.ExelButton {
+				display: flex;
+				gap: 10px;
+				width: 100%;
+				height: auto !important;
+				padding: 10px 24px 10px 16px;
+				border-radius: 8px;
+			}
+		}
+
+		.inputWithIcon {
+			position: relative;
+			display: flex;
+			align-items: center;
+			width: 100%;
+			input {
+				width: 100%;
+			}
+
+			@media (max-width: 320px) {
+				width: 260px;
+				margin-right: 27px;
+			}
+		}
+	}
+
+	.StudentContainer {
+		min-height: 680px !important;
+		border-radius: 10px;
+		background: #ffffff;
+		border: 1px solid #d4d4d4;
+		margin: 24px 40px 77px 20px;
+		overflow-x: auto;
+		white-space: nowrap;
+		scrollbar-width: thin;
+		scrollbar-color: rgb(55, 114, 255) #fff;
+
+		.Table {
+			width: 100%;
+			border-collapse: collapse;
+
+			td {
+				text-align: start;
+			}
+
+			thead {
+				border-bottom: 1px solid #837a7a14;
+				height: 50px;
+				th {
+					font-family: 'Open Sans', sans-serif;
+					font-size: 14px;
+					font-weight: 600;
+					line-height: 19.07px;
+					text-align: start;
+					padding-left: 50px;
+				}
+			}
+
+			.Button_Photo {
+				border: none;
+				background: none;
+			}
+		}
+		.TableAlternateRow {
+			background: #1a237e12;
+		}
+		.StudentContainerSecond {
+			width: 1140px;
+			height: 50px;
+
+			.TableCell {
+				.TableImage {
+					text-align: end;
+				}
+			}
+		}
+		.Table td {
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 21.79px;
+			letter-spacing: 0.02em;
+			text-align: start;
+			padding-left: 50px;
+		}
+	}
+
+	.PaginationContainerParent {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+
+		@media (max-width: 1000px) {
+			padding-bottom: 120px;
+		}
+
+		.Inputs {
+			display: flex;
+			gap: 20px;
+			input {
+				width: 40px;
+				text-align: center;
+			}
+		}
+	}
+}
+.changeClass {
+	color: #ff0000;
+}

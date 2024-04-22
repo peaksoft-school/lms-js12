@@ -12,6 +12,7 @@ import Teacher from '@/src/pagesAdmin/components/pages/teachers/Teachers';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
+import Students from '../pages/studentSection/Students';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +76,7 @@ const LayoutAdmin = () => {
 							path="/courses/:coursesId/:matelials"
 							element={<Material />}
 						/>
+						<Route path={'/students'} element={<Students />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
