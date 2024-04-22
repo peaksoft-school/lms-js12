@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import {
 	Modal,
 	Box,
@@ -7,13 +7,14 @@ import {
 	IconButton
 } from '@mui/material';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
-import ButtonWithPlus from '@/src/ui/customButton/ButtonWithPlus.tsx';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
-import { usePostStudentTableMutation } from '@/src/redux/api/admin/student';
+import {
+	useGetStudentTableQuery,
+	usePatchStudentTableMutation
+} from '@/src/redux/api/admin/student';
 
 import * as React from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -23,8 +24,31 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Input from '../customInput/Input';
+
+const names = [
+	'Java 14',
+	'JS 14',
+	'Java 13',
+	'JS 13',
+	'Java 12',
+	'JS 12',
+	'Flutter',
+	'English lesson'
+];
+
+const formats = ['Online', 'OFFLINE'];
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+			width: 250
+		}
+	}
+};
 
 interface PostStudentProps {
 	firstName: string;
@@ -34,7 +58,6 @@ interface PostStudentProps {
 	phone_number: string;
 	email: string;
 	password: string;
-	isCompleted: boolean;
 }
 
 const style = {
@@ -50,52 +73,27 @@ const style = {
 	borderRadius: '12px'
 };
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-	PaperProps: {
-		style: {
-			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-			width: 250
-		}
-	}
-};
-
-const names = [
-	'Java 14',
-	'JS 14',
-	'Java 13',
-	'JS 13',
-	'Java 12',
-	'JS 12',
-	'Flutter',
-	'English lesson'
-];
-
-const formats = ['Online', 'OFFLINE'];
-
-const ModalAddStudent = () => {
+interface EditModalProps {
+	handleClose: () => void;
+	open: boolean;
+	saveIdElement: number | null;
+}
+const ModalEditStudent: FC<EditModalProps> = ({
+	handleClose,
+	open,
+	saveIdElement
+}) => {
 	const { handleSubmit, control, reset } = useForm<PostStudentProps>();
-	const [open, setOpen] = useState(false);
 	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
-	const [postStudentTable] = usePostStudentTableMutation();
-	const [personName, setPersonName] = React.useState<string[]>([]);
-	const [formatName, setFormatName] = React.useState<string[]>([]);
-
+	const [patchStudentTable] = usePatchStudentTableMutation();
+	const { data } = useGetStudentTableQuery();
 	const handleClickShowSecondPassword = () =>
 		setShowSecondPassword((show) => !show);
 	const handleMouseDownSecondPassword1 = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
-
-	const handleOpen = (e: React.MouseEvent<HTMLFormElement>) => {
-		setOpen(true);
-		e.preventDefault();
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
+	const [personName, setPersonName] = React.useState<string[]>([]);
+	const [formatName, setFormatName] = React.useState<string[]>([]);
 
 	// ! first select
 	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
@@ -112,47 +110,52 @@ const ModalAddStudent = () => {
 		} = event;
 		setFormatName(typeof value === 'string' ? value.split(',') : value);
 	};
-	const notify = () =>
-		toast.error('Пожалуйста, заполните все обязательные поля');
-	const notifySuccess = () => toast.success('Успешно добовлено');
+
 	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
-		const { firstName, lastName, phone_number, password, email } = data;
-		if (
-			firstName !== '' &&
-			lastName !== '' &&
-			personName.length > 0 &&
-			formatName.length > 0 &&
-			phone_number !== '' &&
-			email !== '' &&
-			password !== ''
-		) {
-			const newStudent = {
-				firstName: firstName,
-				lastName: lastName,
-				group: personName,
-				TrainingFormat: formatName,
-				phone_number: phone_number,
-				email: email,
-				password: password,
-				isCompleted: true
-			};
-			await postStudentTable(newStudent);
-			handleClose();
-			reset();
-			setPersonName([]);
-			setFormatName([]);
-			notifySuccess();
-		} else {
-			notify();
-		}
+		const editStudent = {
+			firstName: data.firstName,
+			lastName: data.lastName,
+			group: personName,
+			TrainingFormat: formatName,
+			phone_number: data.phone_number,
+			email: data.email,
+			password: data.password,
+			isCompleted: false
+		};
+		await patchStudentTable({
+			saveIdElement,
+			editStudent
+		});
+		handleClose();
 	};
 
+	const finder = data?.find(
+		(id: { _id: number | null }) => id._id === saveIdElement
+	);
+
+	useEffect(() => {
+		reset({
+			firstName: finder?.firstName,
+			lastName: finder?.lastName,
+			group: finder?.group,
+			TrainingFormat: finder?.TrainingFormat,
+			phone_number: finder?.phone_number,
+			email: finder?.email,
+			password: finder?.password
+		});
+	}, [finder]);
+
+	useEffect(() => {
+		if (finder) {
+			setFormatName(
+				Array.isArray(finder.TrainingFormat) ? finder.TrainingFormat : []
+			);
+			setPersonName(Array.isArray(finder.group) ? finder.group : []);
+		}
+	}, [finder]);
+
 	return (
-		<form onSubmit={handleOpen}>
-			<ToastContainer />
-			<ButtonWithPlus type="submit" disabled={false}>
-				Добавить студента
-			</ButtonWithPlus>
+		<form>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -166,7 +169,7 @@ const ModalAddStudent = () => {
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Добавить студента</p>
+						<p className={scss.comText}>Редактировать</p>
 					</Typography>
 
 					<Box className={scss.input_buttonCard}>
@@ -178,25 +181,23 @@ const ModalAddStudent = () => {
 								<Controller
 									name="firstName"
 									control={control}
-									defaultValue=""
 									render={({ field }) => (
 										<Input
 											{...field}
-											type="text"
 											width="100%"
+											type="text"
 											placeholder="First Name"
 										/>
 									)}
-								/>
+								/>{' '}
 								<Controller
 									name="lastName"
 									control={control}
-									defaultValue=""
 									render={({ field }) => (
 										<Input
+											width="100%"
 											{...field}
 											type="text"
-											width="100%"
 											placeholder="Last Name"
 										/>
 									)}
@@ -204,7 +205,6 @@ const ModalAddStudent = () => {
 								<Controller
 									name="phone_number"
 									control={control}
-									defaultValue=""
 									render={({ field }) => (
 										<Input
 											{...field}
@@ -217,20 +217,18 @@ const ModalAddStudent = () => {
 								<Controller
 									name="email"
 									control={control}
-									defaultValue=""
 									render={({ field }) => (
 										<Input
 											{...field}
-											type=""
 											width="100%"
+											type="text"
 											placeholder="Email"
 										/>
 									)}
-								/>
+								/>{' '}
 								<Controller
 									name="password"
 									control={control}
-									defaultValue=""
 									render={({ field }) => (
 										<OutlinedInput
 											style={{ width: '100%', maxWidth: '470px' }}
@@ -342,4 +340,4 @@ const ModalAddStudent = () => {
 	);
 };
 
-export default ModalAddStudent;
+export default ModalEditStudent;
