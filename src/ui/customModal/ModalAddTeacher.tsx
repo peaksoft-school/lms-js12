@@ -15,9 +15,13 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { InputAdornment, IconButton } from '@mui/material';
 
 interface IFormInputs {
 	firstName: string;
@@ -53,13 +57,20 @@ const names = [
 	'Kelly Snyder'
 ];
 
+const profestion = [
+	'js instructor',
+	'java  instructor',
+	'java mentor',
+	'js mentor'
+];
+
 const style = {
 	position: 'absolute',
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 581,
-	height: 650,
+	height: 680,
 	backgroundColor: '#ffffff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
@@ -72,31 +83,55 @@ const ModalAddTeacher = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [postTeacher] = usePostTeacherMutation();
 	const [personName, setPersonName] = React.useState<string[]>([]);
+	const [specialization, setSpecialization] = useState<string[]>([]);
+	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
 	const handleOpen = (e: React.MouseEvent<HTMLFormElement>) => {
 		setOpen(true);
 		e.preventDefault();
 	};
 
+	const handleClickShowSecondPassword = () =>
+		setShowSecondPassword((show) => !show);
+	const handleMouseDownSecondPassword1 = (
+		event: React.MouseEvent<HTMLButtonElement>
+	) => event.preventDefault();
+
 	const handleClose = () => {
 		setOpen(false);
 		setOpen(false);
 	};
+	const notify = () =>
+		toast.error('Пожалуйста, заполните все обязательные поля');
+	const notifySuccess = () => toast.success('Успешно добовлено');
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-		const postData = {
-			firstName: data.firstName,
-			lastName: data.lastName,
-			email: data.email,
-			phoneNumber: data.phoneNumber,
-			login: data.login,
-			specialization: data.specialization,
-			group: personName
-		};
+		const { firstName, lastName, email, phoneNumber, login } = data;
 
-		postTeacher(postData);
-		handleClose();
-		reset();
-		setPersonName([]);
+		if (
+			firstName !== '' &&
+			lastName !== '' &&
+			email !== '' &&
+			phoneNumber !== '' &&
+			login !== '' &&
+			specialization.length > 0
+		) {
+			const postData = {
+				firstName: firstName,
+				lastName: lastName,
+				email: email,
+				phoneNumber: phoneNumber,
+				login: login,
+				specialization: specialization,
+				group: personName
+			};
+			postTeacher(postData);
+			handleClose();
+			reset();
+			setPersonName([]);
+			notifySuccess();
+		} else {
+			notify();
+		}
 	};
 
 	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
@@ -105,9 +140,16 @@ const ModalAddTeacher = () => {
 		} = event;
 		setPersonName(typeof value === 'string' ? value.split(',') : value);
 	};
+	const handleChangeAge = (event: SelectChangeEvent<typeof personName>) => {
+		const {
+			target: { value }
+		} = event;
+		setSpecialization(value as string[]);
+	};
 
 	return (
-		<form onSubmit={handleOpen} className={scss.form}>
+		<form onSubmit={handleOpen}>
+			<ToastContainer />
 			<div className={scss.button}>
 				<ButtonWithPlus type="submit" disabled={false}>
 					Добавить учителя
@@ -140,7 +182,7 @@ const ModalAddTeacher = () => {
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Имя"
+										placeholder="First Name"
 									/>
 								)}
 							/>
@@ -153,7 +195,7 @@ const ModalAddTeacher = () => {
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Фамилия"
+										placeholder="Last Name"
 									/>
 								)}
 							/>
@@ -164,9 +206,9 @@ const ModalAddTeacher = () => {
 								render={({ field }) => (
 									<Input
 										{...field}
-										type="text"
+										type="number"
 										width="100%"
-										placeholder="+996___ __ __ __"
+										placeholder="Phone Number"
 									/>
 								)}
 							/>
@@ -188,53 +230,83 @@ const ModalAddTeacher = () => {
 								control={control}
 								defaultValue=""
 								render={({ field }) => (
-									<Input
+									<OutlinedInput
 										{...field}
-										type="text"
-										width="100%"
-										placeholder="Пароль"
+										className={scss.OutlinedInputEyes}
+										placeholder="Password"
+										type={showSecondPassword ? 'text' : 'password'}
+										endAdornment={
+											<InputAdornment position="end">
+												<IconButton
+													aria-label="toggle password visibility"
+													onClick={handleClickShowSecondPassword}
+													onMouseDown={handleMouseDownSecondPassword1}
+													edge="end"
+												>
+													{showSecondPassword ? (
+														<IconOpen_Eye />
+													) : (
+														<IconClosed />
+													)}
+												</IconButton>
+											</InputAdornment>
+										}
 									/>
 								)}
 							/>
-							<Controller
-								name="specialization"
-								control={control}
-								defaultValue=""
-								render={({ field }) => (
-									<Input
-										{...field}
-										type="text"
-										width="100%"
-										placeholder="Специализация"
-									/>
-								)}
-							/>
-						</div>
-						<div>
-							<FormControl sx={{ m: 1, width: 470 }}>
-								<InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+							<FormControl className={scss.seclect}>
+								<InputLabel id="demo-multiple-checkbox-label">
+									Specialization
+								</InputLabel>
 								<Select
 									className={scss.seclect}
 									labelId="demo-multiple-checkbox-label"
 									id="demo-multiple-checkbox"
 									multiple
-									value={personName}
-									onChange={handleChange}
+									value={specialization}
+									onChange={handleChangeAge}
 									input={<OutlinedInput label="Tag" />}
 									renderValue={(selected) => selected.join(', ')}
 									MenuProps={MenuProps}
 								>
-									{names.map((name) => (
+									{profestion.map((name) => (
 										<MenuItem key={name} value={name}>
-											<Checkbox checked={personName.indexOf(name) > -1} />
+											<Checkbox
+												checked={
+													specialization && specialization.indexOf(name) > -1
+												}
+											/>
 											<ListItemText primary={name} />
 										</MenuItem>
 									))}
 								</Select>
 							</FormControl>
+							<div>
+								<FormControl className={scss.seclect}>
+									<InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+									<Select
+										className={scss.seclect}
+										labelId="demo-multiple-checkbox-label"
+										id="demo-multiple-checkbox"
+										multiple
+										value={personName}
+										onChange={handleChange}
+										input={<OutlinedInput label="Tag" />}
+										renderValue={(selected) => selected.join(', ')}
+										MenuProps={MenuProps}
+									>
+										{names.map((name) => (
+											<MenuItem key={name} value={name}>
+												<Checkbox checked={personName.indexOf(name) > -1} />
+												<ListItemText primary={name} />
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</div>
 						</div>
-						;
-						<div className={scss.buttonAdd}>
+
+						<div className={scss.buttonAdd2}>
 							<ButtonCancel
 								type="submit"
 								disabled={false}

@@ -1,3 +1,4 @@
+import scss from './DeleteTeacher.module.scss';
 import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -28,50 +29,46 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 	return (
 		<div>
 			<React.Fragment>
-				<Dialog
-					open={openModalDelete}
-					aria-labelledby="alert-dialog-title"
-					aria-describedby="alert-dialog-description"
-				>
-					<DialogContent>
-						<DialogContentText id="alert-dialog-description">
-							<p style={{ padding: '18px 63px' }}>
-								Вы уверены, что хотите удалить ... ?
-							</p>
-						</DialogContentText>
-					</DialogContent>
-					<DialogActions
-						style={{
-							display: 'flex',
-							gap: '30px',
-							alignItems: 'center',
-							justifyContent: 'center'
+				<div className={scss.Delete}>
+					<Dialog
+						open={openModalDelete}
+						aria-labelledby="alert-dialog-title"
+						aria-describedby="alert-dialog-description"
+						PaperProps={{
+							className: scss.dialogPaper
 						}}
 					>
-						<ButtonCancel
-							width="103px"
-							type="button"
-							disabled={false}
-							onClick={() => {
-								closeModalDelete(false);
-							}}
-						>
-							отмена
-						</ButtonCancel>
-						<Button
-							onClick={handleDelete}
-							autoFocus
-							style={{
-								backgroundColor: '#F70D1A',
-								color: '#fff',
-								width: '108px',
-								height: '40px'
-							}}
-						>
-							Да
-						</Button>
-					</DialogActions>
-				</Dialog>
+						<DialogContent>
+							<DialogContentText id="alert-dialog-description">
+								<h3>Вы уверены, что хотите удалить этого студента?</h3>
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions className={scss.Buttons}>
+							<ButtonCancel
+								width="103px"
+								type="button"
+								disabled={false}
+								onClick={() => {
+									closeModalDelete(false);
+								}}
+							>
+								отмена
+							</ButtonCancel>
+							<Button
+								onClick={handleDelete}
+								autoFocus
+								style={{
+									backgroundColor: '#F70D1A',
+									color: '#fff',
+									width: '108px',
+									height: '40px'
+								}}
+							>
+								Удалить
+							</Button>
+						</DialogActions>
+					</Dialog>
+				</div>
 			</React.Fragment>
 		</div>
 	);

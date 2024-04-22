@@ -7,7 +7,7 @@ namespace TABLE {
 		email: string;
 		phoneNumber: string;
 		login: string;
-		specialization: string;
+		specialization: string[];
 		group: string;
 	};
 
@@ -21,7 +21,7 @@ namespace TABLE {
 		email: string;
 		phoneNumber: string;
 		login: string;
-		specialization: string;
+		specialization: string[];
 		group: string[];
 	}[];
 	type CreateTeacherssRequest = {
@@ -30,7 +30,7 @@ namespace TABLE {
 		email: string;
 		phoneNumber: string;
 		login: string;
-		specialization: string;
+		specialization: string[];
 		group: string[];
 	};
 	type ChangeTeachersResponse = {
@@ -40,7 +40,7 @@ namespace TABLE {
 			email: string;
 			phoneNumber: string;
 			login: string;
-			specialization: string;
+			specialization: string[];
 			group: string[];
 		};
 	}[];
@@ -53,7 +53,7 @@ namespace TABLE {
 			email: string;
 			phoneNumber: string;
 			login: string;
-			specialization: string;
+			specialization: string[];
 			group: string[];
 		};
 	};

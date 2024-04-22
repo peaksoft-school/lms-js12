@@ -39,12 +39,11 @@
 		padding-left: 20px;
 		padding-right: 20px;
 		padding-top: 20px;
-		gap: 5px;
+		gap: 15px;
 
 		.seclect {
 			border-radius: 20px !important;
 			width: 100% !important;
-			
 		}
 		.input {
 			max-width: 470px;
@@ -52,6 +51,18 @@
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
+
+			.OutlinedInputEyes {
+				width: 100%;
+				border-radius: 20px;
+			}
+
+			.EditButtons {
+				display: flex;
+				justify-content: flex-end;
+				gap: 10px;
+				margin-top: 15px;
+			}
 		}
 
 		.selectDiv {
@@ -70,11 +81,17 @@
 			display: flex;
 			gap: 10px;
 			align-items: center;
-			padding-right: 32px;
-
-			@media (max-width: 600px) {
-				width: 80% !important;
-			}
+		}
+		.buttonAdd2 {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			flex-wrap: wrap;
+			width: 100%;
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			padding-right: 16px;
 		}
 
 		.buttony {
@@ -102,10 +119,4 @@
 			}
 		}
 	}
-}
-
-.form {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
 }

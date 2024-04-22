@@ -27,8 +27,8 @@ export const api = index.injectEndpoints({
 			TABLE.ChangeTeachersResponse,
 			TABLE.ChangeTeacherssRequest
 		>({
-			query: ({ updateTeacher, deleteSt }) => ({
-				url: `https://api.elchocrud.pro/api/v1/59dd7fe356868f1b0a863261bd7b1d9b/THTDTR/${deleteSt}`,
+			query: ({ updateTeacher, deleteById }) => ({
+				url: `https://api.elchocrud.pro/api/v1/59dd7fe356868f1b0a863261bd7b1d9b/THTDTR/${deleteById}`,
 				method: 'PATCH',
 				body: updateTeacher
 			}),
