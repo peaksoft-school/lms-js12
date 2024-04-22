@@ -51,7 +51,7 @@ const Teachers = () => {
 		}
 	};
 	const handlePageChangeC = (
-		e: React.ChangeEvent<unknown>,
+		_e: React.ChangeEvent<unknown>,
 		page: number
 	): void => {
 		setCurrentPage(page);
