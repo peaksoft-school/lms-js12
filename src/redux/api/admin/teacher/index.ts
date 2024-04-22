@@ -1,4 +1,4 @@
-import { api as index } from '../../api';
+import { api as index } from '../..';
 
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({

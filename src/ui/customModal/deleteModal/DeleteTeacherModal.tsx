@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
-import { useDeleteTeacherMutation } from '@/src/redux/api/teacher';
+import { useDeleteTeacherMutation } from '@/src/redux/api/admin/teacher';
 
 interface DeleteProps {
 	openModalDelete: boolean;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import scss from './Teachers.module.scss';
-import { useGetTeacherQuery } from '@/src/redux/api/teacher';
+import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { IconDotsVertical } from '@tabler/icons-react';
 import editIcon from '@/src/assets/svgs/edit.svg';
@@ -61,7 +61,8 @@ const Teachers = () => {
 		setAnchorEl(null);
 	};
 
-	const handleAppend = (event) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const handleAppend = (event: any) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.target.value);
 			if (newOpenPage > 15) {
@@ -194,42 +195,42 @@ const Teachers = () => {
 			<div className={scss.PaginationContainerParent}>
 				{/* //! 1 */}
 				<div className={scss.PaginationInput}>
-					<p>Перейти на страницу</p>
-					<input
-						type="text"
-						value={openPart}
-						onChange={(e) => setOpenPart(+e.target.value)}
-						onKeyDown={(e) => {
-							handleAppend(e);
-							openPartFunc();
-						}}
-					/>
+					<div className={scss.callInput}>
+						<p>Перейти на страницу</p>
+						<input
+							type="text"
+							value={openPart}
+							onChange={(e) => setOpenPart(+e.target.value)}
+							onKeyDown={(e) => {
+								handleAppend(e);
+								openPartFunc();
+							}}
+						/>
+					</div>
+					<Stack direction="row" spacing={2}>
+						{/* //! 2 */}
 
-					{/* <button onClick={openPartFunc}>open</button> */}
-				</div>
-				<Stack direction="row" spacing={2}>
-					{/* //! 2 */}
-
-					<Pagination
-						count={Math.ceil(data.length / rowsPerPage)}
-						page={currentPage}
-						onChange={handlePageChangeC}
-						shape="rounded"
-						variant="outlined"
-					/>
-				</Stack>
-				{/* //! 3 */}
-				<div className={scss.PaginationInput}>
-					<p>Показать</p>
-					<input
-						type="text"
-						value={openPage}
-						onChange={(e) => setOpenPage(e.target.value)}
-						onKeyDown={(e) => {
-							handleAppend(e);
-							openPartPage();
-						}}
-					/>
+						<Pagination
+							count={Math.ceil(data!.length / rowsPerPage)}
+							page={currentPage}
+							onChange={handlePageChangeC}
+							shape="rounded"
+							variant="outlined"
+						/>
+					</Stack>
+					{/* //! 3 */}
+					<div className={scss.callInput}>
+						<p>Показать</p>
+						<input
+							type="text"
+							value={openPage}
+							onChange={(e) => setOpenPage(e.target.value)}
+							onKeyDown={(e) => {
+								handleAppend(e);
+								openPartPage();
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

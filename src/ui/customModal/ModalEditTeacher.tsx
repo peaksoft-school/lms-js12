@@ -9,7 +9,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import {
 	useGetTeacherQuery,
 	usePatchTeacherMutation
-} from '@/src/redux/api/teacher';
+} from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
 import {
 	Checkbox,

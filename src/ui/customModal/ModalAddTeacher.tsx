@@ -8,7 +8,7 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './Style.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonWithPlus from '../customButton/ButtonWithPlus';
-import { usePostTeacherMutation } from '@/src/redux/api/teacher';
+import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
 import * as React from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -128,6 +128,7 @@ const ModalAddTeacher = () => {
 			handleClose();
 			reset();
 			setPersonName([]);
+			setSpecialization([]);
 			notifySuccess();
 		} else {
 			notify();
@@ -219,7 +220,7 @@ const ModalAddTeacher = () => {
 								render={({ field }) => (
 									<Input
 										{...field}
-										type="text"
+										type="email"
 										width="100%"
 										placeholder="Email"
 									/>

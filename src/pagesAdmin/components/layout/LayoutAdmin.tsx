@@ -11,7 +11,7 @@ import CalendarPage from '../pages/CalendarPage';
 import Teacher from '@/src/pagesAdmin/components/pages/teachers/Teachers';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
-import { useGetTeacherQuery } from '@/src/redux/api/teacher';
+import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);

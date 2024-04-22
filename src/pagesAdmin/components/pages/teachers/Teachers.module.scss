@@ -39,7 +39,6 @@
 		white-space: nowrap;
 		scrollbar-width: thin;
 		scrollbar-color: rgb(55, 114, 255) #fff;
-	
 
 		.TableTh {
 			width: 60px;
@@ -115,9 +114,23 @@
 		.PaginationInput {
 			display: flex;
 			gap: 10px;
+			justify-content: space-around;
+			align-items: center;
+			width: 100%;
+
+			@media (max-width: 1000px) {
+				padding-bottom: 200px;
+			}
 			input {
 				width: 40px;
 				text-align: center;
+				height: 20px;
+			}
+
+			.callInput {
+				display: flex;
+				gap: 20px;
+				align-items: center;
 			}
 		}
 	}
