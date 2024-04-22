@@ -22,7 +22,7 @@ export const links = {
 		{
 			name: 'Учителя',
 			icon: <IconUserCheck stroke={2} />,
-			link: 'theacher'
+			link: 'teacher'
 		},
 		{
 			name: 'Студенты',

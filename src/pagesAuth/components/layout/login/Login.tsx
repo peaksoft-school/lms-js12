@@ -4,7 +4,6 @@ import scss from './Login.module.scss';
 import Logo from '@/src/assets/svgs/logo.svg';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import Input from '@/src/ui/customInput/Input';
 import { Link } from 'react-router-dom';
 import MenLogo from '@/src/assets/svgs/boy-proger.svg';
 import {
@@ -13,6 +12,7 @@ import {
 	InputLabel,
 	OutlinedInput
 } from '@mui/material';
+import Input from '@/src/ui/customInput/Input';
 
 type FormData = {
 	login: string;

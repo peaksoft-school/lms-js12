@@ -28,7 +28,6 @@ const App = () => {
 						<Route path="/instructor/*" element={<LayoutInstructor />} />
 						<Route path="/auth/*" element={<LayoutAuth />} />
 					</Routes>
-					
 				</>
 			)}
 		</>
