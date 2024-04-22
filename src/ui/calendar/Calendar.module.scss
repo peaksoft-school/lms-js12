@@ -1,5 +1,9 @@
 .calendarWrapper {
 	margin-top: 47px;
+
+	@media (max-width: 1000px) {
+		padding-bottom: 100px;
+	}
 	:global {
 		.fc {
 			.fc-button {
