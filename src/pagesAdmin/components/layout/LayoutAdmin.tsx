@@ -8,12 +8,15 @@ import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Cards from '@/src/ui/customCards/Cards';
 import Material from '@/src/ui/material/Material';
 import CalendarPage from '../pages/CalendarPage';
-import Teacher from '@/src/pagesAdmin/components/pages/teachers/Teacher';
-import Groups from '@/src/ui/analytics/Analytics';
+import Teacher from '@/src/pagesAdmin/components/pages/teachers/Teachers';
+import NotCreated from '@/src/ui/notCreated/NotCreated';
+import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
+import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
+	const { data } = useGetTeacherQuery();
 
 	useEffect(() => {
 		const changeIsMobile = () => {
@@ -51,8 +54,20 @@ const LayoutAdmin = () => {
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
-						<Route path="/theacher" element={<Teacher />} />
-						<Route path="/group" element={<Groups />} />
+						<Route
+							path="/teacher"
+							element={
+								!data || data.length === 0 ? (
+									<NotCreated
+										text="Вы пока не добавили учителей!"
+										button={<ModalAddTeacher />}
+										name="Учителя"
+									/>
+								) : (
+									<Teacher />
+								)
+							}
+						/>
 						<Route path="" element={<HomePage />} />
 						<Route path="/courses" element={<Cards />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
