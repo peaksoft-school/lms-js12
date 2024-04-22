@@ -1,0 +1,103 @@
+.Cards {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+
+	.firstBlockContainer {
+		width: 270px;
+		height: 311px;
+		font-family: 'Open Sans', sans-serif;
+		border: 1px solid #d4d4d4;
+		border-radius: 10px;
+		background: #fff;
+
+		.BlockImage {
+			width: 270px;
+			height: 171px;
+			border-radius: 10px 10px 0px 0px;
+		}
+
+		.BlockText {
+			width: 180px;
+			height: 70px;
+			font-family: 'Open Sans', sans-serif;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 22px;
+			padding: 0px 0px 0px 10px;
+			display: flex;
+			overflow: hidden;
+		}
+		.BlockButtonDiv {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			padding-top: 15px;
+
+			.BlockButton {
+				border: none;
+				background-color: transparent;
+				color: #343a40;
+				font-weight: 900;
+				font-size: 30px;
+				padding-right: 14px;
+				position: relative;
+				bottom: 30px;
+			}
+		}
+
+		.zeroBlockContainer {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			padding: 0px 5px 0px 10px;
+
+			.secondBlockContainer {
+				height: 30px;
+				display: flex;
+				gap: 30px;
+				font-family: 'Open Sans', sans-serif;
+				align-items: center;
+
+				.BlockDate {
+					font-family: 'Open Sans', sans-serif;
+					font-size: 12px;
+					font-weight: 400;
+					line-height: 16.81px;
+				}
+
+				.BlockTitle {
+					font-size: 18px;
+					font-weight: 600;
+					line-height: 24.51px;
+					font-family: 'Open Sans', sans-serif;
+					padding: 0px 5px 0px 10px;
+				}
+			}
+			.text_card {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+
+				.BlockDotts {
+					display: flex;
+					align-items: flex-end;
+					text-align: center;
+				}
+			}
+		}
+	}
+
+	.skeleton {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+		.mini_sceleton {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}
