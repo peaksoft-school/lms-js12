@@ -1,16 +1,16 @@
-import scss from './CreateCourse.module.scss';
+import scss from './EditCourse.module.scss'; // Изменено на EditCourse
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
-import gallery from '@/src/assets/photo-bg.png';
+import gallery from '@/src/assets/photo-bg.png'; // Исправлено на gallery
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { useRef, useState } from 'react';
-import { useCreateCourseMutation } from '@/src/redux/api/admin/courses'; // Заменено на useCreateCourseMutation
-import ButtonWithPlus from '../customButton/ButtonWithPlus';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { FC, useRef, useState } from 'react';
+import {
+	useGetCourseQuery, // Изменено на useGetCourseQuery
+	useUpdateCourseMutation // Изменено на useUpdateCourseMutation
+} from '@/src/redux/api/admin/courses'; // Изменено на курсы
 
 const style = {
 	position: 'absolute',
@@ -27,23 +27,34 @@ const style = {
 	}
 };
 
-export default function CreateCourse() { // Заменено на CreateCourse
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
-	const [value, setValue] = useState('');
-	const [data, setData] = useState('');
-	const [text, setText] = useState('');
-	const [hidePhoto, setHidePhoto] = useState(false);
-	const [image, setImage] = useState<string>('');
+interface EditModalProps {
+	open: boolean;
+	handleClose: () => void;
+	saveId: number | null;
+}
+
+const EditCourse: FC<EditModalProps> = ({ // Изменено на EditCourse
+	open,
+	handleClose,
+	saveId
+}) => {
+	const { data } = useGetCourseQuery(); // Изменено на useGetCourseQuery
+	const find = data?.find((id) => id._id === saveId);
+	const [value, setValue] = useState<string>(find?.title || '');
+	const [date, setData] = useState<string>(find?.date || '');
+	const [text, setText] = useState<string>(find?.text || '');
+	const [hidePhoto, setHidePhoto] = useState<boolean>(false);
+	const [image, setImage] = useState<string>(find?.img || '');
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [createCourse] = useCreateCourseMutation(); // Заменено на useCreateCourseMutation
+	const [updateCourse] = useUpdateCourseMutation(); // Изменено на useUpdateCourseMutation
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
+
+	console.log(saveId);
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -59,39 +70,19 @@ export default function CreateCourse() { // Заменено на CreateCourse
 		}
 	};
 
-	const notifySuccess = () => toast.success('Курс успешно создан !');
-	const notifyError = () => toast.error('Произошла ошибка при создании курса');
-
-	const handleCreateCourse = () => { // Заменено на handleCreateCourse
-		const newCourse = { // Заменено на newCourse
+	const updateCourseFunc = async () => { // Изменено на updateCourseFunc
+		const newCourse = { // Изменено на newCourse
 			title: value,
 			img: image,
-			date: data,
+			date: date,
 			text: text
 		};
-		createCourse(newCourse) // Заменено на createCourse
-			.unwrap()
-			.then(() => {
-				notifySuccess();
-				setOpen(false);
-				setData('');
-				setText('');
-				setImage('');
-				setValue('');
-			})
-			.catch(() => {
-				notifyError();
-			});
+		await updateCourse({ newCourse, saveId }); // Изменено на updateCourse
+		handleClose();
 	};
 
 	return (
-		<div className={scss.forButton}>
-			<ToastContainer />
-			<div className={scss.ButtonCont}>
-				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
-					Добавить Курс
-				</ButtonWithPlus>
-			</div>
+		<>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -100,12 +91,12 @@ export default function CreateCourse() { // Заменено на CreateCourse
 			>
 				<Box className={scss.mainModal} sx={style}>
 					<Typography
-						className={scss.Curse}
+						className={scss.Course} // Изменено на Course
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p> Создание курса</p>
+						<p> Редактирование курса</p> {/* Изменено на текст */}
 					</Typography>
 					<Typography
 						className={scss.textPart}
@@ -125,7 +116,7 @@ export default function CreateCourse() { // Заменено на CreateCourse
 								style={{ backgroundImage: `url(${image || gallery})` }}
 							></div>
 							<p className={hidePhoto ? scss.hideText : scss.show}>
-								Нажмите на иконку чтобы загрузить или перетащите фото
+								Нажмите на иконку, чтобы загрузить или перетащите фото
 							</p>
 						</div>
 						<div className={scss.inputs}>
@@ -141,7 +132,7 @@ export default function CreateCourse() { // Заменено на CreateCourse
 							<div className={scss.second_input}>
 								<Input
 									placeholder="Дата курса"
-									value={data}
+									value={date}
 									onChange={(e) => setData(e.target.value)}
 									width="100%"
 									type="date"
@@ -167,17 +158,19 @@ export default function CreateCourse() { // Заменено на CreateCourse
 							<div>
 								<ButtonSave
 									type="submit"
-									onClick={handleCreateCourse}
+									onClick={updateCourseFunc}
 									disabled={false}
 									width="117px"
 								>
-									Добавить
+									Сохранить
 								</ButtonSave>
 							</div>
 						</div>
 					</Typography>
 				</Box>
 			</Modal>
-		</div>
+		</>
 	);
-}
+};
+
+export default EditCourse; // Изменено на EditCourse

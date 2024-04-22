@@ -1,0 +1,108 @@
+.CourseCards {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	padding-left: 30px;
+	justify-content: start;
+	gap: 30px;
+
+	.zeroBlockContainer {
+		width: 270px;
+		height: 305px;
+		display: flex;
+		background: #fff;
+		border: 1px solid #d4d4d4;
+		border-radius: 10px;
+		flex-direction: column;
+		gap: 10px;
+
+		.BlockContainerImage {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding-top: 10px;
+
+			.BlockImage {
+				width: 246px;
+				height: 146px;
+				border-radius: 6px;
+			}
+		}
+
+		.BlockCont {
+			padding: 0px 10px 0px 10px;
+
+			.secondBlockContainer {
+				font-family: 'Open Sans', sans-serif;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				height: 30px;
+				gap: 25px;
+
+				.BlockTitle {
+					font-size: 18px;
+					font-weight: 600;
+					line-height: 24.51px;
+					font-family: 'Open Sans', sans-serif;
+				}
+
+				.BlockDate {
+					font-family: 'Open Sans', sans-serif;
+					font-size: 12px;
+					font-weight: 400;
+					line-height: 16.81px;
+				}
+			}
+
+			.text_card {
+				width: 180px;
+				height: 70px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+
+				.BlockText {
+					font-family: 'Open Sans', sans-serif;
+					font-size: 16px;
+					font-weight: 400;
+					line-height: 22px;
+					display: flex;
+					width: 180px;
+					height: 90px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
+		}
+
+		.BlockButtonDiv {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+
+			.BlockButtonDotts {
+				background: none;
+				border: none;
+			}
+		}
+	}
+}
+
+.PaginationContainerParent {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-inline: 40px;
+
+	.PaginationInput {
+		display: flex;
+		gap: 10px;
+		input {
+			width: 40px;
+			text-align: center;
+		}
+	}
+}
