@@ -1,4 +1,4 @@
-import scss from './DeleteGroups.module.scss';
+import scss from './DeleteGroupsModal.module.scss';
 import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -13,7 +13,7 @@ interface DeleteProps {
 	closeModalDelete: (openModalDelete: boolean) => void;
 	deleteById: number | null;
 }
-const DeleteGroups: React.FC<DeleteProps> = ({
+const DeleteGroupModal: React.FC<DeleteProps> = ({
 	openModalDelete,
 	closeModalDelete,
 	deleteById
@@ -73,4 +73,4 @@ const DeleteGroups: React.FC<DeleteProps> = ({
 		</div>
 	);
 };
-export default DeleteGroups;
+export default DeleteGroupModal;

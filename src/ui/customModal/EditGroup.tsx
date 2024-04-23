@@ -6,7 +6,7 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import galerry from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
 	useGetGroupQuery,
 	useUpdateGroupMutation
@@ -36,13 +36,22 @@ interface EditModalProps {
 const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery();
 	const find = data?.find((id) => id._id === saveId);
-	const [value, setValue] = useState<string>(find?.title || '');
-	const [date, setData] = useState<string>(find?.date || '');
-	const [text, setText] = useState<string>(find?.text || '');
+	console.log(find);
+
+	const [value, setValue] = useState<string>('');
+	const [date, setData] = useState<string>('');
+	const [text, setText] = useState<string>('');
 	const [hidePhoto, setHidePhoto] = useState<boolean>(false);
-	const [image, setImage] = useState<string>(find?.img || '');
+	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [updateGroup] = useUpdateGroupMutation();
+
+	useEffect(() => {
+		setValue(find?.title || '');
+		setData(find?.date || '');
+		setText(find?.text || '');
+		setImage(find?.img || '');
+	}, [find]);
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -141,26 +150,23 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							placeholder="Описание группы"
 						></textarea>
 						<div className={scss.buttons}>
-							<div>
-								<ButtonCancel
-									type="submit"
-									onClick={handleClose}
-									disabled={false}
-									width="103px"
-								>
-									Отмена
-								</ButtonCancel>
-							</div>
-							<div>
-								<ButtonSave
-									type="submit"
-									onClick={updateGroupFunc}
-									disabled={false}
-									width="117px"
-								>
-									Добавить
-								</ButtonSave>
-							</div>
+							<ButtonCancel
+								type="submit"
+								onClick={handleClose}
+								disabled={false}
+								width="103px"
+							>
+								Отмена
+							</ButtonCancel>
+
+							<ButtonSave
+								type="submit"
+								onClick={updateGroupFunc}
+								disabled={false}
+								width="117px"
+							>
+								Добавить
+							</ButtonSave>
 						</div>
 					</Typography>
 				</Box>

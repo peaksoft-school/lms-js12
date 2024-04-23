@@ -87,11 +87,11 @@ export default function CreateGroup() {
 	return (
 		<div className={scss.forButton}>
 			<ToastContainer />
-			<div className={scss.ButtonCont}>
-				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
-					Добавить Группу
-				</ButtonWithPlus>
-			</div>
+
+			<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
+				Добавить Группу
+			</ButtonWithPlus>
+
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -105,7 +105,7 @@ export default function CreateGroup() {
 						variant="h6"
 						component="h2"
 					>
-						<p> Создание группы</p>
+						<p> Создать группу</p>
 					</Typography>
 					<Typography
 						className={scss.textPart}
@@ -154,26 +154,22 @@ export default function CreateGroup() {
 							placeholder="Описание группы"
 						></textarea>
 						<div className={scss.buttons}>
-							<div>
-								<ButtonCancel
-									type="submit"
-									onClick={handleClose}
-									disabled={false}
-									width="103px"
-								>
-									Отмена
-								</ButtonCancel>
-							</div>
-							<div>
-								<ButtonSave
-									type="submit"
-									onClick={handleCreateGroup}
-									disabled={false}
-									width="117px"
-								>
-									Добавить
-								</ButtonSave>
-							</div>
+							<ButtonCancel
+								type="submit"
+								onClick={handleClose}
+								disabled={false}
+								width="103px"
+							>
+								Отмена
+							</ButtonCancel>
+							<ButtonSave
+								type="submit"
+								onClick={handleCreateGroup}
+								disabled={false}
+								width="117px"
+							>
+								Добавить
+							</ButtonSave>
 						</div>
 					</Typography>
 				</Box>
