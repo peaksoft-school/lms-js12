@@ -11,9 +11,11 @@ import Teacher from '@/src/pagesAdmin/components/pages/teachers/Teachers';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
+import Trash from '@/src/ui/trash/Trash';
 import Students from '../pages/studentSection/Students';
 import Groups from '../pages/group/Groups';
 import Courses from '../pages/course/Courses';
+import Cards from '@/src/ui/customCards/Cards';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -72,6 +74,8 @@ const LayoutAdmin = () => {
 						/>
 						<Route path="" element={<HomePage />} />
 						<Route path="/courses" element={<Courses />} />
+						<Route path="/courses" element={<Cards />} />
+						<Route path="/trash" element={<Trash />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
 							path="/courses/:coursesId/:matelials"
