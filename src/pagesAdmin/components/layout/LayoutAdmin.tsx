@@ -13,6 +13,7 @@ import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import Students from '../pages/studentSection/Students';
+import Groups from '../pages/group/Groups';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -77,6 +78,7 @@ const LayoutAdmin = () => {
 							element={<Material />}
 						/>
 						<Route path={'/students'} element={<Students />} />
+						<Route path="/group" element={<Groups />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
