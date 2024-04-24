@@ -37,13 +37,17 @@ export const links = {
 		{
 			name: 'Объявление',
 			icon: <IconBellRinging2 stroke={2} />
+		},
+		{
+			name: 'Trash',
+			icon: <IconTrash stroke={2} />,
+			link: 'trash'
 		}
 	],
 	student: [
 		{
 			name: 'Курсы',
-			icon: <IconDeviceDesktop stroke={2} />,
-			link: ''
+			icon: <IconDeviceDesktop stroke={2} />
 		},
 		{
 			name: 'Расписание',
