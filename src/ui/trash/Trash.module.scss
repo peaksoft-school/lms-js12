@@ -1,0 +1,104 @@
+.trash_parent {
+	h1 {
+		padding: 0px 2px 0px 20px;
+	}
+	.table_container {
+		background: #ffffff;
+		border: 1px solid #d4d4d4;
+		margin: 24px 40px 77px 20px;
+
+		.Trash {
+			min-height: 680px !important;
+			overflow-x: auto;
+			border-radius: 10px;
+			white-space: nowrap;
+			scrollbar-width: thin;
+			scrollbar-color: rgb(55, 114, 255) #fff;
+			@media screen and (min-width: 420px) and (max-width: 520px) {
+				max-width: 400px;
+				width: 100%;
+				overflow-x: scroll;
+			}
+			@media screen and (min-width: 320px) and (max-width: 420px) {
+				max-width: 330px;
+				width: 100%;
+				overflow-x: scroll;
+			}
+			// white-space: nowrap;
+			// 	}
+			// }
+		}
+	}
+
+	.table_automatically_deleted {
+		width: 50%;
+		height: 50px;
+		margin: 10px auto;
+		border-radius: 10px;
+		background: orange;
+		color: white;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	@media only screen and (max-width: 550px) {
+		.table_automatically_deleted {
+			height: 86px;
+			width: 240px;
+		}
+	}
+
+	.Table {
+		width: 100%;
+		border-collapse: collapse;
+
+		thead {
+			border-bottom: 1px solid rgba(131, 122, 122, 0.078);
+			height: 50px;
+			th {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 14px;
+				font-weight: 600;
+				line-height: 19.07px;
+				text-align: start;
+				vertical-align: inherit;
+				padding-left: 20px;
+			}
+		}
+	}
+
+	.table_alternate_row {
+		background-color: #1a237e12;
+	}
+
+	.table_container_second {
+		width: 1140px;
+		height: 50px;
+		text-align: start;
+
+		.TableCell_main {
+		}
+		.table_cell {
+			.TableImage {
+				text-align: end;
+			}
+		}
+	}
+
+	.Table td {
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 21.79px;
+		letter-spacing: 0.02em;
+		vertical-align: inherit;
+		padding-left: 20px;
+	}
+
+	.icon {
+		display: flex;
+		gap: 25px;
+	}
+}
