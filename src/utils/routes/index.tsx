@@ -26,6 +26,7 @@ export const links = {
 		},
 		{
 			name: 'Студенты',
+			link: 'students',
 			icon: <IconUser stroke={2} />
 		},
 		{
