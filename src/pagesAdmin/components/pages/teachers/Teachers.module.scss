@@ -1,136 +1,114 @@
-.mainTable {
-	.HeaderContainer {
-		display: flex;
-		align-items: center;
+.mainDiv {
+	width: 100%;
+	.allContainer {
 		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		padding-right: 40px;
-		padding-top: 30px;
-		h1 {
-			padding: 0px 2px 0px 20px;
-		}
-
-		@media (max-width: 425px) {
-			transition: all 1s ease;
-			justify-content: center;
+		.HeaderContainer {
+			padding-top: 30px;
+			padding-bottom: 40px;
 			display: flex;
-			align-items: center;
-			gap: 20px;
-		}
-		@media (max-width: 325px) {
-			transition: all 1s ease;
-			justify-content: center;
-			display: flex;
-			align-items: center;
-			gap: 20px;
-		}
-	}
+			justify-content: space-between;
+			padding-inline: 30px;
 
-	.TableContainer {
-		min-height: 680px;
-		border-radius: 10px;
-		background: #ffffff;
-		border: 1px solid #d4d4d4;
-		margin: 24px 40px 77px 20px;
-		overflow-x: auto;
-		white-space: nowrap;
-		scrollbar-width: thin;
-		scrollbar-color: rgb(55, 114, 255) #fff;
-
-		.TableTh {
-			width: 60px;
-			padding-left: 70px;
+			@media (max-width: 400px) {
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+			}
 		}
-
-		.Table {
+		.TableContainer {
 			width: 100%;
-			border-collapse: collapse;
-
-			thead {
-				border-bottom: 1px solid #837a7a14;
-				height: 50px;
-				th {
-					font-family: 'Open Sans', sans-serif;
-					font-size: 14px;
-					font-weight: 600;
-					line-height: 19.07px;
-					text-align: center;
-				}
-			}
-		}
-		.button {
-			border: none;
-			background: none;
-		}
-		.TableAlternateRow {
-			background-color: #1a237e12;
-
-			.button {
-				border: none;
-				background: none;
-			}
-		}
-		.TableContainerSecond {
-			width: 1140px;
-			height: 50px;
-			text-align: start;
-			.TableCell {
-				.TableImage {
-					text-align: end;
-				}
-			}
-		}
-		.Table td {
-			font-family: 'Open Sans', sans-serif;
-			font-weight: 400;
-			font-size: 16px;
-			line-height: 21.79px;
-			letter-spacing: 0.02em;
-			text-align: center;
-			padding-left: 80px;
-			text-align: start;
-		}
-	}
-
-	.deleteEdit {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	.mainTable {
-		padding: 40px 40px 40px 20px;
-	}
-
-	.PaginationContainerParent {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding-inline: 40px;
-
-		.PaginationInput {
+			flex-direction: column;
 			display: flex;
-			gap: 10px;
+			align-items: center;
+			justify-content: center;
+			padding-inline: 30px;
+
+			.TeacherContainer {
+				background: #fff;
+				min-height: 680px !important;
+				width: 100%;
+				border-radius: 20px;
+				border: 1px solid rgb(219, 210, 210);
+				scrollbar-width: thin;
+				scrollbar-color: rgb(55, 114, 255) #fff;
+
+				@media screen and (min-width: 1000px) and (max-width: 1240px) {
+					max-width: 840px;
+					overflow-x: scroll;
+				}
+				@media screen and (min-width: 320px) and (max-width: 980px) {
+					max-width: 900px;
+					width: 100%;
+					overflow-x: scroll;
+				}
+
+				.Table {
+					width: 100%;
+					border-spacing: 0px;
+					padding-left: 10px;
+
+					thead {
+						border-bottom: 1px solid #837a7a14;
+						height: 50px;
+						background: #fff;
+						th {
+							font-family: 'Open Sans', sans-serif;
+							font-size: 14px;
+							font-weight: 600;
+							line-height: 19.07px;
+							text-align: start;
+							padding-left: 20px;
+						}
+					}
+					tbody {
+						.TableAlternateRow {
+							background: #837a7a14;
+						}
+
+						.TableContainerSecond {
+							height: 50px;
+						}
+						tr {
+							.TableCell {
+								padding-left: 20px;
+							}
+
+							.TableCellIcon {
+								text-align: end;
+
+								button {
+									background: none;
+									border: none;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.PaginationContainerParent {
+			display: flex;
 			justify-content: space-around;
-			align-items: center;
-			width: 100%;
+			width: 90%;
+			padding-top: 70px;
+
+			@media (max-width: 1140px) {
+				width: 100%;
+				max-width: 1140px;
+			}
 
 			@media (max-width: 1000px) {
-				padding-bottom: 200px;
-			}
-			input {
-				width: 40px;
-				text-align: center;
-				height: 20px;
+				padding-bottom: 120px;
 			}
 
 			.callInput {
 				display: flex;
-				gap: 20px;
-				align-items: center;
+				gap: 10px;
+				input {
+					width: 40px;
+					height: 20px;
+				}
 			}
 		}
 	}

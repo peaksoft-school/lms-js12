@@ -77,124 +77,130 @@ const Teachers = () => {
 	};
 
 	return (
-		<div className={scss.mainTable}>
-			<div className={scss.HeaderContainer}>
-				<h1>Учителя</h1>
-				<ModalAddTeacher />
-			</div>
-
-			<div className={scss.TableContainer}>
-				<table className={scss.Table}>
-					<thead>
-						<tr>
-							<th className={scss.TableTh}>№</th>
-							<th>Имя Фамилия</th>
-							<th>Специализация</th>
-							<th>Номер телефона</th>
-							<th>E-mail</th>
-							<th>группы</th>
-							<th>Действия</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data &&
-							data
-								.slice(
-									(currentPage - 1) * rowsPerPage,
-									currentPage * rowsPerPage
-								)
-								.map((item, index) => (
-									<tr
-										key={item._id}
-										className={
-											index % 2 === 1
-												? scss.TableAlternateRow
-												: '' || scss.TableContainerSecond
-										}
-									>
-										<td className={scss.TableCellNumber}>
-											{index + 1 + (currentPage - 1) * rowsPerPage}
-										</td>
-										<td className={scss.TableCell}>
-											{item.firstName} {item.lastName}
-										</td>
-										<td className={scss.TableCell}>{item.specialization}</td>
-										<td className={scss.TableCell}>{item.phoneNumber}</td>
-										<td className={scss.TableCell}>{item.email}</td>
-										<td className={scss.TableCell}>{item.group}</td>
-										<td className={scss.TableCell}>
-											<button
-												className={scss.button}
-												aria-controls={open ? 'basic-menu' : undefined}
-												aria-haspopup="true"
-												onClick={(e) => {
-													handleClick(e);
-													setDeleteById(item._id!);
-												}}
+		<div className={scss.mainDiv}>
+			<div className={scss.allContainer}>
+				<div className={scss.HeaderContainer}>
+					<h1>Учителя</h1>
+					<ModalAddTeacher />
+				</div>
+				<div className={scss.TableContainer}>
+					<div className={scss.TeacherContainer}>
+						<table className={scss.Table}>
+							<thead>
+								<tr>
+									<th className={scss.TableTh}>№</th>
+									<th>Имя</th>
+									<th> Фамилия</th>
+									<th>Специализация</th>
+									<th>Номер телефона</th>
+									<th>E-mail</th>
+									<th>группы</th>
+									<th>Действия</th>
+								</tr>
+							</thead>
+							<tbody>
+								{data &&
+									data
+										.slice(
+											(currentPage - 1) * rowsPerPage,
+											currentPage * rowsPerPage
+										)
+										.map((item, index) => (
+											<tr
+												key={item._id}
+												className={
+													index % 2 === 1
+														? scss.TableAlternateRow
+														: '' || scss.TableContainerSecond
+												}
 											>
-												<IconDotsVertical stroke={2} />
-											</button>
-											<Menu
-												className={scss.deleteEdit}
-												id="basic-menu"
-												anchorEl={anchorEl}
-												open={open}
-												onClose={handleClose}
-												MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-												elevation={0}
-												anchorOrigin={{
-													vertical: 'bottom',
-													horizontal: 'right'
-												}}
-												transformOrigin={{
-													vertical: 'top',
-													horizontal: 'right'
-												}}
-											>
-												<MenuItem
-													style={{ display: 'flex', gap: '20px' }}
-													className={scss.dropdown}
-													onClick={() => {
-														setOpenModalEdit(true);
-														setAnchorEl(null);
-													}}
-												>
-													<img src={editIcon} alt="Edit" />
-													<p>Редактировать</p>
-												</MenuItem>
-												<MenuItem
-													style={{ display: 'flex', gap: '20px' }}
-													className={scss.dropdown}
-													onClick={() => {
-														setOpenModalDelete(true);
-														setAnchorEl(null);
-													}}
-												>
-													<img src={deleteIcon} alt="Delete" />
-													<p>Удалить</p>
-												</MenuItem>
-											</Menu>
-										</td>
-									</tr>
-								))}
-					</tbody>
-				</table>
+												<td className={scss.TableCellNumber}>
+													{index + 1 + (currentPage - 1) * rowsPerPage}
+												</td>
 
-				<ModalEditTeacher
-					openModalEdit={openModalEdit}
-					closeModalEdit={() => setOpenModalEdit(false)}
-					deleteById={deleteById}
-				/>
-			</div>
-			<DeleteTeacherModal
-				openModalDelete={openModalDelete}
-				closeModalDelete={setOpenModalDelete}
-				deleteById={deleteById}
-			/>
+												<td className={scss.TableCell}>{item.lastName}</td>
+												<td className={scss.TableCell}>{item.firstName}</td>
+												<td className={scss.TableCell}>
+													{item.specialization}
+												</td>
+												<td className={scss.TableCell}>{item.phoneNumber}</td>
+												<td className={scss.TableCell}>{item.email}</td>
+												<td className={scss.TableCell}>{item.group}</td>
+												<td className={scss.TableCellIcon}>
+													<button
+														className={scss.button}
+														aria-controls={open ? 'basic-menu' : undefined}
+														aria-haspopup="true"
+														onClick={(e) => {
+															handleClick(e);
+															setDeleteById(item._id!);
+														}}
+													>
+														<IconDotsVertical stroke={2} />
+													</button>
+													<Menu
+														className={scss.deleteEdit}
+														id="basic-menu"
+														anchorEl={anchorEl}
+														open={open}
+														onClose={handleClose}
+														MenuListProps={{
+															'aria-labelledby': 'basic-button'
+														}}
+														elevation={0}
+														anchorOrigin={{
+															vertical: 'bottom',
+															horizontal: 'right'
+														}}
+														transformOrigin={{
+															vertical: 'top',
+															horizontal: 'right'
+														}}
+													>
+														<MenuItem
+															style={{ display: 'flex', gap: '20px' }}
+															className={scss.dropdown}
+															onClick={() => {
+																setOpenModalEdit(true);
+																setAnchorEl(null);
+															}}
+														>
+															<img src={editIcon} alt="Edit" />
+															<p>Редактировать</p>
+														</MenuItem>
+														<MenuItem
+															style={{ display: 'flex', gap: '20px' }}
+															className={scss.dropdown}
+															onClick={() => {
+																setOpenModalDelete(true);
+																setAnchorEl(null);
+															}}
+														>
+															<img src={deleteIcon} alt="Delete" />
+															<p>Удалить</p>
+														</MenuItem>
+													</Menu>
+												</td>
+											</tr>
+										))}
+							</tbody>
+						</table>
 
-			<div className={scss.PaginationContainerParent}>
-				{/* //! 1 */}
-				<div className={scss.PaginationInput}>
+						<ModalEditTeacher
+							openModalEdit={openModalEdit}
+							closeModalEdit={() => setOpenModalEdit(false)}
+							deleteById={deleteById}
+						/>
+					</div>
+					<DeleteTeacherModal
+						openModalDelete={openModalDelete}
+						closeModalDelete={setOpenModalDelete}
+						deleteById={deleteById}
+					/>
+				</div>
+				<div className={scss.PaginationContainerParent}>
+					{/* //! 1 */}
+
 					<div className={scss.callInput}>
 						<p>Перейти на страницу</p>
 						<input

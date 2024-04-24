@@ -5,8 +5,8 @@ import {
 	usePatchCompletedMutationMutation
 } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader.tsx';
-// import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
-// import SearchPhoto from '@/src/assets/svgs/search.svg';
+import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
+import SearchPhoto from '@/src/assets/svgs/search.svg';
 import Input from '@/src/ui/customInput/Input';
 import { Button } from '@mui/material';
 import ButtonExelPhoto from '@/src/assets/svgs/Vector (1).svg';
@@ -14,7 +14,7 @@ import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { IconDotsVertical } from '@tabler/icons-react';
+import { IconDotsVertical } from '@tabler/icons-react';	
 
 const Students = () => {
 	const { data, isLoading } = useGetStudentTableQuery();
@@ -96,155 +96,157 @@ const Students = () => {
 
 	return (
 		<div className={scss.StudentParentContainer}>
-			<div className={scss.sectionLogics}>
-				<div className={scss.inputWithIcon}>
-					{/* <img src={FilterPhoto} alt="Filter" className={scss.inputIcon} />
-						<img src={SearchPhoto} alt="Search" className={scss.SearchIcon} /> */}
-					<Input
-						width="1100px"
-						placeholder="Поиск"
-						type="text"
-						value={searchTerm}
-						onChange={handleSearchChange}
-					/>
-				</div>
+			<div className={scss.allContainer}>
+				<div className={scss.sectionLogics}>
+					<div className={scss.inputWithIcon}>
+						<img src={FilterPhoto} alt="Filter" className={scss.inputIcon} />
+						<img src={SearchPhoto} alt="Search" className={scss.SearchIcon} />
+						<Input
+							width="100%"
+							placeholder="Поиск"
+							type="text"
+							value={searchTerm}
+							onChange={handleSearchChange}
+						/>
+					</div>
 
-				<div className={scss.Parent_second_btn}>
-					<Button className={scss.ExelButton} variant="outlined">
-						<img src={ButtonExelPhoto} alt="#" />
-						Импорт Exel
-					</Button>
-					<div className={scss.Button_UI}>
-						<ModalAddStudent />
+					<div className={scss.Parent_second_btn}>
+						<Button className={scss.ExelButton} variant="outlined">
+							<img src={ButtonExelPhoto} alt="#" />
+							Импорт Exel
+						</Button>
+						<div className={scss.Button_UI}>
+							<ModalAddStudent />
+						</div>
 					</div>
 				</div>
-			</div>
-			<div className={scss.TitleStudent}>
-				<h1>Студенты</h1>
-			</div>
-			<div className={scss.StudentContainer}>
-				<table className={scss.Table}>
-					<thead>
-						<tr>
-							<th className={scss.TableTh}>№</th>
-							<th>Имя</th>
-							<th>Фамилия</th>
-							<th>Группа</th>
-							<th>Формат обучения</th>
-							<th>Номер телефона</th>
-							<th>E-mail</th>
-							<th>Действия</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data
-							?.slice(
-								(currentPage - 1) * rowsPerPage,
-								currentPage * rowsPerPage
-							)
-							.map((item, index) => (
-								<tr
-									key={item._id}
-									className={
-										index % 2 === 1
-											? scss.TableAlternateRow
-											: '' || scss.StudentContainerSecond
-									}
-								>
-									<td className={!item.isCompleted ? scss.changeClass : ''}>
-										{index + 1 + (currentPage - 1) * rowsPerPage}
-									</td>
-									<td className={!item.isCompleted ? scss.changeClass : ''}>
-										{item.firstName}
-									</td>
-									<td className={!item.isCompleted ? scss.changeClass : ''}>
-										{item.lastName}
-									</td>
-									<td className={!item.isCompleted ? scss.changeClass : ''}>
-										{item.group}
-									</td>
-									<td className={!item.isCompleted ? scss.changeClass : ''}>
-										{item.TrainingFormat}
-									</td>
-									<td className={!item.isCompleted ? scss.changeClass : ''}>
-										{item.phone_number}
-									</td>
-									<td className={!item.isCompleted ? scss.changeClass : ''}>
-										{item.email}
-									</td>
-									<td>
-										<button
-											className={scss.Button_Photo}
-											onClick={(event) => {
-												setAnchorEl(event.currentTarget);
-												setSaveIdElement(item._id);
-												setSaveItem(item);
-											}}
-										>
+				<div className={scss.TitleStudent}>
+					<h1>Студенты</h1>
+				</div>
+				<div className={scss.StudentContainer}>
+					<table className={scss.Table}>
+						<thead>
+							<tr>
+								<th className={scss.TableTh}>№</th>
+								<th>Имя</th>
+								<th>Фамилия</th>
+								<th>Группа</th>
+								<th>Формат обучения</th>
+								<th>Номер телефона</th>
+								<th>E-mail</th>
+								<th>Действия</th>
+							</tr>
+						</thead>
+						<tbody>
+							{data
+								?.slice(
+									(currentPage - 1) * rowsPerPage,
+									currentPage * rowsPerPage
+								)
+								.map((item, index) => (
+									<tr
+										key={item._id}
+										className={
+											index % 2 === 1
+												? scss.TableAlternateRow
+												: '' || scss.StudentContainerSecond
+										}
+									>
+										<td className={!item.isCompleted ? scss.changeClass : ''}>
+											{index + 1 + (currentPage - 1) * rowsPerPage}
+										</td>
+										<td className={!item.isCompleted ? scss.changeClass : ''}>
+											{item.firstName}
+										</td>
+										<td className={!item.isCompleted ? scss.changeClass : ''}>
+											{item.lastName}
+										</td>
+										<td className={!item.isCompleted ? scss.changeClass : ''}>
+											{item.group}
+										</td>
+										<td className={!item.isCompleted ? scss.changeClass : ''}>
+											{item.TrainingFormat}
+										</td>
+										<td className={!item.isCompleted ? scss.changeClass : ''}>
+											{item.phone_number}
+										</td>
+										<td className={!item.isCompleted ? scss.changeClass : ''}>
+											{item.email}
+										</td>
+										<td className={scss.TableCellIcon}>
 											<button
 												className={scss.Button_Photo}
-												onClick={() => setAnchorEl(null)}
+												onClick={(event) => {
+													setAnchorEl(event.currentTarget);
+													setSaveIdElement(item._id);
+													setSaveItem(item);
+												}}
 											>
-												<IconDotsVertical />
+												<button
+													className={scss.Button_Photo}
+													onClick={() => setAnchorEl(null)}
+												>
+													<IconDotsVertical />
+												</button>
 											</button>
-										</button>
-									</td>
-								</tr>
-							))}
-						<StudentMenu
-							anchorEl={anchorEl}
-							open={Boolean(anchorEl)}
-							onClose={() => setAnchorEl(null)}
-							setOpenEditModal={() => setOpenEditModal(true)}
-							setOpenDeleteModal={setOpenDeleteModal}
-							updateCompletedFunc={updateCompletedFunc}
-							handleCloseEditModal={handleCloseEditModal}
-							openEditModal={openEditModal}
-							item={data?.slice(
-								(currentPage - 1) * rowsPerPage,
-								currentPage * rowsPerPage
-							)}
-							saveIdElement={saveIdElement}
-							openDeleteModal={openDeleteModal}
-						/>
-					</tbody>
-				</table>
-			</div>
-			<div className={scss.PaginationContainerParent}>
-				<div className={scss.Inputs}>
-					<p>Перейти на страницу</p>
-					<input
-						type="text"
-						value={openPart}
-						onChange={(e) => setOpenPart(+e.target.value)}
-						onKeyDown={(e) => {
-							handleAppend(e);
-							openPartFunc();
-						}}
-					/>
+										</td>
+									</tr>
+								))}
+							<StudentMenu
+								anchorEl={anchorEl}
+								open={Boolean(anchorEl)}
+								onClose={() => setAnchorEl(null)}
+								setOpenEditModal={() => setOpenEditModal(true)}
+								setOpenDeleteModal={setOpenDeleteModal}
+								updateCompletedFunc={updateCompletedFunc}
+								handleCloseEditModal={handleCloseEditModal}
+								openEditModal={openEditModal}
+								item={data?.slice(
+									(currentPage - 1) * rowsPerPage,
+									currentPage * rowsPerPage
+								)}
+								saveIdElement={saveIdElement}
+								openDeleteModal={openDeleteModal}
+							/>
+						</tbody>
+					</table>
 				</div>
-				<div>
-					<Stack direction="row" spacing={2}>
-						<Pagination
-							count={Math.ceil(data!.length / rowsPerPage)}
-							page={currentPage}
-							onChange={handlePageChangeC}
-							shape="rounded"
-							variant="outlined"
+				<div className={scss.PaginationContainerParent}>
+					<div className={scss.Inputs}>
+						<p>Перейти на страницу</p>
+						<input
+							type="text"
+							value={openPart}
+							onChange={(e) => setOpenPart(+e.target.value)}
+							onKeyDown={(e) => {
+								handleAppend(e);
+								openPartFunc();
+							}}
 						/>
-					</Stack>
-				</div>
-				<div className={scss.Inputs}>
-					<p>Показать</p>
-					<input
-						type="text"
-						value={openPage}
-						onChange={(e) => setOpenPage(+e.target.value)}
-						onKeyDown={(e) => {
-							handleAppend(e);
-							openPartPage();
-						}}
-					/>
+					</div>
+					<div>
+						<Stack direction="row" spacing={2}>
+							<Pagination
+								count={Math.ceil(data!.length / rowsPerPage)}
+								page={currentPage}
+								onChange={handlePageChangeC}
+								shape="rounded"
+								variant="outlined"
+							/>
+						</Stack>
+					</div>
+					<div className={scss.Inputs}>
+						<p>Показать</p>
+						<input
+							type="text"
+							value={openPage}
+							onChange={(e) => setOpenPage(+e.target.value)}
+							onKeyDown={(e) => {
+								handleAppend(e);
+								openPartPage();
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

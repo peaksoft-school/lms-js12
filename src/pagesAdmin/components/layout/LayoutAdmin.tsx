@@ -13,12 +13,19 @@ import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import Students from '../pages/studentSection/Students';
+import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import Groups from '../pages/group/Groups';
+import CreateGroup from '@/src/ui/customModal/CreateGroup';
+import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
+import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
 	const { data } = useGetTeacherQuery();
+
+	const { data: groups = [] } = useGetGroupQuery();
+	const { data: student = [] } = useGetStudentTableQuery();
 
 	useEffect(() => {
 		const changeIsMobile = () => {
@@ -77,8 +84,34 @@ const LayoutAdmin = () => {
 							path="/courses/:coursesId/:matelials"
 							element={<Material />}
 						/>
-						<Route path={'/students'} element={<Students />} />
-						<Route path="/group" element={<Groups />} />
+						<Route
+							path={'/students'}
+							element={
+								!student || student.length === 0 ? (
+									<NotCreated
+										text="Вы пока не добавили группу!"
+										button={<ModalAddStudent />}
+										name="Учителя"
+									/>
+								) : (
+									<Students />
+								)
+							}
+						/>
+						<Route
+							path="/group"
+							element={
+								!groups || groups.length === 0 ? (
+									<NotCreated
+										text="Вы пока не добавили группу!"
+										button={<CreateGroup />}
+										name="Учителя"
+									/>
+								) : (
+									<Groups />
+								)
+							}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
