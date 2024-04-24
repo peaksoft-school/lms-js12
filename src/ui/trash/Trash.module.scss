@@ -1,8 +1,8 @@
-.TrashParent {
+.trash_parent {
 	h1 {
 		padding: 0px 2px 0px 20px;
 	}
-	.TableContainer {
+	.table_container {
 		background: #ffffff;
 		border: 1px solid #d4d4d4;
 		margin: 24px 40px 77px 20px;
@@ -30,7 +30,7 @@
 		}
 	}
 
-	.TableAutomaticallyDeleted {
+	.table_automatically_deleted {
 		width: 50%;
 		height: 50px;
 		margin: 10px auto;
@@ -44,10 +44,9 @@
 	}
 
 	@media only screen and (max-width: 550px) {
-		.TableAutomaticallyDeleted {
+		.table_automatically_deleted {
 			height: 86px;
 			width: 240px;
-			//  font-size: 6.5px;
 		}
 	}
 
@@ -70,18 +69,18 @@
 		}
 	}
 
-	.TableAlternateRow {
+	.table_alternate_row {
 		background-color: #1a237e12;
 	}
 
-	.TableContainerSecond {
+	.table_container_second {
 		width: 1140px;
 		height: 50px;
 		text-align: start;
 
 		.TableCell_main {
 		}
-		.TableCell {
+		.table_cell {
 			.TableImage {
 				text-align: end;
 			}

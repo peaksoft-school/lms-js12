@@ -17,10 +17,10 @@ const Trash: FC = () => {
 	}
 
 	return (
-		<div className={scss.TrashParent}>
+		<div className={scss.trash_parent}>
 			<h1>Корзина</h1>
-			<div className={scss.TableContainer}>
-				<div className={scss.TableAutomaticallyDeleted}>
+			<div className={scss.table_container}>
+				<div className={scss.table_automatically_deleted}>
 					Элементы в корзине автоматически удаляются через 7 дней с момента
 					добавления!
 				</div>
@@ -40,13 +40,13 @@ const Trash: FC = () => {
 										// key={item._id}
 										className={
 											index % 2 === 1
-												? scss.TableAlternateRow
-												: '' || scss.TableContainerSecond
+												? scss.table_alternate_row
+												: '' || scss.table_container_second
 										}
 									>
 										<td className={scss.TableCell_main}>{card.name}</td>
-										<td className={scss.TableCell}>{card.date}</td>
-										<td className={scss.TableCell}>
+										<td className={scss.table_cell}>{card.date}</td>
+										<td className={scss.table_cell}>
 											<div className={scss.icon}>
 												<div>
 													<IconRefresh />
