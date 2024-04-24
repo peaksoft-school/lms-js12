@@ -13,7 +13,7 @@ import EditCourse from '@/src/ui/customModal/EditCourse';
 import CreateCourse from '@/src/ui/customModal/CreateCurse';
 
 const Courses: FC = () => {
-	const [openEditModal, setOpenEditModal] = useState(false);
+	const [openEditModal, setOpenEditModal] = useState(false);	
 	const { data } = useGetGroupQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
