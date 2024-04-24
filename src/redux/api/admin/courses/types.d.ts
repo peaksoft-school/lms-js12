@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace COURSES {
-	type Course = {
+	type CoursesResponse = {
 		_id: number;
 		title: string;
 		date: string;
 		text: string;
 		img: string;
-	};
-
-	type CoursesResponse = Course[];
+	}[];
 	type CoursesRequest = void;
 	type CreateCourseResponse = {
 		title: string;

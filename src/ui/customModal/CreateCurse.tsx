@@ -69,19 +69,18 @@ export default function CreateCourse() {
 			date: data,
 			text: text
 		};
-		createCourse(newCourse)
-			.unwrap()
-			.then(() => {
-				notifySuccess();
-				setOpen(false);
-				setData('');
-				setText('');
-				setImage('');
-				setValue('');
-			})
-			.catch(() => {
-				notifyError();
-			});
+		createCourse(newCourse).unwrap();
+		try {
+			createCourse(newCourse).unwrap();
+			notifySuccess();
+			setOpen(false);
+			setData('');
+			setText('');
+			setImage('');
+			setValue('');
+		} catch (error) {
+			notifyError();
+		}
 	};
 
 	return (
