@@ -33,7 +33,7 @@ interface EditModalProps {
 	saveId: number | null;
 }
 
-const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
+const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery();
 	const find = data?.find((id) => id._id === saveId);
 	console.log(find);
@@ -128,7 +128,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							<div className={scss.first_input}>
 								<Input
 									width="100%"
-									placeholder="Название группы"
+									placeholder="Название курсы"
 									value={value}
 									onChange={(e) => setValue(e.target.value)}
 									type="text"
@@ -136,7 +136,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							</div>
 							<div className={scss.second_input}>
 								<Input
-									placeholder="Название группы"
+									placeholder="Название курсы"
 									value={date}
 									onChange={(e) => setData(e.target.value)}
 									width="100%"
@@ -147,7 +147,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<textarea
 							value={text}
 							onChange={(e) => setText(e.target.value)}
-							placeholder="Описание группы"
+							placeholder="Описание курсы"
 						></textarea>
 						<div className={scss.buttons}>
 							<ButtonCancel
@@ -175,4 +175,4 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	);
 };
 
-export default EditGroup;
+export default EditCourse;

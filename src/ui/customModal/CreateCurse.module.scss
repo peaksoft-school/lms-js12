@@ -1,128 +1,144 @@
+.ButtonCont {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.forButton {
+	display: flex;
+	padding-right: 207px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	@media (max-width: 600px) {
+		padding-right: 60px;
+	}
+}
+
 .mainModal {
 	border-radius: 20px;
 	width: 541px !important;
 	padding: 0px 0px !important;
-
 	@media (max-width: 600px) {
 		width: 90% !important;
 		height: 90% !important;
 		border-radius: 10px;
 	}
-	.Curse {
-		border-top-right-radius: 12px;
-		border-top-left-radius: 12px;
-		margin-bottom: 20px;
-		text-align: center;
-		background: #3772ff;
-		color: #ffff;
-		padding: 20px;
-	}
+}
 
-	.textPart {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: flex-end;
-		gap: 20px;
-		padding: 20px;
-		p {
-			font-size: 20px !important;
-		}
-		.background {
-			width: 173px;
-			height: 145px;
-			background: url('../../assets//png/Group\ 35\ \(1\).png');
-		}
-		.backgroundNone {
-			width: 173px;
-			height: 145px;
-		}
-		.imgPart {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			max-width: 309px;
-			gap: 10px;
-			width: 100%;
+.Curse {
+	border-top-right-radius: 12px;
+	border-top-left-radius: 12px;
+	margin-bottom: 20px;
+	text-align: center;
+	background: #3772ff;
+	color: #ffff;
+	padding: 20px;
+}
 
-			img {
-				width: 173px;
-				height: 145px;
-			}
-			p {
-				color: rgb(141, 148, 158) !important;
-				font-size: 18px !important;
-			}
-			.hideText {
-				display: none;
-			}
-		}
+.textPart {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 20px;
+	padding: 20px;
+}
 
-		.fileInput {
-			display: none;
-		}
-		.inputs {
-			max-width: 541px !important;
-			width: 100% !important;
-			gap: 12px;
-			display: flex;
-			justify-content: space-between;
-			padding-left: 10px;
-			padding-right: 10px;
-			@media (max-width: 600px) {
-				padding: 0;
-				flex-direction: column;
-				align-items: flex-start;
-			}
+.textPart p {
+	font-size: 20px !important;
+}
 
-			.first_input {
-				max-width: 367px !important;
-				width: 100% !important;
-			}
+.textPart .background {
+	width: 173px;
+	height: 145px;
+	background: url('../../assets/photo-bg.png');
+}
 
-			.second_input {
-				max-width: 149px;
-				width: 100%;
-			}
-		}
+.textPart .backgroundNone {
+	width: 173px;
+	height: 145px;
+}
 
-		// ! Text Area
-		textarea {
-			border-radius: 10px;
-			max-width: 491px;
-			width: 100%;
-			padding-left: 25px;
-			padding-right: 25px;
-			height: 123px;
-			resize: none;
+.textPart .imgPart {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	max-width: 309px;
+	gap: 10px;
+	width: 100%;
+}
 
-			&::placeholder {
-				font-size: 16px;
-				padding: 10px;
-				color: rgb(141, 148, 158);
-				font-weight: 400;
-			}
-			border: 1px solid rgb(194, 193, 193);
-			@media (max-width: 600px) {
-				padding: 20px;
-				flex-direction: column;
-				align-items: flex-start;
-			}
-		}
+.textPart .imgPart img {
+	width: 173px;
+	height: 145px;
+}
 
-		.buttons {
-			display: flex;
-			gap: 10px;
-			flex-wrap: wrap;
-			-ms-flex-align: end;
-			align-items: flex-end;
-			justify-content: flex-end;
-			text-align: right;
-			height: 100%;
-			width: 100%;
-			padding-left: 5px;
-			padding-right: 5px;
-		}
-	}
+.textPart .imgPart p {
+	color: rgb(141, 148, 158) !important;
+	font-size: 18px !important;
+}
+
+.textPart .imgPart .hideText {
+	display: none;
+}
+
+.textPart .fileInput {
+	display: none;
+}
+
+.textPart .inputs {
+	max-width: 541px !important;
+	width: 100% !important;
+	gap: 12px;
+	display: flex;
+	justify-content: space-between;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.textPart .inputs .first_input {
+	max-width: 367px !important;
+	width: 100% !important;
+}
+
+.textPart .inputs .second_input {
+	max-width: 149px;
+	width: 100%;
+}
+
+.textPart textarea {
+	border-radius: 10px;
+	max-width: 491px;
+	width: 100%;
+	padding-left: 25px;
+	padding-right: 25px;
+	height: 123px;
+	resize: none;
+}
+
+.textPart textarea::placeholder {
+	font-size: 16px;
+	padding: 10px;
+	color: rgb(141, 148, 158);
+	font-weight: 400;
+}
+
+.textPart textarea {
+	border: 1px solid rgb(194, 193, 193);
+}
+
+.textPart .buttons {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	-ms-flex-align: end;
+	align-items: flex-end;
+	justify-content: flex-end;
+	text-align: right;
+	height: 100%;
+	width: 100%;
+	padding-left: 5px;
+	padding-right: 5px;
 }
