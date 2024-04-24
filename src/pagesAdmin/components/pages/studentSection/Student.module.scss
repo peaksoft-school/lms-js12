@@ -72,7 +72,175 @@
 				display: flex;
 				align-items: center;
 				width: 100%;
-				max-width: 1300px;
+
+				.inputIcon {
+					position: relative;
+					left: 1100px;
+					transition: all 0.2s ease-in-out;
+					border: none;
+					cursor: pointer;
+					z-index: 2;
+					@media (max-width: 1700px) {
+						position: relative;
+						left: 850px;
+					}
+					@media (max-width: 1630px) {
+						position: relative;
+						left: 780px;
+					}
+					@media (max-width: 1600px) {
+						position: relative;
+						left: 1270px;
+					}
+					@media (max-width: 1580px) {
+						position: relative;
+						left: 1240px;
+					}
+					@media (max-width: 1520px) {
+						position: relative;
+						left: 1170px;
+					}
+					@media (max-width: 1450px) {
+						position: relative;
+						left: 1090px;
+					}
+					@media (max-width: 1370px) {
+						position: relative;
+						left: 980px;
+					}
+					@media (max-width: 1250px) {
+						position: relative;
+						left: 900px;
+					}
+					@media (max-width: 1170px) {
+						position: relative;
+						left: 830px;
+					}
+					@media (max-width: 900px) {
+						position: relative;
+						left: 760px;
+					}
+					@media (max-width: 830px) {
+						position: relative;
+						left: 700px;
+					}
+					@media (max-width: 770px) {
+						position: relative;
+						left: 630px;
+					}
+					@media (max-width: 700px) {
+						position: relative;
+						left: 550px;
+					}
+					@media (max-width: 620px) {
+						position: relative;
+						left: 480px;
+					}
+					@media (max-width: 550px) {
+						position: relative;
+						left: 440px;
+					}
+					@media (max-width: 510px) {
+						position: relative;
+						left: 400px;
+					}
+					@media (max-width: 470px) {
+						position: relative;
+						left: 350px;
+					}
+					@media (max-width: 420px) {
+						position: relative;
+						left: 300px;
+					}
+					@media (max-width: 370px) {
+						position: relative;
+						left: 250px;
+					}
+				}
+
+				.SearchIcon {
+					position: relative;
+					left: 1040px;
+					transition: all 0.2s ease-in-out;
+
+					@media (max-width: 1700px) {
+						position: relative;
+						left: 800px;
+					}
+					@media (max-width: 1630px) {
+						position: relative;
+						left: 720px;
+					}
+					@media (max-width: 1600px) {
+						position: relative;
+						left: 1210px;
+					}
+
+					@media (max-width: 1580px) {
+						position: relative;
+						left: 1180px;
+					}
+					@media (max-width: 1520px) {
+						position: relative;
+						left: 1100px;
+					}
+					@media (max-width: 1450px) {
+						position: relative;
+						left: 1000px;
+					}
+					@media (max-width: 1370px) {
+						position: relative;
+						left: 900px;
+					}
+					@media (max-width: 1250px) {
+						position: relative;
+						left: 850px;
+					}
+					@media (max-width: 1170px) {
+						position: relative;
+						left: 770px;
+					}
+					@media (max-width: 900px) {
+						position: relative;
+						left: 690px;
+					}
+					@media (max-width: 830px) {
+						position: relative;
+						left: 650px;
+					}
+					@media (max-width: 770px) {
+						position: relative;
+						left: 580px;
+					}
+					@media (max-width: 700px) {
+						position: relative;
+						left: 500px;
+					}
+					@media (max-width: 620px) {
+						position: relative;
+						left: 430px;
+					}
+					@media (max-width: 550px) {
+						position: relative;
+						left: 380px;
+					}
+					@media (max-width: 510px) {
+						position: relative;
+						left: 330px;
+					}
+					@media (max-width: 470px) {
+						position: relative;
+						left: 290px;
+					}
+					@media (max-width: 420px) {
+						position: relative;
+						left: 240px;
+					}
+					@media (max-width: 370px) {
+						position: relative;
+						left: 190px;
+					}
+				}
 
 				input {
 					width: 100%;

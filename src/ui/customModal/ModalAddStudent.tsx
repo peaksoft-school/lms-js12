@@ -159,17 +159,17 @@ const ModalAddStudent = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.main_modal}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Добавить студента</p>
+						<p className={scss.com_text}>Добавить студента</p>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<form
 							style={{ width: '100%', maxWidth: '470px' }}
 							onSubmit={handleSubmit(onSubmit)}

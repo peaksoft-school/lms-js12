@@ -59,7 +59,7 @@ const ModalAddLesson = () => {
 						<p className={scss.comText}>Добавить урок</p>
 					</Typography>
 
-					<Typography className={scss.input_buttonCard}>
+					<Typography className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Input
 								type="text"
@@ -70,7 +70,7 @@ const ModalAddLesson = () => {
 							/>
 						</div>
 
-						<div className={scss.buttonAdd}>
+						<div className={scss.button_add}>
 							<ButtonCancel
 								type="submit"
 								onClick={handleClose}

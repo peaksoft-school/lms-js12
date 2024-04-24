@@ -65,9 +65,9 @@ export default function CreateCourse() {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={scss.mainModal} sx={style}>
+				<Box className={scss.main_modal} sx={style}>
 					<Typography
-						className={scss.Curse}
+						className={scss.curse}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
@@ -75,29 +75,29 @@ export default function CreateCourse() {
 						<p>Создать курс</p>
 					</Typography>
 					<Typography
-						className={scss.textPart}
+						className={scss.text_part}
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
 						<div
-							className={scss.imgPart}
+							className={scss.img_part}
 							style={{
 								backgroundImage: `url(${image})`,
 								backgroundSize: '310px'
 							}}
 						>
 							<input
-								className={scss.fileInput}
+								className={scss.file_input}
 								type="file"
 								ref={fileInputRef}
 								onChange={handleFileChange}
 							/>
 							<div
 								onClick={handleButtonClick}
-								className={hidePhoto ? scss.backgroundNone : scss.background}
+								className={hidePhoto ? scss.background_none : scss.background}
 								style={{ backgroundImage: `url(${galerry})` }}
 							></div>
-							<p className={hidePhoto ? scss.hideText : scss.show}>
+							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
 							</p>
 						</div>
@@ -134,7 +134,7 @@ export default function CreateCourse() {
 									Отмена
 								</ButtonCancel>
 							</div>
-							<div className={scss.Cancel}>
+							<div className={scss.cancel}>
 								<ButtonSave
 									type="submit"
 									onClick={CurentFunc}

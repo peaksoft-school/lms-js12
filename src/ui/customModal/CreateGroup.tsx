@@ -85,7 +85,7 @@ export default function CreateGroup() {
 	};
 
 	return (
-		<div className={scss.forButton}>
+		<div className={scss.for_button}>
 			<ToastContainer />
 
 			<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
@@ -98,9 +98,9 @@ export default function CreateGroup() {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={scss.mainModal} sx={style}>
+				<Box className={scss.main_modal} sx={style}>
 					<Typography
-						className={scss.Curse}
+						className={scss.curse}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
@@ -108,11 +108,11 @@ export default function CreateGroup() {
 						<p> Создать группу</p>
 					</Typography>
 					<Typography
-						className={scss.textPart}
+						className={scss.text_part}
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
-						<div className={scss.imgPart}>
+						<div className={scss.img_part}>
 							<input
 								className={scss.fileInput}
 								type="file"
@@ -121,10 +121,10 @@ export default function CreateGroup() {
 							/>
 							<div
 								onClick={handleButtonClick}
-								className={hidePhoto ? scss.backgroundNone : scss.background}
+								className={hidePhoto ? scss.background_none : scss.background}
 								style={{ backgroundImage: `url(${image || gallery})` }}
 							></div>
-							<p className={hidePhoto ? scss.hideText : scss.show}>
+							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
 							</p>
 						</div>

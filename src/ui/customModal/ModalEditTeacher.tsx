@@ -143,7 +143,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.main_modal}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"

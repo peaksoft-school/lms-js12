@@ -162,7 +162,7 @@ const ModalAddTeacher = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.main_modal}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"
@@ -172,7 +172,7 @@ const ModalAddTeacher = () => {
 						<p className={scss.comText}>Добавление учителя</p>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="firstName"
@@ -233,7 +233,7 @@ const ModalAddTeacher = () => {
 								render={({ field }) => (
 									<OutlinedInput
 										{...field}
-										className={scss.OutlinedInputEyes}
+										className={scss.outlined_input_eyes}
 										placeholder="Password"
 										type={showSecondPassword ? 'text' : 'password'}
 										endAdornment={
@@ -307,7 +307,7 @@ const ModalAddTeacher = () => {
 							</div>
 						</div>
 
-						<div className={scss.buttonAdd2}>
+						<div className={scss.button_add2}>
 							<ButtonCancel
 								type="submit"
 								disabled={false}

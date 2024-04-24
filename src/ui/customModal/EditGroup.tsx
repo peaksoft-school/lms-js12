@@ -94,9 +94,9 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={scss.mainModal} sx={style}>
+				<Box className={scss.main_modal} sx={style}>
 					<Typography
-						className={scss.Curse}
+						className={scss.curse}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
@@ -104,11 +104,11 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<p> Создание группы</p>
 					</Typography>
 					<Typography
-						className={scss.textPart}
+						className={scss.text_part}
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
-						<div className={scss.imgPart}>
+						<div className={scss.img_part}>
 							<input
 								className={scss.fileInput}
 								type="file"
@@ -120,7 +120,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 								className={hidePhoto ? scss.backgroundNone : scss.background}
 								style={{ backgroundImage: `url(${image || galerry})` }}
 							></div>
-							<p className={hidePhoto ? scss.hideText : scss.show}>
+							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
 							</p>
 						</div>

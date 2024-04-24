@@ -51,13 +51,13 @@ const ModalGroupSelect: React.FC = () => {
 		<form>
 			<Button onClick={handleOpen}>Открыть модальное select</Button>
 			<Modal open={open} onClose={handleClose}>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.ModalMain}>
 					<Typography className={scss.text} variant="h6" gutterBottom>
-						<p className={scss.comText}> Добавить студентов группы в курс </p>
+						<p className={scss.com_text}> Добавить студентов группы в курс </p>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
-						<div className={scss.selectDiv}>
+					<Box className={scss.input_button_card}>
+						<div className={scss.select_div}>
 							<Controller
 								name="selectedOption"
 								control={control}
@@ -81,7 +81,7 @@ const ModalGroupSelect: React.FC = () => {
 								)}
 							/>
 						</div>
-						<div className={scss.buttonAdd}>
+						<div className={scss.button_add}>
 							<ButtonCancel
 								type="submit"
 								disabled={false}

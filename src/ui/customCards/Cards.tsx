@@ -25,29 +25,29 @@ const Cards: FC = () => {
 
 						return (
 							<Link key={index} to={linkTo}>
-								<div className={scss.firstBlockContainer}>
-									<div>
+								<div className={scss.first_block_container}>
+									<div className={scss.img}>
 										<img
-											className={scss.BlockImage}
+											className={scss.block_image}
 											src={card.img}
 											alt={card.title}
 										/>
 									</div>
-									<div className={scss.zeroBlockContainer}>
-										<div className={scss.secondBlockContainer}>
-											<p className={scss.BlockTitle}>{card.title}</p>
-											<p className={scss.BlockDate}>{card.date}</p>
+									<div className={scss.zero_block_container}>
+										<div className={scss.second_block_container}>
+											<p className={scss.block_title}>{card.title}</p>
+											<p className={scss.block_date}>{card.date}</p>
 										</div>
 										<div className={scss.text_card}>
-											<span className={scss.BlockText}>
+											<span className={scss.block_text}>
 												{card.text.length > 60
 													? `${card.text.substring(0, 60)}...`
 													: card.text}
 											</span>
 										</div>
 									</div>
-									<div className={scss.BlockButtonDiv}>
-										<button className={scss.BlockButton}>
+									<div className={scss.block_button_div}>
+										<button className={scss.block_button}>
 											<IconDots stroke={2} />
 										</button>
 									</div>

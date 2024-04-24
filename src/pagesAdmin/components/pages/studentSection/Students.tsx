@@ -14,7 +14,8 @@ import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { IconDotsVertical } from '@tabler/icons-react';	
+import { IconDotsVertical } from '@tabler/icons-react';
+import SearchModal from '@/src/ui/customModal/deleteModal/SearchModal';
 
 const Students = () => {
 	const { data, isLoading } = useGetStudentTableQuery();
@@ -30,6 +31,16 @@ const Students = () => {
 	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const [saveItem, setSaveItem] = useState<any>();
+
+	const [open, setOpen] = useState(false);
+
+	const handleOpenSearch = () => {
+		setOpen(true);
+	};
+
+	const handleCloseSearch = () => {
+		setOpen(false);
+	};
 
 	if (isLoading) {
 		return (
@@ -99,8 +110,11 @@ const Students = () => {
 			<div className={scss.allContainer}>
 				<div className={scss.sectionLogics}>
 					<div className={scss.inputWithIcon}>
-						<img src={FilterPhoto} alt="Filter" className={scss.inputIcon} />
+						<button className={scss.inputIcon} onClick={handleOpenSearch}>
+							<img src={FilterPhoto} alt="Filter" />
+						</button>
 						<img src={SearchPhoto} alt="Search" className={scss.SearchIcon} />
+
 						<Input
 							width="100%"
 							placeholder="Поиск"
@@ -249,6 +263,7 @@ const Students = () => {
 					</div>
 				</div>
 			</div>
+			<SearchModal handleClose={handleCloseSearch} open={open} />
 		</div>
 	);
 };

@@ -1,17 +1,9 @@
-import { useState, ChangeEvent } from 'react';
-import {
-	Button,
-	Modal,
-	Box,
-	Typography,
-	Select,
-	MenuItem
-} from '@mui/material';
+import { FC } from 'react';
+import { Modal, Box, Typography, Select, MenuItem } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
-import scss from './Style.module.scss';
+import scss from '../Style.module.scss';
 
 const style = {
 	position: 'absolute',
@@ -19,38 +11,26 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 542,
-	height: 305,
+	height: 335,
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
 };
 
-const ModalImport = () => {
+interface SearcheProps {
+	handleClose: () => void;
+	open: boolean;
+}
+const SearchModal: FC<SearcheProps> = ({ handleClose, open }) => {
 	const { control, handleSubmit } = useForm();
-	const [open, setOpen] = useState(false);
-	const [selectedOption, setSelectedOption] = useState('');
-
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	const onSubmit = () => {
-		// console.log(data); // Здесь можно обработать данные формы
 		handleClose();
-	};
-
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setSelectedOption(e.target.value);
 	};
 
 	return (
 		<div>
-			<Button onClick={handleOpen}>Open modal Импорт</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -64,17 +44,22 @@ const ModalImport = () => {
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.com_text}>Импорт Excel в БД</p>
+						<p className={scss.comText}>Импорт Excel в БД</p>
 					</Typography>
 
 					<Box className={scss.input_button_card}>
-						<div className={scss.selectDiv}>
+						<div className={scss.select_div}>
 							<Controller
 								name="fileType"
 								control={control}
 								defaultValue=""
 								render={({ field }) => (
-									<Select {...field} fullWidth className={scss.select}>
+									<Select
+										{...field}
+										fullWidth
+										className={scss.select}
+										style={{ borderRadius: '20px' }}
+									>
 										<MenuItem value="">Выберите тип файла</MenuItem>
 										<MenuItem value="js10">js10</MenuItem>
 										<MenuItem value="js11">js11</MenuItem>
@@ -83,23 +68,27 @@ const ModalImport = () => {
 								)}
 							/>
 						</div>
-						<div className={scss.containInput}>
-							<Input
-								type="text"
-								width="80%"
-								placeholder="Выберите Excel файл для импорта"
-								value={selectedOption}
-								onChange={handleInputChange}
+						<div className={scss.select_div}>
+							<Controller
+								name="fileType"
+								control={control}
+								defaultValue=""
+								render={({ field }) => (
+									<Select
+										{...field}
+										fullWidth
+										style={{ borderRadius: '20px' }}
+										className={scss.select}
+									>
+										<MenuItem value="">Выберите тип файла</MenuItem>
+										<MenuItem value="js10">js10</MenuItem>
+										<MenuItem value="js11">js11</MenuItem>
+										<MenuItem value="js12">js12</MenuItem>
+									</Select>
+								)}
 							/>
-							<ButtonCancel
-								type="button"
-								disabled={false}
-								onClick={handleClose}
-								width="117px"
-							>
-								Обзор...
-							</ButtonCancel>
 						</div>
+
 						<div className={scss.button_add}>
 							<ButtonCancel
 								type="button"
@@ -125,4 +114,4 @@ const ModalImport = () => {
 	);
 };
 
-export default ModalImport;
+export default SearchModal;

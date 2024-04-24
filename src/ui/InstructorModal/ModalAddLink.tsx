@@ -49,15 +49,15 @@ const ModalAddLink = () => {
 			>
 				<Box sx={style} className={scss.ModalMain}>
 					<Typography
-						className={scss.Addtext}
+						className={scss.add_text}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comtext}>Добавить ссылку</p>
+						<p className={scss.com_text}>Добавить ссылку</p>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="text"
@@ -92,7 +92,7 @@ const ModalAddLink = () => {
 							/>
 						</div>
 
-						<div className={scss.buttonAdd}>
+						<div className={scss.button_add}>
 							<ButtonCancel
 								type="submit"
 								onClick={handleClose}

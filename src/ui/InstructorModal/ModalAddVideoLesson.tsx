@@ -48,16 +48,16 @@ const ModalAddVideoLesson = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.ModalMain}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Добавить видеоурок</p>
+						<p className={scss.com_text}>Добавить видеоурок</p>
 					</Typography>
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="firstName"
@@ -105,7 +105,7 @@ const ModalAddVideoLesson = () => {
 							/>
 						</div>
 
-						<div className={scss.buttonAdd}>
+						<div className={scss.button_add}>
 							<ButtonCancel
 								type="submit"
 								disabled={false}
