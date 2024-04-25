@@ -101,7 +101,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						variant="h6"
 						component="h2"
 					>
-						<p> Создание группы</p>
+						<p> Редактировать</p>
 					</Typography>
 					<Typography
 						className={scss.textPart}

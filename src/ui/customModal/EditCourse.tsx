@@ -1,16 +1,16 @@
-import scss from './CreateCurse.module.scss';
+import scss from './CreateGroup.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
-import gallery from '@/src/assets/photo-bg.png';
+import galerry from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { useRef, useState } from 'react';
-import { useCreateCourseMutation } from '@/src/redux/api/admin/courses';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ButtonWithPlus from '@/src/ui/customButton/ButtonWithPlus';
+import { FC, useEffect, useRef, useState } from 'react';
+import {
+	useGetGroupQuery,
+	useUpdateGroupMutation
+} from '@/src/redux/api/admin/groups';
 
 const style = {
 	position: 'absolute',
@@ -27,23 +27,39 @@ const style = {
 	}
 };
 
-export default function CreateCourse() {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
-	const [value, setValue] = useState('');
-	const [data, setData] = useState('');
-	const [text, setText] = useState('');
-	const [hidePhoto, setHidePhoto] = useState(false);
+interface EditModalProps {
+	open: boolean;
+	handleClose: () => void;
+	saveId: number | null;
+}
+
+const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
+	const { data } = useGetGroupQuery();
+	const find = data?.find((id) => id._id === saveId);
+	console.log(find);
+
+	const [value, setValue] = useState<string>('');
+	const [date, setData] = useState<string>('');
+	const [text, setText] = useState<string>('');
+	const [hidePhoto, setHidePhoto] = useState<boolean>(false);
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [createCourse] = useCreateCourseMutation();
+	const [updateGroup] = useUpdateGroupMutation();
+
+	useEffect(() => {
+		setValue(find?.title || '');
+		setData(find?.date || '');
+		setText(find?.text || '');
+		setImage(find?.img || '');
+	}, [find]);
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
+
+	console.log(saveId);
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -59,38 +75,19 @@ export default function CreateCourse() {
 		}
 	};
 
-	const notifySuccess = () => toast.success('Курс успешно создан !');
-	const notifyError = () => toast.error('Произошла ошибка при создании курса');
-
-	const handleCreateCourse = () => {
-		const newCourse = {
+	const updateGroupFunc = async () => {
+		const newGroup = {
 			title: value,
 			img: image,
-			date: data,
+			date: date,
 			text: text
 		};
-		createCourse(newCourse).unwrap();
-		try {
-			createCourse(newCourse).unwrap();
-			notifySuccess();
-			setOpen(false);
-			setData('');
-			setText('');
-			setImage('');
-			setValue('');
-		} catch (error) {
-			notifyError();
-		}
+		await updateGroup({ newGroup, saveId });
+		handleClose();
 	};
 
 	return (
-		<div className={scss.forButton}>
-			<ToastContainer />
-			<div className={scss.ButtonCont}>
-				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
-					Добавить Курс
-				</ButtonWithPlus>
-			</div>
+		<>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -104,7 +101,7 @@ export default function CreateCourse() {
 						variant="h6"
 						component="h2"
 					>
-						<p> Создание курса</p>
+						<p> Редактировать</p>
 					</Typography>
 					<Typography
 						className={scss.textPart}
@@ -121,7 +118,7 @@ export default function CreateCourse() {
 							<div
 								onClick={handleButtonClick}
 								className={hidePhoto ? scss.backgroundNone : scss.background}
-								style={{ backgroundImage: `url(${image || gallery})` }}
+								style={{ backgroundImage: `url(${image || galerry})` }}
 							></div>
 							<p className={hidePhoto ? scss.hideText : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
@@ -131,7 +128,7 @@ export default function CreateCourse() {
 							<div className={scss.first_input}>
 								<Input
 									width="100%"
-									placeholder="Название курса"
+									placeholder="Название курсы"
 									value={value}
 									onChange={(e) => setValue(e.target.value)}
 									type="text"
@@ -139,8 +136,8 @@ export default function CreateCourse() {
 							</div>
 							<div className={scss.second_input}>
 								<Input
-									placeholder="Дата курса"
-									value={data}
+									placeholder="Название курсы"
+									value={date}
 									onChange={(e) => setData(e.target.value)}
 									width="100%"
 									type="date"
@@ -150,33 +147,32 @@ export default function CreateCourse() {
 						<textarea
 							value={text}
 							onChange={(e) => setText(e.target.value)}
-							placeholder="Описание курса"
+							placeholder="Описание курсы"
 						></textarea>
 						<div className={scss.buttons}>
-							<div>
-								<ButtonCancel
-									type="submit"
-									onClick={handleClose}
-									disabled={false}
-									width="103px"
-								>
-									Отмена
-								</ButtonCancel>
-							</div>
-							<div>
-								<ButtonSave
-									type="submit"
-									onClick={handleCreateCourse}
-									disabled={false}
-									width="117px"
-								>
-									Добавить
-								</ButtonSave>
-							</div>
+							<ButtonCancel
+								type="submit"
+								onClick={handleClose}
+								disabled={false}
+								width="103px"
+							>
+								Отмена
+							</ButtonCancel>
+
+							<ButtonSave
+								type="submit"
+								onClick={updateGroupFunc}
+								disabled={false}
+								width="117px"
+							>
+								Добавить
+							</ButtonSave>
 						</div>
 					</Typography>
 				</Box>
 			</Modal>
-		</div>
+		</>
 	);
-}
+};
+
+export default EditCourse;

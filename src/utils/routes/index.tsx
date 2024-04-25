@@ -17,7 +17,8 @@ export const links = {
 		},
 		{
 			name: 'Курсы ',
-			icon: <IconDeviceDesktop stroke={2} />
+			icon: <IconDeviceDesktop stroke={2} />,
+			link: 'courses'
 		},
 		{
 			name: 'Учителя',
