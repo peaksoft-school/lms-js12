@@ -69,19 +69,18 @@ export default function CreateGroup() {
 			date: data,
 			text: text
 		};
-		createGroup(newGroup)
-			.unwrap()
-			.then(() => {
-				notifySuccess();
-				setOpen(false);
-				setData('');
-				setText('');
-				setImage('');
-				setValue('');
-			})
-			.catch(() => {
-				notifyError();
-			});
+		createGroup(newGroup).unwrap();
+		try {
+			createGroup(newGroup).unwrap();
+			notifySuccess();
+			setOpen(false);
+			setData('');
+			setText('');
+			setImage('');
+			setValue('');
+		} catch (error) {
+			notifyError();
+		}
 	};
 
 	return (

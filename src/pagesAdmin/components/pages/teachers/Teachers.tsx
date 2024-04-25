@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import scss from './Teachers.module.scss';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
@@ -61,10 +61,9 @@ const Teachers = () => {
 		setAnchorEl(null);
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const handleAppend = (event: any) => {
+	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.target.value);
+			const newOpenPage = parseInt(event.currentTarget.value);
 			if (newOpenPage > 15) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
