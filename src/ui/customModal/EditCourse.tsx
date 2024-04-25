@@ -1,4 +1,4 @@
-import scss from './EditGroup.module.scss';
+import scss from './EditCourse.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -33,7 +33,7 @@ interface EditModalProps {
 	saveId: number | null;
 }
 
-const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
+const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery();
 	const find = data?.find((id) => id._id === saveId);
 	console.log(find);
@@ -94,9 +94,9 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={scss.main_modal} sx={style}>
+				<Box className={scss.mainModal} sx={style}>
 					<Typography
-						className={scss.curse}
+						className={scss.Curse}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
@@ -104,11 +104,11 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<p> Редактировать</p>
 					</Typography>
 					<Typography
-						className={scss.text_part}
+						className={scss.textPart}
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
-						<div className={scss.img_part}>
+						<div className={scss.imgPart}>
 							<input
 								className={scss.fileInput}
 								type="file"
@@ -117,10 +117,10 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							/>
 							<div
 								onClick={handleButtonClick}
-								className={hidePhoto ? scss.background_none : scss.background}
+								className={hidePhoto ? scss.backgroundNone : scss.background}
 								style={{ backgroundImage: `url(${image || galerry})` }}
 							></div>
-							<p className={hidePhoto ? scss.hide_text : scss.show}>
+							<p className={hidePhoto ? scss.hideText : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
 							</p>
 						</div>
@@ -128,7 +128,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							<div className={scss.first_input}>
 								<Input
 									width="100%"
-									placeholder="Название группы"
+									placeholder="Название курсы"
 									value={value}
 									onChange={(e) => setValue(e.target.value)}
 									type="text"
@@ -136,7 +136,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							</div>
 							<div className={scss.second_input}>
 								<Input
-									placeholder="Название группы"
+									placeholder="Название курсы"
 									value={date}
 									onChange={(e) => setData(e.target.value)}
 									width="100%"
@@ -147,7 +147,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<textarea
 							value={text}
 							onChange={(e) => setText(e.target.value)}
-							placeholder="Описание группы"
+							placeholder="Описание курсы"
 						></textarea>
 						<div className={scss.buttons}>
 							<ButtonCancel
@@ -175,4 +175,4 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	);
 };
 
-export default EditGroup;
+export default EditCourse;

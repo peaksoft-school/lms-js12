@@ -1,13 +1,16 @@
-import * as React from 'react';
 import scss from './CreateCurse.module.scss';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
-import galerry from '@/src/assets/photo-bg.png';
+import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
+import { useRef, useState } from 'react';
+import { useCreateCourseMutation } from '@/src/redux/api/admin/courses';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ButtonWithPlus from '@/src/ui/customButton/ButtonWithPlus';
 
 const style = {
 	position: 'absolute',
@@ -16,7 +19,6 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	width: 400,
 	bgcolor: 'background.paper',
-
 	boxShadow: 24,
 	p: 4,
 	sx: {
@@ -26,13 +28,16 @@ const style = {
 };
 
 export default function CreateCourse() {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
-	const [value, setValue] = React.useState('');
-	const [hidePhoto, setHidePhoto] = React.useState(false);
-	const [image, setImage] = React.useState<string>('');
-	const fileInputRef = React.useRef<HTMLInputElement>(null);
+	const [value, setValue] = useState('');
+	const [data, setData] = useState('');
+	const [text, setText] = useState('');
+	const [hidePhoto, setHidePhoto] = useState(false);
+	const [image, setImage] = useState<string>('');
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const [createCourse] = useCreateCourseMutation();
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -53,12 +58,39 @@ export default function CreateCourse() {
 			reader.readAsDataURL(file);
 		}
 	};
-	const CurentFunc = () => {
-		setOpen(false);
+
+	const notifySuccess = () => toast.success('Курс успешно создан !');
+	const notifyError = () => toast.error('Произошла ошибка при создании курса');
+
+	const handleCreateCourse = () => {
+		const newCourse = {
+			title: value,
+			img: image,
+			date: data,
+			text: text
+		};
+		createCourse(newCourse).unwrap();
+		try {
+			createCourse(newCourse).unwrap();
+			notifySuccess();
+			setOpen(false);
+			setData('');
+			setText('');
+			setImage('');
+			setValue('');
+		} catch (error) {
+			notifyError();
+		}
 	};
+
 	return (
-		<>
-			<Button onClick={handleOpen}>Open modal</Button>
+		<div className={scss.for_button}>
+			<ToastContainer />
+			<div className={scss.button_cont}>
+				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
+					Добавить Курс
+				</ButtonWithPlus>
+			</div>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -72,20 +104,14 @@ export default function CreateCourse() {
 						variant="h6"
 						component="h2"
 					>
-						<p>Создать курс</p>
+						<p> Создание курса</p>
 					</Typography>
 					<Typography
 						className={scss.text_part}
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
-						<div
-							className={scss.img_part}
-							style={{
-								backgroundImage: `url(${image})`,
-								backgroundSize: '310px'
-							}}
-						>
+						<div className={scss.img_part}>
 							<input
 								className={scss.file_input}
 								type="file"
@@ -95,7 +121,7 @@ export default function CreateCourse() {
 							<div
 								onClick={handleButtonClick}
 								className={hidePhoto ? scss.background_none : scss.background}
-								style={{ backgroundImage: `url(${galerry})` }}
+								style={{ backgroundImage: `url(${image || gallery})` }}
 							></div>
 							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
@@ -105,39 +131,42 @@ export default function CreateCourse() {
 							<div className={scss.first_input}>
 								<Input
 									width="100%"
-									placeholder="Название группы"
+									placeholder="Название курса"
 									value={value}
 									onChange={(e) => setValue(e.target.value)}
 									type="text"
 								/>
 							</div>
-
 							<div className={scss.second_input}>
 								<Input
-									placeholder="Название группы"
-									value={value}
-									onChange={(e) => setValue(e.target.value)}
+									placeholder="Дата курса"
+									value={data}
+									onChange={(e) => setData(e.target.value)}
 									width="100%"
 									type="date"
 								/>
 							</div>
 						</div>
-						<textarea placeholder="Описание группы"></textarea>
+						<textarea
+							value={text}
+							onChange={(e) => setText(e.target.value)}
+							placeholder="Описание курса"
+						></textarea>
 						<div className={scss.buttons}>
-							<div className={scss.Cancel}>
+							<div>
 								<ButtonCancel
 									type="submit"
-									onClick={CurentFunc}
+									onClick={handleClose}
 									disabled={false}
 									width="103px"
 								>
 									Отмена
 								</ButtonCancel>
 							</div>
-							<div className={scss.cancel}>
+							<div>
 								<ButtonSave
 									type="submit"
-									onClick={CurentFunc}
+									onClick={handleCreateCourse}
 									disabled={false}
 									width="117px"
 								>
@@ -148,6 +177,6 @@ export default function CreateCourse() {
 					</Typography>
 				</Box>
 			</Modal>
-		</>
+		</div>
 	);
 }

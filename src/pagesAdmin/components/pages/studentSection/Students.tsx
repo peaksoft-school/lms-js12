@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import scss from './Student.module.scss';
 import {
 	useGetStudentTableQuery,
@@ -17,6 +17,17 @@ import Stack from '@mui/material/Stack';
 import { IconDotsVertical } from '@tabler/icons-react';
 import SearchModal from '@/src/ui/customModal/deleteModal/SearchModal';
 
+interface Student {
+	_id: string;
+	firstName: string;
+	lastName: string;
+	group: string;
+	TrainingFormat: string;
+	phone_number: string;
+	email: string;
+	password: string;
+	isCompleted: boolean;
+}
 const Students = () => {
 	const { data, isLoading } = useGetStudentTableQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
@@ -29,8 +40,8 @@ const Students = () => {
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(15);
 	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const [saveItem, setSaveItem] = useState<any>();
+
+	const [saveItem, setSaveItem] = useState<Student>();
 
 	const [open, setOpen] = useState(false);
 
@@ -76,10 +87,9 @@ const Students = () => {
 		}
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const handleAppend = (event: any) => {
+	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.target.value);
+			const newOpenPage = parseInt(event.currentTarget.value);
 			if (newOpenPage > 15) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
@@ -92,17 +102,19 @@ const Students = () => {
 	};
 
 	const updateCompletedFunc = async () => {
-		const updated = {
-			firstName: saveItem.firstName,
-			lastName: saveItem.lastName,
-			email: saveItem.email,
-			group: saveItem.group,
-			phone_number: saveItem.phone_number,
-			TrainingFormat: saveItem.trainingFormat,
-			password: saveItem.password,
-			isCompleted: !saveItem.isCompleted
-		};
-		patchCompletedMutation({ updated, saveIdElement });
+		if (saveItem) {
+			const updated = {
+				firstName: saveItem.firstName,
+				lastName: saveItem.lastName,
+				email: saveItem.email,
+				group: saveItem.group,
+				phone_number: saveItem.phone_number,
+				TrainingFormat: saveItem.TrainingFormat,
+				password: saveItem.password,
+				isCompleted: !saveItem.isCompleted
+			};
+			patchCompletedMutation({ updated, saveIdElement });
+		}
 	};
 
 	return (
