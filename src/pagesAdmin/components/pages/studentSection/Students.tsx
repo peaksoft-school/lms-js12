@@ -122,11 +122,6 @@ const Students = () => {
 			<div className={scss.allContainer}>
 				<div className={scss.sectionLogics}>
 					<div className={scss.inputWithIcon}>
-						<button className={scss.inputIcon} onClick={handleOpenSearch}>
-							<img src={FilterPhoto} alt="Filter" />
-						</button>
-						<img src={SearchPhoto} alt="Search" className={scss.SearchIcon} />
-
 						<Input
 							width="100%"
 							placeholder="Поиск"
@@ -134,6 +129,14 @@ const Students = () => {
 							value={searchTerm}
 							onChange={handleSearchChange}
 						/>
+						<div className={scss.buttons}>
+							<button className={scss.button} onClick={handleOpenSearch}>
+								<img src={FilterPhoto} alt="Filter" />
+							</button>
+							<button className={scss.button}>
+								<img src={SearchPhoto} alt="Search" />
+							</button>
+						</div>
 					</div>
 
 					<div className={scss.Parent_second_btn}>
