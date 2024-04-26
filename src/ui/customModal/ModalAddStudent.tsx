@@ -97,7 +97,6 @@ const ModalAddStudent = () => {
 		setOpen(false);
 	};
 
-	// ! first select
 	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
 		const {
 			target: { value }
@@ -105,7 +104,6 @@ const ModalAddStudent = () => {
 		setPersonName(typeof value === 'string' ? value.split(',') : value);
 	};
 
-	// ! second select
 	const handleFormatChange = (event: SelectChangeEvent<typeof formatName>) => {
 		const {
 			target: { value }
@@ -257,7 +255,6 @@ const ModalAddStudent = () => {
 										/>
 									)}
 								/>
-								{/*//! select first  input*/}
 								<FormControl sx={{ width: 300 }}>
 									<InputLabel id="demo-multiple-checkbox-label">
 										Группа
@@ -281,7 +278,6 @@ const ModalAddStudent = () => {
 										))}
 									</Select>
 								</FormControl>
-								{/* //! second select  */}
 								<FormControl sx={{ width: 300 }}>
 									<InputLabel id="demo-multiple-checkbox-label">
 										Формат обучения

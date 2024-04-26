@@ -60,6 +60,7 @@ const LayoutAdmin = () => {
 						<Header isOpen={isOpen} setIsOpen={setIsOpen} />
 					</>
 				)}
+
 				<main style={{ width: '100%' }}>
 					<Routes>
 						<Route path="/" element={<HomePage />} />

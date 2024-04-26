@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, KeyboardEvent } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
@@ -18,7 +18,6 @@ const Courses: FC = () => {
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
-	// ! state pagination
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
@@ -32,7 +31,6 @@ const Courses: FC = () => {
 		setAnchorEl(null);
 	};
 
-	// ! Pagination
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
 		page: number
@@ -53,10 +51,10 @@ const Courses: FC = () => {
 			setCurrentPage(1);
 		}
 	};
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const handleAppend = (event: any) => {
+
+	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.target.value);
+			const newOpenPage = parseInt(event.currentTarget.value);
 			if (newOpenPage > 8) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
@@ -69,94 +67,102 @@ const Courses: FC = () => {
 	};
 
 	return (
-		<div className={scss.ContainerGroupsParent}>
-			<div className={scss.ParentTitleContainer}>
-				<h1>Курсы</h1>
-				<CreateCourse />
-			</div>
-			<div className={scss.ContainerCardsParent}>
-				{data && Array.isArray(data) && data.length > 0 ? (
-					<div className={scss.Cards}>
-						{data
-							.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)
-							.map((item) => (
-								<div key={item._id} className={scss.zeroBlockContainer}>
-									<div className={scss.BlockContainerImage}>
-										<img
-											className={scss.BlockImage}
-											src={item.img}
-											alt="images"
-										/>
-									</div>
-									<div className={scss.BlockCont}>
-										<div className={scss.secondBlockContainer}>
-											<p className={scss.BlockTitle}>{item.title}</p>
-											<p className={scss.BlockDate}>{item.date}</p>
+		<div className={scss.ContainerCoursesParent}>
+			<div className={scss.all_container}>
+				<div className={scss.test}>
+					<div className={scss.ParentTitleContainer}>
+						<h1>Курсы</h1>
+						<CreateCourse />
+					</div>
+					<div className={scss.ContainerCardsParent}>
+						{data && Array.isArray(data) && data.length > 0 ? (
+							<div className={scss.Cards}>
+								{data
+									.slice(
+										(currentPage - 1) * rowsPerPage,
+										currentPage * rowsPerPage
+									)
+									.map((item) => (
+										<div key={item._id} className={scss.zeroBlockContainer}>
+											<div className={scss.block_photo_cards}>
+												<img src={item.img} alt="images" />
+											</div>
+											<div className={scss.BlockCont}>
+												<div className={scss.secondBlockContainer}>
+													<p className={scss.BlockTitle}>{item.title}</p>
+													<p className={scss.BlockDate}>{item.date}</p>
+												</div>
+												<div className={scss.text_card}>
+													<span className={scss.BlockText}>
+														{item.text && item.text.length > 60
+															? `${item.text.substring(0, 60)}...`
+															: item.text}
+													</span>
+												</div>
+											</div>
+											<div className={scss.BlockButtonDiv}>
+												<div onClick={handleClick}>
+													<button
+														className={scss.BlockButtonDotts}
+														onClick={() => {
+															setSaveId(item._id);
+														}}
+													>
+														<IconDots stroke={2} />
+													</button>
+												</div>
+												{
+													<Menu
+														id="positioned-menu"
+														anchorEl={anchorEl}
+														open={open}
+														onClose={handleClose}
+														anchorOrigin={{
+															vertical: 'top',
+															horizontal: 'left'
+														}}
+														transformOrigin={{
+															vertical: 'top',
+															horizontal: 'left'
+														}}
+													>
+														<MenuItem
+															onClick={() => {
+																setOpenEditModal(true);
+																handleClose();
+															}}
+														>
+															<img src={editImg} />
+															Редактировать
+														</MenuItem>
+														<MenuItem
+															onClick={() => {
+																setDeleteModal(true);
+																handleClose();
+															}}
+														>
+															<img src={deleteImg} />
+															Удалить
+														</MenuItem>
+													</Menu>
+												}
+											</div>
 										</div>
-										<div className={scss.text_card}>
-											<span className={scss.BlockText}>
-												{item.text && item.text.length > 60
-													? `${item.text.substring(0, 60)}...`
-													: item.text}
-											</span>
-										</div>
-									</div>
-									<div className={scss.BlockButtonDiv}>
-										<div onClick={handleClick}>
-											<button
-												className={scss.BlockButtonDotts}
-												onClick={() => {
-													setSaveId(item._id);
-												}}
-											>
-												<IconDots stroke={2} />
-											</button>
-										</div>
-										{
-											<Menu
-												id="positioned-menu"
-												anchorEl={anchorEl}
-												open={open}
-												onClose={handleClose}
-												anchorOrigin={{
-													vertical: 'top',
-													horizontal: 'left'
-												}}
-												transformOrigin={{
-													vertical: 'top',
-													horizontal: 'left'
-												}}
-											>
-												<MenuItem
-													onClick={() => {
-														setOpenEditModal(true);
-														handleClose();
-													}}
-												>
-													<img src={editImg} />
-													Редактировать
-												</MenuItem>
-												<MenuItem
-													onClick={() => {
-														setDeleteModal(true);
-														handleClose();
-													}}
-												>
-													<img src={deleteImg} />
-													Удалить
-												</MenuItem>
-											</Menu>
-										}
-									</div>
-								</div>
-							))}
-						<EditCourse
-							open={openEditModal}
-							handleClose={handleCloseEditModal}
-							saveId={saveId}
+									))}
+								<EditCourse
+									open={openEditModal}
+									handleClose={handleCloseEditModal}
+									saveId={saveId}
+								/>
+							</div>
+						) : null}
+						<DeleteCourses
+							openModalDelete={deleteModal}
+							closeModalDelete={() => setDeleteModal(false)}
+							deleteById={saveId}
 						/>
 					</div>
-				) : null}
+				</div>
 				<div className={scss.PaginationContainerParent}>
 					<div className={scss.Inputs}>
 						<p>Перейти на страницу</p>
@@ -194,11 +200,6 @@ const Courses: FC = () => {
 						/>
 					</div>
 				</div>
-				<DeleteCourses
-					openModalDelete={deleteModal}
-					closeModalDelete={() => setDeleteModal(false)}
-					deleteById={saveId}
-				/>
 			</div>
 		</div>
 	);

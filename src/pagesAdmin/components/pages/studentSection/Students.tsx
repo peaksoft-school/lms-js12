@@ -36,22 +36,12 @@ const Students = () => {
 	const [openDeleteModal, setOpenDeleteModal] = useState(false);
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(15);
+	const [rowsPerPage, setRowsPerPage] = useState(30);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(15);
+	const [openPage, setOpenPage] = useState(30);
 	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
-
 	const [saveItem, setSaveItem] = useState<Student>();
-
 	const [open, setOpen] = useState(false);
-
-	const handleOpenSearch = () => {
-		setOpen(true);
-	};
-
-	const handleCloseSearch = () => {
-		setOpen(false);
-	};
 
 	if (isLoading) {
 		return (
@@ -60,6 +50,14 @@ const Students = () => {
 			</div>
 		);
 	}
+
+	const handleOpenSearch = () => {
+		setOpen(true);
+	};
+
+	const handleCloseSearch = () => {
+		setOpen(false);
+	};
 
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
@@ -75,8 +73,8 @@ const Students = () => {
 	const handleCloseEditModal = () => setOpenEditModal(false);
 	const openPartFunc = () => {
 		if (openPart >= 1) {
-			setRowsPerPage(15);
-			setOpenPage(15);
+			setRowsPerPage(30);
+			setOpenPage(30);
 			setCurrentPage(openPart);
 		}
 	};
@@ -120,125 +118,145 @@ const Students = () => {
 	return (
 		<div className={scss.StudentParentContainer}>
 			<div className={scss.allContainer}>
-				<div className={scss.sectionLogics}>
-					<div className={scss.inputWithIcon}>
-						<Input
-							width="100%"
-							placeholder="Поиск"
-							type="text"
-							value={searchTerm}
-							onChange={handleSearchChange}
-						/>
-						<div className={scss.buttons}>
-							<button className={scss.button} onClick={handleOpenSearch}>
-								<img src={FilterPhoto} alt="Filter" />
-							</button>
-							<button className={scss.button}>
-								<img src={SearchPhoto} alt="Search" />
-							</button>
-						</div>
-					</div>
-
-					<div className={scss.Parent_second_btn}>
-						<Button className={scss.ExelButton} variant="outlined">
-							<img src={ButtonExelPhoto} alt="#" />
-							Импорт Exel
-						</Button>
-						<div className={scss.Button_UI}>
-							<ModalAddStudent />
-						</div>
-					</div>
-				</div>
-				<div className={scss.TitleStudent}>
-					<h1>Студенты</h1>
-				</div>
-				<div className={scss.StudentContainer}>
-					<table className={scss.Table}>
-						<thead>
-							<tr>
-								<th className={scss.TableTh}>№</th>
-								<th>Имя</th>
-								<th>Фамилия</th>
-								<th>Группа</th>
-								<th>Формат обучения</th>
-								<th>Номер телефона</th>
-								<th>E-mail</th>
-								<th>Действия</th>
-							</tr>
-						</thead>
-						<tbody>
-							{data
-								?.slice(
-									(currentPage - 1) * rowsPerPage,
-									currentPage * rowsPerPage
-								)
-								.map((item, index) => (
-									<tr
-										key={item._id}
-										className={
-											index % 2 === 1
-												? scss.TableAlternateRow
-												: '' || scss.StudentContainerSecond
-										}
-									>
-										<td className={!item.isCompleted ? scss.changeClass : ''}>
-											{index + 1 + (currentPage - 1) * rowsPerPage}
-										</td>
-										<td className={!item.isCompleted ? scss.changeClass : ''}>
-											{item.firstName}
-										</td>
-										<td className={!item.isCompleted ? scss.changeClass : ''}>
-											{item.lastName}
-										</td>
-										<td className={!item.isCompleted ? scss.changeClass : ''}>
-											{item.group}
-										</td>
-										<td className={!item.isCompleted ? scss.changeClass : ''}>
-											{item.TrainingFormat}
-										</td>
-										<td className={!item.isCompleted ? scss.changeClass : ''}>
-											{item.phone_number}
-										</td>
-										<td className={!item.isCompleted ? scss.changeClass : ''}>
-											{item.email}
-										</td>
-										<td className={scss.TableCellIcon}>
-											<button
-												className={scss.Button_Photo}
-												onClick={(event) => {
-													setAnchorEl(event.currentTarget);
-													setSaveIdElement(item._id);
-													setSaveItem(item);
-												}}
-											>
-												<button
-													className={scss.Button_Photo}
-													onClick={() => setAnchorEl(null)}
-												>
-													<IconDotsVertical />
-												</button>
-											</button>
-										</td>
-									</tr>
-								))}
-							<StudentMenu
-								anchorEl={anchorEl}
-								open={Boolean(anchorEl)}
-								onClose={() => setAnchorEl(null)}
-								setOpenEditModal={() => setOpenEditModal(true)}
-								setOpenDeleteModal={setOpenDeleteModal}
-								updateCompletedFunc={updateCompletedFunc}
-								handleCloseEditModal={handleCloseEditModal}
-								openEditModal={openEditModal}
-								item={data?.slice(
-									(currentPage - 1) * rowsPerPage,
-									currentPage * rowsPerPage
-								)}
-								saveIdElement={saveIdElement}
-								openDeleteModal={openDeleteModal}
+				<div className={scss.test}>
+					<div className={scss.sectionLogics}>
+						<div className={scss.inputWithIcon}>
+							<Input
+								width="100%"
+								placeholder="Поиск"
+								type="text"
+								value={searchTerm}
+								onChange={handleSearchChange}
 							/>
-						</tbody>
-					</table>
+							<div className={scss.buttons}>
+								<button className={scss.button} onClick={handleOpenSearch}>
+									<img src={FilterPhoto} alt="Filter" />
+								</button>
+								<button className={scss.button}>
+									<img src={SearchPhoto} alt="Search" />
+								</button>
+							</div>
+						</div>
+
+						<div className={scss.Parent_second_btn}>
+							<Button className={scss.ExelButton} variant="outlined">
+								<img src={ButtonExelPhoto} alt="#" />
+								Импорт Exel
+							</Button>
+							<div className={scss.Button_UI}>
+								<ModalAddStudent />
+							</div>
+						</div>
+					</div>
+					<div className={scss.TitleStudent}>
+						<h1>Студенты</h1>
+					</div>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<div className={scss.StudentContainer}>
+							<table className={scss.Table}>
+								<thead>
+									<tr>
+										<th className={scss.TableTh}>№</th>
+										<th>Имя</th>
+										<th>Фамилия</th>
+										<th>Группа</th>
+										<th>Формат обучения</th>
+										<th>Номер телефона</th>
+										<th>E-mail</th>
+										<th style={{ textAlign: 'end', paddingRight: '10px' }}>
+											Действия
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{data
+										?.slice(
+											(currentPage - 1) * rowsPerPage,
+											currentPage * rowsPerPage
+										)
+										.map((item, index) => (
+											<tr
+												key={item._id}
+												className={
+													index % 2 === 1
+														? scss.TableAlternateRow
+														: '' || scss.StudentContainerSecond
+												}
+											>
+												<td
+													className={!item.isCompleted ? scss.changeClass : ''}
+												>
+													{index + 1 + (currentPage - 1) * rowsPerPage}
+												</td>
+												<td
+													className={!item.isCompleted ? scss.changeClass : ''}
+												>
+													{item.firstName}
+												</td>
+												<td
+													className={!item.isCompleted ? scss.changeClass : ''}
+												>
+													{item.lastName}
+												</td>
+												<td
+													className={!item.isCompleted ? scss.changeClass : ''}
+												>
+													{item.group}
+												</td>
+												<td
+													className={!item.isCompleted ? scss.changeClass : ''}
+												>
+													{item.TrainingFormat}
+												</td>
+												<td
+													className={!item.isCompleted ? scss.changeClass : ''}
+												>
+													{item.phone_number}
+												</td>
+												<td
+													className={!item.isCompleted ? scss.changeClass : ''}
+												>
+													{item.email}
+												</td>
+												<td className={scss.TableCellIcon}>
+													<button
+														className={scss.Button_Photo}
+														onClick={(event) => {
+															setAnchorEl(event.currentTarget);
+															setSaveIdElement(item._id);
+															setSaveItem(item);
+														}}
+													>
+														<button
+															className={scss.Button_Photo}
+															onClick={() => setAnchorEl(null)}
+														>
+															<IconDotsVertical />
+														</button>
+													</button>
+												</td>
+											</tr>
+										))}
+									<StudentMenu
+										anchorEl={anchorEl}
+										open={Boolean(anchorEl)}
+										onClose={() => setAnchorEl(null)}
+										setOpenEditModal={() => setOpenEditModal(true)}
+										setOpenDeleteModal={setOpenDeleteModal}
+										updateCompletedFunc={updateCompletedFunc}
+										handleCloseEditModal={handleCloseEditModal}
+										openEditModal={openEditModal}
+										item={data?.slice(
+											(currentPage - 1) * rowsPerPage,
+											currentPage * rowsPerPage
+										)}
+										saveIdElement={saveIdElement}
+										openDeleteModal={openDeleteModal}
+									/>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 				<div className={scss.PaginationContainerParent}>
 					<div className={scss.Inputs}>

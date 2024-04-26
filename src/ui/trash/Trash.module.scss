@@ -3,7 +3,7 @@
 		padding: 0px 2px 0px 20px;
 	}
 	.table_container {
-		background: #ffffff;
+		background: #fff;
 		border: 1px solid #d4d4d4;
 		margin: 24px 40px 77px 20px;
 
@@ -13,7 +13,7 @@
 			border-radius: 10px;
 			white-space: nowrap;
 			scrollbar-width: thin;
-			scrollbar-color: rgb(55, 114, 255) #fff;
+			scrollbar-color: #3772ff #fff;
 			@media screen and (min-width: 420px) and (max-width: 520px) {
 				max-width: 400px;
 				width: 100%;
@@ -24,9 +24,6 @@
 				width: 100%;
 				overflow-x: scroll;
 			}
-			// white-space: nowrap;
-			// 	}
-			// }
 		}
 	}
 
@@ -35,8 +32,8 @@
 		height: 50px;
 		margin: 10px auto;
 		border-radius: 10px;
-		background: orange;
-		color: white;
+		background: #ffa500;
+		color: #fff;
 		text-align: center;
 		display: flex;
 		align-items: center;
@@ -55,7 +52,7 @@
 		border-collapse: collapse;
 
 		thead {
-			border-bottom: 1px solid rgba(131, 122, 122, 0.078);
+			border-bottom: 1px solid #837a7a14;
 			height: 50px;
 			th {
 				font-family: 'Open Sans', sans-serif;
@@ -78,8 +75,6 @@
 		height: 50px;
 		text-align: start;
 
-		.TableCell_main {
-		}
 		.table_cell {
 			.TableImage {
 				text-align: end;

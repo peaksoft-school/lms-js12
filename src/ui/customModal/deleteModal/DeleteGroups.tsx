@@ -38,7 +38,7 @@ const DeleteGroupModal: React.FC<DeleteProps> = ({
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<p style={{ padding: '18px 63px' }}>
+								<p>
 									Вы уверены, что хотите удалить этого учителя?
 								</p>
 							</DialogContentText>

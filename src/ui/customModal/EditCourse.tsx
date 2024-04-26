@@ -36,7 +36,6 @@ interface EditModalProps {
 const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery();
 	const find = data?.find((id) => id._id === saveId);
-	console.log(find);
 
 	const [value, setValue] = useState<string>('');
 	const [date, setData] = useState<string>('');
@@ -59,7 +58,6 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 		}
 	};
 
-	console.log(saveId);
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];

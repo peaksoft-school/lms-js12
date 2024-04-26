@@ -37,7 +37,6 @@ const Trash: FC = () => {
 							{data &&
 								data.map((card, index) => (
 									<tr
-										// key={item._id}
 										className={
 											index % 2 === 1
 												? scss.table_alternate_row

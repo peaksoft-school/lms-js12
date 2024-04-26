@@ -57,7 +57,7 @@
 			}
 
 			p {
-				color: rgb(141, 148, 158) !important;
+				color: #8d949e !important;
 				font-size: 18px !important;
 			}
 
@@ -108,11 +108,11 @@
 			&::placeholder {
 				font-size: 16px;
 				padding: 10px;
-				color: rgb(141, 148, 158);
+				color: #8d949e;
 				font-weight: 400;
 			}
 
-			border: 1px solid rgb(194, 193, 193);
+			border: 1px solid #c2c1c1;
 
 			@media (max-width: 600px) {
 				padding: 20px;

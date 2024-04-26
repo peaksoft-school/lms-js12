@@ -97,22 +97,23 @@
 		}
 
 		textarea {
-			border-radius: 10px;
-			max-width: 491px;
 			width: 100%;
-			padding-left: 25px;
-			padding-right: 25px;
+			max-width: 485px;
 			height: 123px;
+			padding: 7px 7px;
+			border-radius: 20px;
+			border: 1px solid #c2c1c1;
+			font-family: 'Open Sans', sans-serif !important;
+			font-weight: 500;
+			font-size: 17px;
+			opacity: none;
+			outline: none;
 			resize: none;
-
 			&::placeholder {
-				font-size: 16px;
-				padding: 10px;
-				color: rgb(141, 148, 158);
-				font-weight: 400;
+				font-family: 'Open Sans', sans-serif !important;
+				font-size: 17px;
+				font-weight: 500;
 			}
-
-			border: 1px solid rgb(194, 193, 193);
 
 			@media (max-width: 600px) {
 				padding: 20px;

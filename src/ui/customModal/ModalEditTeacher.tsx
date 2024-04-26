@@ -156,7 +156,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 						</div>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="firstName"

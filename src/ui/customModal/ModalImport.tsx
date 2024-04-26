@@ -40,7 +40,6 @@ const ModalImport = () => {
 	};
 
 	const onSubmit = () => {
-		// console.log(data); // Здесь можно обработать данные формы
 		handleClose();
 	};
 
