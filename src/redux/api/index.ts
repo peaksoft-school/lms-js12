@@ -18,6 +18,6 @@ export const api = createApi({
 	baseQuery: baseQueryExtended,
 	refetchOnReconnect: true,
 	refetchOnFocus: false,
-	tagTypes: ['lesson', 'teacher', 'analytics', 'student'],
+	tagTypes: ['lesson', 'teacher', 'analytics', 'student', 'announcement'],
 	endpoints: () => ({})
 });

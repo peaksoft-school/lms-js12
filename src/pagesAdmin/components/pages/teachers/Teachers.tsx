@@ -61,7 +61,6 @@ const Teachers = () => {
 		setAnchorEl(null);
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleAppend = (event: any) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.target.value);

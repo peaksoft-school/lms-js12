@@ -13,11 +13,15 @@ import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import Students from '../pages/studentSection/Students';
+import { useGetAnnouncementTableQuery } from '@/src/redux/api/admin/announcement';
+import Announcements from '../pages/announcements/Announcements';
+import AnnouncementForm from '@/src/ui/announcementForm/AnnouncementForm';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
 	const { data } = useGetTeacherQuery();
+	const { data: announcements = [] } = useGetAnnouncementTableQuery();
 
 	useEffect(() => {
 		const changeIsMobile = () => {
@@ -77,6 +81,20 @@ const LayoutAdmin = () => {
 							element={<Material />}
 						/>
 						<Route path={'/students'} element={<Students />} />
+						<Route
+							path="/announcement"
+							element={
+								!announcements || announcements.length === 0 ? (
+									<NotCreated
+										text="Вы пока не добавили объявления!"
+										button={<AnnouncementForm />}
+										name="Объявления"
+									/>
+								) : (
+									<Announcements />
+								)
+							}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

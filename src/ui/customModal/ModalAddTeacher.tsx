@@ -85,6 +85,7 @@ const ModalAddTeacher = () => {
 	const [personName, setPersonName] = React.useState<string[]>([]);
 	const [specialization, setSpecialization] = useState<string[]>([]);
 	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
+
 	const handleOpen = (e: React.MouseEvent<HTMLFormElement>) => {
 		setOpen(true);
 		e.preventDefault();
@@ -92,6 +93,7 @@ const ModalAddTeacher = () => {
 
 	const handleClickShowSecondPassword = () =>
 		setShowSecondPassword((show) => !show);
+
 	const handleMouseDownSecondPassword1 = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();

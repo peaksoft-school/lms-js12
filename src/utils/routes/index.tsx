@@ -36,7 +36,8 @@ export const links = {
 		},
 		{
 			name: 'Объявление',
-			icon: <IconBellRinging2 stroke={2} />
+			icon: <IconBellRinging2 stroke={2} />,
+			link: 'announcement'
 		}
 	],
 	student: [

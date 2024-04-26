@@ -1,0 +1,44 @@
+.SectionAnnounce {
+	.topContainer {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		padding-right: 40px;
+		padding-top: 50px;
+		h1 {
+			padding: 0px 2px 0px 20px;
+		}
+	}
+	.announceBox {
+		.announceCard {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			flex-wrap: wrap;
+
+			.announceList {
+				width: 600px;
+				height: 200px;
+				background-color: #fff;
+				color: black;
+				border: 1px solid #a19e9e;
+				margin-left: 10px;
+				margin-top: 30px;
+				border-radius: 15px;
+				position: relative;
+
+				.button {
+					border: none;
+					background: none;
+					position: absolute;
+					bottom: 20px;
+					right: 20px;
+				}
+			}
+		}
+	}
+}
