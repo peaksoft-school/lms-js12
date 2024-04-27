@@ -18,6 +18,7 @@ const Input = forwardRef<Ref, InputProps>(
 		return (
 			<>
 				<TextField
+					size="small"
 					className={scss.inputBackground}
 					id="customWidth"
 					style={{ width }}
@@ -29,7 +30,7 @@ const Input = forwardRef<Ref, InputProps>(
 					ref={ref}
 					InputProps={{
 						style: {
-							borderRadius: '20px'
+							borderRadius: '12px'
 						}
 					}}
 				/>

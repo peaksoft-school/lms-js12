@@ -9,12 +9,12 @@ import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
 import SearchPhoto from '@/src/assets/svgs/search.svg';
 import Input from '@/src/ui/customInput/Input';
 import { Button } from '@mui/material';
-import ButtonExelPhoto from '@/src/assets/svgs/Vector (1).svg';
-import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
+// import ButtonExelPhoto from '@/src/assets/svgs/Vector (1).svg';
+// import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { IconDotsVertical } from '@tabler/icons-react';
+import { IconDotsVertical, IconPlus, IconUpload } from '@tabler/icons-react';
 import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
 
 interface Student {
@@ -118,10 +118,10 @@ const Students = () => {
 
 	return (
 		<div className={scss.StudentParentContainer}>
-			<div className={scss.allContainer}>
+			<div className={scss.container}>
 				<div className={scss.content_table}>
-					<div className={scss.sectionLogics}>
-						<div className={scss.inputWithIcon}>
+					<div className={scss.search_input_buttons}>
+						<div className={scss.search_input}>
 							<Input
 								width="100%"
 								placeholder="Поиск"
@@ -138,20 +138,22 @@ const Students = () => {
 								</button>
 							</div>
 						</div>
-
-						<div className={scss.Parent_second_btn}>
-							<Button className={scss.ExelButton} variant="outlined">
-								<img src={ButtonExelPhoto} alt="#" />
-								Импорт Exel
+						<div className={scss.buttons}>
+							<Button size="large" className={scss.button} variant="outlined">
+								<div className={scss.icon}>
+									<IconUpload stroke={2} />
+								</div>
+								<span>Импорт Excel</span>
 							</Button>
-							<div className={scss.Button_UI}>
-								<ModalAddStudent />
-							</div>
+							<Button size="large" className={scss.button} variant="outlined">
+								<div className={scss.icon}>
+									<IconPlus stroke={2} />
+								</div>
+								<span>Добавить студента</span>
+							</Button>
 						</div>
 					</div>
-					<div className={scss.TitleStudent}>
-						<h1>Студенты</h1>
-					</div>
+					<h1 className={scss.title}>Студенты</h1>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<div className={scss.StudentContainer}>
 							<table className={scss.Table}>

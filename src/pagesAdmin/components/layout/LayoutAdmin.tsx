@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutAdmin.module.scss';
 import Header from '@/src/ui/header/Header';
-import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
@@ -14,11 +13,12 @@ import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import Trash from '@/src/ui/trash/Trash';
 import Students from '../pages/studentSection/Students';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
-import Groups from '../pages/group/Groups';
+import Groups from '@/src/pagesAdmin/components/pages/groupSections/Groups';
 import CreateGroup from '@/src/ui/customModal/CreateGroup';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
-import Courses from '../pages/course/Courses';
+import Courses from '@/src/pagesAdmin/components/pages/courseSections/Courses';
+import AnalyticsPage from '@/src/pagesAdmin/components/pages/AnalyticsPage.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +63,7 @@ const LayoutAdmin = () => {
 
 				<main style={{ width: '100%' }}>
 					<Routes>
-						<Route path="/" element={<HomePage />} />
+						<Route path="/" element={<AnalyticsPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
 						<Route
 							path="/teacher"
@@ -79,7 +79,6 @@ const LayoutAdmin = () => {
 								)
 							}
 						/>
-						<Route path="" element={<HomePage />} />
 						<Route path="/courses" element={<Courses />} />
 						<Route path="/trash" element={<Trash />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />

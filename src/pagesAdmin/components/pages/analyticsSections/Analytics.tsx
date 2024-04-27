@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import scss from './Analytics.module.scss';
-import { useGetAnalyticsQuery } from '../../redux/api/analytics';
+import { useGetAnalyticsQuery } from '../../../../redux/api/analytics';
 
 ChartJS.register(
 	CategoryScale,

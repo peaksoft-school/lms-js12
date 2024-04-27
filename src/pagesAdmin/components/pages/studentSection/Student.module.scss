@@ -1,79 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 .StudentParentContainer {
-	.allContainer {
+	padding-top: 20px;
+	.container {
+		padding-inline: 20px;
 		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		.content_table {
-			.TitleStudent {
-				width: 100%;
-				display: flex;
-				padding: 0 2px 0 20px;
-				margin-top: 3px;
-				padding-block: 20px;
-				padding-inline: 40px;
-			}
-			.sectionLogics {
+			.search_input_buttons {
+				margin-bottom: 30px;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
 				gap: 10px;
 				width: 100%;
-				padding: 0 2px 0 20px;
-				margin-top: 14px;
-				padding-inline: 40px;
-
-				@media (max-width: 520px) {
-					display: flex;
-					flex-direction: column;
-				}
-
-				.Parent_second_btn {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					gap: 10px;
-					max-width: 550px;
-					width: 100%;
-
-					@media (max-width: 797px) {
-						display: flex;
-						flex-direction: column;
-						width: 100%;
-						max-width: 360px;
-						justify-content: center !important;
-						align-items: center !important;
-					}
-
-					.Button_UI {
-						width: 100%;
-						height: auto !important;
-					}
-
-					:global {
-						.MuiButtonBase-root {
-							max-width: 360px !important;
-							width: 100% !important ;
-						}
-						.MuiButton-outlinedPrimary {
-							max-width: 360px !important;
-							width: 100% !important ;
-						}
-					}
-
-					.ExelButton {
-						display: flex;
-						gap: 10px;
-						width: 100%;
-						height: auto !important;
-						padding: 10px 24px 10px 16px;
-						border-radius: 8px;
-					}
-				}
-
-				.inputWithIcon {
+				.search_input {
 					position: relative;
 					display: flex;
 					align-items: center;
@@ -94,12 +37,11 @@
 					.input_buttons {
 						position: absolute;
 						top: 50%;
-						right: 15px;
+						right: 10px;
 						transform: translateY(-50%);
 						display: flex;
 						justify-content: center;
 						align-items: center;
-
 						.button {
 							padding: 5px;
 							display: flex;
@@ -110,6 +52,7 @@
 							background: transparent;
 							border-radius: 4px;
 							cursor: pointer;
+							transition: 0.2s;
 							&:hover {
 								background: #dcdcdc;
 							}
@@ -117,12 +60,66 @@
 					}
 				}
 			}
+			.buttons {
+				display: flex;
+				gap: 10px;
+				justify-content: center;
+				align-items: center;
+				@media (max-width: 700px) {
+					gap: 0;
+				}
+				.button {
+					display: flex;
+					gap: 10px;
+					justify-content: center;
+					align-items: center;
+					border-radius: 8px;
+					text-transform: capitalize;
+					.icon {
+						width: 25px;
+						height: 25px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						svg {
+						}
+					}
+					span {
+						white-space: nowrap;
+					}
+					@media (max-width: 700px) {
+						span {
+							display: none;
+						}
+					}
+				}
+				:global {
+					.MuiButtonBase-root {
+						max-width: 360px !important;
+						width: 100% !important ;
+						@media (max-width: 700px) {
+							width: 0 !important;
+						}
+					}
+					.MuiButton-outlinedPrimary {
+						max-width: 360px !important;
+						width: 100% !important ;
+						@media (max-width: 700px) {
+							width: 0 !important;
+						}
+					}
+				}
+			}
+			.title {
+				margin-bottom: 20px;
+				width: 100%;
+			}
 
 			.StudentContainer {
 				border-radius: 20px;
 				overflow-x: auto;
 				overflow-y: scroll !important;
-				width: 95%;
+				width: 100%;
 				height: 680px;
 				background: #fff;
 				border: 1px solid #dbd2d2;
