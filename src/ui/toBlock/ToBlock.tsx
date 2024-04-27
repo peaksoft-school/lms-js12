@@ -7,6 +7,11 @@ import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import ModalEditStudent from '../customModal/ModalEditStudent';
 import DeleteStudentModal from '@/src/ui/customModal/deleteModal/DeleteStudentModal';
 
+interface MenuItem {
+	_id: number;
+	isCompleted: boolean;
+}
+
 interface MenuProps {
 	anchorEl: null | HTMLElement;
 	open: boolean;
@@ -14,13 +19,14 @@ interface MenuProps {
 	setOpenEditModal: (value: boolean) => void;
 	setOpenDeleteModal: (value: boolean) => void;
 	updateCompletedFunc: () => void;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	item: any | undefined;
+
+	item: MenuItem[] | undefined;
 	openEditModal: boolean;
 	handleCloseEditModal: () => void;
 	saveIdElement: number | null;
 	openDeleteModal: boolean;
 }
+
 const StudentMenu: FC<MenuProps> = ({
 	anchorEl,
 	open,
@@ -34,8 +40,7 @@ const StudentMenu: FC<MenuProps> = ({
 	saveIdElement,
 	openDeleteModal
 }) => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const data = item?.find((el: any) => el._id === saveIdElement);
+	const data = item?.find((el: { _id: number }) => el._id === saveIdElement);
 
 	return (
 		<div>

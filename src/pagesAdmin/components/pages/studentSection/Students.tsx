@@ -15,10 +15,10 @@ import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { IconDotsVertical } from '@tabler/icons-react';
-import SearchModal from '@/src/ui/customModal/deleteModal/SearchModal';
+import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
 
 interface Student {
-	_id: string;
+	_id: number;
 	firstName: string;
 	lastName: string;
 	group: string;
@@ -28,6 +28,7 @@ interface Student {
 	password: string;
 	isCompleted: boolean;
 }
+
 const Students = () => {
 	const { data, isLoading } = useGetStudentTableQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
@@ -118,7 +119,7 @@ const Students = () => {
 	return (
 		<div className={scss.StudentParentContainer}>
 			<div className={scss.allContainer}>
-				<div className={scss.test}>
+				<div className={scss.content_table}>
 					<div className={scss.sectionLogics}>
 						<div className={scss.inputWithIcon}>
 							<Input
@@ -128,7 +129,7 @@ const Students = () => {
 								value={searchTerm}
 								onChange={handleSearchChange}
 							/>
-							<div className={scss.buttons}>
+							<div className={scss.input_buttons}>
 								<button className={scss.button} onClick={handleOpenSearch}>
 									<img src={FilterPhoto} alt="Filter" />
 								</button>
@@ -174,7 +175,7 @@ const Students = () => {
 											(currentPage - 1) * rowsPerPage,
 											currentPage * rowsPerPage
 										)
-										.map((item, index) => (
+										.map((item: Student, index) => (
 											<tr
 												key={item._id}
 												className={
@@ -271,7 +272,7 @@ const Students = () => {
 							}}
 						/>
 					</div>
-					<div>
+					<div className={scss.PaginationCard}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}
@@ -296,7 +297,7 @@ const Students = () => {
 					</div>
 				</div>
 			</div>
-			<SearchModal handleClose={handleCloseSearch} open={open} />
+			<ExelModal handleClose={handleCloseSearch} open={open} />
 		</div>
 	);
 };

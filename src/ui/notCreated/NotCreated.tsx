@@ -1,5 +1,5 @@
 import notCreated from '@/src/assets/notCreated0.png';
-import scss from './notCreated.module.scss';
+import scss from './NotCreated.module.scss';
 import { FC } from 'react';
 
 interface NotCreatedProps {

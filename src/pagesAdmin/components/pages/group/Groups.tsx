@@ -103,7 +103,7 @@ const Groups: FC = () => {
 											<div className={scss.BlockButtonDiv}>
 												<div onClick={handleClick}>
 													<button
-														className={scss.BlockButtonDotts}
+														className={scss.BlockButtonDots}
 														onClick={() => {
 															setSaveId(item._id);
 														}}
@@ -132,7 +132,7 @@ const Groups: FC = () => {
 																handleClose();
 															}}
 														>
-															<img src={editImg} />
+															<img src={editImg} alt="#" />
 															Редактировать
 														</MenuItem>
 														<MenuItem
@@ -141,7 +141,7 @@ const Groups: FC = () => {
 																handleClose();
 															}}
 														>
-															<img src={deleteImg} />
+															<img src={deleteImg} alt="#" />
 															Удалить
 														</MenuItem>
 													</Menu>
@@ -163,7 +163,7 @@ const Groups: FC = () => {
 						/>
 					</div>
 				</div>
-				<div className={scss.PaginationContainerParent}>
+				<div className={scss.PaginationContainer}>
 					<div className={scss.Inputs}>
 						<p>Перейти на страницу</p>
 						<input

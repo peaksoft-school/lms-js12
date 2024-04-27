@@ -5,25 +5,20 @@
 		flex-direction: column;
 		justify-content: space-between;
 		overflow-y: scroll !important;
-		height: auto;
 
 		.test {
 			.ParentTitleContainer {
 				display: flex;
 				align-items: center;
-				padding: 0px 2px 0px 40px;
-				justify-content: space-between;
-				h1 {
-					@media (max-width: 422px) {
-						padding-right: 80px;
-					}
-				}
+				padding-inline: 20px;
+				margin-top: 30px;
+				gap: 20px;
 
-				@media (max-width: 422px) {
+				.course_button_modal {
 					display: flex;
-					flex-direction: column;
+					justify-content: flex-end;
 					align-items: center;
-					justify-content: center;
+					width: 100%;
 				}
 			}
 			.ContainerCardsParent {
@@ -31,6 +26,7 @@
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
+				margin-top: 24px;
 
 				.Cards {
 					position: relative;
@@ -60,18 +56,20 @@
 					}
 
 					.zeroBlockContainer {
-						width: 100%;
 						max-width: 270px;
-						display: flex;
+						width: 100%;
 						background: #fff;
 						border: 1px solid #d4d4d4;
 						border-radius: 10px;
 						flex-direction: column;
 						gap: 10px;
+						display: flex;
+
 						@media (max-width: 1450px) {
 							max-width: 500px;
 							width: 100%;
 						}
+
 						@media (max-width: 1145px) {
 							max-width: 600px;
 							width: 100%;
@@ -160,9 +158,9 @@
 						}
 
 						.BlockCont {
-							padding: 0px 10px 0px 10px;
+							padding: 0 10px 0 10px;
 
-							.secondBlockContainer {
+							.second_block {
 								font-family: 'Open Sans', sans-serif;
 								display: flex;
 								justify-content: space-between;
@@ -170,14 +168,14 @@
 								height: 30px;
 								gap: 25px;
 
-								.BlockTitle {
+								.block_title {
 									font-size: 18px;
 									font-weight: 600;
 									line-height: 24.51px;
 									font-family: 'Open Sans', sans-serif;
 								}
 
-								.BlockDate {
+								.block_date {
 									font-family: 'Open Sans', sans-serif;
 									font-size: 12px;
 									font-weight: 400;
@@ -192,7 +190,7 @@
 								flex-direction: column;
 								justify-content: space-between;
 
-								.BlockText {
+								.block_text {
 									font-family: 'Open Sans', sans-serif;
 									font-size: 16px;
 									font-weight: 400;
@@ -254,9 +252,6 @@
 				padding-bottom: 140px;
 			}
 
-			// @media (max-width: 650px) {
-			// 	margin-bottom: 150px;
-			// }
 			.Inputs {
 				display: flex;
 				gap: 20px;

@@ -72,7 +72,9 @@ const Courses: FC = () => {
 				<div className={scss.test}>
 					<div className={scss.ParentTitleContainer}>
 						<h1>Курсы</h1>
-						<CreateCourse />
+						<div className={scss.course_button_modal}>
+							<CreateCourse />
+						</div>
 					</div>
 					<div className={scss.ContainerCardsParent}>
 						{data && Array.isArray(data) && data.length > 0 ? (
@@ -88,12 +90,12 @@ const Courses: FC = () => {
 												<img src={item.img} alt="images" />
 											</div>
 											<div className={scss.BlockCont}>
-												<div className={scss.secondBlockContainer}>
-													<p className={scss.BlockTitle}>{item.title}</p>
-													<p className={scss.BlockDate}>{item.date}</p>
+												<div className={scss.second_block}>
+													<p className={scss.block_title}>{item.title}</p>
+													<p className={scss.block_date}>{item.date}</p>
 												</div>
 												<div className={scss.text_card}>
-													<span className={scss.BlockText}>
+													<span className={scss.block_text}>
 														{item.text && item.text.length > 60
 															? `${item.text.substring(0, 60)}...`
 															: item.text}
@@ -132,7 +134,7 @@ const Courses: FC = () => {
 																handleClose();
 															}}
 														>
-															<img src={editImg} />
+															<img src={editImg} alt="#" />
 															Редактировать
 														</MenuItem>
 														<MenuItem
@@ -141,7 +143,7 @@ const Courses: FC = () => {
 																handleClose();
 															}}
 														>
-															<img src={deleteImg} />
+															<img src={deleteImg} alt="#" />
 															Удалить
 														</MenuItem>
 													</Menu>

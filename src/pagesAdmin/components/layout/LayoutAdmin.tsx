@@ -7,7 +7,7 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Material from '@/src/ui/material/Material';
 import CalendarPage from '../pages/CalendarPage';
-import Teacher from '@/src/pagesAdmin/components/pages/teachers/Teachers';
+import Teacher from '@/src/pagesAdmin/components/pages/teacherSection/Teacher.tsx';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';

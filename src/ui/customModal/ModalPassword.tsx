@@ -1,4 +1,4 @@
-import scss from './ModalParol.module.scss';
+import scss from './ModalPassword.module.scss';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
@@ -21,7 +21,7 @@ const style = {
 	borderRadius: '12px'
 };
 
-const ModalParol = () => {
+const ModalPassword = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const { control, handleSubmit } = useForm();
 	const [inputvalue, setInputValue] = useState<string>('');
@@ -102,4 +102,4 @@ const ModalParol = () => {
 	);
 };
 
-export default ModalParol;
+export default ModalPassword;

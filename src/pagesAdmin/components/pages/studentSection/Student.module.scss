@@ -1,17 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 .StudentParentContainer {
 	.allContainer {
 		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		.test {
+		.content_table {
 			.TitleStudent {
 				width: 100%;
 				display: flex;
-				padding: 0px 2px 0px 20px;
+				padding: 0 2px 0 20px;
 				margin-top: 3px;
 				padding-block: 20px;
+				padding-inline: 40px;
 			}
 			.sectionLogics {
 				display: flex;
@@ -19,11 +21,11 @@
 				justify-content: space-between;
 				gap: 10px;
 				width: 100%;
-				padding: 0px 2px 0px 20px;
+				padding: 0 2px 0 20px;
 				margin-top: 14px;
-				padding-inline: 20px;
+				padding-inline: 40px;
 
-				@media (max-width: 1600px) {
+				@media (max-width: 520px) {
 					display: flex;
 					flex-direction: column;
 				}
@@ -33,9 +35,8 @@
 					justify-content: center;
 					align-items: center;
 					gap: 10px;
-					max-width: 510px;
+					max-width: 550px;
 					width: 100%;
-					padding-right: 30px;
 
 					@media (max-width: 797px) {
 						display: flex;
@@ -89,16 +90,12 @@
 							overflow: auto;
 						}
 					}
-					@media (max-width: 320px) {
-						width: 260px;
-						margin-right: 27px;
-					}
-					.buttons {
+
+					.input_buttons {
 						position: absolute;
 						top: 50%;
 						right: 15px;
 						transform: translateY(-50%);
-
 						display: flex;
 						justify-content: center;
 						align-items: center;
@@ -108,12 +105,10 @@
 							display: flex;
 							justify-content: center;
 							align-items: center;
-
 							border: none;
 							outline: none;
 							background: transparent;
 							border-radius: 4px;
-
 							cursor: pointer;
 							&:hover {
 								background: #dcdcdc;
@@ -124,14 +119,14 @@
 			}
 
 			.StudentContainer {
-				border-radius: 20px !important;
+				border-radius: 20px;
 				overflow-x: auto;
 				overflow-y: scroll !important;
-				height: 680px;
 				width: 95%;
+				height: 680px;
 				background: #fff;
-				transition: all 0.5s e;
 				border: 1px solid #dbd2d2;
+				transition: all 0.5s;
 				scrollbar-width: thin;
 				scrollbar-color: gray #fff;
 
@@ -219,6 +214,14 @@
 
 			@media (max-width: 1000px) {
 				padding-bottom: 140px;
+			}
+
+			.PaginationCard {
+				@media (max-width: 545px) {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+				}
 			}
 		}
 	}

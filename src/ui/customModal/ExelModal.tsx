@@ -3,7 +3,7 @@ import { Modal, Box, Typography, Select, MenuItem } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
-import scss from '../Style.module.scss';
+import scss from './Style.module.scss';
 
 const style = {
 	position: 'absolute',
@@ -18,11 +18,11 @@ const style = {
 	borderRadius: '10px'
 };
 
-interface SearcheProps {
+interface SearchProps {
 	handleClose: () => void;
 	open: boolean;
 }
-const SearchModal: FC<SearcheProps> = ({ handleClose, open }) => {
+const ExelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	const { control, handleSubmit } = useForm();
 
 	const onSubmit = () => {
@@ -89,7 +89,17 @@ const SearchModal: FC<SearcheProps> = ({ handleClose, open }) => {
 							/>
 						</div>
 
-						<div className={scss.button_add}>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="button"
 								disabled={false}
@@ -114,4 +124,4 @@ const SearchModal: FC<SearcheProps> = ({ handleClose, open }) => {
 	);
 };
 
-export default SearchModal;
+export default ExelModal;

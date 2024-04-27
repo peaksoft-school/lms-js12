@@ -99,7 +99,17 @@ const ModalImport = () => {
 								Обзор...
 							</ButtonCancel>
 						</div>
-						<div className={scss.button_add}>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="button"
 								disabled={false}

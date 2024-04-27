@@ -10,13 +10,15 @@
 				padding-top: 30px;
 				padding-bottom: 40px;
 				display: flex;
-				justify-content: space-between;
-				padding-inline: 30px;
+				align-items: center;
+				padding-inline: 40px;
+				gap: 10px;
 
-				@media (max-width: 400px) {
-					flex-wrap: wrap;
+				.addTeacherButton {
+					width: 100%;
+					display: flex;
+					justify-content: flex-end;
 					align-items: center;
-					justify-content: center;
 				}
 			}
 
@@ -29,18 +31,17 @@
 				padding-inline: 30px;
 
 				.TeacherContainer {
-					width: 100%;
-					background: #fff;
 					overflow-y: scroll !important;
-					height: 670px;
-					border-radius: 20px;
-					transition: all 0.2s ease-in-out;
-					border: 1px solid #dbd2d2;
 					scrollbar-width: thin;
 					scrollbar-color: #808080 #fff;
+					width: 100%;
+					height: 680px;
 					display: flex;
 					flex-wrap: nowrap;
-					overflow: auto;
+					background: #fff;
+					border: 1px solid #dbd2d2;
+					border-radius: 20px;
+					transition: all 0.2s ease-in-out;
 
 					@media screen and (min-width: 1100px) and (max-width: 1160px) {
 						max-width: 830px;
@@ -73,15 +74,11 @@
 							height: 50px;
 							background: #fff;
 
-							.TableTh {
-								text-align: start;
-							}
 							th {
 								font-family: 'Open Sans', sans-serif;
 								font-size: 14px;
 								font-weight: 600;
 								line-height: 19.07px;
-								text-wrap: nowrap;
 								text-align: start;
 								padding-left: 20px;
 							}
@@ -113,7 +110,7 @@
 				}
 			}
 		}
-		.PaginationContainerParent {
+		.PaginationContainer {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;

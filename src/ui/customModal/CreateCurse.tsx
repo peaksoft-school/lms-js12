@@ -84,9 +84,9 @@ export default function CreateCourse() {
 	};
 
 	return (
-		<div className={scss.for_button}>
+		<div>
 			<ToastContainer />
-			<div className={scss.button_cont}>
+			<div className={scss.add_course_button}>
 				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
 					Добавить Курс
 				</ButtonWithPlus>
@@ -152,27 +152,34 @@ export default function CreateCourse() {
 							onChange={(e) => setText(e.target.value)}
 							placeholder="Описание курса"
 						></textarea>
-						<div className={scss.buttons}>
-							<div>
-								<ButtonCancel
-									type="submit"
-									onClick={handleClose}
-									disabled={false}
-									width="103px"
-								>
-									Отмена
-								</ButtonCancel>
-							</div>
-							<div>
-								<ButtonSave
-									type="submit"
-									onClick={handleCreateCourse}
-									disabled={false}
-									width="117px"
-								>
-									Добавить
-								</ButtonSave>
-							</div>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
+							<ButtonCancel
+								type="submit"
+								onClick={handleClose}
+								disabled={false}
+								width="103px"
+							>
+								Отмена
+							</ButtonCancel>
+
+							<ButtonSave
+								type="submit"
+								onClick={handleCreateCourse}
+								disabled={false}
+								width="117px"
+							>
+								Добавить
+							</ButtonSave>
 						</div>
 					</Typography>
 				</Box>

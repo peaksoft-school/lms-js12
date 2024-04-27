@@ -306,7 +306,17 @@ const ModalAddTeacher = () => {
 							</div>
 						</div>
 
-						<div className={scss.button_add2}>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="submit"
 								disabled={false}

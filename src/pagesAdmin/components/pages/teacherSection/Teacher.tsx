@@ -1,5 +1,5 @@
 import React, { useState, KeyboardEvent } from 'react';
-import scss from './Teachers.module.scss';
+import scss from './Teacher.module.scss';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { IconDotsVertical } from '@tabler/icons-react';
@@ -12,7 +12,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 
-const Teachers = () => {
+const Teacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
@@ -81,14 +81,16 @@ const Teachers = () => {
 				<div className={scss.test}>
 					<div className={scss.HeaderContainer}>
 						<h1>Учителя</h1>
-						<ModalAddTeacher />
+						<div className={scss.addTeacherButton}>
+							<ModalAddTeacher />
+						</div>
 					</div>
 					<div className={scss.TableContainer}>
 						<div className={scss.TeacherContainer}>
 							<table className={scss.Table}>
 								<thead>
 									<tr>
-										<th className={scss.TableTh}>№</th>
+										<th style={{ textAlign: 'start' }}>№</th>
 										<th>Имя</th>
 										<th> Фамилия</th>
 										<th>Специализация</th>
@@ -160,7 +162,7 @@ const Teachers = () => {
 															}}
 														>
 															<MenuItem
-																style={{ display: 'flex', gap: '20px' }}
+																style={{ display: 'flex', gap: '10px' }}
 																className={scss.dropdown}
 																onClick={() => {
 																	setOpenModalEdit(true);
@@ -171,7 +173,7 @@ const Teachers = () => {
 																<p>Редактировать</p>
 															</MenuItem>
 															<MenuItem
-																style={{ display: 'flex', gap: '20px' }}
+																style={{ display: 'flex', gap: '10px' }}
 																className={scss.dropdown}
 																onClick={() => {
 																	setOpenModalDelete(true);
@@ -201,9 +203,8 @@ const Teachers = () => {
 						/>
 					</div>
 				</div>
-				<div className={scss.PaginationContainerParent}>
+				<div className={scss.PaginationContainer}>
 					{/* //! 1 */}
-
 					<div className={scss.callInput}>
 						<p>Перейти на страницу</p>
 						<input
@@ -218,7 +219,6 @@ const Teachers = () => {
 					</div>
 					<Stack direction="row" spacing={2}>
 						{/* //! 2 */}
-
 						<Pagination
 							count={Math.ceil(data!.length / rowsPerPage)}
 							page={currentPage}
@@ -246,4 +246,4 @@ const Teachers = () => {
 	);
 };
 
-export default Teachers;
+export default Teacher;
