@@ -7,7 +7,7 @@ export const api = index.injectEndpoints({
 			TABLE.GetTeacherRequest
 		>({
 			query: () => ({
-				url: 'https://api.elchocrud.pro/api/v1/59dd7fe356868f1b0a863261bd7b1d9b/THTDTR',
+				url: 'https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms',
 				method: 'GET'
 			}),
 			providesTags: ['teacher']
@@ -17,7 +17,7 @@ export const api = index.injectEndpoints({
 			TABLE.CreateTeacherssRequest
 		>({
 			query: (newTeacher) => ({
-				url: 'https://api.elchocrud.pro/api/v1/59dd7fe356868f1b0a863261bd7b1d9b/THTDTR',
+				url: 'https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms',
 				method: 'POST',
 				body: newTeacher
 			}),
@@ -28,7 +28,7 @@ export const api = index.injectEndpoints({
 			TABLE.ChangeTeacherssRequest
 		>({
 			query: ({ updateTeacher, deleteById }) => ({
-				url: `https://api.elchocrud.pro/api/v1/59dd7fe356868f1b0a863261bd7b1d9b/THTDTR/${deleteById}`,
+				url: `https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms/${deleteById}`,
 				method: 'PATCH',
 				body: updateTeacher
 			}),
@@ -39,7 +39,7 @@ export const api = index.injectEndpoints({
 			TABLE.DeleteTeacherRequest
 		>({
 			query: (deleteSt) => ({
-				url: `https://api.elchocrud.pro/api/v1/59dd7fe356868f1b0a863261bd7b1d9b/THTDTR/${deleteSt}`,
+				url: `https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms/${deleteSt}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['teacher']

@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState, KeyboardEvent, MouseEvent } from 'react';
 import scss from './Student.module.scss';
 import {
 	useGetStudentTableQuery,
@@ -9,13 +9,12 @@ import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
 import SearchPhoto from '@/src/assets/svgs/search.svg';
 import Input from '@/src/ui/customInput/Input';
 import { Button } from '@mui/material';
-// import ButtonExelPhoto from '@/src/assets/svgs/Vector (1).svg';
-// import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { IconDotsVertical, IconPlus, IconUpload } from '@tabler/icons-react';
 import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
+import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 
 interface Student {
 	_id: number;
@@ -29,7 +28,7 @@ interface Student {
 	isCompleted: boolean;
 }
 
-const Students = () => {
+const Student = () => {
 	const { data, isLoading } = useGetStudentTableQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -37,12 +36,22 @@ const Students = () => {
 	const [openDeleteModal, setOpenDeleteModal] = useState(false);
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(30);
+	const [rowsPerPage, setRowsPerPage] = useState(15);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(30);
+	const [openPage, setOpenPage] = useState(15);
 	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
 	const [saveItem, setSaveItem] = useState<Student>();
 	const [open, setOpen] = useState(false);
+	const [openStudent, setOpenStudent] = useState<boolean>(false);
+
+	const handleStudentOpen = (e: MouseEvent<HTMLButtonElement>) => {
+		setOpenStudent(true);
+		e.preventDefault();
+	};
+
+	const handleCloseStudent = () => {
+		setOpenStudent(false);
+	};
 
 	if (isLoading) {
 		return (
@@ -74,8 +83,8 @@ const Students = () => {
 	const handleCloseEditModal = () => setOpenEditModal(false);
 	const openPartFunc = () => {
 		if (openPart >= 1) {
-			setRowsPerPage(30);
-			setOpenPage(30);
+			setRowsPerPage(15);
+			setOpenPage(15);
 			setCurrentPage(openPart);
 		}
 	};
@@ -117,12 +126,13 @@ const Students = () => {
 	};
 
 	return (
-		<div className={scss.StudentParentContainer}>
+		<div className={scss.student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
 					<div className={scss.search_input_buttons}>
 						<div className={scss.search_input}>
 							<Input
+								size="small"
 								width="100%"
 								placeholder="Поиск"
 								type="text"
@@ -145,7 +155,12 @@ const Students = () => {
 								</div>
 								<span>Импорт Excel</span>
 							</Button>
-							<Button size="large" className={scss.button} variant="outlined">
+							<Button
+								size="large"
+								className={scss.button}
+								variant="contained"
+								onClick={handleStudentOpen}
+							>
 								<div className={scss.icon}>
 									<IconPlus stroke={2} />
 								</div>
@@ -156,10 +171,10 @@ const Students = () => {
 					<h1 className={scss.title}>Студенты</h1>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<div className={scss.StudentContainer}>
-							<table className={scss.Table}>
+							<table className={scss.table}>
 								<thead>
 									<tr>
-										<th className={scss.TableTh}>№</th>
+										<th style={{ textAlign: 'start' }}>№</th>
 										<th>Имя</th>
 										<th>Фамилия</th>
 										<th>Группа</th>
@@ -274,7 +289,7 @@ const Students = () => {
 							}}
 						/>
 					</div>
-					<div className={scss.PaginationCard}>
+					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}
@@ -300,8 +315,14 @@ const Students = () => {
 				</div>
 			</div>
 			<ExelModal handleClose={handleCloseSearch} open={open} />
+
+			<ModalAddStudent
+				open={openStudent}
+				handleOpenStudent={setOpenStudent}
+				handleClose={handleCloseStudent}
+			/>
 		</div>
 	);
 };
 
-export default Students;
+export default Student;

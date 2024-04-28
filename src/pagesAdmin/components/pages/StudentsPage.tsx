@@ -1,9 +1,9 @@
-import Students from './studentSection/Students.tsx';
+import Student from './studentSection/Student.tsx';
 
 const StudentsPage = () => {
 	return (
 		<>
-			<Students />
+			<Student />
 		</>
 	);
 };

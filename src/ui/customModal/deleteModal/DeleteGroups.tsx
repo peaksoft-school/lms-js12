@@ -38,9 +38,7 @@ const DeleteGroupModal: React.FC<DeleteProps> = ({
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<p>
-									Вы уверены, что хотите удалить этого учителя?
-								</p>
+								<p>Вы уверены, что хотите удалить этого учителя?</p>
 							</DialogContentText>
 						</DialogContent>
 						<DialogActions className={scss.buttons}>

@@ -11,7 +11,7 @@ import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import Trash from '@/src/ui/trash/Trash';
-import Students from '../pages/studentSection/Students';
+import Student from '../pages/studentSection/Student.tsx';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import Groups from '@/src/pagesAdmin/components/pages/groupSections/Groups';
 import CreateGroup from '@/src/ui/customModal/CreateGroup';
@@ -96,7 +96,7 @@ const LayoutAdmin = () => {
 										name="Учителя"
 									/>
 								) : (
-									<Students />
+									<Student />
 								)
 							}
 						/>

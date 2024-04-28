@@ -84,6 +84,7 @@ const ModalImport = () => {
 						</div>
 						<div className={scss.containInput}>
 							<Input
+								size="medium"
 								type="text"
 								width="80%"
 								placeholder="Выберите Excel файл для импорта"

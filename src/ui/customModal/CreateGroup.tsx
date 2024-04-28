@@ -130,6 +130,7 @@ export default function CreateGroup() {
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название группы"
 									value={value}
@@ -139,6 +140,7 @@ export default function CreateGroup() {
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
 									placeholder="Название группы"
 									value={data}
 									onChange={(e) => setData(e.target.value)}

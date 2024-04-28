@@ -66,6 +66,7 @@ const ModalAddLink = () => {
 								rules={{ required: 'text error' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -83,6 +84,7 @@ const ModalAddLink = () => {
 								rules={{ required: 'url error' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"

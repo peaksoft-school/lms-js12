@@ -130,6 +130,7 @@ export default function CreateCourse() {
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название курса"
 									value={value}
@@ -139,10 +140,11 @@ export default function CreateCourse() {
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
+									width="100%"
 									placeholder="Дата курса"
 									value={data}
 									onChange={(e) => setData(e.target.value)}
-									width="100%"
 									type="date"
 								/>
 							</div>

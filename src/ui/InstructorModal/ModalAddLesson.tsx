@@ -62,6 +62,7 @@ const ModalAddLesson = () => {
 					<Typography className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Input
+								size="medium"
 								type="text"
 								value={inputvalue}
 								width="100%"

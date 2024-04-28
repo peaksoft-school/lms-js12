@@ -127,6 +127,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название группы"
 									value={value}
@@ -136,6 +137,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
 									placeholder="Название группы"
 									value={date}
 									onChange={(e) => setData(e.target.value)}
