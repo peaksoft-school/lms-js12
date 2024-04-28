@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 
 interface ButtonSaveProps {
 	type: 'button' | 'submit' | 'reset';
-
 	width: string;
 	children: ReactNode;
 	disabled: boolean;

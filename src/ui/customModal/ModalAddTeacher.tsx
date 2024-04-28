@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -7,10 +7,8 @@ import Typography from '@mui/material/Typography';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './Style.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
-import ButtonWithPlus from '../customButton/ButtonWithPlus';
 import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
-import * as React from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,7 +17,7 @@ import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import { InputAdornment, IconButton } from '@mui/material';
 
 interface IFormInputs {
@@ -30,6 +28,11 @@ interface IFormInputs {
 	login: string;
 	specialization: string;
 	group: string[];
+}
+
+interface TeacherAddProps {
+	open: boolean;
+	handleClose: () => void;
 }
 
 const ITEM_HEIGHT = 48;
@@ -77,17 +80,12 @@ const style = {
 	borderRadius: '12px'
 };
 
-const ModalAddTeacher = () => {
+const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 	const { control, handleSubmit, reset } = useForm<IFormInputs>();
-	const [open, setOpen] = useState<boolean>(false);
 	const [postTeacher] = usePostTeacherMutation();
-	const [personName, setPersonName] = React.useState<string[]>([]);
+	const [personName, setPersonName] = useState<string[]>([]);
 	const [specialization, setSpecialization] = useState<string[]>([]);
 	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
-	const handleOpen = (e: React.MouseEvent<HTMLFormElement>) => {
-		setOpen(true);
-		e.preventDefault();
-	};
 
 	const handleClickShowSecondPassword = () =>
 		setShowSecondPassword((show) => !show);
@@ -95,13 +93,9 @@ const ModalAddTeacher = () => {
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
 
-	const handleClose = () => {
-		setOpen(false);
-		setOpen(false);
-	};
-	const notify = () =>
-		toast.error('Пожалуйста, заполните все обязательные поля');
-	const notifySuccess = () => toast.success('Успешно добовлено');
+	// const notify = () =>
+	// 	toast.error('Пожалуйста, заполните все обязательные поля');
+	// const notifySuccess = () => toast.success('Успешно добовлено');
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
 		const { firstName, lastName, email, phoneNumber, login } = data;
@@ -128,9 +122,9 @@ const ModalAddTeacher = () => {
 			reset();
 			setPersonName([]);
 			setSpecialization([]);
-			notifySuccess();
+			// notifySuccess();
 		} else {
-			notify();
+			// notify();
 		}
 	};
 
@@ -148,13 +142,8 @@ const ModalAddTeacher = () => {
 	};
 
 	return (
-		<form onSubmit={handleOpen}>
-			<ToastContainer />
-			<div className={scss.button}>
-				<ButtonWithPlus type="submit" disabled={false}>
-					Добавить учителя
-				</ButtonWithPlus>
-			</div>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			{/* <ToastContainer /> */}
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -179,6 +168,7 @@ const ModalAddTeacher = () => {
 								defaultValue=""
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -192,6 +182,7 @@ const ModalAddTeacher = () => {
 								defaultValue=""
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -205,6 +196,7 @@ const ModalAddTeacher = () => {
 								defaultValue=""
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="number"
 										width="100%"
@@ -218,6 +210,7 @@ const ModalAddTeacher = () => {
 								defaultValue=""
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="email"
 										width="100%"

@@ -35,7 +35,6 @@ const ModalAddVideoLesson = () => {
 	};
 
 	const onSubmit = () => {
-		// console.log(data);
 		handleClose();
 	};
 
@@ -66,6 +65,7 @@ const ModalAddVideoLesson = () => {
 								rules={{ required: 'Введите название видеоурока' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -81,6 +81,7 @@ const ModalAddVideoLesson = () => {
 								rules={{ required: 'Введите описание видеоурока' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -96,6 +97,7 @@ const ModalAddVideoLesson = () => {
 								rules={{ required: 'Вставьте ссылку на видеоурок' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"

@@ -58,7 +58,6 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 		}
 	};
 
-
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
 		if (file) {
@@ -125,6 +124,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название курсы"
 									value={value}
@@ -134,6 +134,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
 									placeholder="Название курсы"
 									value={date}
 									onChange={(e) => setData(e.target.value)}

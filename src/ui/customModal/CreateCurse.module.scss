@@ -1,12 +1,3 @@
-.for_button {
-	display: flex;
-	padding-top: 30px;
-	padding-bottom: 30px;
-	@media (max-width: 600px) {
-		padding-right: 60px;
-	}
-}
-
 .main_modal {
 	border-radius: 20px;
 	width: 541px !important;

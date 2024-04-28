@@ -1,7 +1,7 @@
 .main_modal {
 	max-width: 541px;
 	border-radius: 20px;
-	padding: 0px 0px !important;
+	padding: 0 0 !important;
 
 	@media (max-width: 600px) {
 		width: 80% !important;
@@ -21,7 +21,6 @@
 		.com_text {
 			padding: 20px;
 			text-align: center;
-			padding: 0px;
 		}
 	}
 
@@ -66,12 +65,9 @@
 			display: flex;
 			align-items: center;
 			justify-content: flex-end;
-			display: flex;
 			gap: 10px;
-			align-items: center;
 			padding-bottom: 10px;
 			padding-top: 13px;
-
 			@media (max-width: 600px) {
 				width: 80% !important;
 			}

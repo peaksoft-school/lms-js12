@@ -1,108 +1,114 @@
-.mainDiv {
-	.allContainer {
-		width: 100%;
-		height: 100vh;
+.teacher {
+	padding-top: 20px;
+	.container {
+		padding-inline: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		.test {
-			.HeaderContainer {
-				padding-top: 30px;
-				padding-bottom: 40px;
+		.content_table {
+			.button_title_elements {
+				margin-bottom: 30px;
 				display: flex;
+				justify-content: flex-end;
 				align-items: center;
-				padding-inline: 40px;
-				gap: 10px;
+				width: 100%;
 
-				.addTeacherButton {
-					width: 100%;
+				.button {
 					display: flex;
-					justify-content: flex-end;
+					gap: 10px;
+					justify-content: center;
 					align-items: center;
+					border-radius: 8px;
+					text-transform: capitalize;
+					.icon {
+						width: 25px;
+						height: 25px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						svg {
+						}
+					}
+					span {
+						white-space: nowrap;
+					}
+					@media (max-width: 700px) {
+						span {
+							display: none;
+						}
+					}
 				}
 			}
 
-			.TableContainer {
+			.title {
+				margin-bottom: 20px;
 				width: 100%;
-				flex-direction: column;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				padding-inline: 30px;
+			}
 
-				.TeacherContainer {
-					overflow-y: scroll !important;
-					scrollbar-width: thin;
-					scrollbar-color: #808080 #fff;
+			.TeacherContainer {
+				border-radius: 8px;
+				overflow-x: auto;
+				overflow-y: scroll !important;
+				table-layout: fixed;
+				width: 100%;
+				height: 685px;
+				background: #fff;
+				border: 1px solid #dbd2d2;
+				transition: all 0.5s;
+				scrollbar-width: thin;
+				scrollbar-color: #3772ff #fff;
+
+				@media screen and (min-width: 1185px) and (max-width: 1260px) {
 					width: 100%;
-					height: 680px;
-					display: flex;
-					flex-wrap: nowrap;
-					background: #fff;
-					border: 1px solid #dbd2d2;
-					border-radius: 20px;
-					transition: all 0.2s ease-in-out;
-
-					@media screen and (min-width: 1100px) and (max-width: 1160px) {
-						max-width: 830px;
-						display: flex;
-						flex-wrap: nowrap;
-						overflow: auto;
+					max-width: 953px;
+				}
+				@media screen and (min-width: 1105px) and (max-width: 1185px) {
+					width: 100%;
+					max-width: 870px;
+				}
+				@media screen and (min-width: 1070px) and (max-width: 1105px) {
+					width: 100%;
+					max-width: 830px;
+				}
+				@media screen and (min-width: 1000px) and (max-width: 1070px) {
+					width: 100%;
+					max-width: 760px;
+				}
+				.Table {
+					border-collapse: collapse;
+					width: 100%;
+					thead {
+						border-bottom: 1px solid #837a7a14;
+						height: 50px;
+						background: #fff;
+						th {
+							font-size: 14px;
+							font-weight: 600;
+							line-height: 19.07px;
+							text-align: start;
+							padding-left: 20px;
+							flex-wrap: nowrap;
+						}
 					}
-					@media screen and (min-width: 1060px) and (max-width: 1100px) {
-						max-width: 760px;
-						display: flex;
-						flex-wrap: nowrap;
-						overflow: auto;
-					}
+					tbody {
+						.TableAlternateRow {
+							background: #837a7a14;
+						}
 
-					@media screen and (min-width: 1000px) and (max-width: 1060px) {
-						max-width: 730px;
-						display: flex;
-						flex-wrap: nowrap;
-						overflow: auto;
-					}
-
-					.Table {
-						width: 100%;
-						border-spacing: 0px;
-						padding-left: 10px;
-						flex: 0 0 auto;
-
-						thead {
-							border-bottom: 1px solid #837a7a14;
+						.TableContainerSecond {
 							height: 50px;
-							background: #fff;
-
-							th {
-								font-family: 'Open Sans', sans-serif;
-								font-size: 14px;
-								font-weight: 600;
-								line-height: 19.07px;
-								text-align: start;
+						}
+						tr {
+							td {
 								padding-left: 20px;
 							}
-						}
-						tbody {
-							.TableAlternateRow {
-								background: #837a7a14;
-							}
 
-							.TableContainerSecond {
-								height: 50px;
-							}
-							tr {
-								.TableCell {
-									padding-left: 20px;
-								}
+							.TableCellIcon {
+								text-align: end;
 
-								.TableCellIcon {
-									text-align: end;
-
-									button {
-										background: none;
-										border: none;
-									}
+								button {
+									background: none;
+									border: none;
 								}
 							}
 						}
@@ -110,7 +116,7 @@
 				}
 			}
 		}
-		.PaginationContainer {
+		.pagination {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
@@ -118,23 +124,36 @@
 			background: #efeff6;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 74px;
+			margin-top: 21px;
 			position: sticky;
 			bottom: 0;
 			left: 0;
 
+			@media (max-width: 1000px) {
+				padding-bottom: 140px;
+			}
+
+			@media (max-width: 625px) {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+
+			.stack {
+				@media (max-width: 625px) {
+					display: flex;
+					flex-direction: column;
+				}
+			}
+
 			.callInput {
 				display: flex;
-				gap: 5px;
+				gap: 4px;
 				align-items: center;
 
 				input {
 					width: 40px;
 				}
-			}
-
-			@media (max-width: 1000px) {
-				padding-bottom: 140px;
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import {
 	Modal,
 	Box,
@@ -11,11 +11,8 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
-import ButtonWithPlus from '@/src/ui/customButton/ButtonWithPlus.tsx';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import { usePostStudentTableMutation } from '@/src/redux/api/admin/student';
-
-import * as React from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -23,7 +20,7 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface PostStudentProps {
@@ -35,6 +32,11 @@ interface PostStudentProps {
 	email: string;
 	password: string;
 	isCompleted: boolean;
+}
+
+interface StudentAddProps {
+	open: boolean;
+	handleClose: () => void;
 }
 
 const style = {
@@ -74,28 +76,19 @@ const names = [
 
 const formats = ['Online', 'OFFLINE'];
 
-const ModalAddStudent = () => {
+const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 	const { handleSubmit, control, reset } = useForm<PostStudentProps>();
-	const [open, setOpen] = useState(false);
+
 	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
 	const [postStudentTable] = usePostStudentTableMutation();
-	const [personName, setPersonName] = React.useState<string[]>([]);
-	const [formatName, setFormatName] = React.useState<string[]>([]);
+	const [personName, setPersonName] = useState<string[]>([]);
+	const [formatName, setFormatName] = useState<string[]>([]);
 
 	const handleClickShowSecondPassword = () =>
 		setShowSecondPassword((show) => !show);
 	const handleMouseDownSecondPassword1 = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
-
-	const handleOpen = (e: React.MouseEvent<HTMLFormElement>) => {
-		setOpen(true);
-		e.preventDefault();
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
 		const {
@@ -110,9 +103,9 @@ const ModalAddStudent = () => {
 		} = event;
 		setFormatName(typeof value === 'string' ? value.split(',') : value);
 	};
-	const notify = () =>
-		toast.error('Пожалуйста, заполните все обязательные поля');
-	const notifySuccess = () => toast.success('Успешно добовлено');
+	// const notify = () =>
+	// 	toast.error('Пожалуйста, заполните все обязательные поля');
+	// const notifySuccess = () => toast.success('Успешно добовлено');
 	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
 		const { firstName, lastName, phone_number, password, email } = data;
 		if (
@@ -139,18 +132,15 @@ const ModalAddStudent = () => {
 			reset();
 			setPersonName([]);
 			setFormatName([]);
-			notifySuccess();
+			// notifySuccess();
 		} else {
-			notify();
+			// notify();
 		}
 	};
 
 	return (
-		<form onSubmit={handleOpen}>
-			<ToastContainer />
-			<ButtonWithPlus type="submit" disabled={false}>
-				Добавить студента
-			</ButtonWithPlus>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			{/* <ToastContainer /> */}
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -179,6 +169,7 @@ const ModalAddStudent = () => {
 									defaultValue=""
 									render={({ field }) => (
 										<Input
+											size="medium"
 											{...field}
 											type="text"
 											width="100%"
@@ -192,6 +183,7 @@ const ModalAddStudent = () => {
 									defaultValue=""
 									render={({ field }) => (
 										<Input
+											size="medium"
 											{...field}
 											type="text"
 											width="100%"
@@ -205,6 +197,7 @@ const ModalAddStudent = () => {
 									defaultValue=""
 									render={({ field }) => (
 										<Input
+											size="medium"
 											{...field}
 											type="number"
 											width="100%"
@@ -218,6 +211,7 @@ const ModalAddStudent = () => {
 									defaultValue=""
 									render={({ field }) => (
 										<Input
+											size="medium"
 											{...field}
 											type=""
 											width="100%"

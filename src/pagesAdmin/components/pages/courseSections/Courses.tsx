@@ -71,10 +71,10 @@ const Courses: FC = () => {
 	};
 
 	return (
-		<div className={scss.ContainerCoursesParent}>
-			<div className={scss.all_container}>
-				<div className={scss.test}>
-					<div className={scss.ParentTitleContainer}>
+		<div className={scss.course}>
+			<div className={scss.content}>
+				<div className={scss.container}>
+					<div className={scss.title}>
 						<h1>Курсы</h1>
 						<div className={scss.course_button_modal}>
 							<Button
@@ -90,9 +90,9 @@ const Courses: FC = () => {
 							</Button>
 						</div>
 					</div>
-					<div className={scss.ContainerCardsParent}>
+					<div className={scss.cards}>
 						{data && Array.isArray(data) && data.length > 0 ? (
-							<div className={scss.Cards}>
+							<div className={scss.card}>
 								{data
 									.slice(
 										(currentPage - 1) * rowsPerPage,
@@ -179,7 +179,7 @@ const Courses: FC = () => {
 						/>
 					</div>
 				</div>
-				<div className={scss.PaginationContainerParent}>
+				<div className={scss.pagination}>
 					<div className={scss.Inputs}>
 						<p>Перейти на страницу</p>
 						<input
@@ -193,15 +193,17 @@ const Courses: FC = () => {
 						/>
 					</div>
 					<div>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								count={Math.ceil((data?.length ?? 0) / rowsPerPage)}
-								page={currentPage}
-								onChange={handlePageChangeC}
-								shape="rounded"
-								variant="outlined"
-							/>
-						</Stack>
+						<div className={scss.stack}>
+							<Stack direction="row" spacing={2}>
+								<Pagination
+									count={Math.ceil((data?.length ?? 0) / rowsPerPage)}
+									page={currentPage}
+									onChange={handlePageChangeC}
+									shape="rounded"
+									variant="outlined"
+								/>
+							</Stack>
+						</div>
 					</div>
 					<div className={scss.Inputs}>
 						<p>Показать</p>

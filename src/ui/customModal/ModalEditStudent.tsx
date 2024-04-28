@@ -183,6 +183,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 									control={control}
 									render={({ field }) => (
 										<Input
+											size="medium"
 											{...field}
 											width="100%"
 											type="text"
@@ -195,6 +196,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 									control={control}
 									render={({ field }) => (
 										<Input
+											size="medium"
 											width="100%"
 											{...field}
 											type="text"
@@ -207,6 +209,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 									control={control}
 									render={({ field }) => (
 										<Input
+											size="medium"
 											{...field}
 											type="number"
 											width="100%"
@@ -219,6 +222,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 									control={control}
 									render={({ field }) => (
 										<Input
+											size="medium"
 											{...field}
 											width="100%"
 											type="text"

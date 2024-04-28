@@ -89,7 +89,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 	};
 
 	return (
-		<div className={scss.for_button}>
+		<div>
 			<ToastContainer />
 
 			<Modal
@@ -131,6 +131,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название группы"
 									value={value}
@@ -140,6 +141,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
 									placeholder="Название группы"
 									value={data}
 									onChange={(e) => setData(e.target.value)}

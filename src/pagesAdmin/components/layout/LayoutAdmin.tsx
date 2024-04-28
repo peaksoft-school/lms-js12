@@ -6,39 +6,48 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Material from '@/src/ui/material/Material';
 import CalendarPage from '../pages/CalendarPage';
-import Teacher from '@/src/pagesAdmin/components/pages/teacherSection/Teacher.tsx';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
-import Students from '../pages/studentSection/Students';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import Groups from '@/src/pagesAdmin/components/pages/groupSections/Groups';
 import CreateGroup from '@/src/ui/customModal/CreateGroup';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
-import Courses from '@/src/pagesAdmin/components/pages/courseSections/Courses';
 import AnalyticsPage from '@/src/pagesAdmin/components/pages/AnalyticsPage.tsx';
 import TrashPage from '../pages/TrashPage';
+import TeacherPage from '../pages/TeacherPage.tsx';
+import { useGetCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
+import CoursesPage from '../pages/CoursesPage.tsx';
+import StudentsPage from '../pages/StudentsPage.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
 	const { data } = useGetTeacherQuery();
+	const { data: groups = [] } = useGetGroupQuery();
+	const { data: student = [] } = useGetStudentTableQuery();
+	const { data: courses = [] } = useGetCourseQuery();
 	const [openGroups, setOpen] = useState(false);
-	// const [openModalStudent, setOpenModalStudent] = useState(false);
-	// const handleOpenStudentModal = (e: React.MouseEvent<HTMLFormElement>) => {
-	// 	setOpenModalStudent(true);
-	// 	e.preventDefault();
-	// };
+	const [openTeacher, setOpenTeacher] = useState(false);
+	const [openStudent, setOpenModalStudent] = useState(false);
+	const handleOpenStudentModal = () => {
+		setOpenModalStudent(true);
+	};
 
-	// const handleCloseStudentModal = () => {
-	// 	setOpenModalStudent(false);
-	// };
+	const handleCloseStudentModal = () => {
+		setOpenModalStudent(false);
+	};
+	const handleOpenTeacherModal = () => {
+		setOpenTeacher(true);
+	};
+
+	const handleCloseTeacherModal = () => {
+		setOpenTeacher(false);
+	};
 
 	const handleOpen = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
-	const { data: groups = [] } = useGetGroupQuery();
-	const { data: student = [] } = useGetStudentTableQuery();
 
 	useEffect(() => {
 		const changeIsMobile = () => {
@@ -83,15 +92,16 @@ const LayoutAdmin = () => {
 								!data || data.length === 0 ? (
 									<NotCreated
 										text="Вы пока не добавили учителей!"
-										button={<ModalAddTeacher />}
 										name="Учителя"
+										buttonClick={handleOpenTeacherModal}
+										buttontText="Добавить учителя"
 									/>
 								) : (
-									<Teacher />
+									<TeacherPage />
 								)
 							}
 						/>
-						<Route path="/courses" element={<Courses />} />
+
 						<Route path="/trash" element={<TrashPage />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
@@ -103,12 +113,28 @@ const LayoutAdmin = () => {
 							element={
 								!student || student.length === 0 ? (
 									<NotCreated
-										text="Вы пока не добавили группу!"
-										button={<ModalAddStudent />}
-										name="Учителя"
+										text="Вы пока не добавили студентов!"
+										buttonClick={handleOpenStudentModal}
+										name="Студенты"
+										buttontText="Добавить студента"
 									/>
 								) : (
-									<Students />
+									<StudentsPage />
+								)
+							}
+						/>
+						<Route
+							path={'/courses'}
+							element={
+								!courses || courses.length === 0 ? (
+									<NotCreated
+										text="Вы пока не создали курсы!"
+										buttonClick={handleOpenStudentModal}
+										name="Курсы"
+										buttontText="Создать курс"
+									/>
+								) : (
+									<CoursesPage />
 								)
 							}
 						/>
@@ -118,8 +144,9 @@ const LayoutAdmin = () => {
 								!groups || groups.length === 0 ? (
 									<NotCreated
 										text="Вы пока не добавили группу!"
-										button={handleOpen}
-										name="Учителя"
+										buttonClick={handleOpen}
+										name="Группы"
+										buttontText="Создать группу"
 									/>
 								) : (
 									<Groups />
@@ -133,6 +160,14 @@ const LayoutAdmin = () => {
 					handleOpen={handleOpen}
 					open={openGroups}
 					handleClose={handleCloseCourses}
+				/>
+				<ModalAddTeacher
+					open={openTeacher}
+					handleClose={handleCloseTeacherModal}
+				/>
+				<ModalAddStudent
+					open={openStudent}
+					handleClose={handleCloseStudentModal}
 				/>
 			</div>
 		</>

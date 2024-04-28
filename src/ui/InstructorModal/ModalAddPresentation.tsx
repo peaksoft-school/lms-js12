@@ -66,6 +66,7 @@ const ModalAddPresentation = () => {
 								rules={{ required: 'Введите название презентации' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -81,6 +82,7 @@ const ModalAddPresentation = () => {
 								rules={{ required: 'Введите описание презентации' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -98,6 +100,7 @@ const ModalAddPresentation = () => {
 								rules={{ required: 'Выберите файл в формате ppt' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"

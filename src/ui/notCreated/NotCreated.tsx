@@ -1,13 +1,22 @@
 import notCreated from '@/src/assets/notCreated0.png';
 import scss from './NotCreated.module.scss';
 import { FC } from 'react';
+import { Button } from '@mui/material';
+import { IconPlus } from '@tabler/icons-react';
 
 interface NotCreatedProps {
 	text: string;
 	name: string;
-	button: () => void;
+	buttonClick: () => void;
+	buttontText: string;
 }
-const NotCreated: FC<NotCreatedProps> = ({ text, name, button }) => {
+
+const NotCreated: FC<NotCreatedProps> = ({
+	text,
+	name,
+	buttonClick,
+	buttontText
+}) => {
 	return (
 		<div className={scss.mainNot}>
 			<h2>{name}</h2>
@@ -19,7 +28,17 @@ const NotCreated: FC<NotCreatedProps> = ({ text, name, button }) => {
 					{' '}
 					<h3>{text}</h3>
 				</div>
-				<div>{button}</div>
+				<div>
+					<Button
+						style={{ display: 'flex', gap: '10px' }}
+						size="large"
+						onClick={buttonClick}
+						variant="contained"
+					>
+						<IconPlus stroke={2} />
+						{buttontText}
+					</Button>
+				</div>
 			</div>
 		</div>
 	);

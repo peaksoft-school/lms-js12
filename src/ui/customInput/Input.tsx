@@ -9,16 +9,16 @@ interface InputProps {
 	type: string;
 	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 	error?: boolean;
+	size: 'medium' | 'small';
 }
 
 type Ref = HTMLInputElement;
 
 const Input = forwardRef<Ref, InputProps>(
-	({ placeholder, width, value, onChange, type, error }, ref) => {
+	({ placeholder, width, value, onChange, type, error, size }, ref) => {
 		return (
 			<>
 				<TextField
-					size="small"
 					className={scss.inputBackground}
 					id="customWidth"
 					style={{ width }}
@@ -28,6 +28,7 @@ const Input = forwardRef<Ref, InputProps>(
 					type={type}
 					error={error}
 					ref={ref}
+					size={size}
 					InputProps={{
 						style: {
 							borderRadius: '12px'

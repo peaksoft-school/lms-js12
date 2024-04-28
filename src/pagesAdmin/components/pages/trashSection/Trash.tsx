@@ -9,9 +9,9 @@ import { Pagination, Stack } from '@mui/material';
 const Trash: FC = () => {
 	const { data, isLoading } = useGetTrashQuery();
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(15);
+	const [rowsPerPage, setRowsPerPage] = useState(13);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(15);
+	const [openPage, setOpenPage] = useState(13);
 
 	if (isLoading) {
 		return (
@@ -23,21 +23,21 @@ const Trash: FC = () => {
 
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
-		page: number	
+		page: number
 	): void => {
 		setCurrentPage(page);
 	};
 
 	const openPartFunc = () => {
 		if (openPart >= 1) {
-			setRowsPerPage(30);
-			setOpenPage(30);
+			setRowsPerPage(13);
+			setOpenPage(13);
 			setCurrentPage(openPart);
 		}
 	};
 
 	const openPartPage = () => {
-		if (rowsPerPage > 15) {
+		if (rowsPerPage > 13) {
 			setCurrentPage(1);
 		}
 	};
@@ -55,20 +55,20 @@ const Trash: FC = () => {
 			}
 		}
 	};
+
 	return (
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
 				<h1>Корзина</h1>
 				<div className={scss.table_container}>
-					<div className={scss.table_automatically_deleted}>
+					<div className={scss.text}>
 						<p>
-							{' '}
 							Элементы в корзине автоматически удаляются через 7 дней с момента
 							добавления!
 						</p>
 					</div>
-					<div className={scss.Trash}>
-						<table className={scss.Table}>
+					<div className={scss.trash}>
+						<table className={scss.table}>
 							<thead>
 								<tr>
 									<th>Name</th>
@@ -77,8 +77,12 @@ const Trash: FC = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{data &&
-									data.map((card, index) => (
+								{data
+									?.slice(
+										(currentPage - 1) * rowsPerPage,
+										currentPage * rowsPerPage
+									)
+									.map((card, index) => (
 										<tr
 											className={
 												index % 2 === 1
@@ -104,7 +108,7 @@ const Trash: FC = () => {
 						</table>
 					</div>
 				</div>
-				<div className={scss.PaginationContainerParent}>
+				<div className={scss.pagination}>
 					<div className={scss.Inputs}>
 						<p>Перейти на страницу</p>
 						<input
@@ -117,7 +121,7 @@ const Trash: FC = () => {
 							}}
 						/>
 					</div>
-					<div className={scss.PaginationCard}>
+					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}

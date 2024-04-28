@@ -69,6 +69,7 @@ const ModalStudentMessages = () => {
 								defaultValue=""
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										value={inputValue}

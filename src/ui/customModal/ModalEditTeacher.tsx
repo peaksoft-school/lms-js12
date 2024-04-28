@@ -163,6 +163,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -175,6 +176,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -187,6 +189,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -199,6 +202,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -211,6 +215,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"

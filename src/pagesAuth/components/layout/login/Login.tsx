@@ -76,6 +76,7 @@ const Login: FC = () => {
 											}}
 											render={({ field }) => (
 												<Input
+													size="medium"
 													width="100%"
 													{...field}
 													placeholder="Введите логин"

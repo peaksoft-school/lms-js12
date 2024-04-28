@@ -71,10 +71,10 @@ const Groups: FC = () => {
 	};
 
 	return (
-		<div className={scss.ContainerGroupsParent}>
-			<div className={scss.all_container}>
-				<div className={scss.test}>
-					<div className={scss.ParentTitleContainer}>
+		<div className={scss.group}>
+			<div className={scss.content}>
+				<div className={scss.container}>
+					<div className={scss.title}>
 						<h1>Группы</h1>
 						<div className={scss.course_button_modal}>
 							<Button
@@ -90,9 +90,9 @@ const Groups: FC = () => {
 							</Button>
 						</div>
 					</div>
-					<div className={scss.ContainerCardsParent}>
+					<div className={scss.cards}>
 						{data && Array.isArray(data) && data.length > 0 ? (
-							<div className={scss.Cards}>
+							<div className={scss.card}>
 								{data
 									.slice(
 										(currentPage - 1) * rowsPerPage,
@@ -179,7 +179,7 @@ const Groups: FC = () => {
 						/>
 					</div>
 				</div>
-				<div className={scss.PaginationContainer}>
+				<div className={scss.pagination}>
 					<div className={scss.Inputs}>
 						<p>Перейти на страницу</p>
 						<input
@@ -192,7 +192,7 @@ const Groups: FC = () => {
 							}}
 						/>
 					</div>
-					<div>
+					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
 								count={Math.ceil((data?.length ?? 0) / rowsPerPage)}

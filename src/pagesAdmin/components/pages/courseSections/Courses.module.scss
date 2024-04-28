@@ -1,14 +1,14 @@
-.ContainerCoursesParent {
-	.all_container {
-		height: 85vh;
+.course {
+	.content {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		overflow-y: scroll !important;
 		padding-inline: 20px;
+		height: 100vh;
 
-		.test {
-			.ParentTitleContainer {
+		.container {
+			.title {
 				display: flex;
 				align-items: center;
 				margin-top: 30px;
@@ -47,16 +47,15 @@
 					}
 				}
 			}
-			.ContainerCardsParent {
+			.cards {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: start;
 				margin-top: 24px;
 
-				.Cards {
+				.card {
 					position: relative;
-					// overflow: hidden;
 					display: grid;
 					flex-wrap: wrap;
 					justify-content: start;
@@ -205,7 +204,7 @@
 				}
 			}
 		}
-		.PaginationContainerParent {
+		.pagination {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
@@ -220,6 +219,23 @@
 
 			@media (max-width: 1000px) {
 				padding-bottom: 140px;
+			}
+
+			@media (max-width: 1000px) {
+				padding-bottom: 140px;
+			}
+
+			@media (max-width: 625px) {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+
+			.stack {
+				@media (max-width: 625px) {
+					display: flex;
+					flex-direction: column;
+				}
 			}
 
 			.Inputs {

@@ -10,14 +10,13 @@
 			background: #fff;
 			border: 1px solid #d4d4d4;
 			border-radius: 10px;
-			overflow-y: auto !important;
 
-			.Trash {
-				height: 600px !important;
+			.trash {
+				height: 600px;
 				overflow-x: auto;
-
 				white-space: nowrap;
 				scrollbar-width: thin;
+				overflow-y: auto !important;
 				scrollbar-color: #3772ff #fff;
 				@media screen and (min-width: 480px) and (max-width: 520px) {
 					max-width: 470px;
@@ -32,7 +31,7 @@
 			}
 		}
 
-		.table_automatically_deleted {
+		.text {
 			width: 100%;
 			border-bottom: 1px solid #3a373714;
 			p {
@@ -47,6 +46,36 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+
+				@media (max-width: 800px) {
+					background: #ffa500;
+					width: 80%;
+				}
+
+				@media (max-width: 755px) {
+					background: #ffa500;
+					width: 70%;
+				}
+
+				@media (max-width: 673px) {
+					background: #ffa500;
+					width: 70%;
+				}
+
+				@media (max-width: 583px) {
+					background: #ffa500;
+					width: 90%;
+				}
+				@media (max-width: 462px) {
+					background: #ffa500;
+					width: 90%;
+					height: 80px;
+				}
+				@media (max-width: 340px) {
+					background: #ffa500;
+					width: 90%;
+					height: 80px;
+				}
 			}
 		}
 
@@ -57,7 +86,7 @@
 			}
 		}
 
-		.Table {
+		.table {
 			width: 100%;
 			border-collapse: collapse;
 
@@ -66,7 +95,6 @@
 				height: 50px;
 				border-bottom: 1px solid #3a373714;
 				th {
-					font-family: 'Open Sans', sans-serif;
 					font-size: 16px;
 					font-weight: 600;
 					line-height: 19.07px;
@@ -129,24 +157,9 @@
 					gap: 20px;
 				}
 			}
-
-			// .table_cell {
-			// 	.TableImage {
-			// 		text-align: end;
-			// 	}
-			// }
 		}
 
-		// .Table td {
-		// 	font-weight: 400;
-		// 	font-size: 16px;
-		// 	line-height: 21.79px;
-		// 	letter-spacing: 0.02em;
-		// 	vertical-align: inherit;
-		// 	padding-left: 20px;
-		// }
-
-		.PaginationContainerParent {
+		.pagination {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
@@ -159,6 +172,27 @@
 			bottom: 0;
 			left: 0;
 
+			@media (max-width: 1000px) {
+				padding-bottom: 140px;
+			}
+
+			@media (max-width: 1000px) {
+				padding-bottom: 140px;
+			}
+
+			@media (max-width: 625px) {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+
+			.stack {
+				@media (max-width: 625px) {
+					display: flex;
+					flex-direction: column;
+				}
+			}
+
 			.Inputs {
 				display: flex;
 				gap: 5px;
@@ -167,10 +201,6 @@
 				input {
 					width: 40px;
 				}
-			}
-
-			@media (max-width: 1000px) {
-				padding-bottom: 140px;
 			}
 
 			.PaginationCard {

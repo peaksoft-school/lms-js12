@@ -1,16 +1,17 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState, MouseEvent, KeyboardEvent } from 'react';
 import scss from './Teacher.module.scss';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
-import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
-import { IconDotsVertical } from '@tabler/icons-react';
+import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import editIcon from '@/src/assets/svgs/edit.svg';
-import deleteIcon from '@/src/assets/svgs/delete-red.svg';
+import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { Menu, MenuItem } from '@mui/material';
 import DeleteTeacherModal from '@/src/ui/customModal/deleteModal/DeleteTeacherModal';
 import ModalEditTeacher from '@/src/ui/customModal/ModalEditTeacher';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Preloader } from '@/src/ui/preloader/Preloader';
+import Button from '@mui/material/Button';
+import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher.tsx';
 
 const Teacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -22,6 +23,16 @@ const Teacher = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(15);
 	const { data, isLoading } = useGetTeacherQuery();
 	const [openPart, setOpenPart] = useState(1);
+	const [openTeacher, setTeacherOpen] = useState<boolean>(false);
+
+	const handleTeacherOpen = (e: MouseEvent<HTMLButtonElement>) => {
+		setTeacherOpen(true);
+		e.preventDefault();
+	};
+
+	const handleTeacherClose = () => {
+		setTeacherOpen(false);
+	};
 
 	if (isLoading) {
 		return (
@@ -76,16 +87,24 @@ const Teacher = () => {
 	};
 
 	return (
-		<div className={scss.mainDiv}>
-			<div className={scss.allContainer}>
-				<div className={scss.test}>
-					<div className={scss.HeaderContainer}>
-						<h1>Учителя</h1>
-						<div className={scss.addTeacherButton}>
-							<ModalAddTeacher />
-						</div>
+		<div className={scss.teacher}>
+			<div className={scss.container}>
+				<div className={scss.content_table}>
+					<div className={scss.button_title_elements}>
+						<Button
+							size="large"
+							className={scss.button}
+							onClick={handleTeacherOpen}
+							variant="contained"
+						>
+							<div className={scss.icon}>
+								<IconPlus stroke={2} />
+							</div>
+							<span>Добавить учителя</span>
+						</Button>
 					</div>
-					<div className={scss.TableContainer}>
+					<h1 className={scss.title}>Учителя</h1>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
 						<div className={scss.TeacherContainer}>
 							<table className={scss.Table}>
 								<thead>
@@ -96,7 +115,7 @@ const Teacher = () => {
 										<th>Специализация</th>
 										<th>Номер телефона</th>
 										<th>E-mail</th>
-										<th>группы</th>
+										<th>Группа</th>
 										<th style={{ textAlign: 'end', paddingRight: '10px' }}>
 											Действия
 										</th>
@@ -118,12 +137,10 @@ const Teacher = () => {
 															: '' || scss.TableContainerSecond
 													}
 												>
-													<td style={{ textAlign: 'center' }}>
-														{index + 1 + (currentPage - 1) * rowsPerPage}
-													</td>
+													<td>{index + 1 + (currentPage - 1) * rowsPerPage}</td>
 
-													<td className={scss.TableCell}>{item.lastName}</td>
 													<td className={scss.TableCell}>{item.firstName}</td>
+													<td className={scss.TableCell}>{item.lastName}</td>
 													<td className={scss.TableCell}>
 														{item.specialization}
 													</td>
@@ -196,14 +213,14 @@ const Teacher = () => {
 								deleteById={deleteById}
 							/>
 						</div>
-						<DeleteTeacherModal
-							openModalDelete={openModalDelete}
-							closeModalDelete={setOpenModalDelete}
-							deleteById={deleteById}
-						/>
 					</div>
+					<DeleteTeacherModal
+						openModalDelete={openModalDelete}
+						closeModalDelete={setOpenModalDelete}
+						deleteById={deleteById}
+					/>
 				</div>
-				<div className={scss.PaginationContainer}>
+				<div className={scss.pagination}>
 					{/* //! 1 */}
 					<div className={scss.callInput}>
 						<p>Перейти на страницу</p>
@@ -217,16 +234,18 @@ const Teacher = () => {
 							}}
 						/>
 					</div>
-					<Stack direction="row" spacing={2}>
-						{/* //! 2 */}
-						<Pagination
-							count={Math.ceil(data!.length / rowsPerPage)}
-							page={currentPage}
-							onChange={handlePageChangeC}
-							shape="rounded"
-							variant="outlined"
-						/>
-					</Stack>
+					<div className={scss.stack}>
+						<Stack direction="row" spacing={2}>
+							{/* //! 2 */}
+							<Pagination
+								count={Math.ceil(data!.length / rowsPerPage)}
+								page={currentPage}
+								onChange={handlePageChangeC}
+								shape="rounded"
+								variant="outlined"
+							/>
+						</Stack>
+					</div>
 					{/* //! 3 */}
 					<div className={scss.callInput}>
 						<p>Показать</p>
@@ -242,6 +261,7 @@ const Teacher = () => {
 					</div>
 				</div>
 			</div>
+			<ModalAddTeacher open={openTeacher} handleClose={handleTeacherClose} />
 		</div>
 	);
 };

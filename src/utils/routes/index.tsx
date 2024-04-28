@@ -46,7 +46,7 @@ export const links = {
 			icon: <IconBellRinging2 stroke={2} />
 		},
 		{
-			name: 'Trash',
+			name: 'Корзина',
 			icon: <IconTrash stroke={2} />,
 			link: 'trash'
 		}
