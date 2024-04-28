@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
-import { IconDots } from '@tabler/icons-react';
+import { IconDots, IconPlus } from '@tabler/icons-react';
 import scss from './Groups.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -11,6 +11,7 @@ import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import CreateGroup from '@/src/ui/customModal/CreateGroup';
 import EditGroup from '@/src/ui/customModal/EditGroup';
 import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
+import { Button } from '@mui/material';
 
 const Groups: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -22,6 +23,9 @@ const Groups: FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
+	const [openGroups, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleCloseCourses = () => setOpen(false);
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,7 +76,19 @@ const Groups: FC = () => {
 				<div className={scss.test}>
 					<div className={scss.ParentTitleContainer}>
 						<h1>Группы</h1>
-						<CreateGroup />
+						<div className={scss.course_button_modal}>
+							<Button
+								size="large"
+								className={scss.button}
+								onClick={handleOpen}
+								variant="contained"
+							>
+								<div className={scss.icon}>
+									<IconPlus stroke={2} />
+								</div>
+								<span>Создать группу</span>
+							</Button>
+						</div>
 					</div>
 					<div className={scss.ContainerCardsParent}>
 						{data && Array.isArray(data) && data.length > 0 ? (
@@ -201,6 +217,11 @@ const Groups: FC = () => {
 					</div>
 				</div>
 			</div>
+			<CreateGroup
+				handleOpen={handleOpen}
+				open={openGroups}
+				handleClose={handleCloseCourses}
+			/>
 		</div>
 	);
 };

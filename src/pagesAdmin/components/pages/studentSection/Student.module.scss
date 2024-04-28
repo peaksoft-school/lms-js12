@@ -154,6 +154,7 @@
 							text-align: start;
 							padding-left: 20px;
 							flex-wrap: nowrap;
+							text-align: end;
 						}
 					}
 					tbody {
@@ -170,7 +171,7 @@
 						}
 						tr {
 							td {
-								padding-left: 20px;
+							text-align: end;
 							}
 
 							.TableCellIcon {

@@ -6,8 +6,7 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { useRef, useState } from 'react';
-import ButtonWithPlus from '../customButton/ButtonWithPlus';
+import { FC, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useCreateGroupMutation } from '@/src/redux/api/admin/groups';
@@ -27,10 +26,16 @@ const style = {
 	}
 };
 
-export default function CreateGroup() {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+interface CreateGroupsProps {
+	handleOpen: (value: boolean) => void;
+	open: boolean;
+	handleClose: () => void;
+}
+const CreateGroup: FC<CreateGroupsProps> = ({
+	handleOpen,
+	open,
+	handleClose
+}) => {
 	const [value, setValue] = useState('');
 	const [data, setData] = useState('');
 	const [text, setText] = useState('');
@@ -73,7 +78,7 @@ export default function CreateGroup() {
 		try {
 			createGroup(newGroup).unwrap();
 			notifySuccess();
-			setOpen(false);
+			handleOpen(false);
 			setData('');
 			setText('');
 			setImage('');
@@ -86,10 +91,6 @@ export default function CreateGroup() {
 	return (
 		<div className={scss.for_button}>
 			<ToastContainer />
-
-			<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
-				Добавить Группу
-			</ButtonWithPlus>
 
 			<Modal
 				open={open}
@@ -175,4 +176,6 @@ export default function CreateGroup() {
 			</Modal>
 		</div>
 	);
-}
+};
+
+export default CreateGroup;

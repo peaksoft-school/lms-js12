@@ -6,11 +6,10 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useCreateCourseMutation } from '@/src/redux/api/admin/courses';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonWithPlus from '@/src/ui/customButton/ButtonWithPlus';
 
 const style = {
 	position: 'absolute',
@@ -27,10 +26,17 @@ const style = {
 	}
 };
 
-export default function CreateCourse() {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+interface CreateCoursesProps {
+	handleOpen: (value: boolean) => void;
+	open: boolean;
+	handleClose: () => void;
+}
+
+const CreateCourse: FC<CreateCoursesProps> = ({
+	handleOpen,
+	open,
+	handleClose
+}) => {
 	const [value, setValue] = useState('');
 	const [data, setData] = useState('');
 	const [text, setText] = useState('');
@@ -73,7 +79,7 @@ export default function CreateCourse() {
 		try {
 			createCourse(newCourse).unwrap();
 			notifySuccess();
-			setOpen(false);
+			handleOpen(false);
 			setData('');
 			setText('');
 			setImage('');
@@ -84,13 +90,8 @@ export default function CreateCourse() {
 	};
 
 	return (
-		<div>
+		<div className={scss.for_button}>
 			<ToastContainer />
-			<div className={scss.add_course_button}>
-				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
-					Добавить Курс
-				</ButtonWithPlus>
-			</div>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -113,7 +114,7 @@ export default function CreateCourse() {
 					>
 						<div className={scss.img_part}>
 							<input
-								className={scss.file_input}
+								className={scss.fileInput}
 								type="file"
 								ref={fileInputRef}
 								onChange={handleFileChange}
@@ -186,4 +187,5 @@ export default function CreateCourse() {
 			</Modal>
 		</div>
 	);
-}
+};
+export default CreateCourse;

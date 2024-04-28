@@ -5,7 +5,7 @@ import { FC } from 'react';
 interface NotCreatedProps {
 	text: string;
 	name: string;
-	button: React.ReactNode;
+	button: () => void;
 }
 const NotCreated: FC<NotCreatedProps> = ({ text, name, button }) => {
 	return (

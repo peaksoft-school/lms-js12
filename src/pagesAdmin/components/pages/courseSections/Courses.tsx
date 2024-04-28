@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
-import { IconDots } from '@tabler/icons-react';
+import { IconDots, IconPlus } from '@tabler/icons-react';
 import scss from './Courses.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -11,6 +11,7 @@ import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/EditCourse';
 import CreateCourse from '@/src/ui/customModal/CreateCurse';
+import { Button } from '@mui/material';
 
 const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -22,6 +23,9 @@ const Courses: FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
+	const [openCurse, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleCloseCourses = () => setOpen(false);
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -73,7 +77,17 @@ const Courses: FC = () => {
 					<div className={scss.ParentTitleContainer}>
 						<h1>Курсы</h1>
 						<div className={scss.course_button_modal}>
-							<CreateCourse />
+							<Button
+								size="large"
+								className={scss.button}
+								onClick={handleOpen}
+								variant="contained"
+							>
+								<div className={scss.icon}>
+									<IconPlus stroke={2} />
+								</div>
+								<span>Создать курс</span>
+							</Button>
 						</div>
 					</div>
 					<div className={scss.ContainerCardsParent}>
@@ -203,6 +217,11 @@ const Courses: FC = () => {
 					</div>
 				</div>
 			</div>
+			<CreateCourse
+				handleOpen={handleOpen}
+				open={openCurse}
+				handleClose={handleCloseCourses}
+			/>
 		</div>
 	);
 };

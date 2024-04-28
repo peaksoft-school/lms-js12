@@ -1,11 +1,7 @@
 .for_button {
 	display: flex;
-	padding-right: 207px;
 	padding-top: 30px;
 	padding-bottom: 30px;
-	@media (max-width: 600px) {
-		padding-right: 60px;
-	}
 }
 
 .main_modal {
@@ -14,7 +10,7 @@
 	padding: 0px 0px !important;
 	@media (max-width: 600px) {
 		width: 90% !important;
-		height: 90% !important;
+		height: 75% !important;
 		border-radius: 10px;
 	}
 	.curse {

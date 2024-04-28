@@ -10,7 +10,6 @@ import Teacher from '@/src/pagesAdmin/components/pages/teacherSection/Teacher.ts
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
-import Trash from '@/src/ui/trash/Trash';
 import Students from '../pages/studentSection/Students';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import Groups from '@/src/pagesAdmin/components/pages/groupSections/Groups';
@@ -19,12 +18,25 @@ import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
 import Courses from '@/src/pagesAdmin/components/pages/courseSections/Courses';
 import AnalyticsPage from '@/src/pagesAdmin/components/pages/AnalyticsPage.tsx';
+import TrashPage from '../pages/TrashPage';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
 	const { data } = useGetTeacherQuery();
+	const [openGroups, setOpen] = useState(false);
+	// const [openModalStudent, setOpenModalStudent] = useState(false);
+	// const handleOpenStudentModal = (e: React.MouseEvent<HTMLFormElement>) => {
+	// 	setOpenModalStudent(true);
+	// 	e.preventDefault();
+	// };
 
+	// const handleCloseStudentModal = () => {
+	// 	setOpenModalStudent(false);
+	// };
+
+	const handleOpen = () => setOpen(true);
+	const handleCloseCourses = () => setOpen(false);
 	const { data: groups = [] } = useGetGroupQuery();
 	const { data: student = [] } = useGetStudentTableQuery();
 
@@ -80,7 +92,7 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route path="/courses" element={<Courses />} />
-						<Route path="/trash" element={<Trash />} />
+						<Route path="/trash" element={<TrashPage />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
 							path="/courses/:coursesId/:matelials"
@@ -106,7 +118,7 @@ const LayoutAdmin = () => {
 								!groups || groups.length === 0 ? (
 									<NotCreated
 										text="Вы пока не добавили группу!"
-										button={<CreateGroup />}
+										button={handleOpen}
 										name="Учителя"
 									/>
 								) : (
@@ -117,6 +129,11 @@ const LayoutAdmin = () => {
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
+				<CreateGroup
+					handleOpen={handleOpen}
+					open={openGroups}
+					handleClose={handleCloseCourses}
+				/>
 			</div>
 		</>
 	);
