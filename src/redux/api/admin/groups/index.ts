@@ -37,6 +37,13 @@ export const api = index.injectEndpoints({
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['groups']
+		}),
+		getGroupStudent: builder.query({
+			query: (groupId) => ({
+				url: `https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst/${groupId}`,
+				method: 'GET'
+			}),
+			providesTags: ['groups']
 		})
 	})
 });
@@ -45,5 +52,6 @@ export const {
 	useGetGroupQuery,
 	useCreateGroupMutation,
 	useUpdateGroupMutation,
-	useDeleteGroupMutation
+	useDeleteGroupMutation,
+	useGetGroupStudentQuery
 } = api;

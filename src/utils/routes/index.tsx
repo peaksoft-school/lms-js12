@@ -14,7 +14,7 @@ export const links = {
 		{
 			name: 'Аналитика',
 			icon: <IconChartHistogram stroke={2} />,
-			link: ''
+			link: 'analytics'
 		},
 		{
 			name: 'Группы',

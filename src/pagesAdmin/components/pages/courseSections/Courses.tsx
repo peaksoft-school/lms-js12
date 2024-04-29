@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
-import { IconDots, IconPlus } from '@tabler/icons-react';
+import { IconArticle, IconBook, IconDots, IconPlus } from '@tabler/icons-react';
 import scss from './Courses.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -74,22 +74,22 @@ const Courses: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					<div className={scss.title}>
-						<h1>Курсы</h1>
-						<div className={scss.course_button_modal}>
-							<Button
-								size="large"
-								className={scss.button}
-								onClick={handleOpen}
-								variant="contained"
-							>
-								<div className={scss.icon}>
-									<IconPlus stroke={2} />
-								</div>
-								<span>Создать курс</span>
-							</Button>
-						</div>
+					<div className={scss.course_button_modal}>
+						<Button
+							size="large"
+							className={scss.button}
+							onClick={handleOpen}
+							variant="contained"
+						>
+							<div className={scss.icon}>
+								<IconPlus stroke={2} />
+							</div>
+							<span>Создать курс</span>
+						</Button>
 					</div>
+
+					<h1 className={scss.title}>Курсы</h1>
+
 					<div className={scss.cards}>
 						{data && Array.isArray(data) && data.length > 0 ? (
 							<div className={scss.card}>
@@ -99,11 +99,11 @@ const Courses: FC = () => {
 										currentPage * rowsPerPage
 									)
 									.map((item) => (
-										<div key={item._id} className={scss.zeroBlockContainer}>
+										<div key={item._id} className={scss.zero_block_container}>
 											<div className={scss.block_photo_cards}>
 												<img src={item.img} alt="images" />
 											</div>
-											<div className={scss.BlockCont}>
+											<div className={scss.block_cont}>
 												<div className={scss.second_block}>
 													<p className={scss.block_title}>{item.title}</p>
 													<p className={scss.block_date}>{item.date}</p>
@@ -116,10 +116,11 @@ const Courses: FC = () => {
 													</span>
 												</div>
 											</div>
-											<div className={scss.BlockButtonDiv}>
+
+											<div className={scss.block_button_div}>
 												<div onClick={handleClick}>
 													<button
-														className={scss.BlockButtonDotts}
+														className={scss.button_dots}
 														onClick={() => {
 															setSaveId(item._id);
 														}}
@@ -181,7 +182,10 @@ const Courses: FC = () => {
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.Inputs}>
-						<p>Перейти на страницу</p>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPart}
@@ -192,21 +196,22 @@ const Courses: FC = () => {
 							}}
 						/>
 					</div>
-					<div>
-						<div className={scss.stack}>
-							<Stack direction="row" spacing={2}>
-								<Pagination
-									count={Math.ceil((data?.length ?? 0) / rowsPerPage)}
-									page={currentPage}
-									onChange={handlePageChangeC}
-									shape="rounded"
-									variant="outlined"
-								/>
-							</Stack>
-						</div>
+					<div className={scss.stack}>
+						<Stack direction="row" spacing={2}>
+							<Pagination
+								count={Math.ceil(data!.length / rowsPerPage)}
+								page={currentPage}
+								onChange={handlePageChangeC}
+								shape="rounded"
+								variant="outlined"
+							/>
+						</Stack>
 					</div>
 					<div className={scss.Inputs}>
-						<p>Показать</p>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPage}

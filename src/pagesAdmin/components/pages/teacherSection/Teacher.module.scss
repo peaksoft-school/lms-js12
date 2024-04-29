@@ -45,7 +45,7 @@
 				width: 100%;
 			}
 
-			.TeacherContainer {
+			.teacher_container {
 				border-radius: 8px;
 				overflow-x: auto;
 				overflow-y: scroll !important;
@@ -74,7 +74,7 @@
 					width: 100%;
 					max-width: 760px;
 				}
-				.Table {
+				.table {
 					border-collapse: collapse;
 					width: 100%;
 					thead {
@@ -91,11 +91,12 @@
 						}
 					}
 					tbody {
-						.TableAlternateRow {
+						.table_alternate_row {
 							background: #837a7a14;
+							height: 33px;
 						}
 
-						.TableContainerSecond {
+						.table_container_second {
 							height: 50px;
 						}
 						tr {
@@ -103,7 +104,7 @@
 								padding-left: 20px;
 							}
 
-							.TableCellIcon {
+							.dots {
 								text-align: end;
 
 								button {
@@ -130,29 +131,46 @@
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+				padding-bottom: 96px;
+			}
+
+			@media (max-width: 850px) {
+				flex-direction: column;
 			}
 
 			@media (max-width: 625px) {
-				display: flex;
-				flex-direction: column;
 				gap: 8px;
 			}
 
-			.stack {
-				@media (max-width: 625px) {
-					display: flex;
-					flex-direction: column;
-				}
-			}
-
-			.callInput {
+			.call_input {
 				display: flex;
-				gap: 4px;
+				gap: 5px;
 				align-items: center;
 
 				input {
 					width: 40px;
+				}
+
+				.text {
+					display: block;
+
+					@media (max-width: 850px) {
+						display: none;
+					}
+				}
+
+				.pagination_element {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+					}
+				}
+			}
+
+			.stack {
+				@media (max-width: 650px) {
+					flex-direction: column;
 				}
 			}
 		}

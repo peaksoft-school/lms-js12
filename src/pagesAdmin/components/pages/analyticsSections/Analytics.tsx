@@ -11,6 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import scss from './Analytics.module.scss';
 import { useGetAnalyticsQuery } from '../../../../redux/api/analytics';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 
 ChartJS.register(
 	CategoryScale,
@@ -94,7 +95,12 @@ function Analytics() {
 		}
 	}, [data]);
 
-	if (isLoading) return <p>Loading...</p>;
+	if (isLoading)
+		return (
+			<div>
+				<Preloader />
+			</div>
+		);
 	if (error) return <p>Error loading the data!</p>;
 
 	return (

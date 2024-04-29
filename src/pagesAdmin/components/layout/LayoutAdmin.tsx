@@ -20,6 +20,7 @@ import TeacherPage from '../pages/TeacherPage.tsx';
 import { useGetCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import CoursesPage from '../pages/CoursesPage.tsx';
 import StudentsPage from '../pages/StudentsPage.tsx';
+import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +85,7 @@ const LayoutAdmin = () => {
 
 				<main style={{ width: '100%' }}>
 					<Routes>
-						<Route path="/" element={<AnalyticsPage />} />
+						<Route path="/analytics" element={<AnalyticsPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
 						<Route
 							path="/teacher"
@@ -104,6 +105,7 @@ const LayoutAdmin = () => {
 
 						<Route path="/trash" element={<TrashPage />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
+
 						<Route
 							path="/courses/:coursesId/:matelials"
 							element={<Material />}
@@ -153,6 +155,7 @@ const LayoutAdmin = () => {
 								)
 							}
 						/>
+						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

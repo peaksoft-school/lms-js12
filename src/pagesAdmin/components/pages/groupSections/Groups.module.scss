@@ -1,57 +1,51 @@
 .group {
+	padding-top: 20px;
 	.content {
+		padding-inline: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		overflow-y: scroll !important;
-		padding-inline: 20px;
-		height: 100vh;
 
 		.container {
-			.title {
-				display: flex;
+			.course_button_modal {
+				margin-bottom: 30px;
+				display: grid;
+				justify-content: flex-end;
 				align-items: center;
-				margin-top: 30px;
-				gap: 20px;
+				width: 100%;
 
-				.course_button_modal {
-					display: grid;
-					justify-content: flex-end;
+				.button {
+					display: flex;
+					gap: 10px;
+					justify-content: center;
 					align-items: center;
-					width: 100%;
-
-					.button {
+					border-radius: 8px;
+					text-transform: capitalize;
+					.icon {
+						width: 25px;
+						height: 25px;
 						display: flex;
-						gap: 10px;
 						justify-content: center;
 						align-items: center;
-						border-radius: 8px;
-						text-transform: capitalize;
-						.icon {
-							width: 25px;
-							height: 25px;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							svg {
-							}
-						}
-						span {
-							white-space: nowrap;
-						}
-						@media (max-width: 700px) {
-							span {
-								display: none;
-							}
+						svg {
 						}
 					}
-				}
-				h1 {
-					@media (max-width: 422px) {
-						padding-right: 80px;
+					span {
+						white-space: nowrap;
+					}
+					@media (max-width: 700px) {
+						span {
+							display: none;
+						}
 					}
 				}
 			}
+
+			.title {
+				margin-bottom: 20px;
+				width: 100%;
+			}
+
 			.cards {
 				display: flex;
 				flex-direction: column;
@@ -68,6 +62,9 @@
 					width: 100%;
 					column-gap: 70px;
 					row-gap: 40px;
+					overflow-y: scroll !important;
+					scrollbar-width: thin;
+					scrollbar-color: #3772ff #fff;
 
 					@media (min-width: 1700px) {
 						display: grid;
@@ -103,7 +100,7 @@
 						place-items: center;
 					}
 
-					.zeroBlockContainer {
+					.zero_block_container {
 						padding: 12px;
 						max-width: 280px;
 						width: 100%;
@@ -155,19 +152,20 @@
 							}
 						}
 
-						.BlockCont {
-							.secondBlockContainer {
+						.block_cont {
+							padding-top: 12px;
+							.second_block_container {
 								display: flex;
 								justify-content: space-between;
 								align-items: center;
 
-								.BlockTitle {
+								.block_title {
 									font-size: 18px;
 									font-weight: 600;
 									line-height: 24.51px;
 								}
 
-								.BlockDate {
+								.block_date {
 									font-size: 12px;
 									font-weight: 400;
 									line-height: 16.81px;
@@ -179,7 +177,7 @@
 								flex-direction: column;
 								justify-content: space-between;
 
-								.BlockText {
+								.block_text {
 									margin-top: 10px;
 									font-size: 16px;
 									font-weight: 400;
@@ -191,14 +189,14 @@
 						}
 					}
 
-					.BlockButtonDiv {
+					.block_button_div {
 						margin-top: auto;
 						display: flex;
 						align-items: center;
 						justify-content: flex-end;
 						width: 100%;
 
-						.BlockButtonDots {
+						.block_button_dots {
 							display: flex;
 							justify-content: center;
 							align-items: center;
@@ -216,39 +214,53 @@
 			width: 100%;
 			background: #efeff6;
 			padding-block: 20px;
-			padding-inline: 10px;
-			margin-top: 21px;
+			padding-inline: 30px;
+			margin-top: 90px;
 			position: sticky;
 			bottom: 0;
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+				padding-bottom: 96px;
 			}
 
-			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+			@media (max-width: 850px) {
+				flex-direction: column;
 			}
 
 			@media (max-width: 625px) {
-				display: flex;
-				flex-direction: column;
 				gap: 8px;
 			}
 
-			.stack {
-				@media (max-width: 625px) {
-					display: flex;
-					flex-direction: column;
+			.inputs {
+				display: flex;
+				gap: 5px;
+				align-items: center;
+
+				input {
+					width: 40px;
+				}
+
+				.text {
+					display: block;
+
+					@media (max-width: 850px) {
+						display: none;
+					}
+				}
+
+				.pagination_element {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+					}
 				}
 			}
 
-			.Inputs {
-				display: flex;
-				gap: 20px;
-				input {
-					width: 40px;
-					text-align: center;
+			.stack {
+				@media (max-width: 650px) {
+					flex-direction: column;
 				}
 			}
 		}

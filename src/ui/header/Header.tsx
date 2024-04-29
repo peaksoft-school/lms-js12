@@ -1,7 +1,7 @@
 import { links } from '@/src/utils/routes';
 import scss from './Header.module.scss';
-import { FC } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import peaksoft from '@/src/assets/header-logo.png';
 import peaksoft2 from '@/src/assets/pealsoft.jpg';
 
@@ -12,6 +12,13 @@ interface LayoutProps {
 
 const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 	const { pathname } = useLocation();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (pathname === '/admin') {
+			navigate('/admin/analytics');
+		}
+	}, [pathname]);
 
 	return (
 		<header
@@ -51,6 +58,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 							alt=""
 						/>
 					</div>
+					{/* //! admin */}
 					{pathname.startsWith('/admin') && (
 						<>
 							{links.admin.map((item, index) => (
@@ -58,7 +66,8 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 									<Link
 										to={`/admin/${item.link!}`}
 										className={
-											pathname === `/admin/${item.link!}`
+											pathname === `/admin/${item.link!}` ||
+											pathname.startsWith(`/admin/${item.link!}`)
 												? `${scss.nav_item} ${scss.active}`
 												: `${scss.nav_item}`
 										}

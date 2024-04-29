@@ -5,6 +5,7 @@ import refrash from '@/src/assets/svgs/refresh.svg';
 import { useGetTrashQuery } from '@/src/redux/api/admin/trash';
 import { Preloader } from '../../../../ui/preloader/Preloader';
 import { Pagination, Stack } from '@mui/material';
+import { IconArticle, IconBook } from '@tabler/icons-react';
 
 const Trash: FC = () => {
 	const { data, isLoading } = useGetTrashQuery();
@@ -110,7 +111,10 @@ const Trash: FC = () => {
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.Inputs}>
-						<p>Перейти на страницу</p>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPart}
@@ -133,7 +137,10 @@ const Trash: FC = () => {
 						</Stack>
 					</div>
 					<div className={scss.Inputs}>
-						<p>Показать</p>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPage}
