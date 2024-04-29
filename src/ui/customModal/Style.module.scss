@@ -1,18 +1,18 @@
-.MainModal {
+.main_modal {
 	border-radius: 20px;
 	max-width: 541px;
-	padding: 0px 0px !important;
-	background: #ffffff;
+	padding: 0 0 !important;
+	background: #fff;
 
 	@media (max-width: 600px) {
 		width: 80% !important;
 	}
 	.text {
-		color: white;
 		width: 100%;
 		height: 68px;
 		padding: 20px;
 		background: #3772ff;
+		color: #fff;
 		border-top-right-radius: 10px !important;
 		border-top-left-radius: 10px !important;
 		margin-bottom: 5px;
@@ -22,7 +22,6 @@
 		.comText {
 			padding: 20px;
 			text-align: center;
-			padding: 0px;
 		}
 	}
 
@@ -31,10 +30,10 @@
 		color: #87898e;
 		padding-left: 20px;
 	}
-	.input_buttonCard {
-		display: flex;
+	.input_button_card {
 		flex-direction: column;
 		align-items: center;
+		display: flex;
 		justify-content: center;
 		padding-left: 20px;
 		padding-right: 20px;
@@ -52,9 +51,9 @@
 			flex-direction: column;
 			gap: 10px;
 
-			.OutlinedInputEyes {
+			.outlined_input_eyes {
 				width: 100%;
-				border-radius: 20px;
+				border-radius: 12px;
 			}
 
 			.EditButtons {
@@ -65,49 +64,11 @@
 			}
 		}
 
-		.selectDiv {
+		.select_div {
 			width: 100%;
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
-		}
-
-		.buttonAdd {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			flex-wrap: wrap;
-			width: 100%;
-			display: flex;
-			gap: 10px;
-			align-items: center;
-		}
-		.buttonAdd2 {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			flex-wrap: wrap;
-			width: 100%;
-			display: flex;
-			gap: 10px;
-			align-items: center;
-			padding-right: 16px;
-		}
-
-		.buttony {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			width: 100%;
-			display: flex;
-			gap: 10px;
-			align-items: center;
-			padding-bottom: 10px;
-			padding-top: 13px;
-
-			@media (max-width: 600px) {
-				width: 80% !important;
-			}
 		}
 
 		.containInput {

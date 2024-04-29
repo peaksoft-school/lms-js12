@@ -1,6 +1,6 @@
 import { Checkbox } from '@mui/material';
 import { FC } from 'react';
-import scss from './Checkbox.module.scss';
+import scss from './CheckBox.module.scss';
 
 interface CheckboxProps {
 	disabled: boolean;

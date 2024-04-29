@@ -40,30 +40,64 @@ const HeaderMobile = () => {
 					)}
 					{/* //! student */}
 
-					{!pathname.startsWith('/admin') ===
-						(!pathname.startsWith('/instructor') && (
-							<>
-								{pathname.startsWith('/') && (
-									<>
-										{links.student.map((item, index) => (
-											<li key={index}>
-												<Link
-													to={`/${item.link!}`}
-													className={
-														pathname === `/${item.link!}`
-															? `${scss.nav_item} ${scss.active}`
-															: `${scss.nav_item}`
-													}
-												>
-													<span className={scss.icon}>{item.icon}</span>
-													<span>{item.name}</span>
-												</Link>
-											</li>
-										))}
-									</>
-								)}
-							</>
-						))}
+					{pathname === '/' && (
+						<>
+							{links.student.map((item, index) => (
+								<li key={index}>
+									<Link
+										to={`/${item.link!}`}
+										className={
+											pathname === `/${item.link!}`
+												? `${scss.nav_item} ${scss.active}`
+												: `${scss.nav_item}`
+										}
+									>
+										<span className={scss.icon}>{item.icon}</span>
+										<span>{item.name}</span>
+									</Link>
+								</li>
+							))}
+						</>
+					)}
+					{pathname === '/courses' && (
+						<>
+							{links.student.map((item, index) => (
+								<li key={index}>
+									<Link
+										to={`/${item.link!}`}
+										className={
+											pathname === `/${item.link!}`
+												? `${scss.nav_item} ${scss.active}`
+												: `${scss.nav_item}`
+										}
+									>
+										<span className={scss.icon}>{item.icon}</span>
+										<span>{item.name}</span>
+									</Link>
+								</li>
+							))}
+						</>
+					)}
+					{pathname === '/calendar' && (
+						<>
+							{links.student.map((item, index) => (
+								<li key={index}>
+									<Link
+										to={`/${item.link!}`}
+										className={
+											pathname === `/${item.link!}`
+												? `${scss.nav_item} ${scss.active}`
+												: `${scss.nav_item}`
+										}
+									>
+										<span className={scss.icon}>{item.icon}</span>
+										<span>{item.name}</span>
+									</Link>
+								</li>
+							))}
+						</>
+					)}
+
 					{/* //! instructor */}
 					{pathname.startsWith('/instructor') && (
 						<>

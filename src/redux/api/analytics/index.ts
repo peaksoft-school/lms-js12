@@ -10,7 +10,7 @@ const api = index.injectEndpoints({
 				url: 'https://api.elchocrud.pro/api/v1/c43275804a0b340557d27a25acf8b20f/analytics',
 				method: 'GET'
 			}),
-			providesTags: ['analytics']
+			providesTags: ['analyticsSections']
 		})
 	})
 });

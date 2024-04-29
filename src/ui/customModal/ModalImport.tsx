@@ -40,7 +40,6 @@ const ModalImport = () => {
 	};
 
 	const onSubmit = () => {
-		// console.log(data); // Здесь можно обработать данные формы
 		handleClose();
 	};
 
@@ -57,17 +56,17 @@ const ModalImport = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.main_modal}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Импорт Excel в БД</p>
+						<p className={scss.com_text}>Импорт Excel в БД</p>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.selectDiv}>
 							<Controller
 								name="fileType"
@@ -85,6 +84,7 @@ const ModalImport = () => {
 						</div>
 						<div className={scss.containInput}>
 							<Input
+								size="medium"
 								type="text"
 								width="80%"
 								placeholder="Выберите Excel файл для импорта"
@@ -100,7 +100,17 @@ const ModalImport = () => {
 								Обзор...
 							</ButtonCancel>
 						</div>
-						<div className={scss.buttonAdd}>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="button"
 								disabled={false}

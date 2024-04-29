@@ -1,0 +1,160 @@
+.teacher {
+	padding-top: 20px;
+	.container {
+		padding-inline: 20px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		.content_table {
+			.button_title_elements {
+				margin-bottom: 30px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				width: 100%;
+
+				.button {
+					display: flex;
+					gap: 10px;
+					justify-content: center;
+					align-items: center;
+					border-radius: 8px;
+					text-transform: capitalize;
+					.icon {
+						width: 25px;
+						height: 25px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						svg {
+						}
+					}
+					span {
+						white-space: nowrap;
+					}
+					@media (max-width: 700px) {
+						span {
+							display: none;
+						}
+					}
+				}
+			}
+
+			.title {
+				margin-bottom: 20px;
+				width: 100%;
+			}
+
+			.TeacherContainer {
+				border-radius: 8px;
+				overflow-x: auto;
+				overflow-y: scroll !important;
+				table-layout: fixed;
+				width: 100%;
+				height: 685px;
+				background: #fff;
+				border: 1px solid #dbd2d2;
+				transition: all 0.5s;
+				scrollbar-width: thin;
+				scrollbar-color: #3772ff #fff;
+
+				@media screen and (min-width: 1185px) and (max-width: 1260px) {
+					width: 100%;
+					max-width: 953px;
+				}
+				@media screen and (min-width: 1105px) and (max-width: 1185px) {
+					width: 100%;
+					max-width: 870px;
+				}
+				@media screen and (min-width: 1070px) and (max-width: 1105px) {
+					width: 100%;
+					max-width: 830px;
+				}
+				@media screen and (min-width: 1000px) and (max-width: 1070px) {
+					width: 100%;
+					max-width: 760px;
+				}
+				.Table {
+					border-collapse: collapse;
+					width: 100%;
+					thead {
+						border-bottom: 1px solid #837a7a14;
+						height: 50px;
+						background: #fff;
+						th {
+							font-size: 14px;
+							font-weight: 600;
+							line-height: 19.07px;
+							text-align: start;
+							padding-left: 20px;
+							flex-wrap: nowrap;
+						}
+					}
+					tbody {
+						.TableAlternateRow {
+							background: #837a7a14;
+						}
+
+						.TableContainerSecond {
+							height: 50px;
+						}
+						tr {
+							td {
+								padding-left: 20px;
+							}
+
+							.TableCellIcon {
+								text-align: end;
+
+								button {
+									background: none;
+									border: none;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.pagination {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			width: 100%;
+			background: #efeff6;
+			padding-block: 20px;
+			padding-inline: 30px;
+			margin-top: 21px;
+			position: sticky;
+			bottom: 0;
+			left: 0;
+
+			@media (max-width: 1000px) {
+				padding-bottom: 140px;
+			}
+
+			@media (max-width: 625px) {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+
+			.stack {
+				@media (max-width: 625px) {
+					display: flex;
+					flex-direction: column;
+				}
+			}
+
+			.callInput {
+				display: flex;
+				gap: 4px;
+				align-items: center;
+
+				input {
+					width: 40px;
+				}
+			}
+		}
+	}
+}

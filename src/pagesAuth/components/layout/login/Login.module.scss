@@ -10,7 +10,7 @@
 			width: 100%;
 			max-width: 800px;
 			height: 100vh;
-			background: rgb(55, 114, 255);
+			background: #3772ff;
 
 			.Logos {
 				display: flex;
@@ -32,7 +32,7 @@
 			padding-inline: 20px;
 			width: 100%;
 			height: 100vh;
-			background: rgb(255, 255, 255);
+			background: #ffffff;
 
 			.LoginWhiteElements {
 				width: 100%;
@@ -43,7 +43,7 @@
 				align-items: center;
 
 				.title_red {
-					color: rgb(250, 35, 73);
+					color: #fa2349;
 				}
 
 				.OutlinedInputEyes {
@@ -53,7 +53,7 @@
 				}
 
 				&::placeholder {
-					color: rgb(106, 106, 106);
+					color: #6a6a6a;
 					padding: 10px 8px 10px 22px;
 				}
 
@@ -83,7 +83,7 @@
 						p {
 							font-weight: 400;
 							font-size: 16px;
-							color: rgb(106, 106, 106);
+							color: #6a6a6a;
 						}
 
 						.InputMedia {
@@ -100,7 +100,7 @@
 							margin-top: 18px;
 							font-weight: 400;
 							font-size: 16px;
-							color: rgb(106, 106, 106);
+							color: #6a6a6a;
 						}
 					}
 				}

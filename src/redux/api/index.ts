@@ -21,7 +21,7 @@ export const api = createApi({
 	tagTypes: [
 		'lesson',
 		'teacher',
-		'analytics',
+		'analyticsSections',
 		'student',
 		'groups',
 		'trash',

@@ -5,11 +5,17 @@ import {
 	IconUserCheck,
 	IconCalendar,
 	IconTrash,
-	IconBellRinging2
+	IconBellRinging2,
+	IconChartHistogram
 } from '@tabler/icons-react';
 
 export const links = {
 	admin: [
+		{
+			name: 'Аналитика',
+			icon: <IconChartHistogram stroke={2} />,
+			link: ''
+		},
 		{
 			name: 'Группы',
 			icon: <IconUsersGroup stroke={2} />,
@@ -40,7 +46,7 @@ export const links = {
 			icon: <IconBellRinging2 stroke={2} />
 		},
 		{
-			name: 'Trash',
+			name: 'Корзина',
 			icon: <IconTrash stroke={2} />,
 			link: 'trash'
 		}

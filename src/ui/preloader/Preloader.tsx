@@ -1,4 +1,4 @@
-import scss from './PreLoader.module.scss';
+import scss from './Preloader.module.scss';
 export const Preloader = () => {
 	return (
 		<div className={scss.pre_loader}>

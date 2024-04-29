@@ -12,7 +12,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		.BlockDostup {
+		.block_dostup {
 			font-family: 'Nunito Sans', sans-serif;
 			font-size: 23.65px;
 			font-weight: 600;
@@ -20,10 +20,10 @@
 			text-align: center;
 			color: #000000;
 		}
-		.BlockImage {
+		.block_image {
 			text-align: center;
 		}
-		.BlockZakryliDostup {
+		.block_zakryli_dostup {
 			font-family: 'Nunito Sans', sans-serif;
 			font-size: 18.92px;
 			font-weight: 400;
@@ -32,7 +32,7 @@
 			color: #3c3c4399;
 			margin-top: -8px;
 
-			.BlockZakryliDostupSpan {
+			.block_zakryli_dostup_span {
 				text-align: center;
 				display: flex;
 				font-size: 18.92px;

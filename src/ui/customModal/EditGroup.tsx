@@ -1,4 +1,4 @@
-import scss from './CreateGroup.module.scss';
+import scss from './EditGroup.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -94,9 +94,9 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={scss.mainModal} sx={style}>
+				<Box className={scss.main_modal} sx={style}>
 					<Typography
-						className={scss.Curse}
+						className={scss.curse}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
@@ -104,11 +104,11 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<p> Редактировать</p>
 					</Typography>
 					<Typography
-						className={scss.textPart}
+						className={scss.text_part}
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
-						<div className={scss.imgPart}>
+						<div className={scss.img_part}>
 							<input
 								className={scss.fileInput}
 								type="file"
@@ -117,16 +117,17 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							/>
 							<div
 								onClick={handleButtonClick}
-								className={hidePhoto ? scss.backgroundNone : scss.background}
+								className={hidePhoto ? scss.background_none : scss.background}
 								style={{ backgroundImage: `url(${image || galerry})` }}
 							></div>
-							<p className={hidePhoto ? scss.hideText : scss.show}>
+							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
 							</p>
 						</div>
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название группы"
 									value={value}
@@ -136,6 +137,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
 									placeholder="Название группы"
 									value={date}
 									onChange={(e) => setData(e.target.value)}

@@ -33,17 +33,15 @@ const DeleteGroupModal: React.FC<DeleteProps> = ({
 						aria-labelledby="alert-dialog-title"
 						aria-describedby="alert-dialog-description"
 						PaperProps={{
-							className: scss.dialogPaper
+							className: scss.dialog_paper
 						}}
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<p style={{ padding: '18px 63px' }}>
-									Вы уверены, что хотите удалить этого учителя?
-								</p>
+								<p>Вы уверены, что хотите удалить этого учителя?</p>
 							</DialogContentText>
 						</DialogContent>
-						<DialogActions className={scss.Buttons}>
+						<DialogActions className={scss.buttons}>
 							<ButtonCancel
 								width="103px"
 								type="button"

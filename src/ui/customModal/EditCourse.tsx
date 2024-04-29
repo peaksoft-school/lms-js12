@@ -1,4 +1,4 @@
-import scss from './CreateGroup.module.scss';
+import scss from './EditCourse.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -36,7 +36,6 @@ interface EditModalProps {
 const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery();
 	const find = data?.find((id) => id._id === saveId);
-	console.log(find);
 
 	const [value, setValue] = useState<string>('');
 	const [date, setData] = useState<string>('');
@@ -58,8 +57,6 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 			fileInputRef.current.click();
 		}
 	};
-
-	console.log(saveId);
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -127,6 +124,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название курсы"
 									value={value}
@@ -136,6 +134,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
 									placeholder="Название курсы"
 									value={date}
 									onChange={(e) => setData(e.target.value)}

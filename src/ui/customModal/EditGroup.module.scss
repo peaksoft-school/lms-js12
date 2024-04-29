@@ -1,4 +1,4 @@
-.mainModal {
+.main_modal {
 	border-radius: 20px;
 	width: 541px !important;
 	padding: 0px 0px !important;
@@ -9,7 +9,7 @@
 		border-radius: 10px;
 	}
 
-	.Curse {
+	.curse {
 		border-top-right-radius: 12px;
 		border-top-left-radius: 12px;
 		margin-bottom: 20px;
@@ -19,7 +19,7 @@
 		padding: 20px;
 	}
 
-	.textPart {
+	.text_part {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -37,12 +37,12 @@
 			background: url('../../assets/photo-bg.png');
 		}
 
-		.backgroundNone {
+		.background_none {
 			width: 173px;
 			height: 145px;
 		}
 
-		.imgPart {
+		.img_part {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -57,11 +57,11 @@
 			}
 
 			p {
-				color: rgb(141, 148, 158) !important;
+				color: #8d949e !important;
 				font-size: 18px !important;
 			}
 
-			.hideText {
+			.hide_text {
 				display: none;
 			}
 		}
@@ -108,11 +108,11 @@
 			&::placeholder {
 				font-size: 16px;
 				padding: 10px;
-				color: rgb(141, 148, 158);
+				color: #8d949e;
 				font-weight: 400;
 			}
 
-			border: 1px solid rgb(194, 193, 193);
+			border: 1px solid #c2c1c1;
 
 			@media (max-width: 600px) {
 				padding: 20px;

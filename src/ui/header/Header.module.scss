@@ -1,5 +1,6 @@
 .SaidBar {
-	position: relative;
+	position: sticky;
+
 	top: 0;
 	left: 0;
 	height: 100vh;
@@ -84,12 +85,12 @@
 				border-radius: 0.8rem;
 				transition: all 0.2s ease;
 				&:hover {
-					background: rgb(221, 233, 249);
-					color: rgb(31, 110, 212);
+					background: #dde9f9;
+					color: #1f6ed4;
 				}
 				&.active {
-					background: rgb(221, 233, 249);
-					color: rgb(31, 110, 212);
+					background: #dde9f9;
+					color: #1f6ed4;
 				}
 
 				.icon {
@@ -116,7 +117,7 @@
 				left: 60px;
 				top: 50%;
 				transform: translateY(-50%);
-				box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
+				box-shadow: 0 0.5rem 0.8rem #00000033;
 				border-radius: 0.6rem;
 				padding: 0.4rem 1.2rem;
 				line-height: 1.8rem;
@@ -125,8 +126,8 @@
 				color: #12171e;
 			}
 			&:hover .tooltip {
-				background: rgb(221, 233, 249);
-				color: rgb(31, 110, 212);
+				background: #dde9f9;
+				color: #1f6ed4;
 				opacity: 1;
 			}
 		}

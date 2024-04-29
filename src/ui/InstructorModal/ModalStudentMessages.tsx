@@ -52,16 +52,16 @@ const ModalStudentMessages = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.ModalMain}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Сообщение для студентов</p>
+						<p className={scss.com_text}>Сообщение для студентов</p>
 					</Typography>
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="message"
@@ -69,6 +69,7 @@ const ModalStudentMessages = () => {
 								defaultValue=""
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										value={inputValue}
@@ -83,7 +84,7 @@ const ModalStudentMessages = () => {
 							/>
 						</div>
 
-						<div className={scss.buttonAdd}>
+						<div className={scss.button_add}>
 							<ButtonCancel
 								type="button"
 								disabled={false}

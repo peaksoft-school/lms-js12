@@ -4,8 +4,8 @@ import BasicBreadcrumbs from '../breadCrumbs/BreadCrumbs';
 
 const Material = () => {
 	const { data } = useGetLessonQuery();
-	const { matelials } = useParams();
-	console.log(matelials);
+	const { material } = useParams();
+	console.log(material);
 
 	return (
 		<div>

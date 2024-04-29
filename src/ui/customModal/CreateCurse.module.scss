@@ -1,21 +1,4 @@
-.ButtonCont {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-}
-
-.forButton {
-	display: flex;
-	padding-right: 207px;
-	padding-top: 30px;
-	padding-bottom: 30px;
-	@media (max-width: 600px) {
-		padding-right: 60px;
-	}
-}
-
-.mainModal {
+.main_modal {
 	border-radius: 20px;
 	width: 541px !important;
 	padding: 0px 0px !important;
@@ -24,121 +7,120 @@
 		height: 90% !important;
 		border-radius: 10px;
 	}
-}
+	.curse {
+		border-top-right-radius: 12px;
+		border-top-left-radius: 12px;
+		margin-bottom: 20px;
+		text-align: center;
+		background: #3772ff;
+		color: #ffff;
+		padding: 20px;
+	}
 
-.Curse {
-	border-top-right-radius: 12px;
-	border-top-left-radius: 12px;
-	margin-bottom: 20px;
-	text-align: center;
-	background: #3772ff;
-	color: #ffff;
-	padding: 20px;
-}
+	.text_part {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 20px;
+		padding: 20px;
+		p {
+			font-size: 20px !important;
+		}
+		.background {
+			width: 173px;
+			height: 145px;
+			background: url('../../assets/photo-bg.png');
+		}
+		.background_none {
+			width: 173px;
+			height: 145px;
+		}
+		.img_part {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			max-width: 309px;
+			gap: 10px;
+			width: 100%;
+			img {
+				width: 173px;
+				height: 145px;
+			}
+			p {
+				color: #8d949e !important;
+				font-size: 18px !important;
+			}
+			.hideText {
+				display: none;
+			}
+		}
 
-.textPart {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-end;
-	gap: 20px;
-	padding: 20px;
-}
+		.fileInput {
+			display: none;
+		}
+		.inputs {
+			max-width: 541px !important;
+			width: 100% !important;
+			gap: 12px;
+			display: flex;
+			justify-content: space-between;
+			padding-left: 10px;
+			padding-right: 10px;
+			@media (max-width: 600px) {
+				padding: 0;
+				flex-direction: column;
+				align-items: flex-start;
+			}
 
-.textPart p {
-	font-size: 20px !important;
-}
+			.first_input {
+				max-width: 367px !important;
+				width: 100% !important;
+			}
 
-.textPart .background {
-	width: 173px;
-	height: 145px;
-	background: url('../../assets/photo-bg.png');
-}
+			.second_input {
+				max-width: 149px;
+				width: 100%;
+			}
+		}
 
-.textPart .backgroundNone {
-	width: 173px;
-	height: 145px;
-}
+		textarea {
+			width: 100%;
+			max-width: 485px;
+			height: 123px;
+			padding: 7px 7px;
+			border-radius: 20px;
+			border: 1px solid #c2c1c1;
+			font-family: 'Open Sans', sans-serif !important;
+			font-weight: 500;
+			font-size: 17px;
+			opacity: none;
+			outline: none;
+			resize: none;
+			&::placeholder {
+				font-family: 'Open Sans', sans-serif !important;
+				font-size: 17px;
+				font-weight: 500;
+			}
+			@media (max-width: 600px) {
+				padding: 20px;
+				flex-direction: column;
+				align-items: flex-start;
+			}
 
-.textPart .imgPart {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	max-width: 309px;
-	gap: 10px;
-	width: 100%;
-}
+			@media (max-width: 470px) {
+				display: flex;
+				flex-wrap: wrap;
+			}
+		}
 
-.textPart .imgPart img {
-	width: 173px;
-	height: 145px;
-}
-
-.textPart .imgPart p {
-	color: rgb(141, 148, 158) !important;
-	font-size: 18px !important;
-}
-
-.textPart .imgPart .hideText {
-	display: none;
-}
-
-.textPart .fileInput {
-	display: none;
-}
-
-.textPart .inputs {
-	max-width: 541px !important;
-	width: 100% !important;
-	gap: 12px;
-	display: flex;
-	justify-content: space-between;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-.textPart .inputs .first_input {
-	max-width: 367px !important;
-	width: 100% !important;
-}
-
-.textPart .inputs .second_input {
-	max-width: 149px;
-	width: 100%;
-}
-
-.textPart textarea {
-	border-radius: 10px;
-	max-width: 491px;
-	width: 100%;
-	padding-left: 25px;
-	padding-right: 25px;
-	height: 123px;
-	resize: none;
-}
-
-.textPart textarea::placeholder {
-	font-size: 16px;
-	padding: 10px;
-	color: rgb(141, 148, 158);
-	font-weight: 400;
-}
-
-.textPart textarea {
-	border: 1px solid rgb(194, 193, 193);
-}
-
-.textPart .buttons {
-	display: flex;
-	gap: 10px;
-	flex-wrap: wrap;
-	-ms-flex-align: end;
-	align-items: flex-end;
-	justify-content: flex-end;
-	text-align: right;
-	height: 100%;
-	width: 100%;
-	padding-left: 5px;
-	padding-right: 5px;
+		.buttons {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			justify-content: flex-end;
+			width: 100%;
+		}
+	}
 }

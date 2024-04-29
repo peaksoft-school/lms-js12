@@ -6,15 +6,15 @@ const Block = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<img
-						className={scss.BlockImage}
+						className={scss.block_image}
 						src="../../assets/svgs/353%201.svg"
 						alt="BlockImage"
 					/>
 
-					<h1 className={scss.BlockDostup}>Вам закрыли доступ</h1>
-					<p className={scss.BlockZakryliDostup}>
+					<h1 className={scss.block_dostup}>Вам закрыли доступ</h1>
+					<p className={scss.block_zakryli_dostup}>
 						Вам закрыли доступ к системе,внесите <br />
-						<span className={scss.BlockZakryliDostupSpan}>
+						<span className={scss.block_zakryli_dostup_span}>
 							оплату для продолжения !
 						</span>
 					</p>

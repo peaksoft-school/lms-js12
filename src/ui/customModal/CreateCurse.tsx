@@ -6,11 +6,10 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useCreateCourseMutation } from '@/src/redux/api/admin/courses';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonWithPlus from '@/src/ui/customButton/ButtonWithPlus';
 
 const style = {
 	position: 'absolute',
@@ -27,10 +26,17 @@ const style = {
 	}
 };
 
-export default function CreateCourse() {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+interface CreateCoursesProps {
+	handleOpen: (value: boolean) => void;
+	open: boolean;
+	handleClose: () => void;
+}
+
+const CreateCourse: FC<CreateCoursesProps> = ({
+	handleOpen,
+	open,
+	handleClose
+}) => {
 	const [value, setValue] = useState('');
 	const [data, setData] = useState('');
 	const [text, setText] = useState('');
@@ -73,7 +79,7 @@ export default function CreateCourse() {
 		try {
 			createCourse(newCourse).unwrap();
 			notifySuccess();
-			setOpen(false);
+			handleOpen(false);
 			setData('');
 			setText('');
 			setImage('');
@@ -84,22 +90,17 @@ export default function CreateCourse() {
 	};
 
 	return (
-		<div className={scss.forButton}>
+		<div>
 			<ToastContainer />
-			<div className={scss.ButtonCont}>
-				<ButtonWithPlus onClick={handleOpen} disabled={false} type={'button'}>
-					Добавить Курс
-				</ButtonWithPlus>
-			</div>
 			<Modal
 				open={open}
 				onClose={handleClose}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box className={scss.mainModal} sx={style}>
+				<Box className={scss.main_modal} sx={style}>
 					<Typography
-						className={scss.Curse}
+						className={scss.curse}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
@@ -107,11 +108,11 @@ export default function CreateCourse() {
 						<p> Создание курса</p>
 					</Typography>
 					<Typography
-						className={scss.textPart}
+						className={scss.text_part}
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
-						<div className={scss.imgPart}>
+						<div className={scss.img_part}>
 							<input
 								className={scss.fileInput}
 								type="file"
@@ -120,16 +121,17 @@ export default function CreateCourse() {
 							/>
 							<div
 								onClick={handleButtonClick}
-								className={hidePhoto ? scss.backgroundNone : scss.background}
+								className={hidePhoto ? scss.background_none : scss.background}
 								style={{ backgroundImage: `url(${image || gallery})` }}
 							></div>
-							<p className={hidePhoto ? scss.hideText : scss.show}>
+							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
 							</p>
 						</div>
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
 								<Input
+									size="medium"
 									width="100%"
 									placeholder="Название курса"
 									value={value}
@@ -139,10 +141,11 @@ export default function CreateCourse() {
 							</div>
 							<div className={scss.second_input}>
 								<Input
+									size="medium"
+									width="100%"
 									placeholder="Дата курса"
 									value={data}
 									onChange={(e) => setData(e.target.value)}
-									width="100%"
 									type="date"
 								/>
 							</div>
@@ -152,31 +155,39 @@ export default function CreateCourse() {
 							onChange={(e) => setText(e.target.value)}
 							placeholder="Описание курса"
 						></textarea>
-						<div className={scss.buttons}>
-							<div>
-								<ButtonCancel
-									type="submit"
-									onClick={handleClose}
-									disabled={false}
-									width="103px"
-								>
-									Отмена
-								</ButtonCancel>
-							</div>
-							<div>
-								<ButtonSave
-									type="submit"
-									onClick={handleCreateCourse}
-									disabled={false}
-									width="117px"
-								>
-									Добавить
-								</ButtonSave>
-							</div>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
+							<ButtonCancel
+								type="submit"
+								onClick={handleClose}
+								disabled={false}
+								width="103px"
+							>
+								Отмена
+							</ButtonCancel>
+
+							<ButtonSave
+								type="submit"
+								onClick={handleCreateCourse}
+								disabled={false}
+								width="117px"
+							>
+								Добавить
+							</ButtonSave>
 						</div>
 					</Typography>
 				</Box>
 			</Modal>
 		</div>
 	);
-}
+};
+export default CreateCourse;

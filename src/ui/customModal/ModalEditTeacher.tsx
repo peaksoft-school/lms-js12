@@ -143,7 +143,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.main_modal}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"
@@ -156,13 +156,14 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 						</div>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="firstName"
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -175,6 +176,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -187,6 +189,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -199,6 +202,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -211,6 +215,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								control={control}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"

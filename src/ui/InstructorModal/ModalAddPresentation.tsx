@@ -47,17 +47,17 @@ const ModalAddPresentation = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style} className={scss.MainModal}>
+				<Box sx={style} className={scss.ModalMain}>
 					<Typography
 						className={scss.text}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Добавить презентацию</p>
+						<p className={scss.com_text}>Добавить презентацию</p>
 					</Typography>
 
-					<Box className={scss.input_buttonCard}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="firstName"
@@ -66,6 +66,7 @@ const ModalAddPresentation = () => {
 								rules={{ required: 'Введите название презентации' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -81,6 +82,7 @@ const ModalAddPresentation = () => {
 								rules={{ required: 'Введите описание презентации' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -90,7 +92,7 @@ const ModalAddPresentation = () => {
 							/>
 						</div>
 
-						<div className={scss.buttonreview}>
+						<div className={scss.button_review}>
 							<Controller
 								name="Name"
 								control={control}
@@ -98,6 +100,7 @@ const ModalAddPresentation = () => {
 								rules={{ required: 'Выберите файл в формате ppt' }}
 								render={({ field }) => (
 									<Input
+										size="medium"
 										{...field}
 										type="text"
 										width="100%"
@@ -114,7 +117,7 @@ const ModalAddPresentation = () => {
 								Обзор...
 							</ButtonCancel>
 						</div>
-						<div className={scss.buttonAdd}>
+						<div className={scss.button_add}>
 							<ButtonCancel
 								type="submit"
 								disabled={false}

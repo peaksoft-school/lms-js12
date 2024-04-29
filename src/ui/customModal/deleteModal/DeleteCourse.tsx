@@ -39,9 +39,7 @@ const DeleteCourses: React.FC<DeleteProps> = ({
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<p style={{ padding: '18px 63px' }}>
-									Вы уверены, что хотите удалить этот курс?
-								</p>
+								<p>Вы уверены, что хотите удалить этот курс?</p>
 							</DialogContentText>
 						</DialogContent>
 						<DialogActions className={scss.Buttons}>

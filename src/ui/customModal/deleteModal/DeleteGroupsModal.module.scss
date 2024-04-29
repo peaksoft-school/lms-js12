@@ -1,10 +1,15 @@
-.dialogPaper {
-	width: 500px;
+.dialog_paper {
+	width: 100%;
+	max-width: 500px;
 	height: 186px;
-	.Buttons {
+	.buttons {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		gap: 10px;
+	}
+	p {
+		padding-top: 10px;
+		font-size: 20px;
 	}
 }

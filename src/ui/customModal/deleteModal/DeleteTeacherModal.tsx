@@ -35,7 +35,7 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 						aria-labelledby="alert-dialog-title"
 						aria-describedby="alert-dialog-description"
 						PaperProps={{
-							className: scss.dialogPaper
+							className: scss.dialog_paper
 						}}
 					>
 						<DialogContent>
@@ -43,7 +43,7 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 								<h3>Вы уверены, что хотите удалить этого студента?</h3>
 							</DialogContentText>
 						</DialogContent>
-						<DialogActions className={scss.Buttons}>
+						<DialogActions className={scss.buttons}>
 							<ButtonCancel
 								width="103px"
 								type="button"
