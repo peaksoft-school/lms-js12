@@ -201,7 +201,7 @@ const Student = () => {
 														: '' || scss.StudentContainerSecond
 												}
 											>
-												<td
+												<td 
 													className={!item.isCompleted ? scss.changeClass : ''}
 												>
 													{index + 1 + (currentPage - 1) * rowsPerPage}

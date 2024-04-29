@@ -20,6 +20,7 @@ import TeacherPage from '../pages/TeacherPage.tsx';
 import { useGetCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import CoursesPage from '../pages/CoursesPage.tsx';
 import StudentsPage from '../pages/StudentsPage.tsx';
+import AppointTeacher from '@/src/ui/appoint/AppointTeacher.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -169,6 +170,7 @@ const LayoutAdmin = () => {
 					open={openStudent}
 					handleClose={handleCloseStudentModal}
 				/>
+				<AppointTeacher />
 			</div>
 		</>
 	);
