@@ -21,6 +21,7 @@ import { useGetCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import CoursesPage from '../pages/CoursesPage.tsx';
 import StudentsPage from '../pages/StudentsPage.tsx';
 import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
+import SupHeader from '@/src/ui/supHeader/SupHeader.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
 
 const LayoutAdmin = () => {
@@ -85,6 +86,7 @@ const LayoutAdmin = () => {
 				)}
 
 				<main style={{ width: '100%' }}>
+					<SupHeader />
 					<Routes>
 						<Route path="/analytics" element={<AnalyticsPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
