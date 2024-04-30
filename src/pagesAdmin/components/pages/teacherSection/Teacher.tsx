@@ -1,7 +1,12 @@
 import React, { useState, MouseEvent, KeyboardEvent } from 'react';
 import scss from './Teacher.module.scss';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
-import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
+import {
+	IconArticle,
+	IconBook,
+	IconDotsVertical,
+	IconPlus
+} from '@tabler/icons-react';
 import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { Menu, MenuItem } from '@mui/material';
@@ -105,8 +110,8 @@ const Teacher = () => {
 					</div>
 					<h1 className={scss.title}>Учителя</h1>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<div className={scss.TeacherContainer}>
-							<table className={scss.Table}>
+						<div className={scss.teacher_container}>
+							<table className={scss.table}>
 								<thead>
 									<tr>
 										<th style={{ textAlign: 'start' }}>№</th>
@@ -133,21 +138,19 @@ const Teacher = () => {
 													key={item._id}
 													className={
 														index % 2 === 1
-															? scss.TableAlternateRow
-															: '' || scss.TableContainerSecond
+															? scss.table_alternate_row
+															: '' || scss.table_container_second
 													}
 												>
 													<td>{index + 1 + (currentPage - 1) * rowsPerPage}</td>
 
-													<td className={scss.TableCell}>{item.firstName}</td>
-													<td className={scss.TableCell}>{item.lastName}</td>
-													<td className={scss.TableCell}>
-														{item.specialization}
-													</td>
-													<td className={scss.TableCell}>{item.phoneNumber}</td>
-													<td className={scss.TableCell}>{item.email}</td>
-													<td className={scss.TableCell}>{item.group}</td>
-													<td className={scss.TableCellIcon}>
+													<td>{item.firstName}</td>
+													<td>{item.lastName}</td>
+													<td>{item.specialization}</td>
+													<td>{item.phoneNumber}</td>
+													<td>{item.email}</td>
+													<td>{item.group}</td>
+													<td className={scss.dots}>
 														<button
 															className={scss.button}
 															aria-controls={open ? 'basic-menu' : undefined}
@@ -221,9 +224,11 @@ const Teacher = () => {
 					/>
 				</div>
 				<div className={scss.pagination}>
-					{/* //! 1 */}
-					<div className={scss.callInput}>
-						<p>Перейти на страницу</p>
+					<div className={scss.call_input}>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPart}
@@ -236,7 +241,6 @@ const Teacher = () => {
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
-							{/* //! 2 */}
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
@@ -246,13 +250,15 @@ const Teacher = () => {
 							/>
 						</Stack>
 					</div>
-					{/* //! 3 */}
-					<div className={scss.callInput}>
-						<p>Показать</p>
+					<div className={scss.call_input}>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPage}
-							onChange={(e) => setOpenPage(e.target.value)}
+							onChange={(e) => setOpenPage(+e.target.value)}
 							onKeyDown={(e) => {
 								handleAppend(e);
 								openPartPage();

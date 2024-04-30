@@ -12,7 +12,13 @@ import { Button } from '@mui/material';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { IconDotsVertical, IconPlus, IconUpload } from '@tabler/icons-react';
+import {
+	IconArticle,
+	IconBook,
+	IconDotsVertical,
+	IconPlus,
+	IconUpload
+} from '@tabler/icons-react';
 import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 
@@ -170,7 +176,7 @@ const Student = () => {
 					</div>
 					<h1 className={scss.title}>Студенты</h1>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<div className={scss.StudentContainer}>
+						<div className={scss.student_container}>
 							<table className={scss.table}>
 								<thead>
 									<tr>
@@ -197,46 +203,46 @@ const Student = () => {
 												key={item._id}
 												className={
 													index % 2 === 1
-														? scss.TableAlternateRow
-														: '' || scss.StudentContainerSecond
+														? scss.table_alternate_row
+														: '' || scss.student_container_second
 												}
 											>
 												<td
-													className={!item.isCompleted ? scss.changeClass : ''}
+													className={!item.isCompleted ? scss.change_class : ''}
 												>
 													{index + 1 + (currentPage - 1) * rowsPerPage}
 												</td>
 												<td
-													className={!item.isCompleted ? scss.changeClass : ''}
+													className={!item.isCompleted ? scss.change_class : ''}
 												>
 													{item.firstName}
 												</td>
 												<td
-													className={!item.isCompleted ? scss.changeClass : ''}
+													className={!item.isCompleted ? scss.change_class : ''}
 												>
 													{item.lastName}
 												</td>
 												<td
-													className={!item.isCompleted ? scss.changeClass : ''}
+													className={!item.isCompleted ? scss.change_class : ''}
 												>
 													{item.group}
 												</td>
 												<td
-													className={!item.isCompleted ? scss.changeClass : ''}
+													className={!item.isCompleted ? scss.change_class : ''}
 												>
 													{item.TrainingFormat}
 												</td>
 												<td
-													className={!item.isCompleted ? scss.changeClass : ''}
+													className={!item.isCompleted ? scss.change_class : ''}
 												>
 													{item.phone_number}
 												</td>
 												<td
-													className={!item.isCompleted ? scss.changeClass : ''}
+													className={!item.isCompleted ? scss.change_class : ''}
 												>
 													{item.email}
 												</td>
-												<td className={scss.TableCellIcon}>
+												<td className={scss.dots}>
 													<button
 														className={scss.Button_Photo}
 														onClick={(event) => {
@@ -277,8 +283,11 @@ const Student = () => {
 					</div>
 				</div>
 				<div className={scss.pagination}>
-					<div className={scss.Inputs}>
-						<p>Перейти на страницу</p>
+					<div className={scss.inputs}>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPart}
@@ -300,8 +309,11 @@ const Student = () => {
 							/>
 						</Stack>
 					</div>
-					<div className={scss.Inputs}>
-						<p>Показать</p>
+					<div className={scss.inputs}>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPage}

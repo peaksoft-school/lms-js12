@@ -173,24 +173,15 @@
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+				padding-bottom: 96px;
 			}
 
-			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+			@media (max-width: 850px) {
+				flex-direction: column;
 			}
 
 			@media (max-width: 625px) {
-				display: flex;
-				flex-direction: column;
 				gap: 8px;
-			}
-
-			.stack {
-				@media (max-width: 625px) {
-					display: flex;
-					flex-direction: column;
-				}
 			}
 
 			.Inputs {
@@ -201,13 +192,27 @@
 				input {
 					width: 40px;
 				}
+
+				.text {
+					display: block;
+
+					@media (max-width: 850px) {
+						display: none;
+					}
+				}
+
+				.pagination_element {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+					}
+				}
 			}
 
-			.PaginationCard {
-				@media (max-width: 545px) {
-					display: flex;
+			.stack {
+				@media (max-width: 650px) {
 					flex-direction: column;
-					justify-content: center;
 				}
 			}
 		}

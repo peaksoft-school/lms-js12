@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
-import { IconDots, IconPlus } from '@tabler/icons-react';
+import { IconArticle, IconBook, IconDots, IconPlus } from '@tabler/icons-react';
 import scss from './Groups.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -12,6 +12,7 @@ import CreateGroup from '@/src/ui/customModal/CreateGroup';
 import EditGroup from '@/src/ui/customModal/EditGroup';
 import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Groups: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -74,22 +75,22 @@ const Groups: FC = () => {
 		<div className={scss.group}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					<div className={scss.title}>
-						<h1>Группы</h1>
-						<div className={scss.course_button_modal}>
-							<Button
-								size="large"
-								className={scss.button}
-								onClick={handleOpen}
-								variant="contained"
-							>
-								<div className={scss.icon}>
-									<IconPlus stroke={2} />
-								</div>
-								<span>Создать группу</span>
-							</Button>
-						</div>
+					<div className={scss.course_button_modal}>
+						<Button
+							size="large"
+							className={scss.button}
+							onClick={handleOpen}
+							variant="contained"
+						>
+							<div className={scss.icon}>
+								<IconPlus stroke={2} />
+							</div>
+							<span>Создать группу</span>
+						</Button>
 					</div>
+
+					<h1 className={scss.title}>Группы</h1>
+
 					<div className={scss.cards}>
 						{data && Array.isArray(data) && data.length > 0 ? (
 							<div className={scss.card}>
@@ -99,27 +100,30 @@ const Groups: FC = () => {
 										currentPage * rowsPerPage
 									)
 									.map((item) => (
-										<div key={item._id} className={scss.zeroBlockContainer}>
-											<div className={scss.block_photo_cards}>
-												<img src={item.img} alt="images" />
-											</div>
-											<div className={scss.BlockCont}>
-												<div className={scss.secondBlockContainer}>
-													<p className={scss.BlockTitle}>{item.title}</p>
-													<p className={scss.BlockDate}>{item.date}</p>
+										<div className={scss.zero_block_container}>
+											<Link key={item._id} to={`/admin/group/${item._id}`}>
+												<div className={scss.block_photo_cards}>
+													<img src={item.img} alt="images" />
 												</div>
-												<div className={scss.text_card}>
-													<span className={scss.BlockText}>
-														{item.text && item.text.length > 60
-															? `${item.text.substring(0, 60)}...`
-															: item.text}
-													</span>
+												<div className={scss.block_cont}>
+													<div className={scss.second_block_container}>
+														<p className={scss.block_title}>{item.title}</p>
+														<p className={scss.block_date}>{item.date}</p>
+													</div>
+													<div className={scss.text_card}>
+														<span className={scss.block_text}>
+															{item.text && item.text.length > 60
+																? `${item.text.substring(0, 60)}...`
+																: item.text}
+														</span>
+													</div>
 												</div>
-											</div>
-											<div className={scss.BlockButtonDiv}>
+											</Link>
+
+											<div className={scss.block_button_div}>
 												<div onClick={handleClick}>
 													<button
-														className={scss.BlockButtonDots}
+														className={scss.block_button_dots}
 														onClick={() => {
 															setSaveId(item._id);
 														}}
@@ -180,8 +184,11 @@ const Groups: FC = () => {
 					</div>
 				</div>
 				<div className={scss.pagination}>
-					<div className={scss.Inputs}>
-						<p>Перейти на страницу</p>
+					<div className={scss.inputs}>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPart}
@@ -195,7 +202,7 @@ const Groups: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil((data?.length ?? 0) / rowsPerPage)}
+								count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -203,8 +210,11 @@ const Groups: FC = () => {
 							/>
 						</Stack>
 					</div>
-					<div className={scss.Inputs}>
-						<p>Показать</p>
+					<div className={scss.inputs}>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPage}

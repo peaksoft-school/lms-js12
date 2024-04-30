@@ -1,12 +1,11 @@
-import { useGetLessonQuery } from '@/src/redux/api/lesson';
-
 import { Link, useLocation, useParams } from 'react-router-dom';
 import BasicBreadcrumbs from '../breadCrumbs/BreadCrumbs';
+import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 
 const MyCourses = () => {
 	const { coursesId } = useParams();
 	console.log(coursesId!);
-	const { data } = useGetLessonQuery();
+	const { data } = useGetStudentTableQuery();
 	const { pathname } = useLocation();
 
 	return (

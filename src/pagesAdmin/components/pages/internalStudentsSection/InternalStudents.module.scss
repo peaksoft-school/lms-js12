@@ -1,118 +1,17 @@
-.student {
-	padding-top: 20px;
+.internal_student {
+	padding-top: 90px;
 	.container {
 		padding-inline: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		.content_table {
-			.search_input_buttons {
-				margin-bottom: 30px;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				gap: 10px;
-				width: 100%;
-				.search_input {
-					position: relative;
-					display: flex;
-					align-items: center;
-					width: 100%;
-					input {
-						width: 100%;
-						@media screen and (min-width: 1000px) and (max-width: 1200px) {
-							max-width: 540px;
-						}
-						@media screen and (min-width: 1200px) and (max-width: 1310px) {
-							max-width: 200px !important;
-							display: flex;
-							flex-wrap: nowrap;
-							overflow: auto;
-						}
-					}
-
-					.input_buttons {
-						position: absolute;
-						top: 50%;
-						right: 10px;
-						transform: translateY(-50%);
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						.button {
-							padding: 5px;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							border: none;
-							outline: none;
-							background: transparent;
-							border-radius: 4px;
-							cursor: pointer;
-							transition: 0.2s;
-							&:hover {
-								background: #dcdcdc;
-							}
-						}
-					}
-				}
-			}
-			.buttons {
-				display: flex;
-				gap: 10px;
-				justify-content: center;
-				align-items: center;
-				@media (max-width: 700px) {
-					gap: 0;
-				}
-				.button {
-					display: flex;
-					gap: 10px;
-					justify-content: center;
-					align-items: center;
-					border-radius: 8px;
-					text-transform: capitalize;
-					.icon {
-						width: 25px;
-						height: 25px;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						svg {
-						}
-					}
-					span {
-						white-space: nowrap;
-					}
-					@media (max-width: 700px) {
-						span {
-							display: none;
-						}
-					}
-				}
-				:global {
-					.MuiButtonBase-root {
-						max-width: 360px !important;
-						width: 100% !important ;
-						@media (max-width: 700px) {
-							width: 0 !important;
-						}
-					}
-					.MuiButton-outlinedPrimary {
-						max-width: 360px !important;
-						width: 100% !important ;
-						@media (max-width: 700px) {
-							width: 0 !important;
-						}
-					}
-				}
-			}
 			.title {
 				margin-bottom: 20px;
 				width: 100%;
 			}
 
-			.student_container {
+			.internal_container {
 				border-radius: 8px;
 				overflow-x: auto;
 				overflow-y: scroll !important;
@@ -163,22 +62,13 @@
 							height: 33px;
 						}
 
-						.student_container_second {
+						.internal {
 							height: 50px;
 						}
 
 						tr {
 							td {
 								padding-left: 20px;
-							}
-
-							.dots {
-								text-align: end;
-
-								button {
-									background: none;
-									border: none;
-								}
 							}
 						}
 					}
@@ -244,6 +134,6 @@
 		}
 	}
 }
-.change_class {
+.changeClass {
 	color: #ff0000;
 }
