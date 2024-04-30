@@ -1,8 +1,5 @@
-.SectionAnnounce {
-	.topContainer {
-		display: flex;
-		align-items: center;
-		width: 100%;
+.Section_announcement {
+	.top_container {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -13,23 +10,26 @@
 			padding: 0px 2px 0px 20px;
 		}
 	}
-	.announceBox {
-		.announceCard {
+	.announce_box {
+		.announce_card {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
 			flex-wrap: wrap;
+			gap: 20px;
 
-			.announceList {
-				width: 600px;
-				height: 200px;
+			.announce_list {
+				position: relative;
+				width: 480px;
+				min-height: 200px;
 				background-color: #fff;
-				color: black;
-				border: 1px solid #a19e9e;
+				font-size: 20px;
+				box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.4);
 				margin-left: 10px;
 				margin-top: 30px;
+				padding: 25px;
 				border-radius: 15px;
-				position: relative;
+				overflow-wrap: break-word;
 
 				.button {
 					border: none;
@@ -37,6 +37,42 @@
 					position: absolute;
 					bottom: 20px;
 					right: 20px;
+				}
+			}
+		}
+	}
+}
+@media (max-width: 1000px) {
+	.announce_card {
+		display: flex;
+		justify-content: space-between;
+		.announce_list {
+			max-width: 370px;
+			padding: 15px;
+		}
+	}
+
+	@media (max-width: 779px) {
+		.top_container {
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+		.announce_card {
+			.announce_list {
+				max-width: 900px;
+			}
+		}
+
+		@media (max-width: 490px) {
+			.top_container {
+				margin-left: 30px;
+			}
+			.announce_card {
+				.announce_list {
+					width: 500px;
+					margin: 10px;
 				}
 			}
 		}

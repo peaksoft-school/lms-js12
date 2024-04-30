@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './AnnouncementForm.module.scss';
@@ -8,7 +8,7 @@ import ButtonWithPlus from '../customButton/ButtonWithPlus';
 import * as React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TextField } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { usePostAnnouncementTableMutation } from '@/src/redux/api/admin/announcement';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,6 +17,7 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import InputAnnouncement from '../customInput/InputAnnouncement';
 
 interface PostAnnouncementProps {
 	// id: number;
@@ -39,19 +40,33 @@ const names = [
 	'JS-10',
 	'JS-11',
 	'JS-12',
+	'JS-12-senior',
 	'JS-13',
 	'JS-14',
+	'JS-ehglish',
 	'JAVA-10',
 	'JAVA-11',
 	'JAVA-12',
 	'JAVA-13',
 	'JAVA-14'
 ];
+const style = {
+	position: 'absolute',
+	top: '50%',
+	left: '50%',
+	transform: 'translate(-50%, -50%)',
+	width: 581,
+	minHeight: 330,
+	backgroundColor: '#ffffff',
+	bgColor: 'background.paper',
+	boxShadow: 24,
+	p: 4,
+	borderRadius: '10px'
+};
 
 const AnnouncementForm = () => {
-	const { handleSubmit, reset } = useForm<PostAnnouncementProps>();
+	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
 	const [open, setOpen] = useState<boolean>(false);
-	const [announcement, setAnnouncement] = useState<string>('');
 	const [postAnnouncementTable] = usePostAnnouncementTableMutation();
 	const [personName, setPersonName] = React.useState<string[]>([]);
 
@@ -77,8 +92,8 @@ const AnnouncementForm = () => {
 
 	const onSubmit: SubmitHandler<PostAnnouncementProps> = async (data) => {
 		const { announcement } = data;
-
-		if (announcement !== '' && personName.length > 0) {
+		console.log(onSubmit);
+		if (announcement.length > 0 && personName.length > 0) {
 			const newAnnouncement = {
 				announcement: announcement,
 				group: personName
@@ -107,25 +122,25 @@ const AnnouncementForm = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<div className={scss.AnnouncementForm}>
-					<h1 className={scss.title}>Добавить объявление</h1>
-					<div className={scss.announce_form}>
-						<TextField
-							id="outlined-textarea"
-							label="Введите текст объявления"
-							placeholder="Введите текст объявления"
-							multiline
-							style={{
-								marginLeft: '22px',
-								marginBottom: '20px',
-								width: '491px',
-								height: '40px',
-								borderRadius: '20px'
-							}}
-							value={announcement}
-							onChange={(e) => {
-								setAnnouncement(e.target.value);
-							}}
+				<Box sx={style} className={scss.Announcement_form}>
+					<Typography id="modal-modal-title" variant="h6" component="h2">
+						<p className={scss.title}>Добавить объявление</p>
+					</Typography>
+
+					<Box className={scss.input_form}>
+						<Controller
+							name="announcement"
+							control={control}
+							defaultValue=""
+							render={({ field }) => (
+								<InputAnnouncement
+									{...field}
+									type="text"
+									width="100%"
+									label="Введите текст объявления"
+									placeholder="Введите текст объявления"
+								/>
+							)}
 						/>
 
 						<FormControl sx={{ m: 1, width: 300 }}>
@@ -149,9 +164,12 @@ const AnnouncementForm = () => {
 								MenuProps={MenuProps}
 								style={{
 									marginLeft: '15px',
-									width: '491px',
-									height: '42px',
-									borderRadius: '8px'
+									width: '520px',
+									height: '45px',
+									borderRadius: '10px',
+									position: 'relative',
+									top: '0',
+									right: '20px'
 								}}
 							>
 								{names.map((name) => (
@@ -181,8 +199,8 @@ const AnnouncementForm = () => {
 								Отправить
 							</ButtonSave>
 						</div>
-					</div>
-				</div>
+					</Box>
+				</Box>
 			</Modal>
 		</form>
 	);

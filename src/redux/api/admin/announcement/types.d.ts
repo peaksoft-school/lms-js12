@@ -15,24 +15,28 @@ namespace ANNOUNCEMENT {
 		announcement: string;
 		group: string;
 	}[];
-	type PostAnnouncementPropsRequest = object;
-	type DeleteAnnouncementPropsResponse = number;
+	type PostAnnouncementPropsRequest = {
+		announcement: string;
+		group: string[];
+	};
+
+	type DeleteAnnouncementPropsResponse = void;
 	type DeleteAnnouncementPropsRequest = number | null;
 
 	type PatchAnnouncementPropsResponse = {
-		id: number;
-		announcement: string;
-		group: string;
-	};
+		editAnnouncement: {
+			id: number;
+			announcement: string;
+			group: string[];
+		};
+	}[];
 
 	type PatchAnnouncementPropsRequest = {
 		saveIdElement: number | null;
 		editAnnouncement: {
-			id: number;
+			// id: number;
 			announcement: string;
-			group: string;
+			group: string[];
 		};
 	};
-	type PatchAnnouncementCompletedPropsResponse = boolean;
-	type PatchAnnouncementCompletedPropsRequest = boolean;
 }

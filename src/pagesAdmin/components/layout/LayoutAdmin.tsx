@@ -21,7 +21,7 @@ const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
 	const { data } = useGetTeacherQuery();
-	const { data: announcements = [] } = useGetAnnouncementTableQuery();
+	const { data: announcementData } = useGetAnnouncementTableQuery();
 
 	useEffect(() => {
 		const changeIsMobile = () => {
@@ -84,7 +84,7 @@ const LayoutAdmin = () => {
 						<Route
 							path="/announcement"
 							element={
-								!announcements || announcements.length === 0 ? (
+								!announcementData || announcementData.length === 0 ? (
 									<NotCreated
 										text="Вы пока не добавили объявления!"
 										button={<AnnouncementForm />}
