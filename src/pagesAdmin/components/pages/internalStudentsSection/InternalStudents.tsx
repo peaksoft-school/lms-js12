@@ -20,9 +20,9 @@ interface Student {
 const InternalStudents = () => {
 	// const { groupId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(15);
+	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(15);
+	const [openPage, setOpenPage] = useState(12);
 	const { data, isLoading } = useGetStudentTableQuery();
 
 	if (isLoading) {
@@ -35,14 +35,14 @@ const InternalStudents = () => {
 
 	const openPartFunc = () => {
 		if (openPart >= 1) {
-			setRowsPerPage(15);
-			setOpenPage(15);
+			setRowsPerPage(12);
+			setOpenPage(12);
 			setCurrentPage(openPart);
 		}
 	};
 
 	const openPartPage = () => {
-		if (rowsPerPage > 15) {
+		if (rowsPerPage > 12) {
 			setCurrentPage(1);
 		}
 	};
@@ -73,48 +73,55 @@ const InternalStudents = () => {
 			<div className={scss.container}>
 				<div className={scss.content_table}>
 					<h1 className={scss.title}>Data Engineer</h1>
-					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<div className={scss.internal_container}>
-							<table className={scss.table}>
-								<thead>
-									<tr>
-										<th style={{ textAlign: 'start' }}>№</th>
-										<th>Имя</th>
-										<th>Фамилия</th>
-										<th>Группа</th>
-										<th>Формат обучения</th>
-										<th>Номер телефона</th>
-										<th>E-mail</th>
-									</tr>
-								</thead>
-								<tbody>
-									{data
+					<div
+						style={{
+							height: '577px',
+							background: '#eff0f4'
+						}}
+					>
+						<div style={{ display: 'flex', justifyContent: 'center' }}>
+							<div className={scss.internal_container}>
+								<table className={scss.table}>
+									<thead>
+										<tr>
+											<th style={{ textAlign: 'start' }}>№</th>
+											<th>Имя</th>
+											<th>Фамилия</th>
+											<th>Группа</th>
+											<th>Формат обучения</th>
+											<th>Номер телефона</th>
+											<th>E-mail</th>
+										</tr>
+									</thead>
+									<tbody>
+										{data
 
-										?.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)
-										.map((item: Student, index) => (
-											<tr
-												key={item._id}
-												className={
-													index % 2 === 1
-														? scss.table_alternate_row
-														: '' || scss.internal
-												}
-											>
-												<td>{index + 1 + (currentPage - 1) * rowsPerPage}</td>
+											?.slice(
+												(currentPage - 1) * rowsPerPage,
+												currentPage * rowsPerPage
+											)
+											.map((item: Student, index) => (
+												<tr
+													key={item._id}
+													className={
+														index % 2 === 1
+															? scss.table_alternate_row
+															: '' || scss.internal
+													}
+												>
+													<td>{index + 1 + (currentPage - 1) * rowsPerPage}</td>
 
-												<td>{item.firstName}</td>
-												<td>{item.lastName}</td>
-												<td>{item.group}</td>
-												<td>{item.TrainingFormat}</td>
-												<td>{item.phone_number}</td>
-												<td>{item.email}</td>
-											</tr>
-										))}
-								</tbody>
-							</table>
+													<td>{item.firstName}</td>
+													<td>{item.lastName}</td>
+													<td>{item.group}</td>
+													<td>{item.TrainingFormat}</td>
+													<td>{item.phone_number}</td>
+													<td>{item.email}</td>
+												</tr>
+											))}
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

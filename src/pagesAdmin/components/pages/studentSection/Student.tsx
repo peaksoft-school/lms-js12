@@ -12,13 +12,7 @@ import { Button } from '@mui/material';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import {
-	IconArticle,
-	IconBook,
-	IconDotsVertical,
-	IconPlus,
-	IconUpload
-} from '@tabler/icons-react';
+import { IconDotsVertical, IconPlus, IconUpload } from '@tabler/icons-react';
 import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 
@@ -42,9 +36,9 @@ const Student = () => {
 	const [openDeleteModal, setOpenDeleteModal] = useState(false);
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(15);
+	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(15);
+	const [openPage, setOpenPage] = useState(12);
 	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
 	const [saveItem, setSaveItem] = useState<Student>();
 	const [open, setOpen] = useState(false);
@@ -89,14 +83,14 @@ const Student = () => {
 	const handleCloseEditModal = () => setOpenEditModal(false);
 	const openPartFunc = () => {
 		if (openPart >= 1) {
-			setRowsPerPage(15);
-			setOpenPage(15);
+			setRowsPerPage(12);
+			setOpenPage(12);
 			setCurrentPage(openPart);
 		}
 	};
 
 	const openPartPage = () => {
-		if (rowsPerPage > 15) {
+		if (rowsPerPage > 12) {
 			setCurrentPage(1);
 		}
 	};
@@ -110,7 +104,7 @@ const Student = () => {
 				setCurrentPage(1);
 				openPartFunc();
 			} else {
-				setRowsPerPage(15);
+				setRowsPerPage(12);
 			}
 		}
 	};
@@ -175,119 +169,142 @@ const Student = () => {
 						</div>
 					</div>
 					<h1 className={scss.title}>Студенты</h1>
-					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<div className={scss.student_container}>
-							<table className={scss.table}>
-								<thead>
-									<tr>
-										<th style={{ textAlign: 'start' }}>№</th>
-										<th>Имя</th>
-										<th>Фамилия</th>
-										<th>Группа</th>
-										<th>Формат обучения</th>
-										<th>Номер телефона</th>
-										<th>E-mail</th>
-										<th style={{ textAlign: 'end', paddingRight: '10px' }}>
-											Действия
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{data
-										?.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)
-										.map((item: Student, index) => (
-											<tr
-												key={item._id}
-												className={
-													index % 2 === 1
-														? scss.table_alternate_row
-														: '' || scss.student_container_second
-												}
-											>
-												<td
-													className={!item.isCompleted ? scss.change_class : ''}
+					<div
+						style={{
+							height: '577px',
+							background: '#eff0f4'
+						}}
+					>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'center'
+							}}
+						>
+							<div className={scss.StudentContainer}>
+								<table className={scss.table}>
+									<thead>
+										<tr>
+											<th style={{ textAlign: 'start' }}>№</th>
+											<th>Имя</th>
+											<th>Фамилия</th>
+											<th>Группа</th>
+											<th>Формат обучения</th>
+											<th>Номер телефона</th>
+											<th>E-mail</th>
+											<th style={{ textAlign: 'end', paddingRight: '10px' }}>
+												Действия
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										{data
+											?.slice(
+												(currentPage - 1) * rowsPerPage,
+												currentPage * rowsPerPage
+											)
+											.map((item: Student, index) => (
+												<tr
+													key={item._id}
+													className={
+														index % 2 === 1
+															? scss.TableAlternateRow
+															: '' || scss.StudentContainerSecond
+													}
 												>
-													{index + 1 + (currentPage - 1) * rowsPerPage}
-												</td>
-												<td
-													className={!item.isCompleted ? scss.change_class : ''}
-												>
-													{item.firstName}
-												</td>
-												<td
-													className={!item.isCompleted ? scss.change_class : ''}
-												>
-													{item.lastName}
-												</td>
-												<td
-													className={!item.isCompleted ? scss.change_class : ''}
-												>
-													{item.group}
-												</td>
-												<td
-													className={!item.isCompleted ? scss.change_class : ''}
-												>
-													{item.TrainingFormat}
-												</td>
-												<td
-													className={!item.isCompleted ? scss.change_class : ''}
-												>
-													{item.phone_number}
-												</td>
-												<td
-													className={!item.isCompleted ? scss.change_class : ''}
-												>
-													{item.email}
-												</td>
-												<td className={scss.dots}>
-													<button
-														className={scss.Button_Photo}
-														onClick={(event) => {
-															setAnchorEl(event.currentTarget);
-															setSaveIdElement(item._id);
-															setSaveItem(item);
-														}}
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
 													>
+														{index + 1 + (currentPage - 1) * rowsPerPage}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.firstName}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.lastName}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.group}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.TrainingFormat}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.phone_number}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.email}
+													</td>
+													<td className={scss.TableCellIcon}>
 														<button
 															className={scss.Button_Photo}
-															onClick={() => setAnchorEl(null)}
+															onClick={(event) => {
+																setAnchorEl(event.currentTarget);
+																setSaveIdElement(item._id);
+																setSaveItem(item);
+															}}
 														>
-															<IconDotsVertical />
+															<button
+																className={scss.Button_Photo}
+																onClick={() => setAnchorEl(null)}
+															>
+																<IconDotsVertical />
+															</button>
 														</button>
-													</button>
-												</td>
-											</tr>
-										))}
-									<StudentMenu
-										anchorEl={anchorEl}
-										open={Boolean(anchorEl)}
-										onClose={() => setAnchorEl(null)}
-										setOpenEditModal={() => setOpenEditModal(true)}
-										setOpenDeleteModal={setOpenDeleteModal}
-										updateCompletedFunc={updateCompletedFunc}
-										handleCloseEditModal={handleCloseEditModal}
-										openEditModal={openEditModal}
-										item={data?.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)}
-										saveIdElement={saveIdElement}
-										openDeleteModal={openDeleteModal}
-									/>
-								</tbody>
-							</table>
+													</td>
+												</tr>
+											))}
+										<StudentMenu
+											anchorEl={anchorEl}
+											open={Boolean(anchorEl)}
+											onClose={() => setAnchorEl(null)}
+											setOpenEditModal={() => setOpenEditModal(true)}
+											setOpenDeleteModal={setOpenDeleteModal}
+											updateCompletedFunc={updateCompletedFunc}
+											handleCloseEditModal={handleCloseEditModal}
+											openEditModal={openEditModal}
+											item={data?.slice(
+												(currentPage - 1) * rowsPerPage,
+												currentPage * rowsPerPage
+											)}
+											saveIdElement={saveIdElement}
+											openDeleteModal={openDeleteModal}
+										/>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div className={scss.pagination}>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
-						</div>
+					<div className={scss.Inputs}>
+						<p>Перейти на страницу</p>
 						<input
 							type="text"
 							value={openPart}
@@ -309,11 +326,8 @@ const Student = () => {
 							/>
 						</Stack>
 					</div>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
+					<div className={scss.Inputs}>
+						<p>Показать</p>
 						<input
 							type="text"
 							value={openPage}

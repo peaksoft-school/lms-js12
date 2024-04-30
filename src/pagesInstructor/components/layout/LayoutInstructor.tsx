@@ -8,6 +8,7 @@ import MyCourses from '@/src/ui/myCourses/MyCourses';
 import CalendarPage from '../pages/CalendarPage';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import Cards from '@/src/ui/customCards/Cards';
+import SupHeader from '@/src/ui/supHeader/SupHeader';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -44,6 +45,7 @@ const LayoutInstructor = () => {
 					</>
 				)}
 				<main style={{ width: '100%' }}>
+					<SupHeader/>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />

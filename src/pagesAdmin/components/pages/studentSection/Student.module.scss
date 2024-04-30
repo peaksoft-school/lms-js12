@@ -7,7 +7,7 @@
 		justify-content: space-between;
 		.content_table {
 			.search_input_buttons {
-				margin-bottom: 30px;
+				margin-bottom: 20px;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -112,13 +112,12 @@
 				width: 100%;
 			}
 
-			.student_container {
+			.StudentContainer {
 				border-radius: 8px;
 				overflow-x: auto;
 				overflow-y: scroll !important;
 				table-layout: fixed;
 				width: 100%;
-				height: 685px;
 				background: #fff;
 				border: 1px solid #dbd2d2;
 				transition: all 0.5s;
@@ -155,24 +154,24 @@
 							text-align: start;
 							padding-left: 20px;
 							flex-wrap: nowrap;
+							text-align: end;
 						}
 					}
 					tbody {
-						.table_alternate_row {
+						.TableAlternateRow {
 							background: #837a7a14;
-							height: 33px;
 						}
 
-						.student_container_second {
+						.StudentContainerSecond {
 							height: 50px;
 						}
 
 						tr {
 							td {
-								padding-left: 20px;
+								text-align: end;
 							}
 
-							.dots {
+							.TableCellIcon {
 								text-align: end;
 
 								button {
@@ -199,18 +198,27 @@
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 96px;
+				padding-bottom: 140px;
 			}
 
-			@media (max-width: 850px) {
-				flex-direction: column;
+			@media (max-width: 1000px) {
+				padding-bottom: 140px;
 			}
 
 			@media (max-width: 625px) {
+				display: flex;
+				flex-direction: column;
 				gap: 8px;
 			}
 
-			.inputs {
+			.stack {
+				@media (max-width: 625px) {
+					display: flex;
+					flex-direction: column;
+				}
+			}
+
+			.Inputs {
 				display: flex;
 				gap: 5px;
 				align-items: center;
@@ -218,32 +226,10 @@
 				input {
 					width: 40px;
 				}
-
-				.text {
-					display: block;
-
-					@media (max-width: 850px) {
-						display: none;
-					}
-				}
-
-				.pagination_element {
-					display: none;
-
-					@media (max-width: 850px) {
-						display: block;
-					}
-				}
-			}
-
-			.stack {
-				@media (max-width: 650px) {
-					flex-direction: column;
-				}
 			}
 		}
 	}
 }
-.change_class {
+.changeClass {
 	color: #ff0000;
 }
