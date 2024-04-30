@@ -1,0 +1,99 @@
+.sup_header_container {
+	width: 100%;
+	height: 80px;
+	display: flex;
+	padding-inline: 28px;
+	padding-block: 35px;
+	align-items: center;
+	border-bottom: 1px solid #d0d0d0;
+
+	// position: sticky;
+	// top: 0;
+	// z-index: 50;
+	// background-color: #eff0f4;
+
+	.sup_header_third_containers {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		text-align: center;
+		gap: 20px;
+		justify-content: flex-end;
+
+		.notification {
+			.img {
+				width: 29px;
+				height: 29px;
+			}
+		}
+
+		.profile_photo {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		.sup_header_profile_images {
+			padding-right: 10px;
+		}
+		.sup_teachers {
+			display: flex;
+			font-size: 16px;
+			font-weight: 400;
+			text-align: left;
+			gap: 10px;
+			align-items: center;
+			text-align: center;
+		}
+	}
+
+	.sup_high_second_container {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		.sup_header_third_container {
+			display: flex;
+			align-items: center;
+			text-align: center;
+			gap: 20px;
+
+			.sup_header_fourth_container {
+				display: flex;
+				align-items: center;
+				text-align: center;
+
+				.profile {
+					padding-right: 10px;
+				}
+
+				.sup_teacher {
+					display: flex;
+					font-size: 16px;
+					font-weight: 400;
+					gap: 10px;
+					align-items: center;
+					text-align: center;
+				}
+			}
+		}
+
+		.sup_header_tab_panel {
+			display: flex;
+			// width: 100%;
+			padding-bottom: 60px;
+			.MuiBox-root {
+				border-bottom: 1px solid #bdbdbd;
+				width: 100%;
+			}
+		}
+	}
+}
+
+:global {
+	.MuiTabs-indicator {
+		display: none;
+	}
+}

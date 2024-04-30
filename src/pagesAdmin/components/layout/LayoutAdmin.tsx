@@ -20,6 +20,7 @@ import TeacherPage from '../pages/TeacherPage.tsx';
 import { useGetCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import CoursesPage from '../pages/CoursesPage.tsx';
 import StudentsPage from '../pages/StudentsPage.tsx';
+import SupHeader from '@/src/pagesInstructor/components/pages/supHeaderSection/SupHeader.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -83,6 +84,7 @@ const LayoutAdmin = () => {
 				)}
 
 				<main style={{ width: '100%' }}>
+				<SupHeader />
 					<Routes>
 						<Route path="/" element={<AnalyticsPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />

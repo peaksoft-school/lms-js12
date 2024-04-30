@@ -56,7 +56,9 @@ const LayoutInstructor = () => {
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
+
 			</div>
+
 		</>
 	);
 };
