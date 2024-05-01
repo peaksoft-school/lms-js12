@@ -22,6 +22,7 @@ import CoursesPage from '../pages/CoursesPage.tsx';
 import StudentsPage from '../pages/StudentsPage.tsx';
 import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
+import InternalCourseStudentsPage from '../pages/InternalCourseStudentsPage.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -158,6 +159,10 @@ const LayoutAdmin = () => {
 						/>
 						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
 						<Route path="/announcement" element={<AnnouncementPage />} />
+						<Route
+							path="/courseStudent"
+							element={<InternalCourseStudentsPage />}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
