@@ -91,7 +91,7 @@ const Groups: FC = () => {
 
 					<h1 className={scss.title}>Группы</h1>
 
-					<div >
+					<div>
 						<div className={scss.cards}>
 							{data && Array.isArray(data) && data.length > 0 ? (
 								<div className={scss.card}>
@@ -101,8 +101,8 @@ const Groups: FC = () => {
 											currentPage * rowsPerPage
 										)
 										.map((item) => (
-											<div className={scss.zero_block_container}>
-												<Link key={item.id} to={`/admin/group/${item.id}`}>
+											<div key={item.id} className={scss.zero_block_container}>
+												<Link to={`/admin/group/${item.id}`}>
 													<div className={scss.block_photo_cards}>
 														<img src={item.img} alt="images" />
 													</div>

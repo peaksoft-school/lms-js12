@@ -12,6 +12,7 @@ import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/EditCourse';
 import CreateCourse from '@/src/ui/customModal/CreateCurse';
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -100,23 +101,24 @@ const Courses: FC = () => {
 										)
 										.map((item) => (
 											<div key={item.id} className={scss.zero_block_container}>
-												<div className={scss.block_photo_cards}>
-													<img src={item.img} alt="images" />
-												</div>
-												<div className={scss.block_cont}>
-													<div className={scss.second_block}>
-														<p className={scss.block_title}>{item.title}</p>
-														<p className={scss.block_date}>{item.date}</p>
+												<Link to={`/admin/courses/${item.id}`}>
+													<div className={scss.block_photo_cards}>
+														<img src={item.img} alt="images" />
 													</div>
-													<div className={scss.text_card}>
-														<span className={scss.block_text}>
-															{item.text && item.text.length > 60
-																? `${item.text.substring(0, 60)}...`
-																: item.text}
-														</span>
+													<div className={scss.block_cont}>
+														<div className={scss.second_block}>
+															<p className={scss.block_title}>{item.title}</p>
+															<p className={scss.block_date}>{item.date}</p>
+														</div>
+														<div className={scss.text_card}>
+															<span className={scss.block_text}>
+																{item.text && item.text.length > 60
+																	? `${item.text.substring(0, 60)}...`
+																	: item.text}
+															</span>
+														</div>
 													</div>
-												</div>
-
+												</Link>
 												<div className={scss.block_button_div}>
 													<div onClick={handleClick}>
 														<button

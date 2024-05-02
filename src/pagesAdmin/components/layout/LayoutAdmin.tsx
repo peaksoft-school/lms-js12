@@ -24,6 +24,7 @@ import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
 import CreateCourse from '@/src/ui/customModal/CreateCurse.tsx';
+import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -152,6 +153,10 @@ const LayoutAdmin = () => {
 								)
 							}
 						/>
+							<Route
+								path="/courses/:coursesPart"
+								element={<InternalCoursesPage />}
+							/>
 						<Route
 							path="/group"
 							element={
