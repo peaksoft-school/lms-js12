@@ -38,7 +38,7 @@ const DeleteAnnouncementModal: React.FC<DeleteProps> = ({
 							className: scss.dialogPaper
 						}}
 					>
-						<DialogContent style={{ height: 'auto', minHeight: '150px' }}>
+						<DialogContent style={{ height: 'auto'}}>
 							<DialogContentText id="alert-dialog-description">
 								<h3>Вы уверены, что хотите удалить объявления?</h3>
 							</DialogContentText>

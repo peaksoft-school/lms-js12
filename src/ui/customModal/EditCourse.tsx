@@ -7,10 +7,8 @@ import galerry from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useEffect, useRef, useState } from 'react';
-import {
-	useGetGroupQuery,
-	useUpdateGroupMutation
-} from '@/src/redux/api/admin/groups';
+import { useUpdateGroupMutation } from '@/src/redux/api/admin/groups';
+import { useGetCourseQuery } from '@/src/redux/api/admin/courses';
 
 const style = {
 	position: 'absolute',
@@ -34,8 +32,8 @@ interface EditModalProps {
 }
 
 const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
-	const { data } = useGetGroupQuery();
-	const find = data?.find((id) => id._id === saveId);
+	const { data } = useGetCourseQuery();
+	const find = data?.find((id) => id.id === saveId);
 
 	const [value, setValue] = useState<string>('');
 	const [date, setData] = useState<string>('');

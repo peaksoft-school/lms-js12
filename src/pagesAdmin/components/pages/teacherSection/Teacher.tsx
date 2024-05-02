@@ -75,13 +75,13 @@ const Teacher = () => {
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 15) {
+			if (newOpenPage > 12) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
 				setCurrentPage(1);
 				openPartFunc();
 			} else {
-				setRowsPerPage(15);
+				setRowsPerPage(12);
 			}
 		}
 	};
@@ -136,7 +136,7 @@ const Teacher = () => {
 												)
 												.map((item, index) => (
 													<tr
-														key={item._id}
+														key={item.id}
 														className={
 															index % 2 === 1
 																? scss.TableAlternateRow
@@ -164,7 +164,7 @@ const Teacher = () => {
 																aria-haspopup="true"
 																onClick={(e) => {
 																	handleClick(e);
-																	setDeleteById(item._id!);
+																	setDeleteById(item.id!);
 																}}
 															>
 																<IconDotsVertical stroke={2} />

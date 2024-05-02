@@ -1,4 +1,4 @@
-.student {
+.internal_student {
 	padding-top: 20px;
 	.container {
 		padding-inline: 20px;
@@ -6,65 +6,13 @@
 		flex-direction: column;
 		justify-content: space-between;
 		.content_table {
-			.search_input_buttons {
+			.delete_button_modal {
 				margin-bottom: 20px;
-				display: flex;
+				display: grid;
+				justify-content: flex-end;
 				align-items: center;
-				justify-content: space-between;
-				gap: 10px;
 				width: 100%;
-				.search_input {
-					position: relative;
-					display: flex;
-					align-items: center;
-					width: 100%;
-					input {
-						width: 100%;
-						@media screen and (min-width: 1000px) and (max-width: 1200px) {
-							max-width: 540px;
-						}
-						@media screen and (min-width: 1200px) and (max-width: 1310px) {
-							max-width: 200px !important;
-							display: flex;
-							flex-wrap: nowrap;
-							overflow: auto;
-						}
-					}
 
-					.input_buttons {
-						position: absolute;
-						top: 50%;
-						right: 10px;
-						transform: translateY(-50%);
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						.button {
-							padding: 5px;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							border: none;
-							outline: none;
-							background: transparent;
-							border-radius: 4px;
-							cursor: pointer;
-							transition: 0.2s;
-							&:hover {
-								background: #dcdcdc;
-							}
-						}
-					}
-				}
-			}
-			.buttons {
-				display: flex;
-				gap: 10px;
-				justify-content: center;
-				align-items: center;
-				@media (max-width: 700px) {
-					gap: 0;
-				}
 				.button {
 					display: flex;
 					gap: 10px;
@@ -90,29 +38,13 @@
 						}
 					}
 				}
-				:global {
-					.MuiButtonBase-root {
-						max-width: 360px !important;
-						width: 100% !important ;
-						@media (max-width: 700px) {
-							width: 0 !important;
-						}
-					}
-					.MuiButton-outlinedPrimary {
-						max-width: 360px !important;
-						width: 100% !important ;
-						@media (max-width: 700px) {
-							width: 0 !important;
-						}
-					}
-				}
 			}
 			.title {
 				margin-bottom: 20px;
 				width: 100%;
 			}
 
-			.StudentContainer {
+			.internal_container {
 				border-radius: 8px;
 				overflow-x: auto;
 				overflow-y: scroll !important;
@@ -148,33 +80,27 @@
 						height: 50px;
 						background: #fff;
 						th {
+							font-size: 14px;
 							font-weight: 600;
+							line-height: 19.07px;
 							text-align: start;
 							padding-left: 20px;
 							flex-wrap: nowrap;
 						}
 					}
 					tbody {
-						.TableAlternateRow {
+						.table_alternate_row {
 							background: #837a7a14;
+							height: 33px;
 						}
 
-						.StudentContainerSecond {
+						.internal {
 							height: 50px;
 						}
 
 						tr {
 							td {
 								padding-left: 20px;
-							}
-
-							.TableCellIcon {
-								text-align: end;
-
-								button {
-									background: none;
-									border: none;
-								}
 							}
 						}
 					}
@@ -195,33 +121,46 @@
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+				padding-bottom: 96px;
 			}
 
-			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+			@media (max-width: 850px) {
+				flex-direction: column;
 			}
 
 			@media (max-width: 625px) {
-				display: flex;
-				flex-direction: column;
 				gap: 8px;
 			}
 
-			.stack {
-				@media (max-width: 625px) {
-					display: flex;
-					flex-direction: column;
-				}
-			}
-
-			.Inputs {
+			.inputs {
 				display: flex;
 				gap: 5px;
 				align-items: center;
 
 				input {
 					width: 40px;
+				}
+
+				.text {
+					display: block;
+
+					@media (max-width: 850px) {
+						display: none;
+					}
+				}
+
+				.pagination_element {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+					}
+				}
+			}
+
+			.stack {
+				@media (max-width: 650px) {
+					flex-direction: column;
 				}
 			}
 		}

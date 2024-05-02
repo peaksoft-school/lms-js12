@@ -10,9 +10,9 @@ import { IconArticle, IconBook } from '@tabler/icons-react';
 const Trash: FC = () => {
 	const { data, isLoading } = useGetTrashQuery();
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(13);
+	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(13);
+	const [openPage, setOpenPage] = useState(12);
 
 	if (isLoading) {
 		return (
@@ -31,14 +31,14 @@ const Trash: FC = () => {
 
 	const openPartFunc = () => {
 		if (openPart >= 1) {
-			setRowsPerPage(13);
-			setOpenPage(13);
+			setRowsPerPage(12);
+			setOpenPage(12);
 			setCurrentPage(openPart);
 		}
 	};
 
 	const openPartPage = () => {
-		if (rowsPerPage > 13) {
+		if (rowsPerPage > 12) {
 			setCurrentPage(1);
 		}
 	};
@@ -46,13 +46,13 @@ const Trash: FC = () => {
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 15) {
+			if (newOpenPage > 12) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
 				setCurrentPage(1);
 				openPartFunc();
 			} else {
-				setRowsPerPage(15);
+				setRowsPerPage(12);
 			}
 		}
 	};
@@ -61,52 +61,61 @@ const Trash: FC = () => {
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
 				<h1>Корзина</h1>
-				<div className={scss.table_container}>
-					<div className={scss.text}>
-						<p>
-							Элементы в корзине автоматически удаляются через 7 дней с момента
-							добавления!
-						</p>
-					</div>
-					<div className={scss.trash}>
-						<table className={scss.table}>
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th className={scss.date}>Date of delete</th>
-									<th className={scss.last_th}>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								{data
-									?.slice(
-										(currentPage - 1) * rowsPerPage,
-										currentPage * rowsPerPage
-									)
-									.map((card, index) => (
-										<tr
-											className={
-												index % 2 === 1
-													? scss.table_alternate_row
-													: '' || scss.table_container_second
-											}
-										>
-											<td className={scss.TableCell_main}>{card.name}</td>
-											<td className={scss.table_cell}>{card.date}</td>
-											<td className={scss.last_td}>
-												<div className={scss.icon}>
-													<div>
-														<img src={refrash} alt="" />
+				<div style={{ height: '577px', background: '#eff0f4' }}>
+					<div className={scss.table_container}>
+						<div className={scss.text}>
+							<p>
+								Элементы в корзине автоматически удаляются через 7 дней с
+								момента добавления!
+							</p>
+						</div>
+
+						<div className={scss.trash}>
+							<table className={scss.table}>
+								<thead>
+									<tr>
+										<th>Название</th>
+										<th className={scss.date}>Дата удаления</th>
+										<th className={scss.last_th}>Действие</th>
+									</tr>
+								</thead>
+								<tbody>
+									{data
+										?.slice(
+											(currentPage - 1) * rowsPerPage,
+											currentPage * rowsPerPage
+										)
+										.map((card, index) => (
+											<tr
+												className={
+													index % 2 === 1
+														? scss.table_alternate_row
+														: '' || scss.table_container_second
+												}
+											>
+												<td style={{ paddingLeft: '20px' }}>{card.name}</td>
+												<td style={{ textAlign: 'end', paddingRight: '70px' }}>
+													{card.date}
+												</td>
+												<td>
+													<div
+														style={{
+															display: 'flex',
+															alignItems: 'end',
+															justifyContent: 'end',
+															gap: '20px',
+															paddingRight: '50px'
+														}}
+													>
+														<img src={refrash} alt="#" />
+														<img src={trash} alt="#" />
 													</div>
-													<div>
-														<img src={trash} alt="" />
-													</div>
-												</div>
-											</td>
-										</tr>
-									))}
-							</tbody>
-						</table>
+												</td>
+											</tr>
+										))}
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div className={scss.pagination}>

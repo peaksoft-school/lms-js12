@@ -1,23 +1,23 @@
-import React, { useState, KeyboardEvent, MouseEvent } from 'react';
-import scss from './Student.module.scss';
+import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
+import SearchPhoto from '@/src/assets/svgs/search.svg';
 import {
 	useGetStudentTableQuery,
 	usePatchCompletedMutationMutation
 } from '@/src/redux/api/admin/student';
-import { Preloader } from '@/src/ui/preloader/Preloader.tsx';
-import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
-import SearchPhoto from '@/src/assets/svgs/search.svg';
 import Input from '@/src/ui/customInput/Input';
-import { Button } from '@mui/material';
+import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
+import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
+import { Preloader } from '@/src/ui/preloader/Preloader.tsx';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
+import { Button } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { IconDotsVertical, IconPlus, IconUpload } from '@tabler/icons-react';
-import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
-import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
+import React, { KeyboardEvent, MouseEvent, useState } from 'react';
+import scss from './Student.module.scss';
 
 interface Student {
-	_id: number;
+	id: number;
 	firstName: string;
 	lastName: string;
 	group: string;
@@ -205,7 +205,7 @@ const Student = () => {
 											)
 											.map((item: Student, index) => (
 												<tr
-													key={item._id}
+													key={item.id}
 													className={
 														index % 2 === 1
 															? scss.TableAlternateRow
@@ -266,7 +266,7 @@ const Student = () => {
 															className={scss.Button_Photo}
 															onClick={(event) => {
 																setAnchorEl(event.currentTarget);
-																setSaveIdElement(item._id);
+																setSaveIdElement(item.id);
 																setSaveItem(item);
 															}}
 														>

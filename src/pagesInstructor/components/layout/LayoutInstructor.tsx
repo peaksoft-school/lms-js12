@@ -1,17 +1,33 @@
 import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutInstructor.module.scss';
 import Header from '@/src/ui/header/Header';
-import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
-import Material from '@/src/ui/material/Material';
 import MyCourses from '@/src/ui/myCourses/MyCourses';
 import CalendarPage from '../pages/CalendarPage';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
-import Cards from '@/src/ui/customCards/Cards';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
+import MyCoursePage from '../pages/MyCoursePage';
+import NotCreated from '@/src/ui/notCreated/NotCreated';
+import CreateCourse from '@/src/ui/customModal/CreateCurse';
+import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
+import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
+import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
+import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
+	const { data: courses = [] } = useGetCourseInstructorQuery();
+	const [courseHandle, setCourseHandle] = useState(false);
+
+	const handleOpenCourse = () => {
+		setCourseHandle(true);
+	};
+	const handleCloseCourse = () => {
+		setCourseHandle(false);
+	};
+
+	// !
+
 	useEffect(() => {
 		const changeIsMobile = () => {
 			if (window.innerWidth < 1000) {
@@ -45,19 +61,41 @@ const LayoutInstructor = () => {
 					</>
 				)}
 				<main style={{ width: '100%' }}>
-					<SupHeader/>
+					<SupHeader />
 					<Routes>
-						<Route path="/" element={<HomePage />} />
+						<Route
+							path={'/course'}
+							element={
+								!courses || courses.length === 0 ? (
+									<NotCreated
+										text="Вы пока не создали курсы!"
+										buttonClick={handleOpenCourse}
+										name="Курсы"
+										buttontText="Создать курс"
+									/>
+								) : (
+									<MyCoursePage />
+								)
+							}
+						/>
 						<Route path="/calendar" element={<CalendarPage />} />
-						<Route path="/courses" element={<Cards />} />
+
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
-							path="/courses/:coursesId/:matelials"
-							element={<Material />}
+							path="/course/:studentCourseId"
+							element={<InternalInstructorStudentsPage />}
 						/>
+						<Route path="announcement" element={<AnnouncementPage />} />
+						<Route path="trash" element={<TrashPage />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
+
+				<CreateCourse
+					handleOpenCourse={handleOpenCourse}
+					open={courseHandle}
+					handleClose={handleCloseCourse}
+				/>
 			</div>
 		</>
 	);

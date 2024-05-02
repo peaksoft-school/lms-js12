@@ -28,9 +28,9 @@ const Announcements = () => {
 	const { data, isLoading } = useGetAnnouncementTableQuery();
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(6);
+	const [rowsPerPage, setRowsPerPage] = useState(4);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(6);
+	const [openPage, setOpenPage] = useState(4);
 	const [patchCompletedMutation] = usePatchShowdMutationMutation();
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
@@ -48,7 +48,7 @@ const Announcements = () => {
 		);
 	}
 
-	const find = data?.find((item) => item._id === deleteById);
+	const find = data?.find((item) => item.id === deleteById);
 
 	const open = Boolean(anchorEl);
 
@@ -78,13 +78,13 @@ const Announcements = () => {
 
 	const openPartFunc = () => {
 		if (openPart >= 1) {
-			setRowsPerPage(6);
-			setOpenPage(6);
+			setRowsPerPage(4);
+			setOpenPage(4);
 			setCurrentPage(openPart);
 		}
 	};
 	const openPartPage = () => {
-		if (rowsPerPage > 6) {
+		if (rowsPerPage > 4) {
 			setCurrentPage(1);
 		}
 	};
@@ -92,13 +92,13 @@ const Announcements = () => {
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 6) {
+			if (newOpenPage > 4) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
 				setCurrentPage(1);
 				openPartFunc();
 			} else {
-				setRowsPerPage(6);
+				setRowsPerPage(4);
 			}
 		}
 	};
@@ -125,127 +125,129 @@ const Announcements = () => {
 							<h1>Объявление</h1>
 						</div>
 					</div>
-					<div className={scss.announce_box}>
-						<ul className={scss.announce_card}>
-							{data
-								?.slice(
-									(currentPage - 1) * rowsPerPage,
-									currentPage * rowsPerPage
-								)
-								.map((item) => (
-									<li key={item._id} className={scss.announce_list}>
-										<div className={scss.show_text}>
-											{item?.show === true ? (
-												<>
-													<p style={{ color: '#0ece22 ', fontSize: '16px' }}>
-														Видно
-													</p>
-												</>
-											) : (
-												<>
-													<p style={{ color: 'red' }}>Не видно</p>
-												</>
-											)}
-										</div>
-										<strong>{item.group}</strong>
-										<p>{item.announcement}</p>
-
-										<button
-											className={scss.button}
-											aria-controls={open ? 'basic-menu' : undefined}
-											aria-haspopup="true"
-											onClick={(e) => {
-												handleClick(e);
-												setDeleteById(item._id!);
-											}}
-										>
-											<DotsHorizont />
-										</button>
-
-										<Menu
-											className={scss.deleteEdit}
-											id="basic-menu"
-											anchorEl={anchorEl}
-											open={open}
-											onClose={handleClose}
-											MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-											elevation={0}
-											anchorOrigin={{
-												vertical: 'bottom',
-												horizontal: 'right'
-											}}
-											transformOrigin={{
-												vertical: 'top',
-												horizontal: 'right'
-											}}
-										>
-											<MenuItem
-												style={{
-													display: 'flex',
-													gap: '20px'
-												}}
-												className={scss.dropdown}
-												onClick={() => {
-													setOpenModalEdit(true);
-													setAnchorEl(null);
-												}}
-											>
-												<img src={editIcon} alt="Edit" />
-												<p>Редактировать</p>
-											</MenuItem>
-
-											<MenuItem
-												style={{ display: 'flex', gap: '20px' }}
-												className={scss.dropdown}
-												onClick={() => {
-													handleShowFunc();
-													handleClose();
-												}}
-											>
-												{find?.show === true ? (
+					<div>
+						<div className={scss.announce_box}>
+							<ul className={scss.announce_card}>
+								{data
+									?.slice(
+										(currentPage - 1) * rowsPerPage,
+										currentPage * rowsPerPage
+									)
+									.map((item) => (
+										<li key={item.id} className={scss.announce_list}>
+											<div className={scss.show_text}>
+												{item?.show === true ? (
 													<>
-														<IconEyeOff stroke={2} />
-														<p>Не показывать</p>
+														<p style={{ color: '#0ece22 ', fontSize: '16px' }}>
+															Видно
+														</p>
 													</>
 												) : (
 													<>
-														<IconEye stroke={2} />
-														<p>Показывать</p>
+														<p style={{ color: 'red' }}>Не видно</p>
 													</>
 												)}
-											</MenuItem>
+											</div>
+											<strong>{item.group}</strong>
+											<p>{item.announcement}</p>
 
-											<MenuItem
-												style={{ display: 'flex', gap: '20px' }}
-												className={scss.dropdown}
-												onClick={() => {
-													setOpenModalDelete(true);
-													setAnchorEl(null);
+											<button
+												className={scss.button}
+												aria-controls={open ? 'basic-menu' : undefined}
+												aria-haspopup="true"
+												onClick={(e) => {
+													handleClick(e);
+													setDeleteById(item.id);
 												}}
 											>
-												<img src={deleteIcon} alt="Delete" />
-												<p>Удалить</p>
-											</MenuItem>
-										</Menu>
-									</li>
-								))}
-						</ul>
+												<DotsHorizont />
+											</button>
 
-						<ModalEditAnnouncement
-							openModalEdit={openModalEdit}
-							closeModalEdit={() => setOpenModalEdit(false)}
-							saveIdElement={deleteById}
-						/>
+											<Menu
+												className={scss.deleteEdit}
+												id="basic-menu"
+												anchorEl={anchorEl}
+												open={open}
+												onClose={handleClose}
+												MenuListProps={{ 'aria-labelledby': 'basic-button' }}
+												elevation={0}
+												anchorOrigin={{
+													vertical: 'bottom',
+													horizontal: 'right'
+												}}
+												transformOrigin={{
+													vertical: 'top',
+													horizontal: 'right'
+												}}
+											>
+												<MenuItem
+													style={{
+														display: 'flex',
+														gap: '20px'
+													}}
+													className={scss.dropdown}
+													onClick={() => {
+														setOpenModalEdit(true);
+														setAnchorEl(null);
+													}}
+												>
+													<img src={editIcon} alt="Edit" />
+													<p>Редактировать</p>
+												</MenuItem>
 
-						<DeleteAnnouncementModal
-							openModalDelete={openModalDelete}
-							closeModalDelete={setOpenModalDelete}
-							saveIdElement={deleteById}
-						/>
-						<AnnouncementForm
-							open={openAnnouncement}
-							handleClose={handleCloseAnnoucement}
-						/>
+												<MenuItem
+													style={{ display: 'flex', gap: '20px' }}
+													className={scss.dropdown}
+													onClick={() => {
+														handleShowFunc();
+														handleClose();
+													}}
+												>
+													{find?.show === true ? (
+														<>
+															<IconEyeOff stroke={2} />
+															<p>Не показывать</p>
+														</>
+													) : (
+														<>
+															<IconEye stroke={2} />
+															<p>Показывать</p>
+														</>
+													)}
+												</MenuItem>
+
+												<MenuItem
+													style={{ display: 'flex', gap: '20px' }}
+													className={scss.dropdown}
+													onClick={() => {
+														setOpenModalDelete(true);
+														setAnchorEl(null);
+													}}
+												>
+													<img src={deleteIcon} alt="Delete" />
+													<p>Удалить</p>
+												</MenuItem>
+											</Menu>
+										</li>
+									))}
+							</ul>
+
+							<ModalEditAnnouncement
+								openModalEdit={openModalEdit}
+								closeModalEdit={() => setOpenModalEdit(false)}
+								saveIdElement={deleteById}
+							/>
+
+							<DeleteAnnouncementModal
+								openModalDelete={openModalDelete}
+								closeModalDelete={setOpenModalDelete}
+								saveIdElement={deleteById}
+							/>
+							<AnnouncementForm
+								open={openAnnouncement}
+								handleClose={handleCloseAnnoucement}
+							/>
+						</div>
 					</div>
 				</div>
 				<div className={scss.pagination}>

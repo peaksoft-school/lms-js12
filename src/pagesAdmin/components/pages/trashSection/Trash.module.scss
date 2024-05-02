@@ -3,7 +3,7 @@
 		padding: 20px;
 
 		h1 {
-			padding-top: 70px;
+			padding-top: 60px;
 			padding-bottom: 20px;
 		}
 		.table_container {
@@ -12,7 +12,6 @@
 			border-radius: 10px;
 
 			.trash {
-				height: 600px;
 				overflow-x: auto;
 				white-space: nowrap;
 				scrollbar-width: thin;
@@ -97,9 +96,7 @@
 				th {
 					font-size: 16px;
 					font-weight: 600;
-					line-height: 19.07px;
 					text-align: start;
-					vertical-align: inherit;
 					padding-left: 20px;
 				}
 				.last_th {
@@ -113,49 +110,23 @@
 			}
 		}
 
-		.table_cell {
-			text-align: end;
-			padding-right: 50px;
-		}
 		.table_alternate_row {
-			background-color: #1a237e12;
+			background: #1a237e12;
 			.tbody {
 				width: 100%;
 			}
-			.TableCell_main {
-				padding-left: 20px;
-			}
-			.last_td {
-				text-align: end;
-				width: 50px;
-				padding-left: 20px;
-			}
-			.icon {
-				display: flex;
-				text-align: end;
-				gap: 20px;
-			}
+	
 		}
 
 		.table_container_second {
 			height: 50px;
-			text-align: end;
-			text-align: start;
+
 			.tbody {
 				width: 100%;
 				text-align: end;
 			}
 			.TableCell_main {
 				padding-left: 20px;
-			}
-			.last_td {
-				text-align: end;
-				padding-left: 20px;
-
-				.icon {
-					display: flex;
-					gap: 20px;
-				}
 			}
 		}
 

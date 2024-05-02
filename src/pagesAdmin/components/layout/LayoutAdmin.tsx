@@ -23,6 +23,7 @@ import StudentsPage from '../pages/StudentsPage.tsx';
 import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
+import CreateCourse from '@/src/ui/customModal/CreateCurse.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +33,18 @@ const LayoutAdmin = () => {
 	const { data: student = [] } = useGetStudentTableQuery();
 	const { data: courses = [] } = useGetCourseQuery();
 	const [openGroups, setOpen] = useState(false);
+	const [courseHandle, setCourseHandle] = useState(false);
 	const [openTeacher, setOpenTeacher] = useState(false);
 	const [openStudent, setOpenModalStudent] = useState(false);
 	const handleOpenStudentModal = () => {
 		setOpenModalStudent(true);
+	};
+
+	const handleOpenCourse = () => {
+		setCourseHandle(true);
+	};
+	const handleCloseCourse = () => {
+		setCourseHandle(false);
 	};
 
 	const handleCloseStudentModal = () => {
@@ -134,7 +143,7 @@ const LayoutAdmin = () => {
 								!courses || courses.length === 0 ? (
 									<NotCreated
 										text="Вы пока не создали курсы!"
-										buttonClick={handleOpenStudentModal}
+										buttonClick={handleOpenCourse}
 										name="Курсы"
 										buttontText="Создать курс"
 									/>
@@ -163,6 +172,13 @@ const LayoutAdmin = () => {
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
+
+				<CreateCourse
+					handleOpenCourse={handleOpenCourse}
+					open={courseHandle}
+					handleClose={handleCloseCourse}
+				/>
+
 				<CreateGroup
 					handleOpen={handleOpen}
 					open={openGroups}

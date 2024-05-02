@@ -3,20 +3,19 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
-import { IconArticle, IconBook, IconDots, IconPlus } from '@tabler/icons-react';
-import scss from './Groups.module.scss';
+import { IconArticle, IconBook, IconDots } from '@tabler/icons-react';
+import scss from './Course.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
-import CreateGroup from '@/src/ui/customModal/CreateGroup';
-import EditGroup from '@/src/ui/customModal/EditGroup';
-import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
-import { Button } from '@mui/material';
+import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
+import CreateCourse from '@/src/ui/customModal/CreateCurse';
+import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
+import EditCourse from '@/src/ui/customModal/EditCourse';
 import { Link } from 'react-router-dom';
 
-const Groups: FC = () => {
+const Course: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
-	const { data } = useGetGroupQuery();
+	const { data } = useGetCourseInstructorQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
@@ -24,8 +23,8 @@ const Groups: FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
-	const [openGroups, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
+	const [openCurse, setOpen] = useState(false);
+	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
 
 	const open = Boolean(anchorEl);
@@ -72,26 +71,11 @@ const Groups: FC = () => {
 	};
 
 	return (
-		<div className={scss.group}>
+		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					<div className={scss.course_button_modal}>
-						<Button
-							size="large"
-							className={scss.button}
-							onClick={handleOpen}
-							variant="contained"
-						>
-							<div className={scss.icon}>
-								<IconPlus stroke={2} />
-							</div>
-							<span>Создать группу</span>
-						</Button>
-					</div>
-
-					<h1 className={scss.title}>Группы</h1>
-
-					<div >
+					<h1 className={scss.title}>Курсы</h1>
+					<div>
 						<div className={scss.cards}>
 							{data && Array.isArray(data) && data.length > 0 ? (
 								<div className={scss.card}>
@@ -102,12 +86,12 @@ const Groups: FC = () => {
 										)
 										.map((item) => (
 											<div className={scss.zero_block_container}>
-												<Link key={item.id} to={`/admin/group/${item.id}`}>
+												<Link key={item.id} to={`/instructor/course/${item.id}`}>
 													<div className={scss.block_photo_cards}>
 														<img src={item.img} alt="images" />
 													</div>
 													<div className={scss.block_cont}>
-														<div className={scss.second_block_container}>
+														<div className={scss.second_block}>
 															<p className={scss.block_title}>{item.title}</p>
 															<p className={scss.block_date}>{item.date}</p>
 														</div>
@@ -120,11 +104,10 @@ const Groups: FC = () => {
 														</div>
 													</div>
 												</Link>
-
 												<div className={scss.block_button_div}>
 													<div onClick={handleClick}>
 														<button
-															className={scss.block_button_dots}
+															className={scss.button_dots}
 															onClick={() => {
 																setSaveId(item.id);
 															}}
@@ -170,14 +153,14 @@ const Groups: FC = () => {
 												</div>
 											</div>
 										))}
-									<EditGroup
+									<EditCourse
 										open={openEditModal}
 										handleClose={handleCloseEditModal}
 										saveId={saveId}
 									/>
 								</div>
 							) : null}
-							<DeleteGroupModal
+							<DeleteCourses
 								openModalDelete={deleteModal}
 								closeModalDelete={() => setDeleteModal(false)}
 								deleteById={saveId}
@@ -186,7 +169,7 @@ const Groups: FC = () => {
 					</div>
 				</div>
 				<div className={scss.pagination}>
-					<div className={scss.inputs}>
+					<div className={scss.Inputs}>
 						<p className={scss.text}>Перейти на страницу</p>
 						<div className={scss.pagination_element}>
 							<IconBook stroke={2} />
@@ -212,7 +195,7 @@ const Groups: FC = () => {
 							/>
 						</Stack>
 					</div>
-					<div className={scss.inputs}>
+					<div className={scss.Inputs}>
 						<p className={scss.text}>Показать</p>
 						<div className={scss.pagination_element}>
 							<IconArticle stroke={2} />
@@ -229,13 +212,13 @@ const Groups: FC = () => {
 					</div>
 				</div>
 			</div>
-			<CreateGroup
-				handleOpen={handleOpen}
-				open={openGroups}
+			<CreateCourse
+				handleOpenCourse={handleOpenCourse}
+				open={openCurse}
 				handleClose={handleCloseCourses}
 			/>
 		</div>
 	);
 };
 
-export default Groups;
+export default Course;

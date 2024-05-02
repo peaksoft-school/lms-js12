@@ -7,7 +7,7 @@ const api = index.injectEndpoints({
 			ANALYTIC.AnalyticsRequest
 		>({
 			query: () => ({
-				url: 'https://api.elchocrud.pro/api/v1/c43275804a0b340557d27a25acf8b20f/analytics',
+				url: 'https://04c2c825595e3dcc.mokky.dev/analytic',
 				method: 'GET'
 			}),
 			providesTags: ['analyticsSections']

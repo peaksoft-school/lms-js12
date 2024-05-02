@@ -27,13 +27,13 @@ const style = {
 };
 
 interface CreateCoursesProps {
-	handleOpen: (value: boolean) => void;
+	handleOpenCourse: (value: boolean) => void;
 	open: boolean;
 	handleClose: () => void;
 }
 
 const CreateCourse: FC<CreateCoursesProps> = ({
-	handleOpen,
+	handleOpenCourse,
 	open,
 	handleClose
 }) => {
@@ -79,7 +79,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		try {
 			createCourse(newCourse).unwrap();
 			notifySuccess();
-			handleOpen(false);
+			handleOpenCourse(false);
 			setData('');
 			setText('');
 			setImage('');

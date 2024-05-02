@@ -8,7 +8,7 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.TablesAnnouncementRequest
 		>({
 			query: () => ({
-				url: 'https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms',
+				url: 'https://04c2c825595e3dcc.mokky.dev/announcement',
 				method: 'GET'
 			}),
 			providesTags: ['announcement']
@@ -19,7 +19,7 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.PostAnnouncementPropsRequest
 		>({
 			query: (newAnnouncement) => ({
-				url: 'https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms',
+				url: 'https://04c2c825595e3dcc.mokky.dev/announcement',
 				method: 'POST',
 				body: newAnnouncement
 			}),
@@ -30,8 +30,8 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.DeleteAnnouncementPropsResponse,
 			ANNOUNCEMENT.DeleteAnnouncementPropsRequest
 		>({
-			query: (_id) => ({
-				url: `https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms/${_id}`,
+			query: (id) => ({
+				url: `https://04c2c825595e3dcc.mokky.dev/announcement/${id}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['announcement']
@@ -42,7 +42,7 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.PatchAnnouncementPropsRequest
 		>({
 			query: ({ editAnnouncement, saveIdElement }) => ({
-				url: `https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms/${saveIdElement}`,
+				url: `https://04c2c825595e3dcc.mokky.dev/announcement/${saveIdElement}`,
 				method: 'PATCH',
 				body: editAnnouncement
 			}),
@@ -50,7 +50,7 @@ export const api = index.injectEndpoints({
 		}),
 		patchShowdMutation: builder.mutation({
 			query: ({ updated, deleteById }) => ({
-				url: `https://api.elchocrud.pro/api/v1/1f6d495b1c4770efe810467625c7b433/lms/${deleteById}`,
+				url: `https://04c2c825595e3dcc.mokky.dev/announcement/${deleteById}`,
 				method: 'PATCH',
 				body: updated
 			}),

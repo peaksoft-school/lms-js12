@@ -35,7 +35,7 @@ interface EditModalProps {
 
 const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery();
-	const find = data?.find((id) => id._id === saveId);
+	const find = data?.find((id) => id.id === saveId);
 	console.log(find);
 
 	const [value, setValue] = useState<string>('');

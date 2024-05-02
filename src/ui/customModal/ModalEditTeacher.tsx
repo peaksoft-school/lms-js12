@@ -88,7 +88,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 	const { control, handleSubmit, reset } = useForm<IFormInputs>();
 	const [patchTeacher] = usePatchTeacherMutation();
 	const { data } = useGetTeacherQuery();
-	const find = data?.find((id) => id._id === deleteById);
+	const find = data?.find((id) => id.id === deleteById);
 	const [specialization, setSpecialization] = useState<string[]>([]);
 	const [personName, setPersonName] = useState<string[]>([]);
 

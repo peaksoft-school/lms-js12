@@ -1,9 +1,9 @@
-import scss from './InternalStudents.module.scss';
+import scss from './InternalInstructorStudents.module.scss';
 import { KeyboardEvent, useState } from 'react';
-import { Pagination, Stack } from '@mui/material';
+import { Button, Pagination, Stack } from '@mui/material';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
-import { IconArticle, IconBook } from '@tabler/icons-react';
+import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
 
 interface Student {
 	id: number;
@@ -17,8 +17,8 @@ interface Student {
 	isCompleted: boolean;
 }
 
-const InternalStudents = () => {
-	// const { groupId } = useParams();
+const InternalInstructorStudents = () => {
+	// const { courseId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
@@ -72,6 +72,20 @@ const InternalStudents = () => {
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
+					<div className={scss.delete_button_modal}>
+						<Button
+							size="large"
+							className={scss.button}
+							// onClick={handleOpen}
+							variant="contained"
+							color='error'
+						>
+							<div className={scss.icon}>
+								<IconPlus stroke={2} />
+							</div>
+							<span>Удалить группу с курса</span>
+						</Button>
+					</div>
 					<h1 className={scss.title}>Data Engineer</h1>
 					<div
 						style={{
@@ -173,4 +187,4 @@ const InternalStudents = () => {
 	);
 };
 
-export default InternalStudents;
+export default InternalInstructorStudents;

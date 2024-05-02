@@ -4,7 +4,7 @@ export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getGroup: builder.query<GROUPS.GroupsResponse, GROUPS.GroupsRequest>({
 			query: () => ({
-				url: 'https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst',
+				url: 'https://04c2c825595e3dcc.mokky.dev/group',
 				method: 'GET'
 			}),
 			providesTags: ['groups']
@@ -14,7 +14,7 @@ export const api = index.injectEndpoints({
 			GROUPS.CreateGroupRequest
 		>({
 			query: (newGroup) => ({
-				url: 'https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst',
+				url: 'https://04c2c825595e3dcc.mokky.dev/group',
 				method: 'POST',
 				body: newGroup
 			}),
@@ -25,7 +25,7 @@ export const api = index.injectEndpoints({
 			GROUPS.UpdateGroupRequest
 		>({
 			query: ({ newGroup, saveId }) => ({
-				url: `https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst/${saveId}`,
+				url: `https://04c2c825595e3dcc.mokky.dev/group/${saveId}`,
 				method: 'PATCH',
 				body: newGroup
 			}),
@@ -33,14 +33,14 @@ export const api = index.injectEndpoints({
 		}),
 		deleteGroup: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst/${deleteById}`,
+				url: `https://04c2c825595e3dcc.mokky.dev/group/${deleteById}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['groups']
 		}),
 		getGroupStudent: builder.query({
 			query: (groupId) => ({
-				url: `https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst/${groupId}`,
+				url: `https://04c2c825595e3dcc.mokky.dev/group/${groupId}`,
 				method: 'GET'
 			}),
 			providesTags: ['groups']

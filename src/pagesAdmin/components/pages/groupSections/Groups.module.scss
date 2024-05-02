@@ -8,7 +8,7 @@
 
 		.container {
 			.course_button_modal {
-				margin-bottom: 30px;
+				margin-bottom: 20px;
 				display: grid;
 				justify-content: flex-end;
 				align-items: center;
@@ -55,6 +55,7 @@
 
 				.card {
 					position: relative;
+					height: auto;
 					overflow: hidden;
 					display: grid;
 					flex-wrap: wrap;
@@ -104,7 +105,6 @@
 						padding: 12px;
 						max-width: 280px;
 						width: 100%;
-						height: auto;
 						background: #fff;
 						border: 1px solid #d4d4d4;
 						border-radius: 10px;
@@ -215,7 +215,7 @@
 			background: #efeff6;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 90px;
+			margin-top: 21px;
 			position: sticky;
 			bottom: 0;
 			left: 0;

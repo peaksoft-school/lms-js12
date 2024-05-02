@@ -2,7 +2,6 @@
 	overflow-y: auto;
 	padding-inline: 20px;
 	.main_container {
-		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -11,7 +10,7 @@
 			flex-direction: column;
 			padding-top: 20px;
 			.course_button_modal {
-				margin-bottom: 30px;
+				margin-bottom: 20px;
 				display: grid;
 				justify-content: flex-end;
 				align-items: center;
@@ -46,11 +45,13 @@
 		}
 
 		.announce_box {
+			width: 100%;
 			.announce_card {
 				display: grid;
 				grid-template-columns: repeat(2, 1fr);
 				place-items: center;
-				gap: 50px;
+				gap: 20px;
+	
 
 				@media (max-width: 850px) {
 					column-gap: 120px;
@@ -67,11 +68,10 @@
 					position: relative;
 					width: 100%;
 					max-width: 800px;
-					min-height: 250px;
-					background-color: #fff;
+					min-height: 260px;
+					background:#fff;
 					font-size: 20px;
-					box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.4);
-					// margin-left: 10px;
+					box-shadow: 2px 2px 4px #80808066;
 					margin-top: 30px;
 					padding: 25px;
 					border-radius: 15px;
@@ -137,7 +137,7 @@
 	background: #efeff6;
 	padding-block: 20px;
 	padding-inline: 30px;
-	margin-top: 90px;
+	margin-top: 21px;
 	position: sticky;
 	bottom: 0;
 	left: 0;

@@ -80,7 +80,7 @@ const ModalEditAnnouncement: React.FC<modalProps> = ({
 	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
 	const [patchAnnouncementTable] = usePatchAnnouncementTableMutation();
 	const { data } = useGetAnnouncementTableQuery();
-	const find = data?.find((id) => id._id === saveIdElement);
+	const find = data?.find((id) => id.id === saveIdElement);
 	const [personName, setPersonName] = useState<string[]>([]);
 
 	useEffect(() => {

@@ -130,7 +130,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 	};
 
 	const finder = data?.find(
-		(id: { _id: number | null }) => id._id === saveIdElement
+		(id: { id: number | null }) => id.id === saveIdElement
 	);
 
 	useEffect(() => {

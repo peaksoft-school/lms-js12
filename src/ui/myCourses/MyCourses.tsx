@@ -7,6 +7,7 @@ const MyCourses = () => {
 	console.log(coursesId!);
 	const { data } = useGetStudentTableQuery();
 	const { pathname } = useLocation();
+	console.log('MyCourses');
 
 	return (
 		<div>
@@ -14,14 +15,14 @@ const MyCourses = () => {
 			{data?.map((item) => {
 				let linkTo = '';
 				if (pathname.startsWith('/admin')) {
-					linkTo = `/admin/courses/${coursesId}/${item._id}`;
+					linkTo = `/admin/courses/${coursesId}/${item.id}`;
 				} else if (pathname.startsWith('/instructor')) {
-					linkTo = `/instructor/courses/${coursesId}/${item._id}`;
+					linkTo = `/instructor/courses/${coursesId}/${item.id}`;
 				} else {
-					linkTo = `/courses/${coursesId}/${item._id}`;
+					linkTo = `/courses/${coursesId}/${item.id}`;
 				}
 				return (
-					<Link key={item._id} to={linkTo}>
+					<Link key={item.id} to={linkTo}>
 						<div>
 							<h1>{item.title}</h1>
 						</div>

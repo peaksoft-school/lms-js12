@@ -14,6 +14,7 @@ const HeaderMobile = () => {
 			spacing: 5
 		}
 	});
+
 	return (
 		<>
 			<header className={scss.HeaderMobile}>

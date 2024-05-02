@@ -8,7 +8,7 @@ import ModalEditStudent from '../customModal/ModalEditStudent';
 import DeleteStudentModal from '@/src/ui/customModal/deleteModal/DeleteStudentModal';
 
 interface MenuItem {
-	_id: number;
+	id: number;
 	isCompleted: boolean;
 }
 
@@ -40,7 +40,7 @@ const StudentMenu: FC<MenuProps> = ({
 	saveIdElement,
 	openDeleteModal
 }) => {
-	const data = item?.find((el: { _id: number }) => el._id === saveIdElement);
+	const data = item?.find((el: { id: number }) => el.id === saveIdElement);
 
 	return (
 		<div>
