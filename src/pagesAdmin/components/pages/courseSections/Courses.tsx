@@ -101,7 +101,9 @@ const Courses: FC = () => {
 										)
 										.map((item) => (
 											<div key={item.id} className={scss.zero_block_container}>
-												<Link to={`/admin/courses/${item.id}`}>
+												<Link
+													to={`${`/admin/courses/student/${item.id}`} ${`/admin/courses/teacher/${item.id}`}`}
+												>
 													<div className={scss.block_photo_cards}>
 														<img src={item.img} alt="images" />
 													</div>

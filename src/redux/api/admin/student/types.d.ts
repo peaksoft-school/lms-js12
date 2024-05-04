@@ -3,7 +3,7 @@ namespace STUDENT {
 	type Table = {
 		[x: string]: ReactNode;
 		id: ReactNode;
-		id: number;
+		_id: number;
 		firstName: string;
 		lastName: string;
 		email: string;
@@ -32,7 +32,7 @@ namespace STUDENT {
 	type DeleteStudentPropsRequest = number | null;
 
 	type PatchStudentPropsResponse = {
-		id: number;
+		_id: number;
 		firstName: string;
 		lastName: string;
 		email: string;

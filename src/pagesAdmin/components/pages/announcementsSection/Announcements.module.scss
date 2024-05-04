@@ -29,8 +29,6 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						svg {
-						}
 					}
 					span {
 						white-space: nowrap;
@@ -46,11 +44,15 @@
 
 		.announce_box {
 			width: 100%;
+
 			.announce_card {
 				display: grid;
 				grid-template-columns: repeat(2, 1fr);
 				place-items: center;
 				gap: 20px;
+				scrollbar-width: thin;
+				scrollbar-color: #3772ff #fff;
+				overflow-y: scroll;
 	
 
 				@media (max-width: 850px) {
@@ -79,6 +81,7 @@
 					p {
 						font-size: 16px;
 						font-weight: 400;
+						padding-top: 10px;
 					}
 
 					.button {

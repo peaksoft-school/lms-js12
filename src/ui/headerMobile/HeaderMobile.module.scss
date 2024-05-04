@@ -11,7 +11,18 @@
 		padding-block: 20px;
 		align-items: center;
 		justify-content: center;
-		gap: 40px;
+		gap: 50px;
+
+		@media (max-width: 630px) {
+			gap: 30px;
+		}
+
+		@media (max-width: 530px) {
+			gap: 20px;
+		}
+		@media (max-width: 320px) {
+			gap: 10px;
+		}
 		li {
 			display: flex;
 			gap: 20px;

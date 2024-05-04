@@ -1,4 +1,4 @@
-.student {
+.teacher {
 	padding-top: 20px;
 	.container {
 		padding-inline: 20px;
@@ -6,68 +6,13 @@
 		flex-direction: column;
 		justify-content: space-between;
 		.content_table {
-			.search_input_buttons {
+			.button_title_elements {
 				margin-bottom: 20px;
 				display: flex;
+				justify-content: flex-end;
 				align-items: center;
-				justify-content: space-between;
-				gap: 10px;
 				width: 100%;
-				.search_input {
-					position: relative;
-					display: flex;
-					align-items: center;
-					width: 100%;
-					background: #fff;
-					border-radius: 12px;
 
-					input {
-						width: 100%;
-						@media screen and (min-width: 1000px) and (max-width: 1200px) {
-							max-width: 540px;
-						}
-						@media screen and (min-width: 1200px) and (max-width: 1310px) {
-							max-width: 200px !important;
-							display: flex;
-							flex-wrap: nowrap;
-							overflow: auto;
-						}
-					}
-
-					.input_buttons {
-						position: absolute;
-						top: 50%;
-						right: 10px;
-						transform: translateY(-50%);
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						.button {
-							padding: 5px;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							border: none;
-							outline: none;
-							background: transparent;
-							border-radius: 4px;
-							cursor: pointer;
-							transition: 0.2s;
-							&:hover {
-								background: #dcdcdc;
-							}
-						}
-					}
-				}
-			}
-			.buttons {
-				display: flex;
-				gap: 10px;
-				justify-content: center;
-				align-items: center;
-				@media (max-width: 700px) {
-					gap: 0;
-				}
 				.button {
 					display: flex;
 					gap: 10px;
@@ -81,6 +26,8 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
+						svg {
+						}
 					}
 					span {
 						white-space: nowrap;
@@ -91,29 +38,14 @@
 						}
 					}
 				}
-				:global {
-					.MuiButtonBase-root {
-						max-width: 360px !important;
-						width: 100% !important ;
-						@media (max-width: 700px) {
-							width: 0 !important;
-						}
-					}
-					.MuiButton-outlinedPrimary {
-						max-width: 360px !important;
-						width: 100% !important ;
-						@media (max-width: 700px) {
-							width: 0 !important;
-						}
-					}
-				}
 			}
+
 			.title {
 				margin-bottom: 20px;
 				width: 100%;
 			}
 
-			.StudentContainer {
+			.TeacherContainer {
 				border-radius: 8px;
 				overflow-x: auto;
 				overflow-y: scroll !important;
@@ -125,23 +57,23 @@
 				scrollbar-width: thin;
 				scrollbar-color: #3772ff #fff;
 
-				@media screen and (min-width: 1170px) and (max-width: 1205px) {
+				@media screen and (min-width: 1185px) and (max-width: 1260px) {
 					width: 100%;
-					max-width: 930px;
+					max-width: 953px;
 				}
-				@media screen and (min-width: 1100px) and (max-width: 1170px) {
+				@media screen and (min-width: 1105px) and (max-width: 1185px) {
 					width: 100%;
-					max-width: 860px;
+					max-width: 870px;
 				}
-				@media screen and (min-width: 1070px) and (max-width: 1100px) {
+				@media screen and (min-width: 1070px) and (max-width: 1105px) {
 					width: 100%;
-					max-width: 820px;
+					max-width: 830px;
 				}
 				@media screen and (min-width: 1000px) and (max-width: 1070px) {
 					width: 100%;
 					max-width: 760px;
 				}
-				.table {
+				.Table {
 					border-collapse: collapse;
 					width: 100%;
 					thead {
@@ -160,10 +92,9 @@
 							background: #837a7a14;
 						}
 
-						.StudentContainerSecond {
+						.TableContainerSecond {
 							height: 50px;
 						}
-
 						tr {
 							td {
 								padding-left: 20px;
@@ -199,10 +130,6 @@
 				padding-bottom: 140px;
 			}
 
-			@media (max-width: 1000px) {
-				padding-bottom: 140px;
-			}
-
 			@media (max-width: 625px) {
 				display: flex;
 				flex-direction: column;
@@ -216,9 +143,9 @@
 				}
 			}
 
-			.Inputs {
+			.callInput {
 				display: flex;
-				gap: 5px;
+				gap: 4px;
 				align-items: center;
 
 				input {
@@ -227,7 +154,4 @@
 			}
 		}
 	}
-}
-.changeClass {
-	color: #ff0000;
 }

@@ -25,6 +25,7 @@ import SupHeader from '@/src/ui/supHeader/SupHeader.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
 import CreateCourse from '@/src/ui/customModal/CreateCurse.tsx';
 import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
+import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -117,7 +118,7 @@ const LayoutAdmin = () => {
 						/>
 
 						<Route path="/trash" element={<TrashPage />} />
-						<Route path="/courses/:coursesId" element={<MyCourses />} />
+						{/* <Route path="/courses/:coursesId" element={<MyCourses />} /> */}
 
 						<Route
 							path="/courses/:coursesId/:matelials"
@@ -153,10 +154,14 @@ const LayoutAdmin = () => {
 								)
 							}
 						/>
-							<Route
-								path="/courses/:coursesPart"
-								element={<InternalCoursesPage />}
-							/>
+						<Route
+							path="/courses/student/:coursesPart"
+							element={<InternalCoursesPage />}
+						/>
+						<Route
+							path="/courses/teacher/:coursesTeacher"
+							element={<CoursesTeacher />}
+						/>
 						<Route
 							path="/group"
 							element={

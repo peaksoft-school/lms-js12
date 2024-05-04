@@ -1,12 +1,17 @@
-import { KeyboardEvent, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
-import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
+import {
+	useGetStudentTableQuery,
+	usePatchCompletedMutationMutation
+} from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './InternalCoursesSection.module.scss';
+import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
+import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 
 interface Student {
-	id: number;
+	_id: number;
 	firstName: string;
 	lastName: string;
 	group: string;
@@ -16,40 +21,46 @@ interface Student {
 	password: string;
 	isCompleted: boolean;
 }
+
 const InternalCourses = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(12);
-	const { data, isLoading } = useGetStudentTableQuery();
+	const { data, isLoading, error } = useGetStudentTableQuery();
+	const [saveItem, setSaveItem] = useState<Student | null>(null);
+	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
+	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
+	const [test, setTest] = useState<number | null>(null);
 
-	if (isLoading) {
-		return (
-			<div>
-				<Preloader />
-			</div>
-		);
-	}
-
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
+	useEffect(() => {
+		if (!isLoading && !error && data) {
+			setOpenPart(1);
 			setCurrentPage(1);
 		}
+	}, [data, isLoading, error]);
+
+	const updateCompletedFunc = async (saveIdElement: number) => {
+		console.log(saveItem?._id, saveIdElement);
+		if (saveItem) {
+			const updated = {
+				firstName: saveItem.firstName,
+				lastName: saveItem.lastName,
+				email: saveItem.email,
+				group: saveItem.group,
+				phone_number: saveItem.phone_number,
+				TrainingFormat: saveItem.TrainingFormat,
+				password: saveItem.password,
+				isCompleted: !saveItem.isCompleted
+			};
+			await patchCompletedMutation({ updated, saveIdElement });
+		}
 	};
 
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
+	const handlePageChange = (_e: React.ChangeEvent<unknown>, page: number) => {
 		setCurrentPage(page);
+		if (saveItem && saveIdElement) {
+			updateCompletedFunc(saveIdElement);
+		}
 	};
 
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -59,24 +70,26 @@ const InternalCourses = () => {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
 				setCurrentPage(1);
-				openPartFunc();
 			} else {
 				setRowsPerPage(12);
 			}
 		}
 	};
 
+	if (isLoading) {
+		return <Preloader />;
+	}
+
+	if (error) {
+		return <div>Error fetching data: {error.message}</div>;
+	}
+
 	return (
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
 					<h1 className={scss.title}>Data Engineer</h1>
-					<div
-						style={{
-							height: '577px',
-							background: '#eff0f4'
-						}}
-					>
+					<div style={{ height: '577px', background: '#eff0f4' }}>
 						<div style={{ display: 'flex', justifyContent: 'center' }}>
 							<div className={scss.internal_container}>
 								<table className={scss.table}>
@@ -89,32 +102,93 @@ const InternalCourses = () => {
 											<th>Формат обучения</th>
 											<th>Номер телефона</th>
 											<th>E-mail</th>
+											<th style={{ textAlign: 'end', paddingRight: '10px' }}>
+												Действия
+											</th>
 										</tr>
 									</thead>
 									<tbody>
 										{data
-
 											?.slice(
 												(currentPage - 1) * rowsPerPage,
 												currentPage * rowsPerPage
 											)
 											.map((item: Student, index) => (
 												<tr
-													key={item.id}
+													key={item._id}
 													className={
 														index % 2 === 1
 															? scss.table_alternate_row
 															: '' || scss.internal
 													}
 												>
-													<td>{index + 1 + (currentPage - 1) * rowsPerPage}</td>
-
-													<td>{item.firstName}</td>
-													<td>{item.lastName}</td>
-													<td>{item.group}</td>
-													<td>{item.TrainingFormat}</td>
-													<td>{item.phone_number}</td>
-													<td>{item.email}</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{index + 1 + (currentPage - 1) * rowsPerPage}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.firstName}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.lastName}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.group}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.TrainingFormat}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.phone_number}
+													</td>
+													<td
+														className={
+															!item.isCompleted ? scss.changeClass : ''
+														}
+													>
+														{item.email}
+													</td>
+													<td>
+														<button
+															onClick={() => {
+																setSaveIdElement(item._id);
+																setSaveItem(item);
+																updateCompletedFunc(item._id);
+																setTest(item._id);
+															}}
+														>
+															{item.isCompleted ? (
+																<>
+																	<img src={LockOpenStudent} alt="#" />
+																</>
+															) : (
+																<img src={LockBlockStudent} alt="#" />
+															)}
+														</button>
+													</td>
 												</tr>
 											))}
 									</tbody>
@@ -135,7 +209,6 @@ const InternalCourses = () => {
 							onChange={(e) => setOpenPart(+e.target.value)}
 							onKeyDown={(e) => {
 								handleAppend(e);
-								openPartFunc();
 							}}
 						/>
 					</div>
@@ -144,7 +217,7 @@ const InternalCourses = () => {
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
-								onChange={handlePageChangeC}
+								onChange={handlePageChange}
 								shape="rounded"
 								variant="outlined"
 							/>
@@ -157,11 +230,10 @@ const InternalCourses = () => {
 						</div>
 						<input
 							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
+							value={rowsPerPage}
+							onChange={(e) => setRowsPerPage(+e.target.value)}
 							onKeyDown={(e) => {
 								handleAppend(e);
-								openPartPage();
 							}}
 						/>
 					</div>

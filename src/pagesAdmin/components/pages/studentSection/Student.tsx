@@ -17,7 +17,7 @@ import React, { KeyboardEvent, MouseEvent, useState } from 'react';
 import scss from './Student.module.scss';
 
 interface Student {
-	id: number;
+	_id: number;
 	firstName: string;
 	lastName: string;
 	group: string;
@@ -121,7 +121,7 @@ const Student = () => {
 				password: saveItem.password,
 				isCompleted: !saveItem.isCompleted
 			};
-			patchCompletedMutation({ updated, saveIdElement });
+		await	patchCompletedMutation({ updated, saveIdElement });
 		}
 	};
 
@@ -205,7 +205,7 @@ const Student = () => {
 											)
 											.map((item: Student, index) => (
 												<tr
-													key={item.id}
+													key={item._id}
 													className={
 														index % 2 === 1
 															? scss.TableAlternateRow
@@ -266,7 +266,7 @@ const Student = () => {
 															className={scss.Button_Photo}
 															onClick={(event) => {
 																setAnchorEl(event.currentTarget);
-																setSaveIdElement(item.id);
+																setSaveIdElement(item._id);
 																setSaveItem(item);
 															}}
 														>
