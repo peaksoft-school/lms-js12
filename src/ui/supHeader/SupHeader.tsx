@@ -1,9 +1,11 @@
 // ! new// ! new
 import { IconChevronDown, IconUserCircle } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box, Menu, MenuItem, Tab, Tabs, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import usePagination from '@mui/material/usePagination/usePagination';
+
 interface TabPanelProps {
 	children?: React.ReactNode;
 	value: number;
@@ -18,6 +20,16 @@ const SupHeader = () => {
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
+
+	useEffect(() => {
+		if (
+			pathname === `/admin/courses/${id}/teacher` &&
+			pathname === `/admin/courses/${id}/teacher`
+		) {
+			setValue(0);
+		}
+	}, [pathname]);
+
 	const TabPanel = (props: TabPanelProps) => {
 		const { children, value, index, ...other } = props;
 		return (
@@ -48,19 +60,23 @@ const SupHeader = () => {
 	const handleLogout = () => {
 		navigate('/registration');
 	};
-	const isAdminCourseWithId = /^\/admin\/courses\/\w+$/.test(pathname);
+	const isAdminCourseWithId = /^\/admin\/courses\/\w+$/.test(
+		window.location.pathname
+	);
+	const id = localStorage.getItem('id');
 	const isInstructorCourseWithId = /^\/instructor\/course\/\w+$/.test(pathname);
-
 	const openStudent = () => {
-		navigate(`/admin/courses/student/kjn;kn`);
+		navigate(`/admin/courses/${id}/student`);
 	};
 	const openTeacher = () => {
-		navigate(`/admin/courses/teacher/фвмфума`);
+		navigate(`/admin/courses/${id}/teacher`);
 	};
+
 	return (
 		<div className={scss.header}>
 			{/* //! admin header */}
-			{pathname !== '/admin/courses/' &&
+			{pathname !== `/admin/courses/${id}/student` &&
+				pathname !== `/admin/courses/${id}/teacher` &&
 				pathname !== '/instructor/course/' &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
@@ -113,7 +129,84 @@ const SupHeader = () => {
 					</div>
 				)}
 			{/* //! admin header для /admin/courses */}
-			{pathname.startsWith('/admin/courses/') &&
+			{pathname === `/admin/courses/${id}/student` &&
+				pathname !== 'admin/courses' && (
+					<div className={scss.subHeaderCourses}>
+						<Box>
+							<Box
+								sx={{
+									borderColor: 'divider',
+									paddingTop: '20px'
+								}}
+							>
+								<Tabs
+									value={value}
+									onChange={handleChange}
+									aria-label="basic tabs example"
+								>
+									<Tab
+										onClick={openTeacher}
+										label="Учителя"
+										{...a11yProps(0)}
+									/>
+									<Tab
+										onClick={openStudent}
+										label="Студенты"
+										{...a11yProps(1)}
+									/>
+								</Tabs>
+							</Box>
+						</Box>
+						<div className={scss.header_elements}>
+							<IconUserCircle className={scss.profile} stroke={2} />
+							<div
+								id="basic-button"
+								aria-controls={open ? 'basic-menu' : undefined}
+								aria-haspopup="true"
+								aria-expanded={open ? 'true' : undefined}
+								onClick={handleClick}
+							>
+								{pathname.startsWith('/admin') && (
+									<div style={{ fontSize: '18px', fontWeight: '500' }}>
+										{pathname.startsWith('/admin') && (
+											<>
+												<p> Aдминистратор</p>
+											</>
+										)}
+										{pathname.startsWith('/instructor') && (
+											<>
+												<p>Учитель</p>
+											</>
+										)}
+										{pathname === '/' && (
+											<>
+												<p>Студент</p>
+											</>
+										)}
+									</div>
+								)}
+								{pathname.startsWith('/instructor') && (
+									<div style={{ fontSize: '18px', fontWeight: '500' }}>
+										Учитель
+									</div>
+								)}
+							</div>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+							<Menu
+								id="basic-menu"
+								anchorEl={anchorEl}
+								open={open}
+								onClose={() => setOpen(false)}
+								MenuListProps={{
+									'aria-labelledby': 'basic-button'
+								}}
+							>
+								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
+							</Menu>
+						</div>
+					</div>
+				)}
+			{pathname === `/admin/courses/${id}/teacher` &&
 				pathname !== 'admin/courses' && (
 					<div className={scss.subHeaderCourses}>
 						<Box>

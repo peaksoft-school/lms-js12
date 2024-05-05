@@ -13,7 +13,7 @@ interface InputProps {
 type Ref = HTMLInputElement;
 
 const InputAnnouncement = forwardRef<Ref, InputProps>(
-	({  value, onChange, type, label, error }, ref) => {
+	({ value, onChange, type, label, error }, ref) => {
 		return (
 			<>
 				<TextField

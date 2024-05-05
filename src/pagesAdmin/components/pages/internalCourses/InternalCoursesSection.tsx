@@ -27,10 +27,9 @@ const InternalCourses = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const { data, isLoading, error } = useGetStudentTableQuery();
-	const [saveItem, setSaveItem] = useState<Student | null>(null);
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
+	const [saveItem, setSaveItem] = useState<Student | null>(null);
 	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
-	const [test, setTest] = useState<number | null>(null);
 
 	useEffect(() => {
 		if (!isLoading && !error && data) {
@@ -39,27 +38,29 @@ const InternalCourses = () => {
 		}
 	}, [data, isLoading, error]);
 
-	const updateCompletedFunc = async (saveIdElement: number) => {
-		console.log(saveItem?._id, saveIdElement);
-		if (saveItem) {
+	const updateCompletedFunc = async (
+		id: number | null,
+		item: Student | null
+	) => {
+		if (id !== null && item !== null) {
 			const updated = {
-				firstName: saveItem.firstName,
-				lastName: saveItem.lastName,
-				email: saveItem.email,
-				group: saveItem.group,
-				phone_number: saveItem.phone_number,
-				TrainingFormat: saveItem.TrainingFormat,
-				password: saveItem.password,
-				isCompleted: !saveItem.isCompleted
+				firstName: item.firstName,
+				lastName: item.lastName,
+				email: item.email,
+				group: item.group,
+				phone_number: item.phone_number,
+				TrainingFormat: item.TrainingFormat,
+				password: item.password,
+				isCompleted: !item.isCompleted
 			};
-			await patchCompletedMutation({ updated, saveIdElement });
+			await patchCompletedMutation({ updated, saveIdElement: id });
 		}
 	};
 
-	const handlePageChange = (_e: React.ChangeEvent<unknown>, page: number) => {
+	const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
 		setCurrentPage(page);
-		if (saveItem && saveIdElement) {
-			updateCompletedFunc(saveIdElement);
+		if (saveItem !== null && saveIdElement !== null) {
+			updateCompletedFunc(saveIdElement, saveItem);
 		}
 	};
 
@@ -78,10 +79,6 @@ const InternalCourses = () => {
 
 	if (isLoading) {
 		return <Preloader />;
-	}
-
-	if (error) {
-		return <div>Error fetching data: {error.message}</div>;
 	}
 
 	return (
@@ -173,17 +170,15 @@ const InternalCourses = () => {
 													</td>
 													<td>
 														<button
+															className={scss.button}
 															onClick={() => {
 																setSaveIdElement(item._id);
 																setSaveItem(item);
-																updateCompletedFunc(item._id);
-																setTest(item._id);
+																updateCompletedFunc(item._id, item);
 															}}
 														>
 															{item.isCompleted ? (
-																<>
-																	<img src={LockOpenStudent} alt="#" />
-																</>
+																<img src={LockOpenStudent} alt="#" />
 															) : (
 																<img src={LockBlockStudent} alt="#" />
 															)}

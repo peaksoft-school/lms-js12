@@ -12,12 +12,13 @@ import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/EditCourse';
 import CreateCourse from '@/src/ui/customModal/CreateCurse';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const { data } = useGetGroupQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
+	const [saveIdSrorege, setSaveIdStorege] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -27,6 +28,7 @@ const Courses: FC = () => {
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
+	const navigate = useNavigate();
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -70,6 +72,7 @@ const Courses: FC = () => {
 			}
 		}
 	};
+	localStorage.setItem('id', saveIdSrorege);
 
 	return (
 		<div className={scss.course}>
@@ -100,28 +103,52 @@ const Courses: FC = () => {
 											currentPage * rowsPerPage
 										)
 										.map((item) => (
-											<div key={item.id} className={scss.zero_block_container}>
-												<Link
-													to={`${`/admin/courses/student/${item.id}`} ${`/admin/courses/teacher/${item.id}`}`}
+											<div
+												key={item.id}
+												className={scss.zero_block_container}
+												// onClick={() => setSaveIdStorege(item.id)}
+											>
+												<div
+													onClick={() => {
+														setSaveIdStorege(item.id);
+													}}
 												>
-													<div className={scss.block_photo_cards}>
-														<img src={item.img} alt="images" />
-													</div>
-													<div className={scss.block_cont}>
-														<div className={scss.second_block}>
-															<p className={scss.block_title}>{item.title}</p>
-															<p className={scss.block_date}>{item.date}</p>
+													{
+														// 		to={`/admin/courses/${item.id}/student`}
+													}
+													<div
+														onClick={() => {
+															// e.preventDefault();
+															setSaveIdStorege(item.id); // Выполняем ваш обработчик\
+															setTimeout(() => {
+																navigate(`/admin/courses/${item.id}/teacher`);
+															}, 1000);
+														}}
+													>
+														<div className={scss.block_photo_cards}>
+															<img src={item.img} alt="images" />
 														</div>
-														<div className={scss.text_card}>
-															<span className={scss.block_text}>
-																{item.text && item.text.length > 60
-																	? `${item.text.substring(0, 60)}...`
-																	: item.text}
-															</span>
+														<div className={scss.block_cont}>
+															<div className={scss.second_block}>
+																<p className={scss.block_title}>{item.title}</p>
+																<p className={scss.block_date}>{item.date}</p>
+															</div>
+															<div className={scss.text_card}>
+																<span className={scss.block_text}>
+																	{item.text && item.text.length > 60
+																		? `${item.text.substring(0, 60)}...`
+																		: item.text}
+																</span>
+															</div>
 														</div>
 													</div>
-												</Link>
-												<div className={scss.block_button_div}>
+												</div>
+												<div
+													className={scss.block_button_div}
+													onClick={() => {
+														setSaveIdStorege(item.id);
+													}}
+												>
 													<div onClick={handleClick}>
 														<button
 															className={scss.button_dots}

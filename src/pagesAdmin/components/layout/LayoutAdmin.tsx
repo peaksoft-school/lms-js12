@@ -3,7 +3,7 @@ import scss from './LayoutAdmin.module.scss';
 import Header from '@/src/ui/header/Header';
 import { useEffect, useState } from 'react';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
-import MyCourses from '@/src/ui/myCourses/MyCourses';
+// import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Material from '@/src/ui/material/Material';
 import CalendarPage from '../pages/CalendarPage';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
@@ -155,11 +155,11 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route
-							path="/courses/student/:coursesPart"
+							path="/courses/:coursesPart/student"
 							element={<InternalCoursesPage />}
 						/>
 						<Route
-							path="/courses/teacher/:coursesTeacher"
+							path="/courses/:coursesTeacher/teacher"
 							element={<CoursesTeacher />}
 						/>
 						<Route

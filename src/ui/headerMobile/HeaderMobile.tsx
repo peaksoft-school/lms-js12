@@ -12,7 +12,7 @@ const HeaderMobile = () => {
 			origin: 'center',
 			perView: 6,
 			spacing: 4
-		},
+		}
 	});
 
 	return (

@@ -80,7 +80,9 @@ const CoursesTeacher = () => {
 			<div className={scss.container}>
 				<div className={scss.content_table}>
 					<div className={scss.button_title_elements}>
-						<Button onClick={handleOpenAppoint}>Назначить учителя/лей</Button>
+						<Button variant="contained" onClick={handleOpenAppoint}>
+							Назначить учителя/лей
+						</Button>
 					</div>
 					<h1 className={scss.title}>Учителя</h1>
 					<div

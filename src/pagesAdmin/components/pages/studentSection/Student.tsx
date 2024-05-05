@@ -121,7 +121,7 @@ const Student = () => {
 				password: saveItem.password,
 				isCompleted: !saveItem.isCompleted
 			};
-		await	patchCompletedMutation({ updated, saveIdElement });
+			await patchCompletedMutation({ updated, saveIdElement });
 		}
 	};
 

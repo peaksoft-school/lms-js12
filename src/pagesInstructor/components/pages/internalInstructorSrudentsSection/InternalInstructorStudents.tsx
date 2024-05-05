@@ -78,7 +78,7 @@ const InternalInstructorStudents = () => {
 							className={scss.button}
 							// onClick={handleOpen}
 							variant="contained"
-							color='error'
+							color="error"
 						>
 							<div className={scss.icon}>
 								<IconPlus stroke={2} />

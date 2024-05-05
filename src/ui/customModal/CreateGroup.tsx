@@ -83,7 +83,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 			setText('');
 			setImage('');
 			setValue('');
-			handleClose()
+			handleClose();
 		} catch (error) {
 			// notifyError();
 		}

@@ -147,9 +147,7 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 								</div>
 
 								<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
-									<InputLabel
-										id="demo-multiple-checkbox-label"
-									>
+									<InputLabel id="demo-multiple-checkbox-label">
 										Группы
 									</InputLabel>
 									<Select
@@ -167,8 +165,7 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 											height: '55px',
 											borderRadius: '12px',
 											position: 'relative',
-											top: '0',
-						
+											top: '0'
 										}}
 									>
 										{names.map((name) => (
