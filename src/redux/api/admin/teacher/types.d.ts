@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace TABLE {
 	type Teacher = {
-		_id?: number;
+		id?: number;
 		firstName: string;
 		lastName: string;
 		email: string;
@@ -15,7 +15,7 @@ namespace TABLE {
 	type GetTeacherRequest = void;
 
 	type CreateTeachersResponse = {
-		_id?: number;
+		id?: number;
 		firstName: string;
 		lastName: string;
 		email: string;

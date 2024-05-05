@@ -4,7 +4,7 @@ export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getCourse: builder.query<COURSES.CoursesResponse, COURSES.CoursesRequest>({
 			query: () => ({
-				url: 'https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst',
+				url: 'https://04c2c825595e3dcc.mokky.dev/course',
 				method: 'GET'
 			}),
 			providesTags: ['courses']
@@ -14,7 +14,7 @@ export const api = index.injectEndpoints({
 			COURSES.CreateCourseRequest
 		>({
 			query: (newCourse) => ({
-				url: 'https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst',
+				url: 'https://04c2c825595e3dcc.mokky.dev/course',
 				method: 'POST',
 				body: newCourse
 			}),
@@ -25,7 +25,7 @@ export const api = index.injectEndpoints({
 			COURSES.UpdateCourseRequest
 		>({
 			query: ({ newCourse, saveId }) => ({
-				url: `https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst/${saveId}`,
+				url: `https://04c2c825595e3dcc.mokky.dev/course/${saveId}`,
 				method: 'PATCH',
 				body: newCourse
 			}),
@@ -33,7 +33,7 @@ export const api = index.injectEndpoints({
 		}),
 		deleteCourse: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://api.elchocrud.pro/api/v1/99ea37d91bc3f882eae29a2420bc4d8a/groupFirst/${deleteById}`,
+				url: `https://04c2c825595e3dcc.mokky.dev/course/${deleteById}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['courses']

@@ -25,7 +25,6 @@ const NotCreated: FC<NotCreatedProps> = ({
 					<img className={scss.img} src={notCreated} alt="" />
 				</div>
 				<div>
-					{' '}
 					<h3>{text}</h3>
 				</div>
 				<div>

@@ -15,7 +15,7 @@ const Calendar = () => {
 					center: 'title',
 					end: 'dayGridMonth,timeGridWeek,timeGridDay'
 				}}
-				height="95vh"
+				height="90vh"
 			/>
 		</div>
 	);

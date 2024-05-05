@@ -4,7 +4,7 @@ const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getTrash: builder.query<TRASH.GetCardsResponse, TRASH.GetCardsRequest>({
 			query: () => ({
-				url: 'https://api.elchocrud.pro/api/v1/103d602158fedf38812fe148fcd1b04e/trashurl',
+				url: 'https://04c2c825595e3dcc.mokky.dev/trash',
 				method: 'GET'
 			}),
 			providesTags: ['trash']

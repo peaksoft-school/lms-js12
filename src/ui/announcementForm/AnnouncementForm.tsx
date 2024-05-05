@@ -19,7 +19,6 @@ import { usePostAnnouncementTableMutation } from '@/src/redux/api/admin/announce
 import InputAnnouncement from '../customInput/InputAnnouncement';
 
 interface PostAnnouncementProps {
-	// id: number;
 	announcement: string;
 	group: string[];
 }
@@ -124,62 +123,72 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 
 					<Box className={scss.input_form}>
 						<div className={scss.input}>
-							<div className={scss.inputText}>
-								<Controller
-									name="announcement"
-									control={control}
-									defaultValue=""
-									render={({ field }) => (
-										<InputAnnouncement
-											{...field}
-											type="text"
-											label="Введите текст объявления"
-											placeholder="Введите текст объявления"
-										/>
-									)}
-								/>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'column',
+									justifyContent: 'center',
+									alignItems: 'center'
+								}}
+							>
+								<div className={scss.inputText}>
+									<Controller
+										name="announcement"
+										control={control}
+										defaultValue=""
+										render={({ field }) => (
+											<InputAnnouncement
+												{...field}
+												type="text"
+												label="Введите текст объявления"
+											/>
+										)}
+									/>
+								</div>
+
+								<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
+									<InputLabel id="demo-multiple-checkbox-label">
+										Группы
+									</InputLabel>
+									<Select
+										labelId="demo-multiple-checkbox-label"
+										id="demo-multiple-checkbox"
+										multiple
+										value={personName}
+										onChange={handleChange}
+										input={<OutlinedInput label="Группы" />}
+										renderValue={(selected) => selected.join(', ')}
+										MenuProps={MenuProps}
+										style={{
+											maxWidth: '540px',
+											width: '100%',
+											height: '55px',
+											borderRadius: '12px',
+											position: 'relative',
+											top: '0'
+										}}
+									>
+										{names.map((name) => (
+											<MenuItem key={name} value={name}>
+												<Checkbox checked={personName.indexOf(name) > -1} />
+												<ListItemText primary={name} />
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
 							</div>
 
-							<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
-								<InputLabel
-									id="demo-multiple-checkbox-label"
-									style={{
-										paddingLeft: '20px',
-										textAlign: 'center'
-									}}
-								>
-									Группы
-								</InputLabel>
-								<Select
-									labelId="demo-multiple-checkbox-label"
-									id="demo-multiple-checkbox"
-									multiple
-									value={personName}
-									onChange={handleChange}
-									input={<OutlinedInput label="Группы" />}
-									renderValue={(selected) => selected.join(', ')}
-									MenuProps={MenuProps}
-									style={{
-										marginLeft: '15px',
-										maxWidth: '540px',
-										width: '100%',
-										height: '55px',
-										borderRadius: '10px',
-										position: 'relative',
-										top: '0',
-										right: '20px'
-									}}
-								>
-									{names.map((name) => (
-										<MenuItem key={name} value={name}>
-											<Checkbox checked={personName.indexOf(name) > -1} />
-											<ListItemText primary={name} />
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-
-							<div className={scss.btn_form}>
+							<div
+								style={{
+									width: '100%',
+									display: 'flex',
+									justifyContent: 'flex-end',
+									alignItems: 'center',
+									paddingBottom: '10px',
+									paddingTop: '13px',
+									gap: '10px'
+								}}
+							>
 								<ButtonCancel
 									type="submit"
 									disabled={false}

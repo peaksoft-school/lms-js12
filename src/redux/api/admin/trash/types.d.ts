@@ -2,7 +2,7 @@
 namespace TRASH {
 	interface TrashType {
 		id: Key | null | undefined;
-		_id: number;
+		id: number;
 		name: string;
 		date: number;
 	}

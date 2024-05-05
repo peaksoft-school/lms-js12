@@ -91,96 +91,98 @@ const Groups: FC = () => {
 
 					<h1 className={scss.title}>Группы</h1>
 
-					<div className={scss.cards}>
-						{data && Array.isArray(data) && data.length > 0 ? (
-							<div className={scss.card}>
-								{data
-									.slice(
-										(currentPage - 1) * rowsPerPage,
-										currentPage * rowsPerPage
-									)
-									.map((item) => (
-										<div className={scss.zero_block_container}>
-											<Link key={item._id} to={`/admin/group/${item._id}`}>
-												<div className={scss.block_photo_cards}>
-													<img src={item.img} alt="images" />
-												</div>
-												<div className={scss.block_cont}>
-													<div className={scss.second_block_container}>
-														<p className={scss.block_title}>{item.title}</p>
-														<p className={scss.block_date}>{item.date}</p>
+					<div>
+						<div className={scss.cards}>
+							{data && Array.isArray(data) && data.length > 0 ? (
+								<div className={scss.card}>
+									{data
+										.slice(
+											(currentPage - 1) * rowsPerPage,
+											currentPage * rowsPerPage
+										)
+										.map((item) => (
+											<div key={item.id} className={scss.zero_block_container}>
+												<Link to={`/admin/group/${item.id}`}>
+													<div className={scss.block_photo_cards}>
+														<img src={item.img} alt="images" />
 													</div>
-													<div className={scss.text_card}>
-														<span className={scss.block_text}>
-															{item.text && item.text.length > 60
-																? `${item.text.substring(0, 60)}...`
-																: item.text}
-														</span>
+													<div className={scss.block_cont}>
+														<div className={scss.second_block_container}>
+															<p className={scss.block_title}>{item.title}</p>
+															<p className={scss.block_date}>{item.date}</p>
+														</div>
+														<div className={scss.text_card}>
+															<span className={scss.block_text}>
+																{item.text && item.text.length > 60
+																	? `${item.text.substring(0, 60)}...`
+																	: item.text}
+															</span>
+														</div>
 													</div>
-												</div>
-											</Link>
+												</Link>
 
-											<div className={scss.block_button_div}>
-												<div onClick={handleClick}>
-													<button
-														className={scss.block_button_dots}
-														onClick={() => {
-															setSaveId(item._id);
-														}}
-													>
-														<IconDots stroke={2} />
-													</button>
+												<div className={scss.block_button_div}>
+													<div onClick={handleClick}>
+														<button
+															className={scss.block_button_dots}
+															onClick={() => {
+																setSaveId(item.id);
+															}}
+														>
+															<IconDots stroke={2} />
+														</button>
+													</div>
+													{
+														<Menu
+															id="positioned-menu"
+															anchorEl={anchorEl}
+															open={open}
+															onClose={handleClose}
+															anchorOrigin={{
+																vertical: 'top',
+																horizontal: 'left'
+															}}
+															transformOrigin={{
+																vertical: 'top',
+																horizontal: 'left'
+															}}
+														>
+															<MenuItem
+																onClick={() => {
+																	setOpenEditModal(true);
+																	handleClose();
+																}}
+															>
+																<img src={editImg} alt="#" />
+																Редактировать
+															</MenuItem>
+															<MenuItem
+																onClick={() => {
+																	setDeleteModal(true);
+																	handleClose();
+																}}
+															>
+																<img src={deleteImg} alt="#" />
+																Удалить
+															</MenuItem>
+														</Menu>
+													}
 												</div>
-												{
-													<Menu
-														id="positioned-menu"
-														anchorEl={anchorEl}
-														open={open}
-														onClose={handleClose}
-														anchorOrigin={{
-															vertical: 'top',
-															horizontal: 'left'
-														}}
-														transformOrigin={{
-															vertical: 'top',
-															horizontal: 'left'
-														}}
-													>
-														<MenuItem
-															onClick={() => {
-																setOpenEditModal(true);
-																handleClose();
-															}}
-														>
-															<img src={editImg} alt="#" />
-															Редактировать
-														</MenuItem>
-														<MenuItem
-															onClick={() => {
-																setDeleteModal(true);
-																handleClose();
-															}}
-														>
-															<img src={deleteImg} alt="#" />
-															Удалить
-														</MenuItem>
-													</Menu>
-												}
 											</div>
-										</div>
-									))}
-								<EditGroup
-									open={openEditModal}
-									handleClose={handleCloseEditModal}
-									saveId={saveId}
-								/>
-							</div>
-						) : null}
-						<DeleteGroupModal
-							openModalDelete={deleteModal}
-							closeModalDelete={() => setDeleteModal(false)}
-							deleteById={saveId}
-						/>
+										))}
+									<EditGroup
+										open={openEditModal}
+										handleClose={handleCloseEditModal}
+										saveId={saveId}
+									/>
+								</div>
+							) : null}
+							<DeleteGroupModal
+								openModalDelete={deleteModal}
+								closeModalDelete={() => setDeleteModal(false)}
+								deleteById={saveId}
+							/>
+						</div>
 					</div>
 				</div>
 				<div className={scss.pagination}>

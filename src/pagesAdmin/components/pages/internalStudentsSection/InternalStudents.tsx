@@ -4,9 +4,8 @@ import { Pagination, Stack } from '@mui/material';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
-
 interface Student {
-	_id: number;
+	id: number;
 	firstName: string;
 	lastName: string;
 	group: string;
@@ -16,7 +15,6 @@ interface Student {
 	password: string;
 	isCompleted: boolean;
 }
-
 const InternalStudents = () => {
 	// const { groupId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +22,6 @@ const InternalStudents = () => {
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const { data, isLoading } = useGetStudentTableQuery();
-
 	if (isLoading) {
 		return (
 			<div>
@@ -32,7 +29,6 @@ const InternalStudents = () => {
 			</div>
 		);
 	}
-
 	const openPartFunc = () => {
 		if (openPart >= 1) {
 			setRowsPerPage(12);
@@ -40,34 +36,30 @@ const InternalStudents = () => {
 			setCurrentPage(openPart);
 		}
 	};
-
 	const openPartPage = () => {
 		if (rowsPerPage > 12) {
 			setCurrentPage(1);
 		}
 	};
-
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
 		page: number
 	): void => {
 		setCurrentPage(page);
 	};
-
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 15) {
+			if (newOpenPage > 12) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
 				setCurrentPage(1);
 				openPartFunc();
 			} else {
-				setRowsPerPage(15);
+				setRowsPerPage(12);
 			}
 		}
 	};
-
 	return (
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
@@ -76,7 +68,7 @@ const InternalStudents = () => {
 					<div
 						style={{
 							height: '577px',
-							background: '#eff0f4'
+							background: '#EFF0F4'
 						}}
 					>
 						<div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -95,14 +87,13 @@ const InternalStudents = () => {
 									</thead>
 									<tbody>
 										{data
-
 											?.slice(
 												(currentPage - 1) * rowsPerPage,
 												currentPage * rowsPerPage
 											)
 											.map((item: Student, index) => (
 												<tr
-													key={item._id}
+													key={item.id}
 													className={
 														index % 2 === 1
 															? scss.table_alternate_row
@@ -110,7 +101,6 @@ const InternalStudents = () => {
 													}
 												>
 													<td>{index + 1 + (currentPage - 1) * rowsPerPage}</td>
-
 													<td>{item.firstName}</td>
 													<td>{item.lastName}</td>
 													<td>{item.group}</td>
@@ -172,5 +162,4 @@ const InternalStudents = () => {
 		</div>
 	);
 };
-
 export default InternalStudents;

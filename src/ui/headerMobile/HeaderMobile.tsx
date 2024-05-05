@@ -7,13 +7,14 @@ import 'keen-slider/keen-slider.min.css';
 const HeaderMobile = () => {
 	const { pathname } = useLocation();
 	const [sliderRef] = useKeenSlider({
-		mode: 'free-snap',
+		mode: 'free',
 		slides: {
 			origin: 'center',
-			perView: 4,
-			spacing: 5
+			perView: 6,
+			spacing: 4
 		}
 	});
+
 	return (
 		<>
 			<header className={scss.HeaderMobile}>

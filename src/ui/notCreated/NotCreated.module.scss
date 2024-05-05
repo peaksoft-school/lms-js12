@@ -1,6 +1,6 @@
 .mainNot {
 	padding-left: 20px;
-	padding-top: 40px;
+	// padding-top: 40px;
 	h2 {
 		color: rgb(41, 41, 41);
 	}
@@ -12,8 +12,9 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	height: 100vh;
 	gap: 60px;
+	margin-top: auto;
+	height: 85vh;
 	.img {
 		img {
 			width: 100%;

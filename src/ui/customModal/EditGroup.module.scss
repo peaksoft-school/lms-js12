@@ -5,7 +5,7 @@
 
 	@media (max-width: 600px) {
 		width: 90% !important;
-		height: 90% !important;
+		height: 75% !important;
 		border-radius: 10px;
 	}
 
@@ -97,19 +97,21 @@
 		}
 
 		textarea {
-			border-radius: 10px;
-			max-width: 491px;
 			width: 100%;
-			padding-left: 25px;
-			padding-right: 25px;
+			max-width: 485px;
 			height: 123px;
+			padding: 7px 7px;
+			border-radius: 20px;
+			border: 1px solid #c2c1c1;
+			font-weight: 500;
+			font-size: 17px;
+			opacity: none;
+			outline: none;
 			resize: none;
 
 			&::placeholder {
-				font-size: 16px;
-				padding: 10px;
-				color: #8d949e;
-				font-weight: 400;
+				font-size: 17px;
+				font-weight: 500;
 			}
 
 			border: 1px solid #c2c1c1;

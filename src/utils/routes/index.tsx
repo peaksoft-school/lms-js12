@@ -56,7 +56,7 @@ export const links = {
 		{
 			name: 'Курсы',
 			icon: <IconDeviceDesktop stroke={2} />,
-			link: 'courses'
+			link: 'course'
 		},
 		{
 			name: 'Расписание',
@@ -70,21 +70,24 @@ export const links = {
 	],
 	instructor: [
 		{
-			name: 'Группы',
-			icon: <IconUsersGroup stroke={2} />
+			name: 'Мои Курсы',
+			icon: <IconDeviceDesktop stroke={2} />,
+			link: 'course'
 		},
 		{
-			name: 'Карзина',
-			icon: <IconTrash stroke={2} />
+			name: 'Объявления',
+			icon: <IconBellRinging2 stroke={2} />,
+			link: 'announcement'
+		},
+		{
+			name: 'Корзина',
+			icon: <IconTrash stroke={2} />,
+			link: 'trash'
 		},
 		{
 			name: 'Расписание',
 			icon: <IconCalendar stroke={2} />,
 			link: 'calendar'
-		},
-		{
-			name: 'Объявление',
-			icon: <IconBellRinging2 stroke={2} />
 		}
 	]
 };

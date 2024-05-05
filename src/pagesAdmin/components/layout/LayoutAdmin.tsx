@@ -3,7 +3,7 @@ import scss from './LayoutAdmin.module.scss';
 import Header from '@/src/ui/header/Header';
 import { useEffect, useState } from 'react';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
-import MyCourses from '@/src/ui/myCourses/MyCourses';
+// import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Material from '@/src/ui/material/Material';
 import CalendarPage from '../pages/CalendarPage';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
@@ -23,6 +23,9 @@ import StudentsPage from '../pages/StudentsPage.tsx';
 import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
+import CreateCourse from '@/src/ui/customModal/CreateCurse.tsx';
+import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
+import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +35,18 @@ const LayoutAdmin = () => {
 	const { data: student = [] } = useGetStudentTableQuery();
 	const { data: courses = [] } = useGetCourseQuery();
 	const [openGroups, setOpen] = useState(false);
+	const [courseHandle, setCourseHandle] = useState(false);
 	const [openTeacher, setOpenTeacher] = useState(false);
 	const [openStudent, setOpenModalStudent] = useState(false);
 	const handleOpenStudentModal = () => {
 		setOpenModalStudent(true);
+	};
+
+	const handleOpenCourse = () => {
+		setCourseHandle(true);
+	};
+	const handleCloseCourse = () => {
+		setCourseHandle(false);
 	};
 
 	const handleCloseStudentModal = () => {
@@ -107,7 +118,7 @@ const LayoutAdmin = () => {
 						/>
 
 						<Route path="/trash" element={<TrashPage />} />
-						<Route path="/courses/:coursesId" element={<MyCourses />} />
+						{/* <Route path="/courses/:coursesId" element={<MyCourses />} /> */}
 
 						<Route
 							path="/courses/:coursesId/:matelials"
@@ -134,7 +145,7 @@ const LayoutAdmin = () => {
 								!courses || courses.length === 0 ? (
 									<NotCreated
 										text="Вы пока не создали курсы!"
-										buttonClick={handleOpenStudentModal}
+										buttonClick={handleOpenCourse}
 										name="Курсы"
 										buttontText="Создать курс"
 									/>
@@ -142,6 +153,14 @@ const LayoutAdmin = () => {
 									<CoursesPage />
 								)
 							}
+						/>
+						<Route
+							path="/courses/:coursesPart/student"
+							element={<InternalCoursesPage />}
+						/>
+						<Route
+							path="/courses/:coursesTeacher/teacher"
+							element={<CoursesTeacher />}
 						/>
 						<Route
 							path="/group"
@@ -163,6 +182,13 @@ const LayoutAdmin = () => {
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
+
+				<CreateCourse
+					handleOpenCourse={handleOpenCourse}
+					open={courseHandle}
+					handleClose={handleCloseCourse}
+				/>
+
 				<CreateGroup
 					handleOpen={handleOpen}
 					open={openGroups}

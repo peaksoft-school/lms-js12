@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import scss from './Analytics.module.scss';
-import { useGetAnalyticsQuery } from '../../../../redux/api/analytics';
+import { useGetAnalyticsQuery } from '@/src/redux/api/analytics';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 
 ChartJS.register(
@@ -53,7 +53,7 @@ function Analytics() {
 		]
 	});
 
-	const { data, error, isLoading } = useGetAnalyticsQuery();
+	const { data, isLoading } = useGetAnalyticsQuery();
 
 	useEffect(() => {
 		if (data && data.length) {
@@ -101,7 +101,6 @@ function Analytics() {
 				<Preloader />
 			</div>
 		);
-	if (error) return <p>Error loading the data!</p>;
 
 	return (
 		<div className={scss.chart}>

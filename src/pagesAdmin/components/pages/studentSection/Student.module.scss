@@ -18,6 +18,9 @@
 					display: flex;
 					align-items: center;
 					width: 100%;
+					background: #fff;
+					border-radius: 12px;
+
 					input {
 						width: 100%;
 						@media screen and (min-width: 1000px) and (max-width: 1200px) {
@@ -78,8 +81,6 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						svg {
-						}
 					}
 					span {
 						white-space: nowrap;
@@ -148,13 +149,10 @@
 						height: 50px;
 						background: #fff;
 						th {
-							font-size: 14px;
 							font-weight: 600;
-							line-height: 19.07px;
 							text-align: start;
 							padding-left: 20px;
 							flex-wrap: nowrap;
-							text-align: end;
 						}
 					}
 					tbody {
@@ -168,7 +166,7 @@
 
 						tr {
 							td {
-								text-align: end;
+								padding-left: 20px;
 							}
 
 							.TableCellIcon {

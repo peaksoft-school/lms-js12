@@ -213,7 +213,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										<Input
 											size="medium"
 											{...field}
-											type=""
+											type="email"
 											width="100%"
 											placeholder="Email"
 										/>

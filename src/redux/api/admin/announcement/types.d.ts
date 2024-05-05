@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ANNOUNCEMENT {
 	type Table = {
-		_id: Key | null | undefined;
+		id: Key | null | undefined;
 		id: number;
 		announcement: string;
 		group: string;
@@ -37,7 +37,6 @@ namespace ANNOUNCEMENT {
 	type PatchAnnouncementPropsRequest = {
 		saveIdElement: number | null;
 		editAnnouncement: {
-			// id: number;
 			announcement: string;
 			group: string[];
 			show: boolean;

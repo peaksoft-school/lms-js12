@@ -13,15 +13,13 @@ const Cards: FC = () => {
 		<div className={scss.Cards}>
 			{!isLoading ? (
 				<>
-					{data!.map((card, index) => {
-						let linkTo = '';
-						if (pathname === '/admin') {
-							linkTo = `/admin/courses/${card._id}`;
-						} else if (pathname === '/instructor') {
-							linkTo = `/instructor/courses/${card._id}`;
-						} else {
-							linkTo = `/courses/${card._id}`;
-						}
+					{data?.map((card, index) => {
+						const linkTo =
+							pathname === '/admin'
+								? `/admin/courses/${card?._id}`
+								: pathname === '/instructor'
+									? `/instructor/courses/${card?._id}`
+									: `/courses/${card?._id}`;
 
 						return (
 							<Link key={index} to={linkTo}>
@@ -29,20 +27,20 @@ const Cards: FC = () => {
 									<div className={scss.img}>
 										<img
 											className={scss.block_image}
-											src={card.img}
-											alt={card.title}
+											src={card?.img || 'https://via.placeholder.com/270x147'}
+											alt={card?.title || 'Card Title'}
 										/>
 									</div>
 									<div className={scss.zero_block_container}>
 										<div className={scss.second_block_container}>
-											<p className={scss.block_title}>{card.title}</p>
-											<p className={scss.block_date}>{card.date}</p>
+											<p className={scss.block_title}>{card?.title}</p>
+											<p className={scss.block_date}>{card?.date}</p>
 										</div>
 										<div className={scss.text_card}>
 											<span className={scss.block_text}>
-												{card.text.length > 60
-													? `${card.text.substring(0, 60)}...`
-													: card.text}
+												{card?.text.length > 60
+													? `${card?.text.substring(0, 60)}...`
+													: card?.text}
 											</span>
 										</div>
 									</div>
@@ -58,46 +56,13 @@ const Cards: FC = () => {
 				</>
 			) : (
 				<div className={scss.skeleton}>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={147} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={147} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={171} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={171} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={171} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={171} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={171} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
-					<div className={scss.mini_sceleton}>
-						<Skeleton variant="rectangular" width={270} height={171} />
-						<Skeleton />
-						<Skeleton width="60%" />
-					</div>
+					{[...Array(8)].map((_, index) => (
+						<div key={index} className={scss.mini_sceleton}>
+							<Skeleton variant="rectangular" width={270} height={171} />
+							<Skeleton />
+							<Skeleton width="60%" />
+						</div>
+					))}
 				</div>
 			)}
 		</div>

@@ -2,8 +2,8 @@
 namespace STUDENT {
 	type Table = {
 		[x: string]: ReactNode;
-		_id: ReactNode;
-		id: number;
+		id: ReactNode;
+		_id: number;
 		firstName: string;
 		lastName: string;
 		email: string;
