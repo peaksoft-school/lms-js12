@@ -8,6 +8,7 @@ import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Cards from '@/src/ui/customCards/Cards';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import CalendarPage from '../pages/CalendarPage';
+import CoursesPage from '../pages/coursesSection/CoursesPage';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +50,7 @@ const LayoutStudents = () => {
 						<Route path="/" element={<HomePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
 						<Route path="" element={<HomePage />} />
-						<Route path="/courses" element={<Cards />} />
+						<Route path="/course" element={<CoursesPage />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
 							path="/courses/:coursesId/:matelials"
