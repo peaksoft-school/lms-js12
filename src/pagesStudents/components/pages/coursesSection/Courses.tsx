@@ -3,20 +3,18 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
-import { IconArticle, IconBook, IconDots, IconPlus } from '@tabler/icons-react';
+import { IconArticle, IconBook, IconDots } from '@tabler/icons-react';
 import scss from './Courses.module.scss';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+// import Pagination from '@mui/material/Pagination';
+// import Stack from '@mui/material/Stack';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/EditCourse';
-import CreateCourse from '@/src/ui/customModal/CreateCurse';
-import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useGetCourseQuery } from '@/src/redux/api/admin/courses';
 
 const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
-	const { data } = useGetGroupQuery();
+	const { data } = useGetCourseQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [saveIdSrorege, setSaveIdStorege] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -25,9 +23,7 @@ const Courses: FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
-	const [openCurse, setOpen] = useState(false);
-	const handleOpenCourse = () => setOpen(true);
-	const handleCloseCourses = () => setOpen(false);
+
 	const navigate = useNavigate();
 
 	const open = Boolean(anchorEl);
@@ -38,12 +34,12 @@ const Courses: FC = () => {
 		setAnchorEl(null);
 	};
 
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-	};
+	// const handlePageChangeC = (
+	// 	_e: React.ChangeEvent<unknown>,
+	// 	page: number
+	// ): void => {
+	// 	setCurrentPage(page);
+	// };
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
 	const openPartFunc = () => {
@@ -78,21 +74,7 @@ const Courses: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					<div className={scss.course_button_modal}>
-						<Button
-							size="large"
-							className={scss.button}
-							onClick={handleOpenCourse}
-							variant="contained"
-						>
-							<div className={scss.icon}>
-								<IconPlus stroke={2} />
-							</div>
-							<span>Создать курс</span>
-						</Button>
-					</div>
-
-					<h1 className={scss.title}>Курсы</h1>
+					<h1 className={scss.title}>Мои курсы</h1>
 					<div>
 						<div className={scss.cards}>
 							{data && Array.isArray(data) && data.length > 0 ? (
@@ -103,25 +85,16 @@ const Courses: FC = () => {
 											currentPage * rowsPerPage
 										)
 										.map((item) => (
-											<div
-												key={item.id}
-												className={scss.zero_block_container}
-												// onClick={() => setSaveIdStorege(item.id)}
-											>
+											<div key={item.id} className={scss.zero_block_container}>
 												<div
 													onClick={() => {
 														setSaveIdStorege(item.id);
 													}}
 												>
-													{
-														// 		to={`/admin/courses/${item.id}/student`}
-													}
 													<div
 														onClick={() => {
-															// e.preventDefault();
-															setSaveIdStorege(item.id); // Выполняем ваш обработчик\
 															setTimeout(() => {
-																navigate(`/admin/courses/${item.id}/teacher`);
+																navigate(`/${item.id}/materials`);
 															}, 1000);
 														}}
 													>
@@ -228,7 +201,7 @@ const Courses: FC = () => {
 							}}
 						/>
 					</div>
-					<div className={scss.stack}>
+					{/* <div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}
@@ -238,7 +211,7 @@ const Courses: FC = () => {
 								variant="outlined"
 							/>
 						</Stack>
-					</div>
+					</div> */}
 					<div className={scss.Inputs}>
 						<p className={scss.text}>Показать</p>
 						<div className={scss.pagination_element}>
@@ -256,12 +229,6 @@ const Courses: FC = () => {
 					</div>
 				</div>
 			</div>
-
-			<CreateCourse
-				handleOpenCourse={handleOpenCourse}
-				open={openCurse}
-				handleClose={handleCloseCourses}
-			/>
 		</div>
 	);
 };

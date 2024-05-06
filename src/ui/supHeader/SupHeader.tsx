@@ -4,6 +4,7 @@ import scss from './SupHeader.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Menu, MenuItem, Tab, Tabs, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import bell from '@/src/assets/bell.png';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -77,9 +78,13 @@ const SupHeader = () => {
 			{pathname !== `/admin/courses/${id}/student` &&
 				pathname !== `/admin/courses/${id}/teacher` &&
 				pathname !== '/instructor/course/' &&
+				pathname !== `/${id}/materials` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>
+						{pathname.startsWith('/instructor') ||
+							(pathname === '/' && <img src={bell} alt="" />)}
+
 						<IconUserCircle className={scss.profile} stroke={2} />
 						<div
 							id="basic-button"
@@ -90,26 +95,19 @@ const SupHeader = () => {
 						>
 							{pathname.startsWith('/admin') && (
 								<div style={{ fontSize: '18px', fontWeight: '500' }}>
-									{pathname.startsWith('/admin') && (
-										<>
-											<p> Aдминистратор</p>
-										</>
-									)}
-									{pathname.startsWith('/instructor') && (
-										<>
-											<p>Учитель</p>
-										</>
-									)}
-									{pathname === '/' && (
-										<>
-											<p>Студент</p>
-										</>
-									)}
+									<>
+										<p> Aдминистратор</p>
+									</>
 								</div>
 							)}
 							{pathname.startsWith('/instructor') && (
 								<div style={{ fontSize: '18px', fontWeight: '500' }}>
 									Учитель
+								</div>
+							)}
+							{pathname === '/' && (
+								<div style={{ fontSize: '18px', fontWeight: '500' }}>
+									Студент
 								</div>
 							)}
 						</div>
@@ -357,6 +355,59 @@ const SupHeader = () => {
 						</div>
 					</div>
 				)}
+			{pathname.startsWith(`/${id}/materials`) && (
+				<div className={scss.subHeaderCourses}>
+					<Box>
+						<Box
+							sx={{
+								borderColor: 'divider',
+								paddingTop: '20px'
+							}}
+						>
+							<Tabs
+								value={value}
+								onChange={handleChange}
+								aria-label="basic tabs example"
+							>
+								<Tab label="Материалы" {...a11yProps(0)} />
+								<Tab label="Рейтинг студентов" {...a11yProps(1)} />
+							</Tabs>
+						</Box>
+					</Box>
+					<div className={scss.header_elements}>
+						<IconUserCircle className={scss.profile} stroke={2} />
+						<div
+							id="basic-button"
+							aria-controls={open ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={open ? 'true' : undefined}
+							onClick={handleClick}
+						>
+							<div style={{ fontSize: '18px', fontWeight: '500' }}>
+								<p>Студент</p>
+							</div>
+
+							{pathname.startsWith('/instructor') && (
+								<div style={{ fontSize: '18px', fontWeight: '500' }}>
+									Учитель
+								</div>
+							)}
+						</div>
+						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						<Menu
+							id="basic-menu"
+							anchorEl={anchorEl}
+							open={open}
+							onClose={() => setOpen(false)}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button'
+							}}
+						>
+							<MenuItem onClick={handleLogout}>Выйти</MenuItem>
+						</Menu>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
