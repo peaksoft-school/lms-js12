@@ -58,6 +58,7 @@ interface PostStudentProps {
 	phone_number: string;
 	email: string;
 	password: string;
+	isCompleted: boolean;
 }
 
 const style = {
@@ -102,6 +103,19 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		} = event;
 		setPersonName(typeof value === 'string' ? value.split(',') : value);
 	};
+	const finder = data?.find(
+		(id: { id: number | null }) => id.id === saveIdElement
+	);
+	console.log(finder);
+	console.log(saveIdElement);
+	useEffect(() => {
+		if (finder) {
+			setFormatName(
+				Array.isArray(finder.TrainingFormat) ? finder.TrainingFormat : []
+			);
+			setPersonName(Array.isArray(finder.group) ? finder.group : []);
+		}
+	}, [finder]);
 
 	// ! second select
 	const handleFormatChange = (event: SelectChangeEvent<typeof formatName>) => {
@@ -115,23 +129,19 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		const editStudent = {
 			firstName: data.firstName,
 			lastName: data.lastName,
-			group: personName,
-			TrainingFormat: formatName,
 			phone_number: data.phone_number,
 			email: data.email,
 			password: data.password,
-			isCompleted: false
+			isCompleted: false,
+			TrainingFormat: formatName,
+			group: personName
 		};
 		await patchStudentTable({
-			saveIdElement,
-			editStudent
+			editStudent,
+			saveIdElement
 		});
 		handleClose();
 	};
-
-	const finder = data?.find(
-		(id: { id: number | null }) => id.id === saveIdElement
-	);
 
 	useEffect(() => {
 		reset({
@@ -143,15 +153,6 @@ const ModalEditStudent: FC<EditModalProps> = ({
 			email: finder?.email,
 			password: finder?.password
 		});
-	}, [finder]);
-
-	useEffect(() => {
-		if (finder) {
-			setFormatName(
-				Array.isArray(finder.TrainingFormat) ? finder.TrainingFormat : []
-			);
-			setPersonName(Array.isArray(finder.group) ? finder.group : []);
-		}
 	}, [finder]);
 
 	return (

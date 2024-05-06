@@ -2,21 +2,24 @@
 	border-radius: 20px;
 	width: 541px !important;
 	padding: 0px 0px !important;
+	height: auto;
 
 	@media (max-width: 600px) {
 		width: 90% !important;
-		height: 90% !important;
 		border-radius: 10px;
 	}
 
 	.Curse {
-		border-top-right-radius: 12px;
-		border-top-left-radius: 12px;
+		border-top-right-radius: 7px;
+		border-top-left-radius: 7px;
 		margin-bottom: 20px;
 		text-align: center;
 		background: #3772ff;
 		color: #ffff;
 		padding: 20px;
+		@media (max-width: 600px) {
+			margin-bottom: 0px;
+		}
 	}
 
 	.textPart {
@@ -26,6 +29,10 @@
 		justify-content: flex-end;
 		gap: 20px;
 		padding: 20px;
+		@media (max-width: 400px) {
+			padding-top: 0px;
+			gap: 5px;
+		}
 
 		p {
 			font-size: 20px !important;
@@ -117,6 +124,9 @@
 				padding: 20px;
 				flex-direction: column;
 				align-items: flex-start;
+			}
+			@media (max-width: 400px) {
+				height: 100px;
 			}
 		}
 
