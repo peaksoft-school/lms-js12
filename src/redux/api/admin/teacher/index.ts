@@ -14,7 +14,7 @@ export const api = index.injectEndpoints({
 		}),
 		postTeacher: builder.mutation<
 			TABLE.CreateTeachersResponse,
-			TABLE.CreateTeacherssRequest
+			TABLE.CreateTeachersRequest
 		>({
 			query: (newTeacher) => ({
 				url: 'https://04c2c825595e3dcc.mokky.dev/teacher',
@@ -25,7 +25,7 @@ export const api = index.injectEndpoints({
 		}),
 		patchTeacher: builder.mutation<
 			TABLE.ChangeTeachersResponse,
-			TABLE.ChangeTeacherssRequest
+			TABLE.ChangeTeachersRequest
 		>({
 			query: ({ updateTeacher, deleteById }) => ({
 				url: `https://04c2c825595e3dcc.mokky.dev/teacher/${deleteById}`,
@@ -35,7 +35,7 @@ export const api = index.injectEndpoints({
 			invalidatesTags: ['teacher']
 		}),
 		deleteTeacher: builder.mutation<
-			TABLE.DeleteTeacherRespone,
+			TABLE.DeleteTeacherResponse,
 			TABLE.DeleteTeacherRequest
 		>({
 			query: (deleteSt) => ({

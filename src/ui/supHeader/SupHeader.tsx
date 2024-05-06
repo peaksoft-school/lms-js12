@@ -12,7 +12,8 @@ interface TabPanelProps {
 }
 const SupHeader = () => {
 	const { pathname } = useLocation();
-	const open = Boolean();
+	const [open, setOpen] = useState(false);
+
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
 	const [value, setValue] = useState(0);
@@ -24,6 +25,14 @@ const SupHeader = () => {
 		if (
 			pathname === `/admin/courses/${id}/teacher` &&
 			pathname === `/admin/courses/${id}/teacher`
+		) {
+			setValue(0);
+		}
+	}, [pathname]);
+	useEffect(() => {
+		if (
+			pathname === `/instructor/course/${id}/materials` &&
+			pathname === `/instructor/course/${id}/materials`
 		) {
 			setValue(0);
 		}
@@ -70,12 +79,20 @@ const SupHeader = () => {
 	const openTeacher = () => {
 		navigate(`/admin/courses/${id}/teacher`);
 	};
+	const openMaterial = () => {
+		navigate(`/instructor/course/${id}/materials`);
+	};
+	const openInstructorStudent = () => {
+		navigate(`/instructor/course/${id}/student`);
+	};
 
 	return (
 		<div className={scss.header}>
 			{/* //! admin header */}
 			{pathname !== `/admin/courses/${id}/student` &&
 				pathname !== `/admin/courses/${id}/teacher` &&
+				pathname !== `/instructor/course/${id}/materials` &&
+				pathname !== `/instructor/course/${id}/student` &&
 				pathname !== '/instructor/course/' &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
@@ -302,8 +319,16 @@ const SupHeader = () => {
 									onChange={handleChange}
 									aria-label="basic tabs example"
 								>
-									<Tab label="Материалы" {...a11yProps(0)} />
-									<Tab label="Студенты" {...a11yProps(1)} />
+									<Tab
+										onClick={openMaterial}
+										label="Материалы"
+										{...a11yProps(0)}
+									/>
+									<Tab
+										onClick={openInstructorStudent}
+										label="Студенты"
+										{...a11yProps(1)}
+									/>
 									<Tab label="Рейтинг студентов" {...a11yProps(2)} />
 								</Tabs>
 							</Box>
@@ -357,6 +382,7 @@ const SupHeader = () => {
 						</div>
 					</div>
 				)}
+			<TabPanel value={value} index={0}></TabPanel>
 		</div>
 	);
 };

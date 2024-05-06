@@ -57,7 +57,7 @@ const InternalCourses = () => {
 		}
 	};
 
-	const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+	const handlePageChange = (_e: React.ChangeEvent<unknown>, page: number) => {
 		setCurrentPage(page);
 		if (saveItem !== null && saveIdElement !== null) {
 			updateCompletedFunc(saveIdElement, saveItem);

@@ -53,19 +53,6 @@
 			}
 		}
 
-		.button_add {
-			display: flex;
-			justify-content: flex-end;
-			display: flex;
-			height: 100%;
-			width: 100%;
-			gap: 10px;
-
-			@media (max-width: 600px) {
-				width: 80% !important;
-			}
-		}
-
 		.button_review {
 			display: flex;
 			gap: 10px;

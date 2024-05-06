@@ -1,17 +1,51 @@
-.trash_parent {
+.material {
+	padding-top: 20px;
+
 	.container {
-		padding: 20px;
+		padding-inline: 20px;
+
+		.button_title_elements {
+			margin-bottom: 20px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			width: 100%;
+
+			.button {
+				display: flex;
+				gap: 10px;
+				justify-content: center;
+				align-items: center;
+				border-radius: 8px;
+				text-transform: capitalize;
+				.icon {
+					width: 25px;
+					height: 25px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				span {
+					white-space: nowrap;
+				}
+				@media (max-width: 700px) {
+					span {
+						display: none;
+					}
+				}
+			}
+		}
 
 		h1 {
-			padding-top: 60px;
 			padding-bottom: 20px;
+			width: 100%;
 		}
 		.table_container {
 			background: #fff;
 			border: 1px solid #d4d4d4;
 			border-radius: 10px;
 
-			.trash {
+			.material_content {
 				overflow-x: auto;
 				white-space: nowrap;
 				scrollbar-width: thin;
@@ -26,54 +60,6 @@
 					max-width: 360px;
 					width: 100%;
 					overflow-x: scroll;
-				}
-			}
-		}
-
-		.text {
-			width: 100%;
-			border-bottom: 1px solid #3a373714;
-			p {
-				background: #ffa500;
-				width: 50%;
-				height: 50px;
-				margin-top: 20px;
-				margin: 10px auto;
-				border-radius: 10px;
-				color: #fff;
-				text-align: center;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-
-				@media (max-width: 800px) {
-					background: #ffa500;
-					width: 80%;
-				}
-
-				@media (max-width: 755px) {
-					background: #ffa500;
-					width: 70%;
-				}
-
-				@media (max-width: 673px) {
-					background: #ffa500;
-					width: 70%;
-				}
-
-				@media (max-width: 583px) {
-					background: #ffa500;
-					width: 90%;
-				}
-				@media (max-width: 462px) {
-					background: #ffa500;
-					width: 90%;
-					height: 80px;
-				}
-				@media (max-width: 340px) {
-					background: #ffa500;
-					width: 90%;
-					height: 80px;
 				}
 			}
 		}
@@ -98,7 +84,16 @@
 				}
 				.date {
 					text-align: end;
-					padding-right: 40px;
+					padding-right: 68px;
+				}
+			}
+			.TableCellIcon {
+				text-align: end;
+				padding-right: 35px;
+
+				button {
+					background: none;
+					border: none;
 				}
 			}
 		}
