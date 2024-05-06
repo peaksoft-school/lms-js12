@@ -103,23 +103,15 @@ const Courses: FC = () => {
 											currentPage * rowsPerPage
 										)
 										.map((item) => (
-											<div
-												key={item.id}
-												className={scss.zero_block_container}
-												// onClick={() => setSaveIdStorege(item.id)}
-											>
+											<div key={item.id} className={scss.zero_block_container}>
 												<div
 													onClick={() => {
 														setSaveIdStorege(item.id);
 													}}
 												>
-													{
-														// 		to={`/admin/courses/${item.id}/student`}
-													}
 													<div
 														onClick={() => {
-															// e.preventDefault();
-															setSaveIdStorege(item.id); // Выполняем ваш обработчик\
+															setSaveIdStorege(item.id);
 															setTimeout(() => {
 																navigate(`/admin/courses/${item.id}/teacher`);
 															}, 1000);
