@@ -1,10 +1,9 @@
 // ! new// ! new
 import { IconChevronDown, IconUserCircle } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Menu, MenuItem, Tab, Tabs, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import usePagination from '@mui/material/usePagination/usePagination';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -131,7 +130,7 @@ const SupHeader = () => {
 			{/* //! admin header для /admin/courses */}
 			{pathname === `/admin/courses/${id}/student` &&
 				pathname !== 'admin/courses' && (
-					<div className={scss.subHeaderCourses}>
+					<div className={scss.subHeaderCourses2}>
 						<Box>
 							<Box
 								sx={{
@@ -160,6 +159,7 @@ const SupHeader = () => {
 						<div className={scss.header_elements}>
 							<IconUserCircle className={scss.profile} stroke={2} />
 							<div
+								className={scss.profile_text}
 								id="basic-button"
 								aria-controls={open ? 'basic-menu' : undefined}
 								aria-haspopup="true"
@@ -186,7 +186,10 @@ const SupHeader = () => {
 									</div>
 								)}
 								{pathname.startsWith('/instructor') && (
-									<div style={{ fontSize: '18px', fontWeight: '500' }}>
+									<div
+										style={{ fontSize: '18px', fontWeight: '500' }}
+										className={scss.person}
+									>
 										Учитель
 									</div>
 								)}
@@ -208,7 +211,7 @@ const SupHeader = () => {
 				)}
 			{pathname === `/admin/courses/${id}/teacher` &&
 				pathname !== 'admin/courses' && (
-					<div className={scss.subHeaderCourses}>
+					<div className={scss.subHeaderCourses2}>
 						<Box>
 							<Box
 								sx={{
@@ -237,6 +240,7 @@ const SupHeader = () => {
 						<div className={scss.header_elements}>
 							<IconUserCircle className={scss.profile} stroke={2} />
 							<div
+								className={scss.profile_text}
 								id="basic-button"
 								aria-controls={open ? 'basic-menu' : undefined}
 								aria-haspopup="true"
