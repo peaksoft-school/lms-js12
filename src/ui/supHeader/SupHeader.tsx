@@ -12,7 +12,8 @@ interface TabPanelProps {
 }
 const SupHeader = () => {
 	const { pathname } = useLocation();
-	const open = Boolean();
+	const [open, setOpen] = useState(false);
+
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
 	const [value, setValue] = useState(0);
@@ -381,6 +382,7 @@ const SupHeader = () => {
 						</div>
 					</div>
 				)}
+			<TabPanel value={value} index={0}></TabPanel>
 		</div>
 	);
 };

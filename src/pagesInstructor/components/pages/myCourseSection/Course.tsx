@@ -26,7 +26,7 @@ const Course: FC = () => {
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
-	const [saveIdSrorege, setSaveIdStorege] = useState<null | number>(null);
+	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const navigate = useNavigate();
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -90,7 +90,7 @@ const Course: FC = () => {
 											<div className={scss.zero_block_container} key={item.id}>
 												<div
 													onClick={() => {
-														setSaveIdStorege(item.id);
+														setSaveIdStorege(String(item.id));
 
 														setTimeout(() => {
 															navigate(

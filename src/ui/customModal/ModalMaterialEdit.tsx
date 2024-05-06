@@ -2,7 +2,7 @@ import {
 	useGetMaterialsQuery,
 	usePatchMaterialMutation
 } from '@/src/redux/api/instructor/materials';
-import {  Modal, Typography } from '@mui/material';
+import { Modal, Typography } from '@mui/material';
 import { FC, useEffect } from 'react';
 import scss from './Style.module.scss';
 import { Controller, useForm } from 'react-hook-form';

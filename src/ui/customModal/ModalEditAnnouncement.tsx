@@ -142,7 +142,6 @@ const ModalEditAnnouncement: React.FC<modalProps> = ({
 											{...field}
 											type="text"
 											label="Введите текст объявления"
-											placeholder="Введите текст объявления"
 										/>
 									)}
 								/>
