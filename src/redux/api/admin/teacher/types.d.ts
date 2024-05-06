@@ -24,7 +24,7 @@ namespace TABLE {
 		specialization: string[];
 		group: string[];
 	}[];
-	type CreateTeacherssRequest = {
+	type CreateTeachersRequest = {
 		firstName: string;
 		lastName: string;
 		email: string;
@@ -45,7 +45,7 @@ namespace TABLE {
 		};
 	}[];
 
-	type ChangeTeacherssRequest = {
+	type ChangeTeachersRequest = {
 		deleteById: number | null;
 		updateTeacher: {
 			firstName: string;
@@ -57,6 +57,6 @@ namespace TABLE {
 			group: string[];
 		};
 	};
-	type DeleteTeacherRespone = void;
+	type DeleteTeacherResponse = void;
 	type DeleteTeacherRequest = number | null;
 }

@@ -109,9 +109,7 @@ const Courses: FC = () => {
 												// onClick={() => setSaveIdStorege(item.id)}
 											>
 												<div
-													onClick={() => {
-														setSaveIdStorege(item.id);
-													}}
+											
 												>
 													{
 														// 		to={`/admin/courses/${item.id}/student`}

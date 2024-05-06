@@ -26,7 +26,8 @@ export const api = createApi({
 		'groups',
 		'trash',
 		'courses',
-		'announcement'
+		'announcement',
+		'material'
 	],
 	endpoints: () => ({})
 });

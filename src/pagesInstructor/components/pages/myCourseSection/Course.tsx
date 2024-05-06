@@ -11,7 +11,7 @@ import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import CreateCourse from '@/src/ui/customModal/CreateCurse';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/EditCourse';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Course: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -26,7 +26,8 @@ const Course: FC = () => {
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
-
+	const [saveIdSrorege, setSaveIdStorege] = useState<null | number>(null);
+	const navigate = useNavigate();
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -69,6 +70,7 @@ const Course: FC = () => {
 			}
 		}
 	};
+	localStorage.setItem('id', saveIdSrorege);
 
 	return (
 		<div className={scss.course}>
@@ -85,10 +87,17 @@ const Course: FC = () => {
 											currentPage * rowsPerPage
 										)
 										.map((item) => (
-											<div className={scss.zero_block_container}>
-												<Link
-													key={item.id}
-													to={`/instructor/course/${item.id}`}
+											<div className={scss.zero_block_container} key={item.id}>
+												<div
+													onClick={() => {
+														setSaveIdStorege(item.id);
+
+														setTimeout(() => {
+															navigate(
+																`/instructor/course/${item.id}/materials`
+															);
+														}, 1000);
+													}}
 												>
 													<div className={scss.block_photo_cards}>
 														<img src={item.img} alt="images" />
@@ -106,7 +115,7 @@ const Course: FC = () => {
 															</span>
 														</div>
 													</div>
-												</Link>
+												</div>
 												<div className={scss.block_button_div}>
 													<div onClick={handleClick}>
 														<button
