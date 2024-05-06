@@ -1,9 +1,9 @@
-import Materials from './marerialsSection/Materials';
+import LessonsList from '@/src/ui/lessonsList/LessonsList';
 
 const MaterialsPage = () => {
 	return (
 		<>
-			<Materials />
+			<LessonsList />
 		</>
 	);
 };

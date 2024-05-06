@@ -23,6 +23,7 @@ const Courses: FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
+	const [saveItem, setSaveItem] = useState('');
 
 	const navigate = useNavigate();
 
@@ -69,6 +70,7 @@ const Courses: FC = () => {
 		}
 	};
 	localStorage.setItem('id', saveIdSrorege);
+	localStorage.setItem('item', saveItem);
 
 	return (
 		<div className={scss.course}>
@@ -89,6 +91,7 @@ const Courses: FC = () => {
 												<div
 													onClick={() => {
 														setSaveIdStorege(item.id);
+														setSaveItem(item.title);
 													}}
 												>
 													<div

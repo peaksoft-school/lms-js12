@@ -1,4 +1,4 @@
-import Courses from './Courses';
+import Courses from './coursesSection/Courses';
 
 const CoursesPage = () => {
 	return (

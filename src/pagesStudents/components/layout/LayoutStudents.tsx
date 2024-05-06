@@ -3,12 +3,11 @@ import scss from './LayoutStudents.module.scss';
 import Header from '@/src/ui/header/Header';
 import { useEffect, useState } from 'react';
 // import Material from '@/src/ui/material/Material';
-import MyCourses from '@/src/ui/myCourses/MyCourses';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import CalendarPage from '../pages/CalendarPage';
-import CoursesPage from '../pages/coursesSection/CoursesPage';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MaterialsPage from '../pages/MaterialsPage';
+import CoursesPage from '../pages/CoursesPage';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
