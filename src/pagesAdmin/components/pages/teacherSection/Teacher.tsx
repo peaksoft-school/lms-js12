@@ -170,7 +170,6 @@ const Teacher = () => {
 																<IconDotsVertical stroke={2} />
 															</button>
 															<Menu
-																className={scss.deleteEdit}
 																id="basic-menu"
 																anchorEl={anchorEl}
 																open={open}
@@ -190,7 +189,6 @@ const Teacher = () => {
 															>
 																<MenuItem
 																	style={{ display: 'flex', gap: '10px' }}
-																	className={scss.dropdown}
 																	onClick={() => {
 																		setOpenModalEdit(true);
 																		setAnchorEl(null);
@@ -201,7 +199,6 @@ const Teacher = () => {
 																</MenuItem>
 																<MenuItem
 																	style={{ display: 'flex', gap: '10px' }}
-																	className={scss.dropdown}
 																	onClick={() => {
 																		setOpenModalDelete(true);
 																		setAnchorEl(null);

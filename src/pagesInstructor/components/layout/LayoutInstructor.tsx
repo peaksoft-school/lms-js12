@@ -13,6 +13,8 @@ import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
 import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
+import MaterialsPage from '../pages/MaterialsPage';
+import Lesson from '../pages/lessonSection/Lesson';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -25,8 +27,6 @@ const LayoutInstructor = () => {
 	const handleCloseCourse = () => {
 		setCourseHandle(false);
 	};
-
-	// !
 
 	useEffect(() => {
 		const changeIsMobile = () => {
@@ -82,8 +82,16 @@ const LayoutInstructor = () => {
 
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
-							path="/course/:studentCourseId"
+							path="/course/:studentCourseId/student"
 							element={<InternalInstructorStudentsPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials"
+							element={<MaterialsPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId"
+							element={<Lesson />}
 						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />

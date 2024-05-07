@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FC } from 'react';
+import { useState, FC } from 'react';
 import {
 	Button,
 	Modal,
@@ -51,14 +51,14 @@ interface AppointProps {
 const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 	const [personName, setPersonName] = useState<string[]>([]);
 
-	const handleChange = (event: ChangeEvent<{ value: unknown }>) => {
-		const {
-			target: { value }
-		} = event;
-		setPersonName(
-			// При автозаполнении мы получаем строковое значение.
-			typeof value === 'string' ? value.split(',') : (value as string[])
-		);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const handleChange = (_e: any) => {
+		const { value } = _e.target as HTMLInputElement;
+		if (typeof value === 'string') {
+			setPersonName(value.split(', '));
+		} else if (Array.isArray(value)) {
+			setPersonName(value as string[]);
+		}
 	};
 
 	const handleRemove = (index: number) => {
@@ -128,9 +128,9 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 					</div>
 					<div className={scss.buttons}>
 						<Button variant="outlined" onClick={handleClose}>
-							отменить
+							Отменить
 						</Button>
-						<Button variant="contained">сохранить</Button>
+						<Button variant="contained">Сохранить</Button>
 					</div>
 				</Box>
 			</Modal>

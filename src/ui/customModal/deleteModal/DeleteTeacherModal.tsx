@@ -29,7 +29,7 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 	return (
 		<div>
 			<React.Fragment>
-				<div className={scss.Delete}>
+				<div>
 					<Dialog
 						open={openModalDelete}
 						aria-labelledby="alert-dialog-title"
