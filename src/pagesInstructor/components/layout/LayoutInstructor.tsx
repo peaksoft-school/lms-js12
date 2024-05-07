@@ -8,12 +8,13 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MyCoursePage from '../pages/MyCoursePage';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
-import CreateCourse from '@/src/ui/customModal/CreateCurse';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
 import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
+import RatingStudentsPage from '../pages/RatingStudentsPage';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -87,6 +88,10 @@ const LayoutInstructor = () => {
 						<Route
 							path="/course/:materialsId/materials"
 							element={<MaterialsPage />}
+						/>
+						<Route
+							path="/course/:ratingId/rating"
+							element={<RatingStudentsPage />}
 						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />

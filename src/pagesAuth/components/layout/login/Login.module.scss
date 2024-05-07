@@ -1,17 +1,21 @@
-.Login {
+.login {
 	.content {
 		width: 100%;
 		height: 100vh;
 		display: flex;
 
 		// ! login Blue
-		.LoginLogoBlue {
+		.login_logo_blue {
 			width: 100%;
 			max-width: 800px;
 			height: 100vh;
 			background: #3772ff;
 
-			.Logos {
+			@media (max-width: 768px) {
+				display: none;
+			}
+
+			.logos {
 				display: flex;
 				gap: 90px;
 				flex-direction: column;
@@ -27,13 +31,13 @@
 		}
 
 		// ! login White
-		.LoginElementsWhite {
+		.login_elements_white {
 			padding-inline: 20px;
 			width: 100%;
 			height: 100vh;
 			background: #ffffff;
 
-			.LoginWhiteElements {
+			.login_white_elements {
 				width: 100%;
 				height: 100vh;
 				display: flex;
@@ -45,7 +49,7 @@
 					color: #fa2349;
 				}
 
-				.OutlinedInputEyes {
+				.outlined_input_eyes {
 					width: 540px;
 					border-radius: 12px;
 					width: 100%;
@@ -56,24 +60,24 @@
 					padding: 10px 8px 10px 22px;
 				}
 
-				.Link_Element {
+				.link_element {
 					text-align: end;
 					margin-top: 20px;
 				}
 
-				.Button_Element {
+				.button_element {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					margin-top: 35px;
 				}
 
-				.Parent_element_inputs {
+				.parent_element_inputs {
 					max-width: 540px;
 					padding: 20px;
 					width: 100%;
 
-					.Element_inputs_login {
+					.element_inputs_login {
 						margin-top: 54px;
 						display: flex;
 						flex-direction: column;
@@ -83,10 +87,6 @@
 							font-weight: 400;
 							font-size: 16px;
 							color: #6a6a6a;
-						}
-
-						.InputMedia {
-							max-width: 540px;
 						}
 					}
 
@@ -114,7 +114,7 @@
 					}
 				}
 
-				.WelcomeMedia {
+				.welcome_media {
 					@media (max-width: 320px) {
 						display: flex;
 						position: relative;
@@ -125,7 +125,7 @@
 					}
 				}
 
-				.PeakSoftMedia {
+				.peak_soft_media {
 					@media (max-width: 320px) {
 						display: flex;
 						font-size: 29px;
@@ -136,12 +136,6 @@
 						align-items: center;
 					}
 				}
-			}
-		}
-
-		.LoginLogoBlue {
-			@media (max-width: 1040px) {
-				display: none;
 			}
 		}
 	}

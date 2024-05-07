@@ -226,7 +226,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											size="medium"
 											{...field}
 											width="100%"
-											type="text"
+											type="email"
 											placeholder="Email"
 										/>
 									)}

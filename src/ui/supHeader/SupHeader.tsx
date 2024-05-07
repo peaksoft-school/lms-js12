@@ -82,6 +82,9 @@ const SupHeader = () => {
 	const openMaterial = () => {
 		navigate(`/instructor/course/${id}/materials`);
 	};
+	const openRating = () => {
+		navigate(`/instructor/course/${id}/rating`);
+	}
 	const openInstructorStudent = () => {
 		navigate(`/instructor/course/${id}/student`);
 	};
@@ -94,6 +97,7 @@ const SupHeader = () => {
 				pathname !== `/instructor/course/${id}/materials` &&
 				pathname !== `/instructor/course/${id}/student` &&
 				pathname !== '/instructor/course/' &&
+				pathname !== `/instructor/course/${id}/rating` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>
@@ -329,7 +333,7 @@ const SupHeader = () => {
 										label="Студенты"
 										{...a11yProps(1)}
 									/>
-									<Tab label="Рейтинг студентов" {...a11yProps(2)} />
+									<Tab onClick={openRating} label="Рейтинг студентов" {...a11yProps(2)} />
 								</Tabs>
 							</Box>
 						</Box>

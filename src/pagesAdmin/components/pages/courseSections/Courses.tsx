@@ -9,8 +9,8 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
-import EditCourse from '@/src/ui/customModal/EditCourse';
-import CreateCourse from '@/src/ui/customModal/CreateCurse';
+import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -163,6 +163,7 @@ const Courses: FC = () => {
 															}}
 														>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setOpenEditModal(true);
 																	handleClose();
@@ -172,6 +173,7 @@ const Courses: FC = () => {
 																Редактировать
 															</MenuItem>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setDeleteModal(true);
 																	handleClose();

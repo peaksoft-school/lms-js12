@@ -8,8 +8,8 @@ import scss from './Groups.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
-import CreateGroup from '@/src/ui/customModal/CreateGroup';
-import EditGroup from '@/src/ui/customModal/EditGroup';
+import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup';
+import EditGroup from '@/src/ui/customModal/editGroup/EditGroup';
 import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -148,6 +148,7 @@ const Groups: FC = () => {
 															}}
 														>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setOpenEditModal(true);
 																	handleClose();
@@ -157,6 +158,7 @@ const Groups: FC = () => {
 																Редактировать
 															</MenuItem>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setDeleteModal(true);
 																	handleClose();
@@ -229,6 +231,7 @@ const Groups: FC = () => {
 					</div>
 				</div>
 			</div>
+
 			<CreateGroup
 				handleOpen={handleOpen}
 				open={openGroups}

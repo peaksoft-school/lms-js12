@@ -11,7 +11,7 @@ import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import Groups from '@/src/pagesAdmin/components/pages/groupSections/Groups';
-import CreateGroup from '@/src/ui/customModal/CreateGroup';
+import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup.tsx';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
 import AnalyticsPage from '@/src/pagesAdmin/components/pages/AnalyticsPage.tsx';
@@ -23,7 +23,7 @@ import StudentsPage from '../pages/StudentsPage.tsx';
 import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
-import CreateCourse from '@/src/ui/customModal/CreateCurse.tsx';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse.tsx';
 import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
 import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 

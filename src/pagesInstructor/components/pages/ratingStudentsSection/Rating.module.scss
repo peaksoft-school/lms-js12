@@ -1,0 +1,78 @@
+.rating {
+  padding-top: 80px;
+  padding-inline: 20px;
+
+  h1 {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+	.rating_container {
+		border-radius: 8px;
+		overflow-x: auto;
+		overflow-y: scroll !important;
+		table-layout: fixed;
+		width: 100%;
+		background: #fff;
+		border: 1px solid #dbd2d2;
+		transition: all 0.5s;
+		scrollbar-width: thin;
+		scrollbar-color: #3772ff #fff;
+
+		@media screen and (min-width: 1185px) and (max-width: 1260px) {
+			width: 100%;
+			max-width: 953px;
+		}
+		@media screen and (min-width: 1105px) and (max-width: 1185px) {
+			width: 100%;
+			max-width: 870px;
+		}
+		@media screen and (min-width: 1070px) and (max-width: 1105px) {
+			width: 100%;
+			max-width: 830px;
+		}
+		@media screen and (min-width: 1000px) and (max-width: 1070px) {
+			width: 100%;
+			max-width: 760px;
+		}
+		.Table {
+			border-collapse: collapse;
+			width: 100%;
+			thead {
+				border-bottom: 1px solid #837a7a14;
+				height: 100px;
+				background: #eff0f4;
+
+				tr {
+					display: flex;
+					align-items: center;
+					padding-top: 40px;
+					th {
+						font-weight: 600;
+						text-align: start;
+						padding-left: 20px;
+						flex-wrap: nowrap;
+					}
+				}
+			}
+			tbody {
+				.TableContainerSecond {
+					height: 50px;
+				}
+				tr {
+					td {
+						padding-left: 57px;
+					}
+
+					.TableCellIcon {
+						text-align: end;
+
+						button {
+							background: none;
+							border: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}

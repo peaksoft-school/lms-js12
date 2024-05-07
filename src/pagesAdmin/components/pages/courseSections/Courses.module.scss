@@ -27,8 +27,6 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						svg {
-						}
 					}
 					span {
 						white-space: nowrap;
@@ -108,6 +106,7 @@
 						flex-direction: column;
 						gap: 10px;
 						display: flex;
+						cursor: pointer;
 						@media (max-width: 1670px) {
 							max-width: 300px;
 							width: 100%;
