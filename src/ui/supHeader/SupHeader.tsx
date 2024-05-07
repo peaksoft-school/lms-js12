@@ -2,14 +2,14 @@
 import { IconChevronDown, IconUserCircle } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Menu, MenuItem, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Menu, MenuItem, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-interface TabPanelProps {
-	children?: React.ReactNode;
-	value: number;
-	index: number;
-}
+// interface TabPanelProps {
+// 	children?: React.ReactNode;
+// 	value: number;
+// 	index: number;
+// }
 const SupHeader = () => {
 	const { pathname } = useLocation();
 	const [open, setOpen] = useState(false);
@@ -38,24 +38,24 @@ const SupHeader = () => {
 		}
 	}, [pathname]);
 
-	const TabPanel = (props: TabPanelProps) => {
-		const { children, value, index, ...other } = props;
-		return (
-			<div
-				role="tabpanel"
-				hidden={value !== index}
-				id={`simple-tabpanel-${index}`}
-				aria-labelledby={`simple-tab-${index}`}
-				{...other}
-			>
-				{value === index && (
-					<Box sx={{ p: 3 }}>
-						<Typography>{children}</Typography>
-					</Box>
-				)}
-			</div>
-		);
-	};
+	// const TabPanel = (props: TabPanelProps) => {
+	// 	const { children, value, index, ...other } = props;
+	// 	return (
+	// 		<div
+	// 			role="tabpanel"
+	// 			hidden={value !== index}
+	// 			id={`simple-tabpanel-${index}`}
+	// 			aria-labelledby={`simple-tab-${index}`}
+	// 			{...other}
+	// 		>
+	// 			{value === index && (
+	// 				<Box sx={{ p: 3 }}>
+	// 					<Typography>{children}</Typography>
+	// 				</Box>
+	// 			)}
+	// 		</div>
+	// 	);
+	// };
 	const a11yProps = (index: number) => {
 		return {
 			id: `simple-tab-${index}`,
@@ -84,7 +84,7 @@ const SupHeader = () => {
 	};
 	const openRating = () => {
 		navigate(`/instructor/course/${id}/rating`);
-	}
+	};
 	const openInstructorStudent = () => {
 		navigate(`/instructor/course/${id}/student`);
 	};
@@ -333,7 +333,11 @@ const SupHeader = () => {
 										label="Студенты"
 										{...a11yProps(1)}
 									/>
-									<Tab onClick={openRating} label="Рейтинг студентов" {...a11yProps(2)} />
+									<Tab
+										onClick={openRating}
+										label="Рейтинг студентов"
+										{...a11yProps(2)}
+									/>
 								</Tabs>
 							</Box>
 						</Box>
@@ -386,7 +390,6 @@ const SupHeader = () => {
 						</div>
 					</div>
 				)}
-			<TabPanel value={value} index={0}></TabPanel>
 		</div>
 	);
 };

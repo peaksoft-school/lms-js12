@@ -77,6 +77,7 @@ const Groups: FC = () => {
 				<div className={scss.container}>
 					<div className={scss.course_button_modal}>
 						<Button
+							type="button"
 							size="large"
 							className={scss.button}
 							onClick={handleOpen}
