@@ -90,10 +90,12 @@
 			.TableCellIcon {
 				text-align: end;
 				padding-right: 35px;
+				cursor: pointer;
 
 				button {
 					background: none;
 					border: none;
+					cursor: pointer;
 				}
 			}
 		}
@@ -111,6 +113,8 @@
 			.tbody {
 				width: 100%;
 				text-align: end;
+
+	
 			}
 			.TableCell_main {
 				padding-left: 20px;
@@ -176,3 +180,5 @@
 		}
 	}
 }
+
+

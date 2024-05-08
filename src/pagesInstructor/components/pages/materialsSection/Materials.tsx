@@ -15,7 +15,12 @@ import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import DeleteMaterial from '@/src/ui/customModal/deleteModal/DeleteMaterial';
 import ModalMaterialEdit from '@/src/ui/customModal/ModalMaterialEdit';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import {
+	DragDropContext,
+	Droppable,
+	Draggable,
+	DropResult
+} from '@hello-pangea/dnd';
 import { useNavigate } from 'react-router-dom';
 interface TodoProps {
 	title: string;
@@ -46,7 +51,7 @@ const Materials: FC = () => {
 		localStorage.setItem('todos', JSON.stringify(todos));
 	}, [todos]);
 
-	const handleDragEnd = (result) => {
+	const handleDragEnd = (result: DropResult) => {
 		if (!result.destination) return;
 		const startIndex = result.source.index;
 		const endIndex = result.destination.index;
@@ -173,7 +178,8 @@ const Materials: FC = () => {
 																			paddingTop: '12px',
 																			display: 'flex',
 																			gap: '10px',
-																			alignItems: 'center'
+																			alignItems: 'center',
+																			cursor: 'pointer'
 																		}}
 																	>
 																		<IconEqual stroke={2} />
@@ -182,7 +188,8 @@ const Materials: FC = () => {
 																	<td
 																		style={{
 																			textAlign: 'end',
-																			paddingRight: '70px'
+																			paddingRight: '70px',
+																			cursor: 'pointer'
 																		}}
 																	>
 																		{todo.date}

@@ -1,13 +1,12 @@
 import scss from './Styled.module.scss';
-import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import { FC } from 'react';
 
 const style = {
 	position: 'absolute',
@@ -22,17 +21,13 @@ const style = {
 	borderRadius: '10px'
 };
 
-const ModalAddVideoLesson = () => {
+interface LessonVideoProps {
+	open: boolean;
+	handleClose: () => void;
+}
+
+const ModalAddVideoLesson: FC<LessonVideoProps> = ({ open, handleClose }) => {
 	const { control, handleSubmit } = useForm();
-	const [open, setOpen] = useState<boolean>(false);
-
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	const onSubmit = () => {
 		handleClose();
@@ -40,7 +35,6 @@ const ModalAddVideoLesson = () => {
 
 	return (
 		<form>
-			<Button onClick={handleOpen}>Open modal Добавить видеоурока</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -107,7 +101,17 @@ const ModalAddVideoLesson = () => {
 							/>
 						</div>
 
-						<div className={scss.button_add}>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="submit"
 								disabled={false}
