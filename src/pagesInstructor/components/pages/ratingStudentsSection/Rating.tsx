@@ -1,9 +1,15 @@
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import scss from './Rating.module.scss';
 import { Preloader } from '@/src/ui/preloader/Preloader';
+import { useGetLessonQuery } from '@/src/redux/api/lesson';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Rating = () => {
-	const { data, isLoading } = useGetStudentTableQuery();
+	const { data: strudents = [], isLoading } = useGetStudentTableQuery();
+	const { data } = useGetLessonQuery();
+	// const naviagete = useNavigate();
+	const [raiting, setRaiting] = useState(0);
 
 	if (isLoading) {
 		return (
@@ -12,6 +18,8 @@ const Rating = () => {
 			</div>
 		);
 	}
+
+	const id = localStorage.getItem('id');
 
 	return (
 		<div className={scss.rating}>
@@ -27,17 +35,48 @@ const Rating = () => {
 						<table className={scss.Table}>
 							<thead>
 								<tr>
-									<th>№</th>
-									<th>Имя Фамилия</th>
+									<th className={scss.number} rowSpan={2}>
+										№
+									</th>
+									<th className={scss.name} rowSpan={2}>
+										Имя Фамилия
+									</th>
+
+									{data?.map((item) => (
+										<>
+											<th key={item._id} className={scss.lesson}>
+												{item.title}
+											</th>
+										</>
+									))}
+									<th rowSpan={2}>Итого</th>
+								</tr>
+								<tr>
+									{data?.map((item) => (
+										<>
+											<th key={item._id} className={scss.lesson}>
+												{item.title}
+											</th>
+										</>
+									))}
 								</tr>
 							</thead>
 							<tbody>
 								{data &&
-									data.map((item) => (
+									strudents.map((item, index) => (
 										<tr key={item.id} className={scss.TableContainerSecond}>
+											<td className={scss.number}>{index + 1}</td>
 											<td className={scss.TableCell}>
 												{item.firstName} {item.lastName}
 											</td>
+											{data?.map((item) => (
+												<td key={item._id}>
+													<Link to={`/instructor/course/${id}/materials`}>
+														{raiting}
+													</Link>
+												</td>
+											))}
+											<td>{(100 * 9) / data.length} %</td>
 										</tr>
 									))}
 							</tbody>
@@ -50,4 +89,3 @@ const Rating = () => {
 };
 
 export default Rating;
-
