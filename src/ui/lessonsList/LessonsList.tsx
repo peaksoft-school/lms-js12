@@ -49,47 +49,50 @@ const LessonsList = () => {
 
 	return (
 		<div className={scss.List_lessons}>
-			<div className={scss.top_container}>
-				<div className={scss.lesson}>
-					<p>
-						<a className={scss.title_lesson_1} href="#">
-							Мои курсы
+			<div className={scss.container}>
+				<div className={scss.top_container}>
+					<div className={scss.lesson}>
+						<p>
+							<a className={scss.title_lesson_1} href="#">
+								Мои курсы
+							</a>
+						</p>
+						<img className={scss.img_arrow} src={arrowIcon} alt="" />
+						<p>
+							<a className={scss.title_lesson_2} href="#">
+								Data Engineer
+							</a>
+						</p>
+					</div>
+					<div>
+						<h1 className={scss.title_lesson}>
+							{localStorage.getItem('item')}
+						</h1>
+					</div>
+				</div>
+				<div className={scss.card_lesson}>
+					<div className={scss.card_container}>
+						<a className={scss.card_link} href="#">
+							<span className={scss.card_item}>№ Название урока</span>
 						</a>
-					</p>
-					<img className={scss.img_arrow} src={arrowIcon} alt="" />
-					<p>
-						<a className={scss.title_lesson_2} href="#">
-							Data Engineer
+					</div>
+					<div className={scss.card_container}>
+						<a className={scss.card_link} href="#">
+							<span className={scss.card_item}>№ Название урока</span>
 						</a>
-					</p>
-				</div>
-				<div>
-					<h2 className={scss.title_lesson}>Data Engineer</h2>
-				</div>
-			</div>
-			<div className={scss.card_lesson}>
-				<div className={scss.card_container}>
-					<a className={scss.card_link} href="#">
-						<span className={scss.card_item}>№ Название урока</span>
-					</a>
-				</div>
-				<div className={scss.card_container}>
-					<a className={scss.card_link} href="#">
-						<span className={scss.card_item}>№ Название урока</span>
-					</a>
-				</div>
-				<div className={scss.card_container}>
-					<a className={scss.card_link} href="#">
-						<span className={scss.card_item}>№ Название урока</span>
-					</a>
-				</div>
-				<div className={scss.card_container}>
-					<a className={scss.card_link} href="#">
-						<span className={scss.card_item}>№ Название урока</span>
-					</a>
-				</div>
+					</div>
+					<div className={scss.card_container}>
+						<a className={scss.card_link} href="#">
+							<span className={scss.card_item}>№ Название урока</span>
+						</a>
+					</div>
+					<div className={scss.card_container}>
+						<a className={scss.card_link} href="#">
+							<span className={scss.card_item}>№ Название урока</span>
+						</a>
+					</div>
 
-				{/* <div className={scss.pagination}>
+					{/* <div className={scss.pagination}>
 					<div className={scss.inputs}>
 						<p className={scss.text}>Перейти на страницу</p>
 						<div className={scss.pagination_element}>
@@ -132,6 +135,7 @@ const LessonsList = () => {
 						/>
 					</div>
 				</div> */}
+				</div>
 			</div>
 		</div>
 	);

@@ -17,6 +17,7 @@
 		"@fullcalendar/interaction": "^6.1.11",
 		"@fullcalendar/react": "^6.1.11",
 		"@fullcalendar/timegrid": "^6.1.11",
+		"@hello-pangea/dnd": "^16.6.0",
 		"@mui/material": "^5.15.14",
 		"@reduxjs/toolkit": "^2.2.3",
 		"@tabler/icons-react": "^3.1.0",

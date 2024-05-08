@@ -51,6 +51,7 @@ const Student = () => {
 
 	const handleCloseStudent = () => {
 		setOpenStudent(false);
+		console.log('ln;lk');
 	};
 
 	if (isLoading) {

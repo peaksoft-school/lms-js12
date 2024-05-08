@@ -1,14 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutStudents.module.scss';
 import Header from '@/src/ui/header/Header';
-import HomePage from '../pages/HomePage';
 import { useEffect, useState } from 'react';
-import Material from '@/src/ui/material/Material';
-import MyCourses from '@/src/ui/myCourses/MyCourses';
-import Cards from '@/src/ui/customCards/Cards';
+// import Material from '@/src/ui/material/Material';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import CalendarPage from '../pages/CalendarPage';
-// import LessonsList from '@/src/ui/lessonsList/LessonsList';
+import SupHeader from '@/src/ui/supHeader/SupHeader';
+import MaterialsPage from '../pages/MaterialsPage';
+import CoursesPage from '../pages/CoursesPage';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -46,17 +45,12 @@ const LayoutStudents = () => {
 					</>
 				)}
 				<main style={{ width: '100%' }}>
+					<SupHeader />
 					<Routes>
-						<Route path="/" element={<HomePage />} />
+						<Route path="/" element={<CoursesPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
-						<Route path="" element={<HomePage />} />
-						<Route path="/courses" element={<Cards />} />
-						{/* <Route path="/lessonsList" element={<LessonsList />} /> */}
-						<Route path="/courses/:coursesId" element={<MyCourses />} />
-						<Route
-							path="/courses/:coursesId/:matelials"
-							element={<Material />}
-						/>
+						<Route path="/:coursesId/materials" element={<MaterialsPage />} />
+						{/* <Route path="/courses/:coursesId" element={<Material />} /> */}
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

@@ -14,6 +14,7 @@ import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage
 import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
+import LessonPage from '../pages/LessonPage';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -87,6 +88,10 @@ const LayoutInstructor = () => {
 						<Route
 							path="/course/:materialsId/materials"
 							element={<MaterialsPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId"
+							element={<LessonPage />}
 						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />

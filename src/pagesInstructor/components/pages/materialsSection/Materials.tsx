@@ -1,4 +1,4 @@
-import { FC, useState, KeyboardEvent, MouseEvent } from 'react';
+import { FC, useState, useEffect } from 'react';
 import scss from './Materials.module.scss';
 import deleteIcon from '@/src/assets/svgs/delete-red.svg';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
@@ -15,7 +15,18 @@ import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import DeleteMaterial from '@/src/ui/customModal/deleteModal/DeleteMaterial';
 import ModalMaterialEdit from '@/src/ui/customModal/ModalMaterialEdit';
-
+import {
+	DragDropContext,
+	Droppable,
+	Draggable,
+	DropResult
+} from '@hello-pangea/dnd';
+import { useNavigate } from 'react-router-dom';
+interface TodoProps {
+	title: string;
+	_id: number;
+	date: string;
+}
 const Materials: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
@@ -25,16 +36,29 @@ const Materials: FC = () => {
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
-
 	const { data, isLoading } = useGetMaterialsQuery();
-	const [openAddMaterial, setOpenAddMaterial] = useState<boolean>(false);
+	const [todos, setTodos] = useState<TodoProps[]>([]);
+	const navigate = useNavigate();
+	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 
-	const handleMaterialClose = () => {
-		setOpenAddMaterial(false);
-	};
+	useEffect(() => {
+		if (data) {
+			setTodos(data);
+		}
+	}, [data]);
 
-	const handleCloseModal = () => {
-		setOpenModalDelete(false);
+	useEffect(() => {
+		localStorage.setItem('todos', JSON.stringify(todos));
+	}, [todos]);
+
+	const handleDragEnd = (result: DropResult) => {
+		if (!result.destination) return;
+		const startIndex = result.source.index;
+		const endIndex = result.destination.index;
+		const copyTodos = [...todos];
+		const [reorderTodo] = copyTodos.splice(startIndex, 1);
+		copyTodos.splice(endIndex, 0, reorderTodo);
+		setTodos(copyTodos);
 	};
 
 	if (isLoading) {
@@ -58,218 +82,235 @@ const Materials: FC = () => {
 		setCurrentPage(page);
 	};
 
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
+	const handleAppend = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
 			if (newOpenPage > 12) {
 				setRowsPerPage(newOpenPage);
 				setOpenPart(1);
 				setCurrentPage(1);
-				openPartFunc();
 			} else {
 				setRowsPerPage(12);
 			}
 		}
 	};
 
-	const handleAddLesson = (e: MouseEvent<HTMLButtonElement>) => {
-		setOpenAddMaterial(true);
+	const handleAddLesson = (e: React.MouseEvent<HTMLButtonElement>) => {
+		setOpenModalEdit(true);
 		e.preventDefault();
 	};
 
+	localStorage.setItem('lessonId', saveIdSrorege);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+	const id = localStorage.getItem('id');
+	console.log(saveIdSrorege);
 
 	return (
 		<div className={scss.material}>
 			<div className={scss.container}>
-				<div className={scss.button_title_elements}>
-					<Button
-						size="large"
-						className={scss.button}
-						onClick={handleAddLesson}
-						variant="contained"
-					>
-						<div className={scss.icon}>
-							<IconPlus stroke={2} />
-						</div>
-						<span>Создать урок</span>
-					</Button>
-				</div>
-				<h1>Материалы</h1>
-				<div style={{ height: '577px', background: '#eff0f4' }}>
-					<div className={scss.table_container}>
-						<div className={scss.material_content}>
-							<table className={scss.table}>
-								<thead>
-									<tr>
-										<th>Название урока</th>
-										<th className={scss.date}>Дата публикации</th>
-										<th className={scss.last_th}>Действие</th>
-									</tr>
-								</thead>
-								<tbody>
-									{data
-										?.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)
-										.map((card, index) => (
-											<tr
-												className={
-													index % 2 === 1
-														? scss.table_alternate_row
-														: '' || scss.table_container_second
-												}
+				<DragDropContext onDragEnd={handleDragEnd}>
+					<div className={scss.button_title_elements}>
+						<Button
+							size="large"
+							className={scss.button}
+							onClick={handleAddLesson}
+							variant="contained"
+						>
+							<div className={scss.icon}>
+								<IconPlus stroke={2} />
+							</div>
+							<span>Создать урок</span>
+						</Button>
+					</div>
+					<h1>Материалы</h1>
+					<div style={{ height: '577px', background: '#eff0f4' }}>
+						<div className={scss.table_container}>
+							<div className={scss.material_content}>
+								<table className={scss.table}>
+									<thead>
+										<tr>
+											<th>Название урока</th>
+											<th className={scss.date}>Дата публикации</th>
+											<th className={scss.last_th}>Действие</th>
+										</tr>
+									</thead>
+									<Droppable droppableId="todos">
+										{(droppableProvider) => (
+											<tbody
+												ref={droppableProvider.innerRef}
+												{...droppableProvider.droppableProps}
 											>
-												<td
-													style={{
-														paddingLeft: '20px',
-														paddingTop: '12px',
-														display: 'flex',
-														gap: '10px',
-														alignItems: 'center'
-													}}
-												>
-													<IconEqual stroke={2} />
-													{card.title}
-												</td>
-												<td style={{ textAlign: 'end', paddingRight: '70px' }}>
-													{card.date}
-												</td>
-												<td className={scss.TableCellIcon}>
-													<button
-														className={scss.button}
-														aria-controls={open ? 'basic-menu' : undefined}
-														aria-haspopup="true"
-														onClick={(e) => {
-															handleClick(e);
-															setDeleteById(card._id);
-														}}
-													>
-														<IconDotsVertical stroke={2} />
-													</button>
-													<Menu
-														id="basic-menu"
-														anchorEl={anchorEl}
-														open={open}
-														onClose={handleClose}
-														MenuListProps={{
-															'aria-labelledby': 'basic-button'
-														}}
-														elevation={0}
-														anchorOrigin={{
-															vertical: 'bottom',
-															horizontal: 'right'
-														}}
-														transformOrigin={{
-															vertical: 'top',
-															horizontal: 'right'
-														}}
-													>
-														<MenuItem
-															style={{ display: 'flex', gap: '10px' }}
-															onClick={() => {
-																setOpenModalEdit(true);
-																setAnchorEl(null);
-															}}
+												{todos
+													.slice(
+														(currentPage - 1) * rowsPerPage,
+														currentPage * rowsPerPage
+													)
+													.map((todo, index) => (
+														<Draggable
+															index={index}
+															key={todo._id}
+															draggableId={`${todo._id}`}
 														>
-															<img src={editIcon} alt="Edit" />
-															<p>Редактировать</p>
-														</MenuItem>
-														<MenuItem
-															style={{ display: 'flex', gap: '10px' }}
-															onClick={() => {
-																setOpenModalDelete(true);
-																setAnchorEl(null);
-															}}
-														>
-															<img src={deleteIcon} alt="Delete" />
-															<p>Удалить</p>
-														</MenuItem>
-													</Menu>
-												</td>
-											</tr>
-										))}
-								</tbody>
-							</table>
-
-							<ModalMaterialEdit
-								openModalEdit={openModalEdit}
-								closeModalEdit={() => setOpenModalEdit(false)}
-								deleteById={deleteById}
+															{(draggableProvider) => (
+																<tr
+																	className={
+																		index % 2 === 1
+																			? scss.table_alternate_row
+																			: '' || scss.table_container_second
+																	}
+																	ref={draggableProvider.innerRef}
+																	{...draggableProvider.draggableProps}
+																	{...draggableProvider.dragHandleProps}
+																	onClick={() => {
+																		setSaveIdStorege(String(todo._id));
+																		setTimeout(() => {
+																			navigate(
+																				`/instructor/course/${id}/materials/${todo._id}`
+																			);
+																		}, 1000);
+																	}}
+																>
+																	<td
+																		style={{
+																			paddingLeft: '20px',
+																			paddingTop: '12px',
+																			display: 'flex',
+																			gap: '10px',
+																			alignItems: 'center',
+																			cursor: 'pointer'
+																		}}
+																	>
+																		<IconEqual stroke={2} />
+																		{todo.title}
+																	</td>
+																	<td
+																		style={{
+																			textAlign: 'end',
+																			paddingRight: '70px',
+																			cursor: 'pointer'
+																		}}
+																	>
+																		{todo.date}
+																	</td>
+																	<td className={scss.TableCellIcon}>
+																		<button
+																			className={scss.button}
+																			aria-controls={
+																				open ? 'basic-menu' : undefined
+																			}
+																			aria-haspopup="true"
+																			onClick={(e) => {
+																				handleClick(e);
+																				setDeleteById(todo._id);
+																			}}
+																		>
+																			<IconDotsVertical stroke={2} />
+																		</button>
+																		<Menu
+																			id="basic-menu"
+																			anchorEl={anchorEl}
+																			open={open}
+																			onClose={handleClose}
+																			MenuListProps={{
+																				'aria-labelledby': 'basic-button'
+																			}}
+																			elevation={0}
+																			anchorOrigin={{
+																				vertical: 'bottom',
+																				horizontal: 'right'
+																			}}
+																			transformOrigin={{
+																				vertical: 'top',
+																				horizontal: 'right'
+																			}}
+																		>
+																			<MenuItem
+																				style={{ display: 'flex', gap: '10px' }}
+																				onClick={() => {
+																					setOpenModalEdit(true);
+																					setAnchorEl(null);
+																				}}
+																			>
+																				<img src={editIcon} alt="Edit" />
+																				<p>Редактировать</p>
+																			</MenuItem>
+																			<MenuItem
+																				style={{ display: 'flex', gap: '10px' }}
+																				onClick={() => {
+																					setOpenModalDelete(true);
+																					setAnchorEl(null);
+																				}}
+																			>
+																				<img src={deleteIcon} alt="Delete" />
+																				<p>Удалить</p>
+																			</MenuItem>
+																		</Menu>
+																	</td>
+																</tr>
+															)}
+														</Draggable>
+													))}
+											</tbody>
+										)}
+									</Droppable>
+								</table>
+								<ModalMaterialEdit
+									openModalEdit={openModalEdit}
+									closeModalEdit={() => setOpenModalEdit(false)}
+									deleteById={deleteById}
+								/>
+								<DeleteMaterial
+									open={openModalDelete}
+									handleCloseModal={handleClose}
+									deleteById={deleteById}
+								/>
+							</div>
+						</div>
+					</div>
+					<div className={scss.pagination}>
+						<div className={scss.Inputs}>
+							<p className={scss.text}>Перейти на страницу</p>
+							<div className={scss.pagination_element}>
+								<IconBook stroke={2} />
+							</div>
+							<input
+								type="text"
+								value={openPart}
+								onChange={(e) => setOpenPart(+e.target.value)}
+								onKeyDown={(e) => handleAppend(e)}
 							/>
-
-							<DeleteMaterial
-								open={openModalDelete}
-								handleCloseModal={handleCloseModal}
-								deleteById={deleteById}
+						</div>
+						<div className={scss.stack}>
+							<Stack direction="row" spacing={2}>
+								<Pagination
+									count={Math.ceil(data!.length / rowsPerPage)}
+									page={currentPage}
+									onChange={handlePageChangeC}
+									shape="rounded"
+									variant="outlined"
+								/>
+							</Stack>
+						</div>
+						<div className={scss.Inputs}>
+							<p className={scss.text}>Показать</p>
+							<div className={scss.pagination_element}>
+								<IconArticle stroke={2} />
+							</div>
+							<input
+								type="text"
+								value={openPage}
+								onChange={(e) => setOpenPage(+e.target.value)}
+								onKeyDown={(e) => handleAppend(e)}
 							/>
 						</div>
 					</div>
-				</div>
-				<div className={scss.pagination}>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
-								page={currentPage}
-								onChange={handlePageChangeC}
-								shape="rounded"
-								variant="outlined"
-							/>
-						</Stack>
-					</div>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
-							}}
-						/>
-					</div>
-				</div>
+				</DragDropContext>
 			</div>
 			<ModalAddLesson
-				open={openAddMaterial}
-				handleClose={handleMaterialClose}
+				open={openModalEdit}
+				handleClose={() => setOpenModalEdit(false)}
 			/>
 		</div>
 	);
