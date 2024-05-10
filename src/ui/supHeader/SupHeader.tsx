@@ -11,6 +11,7 @@ const SupHeader = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
 	const [value, setValue] = useState(0);
+	
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
@@ -62,6 +63,8 @@ const SupHeader = () => {
 		navigate(`/instructor/course/${id}/student`);
 	};
 
+
+
 	const lessonId = localStorage.getItem('lessonId');
 	return (
 		<div className={scss.header}>
@@ -72,6 +75,7 @@ const SupHeader = () => {
 				pathname !== `/instructor/course/${id}/student` &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}` &&
 				pathname !== '/instructor/course/' &&
+				pathname !== `/instructor/course/${id}/materials/${lessonId}/video` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>

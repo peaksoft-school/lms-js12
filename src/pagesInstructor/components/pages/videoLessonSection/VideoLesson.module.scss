@@ -1,0 +1,92 @@
+.VideoLesson {
+	padding-inline: 20px;
+	width: 100%;
+
+	.video {
+		padding-top: 20px;
+		height: 583px;
+		overflow-y: scroll !important;
+		scrollbar-width: thin;
+		scrollbar-color: #3772ff #fff;
+		.content {
+			display: flex;
+			margin-top: 20px;
+			.cards {
+				display: flex;
+				gap: 16px;
+				background: #eff0f4;
+				width: 100%;
+				border-radius: 10px;
+				align-items: center;
+
+				padding-inline: 20px;
+				.photo {
+					img {
+						width: 100%;
+						max-width: 350px;
+						height: 220px;
+						border-radius: 10px;
+					}
+
+					.button_watch {
+						position: relative;
+						bottom: 150px;
+						left: 140px;
+						width: 70px;
+						height: 70px;
+						background: #0000ff96;
+						border-radius: 100%;
+						cursor: pointer;
+
+						.play_video {
+							width: 40px;
+							height: 40px;
+							position: absolute;
+							left: 20px;
+							top: 15px;
+						}
+					}
+				}
+			}
+
+			.title {
+				h1 {
+					font-weight: 600;
+					font-size: 20px;
+					color: #1d293f;
+				}
+
+				p {
+					font-weight: 400;
+					font-size: 14px;
+					color: #1d293f;
+				}
+			}
+		}
+	}
+
+	.button {
+		display: flex;
+		gap: 10px;
+		justify-content: center;
+		align-items: center;
+		border-radius: 8px;
+		text-transform: capitalize;
+		margin-top: 20px;
+		.icon {
+			width: 25px;
+			height: 25px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		span {
+			white-space: nowrap;
+		}
+		@media (max-width: 700px) {
+			span {
+				display: none;
+			}
+		}
+	}
+}

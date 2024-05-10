@@ -18,6 +18,9 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 		if (pathname === '/admin') {
 			navigate('/admin/analytics');
 		}
+		if (pathname === '/instructor') {
+			navigate('/instructor/course');
+		}
 	}, [pathname]);
 
 	return (
@@ -134,7 +137,8 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 									<Link
 										to={`/instructor/${item.link!}`}
 										className={
-											pathname === `/instructor/${item.link!}`
+											pathname === `/instructor/${item.link!}` ||
+											pathname.startsWith(`/instructor/${item.link!}`)
 												? `${scss.nav_item} ${scss.active}`
 												: `${scss.nav_item}`
 										}

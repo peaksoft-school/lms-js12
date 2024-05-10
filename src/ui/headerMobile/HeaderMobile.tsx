@@ -19,7 +19,7 @@ const HeaderMobile = () => {
 		<>
 			<header className={scss.HeaderMobile}>
 				<ul ref={sliderRef} className="keen-slider">
-					{/* //! admin */}
+					{/* //! admin */}	
 					{pathname.startsWith('/admin') && (
 						<>
 							{links.admin.map((item, index) => (
