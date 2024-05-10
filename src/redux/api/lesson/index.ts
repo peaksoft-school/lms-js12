@@ -22,4 +22,5 @@ const api = index.injectEndpoints({
 	})
 });
 
-export const { useGetCardQuery, useGetLessonQuery } = api;
+export const { useGetCardQuery, useGetLessonQuery, useGetPrezentationQuery } =
+	api;

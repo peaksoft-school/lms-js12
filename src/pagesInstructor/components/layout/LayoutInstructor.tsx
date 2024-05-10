@@ -93,6 +93,10 @@ const LayoutInstructor = () => {
 							path="/course/:materialsId/materials/:lessonId"
 							element={<LessonPage />}
 						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/presentation"
+							element={<LessonPage />}
+						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
 					</Routes>

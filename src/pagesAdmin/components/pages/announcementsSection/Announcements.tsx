@@ -11,7 +11,7 @@ import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '@/src/assets/svgs/delete-red.svg';
 import DotsHorizont from '@/src/assets/icon-Dots-Horizont';
 import ModalEditAnnouncement from '@/src/ui/customModal/ModalEditAnnouncement';
-import DeleteAnnouncementModal from '@/src/ui/customModal/deleteModal/DeleteAnnouncementModal';
+import DeleteAnnouncementModal from '@/src/ui/InstructorModal/delete/DelelePresentationl';
 import {
 	IconArticle,
 	IconBook,

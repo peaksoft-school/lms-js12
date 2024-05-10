@@ -61,6 +61,7 @@ const SupHeader = () => {
 	const openInstructorStudent = () => {
 		navigate(`/instructor/course/${id}/student`);
 	};
+	const item = localStorage.getItem('lessonId');
 
 	const lessonId = localStorage.getItem('lessonId');
 	return (
@@ -70,6 +71,8 @@ const SupHeader = () => {
 				pathname !== `/admin/courses/${id}/teacher` &&
 				pathname !== `/instructor/course/${id}/materials` &&
 				pathname !== `/instructor/course/${id}/student` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${item}/presentation` &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}` &&
 				pathname !== '/instructor/course/' &&
 				!isAdminCourseWithId &&

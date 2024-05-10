@@ -1,4 +1,4 @@
-import scss from './DeleteAnnouncement.module.scss';
+import scss from './DeletePresentation.module.scss';
 import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
-import { useDeleteAnnouncementTableMutation } from '@/src/redux/api/admin/announcement';
+import { useDeletePresentationMutation } from '@/src/redux/api/instructor/presentation';
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -14,17 +14,17 @@ interface DeleteProps {
 	saveIdElement: number | null;
 }
 
-const DeleteAnnouncementModal: React.FC<DeleteProps> = ({
+const DeletePresentation: React.FC<DeleteProps> = ({
 	openModalDelete,
 	closeModalDelete,
 	saveIdElement
 }) => {
-	const [deleteAnnouncementTable] = useDeleteAnnouncementTableMutation();
-
+	const [deletePresentation] = useDeletePresentationMutation();
 	const handleDelete = async () => {
-		await deleteAnnouncementTable(saveIdElement!);
+		await deletePresentation(saveIdElement!);
 		closeModalDelete(false);
 	};
+
 
 	return (
 		<div>
@@ -74,4 +74,4 @@ const DeleteAnnouncementModal: React.FC<DeleteProps> = ({
 	);
 };
 
-export default DeleteAnnouncementModal;
+export default DeletePresentation;

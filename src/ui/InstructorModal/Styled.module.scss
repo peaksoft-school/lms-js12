@@ -60,6 +60,18 @@
 			@media (max-width: 600px) {
 				width: 80% !important;
 			}
+			input {
+				width: 370px;
+				border: 1px solid rgb(206, 199, 199);
+				border-radius: 10px;
+				height: 50px;
+
+				&::placeholder {
+					padding-left: 10px;
+					font-size: 16px;
+					color: rgb(180, 177, 177);
+				}
+			}
 		}
 	}
 }

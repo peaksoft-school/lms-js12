@@ -17,4 +17,6 @@ namespace LESSON {
 
 	type GetLessonsResponse = GetLessonType[];
 	type GetLessonssRequest = string | void;
+
+	
 }

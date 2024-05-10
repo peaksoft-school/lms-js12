@@ -1,6 +1,7 @@
 import { Button, Tab, Tabs } from '@mui/material';
 import scss from './Lesson.module.scss';
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
 	IconAB2,
 	IconBrandYoutubeKids,
@@ -9,11 +10,14 @@ import {
 	IconLink,
 	IconPlus
 } from '@tabler/icons-react';
-import ModalAddVideoLesson from '@/src/ui/InstructorModal/ModalAddVideoLesson';
+// import ModalAddVideoLesson from '@/src/ui/InstructorModal/ModalAddVideoLesson';
+import Presentation from '../presentationSection/Presentation';
 
 const Lesson = () => {
 	const [value, setValue] = useState(0);
 	const [open, setOpen] = useState<boolean>(false);
+	const navigate = useNavigate();
+	const { pathname } = useLocation();
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -27,6 +31,11 @@ const Lesson = () => {
 		setValue(newValue);
 	};
 
+	const item = localStorage.getItem('lessonId');
+	const id = localStorage.getItem('id');
+	const openInstructorPresentation = () => {
+		navigate(`/instructor/course/${id}/materials/${item}/presentation`);
+	};
 	return (
 		<div className={scss.lesson}>
 			<h1>Материалы</h1>
@@ -77,6 +86,7 @@ const Lesson = () => {
 							icon={<IconDeviceDesktop stroke={2} />}
 							label="Презентация"
 							id="simple-tab-1"
+							onClick={openInstructorPresentation}
 							className={scss.tab}
 							aria-controls="simple-tabpanel-1"
 						/>
@@ -103,8 +113,13 @@ const Lesson = () => {
 						/>
 					</Tabs>
 				</div>
+			{pathname ===
+				`/instructor/course/${id}/materials/${item}/presentation` && (
+				<>
+					<Presentation />
+				</>
+			)}
 			</div>
-			<ModalAddVideoLesson open={open} handleClose={handleClose} />
 		</div>
 	);
 };
