@@ -43,7 +43,7 @@ const Lesson = () => {
 				<div
 					style={{
 						display: 'flex',
-						justifyContent: 'flex-start',
+						justifyContent: 'flex-start'
 					}}
 				>
 					<div className={scss.container}>
