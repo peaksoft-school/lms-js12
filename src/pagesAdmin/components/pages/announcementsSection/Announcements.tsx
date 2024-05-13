@@ -179,6 +179,9 @@ const Announcements = () => {
 													vertical: 'top',
 													horizontal: 'right'
 												}}
+												PaperProps={{
+													style: { boxShadow: 'none', border: '1px solid gray' }
+												}}
 											>
 												<MenuItem
 													style={{

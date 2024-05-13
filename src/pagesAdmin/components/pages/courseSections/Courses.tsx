@@ -154,12 +154,18 @@ const Courses: FC = () => {
 															open={open}
 															onClose={handleClose}
 															anchorOrigin={{
-																vertical: 'top',
-																horizontal: 'left'
+																vertical: 'bottom',
+																horizontal: 'right'
 															}}
 															transformOrigin={{
 																vertical: 'top',
-																horizontal: 'left'
+																horizontal: 'right'
+															}}
+															PaperProps={{
+																style: {
+																	boxShadow: 'none',
+																	border: '1px solid gray'
+																}
 															}}
 														>
 															<MenuItem
