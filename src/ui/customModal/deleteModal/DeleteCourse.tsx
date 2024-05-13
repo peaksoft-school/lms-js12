@@ -1,12 +1,12 @@
 import scss from './DeleteCourse.module.scss';
 import React from 'react';
+import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteCourseMutation } from '@/src/redux/api/admin/courses';
-import ButtonDelete from '../../customButton/ButtonDelete';
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -39,20 +39,10 @@ const DeleteCourses: React.FC<DeleteProps> = ({
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<h3>Вы уверены, что хотите удалить этот курс?</h3>
+								<p>Вы уверены, что хотите удалить этот курс?</p>
 							</DialogContentText>
 						</DialogContent>
-						<DialogActions
-							style={{
-								width: '100%',
-								display: 'flex',
-								justifyContent: 'flex-end',
-								alignItems: 'center',
-								paddingBottom: '10px',
-								paddingTop: '13px',
-								gap: '10px'
-							}}
-						>
+						<DialogActions className={scss.Buttons}>
 							<ButtonCancel
 								width="103px"
 								type="button"
@@ -63,13 +53,18 @@ const DeleteCourses: React.FC<DeleteProps> = ({
 							>
 								отмена
 							</ButtonCancel>
-							<ButtonDelete
-								type="submit"
+							<Button
 								onClick={handleDelete}
-								disabled={false}
+								autoFocus
+								style={{
+									backgroundColor: '#F70D1A',
+									color: '#fff',
+									width: '108px',
+									height: '40px'
+								}}
 							>
 								Удалить
-							</ButtonDelete>
+							</Button>
 						</DialogActions>
 					</Dialog>
 				</div>

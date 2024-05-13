@@ -134,22 +134,15 @@ const Course: FC = () => {
 															open={open}
 															onClose={handleClose}
 															anchorOrigin={{
-																vertical: 'bottom',
-																horizontal: 'right'
+																vertical: 'top',
+																horizontal: 'left'
 															}}
 															transformOrigin={{
 																vertical: 'top',
-																horizontal: 'right'
-															}}
-															PaperProps={{
-																style: {
-																	boxShadow: 'none',
-																	border: '1px solid gray'
-																}
+																horizontal: 'left'
 															}}
 														>
 															<MenuItem
-																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setOpenEditModal(true);
 																	handleClose();
@@ -159,7 +152,6 @@ const Course: FC = () => {
 																Редактировать
 															</MenuItem>
 															<MenuItem
-																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setDeleteModal(true);
 																	handleClose();

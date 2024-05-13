@@ -1,5 +1,5 @@
 import scss from './Styled.module.scss';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,7 +7,6 @@ import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { FC } from 'react';
-import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
 
 const style = {
 	position: 'absolute',
@@ -22,41 +21,23 @@ const style = {
 	borderRadius: '10px'
 };
 
-interface VideoProps {
-	link: string;
-	title: string;
-	description: string;
-}
-
 interface LessonVideoProps {
 	open: boolean;
-	handleCloseVideo: () => void;
+	handleClose: () => void;
 }
 
-const ModalAddVideoLesson: FC<LessonVideoProps> = ({
-	open,
-	handleCloseVideo
-}) => {
-	const { control, handleSubmit, reset } = useForm<VideoProps>();
-	const [postVideoLesson] = usePostVideoLessonMutation();
+const ModalAddVideoLesson: FC<LessonVideoProps> = ({ open, handleClose }) => {
+	const { control, handleSubmit } = useForm();
 
-	const onSubmit: SubmitHandler<VideoProps> = (data) => {
-		// const { title, description, link } = data;
-		const postData = {
-			title: data.title,
-			description: data.description,
-			link: data.link
-		};
-		postVideoLesson(postData);
-		reset();
-		handleCloseVideo();
+	const onSubmit = () => {
+		handleClose();
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form>
 			<Modal
 				open={open}
-				onClose={handleCloseVideo}
+				onClose={handleClose}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -72,7 +53,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="title"
+								name="firstName"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите название видеоурока' }}
@@ -88,7 +69,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 							/>
 
 							<Controller
-								name="description"
+								name="lastName"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите описание видеоурока' }}
@@ -104,7 +85,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 							/>
 
 							<Controller
-								name="link"
+								name="Name"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Вставьте ссылку на видеоурок' }}
@@ -112,7 +93,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 									<Input
 										size="medium"
 										{...field}
-										type="url"
+										type="text"
 										width="100%"
 										placeholder="Вставьте ссылку на видеоурок"
 									/>
@@ -134,7 +115,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 							<ButtonCancel
 								type="submit"
 								disabled={false}
-								onClick={handleCloseVideo}
+								onClick={handleClose}
 								width="117px"
 							>
 								Отмена

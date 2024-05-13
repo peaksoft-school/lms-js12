@@ -106,6 +106,8 @@ const ModalEditStudent: FC<EditModalProps> = ({
 	const finder = data?.find(
 		(id: { id: number | null }) => id.id === saveIdElement
 	);
+	console.log(finder);
+	console.log(saveIdElement);
 	useEffect(() => {
 		if (finder) {
 			setFormatName(
@@ -125,7 +127,11 @@ const ModalEditStudent: FC<EditModalProps> = ({
 
 	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
 		const editStudent = {
-			...data,
+			firstName: data.firstName,
+			lastName: data.lastName,
+			phone_number: data.phone_number,
+			email: data.email,
+			password: data.password,
 			isCompleted: false,
 			TrainingFormat: formatName,
 			group: personName

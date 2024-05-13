@@ -104,8 +104,7 @@ const Trash: FC = () => {
 															alignItems: 'end',
 															justifyContent: 'end',
 															gap: '20px',
-															paddingRight: '50px',
-															cursor: 'pointer'
+															paddingRight: '50px'
 														}}
 													>
 														<img src={refrash} alt="#" />

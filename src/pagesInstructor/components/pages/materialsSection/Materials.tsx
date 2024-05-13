@@ -34,7 +34,6 @@ const Materials: FC = () => {
 	const [openPage, setOpenPage] = useState(12);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [openModal, setOpenModal] = useState(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const { data, isLoading } = useGetMaterialsQuery();
@@ -96,6 +95,11 @@ const Materials: FC = () => {
 		}
 	};
 
+	const handleAddLesson = (e: React.MouseEvent<HTMLButtonElement>) => {
+		setOpenModalEdit(true);
+		e.preventDefault();
+	};
+
 	localStorage.setItem('lessonId', saveIdSrorege);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -111,7 +115,7 @@ const Materials: FC = () => {
 						<Button
 							size="large"
 							className={scss.button}
-							onClick={() => setOpenModal(true)}
+							onClick={handleAddLesson}
 							variant="contained"
 						>
 							<div className={scss.icon}>
@@ -159,16 +163,16 @@ const Materials: FC = () => {
 																	ref={draggableProvider.innerRef}
 																	{...draggableProvider.draggableProps}
 																	{...draggableProvider.dragHandleProps}
+																	onClick={() => {
+																		setSaveIdStorege(String(todo._id));
+																		setTimeout(() => {
+																			navigate(
+																				`/instructor/course/${id}/materials/${todo._id}`
+																			);
+																		}, 1000);
+																	}}
 																>
 																	<td
-																		onClick={() => {
-																			setSaveIdStorege(String(todo._id));
-																			setTimeout(() => {
-																				navigate(
-																					`/instructor/course/${id}/materials/${todo._id}`
-																				);
-																			}, 1000);
-																		}}
 																		style={{
 																			paddingLeft: '20px',
 																			paddingTop: '12px',
@@ -182,14 +186,6 @@ const Materials: FC = () => {
 																		{todo.title}
 																	</td>
 																	<td
-																		onClick={() => {
-																			setSaveIdStorege(String(todo._id));
-																			setTimeout(() => {
-																				navigate(
-																					`/instructor/course/${id}/materials/${todo._id}`
-																				);
-																			}, 1000);
-																		}}
 																		style={{
 																			textAlign: 'end',
 																			paddingRight: '70px',
@@ -229,12 +225,6 @@ const Materials: FC = () => {
 																				vertical: 'top',
 																				horizontal: 'right'
 																			}}
-																			PaperProps={{
-																				style: {
-																					boxShadow: 'none',
-																					border: '1px solid gray'
-																				}
-																			}}
 																		>
 																			<MenuItem
 																				style={{ display: 'flex', gap: '10px' }}
@@ -273,7 +263,7 @@ const Materials: FC = () => {
 								/>
 								<DeleteMaterial
 									open={openModalDelete}
-									handleCloseModal={() => setOpenModalDelete(false)}
+									handleCloseModal={handleClose}
 									deleteById={deleteById}
 								/>
 							</div>
@@ -319,13 +309,8 @@ const Materials: FC = () => {
 				</DragDropContext>
 			</div>
 			<ModalAddLesson
-				open={openModal}
-				handleClose={() => setOpenModal(false)}
-			/>
-			<ModalMaterialEdit
-				openModalEdit={openModalEdit}
-				closeModalEdit={() => setOpenModalEdit(false)}
-				deleteById={deleteById}
+				open={openModalEdit}
+				handleClose={() => setOpenModalEdit(false)}
 			/>
 		</div>
 	);

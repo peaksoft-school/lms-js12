@@ -1,12 +1,12 @@
 import scss from './DeleteAnnouncement.module.scss';
 import React from 'react';
+import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteAnnouncementTableMutation } from '@/src/redux/api/admin/announcement';
-import ButtonDelete from '../../customButton/ButtonDelete';
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -29,7 +29,7 @@ const DeleteAnnouncementModal: React.FC<DeleteProps> = ({
 	return (
 		<div>
 			<React.Fragment>
-				<div className={scss.dialog_paper}>
+				<div className={scss.Delete}>
 					<Dialog
 						open={openModalDelete}
 						aria-labelledby="alert-dialog-title"
@@ -43,17 +43,7 @@ const DeleteAnnouncementModal: React.FC<DeleteProps> = ({
 								<h3>Вы уверены, что хотите удалить объявления?</h3>
 							</DialogContentText>
 						</DialogContent>
-						<DialogActions
-							style={{
-								width: '100%',
-								display: 'flex',
-								justifyContent: 'flex-end',
-								alignItems: 'center',
-								paddingBottom: '10px',
-								paddingTop: '13px',
-								gap: '10px'
-							}}
-						>
+						<DialogActions className={scss.Buttons}>
 							<ButtonCancel
 								width="103px"
 								type="button"
@@ -64,13 +54,18 @@ const DeleteAnnouncementModal: React.FC<DeleteProps> = ({
 							>
 								отмена
 							</ButtonCancel>
-							<ButtonDelete
+							<Button
 								onClick={handleDelete}
-								type="submit"
-								disabled={false}
+								autoFocus
+								style={{
+									backgroundColor: '#F70D1A',
+									color: '#fff',
+									width: '108px',
+									height: '40px'
+								}}
 							>
 								Удалить
-							</ButtonDelete>
+							</Button>
 						</DialogActions>
 					</Dialog>
 				</div>

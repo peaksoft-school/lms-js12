@@ -1,6 +1,15 @@
 .dialogPaper {
+	width: 500px;
+	height: 190px;
+
+	.Buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+	}
 	p {
-		font-size: 18px;
+		font-size: 20px;
 		padding-top: 10px;
 	}
 }

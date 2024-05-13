@@ -116,12 +116,12 @@
 			.StudentContainer {
 				border-radius: 8px;
 				overflow-x: auto;
+				overflow-y: scroll !important;
 				table-layout: fixed;
 				width: 100%;
 				background: #fff;
 				border: 1px solid #dbd2d2;
-				transition: all 0.5s ease-in-out;
-				overflow-y: scroll !important;
+				transition: all 0.5s;
 				scrollbar-width: thin;
 				scrollbar-color: #3772ff #fff;
 

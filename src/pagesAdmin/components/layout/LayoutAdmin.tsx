@@ -26,7 +26,6 @@ import AnnouncementPage from '../pages/AnnouncementPage.tsx';
 import CreateCourse from '@/src/ui/customModal/CreateCurse.tsx';
 import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
 import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
-import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -98,16 +97,7 @@ const LayoutAdmin = () => {
 				)}
 
 				<main style={{ width: '100%' }}>
-					{!isMobile && (
-						<>
-							<SupHeader />
-						</>
-					)}
-					{isMobile && (
-						<>
-							<SupHeaderMobile />
-						</>
-					)}
+					<SupHeader />
 					<Routes>
 						<Route path="/analytics" element={<AnalyticsPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
