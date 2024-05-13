@@ -11,6 +11,7 @@ import {
 import 'keen-slider/keen-slider.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VideoLessonPage from '../VideoLessonPage';
+import CrateTask from '../createTask/CrateTask';
 
 const Lesson = () => {
 	const [value, setValue] = useState(0);
@@ -27,6 +28,9 @@ const Lesson = () => {
 
 	const handleOpenVideo = () => {
 		navigate(`/instructor/course/${id}/materials/${item}/video`);
+	};
+	const openLesson = () => {
+		navigate(`/instructor/course/${id}/materials/${item}/lesson`);
 	};
 
 	return (
@@ -71,6 +75,7 @@ const Lesson = () => {
 								<Tab
 									icon={<IconFile stroke={2} />}
 									label="Задание"
+									onClick={openLesson}
 									id="simple-tab-2"
 									className={scss.tab}
 									aria-controls="simple-tabpanel-2"
@@ -94,6 +99,12 @@ const Lesson = () => {
 								`/instructor/course/${id}/materials/${item}/video` && (
 								<>
 									<VideoLessonPage />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/lesson` && (
+								<>
+									<CrateTask />
 								</>
 							)}
 						</div>

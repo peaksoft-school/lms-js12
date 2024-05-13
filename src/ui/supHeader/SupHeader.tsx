@@ -74,6 +74,14 @@ const SupHeader = () => {
 				pathname !== `/instructor/course/${id}/materials/${lessonId}` &&
 				pathname !== '/instructor/course/' &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}/video` &&
+				pathname !== `/instructor/course/${id}/materials/${lessonId}/lesson` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/update` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/addTask` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/getTask` &&
+				pathname !== '/instructor/course/' &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>
