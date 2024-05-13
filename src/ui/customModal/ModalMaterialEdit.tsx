@@ -49,9 +49,11 @@ const ModalMaterialEdit: FC<modalProps> = ({
 		const updateMaterial = {
 			...data
 		};
+		console.log(updateMaterial, deleteById);
 		await patchMaterial({ updateMaterial, deleteById });
-		closeModalEdit(false);
 	};
+
+	console.log(deleteById);
 
 	useEffect(() => {
 		reset({
@@ -61,7 +63,7 @@ const ModalMaterialEdit: FC<modalProps> = ({
 	}, [find]);
 
 	return (
-		<form onSubmit={close} className={scss.form}>
+		<form onSubmit={handleSubmit(onSubmit)} className={scss.form}>
 			<Modal
 				open={openModalEdit}
 				aria-labelledby="modal-modal-title"
@@ -121,7 +123,7 @@ const ModalMaterialEdit: FC<modalProps> = ({
 							}}
 						>
 							<ButtonCancel
-								type="submit"
+								type="button"
 								disabled={false}
 								onClick={() => closeModalEdit(false)}
 								width="117px"

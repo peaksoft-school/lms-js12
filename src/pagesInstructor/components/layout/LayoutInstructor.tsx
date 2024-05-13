@@ -15,6 +15,8 @@ import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
+import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
+import { LessonMobilePage } from '../pages/LessonMobilePage';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -61,7 +63,16 @@ const LayoutInstructor = () => {
 					</>
 				)}
 				<main style={{ width: '100%' }}>
-					<SupHeader />
+					{!isMobile && (
+						<>
+							<SupHeader />
+						</>
+					)}
+					{isMobile && (
+						<>
+							<SupHeaderMobile />
+						</>
+					)}
 					<Routes>
 						<Route
 							path={'/course'}
@@ -89,10 +100,30 @@ const LayoutInstructor = () => {
 							path="/course/:materialsId/materials"
 							element={<MaterialsPage />}
 						/>
-						<Route
-							path="/course/:materialsId/materials/:lessonId"
-							element={<LessonPage />}
-						/>
+						{!isMobile && (
+							<>
+								<Route
+									path="/course/:materialsId/materials/:lessonId"
+									element={<LessonPage />}
+								/>
+								<Route
+									path="/course/:materialsId/materials/:lessonId/video"
+									element={<LessonPage />}
+								/>
+							</>
+						)}
+						{isMobile && (
+							<>
+								<Route
+									path="/course/:materialsId/materials/:lessonId"
+									element={<LessonMobilePage />}
+								/>
+								<Route
+									path="/course/:materialsId/materials/:lessonId/video"
+									element={<LessonMobilePage />}
+								/>
+							</>
+						)}
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
 					</Routes>

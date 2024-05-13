@@ -1,20 +1,22 @@
-import { IconChevronDown, IconUserCircle } from '@tabler/icons-react';
-import scss from './SupHeader.module.scss';
+import {
+	IconAlignJustified,
+	IconChevronDown,
+	IconUserCircle
+} from '@tabler/icons-react';
+import scss from './SubHeaderMobile.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Menu, MenuItem, Tab, Tabs } from '@mui/material';
+import { Button, Menu, MenuItem } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-const SupHeader = () => {
+const SupHeaderMobile = () => {
 	const { pathname } = useLocation();
 	const [open, setOpen] = useState(false);
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
-	const [value, setValue] = useState(0);
-
-	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-		setValue(newValue);
-	};
+	const [anchorElOpen, setAnchorElOpen] = useState<null | HTMLElement>(null);
+	const [value, setValue] = useState<number>(0);
+	console.log(value);
 
 	useEffect(() => {
 		if (
@@ -33,12 +35,6 @@ const SupHeader = () => {
 		}
 	}, [pathname]);
 
-	const a11yProps = (index: number) => {
-		return {
-			id: `simple-tab-${index}`,
-			'aria-controls': `simple-tabpanel-${index}`
-		};
-	};
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -64,6 +60,13 @@ const SupHeader = () => {
 	};
 
 	const lessonId = localStorage.getItem('lessonId');
+	const openel = Boolean(anchorElOpen);
+	const handleClickOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorElOpen(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorElOpen(null);
+	};
 	return (
 		<div className={scss.header}>
 			{/* //! admin header */}
@@ -128,31 +131,42 @@ const SupHeader = () => {
 			{pathname === `/admin/courses/${id}/student` &&
 				pathname !== 'admin/courses' && (
 					<div className={scss.subHeaderCourses2}>
-						<Box>
-							<Box
-								sx={{
-									borderColor: 'divider',
-									paddingTop: '20px'
+						<Button
+							id="basic-button"
+							aria-controls={openel ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={openel ? 'true' : undefined}
+							onClick={handleClickOpen}
+						>
+							<IconAlignJustified stroke={2} />
+						</Button>
+						<Menu
+							id="basic-menu"
+							anchorEl={anchorElOpen}
+							open={openel}
+							onClose={handleClose}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button'
+							}}
+						>
+							<MenuItem
+								onClick={() => {
+									openTeacher();
+									handleClose();
 								}}
 							>
-								<Tabs
-									value={value}
-									onChange={handleChange}
-									aria-label="basic tabs example"
-								>
-									<Tab
-										onClick={openTeacher}
-										label="Учителя"
-										{...a11yProps(0)}
-									/>
-									<Tab
-										onClick={openStudent}
-										label="Студенты"
-										{...a11yProps(1)}
-									/>
-								</Tabs>
-							</Box>
-						</Box>
+								Учителя
+							</MenuItem>
+							<MenuItem
+								onClick={() => {
+									openStudent();
+									handleClose();
+								}}
+							>
+								Студенты
+							</MenuItem>
+						</Menu>
+
 						<div className={scss.header_elements}>
 							<IconUserCircle className={scss.profile} stroke={2} />
 							<div
@@ -209,31 +223,42 @@ const SupHeader = () => {
 			{pathname === `/admin/courses/${id}/teacher` &&
 				pathname !== 'admin/courses' && (
 					<div className={scss.subHeaderCourses2}>
-						<Box>
-							<Box
-								sx={{
-									borderColor: 'divider',
-									paddingTop: '20px'
+						<Button
+							id="basic-button"
+							aria-controls={openel ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={openel ? 'true' : undefined}
+							onClick={handleClickOpen}
+						>
+							<IconAlignJustified stroke={2} />
+						</Button>
+						<Menu
+							id="basic-menu"
+							anchorEl={anchorElOpen}
+							open={openel}
+							onClose={handleClose}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button'
+							}}
+						>
+							<MenuItem
+								onClick={() => {
+									openTeacher();
+									handleClose();
 								}}
 							>
-								<Tabs
-									value={value}
-									onChange={handleChange}
-									aria-label="basic tabs example"
-								>
-									<Tab
-										onClick={openTeacher}
-										label="Учителя"
-										{...a11yProps(0)}
-									/>
-									<Tab
-										onClick={openStudent}
-										label="Студенты"
-										{...a11yProps(1)}
-									/>
-								</Tabs>
-							</Box>
-						</Box>
+								Учителя
+							</MenuItem>
+							<MenuItem
+								onClick={() => {
+									openStudent();
+									handleClose();
+								}}
+							>
+								Студенты
+							</MenuItem>
+						</Menu>
+
 						<div className={scss.header_elements}>
 							<IconUserCircle className={scss.profile} stroke={2} />
 							<div
@@ -288,32 +313,49 @@ const SupHeader = () => {
 			{pathname.startsWith('/instructor/course/') &&
 				pathname !== 'instructor/course' && (
 					<div className={scss.subHeaderCourses}>
-						<Box>
-							<Box
-								sx={{
-									borderColor: 'divider',
-									paddingTop: '20px'
+						<Button
+							id="basic-button"
+							aria-controls={openel ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={openel ? 'true' : undefined}
+							onClick={handleClickOpen}
+						>
+							<IconAlignJustified stroke={2} />
+						</Button>
+						<Menu
+							id="basic-menu"
+							anchorEl={anchorElOpen}
+							open={openel}
+							onClose={handleClose}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button'
+							}}
+						>
+							<MenuItem
+								onClick={() => {
+									openMaterial();
+									handleClose();
 								}}
 							>
-								<Tabs
-									value={value}
-									onChange={handleChange}
-									aria-label="basic tabs example"
-								>
-									<Tab
-										onClick={openMaterial}
-										label="Материалы"
-										{...a11yProps(0)}
-									/>
-									<Tab
-										onClick={openInstructorStudent}
-										label="Студенты"
-										{...a11yProps(1)}
-									/>
-									<Tab label="Рейтинг студентов" {...a11yProps(2)} />
-								</Tabs>
-							</Box>
-						</Box>
+								Материалы
+							</MenuItem>
+							<MenuItem
+								onClick={() => {
+									openInstructorStudent();
+									handleClose();
+								}}
+							>
+								Студенты
+							</MenuItem>
+							<MenuItem
+								onClick={() => {
+									handleClose();
+								}}
+							>
+								Рейтинг студентов
+							</MenuItem>
+						</Menu>
+
 						<div className={scss.header_elements}>
 							<IconUserCircle className={scss.profile} stroke={2} />
 							<div
@@ -364,4 +406,4 @@ const SupHeader = () => {
 		</div>
 	);
 };
-export default SupHeader;
+export default SupHeaderMobile;

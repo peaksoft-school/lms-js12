@@ -51,8 +51,16 @@ const StudentMenu: FC<MenuProps> = ({
 				MenuListProps={{
 					'aria-labelledby': 'basic-button'
 				}}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'right'
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'right'
+				}}
 				PaperProps={{
-					style: { boxShadow: 'none' }
+					style: { boxShadow: 'none', border: '1px solid gray' }
 				}}
 			>
 				<MenuItem
