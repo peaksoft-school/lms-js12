@@ -121,7 +121,7 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 								disabled={false}
 								onClick={() => {
 									console.log('asd');
-									handleSubmit(onSubmit)
+									handleSubmit(onSubmit);
 								}}
 							>
 								Создать

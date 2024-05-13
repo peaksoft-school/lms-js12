@@ -271,7 +271,7 @@ const Student = () => {
 															}}
 														>
 															<button
-															style={{cursor: 'pointer'}}
+																style={{ cursor: 'pointer' }}
 																onClick={() => setAnchorEl(null)}
 															>
 																<IconDotsVertical />

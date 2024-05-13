@@ -42,7 +42,7 @@ const DeleteMaterial: FC<MaterialProps> = ({
 						<h3>Вы уверены, что хотите удалить урок?</h3>
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions >
+				<DialogActions>
 					<ButtonCancel
 						width="103px"
 						onClick={handleCloseModal}

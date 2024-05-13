@@ -11,7 +11,7 @@ const SupHeader = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
 	const [value, setValue] = useState(0);
-	
+
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
@@ -62,8 +62,6 @@ const SupHeader = () => {
 	const openInstructorStudent = () => {
 		navigate(`/instructor/course/${id}/student`);
 	};
-
-
 
 	const lessonId = localStorage.getItem('lessonId');
 	return (

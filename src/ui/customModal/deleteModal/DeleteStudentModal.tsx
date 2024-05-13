@@ -60,7 +60,7 @@ const DeleteStudentModal: FC<StudentModalProps> = ({
 				>
 					Отмена
 				</ButtonCancel>
-				<ButtonDelete  onClick={handleDelete} type="submit" disabled={false}>
+				<ButtonDelete onClick={handleDelete} type="submit" disabled={false}>
 					Удалить
 				</ButtonDelete>
 			</DialogActions>
