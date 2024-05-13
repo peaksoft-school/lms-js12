@@ -20,4 +20,24 @@ namespace VIDEO_LESSON {
 		description: string;
 		link: string;
 	};
+
+	type VideoLessonPatchResponse = {
+		newVideoLesson: {
+			title: string;
+			description: string;
+			link: string;
+		};
+	};
+
+	type VideoLessonPatchRequest = {
+		deleteById: number | null;
+		newVideoLesson: {
+			title: string;
+			description: string;
+			link: string;
+		};
+	};
+
+	type VideoLessonDeleteResponse = void;
+	type VideoLessonDeleteRequest = number | null;
 }

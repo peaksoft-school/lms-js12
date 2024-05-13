@@ -30,32 +30,33 @@ interface VideoProps {
 
 interface LessonVideoProps {
 	open: boolean;
-	handleClose: () => void;
+	handleCloseVideo: () => void;
 }
 
-const ModalAddVideoLesson: FC<LessonVideoProps> = ({ open, handleClose }) => {
+const ModalAddVideoLesson: FC<LessonVideoProps> = ({
+	open,
+	handleCloseVideo
+}) => {
 	const { control, handleSubmit, reset } = useForm<VideoProps>();
 	const [postVideoLesson] = usePostVideoLessonMutation();
 
-	const onSubmit: SubmitHandler<VideoProps> = async (data) => {
+	const onSubmit: SubmitHandler<VideoProps> = (data) => {
 		// const { title, description, link } = data;
-
 		const postData = {
 			title: data.title,
 			description: data.description,
 			link: data.link
 		};
-		await postVideoLesson(postData);
-
+		postVideoLesson(postData);
 		reset();
-		handleClose();
+		handleCloseVideo();
 	};
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
 				open={open}
-				onClose={handleClose}
+				onClose={handleCloseVideo}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -133,7 +134,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({ open, handleClose }) => {
 							<ButtonCancel
 								type="submit"
 								disabled={false}
-								onClick={handleClose}
+								onClick={handleCloseVideo}
 								width="117px"
 							>
 								Отмена

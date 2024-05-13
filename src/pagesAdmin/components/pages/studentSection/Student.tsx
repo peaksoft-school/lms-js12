@@ -264,7 +264,6 @@ const Student = () => {
 													</td>
 													<td className={scss.TableCellIcon}>
 														<button
-															className={scss.Button_Photo}
 															onClick={(event) => {
 																setAnchorEl(event.currentTarget);
 																setSaveIdElement(item._id);
@@ -272,7 +271,7 @@ const Student = () => {
 															}}
 														>
 															<button
-																className={scss.Button_Photo}
+															style={{cursor: 'pointer'}}
 																onClick={() => setAnchorEl(null)}
 															>
 																<IconDotsVertical />

@@ -134,8 +134,8 @@ const Groups: FC = () => {
 													</div>
 													{
 														<Menu
-															id="positioned-menu"
 															anchorEl={anchorEl}
+															id="positioned-menu"
 															open={open}
 															onClose={handleClose}
 															anchorOrigin={{
@@ -148,6 +148,7 @@ const Groups: FC = () => {
 															}}
 														>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setOpenEditModal(true);
 																	handleClose();
@@ -157,6 +158,7 @@ const Groups: FC = () => {
 																Редактировать
 															</MenuItem>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setDeleteModal(true);
 																	handleClose();

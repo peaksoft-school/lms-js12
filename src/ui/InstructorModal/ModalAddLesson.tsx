@@ -119,7 +119,10 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 								type="submit"
 								width="117px"
 								disabled={false}
-								onClick={handleSubmit(onSubmit)}
+								onClick={() => {
+									console.log('asd');
+									handleSubmit(onSubmit)
+								}}
 							>
 								Создать
 							</ButtonSave>

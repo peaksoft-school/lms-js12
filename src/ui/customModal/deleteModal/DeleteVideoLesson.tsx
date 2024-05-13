@@ -5,32 +5,31 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import ButtonDelete from '@/src/ui/customButton/ButtonDelete';
-import scss from './DeleteMaterial.module.scss';
-import { useDeleteMaterialMutation } from '@/src/redux/api/instructor/materials';
+import scss from './DeleteVideoLesson.module.scss';
+import { useDeleteVideoLessonMutation } from '@/src/redux/api/instructor/video';
 
-type MaterialProps = {
-	open: boolean;
-	handleCloseModal: () => void;
-	deleteById: number | null;
+type VideoLessonProps = {
+	openModalDelete: boolean;
+	handleCloseModal: (openModalVideo: boolean) => void;
+	saveIdElement: number | null;
 };
 
-const DeleteMaterial: FC<MaterialProps> = ({
-	open,
+const DeleteVideoLesson: FC<VideoLessonProps> = ({
+	openModalDelete,
 	handleCloseModal,
-	deleteById
+	saveIdElement
 }) => {
-	const [deleteMaterial] = useDeleteMaterialMutation();
+	const [deleteId] = useDeleteVideoLessonMutation();
 
 	const handleDelete = async () => {
-		await deleteMaterial(deleteById);
-		handleCloseModal();
+		await deleteId(saveIdElement!);
+		handleCloseModal(false);
 	};
 
 	return (
-		<div>
+		<>
 			<Dialog
-				open={open}
-				onClose={handleCloseModal}
+				open={openModalDelete}
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 				PaperProps={{
@@ -39,13 +38,25 @@ const DeleteMaterial: FC<MaterialProps> = ({
 			>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						<h3>Вы уверены, что хотите удалить урок?</h3>
+						<h3>Вы уверены, что хотите удалить этого видеоурока?</h3>
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions >
+				<DialogActions
+					style={{
+						width: '100%',
+						display: 'flex',
+						justifyContent: 'flex-end',
+						alignItems: 'center',
+						paddingBottom: '10px',
+						paddingTop: '13px',
+						gap: '10px'
+					}}
+				>
 					<ButtonCancel
-						width="103px"
-						onClick={handleCloseModal}
+						width="117px"
+						onClick={() => {
+							handleCloseModal(false);
+						}}
 						disabled={false}
 						type="submit"
 					>
@@ -56,8 +67,8 @@ const DeleteMaterial: FC<MaterialProps> = ({
 					</ButtonDelete>
 				</DialogActions>
 			</Dialog>
-		</div>
+		</>
 	);
 };
 
-export default DeleteMaterial;
+export default DeleteVideoLesson;

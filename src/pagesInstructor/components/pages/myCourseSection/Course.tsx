@@ -143,6 +143,7 @@ const Course: FC = () => {
 															}}
 														>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setOpenEditModal(true);
 																	handleClose();
@@ -152,6 +153,7 @@ const Course: FC = () => {
 																Редактировать
 															</MenuItem>
 															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
 																onClick={() => {
 																	setDeleteModal(true);
 																	handleClose();

@@ -1,11 +1,6 @@
 .dialog_paper {
-	width: 500px;
-	height: 190px;
-
-	.buttons {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 10px;
+	p {
+		padding-top: 10px;
+		font-size: 18px;
 	}
 }

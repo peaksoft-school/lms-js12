@@ -110,3 +110,15 @@
 		}
 	}
 }
+
+.main_modal_vid {
+	width: 60% !important;
+	height: 60% !important;
+	padding: 0px !important;
+
+	@media (max-width: 1300px) {
+		width: 100%;
+		max-height: 700px;
+		height: 100%;
+	}
+}

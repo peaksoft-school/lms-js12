@@ -3,32 +3,40 @@
 	width: 100%;
 
 	.video {
-		padding-top: 20px;
-		height: auto;
+		height: 603px;
+
 		overflow-y: scroll !important;
 		scrollbar-width: thin;
 		scrollbar-color: #3772ff #fff;
-		margin-top: 20px;
 		.content {
+			margin-top: 20px;
 			display: flex;
 			.cards {
+				padding: 15px;
 				display: flex;
 				gap: 16px;
 				background: #eff0f4;
 				width: 100%;
 				border-radius: 10px;
-				align-items: center;
 
-				padding-inline: 20px;
+				@media (max-width: 840px) {
+					display: flex;
+					flex-direction: column;
+				}
+
 				.photo {
+					width: 100%;
+					max-width: 350px;
 					position: relative;
 					display: flex;
 					align-items: center;
 					img {
 						width: 100%;
 						max-width: 350px;
-						height: 220px;
+						height: 100%;
+						max-height: 220px;
 						border-radius: 10px;
+						transition: 0.3s;
 					}
 
 					.button_watch {
@@ -54,16 +62,35 @@
 			}
 
 			.title {
-				h1 {
-					font-weight: 600;
-					font-size: 20px;
-					color: #1d293f;
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+
+				.text {
+					h1 {
+						font-weight: 600;
+						font-size: 20px;
+						color: #1d293f;
+					}
+
+					p {
+						font-weight: 400;
+						font-size: 14px;
+						color: #1d293f;
+					}
 				}
 
-				p {
-					font-weight: 400;
-					font-size: 14px;
-					color: #1d293f;
+				.dots {
+					display: flex;
+					margin-top: auto;
+					justify-content: flex-end;
+					align-items: end;
+
+					.button {
+						border: none;
+						background: none;
+						cursor: pointer;
+					}
 				}
 			}
 		}
