@@ -135,11 +135,11 @@ const Course: FC = () => {
 															onClose={handleClose}
 															anchorOrigin={{
 																vertical: 'bottom',
-																horizontal: 'right',
+																horizontal: 'right'
 															}}
 															transformOrigin={{
 																vertical: 'top',
-																horizontal: 'right',
+																horizontal: 'right'
 															}}
 															PaperProps={{
 																style: {

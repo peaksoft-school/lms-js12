@@ -3,7 +3,7 @@ import {
 	IconChevronDown,
 	IconUserCircle
 } from '@tabler/icons-react';
-import scss from './SupHeaderMobile.module.scss';
+import scss from './SubHeaderMobile.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -15,11 +15,8 @@ const SupHeaderMobile = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
 	const [anchorElOpen, setAnchorElOpen] = useState<null | HTMLElement>(null);
-	const [value, setValue] = useState(0);
-
-	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-		setValue(newValue);
-	};
+	const [value, setValue] = useState<number>(0);
+	console.log(value);
 
 	useEffect(() => {
 		if (
@@ -38,12 +35,6 @@ const SupHeaderMobile = () => {
 		}
 	}, [pathname]);
 
-	const a11yProps = (index: number) => {
-		return {
-			id: `simple-tab-${index}`,
-			'aria-controls': `simple-tabpanel-${index}`
-		};
-	};
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};

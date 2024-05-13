@@ -147,7 +147,10 @@ const Groups: FC = () => {
 																horizontal: 'right'
 															}}
 															PaperProps={{
-																style: { boxShadow: 'none', border: '1px solid gray' }
+																style: {
+																	boxShadow: 'none',
+																	border: '1px solid gray'
+																}
 															}}
 														>
 															<MenuItem

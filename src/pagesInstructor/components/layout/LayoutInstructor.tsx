@@ -15,7 +15,7 @@ import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
-import SupHeaderMobile from '@/src/ui/subHeaderMobile/SupHeaderMobile';
+import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import { LessonMobilePage } from '../pages/LessonMobilePage';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);

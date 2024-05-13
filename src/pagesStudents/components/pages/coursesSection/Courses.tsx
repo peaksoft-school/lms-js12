@@ -16,7 +16,7 @@ const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const { data } = useGetCourseQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
-	const [saveIdSrorege, setSaveIdStorege] = useState<null | number>(null);
+	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -90,7 +90,7 @@ const Courses: FC = () => {
 											<div key={item.id} className={scss.zero_block_container}>
 												<div
 													onClick={() => {
-														setSaveIdStorege(item.id);
+														setSaveIdStorege(String(item.id));
 														setSaveItem(item.title);
 													}}
 												>
@@ -122,7 +122,7 @@ const Courses: FC = () => {
 												<div
 													className={scss.block_button_div}
 													onClick={() => {
-														setSaveIdStorege(item.id);
+														setSaveIdStorege(String(item.id));
 													}}
 												>
 													<div onClick={handleClick}>

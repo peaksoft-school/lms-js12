@@ -26,7 +26,7 @@ import AnnouncementPage from '../pages/AnnouncementPage.tsx';
 import CreateCourse from '@/src/ui/customModal/CreateCurse.tsx';
 import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
 import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
-import SupHeaderMobile from '@/src/ui/subHeaderMobile/SupHeaderMobile.tsx';
+import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
