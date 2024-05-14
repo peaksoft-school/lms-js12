@@ -15,6 +15,7 @@ import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
+import ModalAddPresentation from '@/src/ui/InstructorModal/ModalAddPresentation';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -95,6 +96,7 @@ const LayoutInstructor = () => {
 						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
+						<Route path="presentation" element={<ModalAddPresentation />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

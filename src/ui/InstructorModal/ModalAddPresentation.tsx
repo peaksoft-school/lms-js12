@@ -1,6 +1,7 @@
 import scss from './Styled.module.scss';
+import { FC } from 'react';
 import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -8,6 +9,18 @@ import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import { usePostPresentationsMutation } from '@/src/redux/api/instructor/presentations';
+
+interface FormData {
+	title: string;
+	description: string;
+	file: string;
+}
+
+interface AddPresentationProps {
+	open: boolean;
+	handleClose: () => void;
+}
 
 const style = {
 	position: 'absolute',
@@ -22,9 +35,15 @@ const style = {
 	borderRadius: '10px'
 };
 
-const ModalAddPresentation = () => {
+const ModalAddPresentation: FC<AddPresentationProps> = (
+	{
+		// open,
+		// handleClose
+	}
+) => {
 	const [open, setOpen] = useState<boolean>(false);
-	const { control, handleSubmit } = useForm();
+	const { control, reset, handleSubmit } = useForm<FormData>();
+	const [postPresentations] = usePostPresentationsMutation();
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -34,12 +53,22 @@ const ModalAddPresentation = () => {
 		setOpen(false);
 	};
 
-	const onSubmit = () => {
-		handleClose();
+	const onSubmit: SubmitHandler<FormData> = async (data) => {
+		const { title, description, file } = data;
+
+		if (title !== '' && description !== '' && file !== '') {
+			const postData = {
+				title: title,
+				description: description,
+				file: file
+			};
+			postPresentations(postData);
+			reset();
+		}
 	};
 
 	return (
-		<form>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<Button onClick={handleOpen}>Open modal Добавить презентацию</Button>
 			<Modal
 				open={open}
@@ -60,7 +89,7 @@ const ModalAddPresentation = () => {
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="firstName"
+								name="title"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите название презентации' }}
@@ -76,7 +105,7 @@ const ModalAddPresentation = () => {
 							/>
 
 							<Controller
-								name="lastName"
+								name="description"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите описание презентации' }}
@@ -94,7 +123,7 @@ const ModalAddPresentation = () => {
 
 						<div className={scss.button_review}>
 							<Controller
-								name="Name"
+								name="file"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Выберите файл в формате ppt' }}
