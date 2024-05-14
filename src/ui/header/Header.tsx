@@ -15,6 +15,9 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		if (pathname === '/') {
+			navigate('/courses');
+		}
 		if (pathname === '/admin') {
 			navigate('/admin/analytics');
 		}

@@ -9,7 +9,7 @@ const LessonsList = () => {
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const { data } = useGetMaterialsQuery();
+	const { data: data = [] } = useGetMaterialsQuery();
 
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
