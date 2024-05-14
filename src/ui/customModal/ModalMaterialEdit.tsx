@@ -49,11 +49,8 @@ const ModalMaterialEdit: FC<modalProps> = ({
 		const updateMaterial = {
 			...data
 		};
-		console.log(updateMaterial, deleteById);
 		await patchMaterial({ updateMaterial, deleteById });
 	};
-
-	console.log(deleteById);
 
 	useEffect(() => {
 		reset({

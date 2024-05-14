@@ -5,8 +5,8 @@ import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
 import { IconArticle, IconBook, IconDots } from '@tabler/icons-react';
 import scss from './Courses.module.scss';
-// import Pagination from '@mui/material/Pagination';
-// import Stack from '@mui/material/Stack';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/EditCourse';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ import { useGetCourseQuery } from '@/src/redux/api/admin/courses';
 
 const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
-	const { data } = useGetCourseQuery();
+	const { data: data = [] } = useGetCourseQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -35,12 +35,12 @@ const Courses: FC = () => {
 		setAnchorEl(null);
 	};
 
-	// const handlePageChangeC = (
-	// 	_e: React.ChangeEvent<unknown>,
-	// 	page: number
-	// ): void => {
-	// 	setCurrentPage(page);
-	// };
+	const handlePageChangeC = (
+		_e: React.ChangeEvent<unknown>,
+		page: number
+	): void => {
+		setCurrentPage(page);
+	};
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
 	const openPartFunc = () => {
@@ -97,7 +97,7 @@ const Courses: FC = () => {
 													<div
 														onClick={() => {
 															setTimeout(() => {
-																navigate(`/${item.id}/materials`);
+																navigate(`/courses/${item.id}/materials`);
 															}, 1000);
 														}}
 													>
@@ -212,7 +212,7 @@ const Courses: FC = () => {
 							}}
 						/>
 					</div>
-					{/* <div className={scss.stack}>
+					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}
@@ -222,7 +222,7 @@ const Courses: FC = () => {
 								variant="outlined"
 							/>
 						</Stack>
-					</div> */}
+					</div>
 					<div className={scss.Inputs}>
 						<p className={scss.text}>Показать</p>
 						<div className={scss.pagination_element}>

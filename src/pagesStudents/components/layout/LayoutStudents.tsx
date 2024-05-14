@@ -7,6 +7,7 @@ import CalendarPage from '../pages/CalendarPage';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import CoursesPage from '../pages/CoursesPage';
 import LessonListPage from '../pages/LessonListPage';
+import LessonsStudentPage from '../pages/LessonsStudentPage';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +49,18 @@ const LayoutStudents = () => {
 					<Routes>
 						<Route path="/courses" element={<CoursesPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
-						<Route path="/:coursesId/materials" element={<LessonListPage />} />
+						<Route
+							path="/courses/:coursesId/materials"
+							element={<LessonListPage />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:sectionStudentId"
+							element={<LessonsStudentPage />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:sectionStudentId/video"
+							element={<LessonsStudentPage />}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
