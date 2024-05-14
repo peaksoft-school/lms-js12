@@ -2,12 +2,11 @@ import { Route, Routes } from 'react-router-dom';
 import scss from './LayoutStudents.module.scss';
 import Header from '@/src/ui/header/Header';
 import { useEffect, useState } from 'react';
-// import Material from '@/src/ui/material/Material';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import CalendarPage from '../pages/CalendarPage';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
-import MaterialsPage from '../pages/MaterialsPage';
 import CoursesPage from '../pages/CoursesPage';
+import LessonListPage from '../pages/LessonListPage';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -47,10 +46,9 @@ const LayoutStudents = () => {
 				<main style={{ width: '100%' }}>
 					<SupHeader />
 					<Routes>
-						<Route path="/" element={<CoursesPage />} />
+						<Route path="/courses" element={<CoursesPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
-						<Route path="/:coursesId/materials" element={<MaterialsPage />} />
-						{/* <Route path="/courses/:coursesId" element={<Material />} /> */}
+						<Route path="/:coursesId/materials" element={<LessonListPage />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

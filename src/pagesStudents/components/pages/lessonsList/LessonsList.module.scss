@@ -1,4 +1,4 @@
-.List_lessons {
+.list_lessons {
 	padding-top: 80px;
 
 	.container {
@@ -12,7 +12,7 @@
 
 			.title_lesson_1 {
 				text-decoration: none;
-				color: blue;
+				color: #0000ff;
 			}
 			.img_arrow {
 				color: #b4b2b2;
@@ -25,11 +25,11 @@
 		.title_lesson {
 			margin-bottom: 20px;
 		}
-		.card_lesson {
+		.card {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
 			flex-wrap: wrap;
-			background-color: #fff;
+			background: #fff;
 			border-radius: 8px;
 			gap: 20px;
 			padding-inline: 20px;
@@ -39,25 +39,67 @@
 				grid-template-columns: repeat(1, 1fr);
 			}
 
-			.card_container {
+			.cards {
 				display: flex;
 				justify-content: left;
 				align-items: center;
 				width: 100%;
 				height: 70px;
-				background-color: #dde9f9;
+				background: #dde9f9;
 				border: 1px solid #d4d4d4;
 				border-radius: 8px;
 				font-weight: bold;
 				font-size: 16px;
+				cursor: pointer;
 
-				.card_link {
+				.link {
 					text-decoration: none;
 
 					.card_item {
 						color: #141414;
 						margin-left: 15px;
 					}
+				}
+			}
+		}
+		.pagination {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			width: 100%;
+			background: #efeff6;
+
+			padding-block: 20px;
+			padding-inline: 30px;
+			margin-top: 21px;
+			position: sticky;
+			bottom: 0;
+			left: 0;
+
+			@media (max-width: 1000px) {
+				padding-bottom: 140px;
+			}
+
+			@media (max-width: 625px) {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+
+			.stack {
+				@media (max-width: 625px) {
+					display: flex;
+					flex-direction: column;
+				}
+			}
+
+			.callInput {
+				display: flex;
+				gap: 4px;
+				align-items: center;
+
+				input {
+					width: 40px;
 				}
 			}
 		}

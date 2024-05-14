@@ -101,7 +101,6 @@ const Materials: FC = () => {
 		setAnchorEl(event.currentTarget);
 	};
 	const id = localStorage.getItem('id');
-	console.log(saveIdSrorege);
 
 	return (
 		<div className={scss.material}>
