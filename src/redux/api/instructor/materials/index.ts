@@ -7,7 +7,7 @@ const api = index.injectEndpoints({
 			MATERIALS.MaterialsGetRequest
 		>({
 			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/e2e52edbbeb1c03191182468eb7da6a3/mm',
+				url: 'https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users',
 				method: 'GET'
 			}),
 			providesTags: ['material']
@@ -17,7 +17,7 @@ const api = index.injectEndpoints({
 			MATERIALS.MaterialsPostRequest
 		>({
 			query: (newLesson) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/e2e52edbbeb1c03191182468eb7da6a3/mm',
+				url: 'https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users',
 				method: 'POST',
 				body: newLesson
 			}),
@@ -28,7 +28,7 @@ const api = index.injectEndpoints({
 			MATERIALS.MaterialsPatchRequest
 		>({
 			query: ({ updateMaterial, deleteById }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/e2e52edbbeb1c03191182468eb7da6a3/mm/${deleteById}`,
+				url: `https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users/${deleteById}`,
 				method: 'PATCH',
 				body: updateMaterial
 			}),
@@ -39,7 +39,7 @@ const api = index.injectEndpoints({
 			MATERIALS.MaterialsDeleteRequest
 		>({
 			query: (deleteId) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/e2e52edbbeb1c03191182468eb7da6a3/mm/${deleteId}`,
+				url: `https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users/${deleteId}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['material']
