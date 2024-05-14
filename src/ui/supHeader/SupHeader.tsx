@@ -1,12 +1,26 @@
-import { IconChevronDown, IconUserCircle } from '@tabler/icons-react';
+import {
+	IconBellRinging2,
+	IconChevronDown,
+	IconUserCircle
+} from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Menu, MenuItem, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
+import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
 
 const SupHeader = () => {
 	const { pathname } = useLocation();
 	const [open, setOpen] = useState(false);
+	const [openNotification, setOpenNotification] = useState(false);
+
+	const handleOpenNotification = () => {
+		setOpenNotification(true);
+	};
+
+	const handleCloseNotification = () => {
+		setOpenNotification(false);
+	};
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
@@ -77,6 +91,36 @@ const SupHeader = () => {
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>
+						{pathname.startsWith('/courses') && (
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									cursor: 'pointer'
+								}}
+							>
+								<IconBellRinging2
+									onClick={handleOpenNotification}
+									style={{ width: '30px', height: '30px' }}
+									stroke={2}
+								/>
+							</div>
+						)}
+						{pathname.startsWith('/instructor') && (
+							<div
+								style={{
+									display: 'flex',
+									cursor: 'pointer',
+									alignItems: 'center'
+								}}
+							>
+								<IconBellRinging2
+									onClick={handleOpenNotification}
+									style={{ width: '30px', height: '30px' }}
+									stroke={2}
+								/>
+							</div>
+						)}
 						<IconUserCircle className={scss.profile} stroke={2} />
 						<div
 							id="basic-button"
@@ -92,21 +136,18 @@ const SupHeader = () => {
 											<p> Aдминистратор</p>
 										</>
 									)}
-									{pathname.startsWith('/instructor') && (
-										<>
-											<p>Учитель</p>
-										</>
-									)}
-									{pathname === '/' && (
-										<>
-											<p>Студент</p>
-										</>
-									)}
 								</div>
 							)}
 							{pathname.startsWith('/instructor') && (
+								<>
+									<div style={{ fontSize: '18px', fontWeight: '500' }}>
+										Учитель
+									</div>
+								</>
+							)}
+							{pathname.startsWith('/courses') && (
 								<div style={{ fontSize: '18px', fontWeight: '500' }}>
-									Учитель
+									Студент
 								</div>
 							)}
 						</div>
@@ -361,6 +402,10 @@ const SupHeader = () => {
 						</div>
 					</div>
 				)}
+			<NotificationHeader
+				open={openNotification}
+				handleClose={handleCloseNotification}
+			/>
 		</div>
 	);
 };

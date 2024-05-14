@@ -58,7 +58,6 @@ const Lesson = () => {
 											icon={<IconBrandYoutubeKids stroke={2} />}
 											label="Видеоурок"
 											id="simple-tab-0"
-											// className={scss.tab}
 											aria-controls="simple-tabpanel-0"
 											onClick={handleOpenVideo}
 										/>
@@ -66,20 +65,17 @@ const Lesson = () => {
 											icon={<IconDeviceDesktop stroke={2} />}
 											label="Презентация"
 											id="simple-tab-1"
-											// className={scss.tab}
 											aria-controls="simple-tabpanel-1"
 										/>
 										<Tab
 											icon={<IconFile stroke={2} />}
 											label="Задание"
 											id="simple-tab-2"
-											// className={scss.tab}
 											aria-controls="simple-tabpanel-2"
 										/>
 										<Tab
 											icon={<IconLink stroke={2} />}
 											label="Ссылка"
-											// className={scss.tab}
 											id="simple-tab-3"
 											aria-controls="simple-tabpanel-3"
 										/>
@@ -87,7 +83,6 @@ const Lesson = () => {
 											icon={<IconAB2 stroke={2} />}
 											label="Тест"
 											id="simple-tab-4"
-											// className={scss.tab}
 											aria-controls="simple-tabpanel-4"
 										/>
 									</Tabs>
