@@ -1,4 +1,4 @@
-import { Tab, Tabs } from '@mui/material';
+import { Box, Tab, Tabs } from '@mui/material';
 import scss from './LessonsStudent.module.scss';
 import { useState } from 'react';
 import {
@@ -11,6 +11,7 @@ import {
 import 'keen-slider/keen-slider.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StudentVideoLessonPage from '../StudentVideoLessonPage';
+import { ScrollArea } from '@mantine/core';
 
 const LessonsStudent = () => {
 	const [value, setValue] = useState(0);
@@ -48,48 +49,52 @@ const LessonsStudent = () => {
 				>
 					<div className={scss.container}>
 						<div className={scss.content}>
-							<Tabs
-								value={value}
-								onChange={handleChange}
-								aria-label="basic tabs example"
-							>
-								<Tab
-									icon={<IconBrandYoutubeKids stroke={2} />}
-									label="Видеоурок"
-									id="simple-tab-0"
-									className={scss.tab}
-									aria-controls="simple-tabpanel-0"
-									onClick={handleOpenVideo}
-								/>
-								<Tab
-									icon={<IconDeviceDesktop stroke={2} />}
-									label="Презентация"
-									id="simple-tab-1"
-									className={scss.tab}
-									aria-controls="simple-tabpanel-1"
-								/>
-								<Tab
-									icon={<IconFile stroke={2} />}
-									label="Задание"
-									id="simple-tab-2"
-									className={scss.tab}
-									aria-controls="simple-tabpanel-2"
-								/>
-								<Tab
-									icon={<IconLink stroke={2} />}
-									label="Ссылка"
-									className={scss.tab}
-									id="simple-tab-3"
-									aria-controls="simple-tabpanel-3"
-								/>
-								<Tab
-									icon={<IconAB2 stroke={2} />}
-									label="Тест"
-									id="simple-tab-4"
-									className={scss.tab}
-									aria-controls="simple-tabpanel-4"
-								/>
-							</Tabs>
+							<ScrollArea type="always" offsetScrollbars classNames={scss}>
+								<Box>
+									<Tabs
+										value={value}
+										onChange={handleChange}
+										aria-label="basic tabs example"
+									>
+										<Tab
+											icon={<IconBrandYoutubeKids stroke={2} />}
+											label="Видеоурок"
+											id="simple-tab-0"
+											className={scss.tab}
+											aria-controls="simple-tabpanel-0"
+											onClick={handleOpenVideo}
+										/>
+										<Tab
+											icon={<IconDeviceDesktop stroke={2} />}
+											label="Презентация"
+											id="simple-tab-1"
+											className={scss.tab}
+											aria-controls="simple-tabpanel-1"
+										/>
+										<Tab
+											icon={<IconFile stroke={2} />}
+											label="Задание"
+											id="simple-tab-2"
+											className={scss.tab}
+											aria-controls="simple-tabpanel-2"
+										/>
+										<Tab
+											icon={<IconLink stroke={2} />}
+											label="Ссылка"
+											className={scss.tab}
+											id="simple-tab-3"
+											aria-controls="simple-tabpanel-3"
+										/>
+										<Tab
+											icon={<IconAB2 stroke={2} />}
+											label="Тест"
+											id="simple-tab-4"
+											className={scss.tab}
+											aria-controls="simple-tabpanel-4"
+										/>
+									</Tabs>
+								</Box>
+							</ScrollArea>
 							{pathname === `/courses/${id}/materials/${item}/video` && (
 								<>
 									<StudentVideoLessonPage />

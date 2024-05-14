@@ -1,0 +1,44 @@
+.main_modal_vid {
+	width: 27% !important;
+	height: 70% !important;
+	padding: 20px !important;
+	border-radius: 8px !important;
+	overflow-y: scroll !important;
+	scrollbar-width: thin;
+	scrollbar-color: #3772ff #fff;
+	border: none !important;
+
+	.header_modal {
+		border-bottom: 1px solid gray;
+		height: 50px;
+
+		h1 {
+			color: #707070;
+			font-weight: 600;
+			font-size: 20px;
+		}
+	}
+
+	.notifications {
+		margin-top: 25px;
+		h2 {
+			color: #707070;
+			font-weight: 600;
+			font-size: 18px;
+		}
+
+		.messages_content {
+			h1 {
+				font-weight: 600;
+				font-size: 25px;
+				padding-top: 25px;
+			}
+
+			.results {
+				display: flex;
+				flex-direction: column;
+				gap: 7px;
+			}
+		}
+	}
+}
