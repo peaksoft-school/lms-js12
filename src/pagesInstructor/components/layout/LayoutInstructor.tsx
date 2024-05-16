@@ -17,6 +17,7 @@ import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import { LessonMobilePage } from '../pages/LessonMobilePage';
+import Test from '../pages/testtSection/Test';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -124,6 +125,14 @@ const LayoutInstructor = () => {
 								/>
 							</>
 						)}
+						<Route
+							path="/course/:materialsId/materials/:lessonId/test"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/createTest"
+							element={<Test />}
+						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
 					</Routes>

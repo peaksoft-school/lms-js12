@@ -1,0 +1,182 @@
+.div_component {
+	background: white;
+	width: 98%;
+	height: 200px;
+	border-radius: 10px;
+	margin-top: 10px;
+	margin-left: 15px;
+	.text_h3 {
+		color: blue;
+		padding-top: 20px;
+		padding-left: 35px;
+	}
+	.container {
+		width: 95%;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		.input_contain {
+			width: 103%;
+		}
+		.input_time {
+			display: flex;
+			justify-content: flex-end;
+			gap: 10px;
+			align-items: center;
+		}
+
+		.time_inputs {
+			display: flex;
+			gap: 30px;
+			height: 40px;
+			width: 90px;
+			border-radius: 10px;
+		}
+		.input_contain {
+			padding-left: 35px;
+			padding-top: 25px;
+		}
+		.variant_inputs {
+			// width: 100%;
+		}
+	}
+}
+
+.modal_contain {
+	// width: 800px;
+	.title {
+		font-size: 15px;
+	}
+	.vremia_time {
+		display: flex;
+		gap: 10px;
+	}
+	.vremia{
+		
+  border-color: blue;
+	background: rgb(212, 210, 210);
+	}
+	.vremia :hover{
+	border-color: blue($color: #000000);
+	}
+	.chas_minuta {
+		display: flex;
+		gap: 75px;
+		margin-left: 30px;
+		font-size: 10px;
+		margin-top: -20px;
+		text-align: center;
+	}
+	.handleClose{
+		color: red;
+	}
+}
+
+.div_component2 {
+	background: white;
+	width: 98%;
+	border-radius: 10px;
+	margin-left: 15px;
+	margin-top: 20px;
+
+	.input_contain2 {
+		gap: 50px;
+		margin-left: 40px;
+		.h2_number {
+			color: blue;
+		}
+		.input_texsts {
+			display: flex;
+			gap: 40px;
+			padding-top: 50px;
+
+			@media (max-width: 1200px) {
+				margin-right: 500px;
+			}
+
+			@media (max-width: 992px) {
+				margin-right: 300px;
+			}
+
+			@media (max-width: 768px) {
+				margin-right: 200px;
+			}
+
+			@media (max-width: 576px) {
+				margin-right: 100px;
+			}
+		}
+		.h2_number {
+		}
+		.radio_input {
+			display: flex;
+			gap: 35px;
+			padding-top: 9px;
+		}
+	}
+	.input_div {
+		display: flex	;
+		gap: 40px;
+		.variant_inputs{
+			width: 95%;
+			display: flex;
+			align-items: center;
+		}
+
+		margin-top: 20px;
+	}
+	.radio_checkbox {
+		margin-top: 10px;
+	}
+	.p_text2 {
+		display: flex;
+		gap: 20px;
+		padding-left: 55px;
+		padding-top: 15px;
+		padding-bottom: 15px;
+
+		.copy_icon {
+			display: flex;
+			// justify-content: flex-end;
+			margin-left: 1000px;
+
+			@media (max-width: 1200px) {
+				margin-left: 500px;
+			}
+
+			@media (max-width: 992px) {
+				margin-left: 300px;
+			}
+
+			@media (max-width: 768px) {
+				margin-left: 100px;
+			}
+
+			@media (max-width: 576px) {
+				margin-left: 1%;
+			}
+		}
+		.delete_icon {
+			display: flex;
+			justify-content: flex-end;
+
+			@media (max-width: 576px) {
+				justify-content: flex-start;
+			}
+		}
+	}
+}
+
+.button_contain {
+	display: flex;
+	justify-content: flex-end;
+	gap: 20px;
+	margin-right: 20px;
+	margin-top: 20px;
+}
+.button_circle {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 100px;
+	margin-right: 50px;
+}
