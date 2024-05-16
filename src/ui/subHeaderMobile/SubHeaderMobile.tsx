@@ -77,6 +77,8 @@ const SupHeaderMobile = () => {
 				pathname !== `/instructor/course/${id}/materials/${lessonId}` &&
 				pathname !== '/instructor/course/' &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}/video` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/presentation` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>

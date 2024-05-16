@@ -12,6 +12,7 @@ import 'keen-slider/keen-slider.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StudentVideoLessonPage from '../StudentVideoLessonPage';
 import { ScrollArea } from '@mantine/core';
+import StudentPresentationPage from '../StudentPresentationPage';
 
 const LessonsStudent = () => {
 	const [value, setValue] = useState(0);
@@ -28,6 +29,10 @@ const LessonsStudent = () => {
 
 	const handleOpenVideo = () => {
 		navigate(`/courses/${id}/materials/${item}/video`);
+	};
+
+	const openStudentPresentation = () => {
+		navigate(`/courses/${id}/materials/${item}/presentation`);
 	};
 
 	return (
@@ -70,6 +75,7 @@ const LessonsStudent = () => {
 											id="simple-tab-1"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-1"
+											onClick={openStudentPresentation}
 										/>
 										<Tab
 											icon={<IconFile stroke={2} />}
@@ -98,6 +104,11 @@ const LessonsStudent = () => {
 							{pathname === `/courses/${id}/materials/${item}/video` && (
 								<>
 									<StudentVideoLessonPage />
+								</>
+							)}
+							{pathname === `/courses/${id}/materials/${item}/presentation` && (
+								<>
+									<StudentPresentationPage />
 								</>
 							)}
 						</div>

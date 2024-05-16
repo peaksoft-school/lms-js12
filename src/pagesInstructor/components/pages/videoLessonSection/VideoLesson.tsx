@@ -4,7 +4,6 @@ import { Preloader } from '@/src/ui/preloader/Preloader';
 import { Button, Menu, MenuItem } from '@mui/material';
 import ModalAddVideoLesson from '@/src/ui/InstructorModal/ModalAddVideoLesson';
 import { useState } from 'react';
-import watch from '@/src/assets/svgs/Polygon 62.svg';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
@@ -87,7 +86,21 @@ const VideoLesson = () => {
 									alt=""
 								/>
 								<div onClick={handleOpenWatch} className={scss.button_watch}>
-									<img className={scss.play_video} src={watch} alt="" />
+									<Button
+										sx={{
+											borderRadius: '8px',
+											textTransform: 'capitalize',
+											background: '#0000ff7f',
+											'&:hover': {
+												background: '#0000ffb2'
+											}
+										}}
+										size="medium"
+										variant="contained"
+										onClick={handleOpenWatch}
+									>
+										Смотреть
+									</Button>
 								</div>
 							</div>
 							<div className={scss.title}>

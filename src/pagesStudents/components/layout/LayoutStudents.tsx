@@ -61,6 +61,10 @@ const LayoutStudents = () => {
 							path="/courses/:coursesId/materials/:sectionStudentId/video"
 							element={<LessonsStudentPage />}
 						/>
+						<Route
+							path="/courses/:coursesId/materials/:sectionStudentId/presentation"
+							element={<LessonsStudentPage />}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

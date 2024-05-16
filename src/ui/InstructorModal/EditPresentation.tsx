@@ -1,12 +1,21 @@
 import scss from './Styled.module.scss';
-import { FC, useRef, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { FC, useEffect, useRef, useState } from 'react';
+import {
+	useForm,
+	Controller,
+	SubmitHandler,
+	FieldValues
+} from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import {
+	useEditPresentationMutation,
+	useGetPresentationQuery
+} from '@/src/redux/api/instructor/presentation';
 
 const style = {
 	position: 'absolute',
@@ -14,37 +23,59 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
-	height: 357,
+	height: 368,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
 };
 
-interface ModalAddPresentationProps {
+interface PresentationProps1 {
 	open: boolean;
 	handleClose: () => void;
+	saveIdElement: number | null;
 }
 
-const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
+const EditPresentation: FC<PresentationProps1> = ({
+	open,
 	handleClose,
-	open
+	saveIdElement
 }) => {
-	const { control } = useForm();
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const { control, handleSubmit, reset } = useForm();
+	const { data } = useGetPresentationQuery();
 	const fileInputRef = useRef<HTMLInputElement>(null);
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [editPresentation] = useEditPresentationMutation();
+
+	const openFilePicker = () => {
+		fileInputRef.current?.click();
+	};
 
 	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0] || null;
 		setSelectedFile(file);
 	};
 
-	const openFilePicker = () => {
-		fileInputRef.current?.click();
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const newPresentation = {
+			title: data.title,
+			presentation: selectedFile,
+			description: data.description
+		};
+		await editPresentation({ newPresentation, saveIdElement });
+		reset();
 	};
+	const finder = data?.find((item) => item._id === saveIdElement);
 
+	useEffect(() => {
+		reset({
+			title: finder?.title,
+			presentation: finder?.presentation,
+			description: finder?.description
+		});
+	}, [finder]);
 	return (
-		<form>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -58,13 +89,13 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.com_text}>Добавить презентацию</p>
+						<p className={scss.com_text}>Редактировать презентацию</p>
 					</Typography>
 
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="firstName"
+								name="title"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите название презентации' }}
@@ -80,7 +111,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 							/>
 
 							<Controller
-								name="lastName"
+								name="description"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите описание презентации' }}
@@ -153,7 +184,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
-								onClick={() => {}}
+								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="117px"
 								disabled={false}
@@ -168,4 +199,4 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	);
 };
 
-export default ModalAddPresentation;
+export default EditPresentation;

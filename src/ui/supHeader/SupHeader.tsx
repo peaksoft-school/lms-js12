@@ -13,6 +13,7 @@ const SupHeader = () => {
 	const { pathname } = useLocation();
 	const [open, setOpen] = useState(false);
 	const [openNotification, setOpenNotification] = useState(false);
+	const navigate = useNavigate();
 
 	const handleOpenNotification = () => {
 		setOpenNotification(true);
@@ -23,7 +24,7 @@ const SupHeader = () => {
 	};
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const navigate = useNavigate();
+
 	const [value, setValue] = useState(0);
 
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -44,6 +45,20 @@ const SupHeader = () => {
 			pathname === `/instructor/course/${id}/materials`
 		) {
 			setValue(0);
+		}
+	}, [pathname]);
+
+	// ! instructor video rendering
+	useEffect(() => {
+		if (pathname === `/instructor/course/${id}/materials/${lessonId}`) {
+			navigate(`/instructor/course/${id}/materials/${lessonId}/video`);
+		}
+	}, [pathname]);
+
+	// ! student video rendering
+	useEffect(() => {
+		if (pathname === `/courses/${id}/materials/${lessonId}`) {
+			navigate(`/courses/${id}/materials/${lessonId}/video`);
 		}
 	}, [pathname]);
 
@@ -88,6 +103,11 @@ const SupHeader = () => {
 				pathname !== `/instructor/course/${id}/materials/${lessonId}` &&
 				pathname !== '/instructor/course/' &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}/video` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/presentation` &&
+				pathname !== `/courses/${id}/materials` &&
+				pathname !== `/courses/${id}/materials/${lessonId}/video` &&
+				pathname !== `/courses/${id}/materials/${lessonId}/presentation` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>
@@ -385,6 +405,81 @@ const SupHeader = () => {
 								)}
 								{pathname.startsWith('/instructor') && (
 									<div className={scss.instructor_profile}>Учитель</div>
+								)}
+							</div>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+							<Menu
+								id="basic-menu"
+								anchorEl={anchorEl}
+								open={open}
+								onClose={() => setOpen(false)}
+								MenuListProps={{
+									'aria-labelledby': 'basic-button'
+								}}
+							>
+								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
+							</Menu>
+						</div>
+					</div>
+				)}
+			{/* //! student header*/}
+			{pathname.startsWith(`/courses/${id}/materials`) &&
+				pathname !== '/courses' && (
+					<div className={scss.subHeaderCourses2}>
+						<Box>
+							<Box
+								sx={{
+									borderColor: 'divider',
+									paddingTop: '20px'
+								}}
+							>
+								<Tabs
+									value={value}
+									onChange={handleChange}
+									aria-label="basic tabs example"
+								>
+									<Tab label="Материалы" {...a11yProps(0)} />
+									<Tab label="Рейтинг Студентов" {...a11yProps(1)} />
+								</Tabs>
+							</Box>
+						</Box>
+						<div className={scss.header_elements}>
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									cursor: 'pointer'
+								}}
+							>
+								<IconBellRinging2
+									onClick={handleOpenNotification}
+									style={{ width: '30px', height: '30px' }}
+									stroke={2}
+								/>
+							</div>
+							<IconUserCircle className={scss.profile} stroke={2} />
+							<div
+								className={scss.profile_text}
+								id="basic-button"
+								aria-controls={open ? 'basic-menu' : undefined}
+								aria-haspopup="true"
+								aria-expanded={open ? 'true' : undefined}
+								onClick={handleClick}
+							>
+								{pathname.startsWith('/courses') && (
+									<div style={{ fontSize: '18px', fontWeight: '500' }}>
+										<>
+											<p>Студент</p>
+										</>
+									</div>
+								)}
+								{pathname.startsWith('/instructor') && (
+									<div
+										style={{ fontSize: '18px', fontWeight: '500' }}
+										className={scss.person}
+									>
+										Учитель
+									</div>
 								)}
 							</div>
 							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />

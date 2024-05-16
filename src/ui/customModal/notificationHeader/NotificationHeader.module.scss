@@ -7,7 +7,7 @@
 	scrollbar-width: thin;
 	scrollbar-color: #3772ff #fff;
 	border: none !important;
-	overflow-x: scroll !important;
+	outline: none !important;
 
 	@media (max-width: 1300px) {
 		width: 37% !important;

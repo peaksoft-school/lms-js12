@@ -1,15 +1,16 @@
-.VideoLesson {
+.presentation {
 	padding-inline: 20px;
 	width: 100%;
 
-	.video {
-		// height: 603px;
+	.card {
 		overflow-y: scroll !important;
 		scrollbar-width: thin;
 		scrollbar-color: #3772ff #fff;
+
 		.content {
-			margin-top: 20px;
+			margin-top: 40px;
 			display: flex;
+
 			.cards {
 				padding: 15px;
 				display: flex;
@@ -23,7 +24,7 @@
 					flex-direction: column;
 				}
 
-				.photo {
+				.img {
 					width: 100%;
 					max-width: 350px;
 					position: relative;
@@ -81,7 +82,6 @@
 			}
 		}
 	}
-
 	.button {
 		display: flex;
 		gap: 10px;
