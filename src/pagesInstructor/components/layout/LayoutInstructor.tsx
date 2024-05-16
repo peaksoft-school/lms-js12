@@ -17,6 +17,7 @@ import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import { LessonMobilePage } from '../pages/LessonMobilePage';
+import GetTest from '@/src/ui/getTest/GetTest';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -110,6 +111,14 @@ const LayoutInstructor = () => {
 									path="/course/:materialsId/materials/:lessonId/video"
 									element={<LessonPage />}
 								/>
+								<Route
+									path="/course/:materialsId/materials/:lessonId/test"
+									element={<LessonPage />}
+								/>
+								<Route
+									path="/course/:materialsId/materials/:lessonId/showTest"
+									element={<GetTest />}
+								/>
 							</>
 						)}
 						{isMobile && (
@@ -121,6 +130,14 @@ const LayoutInstructor = () => {
 								<Route
 									path="/course/:materialsId/materials/:lessonId/video"
 									element={<LessonMobilePage />}
+								/>
+								<Route
+									path="/course/:materialsId/materials/:lessonId/test"
+									element={<LessonPage />}
+								/>
+								<Route
+									path="/course/:materialsId/materials/:lessonId/showTest"
+									element={<GetTest />}
 								/>
 							</>
 						)}

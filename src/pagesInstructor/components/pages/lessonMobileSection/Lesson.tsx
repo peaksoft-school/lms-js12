@@ -12,6 +12,7 @@ import {
 import 'keen-slider/keen-slider.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VideoLessonPage from '../VideoLessonPage';
+import Test from '../testSection/Test';
 
 const Lesson = () => {
 	const [value, setValue] = useState(0);
@@ -27,6 +28,9 @@ const Lesson = () => {
 
 	const handleOpenVideo = () => {
 		navigate(`/instructor/course/${id}/materials/${item}/video`);
+	};
+	const handleOpenTest = () => {
+		navigate(`/instructor/course/${id}/materials/${item}/test`);
 	};
 	return (
 		<div className={scss.lesson}>
@@ -89,6 +93,7 @@ const Lesson = () => {
 											id="simple-tab-4"
 											// className={scss.tab}
 											aria-controls="simple-tabpanel-4"
+											onClick={handleOpenTest}
 										/>
 									</Tabs>
 								</Box>
@@ -97,6 +102,12 @@ const Lesson = () => {
 								`/instructor/course/${id}/materials/${item}/video` && (
 								<>
 									<VideoLessonPage />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/test` && (
+								<>
+									<Test />
 								</>
 							)}
 						</div>
