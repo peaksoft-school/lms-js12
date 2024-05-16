@@ -10,7 +10,7 @@ import DeleteTask from '@/src/ui/customModal/deleteModal/DeleteTask';
 
 const CrateTask = () => {
 	const [openDelete, setOpenDelete] = useState(false);
-	const [saveId, setSaveId] = useState(null);
+	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
 	const { data } = useGetTaskInstructorQuery();
 	const id = localStorage.getItem('id');
@@ -26,6 +26,7 @@ const CrateTask = () => {
 	};
 
 	const lessonId = localStorage.getItem('lessonId');
+	const task = localStorage.getItem('task');
 
 	const openLessonAddTask = () => {
 		navigate(`/instructor/course/${id}/materials/${lessonId}/lesson/addTask`);
@@ -35,7 +36,9 @@ const CrateTask = () => {
 	};
 
 	const GetTask = () => {
-		navigate(`/instructor/course/${id}/materials/${lessonId}/lesson/getTask`);
+		navigate(
+			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding`
+		);
 	};
 	return (
 		<div className={scss.Task}>
@@ -55,11 +58,16 @@ const CrateTask = () => {
 			<div className={scss.card_lesson}>
 				{data?.map((item) => (
 					<div className={scss.card_container}>
-						<p className={scss.card_link} href="#" onClick={GetTask}>
+						<p className={scss.card_link} onClick={GetTask}>
 							{item.title}
 						</p>
-						<div onClick={handleClick} className={scss.button}>
-							<button>
+						<div
+							onClick={() => {
+								localStorage.setItem('task', String(item._id));
+							}}
+							className={scss.button}
+						>
+							<button onClick={handleClick}>
 								<IconDotsVertical stroke={2} />
 							</button>
 						</div>
@@ -80,7 +88,6 @@ const CrateTask = () => {
 							>
 								<MenuItem
 									onClick={() => {
-										localStorage.setItem('task', String(item._id));
 										openLessonEditTask();
 									}}
 								>

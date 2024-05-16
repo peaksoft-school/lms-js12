@@ -7,15 +7,25 @@
 	.conatiner {
 		margin-bottom: 20px;
 		width: 100%;
-		height: auto;
 		background: #fff;
 		padding-inline: 20px;
 		padding-top: 21px;
+		overflow-y: scroll;
 
 		.main_task {
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
+
+			.save_file {
+				display: flex;
+				justify-content: flex-end;
+			}
+			button {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+			}
 
 			.input_part {
 				display: flex;
@@ -25,13 +35,13 @@
 
 				.editor {
 					.editorInput {
+						display: flex;
 						width: 100%;
 						border: none;
-						display: flex;
 						flex-direction: column;
 						flex-direction: row-reverse;
 						gap: 20px;
-						border-top: none;
+						border-bottom: none;
 					}
 				}
 				.icons {
@@ -104,15 +114,20 @@
 	.calendar {
 		background: #fff;
 		display: flex;
-		justify-content: space-between;
-	}
-}
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: flex-end;
+		gap: 60px;
+		padding-inline: 20px;
 
-.button {
-	position: absolute;
-	top: 65%;
-	left: 55%;
-	background: rgb(248, 59, 59);
-	color: #fff;
-	border-radius: 10px;
+		.dataInput {
+			display: flex;
+			align-items: center;
+			gap: 15px;
+			input {
+				padding-block: 14px;
+				padding-inline: 5px;
+			}
+		}
+	}
 }

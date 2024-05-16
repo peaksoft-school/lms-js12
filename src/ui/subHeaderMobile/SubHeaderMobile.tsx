@@ -67,6 +67,7 @@ const SupHeaderMobile = () => {
 	const handleClose = () => {
 		setAnchorElOpen(null);
 	};
+	const task = localStorage.getItem('task');
 	return (
 		<div className={scss.header}>
 			{/* //! admin header */}
@@ -85,6 +86,18 @@ const SupHeaderMobile = () => {
 				pathname !==
 					`/instructor/course/${id}/materials/${lessonId}/lesson/getTask` &&
 				pathname !== '/instructor/course/' &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/getTask` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>

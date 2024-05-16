@@ -28,7 +28,8 @@ export const api = createApi({
 		'courses',
 		'announcement',
 		'material',
-		'videoLesson'
+		'videoLesson',
+		'addTask'
 	],
 	endpoints: () => ({})
 });

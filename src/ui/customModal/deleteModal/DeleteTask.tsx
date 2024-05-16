@@ -25,8 +25,7 @@ const DeleteTask: React.FC<DeleteProps> = ({
 		await deleteTaskInstructor(deleteById!);
 		closeModalDelete(false);
 	};
-  console.log(deleteById);
-  
+	console.log(deleteById);
 
 	return (
 		<div>

@@ -64,6 +64,8 @@ const SupHeader = () => {
 	};
 
 	const lessonId = localStorage.getItem('lessonId');
+	const task = localStorage.getItem('task');
+	const taskId = localStorage.getItem('taskId');
 	return (
 		<div className={scss.header}>
 			{/* //! admin header */}
@@ -82,6 +84,20 @@ const SupHeader = () => {
 				pathname !==
 					`/instructor/course/${id}/materials/${lessonId}/lesson/getTask` &&
 				pathname !== '/instructor/course/' &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/getTask` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/answer/${taskId}` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>

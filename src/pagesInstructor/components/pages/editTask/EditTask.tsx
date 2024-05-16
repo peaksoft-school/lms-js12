@@ -1,26 +1,34 @@
 import Input from '@/src/ui/customInput/Input';
 import scss from './EditTask.module.scss';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { Button } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import { useNavigate } from 'react-router-dom';
 import {
 	useEditTaskInstructorMutation,
 	useGetTaskInstructorQuery
 } from '@/src/redux/api/instructor/addTask';
+import { IconDownload } from '@tabler/icons-react';
+import { Dayjs } from 'dayjs';
 
 const EditTask = () => {
 	const task = localStorage.getItem('task');
 	const { data } = useGetTaskInstructorQuery();
 	const navigate = useNavigate();
-	const id = data?.find((item) => item._id === +task);
+	const id = data?.find((item) => item._id === Number(task));
 	console.log(id?.title);
-	const [title, setTitle] = useState(id?.title);
+	const [title, setTitle] = useState<string | undefined>(id?.title);
 	const [value, setValue] = useState(id?.description);
-	const [dedline, setDedlene] = useState(id?.dedline);
+	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
+		null
+	);
 	const [editTaskInstructor] = useEditTaskInstructorMutation();
 	const modules = {
 		toolbar: [
@@ -46,15 +54,22 @@ const EditTask = () => {
 			[{ color: [] }, { background: [] }]
 		]
 	};
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
+	const openFilePicker = () => {
+		fileInputRef.current?.click();
+	};
 	const lessonId = localStorage.getItem('lessonId');
 	const _id = localStorage.getItem('id');
 	const addTask = async () => {
+		const selectedFile = fileInputRef.current?.files?.[0];
 		const newtask = {
 			title,
 			description: value,
-			dedline
+			file: selectedFile,
+			dedline: selectedDate
 		};
+
 		await editTaskInstructor({ newtask, task });
 		navigate(`/instructor/course/${_id}/materials/${lessonId}/lesson`);
 	};
@@ -64,12 +79,31 @@ const EditTask = () => {
 			<h1>Материалы</h1>
 			<div className={scss.conatiner}>
 				<div className={scss.main_task}>
-					<p>Создать задание</p>
+					<p style={{ color: 'rgb(31, 110, 212)' }}>Создать задание</p>
+					<div className={scss.save_file}>
+						<input
+							type="file"
+							ref={fileInputRef}
+							style={{ display: 'none' }}
+							onChange={() => {}}
+						/>
+						<ButtonCancel
+							disabled={false}
+							width="207px"
+							onClick={openFilePicker}
+							type="button"
+						>
+							Загрузить файл <IconDownload stroke={2} />
+						</ButtonCancel>
+					</div>
 					<div className={scss.input_part}>
 						<Input
-							value={title}
+							type="text"
+							width="100%"
+							value={String(title)}
 							onChange={(e) => setTitle(e.target.value)}
 							size="small"
+							placeholder="Название задания"
 						/>
 					</div>
 					<div className={scss.secon_part}>
@@ -88,15 +122,36 @@ const EditTask = () => {
 				</div>
 			</div>
 			<div className={scss.calendar}>
-				<p>Срок сдачи:</p>
-				<input
-					type="date"
-					value={dedline}
-					onChange={(e) => setDedlene(e.target.value)}
-				/>
-				<div style={{ display: 'flex', alignItems: 'center' }}>
-					<ButtonCancel>Отмена</ButtonCancel>
-					<Button variant="contained" onClick={addTask}>
+				<div className={scss.dataInput}>
+					<p>Срок сдачи:</p>
+
+					<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<DemoContainer components={['DateTimePicker']}>
+							<DateTimePicker
+								label="Выберите дату и время"
+								value={selectedDate}
+								onChange={(newDate) => setSelectedDate(newDate)}
+							/>
+						</DemoContainer>
+					</LocalizationProvider>
+				</div>
+
+				<div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+					<ButtonCancel
+						type="button"
+						disabled={false}
+						onClick={() =>
+							navigate(`/instructor/course/${_id}/materials/${lessonId}/lesson`)
+						}
+						width="105px"
+					>
+						Отмена
+					</ButtonCancel>
+					<Button
+						variant="contained"
+						style={{ padding: '10px 24px' }}
+						onClick={addTask}
+					>
 						Добавить
 					</Button>
 				</div>
