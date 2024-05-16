@@ -1,9 +1,9 @@
 import { useGetVideoLessonQuery } from '@/src/redux/api/instructor/video';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { useState } from 'react';
-import watch from '@/src/assets/svgs/Polygon 62.svg';
 import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import scss from './StudentVideoLesson.module.scss';
+import { Button } from '@mui/material';
 
 const StudentVideoLesson = () => {
 	const { data, isLoading } = useGetVideoLessonQuery();
@@ -36,7 +36,21 @@ const StudentVideoLesson = () => {
 									alt=""
 								/>
 								<div onClick={handleOpenWatch} className={scss.button_watch}>
-									<img className={scss.play_video} src={watch} alt="" />
+									<Button
+										sx={{
+											borderRadius: '8px',
+											textTransform: 'capitalize',
+											background: '#0000ff7f',
+											'&:hover': {
+												background: '#0000ffb2'
+											}
+										}}
+										size="medium"
+										variant="contained"
+										onClick={handleOpenWatch}
+									>
+										Смотреть
+									</Button>
 								</div>
 							</div>
 							<div className={scss.title}>
