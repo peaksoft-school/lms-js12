@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs } from '@mui/material';
-import scss from './Lesson.module.scss';
+import scss from './LessonsStudent.module.scss';
 import { useState } from 'react';
 import {
 	IconAB2,
@@ -10,16 +10,14 @@ import {
 } from '@tabler/icons-react';
 import 'keen-slider/keen-slider.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import VideoLessonPage from '../VideoLessonPage';
-
-import PresentationPage from '../PresentationPage';
+import StudentVideoLessonPage from '../StudentVideoLessonPage';
 import { ScrollArea } from '@mantine/core';
-import CrateTask from '../createTask/CrateTask';
-import GetTask from '../getTask/GetTask';
+import StudentPresentationPage from '../StudentPresentationPage';
 
-const Lesson = () => {
+const LessonsStudent = () => {
 	const [value, setValue] = useState(0);
 	const navigate = useNavigate();
+
 	const { pathname } = useLocation();
 
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -29,17 +27,13 @@ const Lesson = () => {
 	const id = localStorage.getItem('id');
 	const item = localStorage.getItem('lessonId');
 
-	const openInstructorPresentation = () => {
-		navigate(`/instructor/course/${id}/materials/${item}/presentation`);
+	const handleOpenVideo = () => {
+		navigate(`/courses/${id}/materials/${item}/video`);
 	};
 
-	const handleOpenVideo = () => {
-		navigate(`/instructor/course/${id}/materials/${item}/video`);
+	const openStudentPresentation = () => {
+		navigate(`/courses/${id}/materials/${item}/presentation`);
 	};
-	const openLesson = () => {
-		navigate(`/instructor/course/${id}/materials/${item}/lesson`);
-	};
-	const task = localStorage.getItem('task');
 
 	return (
 		<div className={scss.lesson}>
@@ -81,7 +75,7 @@ const Lesson = () => {
 											id="simple-tab-1"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-1"
-											onClick={openInstructorPresentation}
+											onClick={openStudentPresentation}
 										/>
 										<Tab
 											icon={<IconFile stroke={2} />}
@@ -89,7 +83,6 @@ const Lesson = () => {
 											id="simple-tab-2"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-2"
-											onClick={openLesson}
 										/>
 										<Tab
 											icon={<IconLink stroke={2} />}
@@ -108,53 +101,14 @@ const Lesson = () => {
 									</Tabs>
 								</Box>
 							</ScrollArea>
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/video` && (
+							{pathname === `/courses/${id}/materials/${item}/video` && (
 								<>
-									<VideoLessonPage />
+									<StudentVideoLessonPage />
 								</>
 							)}
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/presentation` && (
+							{pathname === `/courses/${id}/materials/${item}/presentation` && (
 								<>
-									<PresentationPage />
-								</>
-							)}
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson` && (
-								<>
-									<CrateTask />
-								</>
-							)}
-
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/panding` && (
-								<>
-									<GetTask />
-								</>
-							)}
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/accepted` && (
-								<>
-									<GetTask />
-								</>
-							)}
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/notAccepted` && (
-								<>
-									<GetTask />
-								</>
-							)}
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/late` && (
-								<>
-									<GetTask />
-								</>
-							)}
-							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/notSubmitted` && (
-								<>
-									<GetTask />
+									<StudentPresentationPage />
 								</>
 							)}
 						</div>
@@ -165,4 +119,4 @@ const Lesson = () => {
 	);
 };
 
-export default Lesson;
+export default LessonsStudent;

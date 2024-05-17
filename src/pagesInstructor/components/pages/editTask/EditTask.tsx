@@ -22,7 +22,7 @@ const EditTask = () => {
 	const task = localStorage.getItem('task');
 	const { data } = useGetTaskInstructorQuery();
 	const navigate = useNavigate();
-	const id = data?.find((item) => item._id === Number(task));
+	const id = data?.find((item) => item._id === task);
 	console.log(id?.title);
 	const [title, setTitle] = useState<string | undefined>(id?.title);
 	const [value, setValue] = useState(id?.description);
@@ -69,6 +69,7 @@ const EditTask = () => {
 			file: selectedFile,
 			dedline: selectedDate
 		};
+		console.log(task);
 
 		await editTaskInstructor({ newtask, task });
 		navigate(`/instructor/course/${_id}/materials/${lessonId}/lesson`);
@@ -100,7 +101,7 @@ const EditTask = () => {
 						<Input
 							type="text"
 							width="100%"
-							value={String(title)}
+							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 							size="small"
 							placeholder="Название задания"

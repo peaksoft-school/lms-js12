@@ -1,24 +1,56 @@
 import { useGetTaskInstructorQuery } from '@/src/redux/api/instructor/addTask';
 import scss from './GetTask.module.scss';
 import { Tab, Tabs } from '@mui/material';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import PandingPage from '../PandingPage';
 // import Accepted from '../acceptedSection/Accepted';
 // import NotAccepted from '../notAccepted/NotAccepted';
-// import Late from '../late/Late';
+import Late from '../late/Late';
+import Panding from '../panding/Panding';
+import Accepted from '../acceptedSection/Accepted';
+import NotAccepted from '../notAccepted/NotAccepted';
+import NotSubmitted from '../notSubmitted/NotSubmitted';
 // import NotSubmitted from '../notSubmitted/NotSubmitted';
 const GetTask = () => {
 	const nanvigate = useNavigate();
 	const { data } = useGetTaskInstructorQuery();
 	const [value, setValue] = useState(0);
-	// const { pathname } = useLocation();
+	const { pathname } = useLocation();
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
 	const id = localStorage.getItem('id');
 	const lessonId = localStorage.getItem('lessonId');
 	const task = localStorage.getItem('task');
+	useEffect(() => {
+		if (
+			pathname ===
+			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding`
+		) {
+			setValue(0);
+		} else if (
+			pathname ==
+			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted`
+		) {
+			setValue(1);
+		} else if (
+			pathname ==
+			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late`
+		) {
+			setValue(3);
+		} else if (
+			pathname ===
+			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted`
+		) {
+			setValue(2);
+		} else if (
+			pathname ===
+			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted`
+		) {
+			setValue(4);
+		}
+	}, [pathname]);
 	const handleOpenPanding = () => {
 		nanvigate(
 			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding`
@@ -98,16 +130,28 @@ const GetTask = () => {
 						onClick={handleOpenNotSubmitted}
 					/>
 				</Tabs>
-				{/* {pathname ===
+				{pathname ===
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding` && (
+					<>
+						<Panding />
+					</>
+				)}
+				{pathname ===
 					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted` && (
 					<>
 						<Accepted />
 					</>
-				)} */}
-				{/* {pathname ===
+				)}
+				{pathname ===
 					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted` && (
 					<>
 						<NotAccepted />
+					</>
+				)}
+				{pathname ===
+					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted` && (
+					<>
+						<NotSubmitted />
 					</>
 				)}
 				{pathname ===
@@ -116,12 +160,6 @@ const GetTask = () => {
 						<Late />
 					</>
 				)}
-				{pathname ===
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted` && (
-					<>
-						<NotSubmitted />
-					</>
-				)} */}
 			</div>
 		</div>
 	);

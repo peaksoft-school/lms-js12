@@ -1,0 +1,93 @@
+.main_modal_vid {
+	width: 27% !important;
+	height: 70% !important;
+	padding: 20px !important;
+	border-radius: 8px !important;
+	overflow-y: scroll !important;
+	scrollbar-width: thin;
+	scrollbar-color: #3772ff #fff;
+	border: none !important;
+	outline: none !important;
+
+	@media (max-width: 1300px) {
+		width: 37% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 1100px) {
+		width: 47% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 850px) {
+		width: 57% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 695px) {
+		width: 65% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 610px) {
+		width: 65% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 510px) {
+		width: 70% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 440px) {
+		width: 75% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 400px) {
+		width: 80% !important;
+		transition: 0.4s !important;
+	}
+	@media (max-width: 360px) {
+		width: 90% !important;
+		transition: 0.4s !important;
+	}
+	@media (max-width: 320px) {
+		width: 95% !important;
+		transition: 0.4s !important;
+	}
+
+	.header_modal {
+		border-bottom: 1px solid gray;
+		height: 50px;
+
+		h1 {
+			color: #707070;
+			font-weight: 600;
+			font-size: 20px;
+		}
+	}
+
+	.notifications {
+		margin-top: 25px;
+		h2 {
+			color: #707070;
+			font-weight: 600;
+			font-size: 18px;
+		}
+
+		.messages_content {
+			h1 {
+				font-weight: 600;
+				font-size: 25px;
+				padding-top: 25px;
+			}
+
+			.results {
+				display: flex;
+				flex-direction: column;
+				gap: 7px;
+			}
+		}
+	}
+}

@@ -152,6 +152,59 @@ const LayoutInstructor = () => {
 							path="/course/:materialsId/materials/:lessonId/lesson/update"
 							element={<EditTask />}
 						/>
+						<>
+							<Route
+								path="/course/:materialsId/materials/:lessonId"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/video"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/presentation"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/panding"
+								element={<LessonPage />}
+							/>
+
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/accepted"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notAccepted"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/late"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
+								element={<Answer />}
+							/>
+
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/addTask"
+								element={<AddTaskPage />}
+							/>
+
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/update"
+								element={<EditTask />}
+							/>
+						</>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
 					</Routes>

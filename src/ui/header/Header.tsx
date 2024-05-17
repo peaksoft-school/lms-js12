@@ -15,6 +15,9 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		if (pathname === '/') {
+			navigate('/courses');
+		}
 		if (pathname === '/admin') {
 			navigate('/admin/analytics');
 		}
@@ -103,7 +106,8 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 											<Link
 												to={`/${item.link!}`}
 												className={
-													pathname === `/${item.link!}`
+													pathname === `/${item.link!}` ||
+													pathname.startsWith(`/${item.link!}`)
 														? `${scss.nav_item} ${scss.active}`
 														: `${scss.nav_item}`
 												}

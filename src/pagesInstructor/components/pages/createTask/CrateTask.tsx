@@ -16,6 +16,8 @@ const CrateTask = () => {
 	const id = localStorage.getItem('id');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+	console.log(saveId);
+
 	const open = Boolean(anchorEl);
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -63,7 +65,8 @@ const CrateTask = () => {
 						</p>
 						<div
 							onClick={() => {
-								localStorage.setItem('task', String(item._id));
+								setSaveId(item._id);
+								localStorage.setItem('task', item._id);
 							}}
 							className={scss.button}
 						>
@@ -96,7 +99,6 @@ const CrateTask = () => {
 								</MenuItem>
 								<MenuItem
 									onClick={() => {
-										setSaveId(item._id);
 										setOpenDelete(true);
 										handleClose();
 									}}

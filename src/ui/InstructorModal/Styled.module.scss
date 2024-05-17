@@ -60,6 +60,33 @@
 			@media (max-width: 600px) {
 				width: 80% !important;
 			}
+
+			.review {
+				display: flex;
+				width: 100%;
+				border: gray;
+				gap: 10px;
+
+				.input {
+					border-radius: 10px;
+					border: 1px solid #cfc9c9;
+					outline: none;
+					&:hover {
+						border: 1px solid #000000 !important;
+					}
+					&:focus {
+						border: 1px solid #0000ff !important;
+					}
+					&:active {
+						border: 1px solid #0000ff !important;
+					}
+
+					&::placeholder {
+						font-size: 15px;
+						padding-inline: 7px;
+					}
+				}
+			}
 		}
 	}
 }

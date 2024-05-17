@@ -43,8 +43,9 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 				title: title,
 				date: date
 			};
-			postMaterials(postData);
+			await postMaterials(postData);
 			reset();
+			handleClose();
 		}
 	};
 
@@ -108,7 +109,7 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 							}}
 						>
 							<ButtonCancel
-								type="submit"
+								type="button"
 								onClick={handleClose}
 								disabled={false}
 								width="117px"
@@ -116,13 +117,10 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
-								type="submit"
+								type="button"
 								width="117px"
 								disabled={false}
-								onClick={() => {
-									console.log('asd');
-									handleSubmit(onSubmit);
-								}}
+								onClick={handleSubmit(onSubmit)}
 							>
 								Создать
 							</ButtonSave>
