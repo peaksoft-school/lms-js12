@@ -16,6 +16,11 @@ import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsP
 import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
+import AddTaskPage from '../pages/AddTaskPage';
+import EditTask from '../pages/editTask/EditTask';
+import GetTask from '../pages/getTask/GetTask';
+import Answer from '../pages/answerSection/Answer';
+
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -100,6 +105,53 @@ const LayoutInstructor = () => {
 							element={<MaterialsPage />}
 						/>
 
+						<Route
+							path="/course/:materialsId/materials/:lessonId"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/video"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/panding"
+							element={<LessonPage />}
+						/>
+
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/accepted"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notAccepted"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/late"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
+							element={<GetTask />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
+							element={<Answer />}
+						/>
+
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/addTask"
+							element={<AddTaskPage />}
+						/>
+
+						<Route
+							path="/course/:materialsId/materials/:lessonId/lesson/update"
+							element={<EditTask />}
+						/>
 						<>
 							<Route
 								path="/course/:materialsId/materials/:lessonId"
@@ -112,6 +164,45 @@ const LayoutInstructor = () => {
 							<Route
 								path="/course/:materialsId/materials/:lessonId/presentation"
 								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/panding"
+								element={<LessonPage />}
+							/>
+
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/accepted"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notAccepted"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/late"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
+								element={<Answer />}
+							/>
+
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson"
+								element={<LessonPage />}
+							/>
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/addTask"
+								element={<AddTaskPage />}
+							/>
+
+							<Route
+								path="/course/:materialsId/materials/:lessonId/lesson/update"
+								element={<EditTask />}
 							/>
 						</>
 						<Route path="announcement" element={<AnnouncementPage />} />
