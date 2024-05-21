@@ -3,7 +3,7 @@ namespace TASK {
 	type TaskResponse = {
 		_id: number;
 		title: string;
-		description: string;
+		description: string!;
 		file: File | undefined;
 		dedline: Dayjs | null | undefined;
 	}[];
@@ -11,13 +11,13 @@ namespace TASK {
 	type CreateTaskResponse = {
 		_id: number;
 		title: string;
-		description: string;
+		description: string!;
 		file: File | undefined;
 		dedline: Dayjs | null | undefined;
 	}[];
 	type CreateTaskRequest = {
 		title: string;
-		description: string;
+		description: string!;
 		file: File | undefined;
 		dedline: Dayjs | null | undefined;
 	};
@@ -25,7 +25,7 @@ namespace TASK {
 		task: string | null;
 		newtask: {
 			title: string;
-			description: string;
+			description: string!;
 			file: File | undefined;
 			dedline: Dayjs | null | undefined;
 		};
@@ -34,7 +34,7 @@ namespace TASK {
 		task: string | null;
 		newtask: {
 			title: string;
-			description: string;
+			description: string!;
 			file: File | undefined;
 			dedline: Dayjs | null | undefined;
 		};

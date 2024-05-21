@@ -25,7 +25,7 @@ const EditTask = () => {
 	const id = data?.find((item) => item._id === Number(task));
 	console.log(id?.title);
 	const [title, setTitle] = useState<string>(id!.title);
-	const [value, setValue] = useState(id?.description);
+	const [value, setValue] = useState(id!.description);
 	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
 		null
 	);
