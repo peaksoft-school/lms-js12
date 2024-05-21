@@ -1,41 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace COURSES {
 	type CoursesResponse = {
-		id: number;
+		_id: number;
+		file: File | undefined;
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		description: string;
+		dedline: Dayjs | null | undefined;
 	}[];
 	type CoursesRequest = void;
 	type CreateCourseResponse = {
-		title: string;
-		date: string;
-		text: string;
-		img: string;
+		newCourse: {
+			file: File | undefined;
+			title: string;
+			description: string;
+			dedline: Dayjs | null | undefined;
+		};
 	}[];
 	type CreateCourseRequest = {
+		file: File | undefined;
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		description: string;
+		dedline: Dayjs | null | undefined;
 	};
 	type UpdateCourseResponse = {
-		saveId: number | null;
+		saveId: string | null;
 		newCourse: {
-			title: string;
-			date: string;
-			text: string;
-			img: string;
+			file: File | undefined;
+			title: string | undefined;
+			description: string | undefined;
+			dedline: Dayjs | null | undefined;
 		};
 	}[];
 	type UpdateCourseRequest = {
-		saveId: number | null;
+		saveId: string | null;
 		newCourse: {
-			title: string;
-			date: string;
-			text: string;
-			img: string;
+			file: File | undefined;
+			title: string | undefined;
+			description: string | undefined;
+			dedline: Dayjs | null | undefined;
 		};
 	};
 }

@@ -11,8 +11,11 @@ import {
 import 'keen-slider/keen-slider.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VideoLessonPage from '../VideoLessonPage';
+
 import PresentationPage from '../PresentationPage';
 import { ScrollArea } from '@mantine/core';
+import CrateTask from '../createTask/CrateTask';
+import GetTask from '../getTask/GetTask';
 import Test from '../testSection/TestInstructor';
 
 const Lesson = () => {
@@ -34,6 +37,10 @@ const Lesson = () => {
 	const handleOpenVideo = () => {
 		navigate(`/instructor/course/${id}/materials/${item}/video`);
 	};
+	const openLesson = () => {
+		navigate(`/instructor/course/${id}/materials/${item}/lesson`);
+	};
+	const task = localStorage.getItem('task');
 	const handleOpenTest = () => {
 		navigate(`/instructor/course/${id}/materials/${item}/test`);
 	};
@@ -45,7 +52,8 @@ const Lesson = () => {
 				style={{
 					background: '#fff',
 					borderRadius: '10px',
-					width: '100%'
+					width: '100%',
+					height: '737px'
 				}}
 			>
 				<div
@@ -85,6 +93,7 @@ const Lesson = () => {
 											id="simple-tab-2"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-2"
+											onClick={openLesson}
 										/>
 										<Tab
 											icon={<IconLink stroke={2} />}
@@ -104,7 +113,6 @@ const Lesson = () => {
 									</Tabs>
 								</Box>
 							</ScrollArea>
-
 							{pathname ===
 								`/instructor/course/${id}/materials/${item}/video` && (
 								<>
@@ -115,6 +123,43 @@ const Lesson = () => {
 								`/instructor/course/${id}/materials/${item}/presentation` && (
 								<>
 									<PresentationPage />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/lesson` && (
+								<>
+									<CrateTask />
+								</>
+							)}
+
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/lesson/${task}/panding` && (
+								<>
+									<GetTask />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/lesson/${task}/accepted` && (
+								<>
+									<GetTask />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/lesson/${task}/notAccepted` && (
+								<>
+									<GetTask />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/lesson/${task}/late` && (
+								<>
+									<GetTask />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/lesson/${task}/notSubmitted` && (
+								<>
+									<GetTask />
 								</>
 							)}
 							{pathname ===
