@@ -2,30 +2,33 @@ import { api as index } from '../../../api';
 
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
-		getCourse: builder.query<COURSES.CoursesResponse, COURSES.CoursesRequest>({
+		getAdminCourse: builder.query<
+			ADMINCOURSES.CoursesAdminResponse,
+			ADMINCOURSES.CoursesAdminRequest
+		>({
 			query: () => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/course',
+				url: 'https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse',
 				method: 'GET'
 			}),
 			providesTags: ['courses']
 		}),
-		createCourse: builder.mutation<
-			COURSES.CreateCourseResponse,
-			COURSES.CreateCourseRequest
+		createAdminCourse: builder.mutation<
+			ADMINCOURSES.CreateAdminCourseResponse,
+			ADMINCOURSES.CreateAdminCourseRequest
 		>({
 			query: (newCourse) => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/course',
+				url: 'https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse',
 				method: 'POST',
 				body: newCourse
 			}),
 			invalidatesTags: ['courses']
 		}),
-		updateCourse: builder.mutation<
-			COURSES.UpdateCourseResponse,
-			COURSES.UpdateCourseRequest
+		updateAdminCourse: builder.mutation<
+			ADMINCOURSES.UpdateCourseResponse,
+			ADMINCOURSES.UpdateCourseRequest
 		>({
 			query: ({ newCourse, saveId }) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/course/${saveId}`,
+				url: `https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse${saveId}`,
 				method: 'PATCH',
 				body: newCourse
 			}),
@@ -33,7 +36,7 @@ export const api = index.injectEndpoints({
 		}),
 		deleteCourse: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/course/${deleteById}`,
+				url: `https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse${deleteById}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['courses']
@@ -42,8 +45,8 @@ export const api = index.injectEndpoints({
 });
 
 export const {
-	useGetCourseQuery,
-	useCreateCourseMutation,
-	useUpdateCourseMutation,
+	useGetAdminCourseQuery,
+	useCreateAdminCourseMutation,
+	useUpdateAdminCourseMutation,
 	useDeleteCourseMutation
 } = api;

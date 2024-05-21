@@ -37,6 +37,7 @@ export const api = createApi({
 		'announcement',
 		'material',
 		'videoLesson',
+		'addTask',
 		'presentation',
 		'auth'
 	],

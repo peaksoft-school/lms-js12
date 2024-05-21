@@ -72,7 +72,7 @@ const NewPassword: FC = () => {
 											rules={{
 												required: 'Пароль обязателен для заполнения',
 												minLength: {
-													value: 5   ,
+													value: 5,
 													message: 'Пароль должен содержать минимум 8 символов'
 												}
 											}}

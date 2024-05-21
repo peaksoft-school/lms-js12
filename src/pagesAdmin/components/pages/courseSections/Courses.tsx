@@ -7,16 +7,16 @@ import { IconArticle, IconBook, IconDots, IconPlus } from '@tabler/icons-react';
 import scss from './Courses.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/EditCourse';
 import CreateCourse from '@/src/ui/customModal/CreateCurse';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 
 const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
-	const { data } = useGetGroupQuery();
+	const { data } = useGetAdminCourseQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -103,29 +103,32 @@ const Courses: FC = () => {
 											currentPage * rowsPerPage
 										)
 										.map((item) => (
-											<div key={item.id} className={scss.zero_block_container}>
+											<div key={item._id} className={scss.zero_block_container}>
 												<div>
 													<div
 														onClick={() => {
-															setSaveIdStorege(String(item.id));
+															setSaveIdStorege(String(item._id));
 															setTimeout(() => {
-																navigate(`/admin/courses/${item.id}/teacher`);
+																navigate(`/admin/courses/${item._id}/teacher`);
 															}, 1000);
 														}}
 													>
 														<div className={scss.block_photo_cards}>
-															<img src={item.img} alt="images" />
+															<img src={item.image} alt="images" />
 														</div>
 														<div className={scss.block_cont}>
 															<div className={scss.second_block}>
 																<p className={scss.block_title}>{item.title}</p>
-																<p className={scss.block_date}>{item.date}</p>
+																<p className={scss.block_date}>
+																	{item.dateOfEnd}
+																</p>
 															</div>
 															<div className={scss.text_card}>
 																<span className={scss.block_text}>
-																	{item.text && item.text.length > 60
-																		? `${item.text.substring(0, 60)}...`
-																		: item.text}
+																	{item.description &&
+																	item.description.length > 60
+																		? `${item.description.substring(0, 60)}...`
+																		: item.description}
 																</span>
 															</div>
 														</div>
@@ -134,14 +137,14 @@ const Courses: FC = () => {
 												<div
 													className={scss.block_button_div}
 													onClick={() => {
-														setSaveIdStorege(String(item.id));
+														setSaveIdStorege(String(item._id));
 													}}
 												>
 													<div onClick={handleClick}>
 														<button
 															className={scss.button_dots}
 															onClick={() => {
-																setSaveId(item.id);
+																setSaveId(item._id);
 															}}
 														>
 															<IconDots stroke={2} />

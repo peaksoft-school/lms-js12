@@ -103,6 +103,7 @@
 						max-width: 280px;
 						width: 100%;
 						background: #fff;
+						height: 280.5px;
 						border: 1px solid #d4d4d4;
 						border-radius: 10px;
 						flex-direction: column;
@@ -185,23 +186,6 @@
 									text-overflow: ellipsis;
 								}
 							}
-						}
-					}
-
-					.block_button_div {
-						margin-top: auto;
-						display: flex;
-						align-items: center;
-						justify-content: flex-end;
-						width: 100%;
-
-						.button_dots {
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							background: none;
-							border: none;
-							cursor: pointer;
 						}
 					}
 				}

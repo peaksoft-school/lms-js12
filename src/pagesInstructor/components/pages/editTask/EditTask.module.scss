@@ -1,0 +1,128 @@
+.addTask {
+	padding-inline: 20px;
+	padding-top: 60px;
+	h1 {
+		padding-bottom: 24px;
+	}
+	.conatiner {
+		margin-bottom: 20px;
+		width: 100%;
+		background: #fff;
+		padding-inline: 20px;
+		padding-top: 21px;
+		overflow-y: scroll;
+
+		.main_task {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			.save_file {
+				display: flex;
+				justify-content: flex-end;
+			}
+
+			.input_part {
+				display: flex;
+				align-items: flex-end;
+				height: 66px;
+				gap: 30px;
+
+				.editor {
+					.editorInput {
+						display: flex;
+						width: 100%;
+						border: none;
+						flex-direction: column;
+						flex-direction: row-reverse;
+						gap: 20px;
+						border-bottom: none;
+					}
+				}
+				.icons {
+					display: flex;
+					gap: 28px;
+					button {
+						background: none;
+						border: none;
+						cursor: pointer;
+						.text {
+							position: absolute;
+							width: auto;
+							text-align: center;
+							bottom: 100%;
+							transform: translateX(-30%);
+							background: #7f94a8e7;
+							color: #fffefe;
+							padding: 8px;
+							border-radius: 8px;
+							z-index: 5;
+							transition: opacity 0.3s ease-in-out;
+						}
+					}
+				}
+
+				.bold {
+					font-weight: bold;
+				}
+			}
+
+			.secon_part {
+				padding-top: 40px;
+
+				.editor {
+					.editorInput {
+						width: 100%;
+						border: none !important;
+						display: flex;
+						flex-direction: column;
+						border-top: none;
+						// :last-child {
+						// 	border: 10px;
+						// 	border-top: 1px solid black;
+						// }
+					}
+				}
+				.second_icon {
+					height: 60px;
+					display: flex;
+					align-items: flex-end;
+					padding-left: 43px;
+					gap: 28px;
+
+					button {
+						background: none;
+						border: none;
+						cursor: pointer;
+					}
+				}
+
+				.text_input {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					padding-block: 10px;
+				}
+			}
+		}
+	}
+	.calendar {
+		background: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: flex-end;
+		gap: 60px;
+		padding-inline: 20px;
+
+		.dataInput {
+			display: flex;
+			align-items: center;
+			gap: 15px;
+			input {
+				padding-block: 14px;
+				padding-inline: 5px;
+			}
+		}
+	}
+}

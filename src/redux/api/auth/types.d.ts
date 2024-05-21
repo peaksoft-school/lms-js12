@@ -3,7 +3,7 @@
 namespace AUTH {
 	type PostFindResponse = {
 		token: string;
-    // login: string;
+		// login: string;
 		// password: string;
 	};
 	type PostFindRequest = {

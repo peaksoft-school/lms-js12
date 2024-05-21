@@ -186,7 +186,7 @@ const Login: FC = () => {
 										type="submit"
 										width="214px"
 										disabled={false}
-										// onClick={handleSubmit(onSubmit)}
+										onClick={() => {}}
 									>
 										Войти
 									</ButtonSave>

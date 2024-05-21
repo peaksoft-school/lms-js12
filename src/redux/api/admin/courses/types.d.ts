@@ -1,41 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace COURSES {
-	type CoursesResponse = {
-		id: number;
+namespace ADMINCOURSES {
+	type CoursesAdminResponse = {
+		_id: number;
+		image: string | undefined;
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		description: string;
+		dateOfEnd: Dayjs | null | undefined;
 	}[];
-	type CoursesRequest = void;
-	type CreateCourseResponse = {
-		title: string;
-		date: string;
-		text: string;
-		img: string;
+	type CoursesAdminRequest = void;
+	type CreateAdminCourseResponse = {
+		newCourse: {
+			image: string | undefined;
+			title: string;
+			description: string;
+			dateOfEnd: Dayjs | null | undefined;
+		};
 	}[];
-	type CreateCourseRequest = {
+	type CreateAdminCourseRequest = {
+		image: string | undefined;
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		description: string;
+		dateOfEnd: Dayjs | null | undefined;
 	};
 	type UpdateCourseResponse = {
 		saveId: number | null;
 		newCourse: {
+			image: string | undefined;
 			title: string;
-			date: string;
-			text: string;
-			img: string;
+			description: string;
+			dateOfEnd: Dayjs | null | undefined;
 		};
 	}[];
 	type UpdateCourseRequest = {
 		saveId: number | null;
 		newCourse: {
+			image: string | undefined;
 			title: string;
-			date: string;
-			text: string;
-			img: string;
+			description: string;
+			dateOfEnd: Dayjs | null | undefined;
 		};
 	};
 }
