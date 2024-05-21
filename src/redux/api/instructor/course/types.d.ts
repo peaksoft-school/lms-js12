@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace COURSES {
+namespace INSTRUCTORCOURSES {
 	type CoursesResponse = {
 		id: number;
 		title: string;

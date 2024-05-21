@@ -15,8 +15,14 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		if (pathname === '/') {
+			navigate('/courses');
+		}
 		if (pathname === '/admin') {
 			navigate('/admin/analytics');
+		}
+		if (pathname === '/instructor') {
+			navigate('/instructor/course');
 		}
 	}, [pathname]);
 
@@ -100,7 +106,8 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 											<Link
 												to={`/${item.link!}`}
 												className={
-													pathname === `/${item.link!}`
+													pathname === `/${item.link!}` ||
+													pathname.startsWith(`/${item.link!}`)
 														? `${scss.nav_item} ${scss.active}`
 														: `${scss.nav_item}`
 												}
@@ -134,7 +141,8 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 									<Link
 										to={`/instructor/${item.link!}`}
 										className={
-											pathname === `/instructor/${item.link!}`
+											pathname === `/instructor/${item.link!}` ||
+											pathname.startsWith(`/instructor/${item.link!}`)
 												? `${scss.nav_item} ${scss.active}`
 												: `${scss.nav_item}`
 										}

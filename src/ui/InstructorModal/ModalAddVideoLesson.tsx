@@ -1,13 +1,13 @@
 import scss from './Styled.module.scss';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Button from '@mui/material/Button';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import { FC } from 'react';
+import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
 
 const style = {
 	position: 'absolute',
@@ -22,28 +22,41 @@ const style = {
 	borderRadius: '10px'
 };
 
-const ModalAddVideoLesson = () => {
-	const { control, handleSubmit } = useForm();
-	const [open, setOpen] = useState<boolean>(false);
+interface VideoProps {
+	link: string;
+	title: string;
+	description: string;
+}
 
-	const handleOpen = () => {
-		setOpen(true);
-	};
+interface LessonVideoProps {
+	open: boolean;
+	handleCloseVideo: () => void;
+}
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+const ModalAddVideoLesson: FC<LessonVideoProps> = ({
+	open,
+	handleCloseVideo
+}) => {
+	const { control, handleSubmit, reset } = useForm<VideoProps>();
+	const [postVideoLesson] = usePostVideoLessonMutation();
 
-	const onSubmit = () => {
-		handleClose();
+	const onSubmit: SubmitHandler<VideoProps> = (data) => {
+		// const { title, description, link } = data;
+		const postData = {
+			title: data.title,
+			description: data.description,
+			link: data.link
+		};
+		postVideoLesson(postData);
+		reset();
+		handleCloseVideo();
 	};
 
 	return (
-		<form>
-			<Button onClick={handleOpen}>Open modal Добавить видеоурока</Button>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
 				open={open}
-				onClose={handleClose}
+				onClose={handleCloseVideo}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -59,7 +72,7 @@ const ModalAddVideoLesson = () => {
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="firstName"
+								name="title"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите название видеоурока' }}
@@ -75,7 +88,7 @@ const ModalAddVideoLesson = () => {
 							/>
 
 							<Controller
-								name="lastName"
+								name="description"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите описание видеоурока' }}
@@ -91,7 +104,7 @@ const ModalAddVideoLesson = () => {
 							/>
 
 							<Controller
-								name="Name"
+								name="link"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Вставьте ссылку на видеоурок' }}
@@ -99,7 +112,7 @@ const ModalAddVideoLesson = () => {
 									<Input
 										size="medium"
 										{...field}
-										type="text"
+										type="url"
 										width="100%"
 										placeholder="Вставьте ссылку на видеоурок"
 									/>
@@ -107,11 +120,21 @@ const ModalAddVideoLesson = () => {
 							/>
 						</div>
 
-						<div className={scss.button_add}>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="submit"
 								disabled={false}
-								onClick={handleClose}
+								onClick={handleCloseVideo}
 								width="117px"
 							>
 								Отмена

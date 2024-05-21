@@ -1,0 +1,35 @@
+.get_task {
+	padding-inline: 20px;
+	width: 100%;
+
+	h1 {
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.Task {
+		height: 70vh;
+		background: #fff;
+		border-radius: 10px;
+		overflow-y: scroll;
+		.card {
+			padding-inline: 20px;
+			img {
+				width: 100%;
+				max-width: 600px;
+				height: auto;
+			}
+			p {
+				font-size: 18px;
+			}
+			.text {
+				padding: 10px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				@media (max-width: 490px) {
+					flex-wrap: wrap;
+				}
+			}
+		}
+	}
+}

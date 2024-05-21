@@ -82,7 +82,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	};
 
 	return (
-		<>
+		<div>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -168,7 +168,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 					</Typography>
 				</Box>
 			</Modal>
-		</>
+		</div>
 	);
 };
 

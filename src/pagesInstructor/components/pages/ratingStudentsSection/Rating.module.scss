@@ -1,5 +1,5 @@
 .rating {
-	overflow-y: auto !important;
+	// overflow-y: auto !important;
 	padding-top: 80px;
 	padding-inline: 20px;
 
@@ -9,14 +9,14 @@
 	}
 	.rating_container {
 		border-radius: 8px;
-		overflow-x: auto;
+		// overflow-x: auto;
 		table-layout: fixed;
-		width: 100%;
+
 		background: #fff;
 		border: 1px solid #dbd2d2;
 		transition: all 0.5s;
-		scrollbar-width: thin;
-		scrollbar-color: #3772ff #fff;
+		// scrollbar-width: thin;
+		// scrollbar-color: #3772ff #fff;
 		background: #fff;
 		padding-inline: 20px;
 		padding-top: 20px;
@@ -60,58 +60,30 @@
 
 			td {
 				text-align: center;
-				width: 50px;
+				width: 150px;
 				height: 50px;
 				padding: 10px;
 			}
+			.name {
+				width: 220px;
+			}
+			.button {
+				width: 30px !important;
+				height: 30px;
+			}
 		}
-
-		// .Table {
-		// 	// border-collapse: collapse;
-		// 	width: 100%;
-		// 	thead {
-		// 		border: 1px solid #837a7a14;
-		// 		background: #eff0f4;
-		// 		width: 100%;
-
-		// 		tr {
-
-		// 			width: 100%;
-		// 			border-left: 1px solid #837a7a14;
-		// 			height: 50px;
-		// 			display: flex;
-		// 			align-items: center;
-		// 			justify-content: space-between;
-		// 			// padding-top: 40px;
-		// 			th {
-		// 				font-weight: 600;
-		// 				text-align: start;
-		// 				padding-left: 20px;
-		// 				flex-wrap: nowrap;
-		// 			}
-		// 		}
-		// 	}
-		// 	tbody {
-		// 		.TableContainerSecond {
-		// 			height: 50px;
-		// 		}
-		// 		tr {
-		// 			border: 1px solid #837a7a14;
-		// 			td {
-		// 				border: 1px solid #151414e5;
-		// 				padding-left: 57px;
-		// 			}
-
-		// 			.TableCellIcon {
-		// 				text-align: end;
-
-		// 				button {
-		// 					background: none;
-		// 					border: none;
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
 	}
 }
+
+// .scrollbar {
+//   &,
+//   &:hover {
+//     background: #EEEDED;
+//   }
+//   &[data-orientation='vertical'] .thumb {
+//     background: #EEEDED;
+//   }
+//   &[data-orientation='horizontal'] .thumb {
+//     background: #EEEDED;
+//   }
+// }

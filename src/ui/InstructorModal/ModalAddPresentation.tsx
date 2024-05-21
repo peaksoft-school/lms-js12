@@ -1,7 +1,6 @@
 import scss from './Styled.module.scss';
-import { useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -15,32 +14,37 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
-	height: 368,
+	height: 357,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
 };
 
-const ModalAddPresentation = () => {
-	const [open, setOpen] = useState<boolean>(false);
-	const { control, handleSubmit } = useForm();
+interface ModalAddPresentationProps {
+	open: boolean;
+	handleClose: () => void;
+}
 
-	const handleOpen = () => {
-		setOpen(true);
+const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
+	handleClose,
+	open
+}) => {
+	const { control } = useForm();
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0] || null;
+		setSelectedFile(file);
 	};
 
-	const handleClose = () => {
-		setOpen(false);
-	};
-
-	const onSubmit = () => {
-		handleClose();
+	const openFilePicker = () => {
+		fileInputRef.current?.click();
 	};
 
 	return (
 		<form>
-			<Button onClick={handleOpen}>Open modal Добавить презентацию</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -94,30 +98,52 @@ const ModalAddPresentation = () => {
 
 						<div className={scss.button_review}>
 							<Controller
-								name="Name"
+								name="presentation"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Выберите файл в формате ppt' }}
 								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="text"
-										width="100%"
-										placeholder="Выберите файл в формате ppt"
-									/>
+									<div className={scss.review}>
+										<input
+											type="file"
+											accept=".ppt, .pptx"
+											onChange={(e) => {
+												handleFileSelect(e);
+												field.onChange(e);
+											}}
+											ref={fileInputRef}
+											style={{ display: 'none' }}
+										/>
+										<input
+											type="text"
+											value={selectedFile ? selectedFile.name : ''}
+											readOnly
+											placeholder="Выберите файл в формате ppt"
+											className={scss.input}
+										/>
+										<ButtonCancel
+											type="button"
+											disabled={false}
+											onClick={openFilePicker}
+											width="117px"
+										>
+											Обзор...
+										</ButtonCancel>
+									</div>
 								)}
 							/>
-							<ButtonCancel
-								type="submit"
-								disabled={false}
-								onClick={handleClose}
-								width="117px"
-							>
-								Обзор...
-							</ButtonCancel>
 						</div>
-						<div className={scss.button_add}>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="submit"
 								disabled={false}
@@ -127,10 +153,10 @@ const ModalAddPresentation = () => {
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
+								onClick={() => {}}
 								type="submit"
 								width="117px"
 								disabled={false}
-								onClick={handleSubmit(onSubmit)}
 							>
 								Добавить
 							</ButtonSave>
