@@ -8,6 +8,7 @@ import SupHeader from '@/src/ui/supHeader/SupHeader';
 import CoursesPage from '../pages/CoursesPage';
 import LessonListPage from '../pages/LessonListPage';
 import LessonsStudentPage from '../pages/LessonsStudentPage';
+import GetTest from '../pages/getTest/GetTest';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -64,6 +65,14 @@ const LayoutStudents = () => {
 						<Route
 							path="/courses/:coursesId/materials/:sectionStudentId/presentation"
 							element={<LessonsStudentPage />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:sectionStudentId/test"
+							element={<LessonsStudentPage />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:sectionStudentId/showTest"
+							element={<GetTest />}
 						/>
 					</Routes>
 				</main>
