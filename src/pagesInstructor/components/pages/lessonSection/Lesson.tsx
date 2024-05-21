@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import VideoLessonPage from '../VideoLessonPage';
 import PresentationPage from '../PresentationPage';
 import { ScrollArea } from '@mantine/core';
+import Test from '../testSection/TestInstructor';
 
 const Lesson = () => {
 	const [value, setValue] = useState(0);
@@ -32,6 +33,9 @@ const Lesson = () => {
 
 	const handleOpenVideo = () => {
 		navigate(`/instructor/course/${id}/materials/${item}/video`);
+	};
+	const handleOpenTest = () => {
+		navigate(`/instructor/course/${id}/materials/${item}/test`);
 	};
 
 	return (
@@ -95,6 +99,7 @@ const Lesson = () => {
 											id="simple-tab-4"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-4"
+											onClick={handleOpenTest}
 										/>
 									</Tabs>
 								</Box>
@@ -110,6 +115,12 @@ const Lesson = () => {
 								`/instructor/course/${id}/materials/${item}/presentation` && (
 								<>
 									<PresentationPage />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/test` && (
+								<>
+									<Test />
 								</>
 							)}
 						</div>

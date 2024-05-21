@@ -16,6 +16,8 @@ import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsP
 import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
+import GetTestInstructor from '../pages/getTest/GetTestInstructor';
+
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -116,6 +118,14 @@ const LayoutInstructor = () => {
 						</>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
+						<Route
+							path="/course/:materialsId/materials/:lessonId/test"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/showTest"
+							element={<GetTestInstructor />}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

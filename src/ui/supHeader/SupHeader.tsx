@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
 	IconBellRinging2,
 	IconChevronDown,
@@ -108,6 +109,11 @@ const SupHeader = () => {
 				pathname !== `/courses/${id}/materials` &&
 				pathname !== `/courses/${id}/materials/${lessonId}/video` &&
 				pathname !== `/courses/${id}/materials/${lessonId}/presentation` &&
+				pathname !==
+					`/instructor/course/${id}/materials/${lessonId}/showTest` &&
+				pathname !== `/instructor/course/${id}/materials/${lessonId}/test` &&
+				pathname !== `/courses/${id}/materials/${lessonId}/showTest` &&
+				pathname !== `/courses/${id}/materials/${lessonId}/test` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>
