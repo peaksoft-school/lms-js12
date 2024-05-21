@@ -60,7 +60,7 @@ const Login: FC = () => {
 			}
 			console.log('is working ', response);
 			console.log(data);
-			// navigate('/admin');
+			navigate('/admin');
 			reset();
 		} catch (error) {
 			console.log('not working', error);
