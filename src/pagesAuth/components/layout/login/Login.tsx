@@ -4,7 +4,7 @@ import scss from './Login.module.scss';
 import Logo from '@/src/assets/svgs/logo.svg';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenLogo from '@/src/assets/svgs/boy-proger.svg';
 import {
 	IconButton,
@@ -13,14 +13,32 @@ import {
 	OutlinedInput
 } from '@mui/material';
 import Input from '@/src/ui/customInput/Input';
+import { usePostLoginMutation } from '@/src/redux/api/auth'; ///
 
 type FormData = {
 	login: string;
 	password: string;
+	// token: string;
 };
 
 const Login: FC = () => {
+	const [postLogin] = usePostLoginMutation();
+	const navigate = useNavigate();
+
+	// const handleLogin = async () => {
+	//   try {
+	//     const loginData = { username: 'example', password: 'password' };
+	//     const response = await postLogin(loginData).unwrap();
+	//     console.log('Успешный вход', response);
+
+	//   } catch (error) {
+	//     console.error('Ошибка входа', error);
+
+	//   }
+	// };
+
 	const {
+		register,
 		handleSubmit,
 		reset,
 		control,
@@ -28,7 +46,25 @@ const Login: FC = () => {
 	} = useForm<FormData>();
 	const [showPassword, setShowPassword] = useState(false);
 
-	const onSubmit: SubmitHandler<FormData> = (data) => {
+	const onSubmit: SubmitHandler<FormData> = async (data, event) => {
+		event?.preventDefault();
+		console.log(data);
+
+		try {
+			const response = await postLogin(data);
+			if ('data' in response) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const { token }: any = response.data;
+				localStorage.setItem('token', token);
+				localStorage.setItem('isAuth', 'true');
+			}
+			console.log('is working ', response);
+			console.log(data);
+			// navigate('/admin');
+			reset();
+		} catch (error) {
+			console.log('not working', error);
+		}
 		console.log(data);
 		reset();
 	};
@@ -63,16 +99,17 @@ const Login: FC = () => {
 									<div className={scss.Element_inputs_login}>
 										<p>Логин :</p>
 										<Controller
-											name="login"
+											{...register('login')}
 											control={control}
+											name="login"
 											defaultValue=""
 											rules={{
-												required: 'Логин обязателен для заполнения',
-												pattern: {
-													value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-													message:
-														'Введите действительный email адрес с доменом @gmail.com'
-												}
+												required: 'Логин обязателен для заполнения'
+												// pattern: {
+												// 	value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+												// 	message:
+												// 		'Введите действительный email адрес с доменом @gmail.com'
+												// }
 											}}
 											render={({ field }) => (
 												<Input
@@ -96,14 +133,15 @@ const Login: FC = () => {
 											<p>Пароль : </p>
 										</InputLabel>
 										<Controller
-											name="password"
+											{...register('password')}
 											control={control}
 											defaultValue=""
+											name="password"
 											rules={{
 												required: 'Пароль обязателен для заполнения',
 												minLength: {
-													value: 8,
-													message: 'Пароль должен содержать минимум 8 символов'
+													value: 5,
+													message: 'Пароль должен содержать минимум 5 символов'
 												}
 											}}
 											render={({ field }) => (
@@ -147,8 +185,8 @@ const Login: FC = () => {
 									<ButtonSave
 										type="submit"
 										width="214px"
-										onClick={() => {}}
 										disabled={false}
+										// onClick={handleSubmit(onSubmit)}
 									>
 										Войти
 									</ButtonSave>
