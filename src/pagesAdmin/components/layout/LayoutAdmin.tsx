@@ -13,6 +13,7 @@ import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import Students from '../pages/studentSection/Students';
+import ResultTest from '@/src/ui/resultTest/ResultTest';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +72,7 @@ const LayoutAdmin = () => {
 						/>
 						<Route path="" element={<HomePage />} />
 						<Route path="/courses" element={<Cards />} />
+						<Route path="/test" element={<ResultTest />} />
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
 							path="/courses/:coursesId/:matelials"
