@@ -5,7 +5,7 @@ import {
 	IconUserCircle
 } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box, Menu, MenuItem, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
 import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
@@ -15,6 +15,7 @@ const SupHeader = () => {
 	const [open, setOpen] = useState(false);
 	const [openNotification, setOpenNotification] = useState(false);
 	const navigate = useNavigate();
+	const { coursesPart, coursesTeacher } = useParams();
 
 	const handleOpenNotification = () => {
 		setOpenNotification(true);
