@@ -11,7 +11,7 @@ import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 
 const Courses: FC = () => {
@@ -29,6 +29,7 @@ const Courses: FC = () => {
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
 	const navigate = useNavigate();
+	const { coursesTeacher } = useParams();
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {

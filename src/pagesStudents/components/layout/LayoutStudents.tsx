@@ -11,6 +11,7 @@ import LessonsStudentPage from '../pages/LessonsStudentPage';
 import RatingPage from '../pages/RatingPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import GetTest from '../pages/getTest/GetTest';
+import GetOneTask from '../pages/getOneTask/GetOneTask';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -66,6 +67,14 @@ const LayoutStudents = () => {
 						<Route
 							path="/courses/:coursesId/materials/:sectionStudentId/video"
 							element={<LessonsStudentPage />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:sectionStudentId/lesson"
+							element={<LessonsStudentPage />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:sectionStudentId/lesson/:lessonStudent"
+							element={<GetOneTask />}
 						/>
 						<Route
 							path="/courses/:coursesId/materials/:sectionStudentId/presentation"

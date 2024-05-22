@@ -21,7 +21,7 @@ import {
 	Draggable,
 	DropResult
 } from '@hello-pangea/dnd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 interface TodoProps {
 	title: string;
 	_id: number;
@@ -61,6 +61,7 @@ const Materials: FC = () => {
 		copyTodos.splice(endIndex, 0, reorderTodo);
 		setTodos(copyTodos);
 	};
+	const { materialsId } = useParams();
 
 	if (isLoading) {
 		return (
@@ -168,7 +169,7 @@ const Materials: FC = () => {
 
 																			setTimeout(() => {
 																				navigate(
-																					`/instructor/course/${id}/materials/${todo._id}`
+																					`/instructor/course/${materialsId}/materials/${todo._id}`
 																				);
 																			}, 1000);
 																		}}

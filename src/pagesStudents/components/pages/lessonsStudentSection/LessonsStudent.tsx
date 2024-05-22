@@ -14,6 +14,7 @@ import StudentVideoLessonPage from '../StudentVideoLessonPage';
 import { ScrollArea } from '@mantine/core';
 import StudentPresentationPage from '../StudentPresentationPage';
 import TestSection from '../TestSection';
+import GetLessonTask from '../getLesson/GetLessonTask';
 
 const LessonsStudent = () => {
 	const [value, setValue] = useState(0);
@@ -37,6 +38,9 @@ const LessonsStudent = () => {
 	};
 	const OpenTest = () => {
 		navigate(`/courses/${id}/materials/${item}/test`);
+	};
+	const OpenLesson = () => {
+		navigate(`/courses/${id}/materials/${item}/lesson`);
 	};
 
 	return (
@@ -87,6 +91,7 @@ const LessonsStudent = () => {
 											id="simple-tab-2"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-2"
+											onClick={OpenLesson}
 										/>
 										<Tab
 											icon={<IconLink stroke={2} />}
@@ -119,6 +124,11 @@ const LessonsStudent = () => {
 							{pathname === `/courses/${id}/materials/${item}/test` && (
 								<>
 									<TestSection />
+								</>
+							)}
+							{pathname === `/courses/${id}/materials/${item}/lesson` && (
+								<>
+									<GetLessonTask />
 								</>
 							)}
 						</div>
