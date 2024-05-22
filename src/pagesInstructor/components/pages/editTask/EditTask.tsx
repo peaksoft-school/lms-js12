@@ -22,10 +22,10 @@ const EditTask = () => {
 	const task = localStorage.getItem('task');
 	const { data } = useGetTaskInstructorQuery();
 	const navigate = useNavigate();
-	const id = data?.find((item) => item._id === task);
+	const id = data?.find((item) => item._id === Number(task));
 	console.log(id?.title);
-	const [title, setTitle] = useState<string | undefined>(id?.title);
-	const [value, setValue] = useState(id?.description);
+	const [title, setTitle] = useState<string>(id!.title);
+	const [value, setValue] = useState(id!.description);
 	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
 		null
 	);
@@ -80,7 +80,7 @@ const EditTask = () => {
 			<h1>Материалы</h1>
 			<div className={scss.conatiner}>
 				<div className={scss.main_task}>
-					<p style={{ color: 'rgb(31, 110, 212)' }}>Создать задание</p>
+					<p style={{ color: '#1f6ed4' }}>Создать задание</p>
 					<div className={scss.save_file}>
 						<input
 							type="file"

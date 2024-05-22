@@ -66,7 +66,7 @@ const CrateTask = () => {
 						<div
 							onClick={() => {
 								setSaveId(item._id);
-								localStorage.setItem('task', item._id);
+								localStorage.setItem('task', String(item._id));
 							}}
 							className={scss.button}
 						>
