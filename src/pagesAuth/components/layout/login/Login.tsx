@@ -7,6 +7,7 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { Link, useNavigate } from 'react-router-dom';
 import MenLogo from '@/src/assets/svgs/boy-proger.svg';
 import {
+	Button,
 	IconButton,
 	InputAdornment,
 	InputLabel,
@@ -14,6 +15,7 @@ import {
 } from '@mui/material';
 import Input from '@/src/ui/customInput/Input';
 import { usePostLoginMutation } from '@/src/redux/api/auth'; ///
+import ModalPassword from '@/src/ui/customModal/ModalPassword';
 type FormData = {
 	login: string;
 	password: string;
@@ -21,7 +23,14 @@ type FormData = {
 };
 const Login: FC = () => {
 	const [postLogin] = usePostLoginMutation();
+	const [open, setOpen] = useState<boolean>(false);
 	const navigate = useNavigate();
+
+	const [showModal, setShowModal] = useState(false);
+
+	const handleForgotPasswordClick = () => {
+		setShowModal(true);
+	};
 	// const handleLogin = async () => {
 	//   try {
 	//     const loginData = { username: 'example', password: 'password' };
@@ -62,6 +71,7 @@ const Login: FC = () => {
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
+
 	return (
 		<>
 			<div className={scss.Login}>
@@ -165,9 +175,13 @@ const Login: FC = () => {
 										)}
 									</div>
 								</div>
-								<div className={scss.Link_Element}>
-									<Link to="/auth/newPassword">Забыли пароль?</Link>
+								<div
+									className={scss.Link_Element}
+									onClick={() => setOpen(true)}
+								>
+									<p> Забыли пароль?</p>
 								</div>
+								<div className={scss.Link_Element}></div>
 								<div className={scss.Button_Element}>
 									<ButtonSave
 										type="submit"
@@ -182,6 +196,7 @@ const Login: FC = () => {
 						</div>
 					</div>
 				</div>
+				<ModalPassword open={open} handleClose={() => setOpen(false)} />
 			</div>
 		</>
 	);

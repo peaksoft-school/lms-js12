@@ -1,7 +1,6 @@
 import scss from './ModalPassword.module.scss';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -21,29 +20,25 @@ const style = {
 	borderRadius: '12px'
 };
 
-const ModalPassword = () => {
-	const [open, setOpen] = useState<boolean>(false);
+interface ModalProps {
+	handleClose: () => void;
+	open: boolean;
+}
+
+const ModalPassword: FC<ModalProps> = ({ handleClose, open }) => {
 	const { control, handleSubmit } = useForm();
 	const [inputvalue, setInputValue] = useState<string>('');
-
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	const handleInputChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
 	};
+
 	const onSubmit = () => {
 		handleClose();
 	};
 
 	return (
 		<form>
-			<Button onClick={handleOpen}>Open modal Забыли пароль?</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
