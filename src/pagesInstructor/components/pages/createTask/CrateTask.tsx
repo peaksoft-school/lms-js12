@@ -12,7 +12,7 @@ const CrateTask = () => {
 	const [openDelete, setOpenDelete] = useState(false);
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
-	const { data } = useGetTaskInstructorQuery();
+	const { data: lesson = [] } = useGetTaskInstructorQuery();
 	const id = localStorage.getItem('id');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -58,12 +58,14 @@ const CrateTask = () => {
 				</Button>
 			</div>
 			<div className={scss.card_lesson}>
-				{data?.map((item) => (
+				{lesson?.map((item) => (
 					<div
 						className={scss.card_container}
 						onClick={() => {
-							localStorage.setItem('hwTask', item.title);
+							console.log(item._id + 'Проблема!');
+
 							localStorage.setItem('task', item._id);
+							localStorage.setItem('hwTask', item.title);
 							setSaveId(item._id);
 							setTimeout(() => {
 								GetTask();

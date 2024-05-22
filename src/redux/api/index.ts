@@ -8,7 +8,7 @@ const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_BACEND_URL,
 
 	prepareHeaders: (headers) => {
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem('token-auth');
 		if (token) {
 			headers.set('Authorization', `Bearer ${token}`);
 		}

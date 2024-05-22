@@ -1,5 +1,4 @@
 import scss from './LessonsList.module.scss';
-import arrowIcon from '@/src/assets/svgs/arrow-right.svg';
 import { Pagination, Stack } from '@mui/material';
 import { useState, KeyboardEvent } from 'react';
 import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
