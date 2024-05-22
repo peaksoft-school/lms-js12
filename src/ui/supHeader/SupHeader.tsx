@@ -89,8 +89,14 @@ const SupHeader = () => {
 	const openMaterial = () => {
 		navigate(`/instructor/course/${id}/materials`);
 	};
+	const openRating = () => {
+		navigate(`/instructor/course/${id}/rating`);
+	};
 	const openInstructorStudent = () => {
 		navigate(`/instructor/course/${id}/student`);
+	};
+	const openRatingStudent = () => {
+		navigate(`/courses/${id}/rating`);
 	};
 
 	const lessonId = localStorage.getItem('lessonId');
@@ -133,6 +139,8 @@ const SupHeader = () => {
 					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late` &&
 				pathname !==
 					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/answer/${taskId}` &&
+				pathname !== `/instructor/course/${id}/rating` &&
+				pathname !== `/courses/${id}/rating` &&
 				pathname !==
 					`/instructor/course/${id}/materials/${lessonId}/showTest` &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}/test` &&
@@ -401,7 +409,11 @@ const SupHeader = () => {
 										label="Студенты"
 										{...a11yProps(1)}
 									/>
-									<Tab label="Рейтинг студентов" {...a11yProps(2)} />
+									<Tab
+										onClick={openRating}
+										label="Рейтинг студентов"
+										{...a11yProps(2)}
+									/>
 								</Tabs>
 							</Box>
 						</Box>
@@ -453,80 +465,83 @@ const SupHeader = () => {
 					</div>
 				)}
 			{/* //! student header*/}
-			{pathname.startsWith(`/courses/${id}/materials`) &&
-				pathname !== '/courses' && (
-					<div className={scss.subHeaderCourses2}>
-						<Box>
-							<Box
-								sx={{
-									borderColor: 'divider',
-									paddingTop: '20px'
-								}}
+			{pathname.startsWith(`/courses/${id}`) && pathname !== '/courses' && (
+				<div className={scss.subHeaderCourses2}>
+					<Box>
+						<Box
+							sx={{
+								borderColor: 'divider',
+								paddingTop: '20px'
+							}}
+						>
+							<Tabs
+								value={value}
+								onChange={handleChange}
+								aria-label="basic tabs example"
 							>
-								<Tabs
-									value={value}
-									onChange={handleChange}
-									aria-label="basic tabs example"
-								>
-									<Tab label="Материалы" {...a11yProps(0)} />
-									<Tab label="Рейтинг Студентов" {...a11yProps(1)} />
-								</Tabs>
-							</Box>
-						</Box>
-						<div className={scss.header_elements}>
-							<div
-								style={{
-									display: 'flex',
-									alignItems: 'center',
-									cursor: 'pointer'
-								}}
-							>
-								<IconBellRinging2
-									onClick={handleOpenNotification}
-									style={{ width: '30px', height: '30px' }}
-									stroke={2}
+								<Tab label="Материалы" {...a11yProps(0)} />
+								<Tab
+									onClick={openRatingStudent}
+									label="Рейтинг Студентов"
+									{...a11yProps(1)}
 								/>
-							</div>
-							<IconUserCircle className={scss.profile} stroke={2} />
-							<div
-								className={scss.profile_text}
-								id="basic-button"
-								aria-controls={open ? 'basic-menu' : undefined}
-								aria-haspopup="true"
-								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
-							>
-								{pathname.startsWith('/courses') && (
-									<div style={{ fontSize: '18px', fontWeight: '500' }}>
-										<>
-											<p>Студент</p>
-										</>
-									</div>
-								)}
-								{pathname.startsWith('/instructor') && (
-									<div
-										style={{ fontSize: '18px', fontWeight: '500' }}
-										className={scss.person}
-									>
-										Учитель
-									</div>
-								)}
-							</div>
-							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
+							</Tabs>
+						</Box>
+					</Box>
+					<div className={scss.header_elements}>
+						<div
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								cursor: 'pointer'
+							}}
+						>
+							<IconBellRinging2
+								onClick={handleOpenNotification}
+								style={{ width: '30px', height: '30px' }}
+								stroke={2}
+							/>
 						</div>
+						<IconUserCircle className={scss.profile} stroke={2} />
+						<div
+							className={scss.profile_text}
+							id="basic-button"
+							aria-controls={open ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={open ? 'true' : undefined}
+							onClick={handleClick}
+						>
+							{pathname.startsWith('/courses') && (
+								<div style={{ fontSize: '18px', fontWeight: '500' }}>
+									<>
+										<p>Студент</p>
+									</>
+								</div>
+							)}
+							{pathname.startsWith('/instructor') && (
+								<div
+									style={{ fontSize: '18px', fontWeight: '500' }}
+									className={scss.person}
+								>
+									Учитель
+								</div>
+							)}
+						</div>
+						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						<Menu
+							id="basic-menu"
+							anchorEl={anchorEl}
+							open={open}
+							onClose={() => setOpen(false)}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button'
+							}}
+						>
+							<MenuItem onClick={handleLogout}>Выйти</MenuItem>
+						</Menu>
 					</div>
-				)}
+				</div>
+			)}
 			<NotificationHeader
 				open={openNotification}
 				handleClose={handleCloseNotification}

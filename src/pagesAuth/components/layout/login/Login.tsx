@@ -14,29 +14,23 @@ import {
 } from '@mui/material';
 import Input from '@/src/ui/customInput/Input';
 import { usePostLoginMutation } from '@/src/redux/api/auth'; ///
-
 type FormData = {
 	login: string;
 	password: string;
 	// token: string;
 };
-
 const Login: FC = () => {
 	const [postLogin] = usePostLoginMutation();
 	const navigate = useNavigate();
-
 	// const handleLogin = async () => {
 	//   try {
 	//     const loginData = { username: 'example', password: 'password' };
 	//     const response = await postLogin(loginData).unwrap();
 	//     console.log('Успешный вход', response);
-
 	//   } catch (error) {
 	//     console.error('Ошибка входа', error);
-
 	//   }
 	// };
-
 	const {
 		register,
 		handleSubmit,
@@ -45,22 +39,18 @@ const Login: FC = () => {
 		formState: { errors }
 	} = useForm<FormData>();
 	const [showPassword, setShowPassword] = useState(false);
-
 	const onSubmit: SubmitHandler<FormData> = async (data, event) => {
 		event?.preventDefault();
-		console.log(data);
-
 		try {
 			const response = await postLogin(data);
 			if ('data' in response) {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const { token }: any = response.data;
 				localStorage.setItem('token', token);
 				localStorage.setItem('isAuth', 'true');
 			}
 			console.log('is working ', response);
 			console.log(data);
-			navigate('/admin');
+			// navigate('/admin');
 			reset();
 		} catch (error) {
 			console.log('not working', error);
@@ -68,12 +58,10 @@ const Login: FC = () => {
 		console.log(data);
 		reset();
 	};
-
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
-
 	return (
 		<>
 			<div className={scss.Login}>
@@ -84,7 +72,6 @@ const Login: FC = () => {
 							<img src={MenLogo} alt="#" />
 						</div>
 					</div>
-
 					<div className={scss.LoginElementsWhite}>
 						<div className={scss.LoginWhiteElements}>
 							<h1 className={scss.WelcomeMedia}>Добро пожаловать:</h1>
@@ -106,9 +93,9 @@ const Login: FC = () => {
 											rules={{
 												required: 'Логин обязателен для заполнения'
 												// pattern: {
-												// 	value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-												// 	message:
-												// 		'Введите действительный email адрес с доменом @gmail.com'
+												//  value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+												//  message:
+												//    'Введите действительный email адрес с доменом @gmail.com'
 												// }
 											}}
 											render={({ field }) => (
@@ -199,5 +186,4 @@ const Login: FC = () => {
 		</>
 	);
 };
-
 export default Login;

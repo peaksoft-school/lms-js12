@@ -101,7 +101,7 @@ const Materials: FC = () => {
 		setAnchorEl(event.currentTarget);
 	};
 	const id = localStorage.getItem('id');
-
+	const item = localStorage.getItem('item');
 	return (
 		<div className={scss.material}>
 			<div className={scss.container}>
@@ -119,7 +119,7 @@ const Materials: FC = () => {
 							<span>Создать урок</span>
 						</Button>
 					</div>
-					<h1>Материалы</h1>
+					<h1>{item}</h1>
 					<div style={{ height: '577px', background: '#eff0f4' }}>
 						<div className={scss.table_container}>
 							<div className={scss.material_content}>
@@ -150,6 +150,9 @@ const Materials: FC = () => {
 														>
 															{(draggableProvider) => (
 																<tr
+																	onClick={() =>
+																		localStorage.setItem('taskName', todo.title)
+																	}
 																	className={
 																		index % 2 === 1
 																			? scss.table_alternate_row
@@ -162,6 +165,7 @@ const Materials: FC = () => {
 																	<td
 																		onClick={() => {
 																			setSaveIdStorege(String(todo._id));
+
 																			setTimeout(() => {
 																				navigate(
 																					`/instructor/course/${id}/materials/${todo._id}`

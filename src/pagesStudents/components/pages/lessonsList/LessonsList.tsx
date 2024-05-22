@@ -1,5 +1,4 @@
 import scss from './LessonsList.module.scss';
-import arrowIcon from '@/src/assets/svgs/arrow-right.svg';
 import { Pagination, Stack } from '@mui/material';
 import { useState, KeyboardEvent } from 'react';
 import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
@@ -54,19 +53,7 @@ const LessonsList = () => {
 	return (
 		<div className={scss.list_lessons}>
 			<div className={scss.container}>
-				<div className={scss.lesson}>
-					<p>
-						<a className={scss.title_lesson_1} href="#">
-							Мои курсы
-						</a>
-					</p>
-					<img className={scss.img_arrow} src={arrowIcon} alt="" />
-					<p>
-						<a className={scss.title_lesson_2} href="#">
-							Data Engineer
-						</a>
-					</p>
-				</div>
+				<div className={scss.lesson}></div>
 				<div>
 					<h1 className={scss.title_lesson}>{localStorage.getItem('item')}</h1>
 				</div>
@@ -90,6 +77,7 @@ const LessonsList = () => {
 									className={scss.cards}
 									onClick={() => {
 										localStorage.setItem('lessonId', String(item._id));
+										localStorage.setItem('taskName', String(item.title));
 										setTimeout(() => {
 											navigate(`/courses/${id}/materials/${item._id}`);
 										}, 1000);

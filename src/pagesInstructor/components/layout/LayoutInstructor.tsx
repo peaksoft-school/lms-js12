@@ -8,7 +8,7 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MyCoursePage from '../pages/MyCoursePage';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
-import CreateCourse from '@/src/ui/customModal/CreateCurse';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
 import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
@@ -21,6 +21,10 @@ import EditTask from '../pages/editTask/EditTask';
 import GetTask from '../pages/getTask/GetTask';
 import Answer from '../pages/answerSection/Answer';
 import GetTestInstructor from '../pages/getTest/GetTestInstructor';
+
+import RatingStudentsPage from '../pages/RatingStudentsPage';
+// import { Breadcrumbs } from '@mui/material';
+import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +82,9 @@ const LayoutInstructor = () => {
 							<SupHeaderMobile />
 						</>
 					)}
+					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>
+						<BasicBreadcrumbs />
+					</p>
 					<Routes>
 						<Route
 							path={'/course'}
@@ -206,6 +213,10 @@ const LayoutInstructor = () => {
 								element={<EditTask />}
 							/>
 						</>
+						<Route
+							path="/course/:ratingId/rating"
+							element={<RatingStudentsPage />}
+						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
 						<Route

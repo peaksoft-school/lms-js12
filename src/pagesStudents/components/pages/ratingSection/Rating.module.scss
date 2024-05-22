@@ -1,0 +1,95 @@
+.rating {
+	padding-top: 20px;
+	padding-inline: 20px;
+
+	h1 {
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.rating_container {
+		border-radius: 8px;
+		// overflow-x: auto;
+		table-layout: fixed;
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+		background: #fff;
+		border: 1px solid #dbd2d2;
+		transition: all 0.5s;
+		// scrollbar-width: thin;
+		// scrollbar-color: #3772ff #fff;
+		background: #fff;
+		padding-inline: 20px;
+		padding-top: 20px;
+
+		@media screen and (min-width: 1185px) and (max-width: 1260px) {
+			width: 100%;
+			max-width: 953px;
+		}
+		@media screen and (min-width: 1105px) and (max-width: 1185px) {
+			width: 100%;
+			max-width: 870px;
+		}
+		@media screen and (min-width: 1070px) and (max-width: 1105px) {
+			width: 100%;
+			max-width: 830px;
+		}
+		@media screen and (min-width: 1000px) and (max-width: 1070px) {
+			width: 100%;
+			max-width: 760px;
+		}
+
+		.Table {
+			width: 100%;
+			border: 1px solid rgb(212, 212, 212);
+			border-collapse: collapse;
+
+			th,
+			td {
+				height: 50px;
+				border: 1px solid rgb(212, 212, 212);
+			}
+
+			th {
+				text-wrap: nowrap;
+				background: #eff0f4;
+			}
+			.TableCell {
+				width: 50px;
+				text-align: start;
+			}
+
+			td {
+				text-align: center;
+				width: 150px;
+				height: 50px;
+				padding: 10px;
+			}
+			.name {
+				width: 220px;
+			}
+			.button {
+				width: 30px !important;
+				height: 30px;
+			}
+		}
+	}
+
+	.rating {
+		text-align: start;
+		width: 10%;
+	}
+}
+
+// .scrollbar {
+//   &,
+//   &:hover {
+//     background: #EEEDED;
+//   }
+//   &[data-orientation='vertical'] .thumb {
+//     background: #EEEDED;
+//   }
+//   &[data-orientation='horizontal'] .thumb {
+//     background: #EEEDED;
+//   }
+// }

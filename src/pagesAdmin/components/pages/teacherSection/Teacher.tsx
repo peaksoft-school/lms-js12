@@ -19,8 +19,8 @@ const Teacher = () => {
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [openPage, setOpenPage] = useState<number | string>(12);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
+	const [openPage, setOpenPage] = useState<number | string>(12);
 	const { data, isLoading } = useGetTeacherQuery();
 	const [openPart, setOpenPart] = useState(1);
 	const [openTeacher, setTeacherOpen] = useState<boolean>(false);

@@ -8,8 +8,8 @@ import scss from './Groups.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
-import CreateGroup from '@/src/ui/customModal/CreateGroup';
-import EditGroup from '@/src/ui/customModal/EditGroup';
+import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup';
+import EditGroup from '@/src/ui/customModal/editGroup/EditGroup';
 import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -77,6 +77,7 @@ const Groups: FC = () => {
 				<div className={scss.container}>
 					<div className={scss.course_button_modal}>
 						<Button
+							type="button"
 							size="large"
 							className={scss.button}
 							onClick={handleOpen}
@@ -237,6 +238,7 @@ const Groups: FC = () => {
 					</div>
 				</div>
 			</div>
+
 			<CreateGroup
 				handleOpen={handleOpen}
 				open={openGroups}

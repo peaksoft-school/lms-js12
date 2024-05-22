@@ -1,5 +1,5 @@
 .list_lessons {
-	padding-top: 80px;
+	padding-top: 20px;
 
 	.container {
 		padding-inline: 20px;
@@ -8,7 +8,6 @@
 			justify-content: flex-start;
 			gap: 15px;
 			align-items: center;
-			margin-bottom: 20px;
 
 			.title_lesson_1 {
 				text-decoration: none;
@@ -23,7 +22,7 @@
 			}
 		}
 		.title_lesson {
-			margin-bottom: 20px;
+			margin-bottom: 24px;
 		}
 		.card {
 			display: grid;

@@ -12,7 +12,7 @@ const CrateTask = () => {
 	const [openDelete, setOpenDelete] = useState(false);
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
-	const { data } = useGetTaskInstructorQuery();
+	const { data: lesson = [] } = useGetTaskInstructorQuery();
 	const id = localStorage.getItem('id');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -58,18 +58,22 @@ const CrateTask = () => {
 				</Button>
 			</div>
 			<div className={scss.card_lesson}>
-				{data?.map((item) => (
-					<div className={scss.card_container}>
-						<p className={scss.card_link} onClick={GetTask}>
-							{item.title}
-						</p>
-						<div
-							onClick={() => {
-								setSaveId(item._id);
-								localStorage.setItem('task', String(item._id));
-							}}
-							className={scss.button}
-						>
+				{lesson?.map((item) => (
+					<div
+						className={scss.card_container}
+						onClick={() => {
+							console.log(item._id + 'Проблема!');
+
+							localStorage.setItem('task', item._id);
+							localStorage.setItem('hwTask', item.title);
+							setSaveId(item._id);
+							setTimeout(() => {
+								GetTask();
+							}, 1000);
+						}}
+					>
+						<p className={scss.card_link}>{item.title}</p>
+						<div className={scss.button}>
 							<button onClick={handleClick}>
 								<IconDotsVertical stroke={2} />
 							</button>

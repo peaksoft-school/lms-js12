@@ -3,14 +3,12 @@
 		width: 100%;
 		height: 100vh;
 		display: flex;
-
 		// ! login Blue
 		.LoginLogoBlue {
 			width: 100%;
 			max-width: 800px;
 			height: 100vh;
 			background: #3772ff;
-
 			.Logos {
 				display: flex;
 				gap: 90px;
@@ -25,14 +23,12 @@
 				}
 			}
 		}
-
 		// ! login White
 		.LoginElementsWhite {
 			padding-inline: 20px;
 			width: 100%;
 			height: 100vh;
 			background: #ffffff;
-
 			.LoginWhiteElements {
 				width: 100%;
 				height: 100vh;
@@ -40,39 +36,32 @@
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-
 				.title_red {
 					color: #fa2349;
 				}
-
 				.OutlinedInputEyes {
 					width: 540px;
 					border-radius: 12px;
 					width: 100%;
 				}
-
 				&::placeholder {
 					color: #6a6a6a;
 					padding: 10px 8px 10px 22px;
 				}
-
 				.Link_Element {
 					text-align: end;
 					margin-top: 20px;
 				}
-
 				.Button_Element {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					margin-top: 35px;
 				}
-
 				.Parent_element_inputs {
 					max-width: 540px;
 					padding: 20px;
 					width: 100%;
-
 					.Element_inputs_login {
 						margin-top: 54px;
 						display: flex;
@@ -84,12 +73,10 @@
 							font-size: 16px;
 							color: #6a6a6a;
 						}
-
 						.InputMedia {
 							max-width: 540px;
 						}
 					}
-
 					.Element_inputs_password {
 						display: flex;
 						flex-direction: column;
@@ -104,7 +91,6 @@
 					}
 				}
 			}
-
 			.LoginWhiteElements {
 				h1 {
 					@media (max-width: 320px) {
@@ -113,7 +99,6 @@
 						width: 100%;
 					}
 				}
-
 				.WelcomeMedia {
 					@media (max-width: 320px) {
 						display: flex;
@@ -124,7 +109,6 @@
 						font-size: 25px;
 					}
 				}
-
 				.PeakSoftMedia {
 					@media (max-width: 320px) {
 						display: flex;
@@ -138,7 +122,6 @@
 				}
 			}
 		}
-
 		.LoginLogoBlue {
 			@media (max-width: 1040px) {
 				display: none;

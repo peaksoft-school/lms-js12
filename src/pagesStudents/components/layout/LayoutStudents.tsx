@@ -8,6 +8,8 @@ import SupHeader from '@/src/ui/supHeader/SupHeader';
 import CoursesPage from '../pages/CoursesPage';
 import LessonListPage from '../pages/LessonListPage';
 import LessonsStudentPage from '../pages/LessonsStudentPage';
+import RatingPage from '../pages/RatingPage';
+import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import GetTest from '../pages/getTest/GetTest';
 
 const LayoutStudents = () => {
@@ -47,6 +49,9 @@ const LayoutStudents = () => {
 				)}
 				<main style={{ width: '100%' }}>
 					<SupHeader />
+					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>
+						<BasicBreadcrumbs />
+					</p>
 					<Routes>
 						<Route path="/courses" element={<CoursesPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
@@ -74,6 +79,7 @@ const LayoutStudents = () => {
 							path="/courses/:coursesId/materials/:sectionStudentId/showTest"
 							element={<GetTest />}
 						/>
+						<Route path="/courses/:ratingId/rating" element={<RatingPage />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
