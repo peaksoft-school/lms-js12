@@ -16,6 +16,7 @@ import PresentationPage from '../PresentationPage';
 import { ScrollArea } from '@mantine/core';
 import CrateTask from '../createTask/CrateTask';
 import GetTask from '../getTask/GetTask';
+import Test from '../testSection/TestInstructor';
 
 const Lesson = () => {
 	const [value, setValue] = useState(0);
@@ -40,6 +41,9 @@ const Lesson = () => {
 		navigate(`/instructor/course/${id}/materials/${item}/lesson`);
 	};
 	const task = localStorage.getItem('task');
+	const handleOpenTest = () => {
+		navigate(`/instructor/course/${id}/materials/${item}/test`);
+	};
 
 	return (
 		<div className={scss.lesson}>
@@ -104,6 +108,7 @@ const Lesson = () => {
 											id="simple-tab-4"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-4"
+											onClick={handleOpenTest}
 										/>
 									</Tabs>
 								</Box>
@@ -155,6 +160,12 @@ const Lesson = () => {
 								`/instructor/course/${id}/materials/${item}/lesson/${task}/notSubmitted` && (
 								<>
 									<GetTask />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${id}/materials/${item}/test` && (
+								<>
+									<Test />
 								</>
 							)}
 						</div>

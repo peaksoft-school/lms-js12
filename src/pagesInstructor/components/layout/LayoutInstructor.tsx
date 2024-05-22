@@ -20,9 +20,12 @@ import AddTaskPage from '../pages/AddTaskPage';
 import EditTask from '../pages/editTask/EditTask';
 import GetTask from '../pages/getTask/GetTask';
 import Answer from '../pages/answerSection/Answer';
+import GetTestInstructor from '../pages/getTest/GetTestInstructor';
+
 import RatingStudentsPage from '../pages/RatingStudentsPage';
-import { Breadcrumbs } from '@mui/material';
+// import { Breadcrumbs } from '@mui/material';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
+
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
@@ -216,6 +219,14 @@ const LayoutInstructor = () => {
 						/>
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
+						<Route
+							path="/course/:materialsId/materials/:lessonId/test"
+							element={<LessonPage />}
+						/>
+						<Route
+							path="/course/:materialsId/materials/:lessonId/showTest"
+							element={<GetTestInstructor />}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
