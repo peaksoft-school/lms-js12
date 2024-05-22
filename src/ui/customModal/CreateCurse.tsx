@@ -7,9 +7,9 @@ import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useRef, useState } from 'react';
-import { useCreateCourseMutation } from '@/src/redux/api/admin/courses';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useCreateAdminCourseMutation } from '@/src/redux/api/admin/courses';
 
 const style = {
 	position: 'absolute',
@@ -43,7 +43,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	const [hidePhoto, setHidePhoto] = useState(false);
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [createCourse] = useCreateCourseMutation();
+	const [createCourse] = useCreateAdminCourseMutation();
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -72,9 +72,9 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		if (value !== '' && image !== '' && data !== '' && text !== '') {
 			const newCourse = {
 				title: value,
-				img: image,
-				date: data,
-				text: text
+				image: image,
+				dateOfEnd: data,
+				description: text
 			};
 			createCourse(newCourse).unwrap();
 			try {

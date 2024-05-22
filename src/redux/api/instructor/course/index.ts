@@ -3,8 +3,8 @@ import { api as index } from '../../../api';
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getCourseInstructor: builder.query<
-			COURSES.CoursesResponse,
-			COURSES.CoursesRequest
+			INSTRUCTORCOURSES.CoursesResponse,
+			INSTRUCTORCOURSES.CoursesRequest
 		>({
 			query: () => ({
 				url: 'https://04c2c825595e3dcc.mokky.dev/course',
@@ -13,8 +13,8 @@ export const api = index.injectEndpoints({
 			providesTags: ['courses']
 		}),
 		createCourseInstructor: builder.mutation<
-			COURSES.CreateCourseResponse,
-			COURSES.CreateCourseRequest
+			INSTRUCTORCOURSES.CreateCourseResponse,
+			INSTRUCTORCOURSES.CreateCourseRequest
 		>({
 			query: (newCourse) => ({
 				url: 'https://04c2c825595e3dcc.mokky.dev/course',
@@ -24,8 +24,8 @@ export const api = index.injectEndpoints({
 			invalidatesTags: ['courses']
 		}),
 		updateCourseInstructor: builder.mutation<
-			COURSES.UpdateCourseResponse,
-			COURSES.UpdateCourseRequest
+			INSTRUCTORCOURSES.UpdateCourseResponse,
+			INSTRUCTORCOURSES.UpdateCourseRequest
 		>({
 			query: ({ newCourse, saveId }) => ({
 				url: `https://04c2c825595e3dcc.mokky.dev/course/${saveId}`,

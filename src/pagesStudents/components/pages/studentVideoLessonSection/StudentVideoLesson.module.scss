@@ -1,0 +1,70 @@
+.VideoLesson {
+	padding-inline: 20px;
+	width: 100%;
+
+	.video {
+		overflow-y: scroll !important;
+		scrollbar-width: thin;
+		scrollbar-color: #3772ff #fff;
+		.content {
+			margin-top: 40px;
+			display: flex;
+			.cards {
+				padding: 15px;
+				display: flex;
+				gap: 16px;
+				background: #eff0f4;
+				width: 100%;
+				border-radius: 10px;
+
+				@media (max-width: 840px) {
+					display: flex;
+					flex-direction: column;
+				}
+
+				.photo {
+					width: 100%;
+					max-width: 350px;
+					position: relative;
+					display: flex;
+					align-items: center;
+					img {
+						width: 100%;
+						max-width: 350px;
+						height: 100%;
+						max-height: 220px;
+						border-radius: 10px;
+						transition: 0.3s;
+					}
+
+					.button_watch {
+						position: absolute;
+						left: 50%;
+						top: 50%;
+						transform: translate(-50%, -50%);
+					}
+				}
+			}
+
+			.title {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+
+				.text {
+					h1 {
+						font-weight: 600;
+						font-size: 20px;
+						color: #1d293f;
+					}
+
+					p {
+						font-weight: 400;
+						font-size: 14px;
+						color: #1d293f;
+					}
+				}
+			}
+		}
+	}
+}

@@ -116,7 +116,8 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 				specialization: specialization,
 				group: personName
 			};
-			postTeacher(postData);
+			await postTeacher(postData);
+
 			handleClose();
 			reset();
 			setPersonName([]);

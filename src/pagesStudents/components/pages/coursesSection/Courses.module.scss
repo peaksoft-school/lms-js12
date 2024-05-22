@@ -1,5 +1,5 @@
 .course {
-	padding-top: 20px;
+	padding-top: 80px;
 	.content {
 		padding-inline: 20px;
 		display: flex;
@@ -103,11 +103,13 @@
 						max-width: 280px;
 						width: 100%;
 						background: #fff;
+						height: 280.5px;
 						border: 1px solid #d4d4d4;
 						border-radius: 10px;
 						flex-direction: column;
 						gap: 10px;
 						display: flex;
+						cursor: pointer;
 						@media (max-width: 1670px) {
 							max-width: 300px;
 							width: 100%;
@@ -184,22 +186,6 @@
 									text-overflow: ellipsis;
 								}
 							}
-						}
-					}
-
-					.block_button_div {
-						margin-top: auto;
-						display: flex;
-						align-items: center;
-						justify-content: flex-end;
-						width: 100%;
-
-						.button_dots {
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							background: none;
-							border: none;
 						}
 					}
 				}

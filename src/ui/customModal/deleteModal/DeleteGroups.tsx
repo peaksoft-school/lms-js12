@@ -1,12 +1,12 @@
 import scss from './DeleteGroupsModal.module.scss';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteGroupMutation } from '@/src/redux/api/admin/groups';
+import ButtonDelete from '../../customButton/ButtonDelete';
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -38,10 +38,20 @@ const DeleteGroupModal: React.FC<DeleteProps> = ({
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<p>Вы уверены, что хотите удалить этого учителя?</p>
+								<p>Вы уверены, что хотите удалить группу?</p>
 							</DialogContentText>
 						</DialogContent>
-						<DialogActions className={scss.buttons}>
+						<DialogActions
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								width="103px"
 								type="button"
@@ -52,18 +62,13 @@ const DeleteGroupModal: React.FC<DeleteProps> = ({
 							>
 								отмена
 							</ButtonCancel>
-							<Button
+							<ButtonDelete
+								type="submit"
+								disabled={false}
 								onClick={handleDelete}
-								autoFocus
-								style={{
-									backgroundColor: '#F70D1A',
-									color: '#fff',
-									width: '108px',
-									height: '40px'
-								}}
 							>
 								Удалить
-							</Button>
+							</ButtonDelete>
 						</DialogActions>
 					</Dialog>
 				</div>

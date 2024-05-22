@@ -60,6 +60,33 @@
 			@media (max-width: 600px) {
 				width: 80% !important;
 			}
+
+			.review {
+				display: flex;
+				width: 100%;
+				border: gray;
+				gap: 10px;
+
+				.input {
+					border-radius: 10px;
+					border: 1px solid #cfc9c9;
+					outline: none;
+					&:hover {
+						border: 1px solid #000000 !important;
+					}
+					&:focus {
+						border: 1px solid #0000ff !important;
+					}
+					&:active {
+						border: 1px solid #0000ff !important;
+					}
+
+					&::placeholder {
+						font-size: 15px;
+						padding-inline: 7px;
+					}
+				}
+			}
 		}
 	}
 }
@@ -108,5 +135,81 @@
 			flex-direction: column;
 			gap: 10px;
 		}
+	}
+}
+
+.main_modal_vid {
+	width: 60% !important;
+	height: 60% !important;
+	padding: 0px !important;
+	transition: 0.4s !important;
+	border-radius: 8px !important;
+
+	@media (max-width: 1300px) {
+		width: 75% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 1150px) {
+		width: 80% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 1000px) {
+		width: 85% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 875px) {
+		height: 50% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 840px) {
+		height: 50% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 770px) {
+		width: 85% !important;
+		height: 50% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 720px) {
+		height: 45% !important;
+		transition: 0.4s !important;
+	}
+	@media (max-width: 700px) {
+		width: 85% !important;
+		height: 40% !important;
+		transition: 0.4s !important;
+	}
+	@media (max-width: 590px) {
+		width: 85% !important;
+		height: 30% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 500px) {
+		height: 28% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 490px) {
+		height: 25% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 400px) {
+		width: 92% !important;
+		height: 25% !important;
+		transition: 0.4s !important;
+	}
+
+	@media (max-width: 350px) {
+		width: 92% !important;
+		height: 20% !important;
+		transition: 0.4s !important;
 	}
 }
