@@ -15,7 +15,8 @@ const SupHeader = () => {
 	const [open, setOpen] = useState(false);
 	const [openNotification, setOpenNotification] = useState(false);
 	const navigate = useNavigate();
-	const { coursesPart, coursesTeacher } = useParams();
+	const { materialsId } = useParams();
+	console.log(materialsId);
 
 	const handleOpenNotification = () => {
 		setOpenNotification(true);
@@ -107,7 +108,7 @@ const SupHeader = () => {
 		<div className={scss.header}>
 			{/* //! admin header */}
 			{pathname !== `/admin/courses/${id}/student` &&
-				pathname !== `/admin/courses/${id}/teacher` &&
+				pathname !== `/admin/courses/${materialsId}/teacher` &&
 				pathname !== `/instructor/course/${id}/materials` &&
 				pathname !== `/instructor/course/${id}/student` &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}` &&
