@@ -4,7 +4,7 @@ import scss from './Login.module.scss';
 import Logo from '@/src/assets/svgs/logo.svg';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenLogo from '@/src/assets/svgs/boy-proger.svg';
 import {
 	IconButton,
@@ -13,6 +13,7 @@ import {
 	OutlinedInput
 } from '@mui/material';
 import Input from '@/src/ui/customInput/Input';
+import { usePostLoginMutation } from '@/src/redux/api/auth';
 
 type FormData = {
 	login: string;
@@ -20,7 +21,11 @@ type FormData = {
 };
 
 const Login: FC = () => {
+	const [postLogin] = usePostLoginMutation();
+	const navigate = useNavigate();
+
 	const {
+		register,
 		handleSubmit,
 		reset,
 		control,
@@ -28,8 +33,24 @@ const Login: FC = () => {
 	} = useForm<FormData>();
 	const [showPassword, setShowPassword] = useState(false);
 
-	const onSubmit: SubmitHandler<FormData> = (data) => {
+	const onSubmit: SubmitHandler<FormData> = async (data, event) => {
+		event?.preventDefault();
 		console.log(data);
+
+		try {
+			const response = await postLogin(data);
+			if ('data' in response) {
+				const { token }: any = response.data;
+				localStorage.setItem('token', token);
+				localStorage.setItem('isAuth', 'true');
+			}
+			console.log('is working ', response);
+			console.log(data);
+			navigate('/admin');
+			reset();
+		} catch (error) {
+			console.log('not working', error);
+		}
 		reset();
 	};
 
@@ -47,31 +68,26 @@ const Login: FC = () => {
 						<img src={MenLogo} alt="#" />
 					</div>
 				</div>
-
-				<div className={scss.login_elements_white}>
-					<div className={scss.login_white_elements}>
-						<h1 className={scss.welcome_media}>Добро пожаловать:</h1>
-						<h1 className={scss.peak_soft_media}>
+				<div className={scss.LoginElementsWhite}>
+					<div className={scss.LoginWhiteElements}>
+						<h1 className={scss.WelcomeMedia}>Добро пожаловать:</h1>
+						<h1 className={scss.PeakSoftMedia}>
 							в <span className={scss.title_red}>PEAKSOFT LMS</span>!
 						</h1>
 						<form
 							style={{ maxWidth: '540px', width: '100%' }}
 							onSubmit={handleSubmit(onSubmit)}
 						>
-							<div className={scss.parent_element_inputs}>
-								<div className={scss.element_inputs_login}>
+							<div className={scss.Parent_element_inputs}>
+								<div className={scss.Element_inputs_login}>
 									<p>Логин :</p>
 									<Controller
-										name="login"
+										{...register('login')}
 										control={control}
+										name="login"
 										defaultValue=""
 										rules={{
-											required: 'Логин обязателен для заполнения',
-											pattern: {
-												value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-												message:
-													'Введите действительный email адрес с доменом @gmail.com'
-											}
+											required: 'Логин обязателен для заполнения'
 										}}
 										render={({ field }) => (
 											<Input
@@ -93,22 +109,22 @@ const Login: FC = () => {
 										<p>Пароль : </p>
 									</InputLabel>
 									<Controller
-										name="password"
+										{...register('password')}
 										control={control}
 										defaultValue=""
+										name="password"
 										rules={{
 											required: 'Пароль обязателен для заполнения',
 											minLength: {
-												value: 8,
-												message: 'Пароль должен содержать минимум 8 символов'
+												value: 5,
+												message: 'Пароль должен содержать минимум 5 символов'
 											}
 										}}
 										render={({ field }) => (
 											<OutlinedInput
-												className={scss.outlined_input_eyes}
 												{...field}
+												className={scss.outlined_input_eyes}
 												placeholder="Введите пароль"
-												id="outlined-adornment-password"
 												type={showPassword ? 'text' : 'password'}
 												endAdornment={
 													<InputAdornment position="end">
@@ -122,6 +138,7 @@ const Login: FC = () => {
 														</IconButton>
 													</InputAdornment>
 												}
+												label="Password"
 												error={!!errors.password}
 											/>
 										)}
@@ -133,16 +150,11 @@ const Login: FC = () => {
 									)}
 								</div>
 							</div>
-							<div className={scss.link_element}>
+							<div className={scss.Link_Element}>
 								<Link to="/auth/newPassword">Забыли пароль?</Link>
 							</div>
-							<div className={scss.button_element}>
-								<ButtonSave
-									type="submit"
-									width="214px"
-									onClick={() => {}}
-									disabled={false}
-								>
+							<div className={scss.Button_Element}>
+								<ButtonSave type="submit" width="214px" disabled={false}>
 									Войти
 								</ButtonSave>
 							</div>

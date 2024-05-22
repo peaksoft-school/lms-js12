@@ -17,7 +17,6 @@ import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
 import AnalyticsPage from '@/src/pagesAdmin/components/pages/AnalyticsPage.tsx';
 import TrashPage from '../pages/TrashPage';
 import TeacherPage from '../pages/TeacherPage.tsx';
-import { useGetCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import CoursesPage from '../pages/CoursesPage.tsx';
 import StudentsPage from '../pages/StudentsPage.tsx';
 import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
@@ -27,6 +26,7 @@ import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse.tsx';
 import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
 import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
+import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +34,7 @@ const LayoutAdmin = () => {
 	const { data } = useGetTeacherQuery();
 	const { data: groups = [] } = useGetGroupQuery();
 	const { data: student = [] } = useGetStudentTableQuery();
-	const { data: courses = [] } = useGetCourseQuery();
+	const { data: courses = [] } = useGetAdminCourseQuery();
 	const [openGroups, setOpen] = useState(false);
 	const [courseHandle, setCourseHandle] = useState(false);
 	const [openTeacher, setOpenTeacher] = useState(false);

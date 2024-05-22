@@ -1,43 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace COURSES {
-	type CoursesResponse = {
+namespace ADMINCOURSES {
+	type CoursesAdminResponse = {
 		_id: number;
-		file: File | undefined;
+		image: string | undefined;
 		title: string;
 		description: string;
-		dedline: Dayjs | null | undefined;
+		dateOfEnd: Dayjs | null | undefined;
 	}[];
-	type CoursesRequest = void;
-	type CreateCourseResponse = {
+	type CoursesAdminRequest = void;
+	type CreateAdminCourseResponse = {
 		newCourse: {
-			file: File | undefined;
+			image: string | undefined;
 			title: string;
 			description: string;
-			dedline: Dayjs | null | undefined;
+			dateOfEnd: Dayjs | null | undefined;
 		};
 	}[];
-	type CreateCourseRequest = {
-		file: File | undefined;
+	type CreateAdminCourseRequest = {
+		image: string | undefined;
 		title: string;
 		description: string;
-		dedline: Dayjs | null | undefined;
+		dateOfEnd: Dayjs | null | undefined;
 	};
 	type UpdateCourseResponse = {
-		saveId: string | null;
+		saveId: number | null;
 		newCourse: {
-			file: File | undefined;
-			title: string | undefined;
-			description: string | undefined;
-			dedline: Dayjs | null | undefined;
+			image: string | undefined;
+			title: string;
+			description: string;
+			dateOfEnd: Dayjs | null | undefined;
 		};
 	}[];
 	type UpdateCourseRequest = {
-		saveId: string | null;
+		saveId: number | null;
 		newCourse: {
-			file: File | undefined;
-			title: string | undefined;
-			description: string | undefined;
-			dedline: Dayjs | null | undefined;
+			image: string | undefined;
+			title: string;
+			description: string;
+			dateOfEnd: Dayjs | null | undefined;
 		};
 	};
 }

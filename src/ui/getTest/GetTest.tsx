@@ -66,13 +66,12 @@ function GetTest() {
 
 	return (
 		<div className={scss.Main_div}>
-			
 			<div className={scss.get_test_name_test}>
 				<h2>Название теста</h2>
 				<p className={scss.get_test_time}>59:39</p>
 			</div>
 			<div className={scss.testing_container}>
-			{questions.map((question) => (
+				{questions.map((question) => (
 					<div key={question.id} className={scss.question}>
 						<div className={scss.get_test_testing_second_container}>
 							<h4>{question.id}.</h4>

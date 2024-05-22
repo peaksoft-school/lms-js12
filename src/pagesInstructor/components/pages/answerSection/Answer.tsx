@@ -27,7 +27,12 @@ const Answer = () => {
 						placeholder="Комментарий  к заданию"
 					/>
 					<div className={scss.comment_part}>
-						<ButtonCancel type="button" width="145px" disabled={false}>
+						<ButtonCancel
+							type="button"
+							width="145px"
+							disabled={false}
+							onClick={() => {}}
+						>
 							Не принято
 						</ButtonCancel>
 						<div className={scss.comment_div}>

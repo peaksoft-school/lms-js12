@@ -7,8 +7,9 @@ import galerry from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useEffect, useRef, useState } from 'react';
+
+import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { useUpdateGroupMutation } from '@/src/redux/api/admin/groups';
-import { useGetCourseQuery } from '@/src/redux/api/admin/courses';
 
 const style = {
 	position: 'absolute',
@@ -32,8 +33,8 @@ interface EditModalProps {
 }
 
 const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
-	const { data } = useGetCourseQuery();
-	const find = data?.find((id) => id.id === saveId);
+	const { data } = useGetAdminCourseQuery();
+	const find = data?.find((id) => id._id === saveId);
 
 	const [value, setValue] = useState<string>('');
 	const [date, setData] = useState<string>('');
@@ -45,9 +46,9 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 
 	useEffect(() => {
 		setValue(find?.title || '');
-		setData(find?.date || '');
-		setText(find?.text || '');
-		setImage(find?.img || '');
+		setData(find?.dateOfEnd || '');
+		setText(find?.description || '');
+		setImage(find?.image || '');
 	}, [find]);
 
 	const handleButtonClick = () => {

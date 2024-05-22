@@ -63,7 +63,7 @@ const CrateTask = () => {
 						className={scss.card_container}
 						onClick={() => {
 							localStorage.setItem('hwTask', item.title);
-							localStorage.setItem('task',item._id);
+							localStorage.setItem('task', item._id);
 							setSaveId(item._id);
 							setTimeout(() => {
 								GetTask();
