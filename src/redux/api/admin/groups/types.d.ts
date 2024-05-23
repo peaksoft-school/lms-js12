@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace GROUPS {
-	type Group = {
+	type GroupResponses = {
 		id: number;
 		title: string;
 		dateOfEnd: string;
@@ -8,7 +8,11 @@ namespace GROUPS {
 		image: string;
 	};
 
-	type GroupsResponse = Group[];
+	type GroupsResponse = {
+		groupResponses: GroupResponses[];
+		page: number;
+		size: number
+	};
 	type GroupsRequest = void;
 	type CreateGroupResponse = {
 		title: string;

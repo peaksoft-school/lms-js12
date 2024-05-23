@@ -67,29 +67,33 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 	// const notifySuccess = () => toast.success('Группа успешно создана !');
 	// const notifyError = () => toast.error('Произошла ошибка при создании группы');
 
-	const handleCreateGroup = async () => {
+	const handleCreateGroup = async () => {		
 		const newGroup = {
 			title: value,
 			image: image,
 			dateOfEnd: data,
 			description: text
 		};
-		await createGroup(newGroup).unwrap();
+		
+		
+		await createGroup(newGroup);
 		console.log(newGroup);
 
-		try {
-			createGroup(newGroup).unwrap();
-			// notifySuccess();
-			handleOpen(false);
-			setData('');
-			setText('');
-			setImage('');
-			setValue('');
-			handleClose();
-		} catch (error) {
-			// notifyError();
-			console.log('error');
-		}
+		// try {
+		// 	createGroup(newGroup).unwrap();
+		// 	// notifySuccess();
+		// 	handleOpen(false);
+		// 	setData('');
+		// 	setText('');
+		// 	setImage('');
+		// 	setValue('');
+		// 	handleClose();
+		// 	console.log('test');
+			
+		// } catch (error) {
+		// 	// notifyError();
+		// 	console.log('error');
+		// }
 	};
 
 	return (
