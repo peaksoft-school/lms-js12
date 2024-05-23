@@ -105,18 +105,21 @@ const Groups: FC = () => {
 											<div key={item.id} className={scss.zero_block_container}>
 												<Link to={`/admin/group/${item.id}`}>
 													<div className={scss.block_photo_cards}>
-														<img src={item.img} alt="images" />
+														<img src={item.image} alt="images" />
 													</div>
 													<div className={scss.block_cont}>
 														<div className={scss.second_block_container}>
 															<p className={scss.block_title}>{item.title}</p>
-															<p className={scss.block_date}>{item.date}</p>
+															<p className={scss.block_date}>
+																{item.dateOfEnd}
+															</p>
 														</div>
 														<div className={scss.text_card}>
 															<span className={scss.block_text}>
-																{item.text && item.text.length > 60
-																	? `${item.text.substring(0, 60)}...`
-																	: item.text}
+																{item.description &&
+																item.description.length > 60
+																	? `${item.description.substring(0, 60)}...`
+																	: item.description}
 															</span>
 														</div>
 													</div>

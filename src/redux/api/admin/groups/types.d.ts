@@ -3,41 +3,41 @@ namespace GROUPS {
 	type Group = {
 		id: number;
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		dateOfEnd: string;
+		description: string;
+		image: string;
 	};
 
 	type GroupsResponse = Group[];
 	type GroupsRequest = void;
 	type CreateGroupResponse = {
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		dateOfEnd: string;
+		description: string;
+		image: string;
 	}[];
 	type CreateGroupRequest = {
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		dateOfEnd: string;
+		description: string;
+		image: string;
 	};
 	type UpdateGroupResponse = {
 		saveId: number | null;
 		newGroup: {
 			title: string;
-			date: string;
-			text: string;
-			img: string;
+			dateOfEnd: string;
+			description: string;
+			image: string;
 		};
 	}[];
 	type UpdateGroupRequest = {
 		saveId: number | null;
 		newGroup: {
 			title: string;
-			date: string;
-			text: string;
-			img: string;
+			dateOfEnd: string;
+			description: string;
+			image: string;
 		};
 	};
 }

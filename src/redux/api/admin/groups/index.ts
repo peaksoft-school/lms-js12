@@ -4,9 +4,10 @@ export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getGroup: builder.query<GROUPS.GroupsResponse, GROUPS.GroupsRequest>({
 			query: () => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/group',
+				url: '/api/groups?page=1&size=8',
 				method: 'GET'
 			}),
+			// https://04c2c825595e3dcc.mokky.dev/group
 			providesTags: ['groups']
 		}),
 		createGroup: builder.mutation<
@@ -14,10 +15,11 @@ export const api = index.injectEndpoints({
 			GROUPS.CreateGroupRequest
 		>({
 			query: (newGroup) => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/group',
+				url: '/api/groups',
 				method: 'POST',
 				body: newGroup
 			}),
+			// https://04c2c825595e3dcc.mokky.dev/group
 			invalidatesTags: ['groups']
 		}),
 		updateGroup: builder.mutation<
@@ -29,6 +31,7 @@ export const api = index.injectEndpoints({
 				method: 'PATCH',
 				body: newGroup
 			}),
+			// https://04c2c825595e3dcc.mokky.dev/group/${saveId}
 			invalidatesTags: ['groups']
 		}),
 		deleteGroup: builder.mutation({
