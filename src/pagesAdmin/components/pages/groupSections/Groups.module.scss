@@ -1,8 +1,9 @@
 .group {
 	padding-top: 20px;
-	
+
 	.content {
 		padding-inline: 20px;
+		min-height: 89vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -62,7 +63,6 @@
 					width: 100%;
 					column-gap: 70px;
 					row-gap: 40px;
-
 
 					@media (min-width: 1700px) {
 						display: grid;
@@ -211,9 +211,10 @@
 			align-items: center;
 			width: 100%;
 			background: #efeff6;
+			margin-top: auto;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 21px;
+			// margin-top: 21px;
 			position: sticky;
 			bottom: 0;
 			left: 0;
