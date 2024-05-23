@@ -50,9 +50,7 @@
 				grid-template-columns: repeat(2, 1fr);
 				place-items: center;
 				gap: 20px;
-				scrollbar-width: thin;
-				scrollbar-color: #3772ff #fff;
-				overflow-y: scroll;
+
 
 				@media (max-width: 1350px) {
 					column-gap: 120px;

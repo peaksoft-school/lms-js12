@@ -11,9 +11,10 @@ import Panding from '../panding/Panding';
 import Accepted from '../acceptedSection/Accepted';
 import NotAccepted from '../notAccepted/NotAccepted';
 import NotSubmitted from '../notSubmitted/NotSubmitted';
+import { Box, ScrollArea } from '@mantine/core';
 // import NotSubmitted from '../notSubmitted/NotSubmitted';
 const GetTask = () => {
-	const nanvigate = useNavigate();
+	const navigate = useNavigate();
 	const { data } = useGetTaskInstructorQuery();
 	const [value, setValue] = useState(0);
 	const { pathname } = useLocation();
@@ -52,27 +53,27 @@ const GetTask = () => {
 		}
 	}, [pathname]);
 	const handleOpenPanding = () => {
-		nanvigate(
+		navigate(
 			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding`
 		);
 	};
 	const handleOpenAccepted = () => {
-		nanvigate(
+		navigate(
 			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted`
 		);
 	};
 	const handleOpenNotAccepted = () => {
-		nanvigate(
+		navigate(
 			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted`
 		);
 	};
 	const handleOpenLate = () => {
-		nanvigate(
+		navigate(
 			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late`
 		);
 	};
 	const handleOpenNotSubmitted = () => {
-		nanvigate(
+		navigate(
 			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted`
 		);
 	};
@@ -89,47 +90,56 @@ const GetTask = () => {
 						<div dangerouslySetInnerHTML={{ __html: item.description }} />
 					</div>
 				))}
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					aria-label="basic tabs example"
+				<ScrollArea
+					scrollbars="xy"
+					offsetScrollbars
+					classNames={scss}
+					type="always"
 				>
-					<Tab
-						label="Ожидание"
-						id="simple-tab-0"
-						className={scss.tab}
-						aria-controls="simple-tabpanel-0"
-						onClick={handleOpenPanding}
-					/>
-					<Tab
-						label="ПРИНЯТО"
-						id="simple-tab-1"
-						className={scss.tab}
-						aria-controls="simple-tabpanel-1"
-						onClick={handleOpenAccepted}
-					/>
-					<Tab
-						label="НЕ ПРИНЯТО"
-						onClick={handleOpenNotAccepted}
-						id="simple-tab-2"
-						className={scss.tab}
-						aria-controls="simple-tabpanel-2"
-					/>
-					<Tab
-						label="Опоздание"
-						className={scss.tab}
-						id="simple-tab-3"
-						aria-controls="simple-tabpanel-3"
-						onClick={handleOpenLate}
-					/>
-					<Tab
-						label="не сдавшие"
-						id="simple-tab-4"
-						className={scss.tab}
-						aria-controls="simple-tabpanel-4"
-						onClick={handleOpenNotSubmitted}
-					/>
-				</Tabs>
+					<Box>
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							aria-label="basic tabs example"
+						>
+							<Tab
+								label="Ожидание"
+								id="simple-tab-0"
+								className={scss.tab}
+								aria-controls="simple-tabpanel-0"
+								onClick={handleOpenPanding}
+							/>
+							<Tab
+								label="Принято"
+								id="simple-tab-1"
+								className={scss.tab}
+								aria-controls="simple-tabpanel-1"
+								onClick={handleOpenAccepted}
+							/>
+							<Tab
+								label="Не Принято"
+								onClick={handleOpenNotAccepted}
+								id="simple-tab-2"
+								className={scss.tab}
+								aria-controls="simple-tabpanel-2"
+							/>
+							<Tab
+								label="Опоздание"
+								className={scss.tab}
+								id="simple-tab-3"
+								aria-controls="simple-tabpanel-3"
+								onClick={handleOpenLate}
+							/>
+							<Tab
+								label="Не сдавшие"
+								id="simple-tab-4"
+								className={scss.tab}
+								aria-controls="simple-tabpanel-4"
+								onClick={handleOpenNotSubmitted}
+							/>
+						</Tabs>
+					</Box>
+				</ScrollArea>
 				{pathname ===
 					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding` && (
 					<>

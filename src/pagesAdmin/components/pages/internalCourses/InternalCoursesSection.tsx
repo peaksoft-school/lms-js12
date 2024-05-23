@@ -9,6 +9,7 @@ import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './InternalCoursesSection.module.scss';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
+import { Box, ScrollArea } from '@mantine/core';
 
 interface Student {
 	_id: number;
@@ -86,111 +87,122 @@ const InternalCourses = () => {
 			<div className={scss.container}>
 				<div className={scss.content_table}>
 					<h1 className={scss.title}>Data Engineer</h1>
-					<div style={{ height: '577px', background: '#eff0f4' }}>
-						<div style={{ display: 'flex', justifyContent: 'center' }}>
-							<div className={scss.internal_container}>
-								<table className={scss.table}>
-									<thead>
-										<tr>
-											<th style={{ textAlign: 'start' }}>№</th>
-											<th>Имя</th>
-											<th>Фамилия</th>
-											<th>Группа</th>
-											<th>Формат обучения</th>
-											<th>Номер телефона</th>
-											<th>E-mail</th>
-											<th style={{ textAlign: 'end', paddingRight: '10px' }}>
-												Действия
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										{data
-											?.slice(
-												(currentPage - 1) * rowsPerPage,
-												currentPage * rowsPerPage
-											)
-											.map((item: Student, index) => (
-												<tr
-													key={item._id}
-													className={
-														index % 2 === 1
-															? scss.table_alternate_row
-															: '' || scss.internal
-													}
-												>
-													<td
-														className={
-															!item.isCompleted ? scss.changeClass : ''
-														}
+					<ScrollArea
+						type="always"
+						scrollbars="xy"
+						offsetScrollbars
+						classNames={scss}
+					>
+						<Box>
+							<div style={{ height: '577px', background: '#eff0f4' }}>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
+									<div className={scss.internal_container}>
+										<table className={scss.table}>
+											<thead>
+												<tr>
+													<th style={{ textAlign: 'start' }}>№</th>
+													<th>Имя</th>
+													<th>Фамилия</th>
+													<th>Группа</th>
+													<th>Формат обучения</th>
+													<th>Номер телефона</th>
+													<th>E-mail</th>
+													<th
+														style={{ textAlign: 'end', paddingRight: '10px' }}
 													>
-														{index + 1 + (currentPage - 1) * rowsPerPage}
-													</td>
-													<td
-														className={
-															!item.isCompleted ? scss.changeClass : ''
-														}
-													>
-														{item.firstName}
-													</td>
-													<td
-														className={
-															!item.isCompleted ? scss.changeClass : ''
-														}
-													>
-														{item.lastName}
-													</td>
-													<td
-														className={
-															!item.isCompleted ? scss.changeClass : ''
-														}
-													>
-														{item.group}
-													</td>
-													<td
-														className={
-															!item.isCompleted ? scss.changeClass : ''
-														}
-													>
-														{item.TrainingFormat}
-													</td>
-													<td
-														className={
-															!item.isCompleted ? scss.changeClass : ''
-														}
-													>
-														{item.phone_number}
-													</td>
-													<td
-														className={
-															!item.isCompleted ? scss.changeClass : ''
-														}
-													>
-														{item.email}
-													</td>
-													<td>
-														<button
-															className={scss.button}
-															onClick={() => {
-																setSaveIdElement(item._id);
-																setSaveItem(item);
-																updateCompletedFunc(item._id, item);
-															}}
-														>
-															{item.isCompleted ? (
-																<img src={LockOpenStudent} alt="#" />
-															) : (
-																<img src={LockBlockStudent} alt="#" />
-															)}
-														</button>
-													</td>
+														Действия
+													</th>
 												</tr>
-											))}
-									</tbody>
-								</table>
+											</thead>
+											<tbody>
+												{data
+													?.slice(
+														(currentPage - 1) * rowsPerPage,
+														currentPage * rowsPerPage
+													)
+													.map((item: Student, index) => (
+														<tr
+															key={item._id}
+															className={
+																index % 2 === 1
+																	? scss.table_alternate_row
+																	: '' || scss.internal
+															}
+														>
+															<td
+																className={
+																	!item.isCompleted ? scss.changeClass : ''
+																}
+															>
+																{index + 1 + (currentPage - 1) * rowsPerPage}
+															</td>
+															<td
+																className={
+																	!item.isCompleted ? scss.changeClass : ''
+																}
+															>
+																{item.firstName}
+															</td>
+															<td
+																className={
+																	!item.isCompleted ? scss.changeClass : ''
+																}
+															>
+																{item.lastName}
+															</td>
+															<td
+																className={
+																	!item.isCompleted ? scss.changeClass : ''
+																}
+															>
+																{item.group}
+															</td>
+															<td
+																className={
+																	!item.isCompleted ? scss.changeClass : ''
+																}
+															>
+																{item.TrainingFormat}
+															</td>
+															<td
+																className={
+																	!item.isCompleted ? scss.changeClass : ''
+																}
+															>
+																{item.phone_number}
+															</td>
+															<td
+																className={
+																	!item.isCompleted ? scss.changeClass : ''
+																}
+															>
+																{item.email}
+															</td>
+															<td>
+																<button
+																	className={scss.button}
+																	onClick={() => {
+																		setSaveIdElement(item._id);
+																		setSaveItem(item);
+																		updateCompletedFunc(item._id, item);
+																	}}
+																>
+																	{item.isCompleted ? (
+																		<img src={LockOpenStudent} alt="#" />
+																	) : (
+																		<img src={LockBlockStudent} alt="#" />
+																	)}
+																</button>
+															</td>
+														</tr>
+													))}
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</Box>
+					</ScrollArea>
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.inputs}>

@@ -13,6 +13,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useNavigate } from 'react-router-dom';
 import { IconDownload } from '@tabler/icons-react';
 import { Dayjs } from 'dayjs';
+import { Box, ScrollArea } from '@mantine/core';
 const AddTask = () => {
 	const [title, setTitle] = useState('');
 	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
@@ -87,99 +88,110 @@ const AddTask = () => {
 	return (
 		<div className={scss.addTask}>
 			<h1>Материалы</h1>
-			<div className={scss.conatiner}>
-				<div className={scss.main_task}>
-					<p style={{ color: 'rgb(31, 110, 212)' }}>Создать задание</p>
-					<div className={scss.save_file}>
-						<input
-							type="file"
-							ref={fileInputRef}
-							style={{ display: 'none' }}
-							onChange={() => {}}
-						/>
-						<ButtonCancel
-							disabled={false}
-							width="207px"
-							onClick={openFilePicker}
-							type="button"
-						>
-							<span> Загрузить файл</span> <IconDownload stroke={2} />
-						</ButtonCancel>
-					</div>
-					<div className={scss.input_part}>
-						<Input
-							value={title}
-							onChange={(e) => setTitle(e.target.value)}
-							size="small"
-							type="text"
-							width="100%"
-							placeholder="Название задания"
-						/>
-					</div>
-					<div className={scss.secon_part}>
-						<div className={scss.second_part}>
-							<div className={scss.editor}>
-								<ReactQuill
-									theme="snow"
-									value={value}
-									onChange={(newValue) => setValue(newValue)}
-									className={scss.editorInput}
-									modules={modules}
+			<ScrollArea type="always" scrollbars="y" offsetScrollbars classNames={scss}>
+				<Box>
+					<div className={scss.container}>
+						<div className={scss.main_task}>
+							<p style={{ color: 'rgb(31, 110, 212)' }}>Создать задание</p>
+							<div className={scss.save_file}>
+								<input
+									type="file"
+									ref={fileInputRef}
+									style={{ display: 'none' }}
+									onChange={() => {}}
 								/>
-								{value.includes('<img') && (
-									<div className={scss.button}>
-										<Button className={scss.btn} onClick={() => setValue('')}>
-											Удалить
-										</Button>
+								<ButtonCancel
+									disabled={false}
+									width="207px"
+									onClick={openFilePicker}
+									type="button"
+								>
+									<span> Загрузить файл</span> <IconDownload stroke={2} />
+								</ButtonCancel>
+							</div>
+							<div className={scss.input_part}>
+								<Input
+									value={title}
+									onChange={(e) => setTitle(e.target.value)}
+									size="small"
+									type="text"
+									width="100%"
+									placeholder="Название задания"
+								/>
+							</div>
+							<div className={scss.secon_part}>
+								<div className={scss.second_part}>
+									<div className={scss.editor}>
+										<ReactQuill
+											theme="snow"
+											value={value}
+											onChange={(newValue) => setValue(newValue)}
+											className={scss.editorInput}
+											modules={modules}
+										/>
+										{value.includes('<img') && (
+											<div className={scss.button}>
+												<Button
+													className={scss.btn}
+													onClick={() => setValue('')}
+												>
+													Удалить
+												</Button>
+											</div>
+										)}
+										{value.includes('<a') && (
+											<div className={scss.link}>
+												<Button
+													className={scss.btn}
+													onClick={() => setValue('')}
+												>
+													x
+												</Button>
+											</div>
+										)}
 									</div>
-								)}
-								{value.includes('<a') && (
-									<div className={scss.link}>
-										<Button className={scss.btn} onClick={() => setValue('')}>
-											x
-										</Button>
-									</div>
-								)}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div className={scss.calendar}>
-				<div className={scss.dataInput}>
-					<p>Срок сдачи:</p>
+					<div className={scss.calendar}>
+						<div className={scss.dataInput}>
+							<p>Срок сдачи:</p>
+							<LocalizationProvider dateAdapter={AdapterDayjs}>
+								<DemoContainer components={['DateTimePicker']}>
+									<DateTimePicker
+										label="Выберите дату и время"
+										value={selectedDate}
+										onChange={(newDate) => setSelectedDate(newDate)}
+									/>
+								</DemoContainer>
+							</LocalizationProvider>
+						</div>
 
-					<LocalizationProvider dateAdapter={AdapterDayjs}>
-						<DemoContainer components={['DateTimePicker']}>
-							<DateTimePicker
-								label="Выберите дату и время"
-								value={selectedDate}
-								onChange={(newDate) => setSelectedDate(newDate)}
-							/>
-						</DemoContainer>
-					</LocalizationProvider>
-				</div>
-
-				<div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-					<ButtonCancel
-						type="button"
-						disabled={false}
-						width="105px"
-						onClick={() =>
-							navigate(`/instructor/course/${_id}/materials/${lessonId}/lesson`)
-						}
-					>
-						Отмена
-					</ButtonCancel>
-					<Button
-						variant="contained"
-						style={{ padding: '10px 24px' }}
-						onClick={addTask}
-					>
-						Добавить
-					</Button>
-				</div>
-			</div>
+						<div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+							<ButtonCancel
+								type="button"
+								disabled={false}
+								width="105px"
+								onClick={() =>
+									navigate(
+										`/instructor/course/${_id}/materials/${lessonId}/lesson`
+									)
+								}
+							>
+								Отмена
+							</ButtonCancel>
+							<Button
+								variant="contained"
+								style={{ padding: '10px 24px', borderRadius: '8px' }}
+								onClick={addTask}
+							>
+								Добавить
+							</Button>
+						</div>
+					</div>
+				</Box>
+			</ScrollArea>
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 .course {
-	padding-top: 80px;
+	padding-top: 60px;
 	.content {
 		padding-inline: 20px;
 		display: flex;
@@ -27,9 +27,6 @@
 					width: 100%;
 					column-gap: 70px;
 					row-gap: 40px;
-					overflow-y: scroll !important;
-					scrollbar-width: thin;
-					scrollbar-color: #3772ff #fff;
 
 					@media (min-width: 1700px) {
 						display: grid;
@@ -177,7 +174,7 @@
 		}
 		.pagination {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
 			width: 100%;
 			background: #efeff6;

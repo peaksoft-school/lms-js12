@@ -12,6 +12,7 @@ import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
 import { useNavigate } from 'react-router-dom';
+import { Box, ScrollArea } from '@mantine/core';
 
 const Course: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
@@ -77,116 +78,130 @@ const Course: FC = () => {
 			<div className={scss.content}>
 				<div className={scss.container}>
 					<h1 className={scss.title}>Курсы</h1>
-					<div>
-						<div className={scss.cards}>
-							{data && Array.isArray(data) && data.length > 0 ? (
-								<div className={scss.card}>
-									{data
-										.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)
-										.map((item) => (
-											<div className={scss.zero_block_container} key={item.id}>
-												<div
-													onClick={() => {
-														setSaveIdStorege(String(item.id));
-														localStorage.setItem('item', item.title);
-														setTimeout(() => {
-															navigate(
-																`/instructor/course/${item.id}/materials`
-															);
-														}, 1000);
-													}}
-												>
-													<div className={scss.block_photo_cards}>
-														<img src={item.img} alt="images" />
-													</div>
-													<div className={scss.block_cont}>
-														<div className={scss.second_block}>
-															<p className={scss.block_title}>{item.title}</p>
-															<p className={scss.block_date}>{item.date}</p>
-														</div>
-														<div className={scss.text_card}>
-															<span className={scss.block_text}>
-																{item.text && item.text.length > 60
-																	? `${item.text.substring(0, 60)}...`
-																	: item.text}
-															</span>
-														</div>
-													</div>
-												</div>
-												<div className={scss.block_button_div}>
-													<div onClick={handleClick}>
-														<button
-															className={scss.button_dots}
+					<ScrollArea
+						type="always"
+						scrollbars="xy"
+						offsetScrollbars
+						classNames={scss}
+					>
+						<Box>
+							<div>
+								<div className={scss.cards}>
+									{data && Array.isArray(data) && data.length > 0 ? (
+										<div className={scss.card}>
+											{data
+												.slice(
+													(currentPage - 1) * rowsPerPage,
+													currentPage * rowsPerPage
+												)
+												.map((item) => (
+													<div
+														className={scss.zero_block_container}
+														key={item.id}
+													>
+														<div
 															onClick={() => {
-																setSaveId(item.id);
+																setSaveIdStorege(String(item.id));
+																localStorage.setItem('item', item.title);
+																setTimeout(() => {
+																	navigate(
+																		`/instructor/course/${item.id}/materials`
+																	);
+																}, 1000);
 															}}
 														>
-															<IconDots stroke={2} />
-														</button>
+															<div className={scss.block_photo_cards}>
+																<img src={item.img} alt="images" />
+															</div>
+															<div className={scss.block_cont}>
+																<div className={scss.second_block}>
+																	<p className={scss.block_title}>
+																		{item.title}
+																	</p>
+																	<p className={scss.block_date}>{item.date}</p>
+																</div>
+																<div className={scss.text_card}>
+																	<span className={scss.block_text}>
+																		{item.text && item.text.length > 60
+																			? `${item.text.substring(0, 60)}...`
+																			: item.text}
+																	</span>
+																</div>
+															</div>
+														</div>
+														<div className={scss.block_button_div}>
+															<div onClick={handleClick}>
+																<button
+																	className={scss.button_dots}
+																	onClick={() => {
+																		setSaveId(item.id);
+																	}}
+																>
+																	<IconDots stroke={2} />
+																</button>
+															</div>
+															{
+																<Menu
+																	id="positioned-menu"
+																	anchorEl={anchorEl}
+																	open={open}
+																	onClose={handleClose}
+																	anchorOrigin={{
+																		vertical: 'bottom',
+																		horizontal: 'right'
+																	}}
+																	transformOrigin={{
+																		vertical: 'top',
+																		horizontal: 'right'
+																	}}
+																	PaperProps={{
+																		style: {
+																			boxShadow: 'none',
+																			border: '1px solid gray'
+																		}
+																	}}
+																>
+																	<MenuItem
+																		style={{ display: 'flex', gap: '10px' }}
+																		onClick={() => {
+																			setOpenEditModal(true);
+																			handleClose();
+																		}}
+																	>
+																		<img src={editImg} alt="#" />
+																		Редактировать
+																	</MenuItem>
+																	<MenuItem
+																		style={{ display: 'flex', gap: '10px' }}
+																		onClick={() => {
+																			setDeleteModal(true);
+																			handleClose();
+																		}}
+																	>
+																		<img src={deleteImg} alt="#" />
+																		Удалить
+																	</MenuItem>
+																</Menu>
+															}
+														</div>
 													</div>
-													{
-														<Menu
-															id="positioned-menu"
-															anchorEl={anchorEl}
-															open={open}
-															onClose={handleClose}
-															anchorOrigin={{
-																vertical: 'bottom',
-																horizontal: 'right'
-															}}
-															transformOrigin={{
-																vertical: 'top',
-																horizontal: 'right'
-															}}
-															PaperProps={{
-																style: {
-																	boxShadow: 'none',
-																	border: '1px solid gray'
-																}
-															}}
-														>
-															<MenuItem
-																style={{ display: 'flex', gap: '10px' }}
-																onClick={() => {
-																	setOpenEditModal(true);
-																	handleClose();
-																}}
-															>
-																<img src={editImg} alt="#" />
-																Редактировать
-															</MenuItem>
-															<MenuItem
-																style={{ display: 'flex', gap: '10px' }}
-																onClick={() => {
-																	setDeleteModal(true);
-																	handleClose();
-																}}
-															>
-																<img src={deleteImg} alt="#" />
-																Удалить
-															</MenuItem>
-														</Menu>
-													}
-												</div>
-											</div>
-										))}
-									<EditCourse
-										open={openEditModal}
-										handleClose={handleCloseEditModal}
-										saveId={saveId}
+												))}
+											<EditCourse
+												open={openEditModal}
+												handleClose={handleCloseEditModal}
+												saveId={saveId}
+											/>
+										</div>
+									) : null}
+									<DeleteCourses
+										openModalDelete={deleteModal}
+										closeModalDelete={() => setDeleteModal(false)}
+										deleteById={saveId}
 									/>
 								</div>
-							) : null}
-							<DeleteCourses
-								openModalDelete={deleteModal}
-								closeModalDelete={() => setDeleteModal(false)}
-								deleteById={saveId}
-							/>
-						</div>
-					</div>
+							</div>
+						</Box>
+					</ScrollArea>
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.Inputs}>

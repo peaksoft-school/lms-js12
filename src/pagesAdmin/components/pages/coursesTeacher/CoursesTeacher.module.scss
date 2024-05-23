@@ -6,13 +6,14 @@
 		flex-direction: column;
 		justify-content: space-between;
 		.content_table {
-			.button_title_elements {
-				margin-bottom: 20px;
+			.buttons {
 				display: flex;
+				gap: 10px;
 				justify-content: flex-end;
 				align-items: center;
-				width: 100%;
-
+				@media (max-width: 700px) {
+					gap: 0;
+				}
 				.button {
 					display: flex;
 					gap: 10px;
@@ -26,8 +27,6 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						svg {
-						}
 					}
 					span {
 						white-space: nowrap;
@@ -47,29 +46,21 @@
 
 			.TeacherContainer {
 				border-radius: 8px;
-				overflow-x: auto;
-				overflow-y: scroll !important;
 				table-layout: fixed;
 				width: 100%;
 				background: #fff;
 				border: 1px solid #dbd2d2;
 				transition: all 0.5s;
-				scrollbar-width: thin;
-				scrollbar-color: #3772ff #fff;
 
-				@media screen and (min-width: 1185px) and (max-width: 1260px) {
-					width: 100%;
-					max-width: 953px;
-				}
 				@media screen and (min-width: 1105px) and (max-width: 1185px) {
 					width: 100%;
 					max-width: 870px;
 				}
-				@media screen and (min-width: 1070px) and (max-width: 1105px) {
+				@media screen and (min-width: 1060px) and (max-width: 1105px) {
 					width: 100%;
 					max-width: 830px;
 				}
-				@media screen and (min-width: 1000px) and (max-width: 1070px) {
+				@media screen and (min-width: 1000px) and (max-width: 1060px) {
 					width: 100%;
 					max-width: 760px;
 				}
@@ -90,6 +81,7 @@
 					tbody {
 						.TableAlternateRow {
 							background: #837a7a14;
+							height: 33px;
 						}
 
 						.TableContainerSecond {
@@ -116,41 +108,58 @@
 		}
 		.pagination {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
 			width: 100%;
 			background: #efeff6;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 21px;
+			margin-top: 10px;
 			position: sticky;
 			bottom: 0;
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+				padding-bottom: 96px;
+			}
+
+			@media (max-width: 850px) {
+				flex-direction: column;
 			}
 
 			@media (max-width: 625px) {
-				display: flex;
-				flex-direction: column;
 				gap: 8px;
 			}
 
-			.stack {
-				@media (max-width: 625px) {
-					display: flex;
-					flex-direction: column;
-				}
-			}
-
-			.callInput {
+			.inputs {
 				display: flex;
-				gap: 4px;
+				gap: 5px;
 				align-items: center;
 
 				input {
 					width: 40px;
+				}
+
+				.text {
+					display: block;
+
+					@media (max-width: 850px) {
+						display: none;
+					}
+				}
+
+				.pagination_element {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+					}
+				}
+			}
+
+			.stack {
+				@media (max-width: 650px) {
+					flex-direction: column;
 				}
 			}
 		}

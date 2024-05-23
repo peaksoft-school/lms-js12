@@ -58,6 +58,7 @@ const Courses: FC = () => {
 			<div className={scss.content}>
 				<div className={scss.container}>
 					<h1 className={scss.title}>Мои курсы</h1>
+				
 					<div>
 						<div className={scss.cards}>
 							{data && Array.isArray(data) && data.length > 0 ? (

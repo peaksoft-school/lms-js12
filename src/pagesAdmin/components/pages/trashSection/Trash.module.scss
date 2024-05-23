@@ -12,11 +12,7 @@
 			border-radius: 10px;
 
 			.trash {
-				overflow-x: auto;
 				white-space: nowrap;
-				scrollbar-width: thin;
-				overflow-y: auto !important;
-				scrollbar-color: #3772ff #fff;
 				@media screen and (min-width: 480px) and (max-width: 520px) {
 					max-width: 470px;
 					width: 100%;

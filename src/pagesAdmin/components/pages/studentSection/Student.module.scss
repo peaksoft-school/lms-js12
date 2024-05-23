@@ -115,15 +115,11 @@
 
 			.StudentContainer {
 				border-radius: 8px;
-				overflow-x: auto;
 				table-layout: fixed;
 				width: 100%;
 				background: #fff;
 				border: 1px solid #dbd2d2;
 				transition: all 0.5s ease-in-out;
-				overflow-y: scroll !important;
-				scrollbar-width: thin;
-				scrollbar-color: #3772ff #fff;
 
 				@media screen and (min-width: 1170px) and (max-width: 1205px) {
 					width: 100%;
@@ -184,45 +180,58 @@
 		}
 		.pagination {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
 			width: 100%;
 			background: #efeff6;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 21px;
+			margin-top: 10px;
 			position: sticky;
 			bottom: 0;
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+				padding-bottom: 96px;
 			}
 
-			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+			@media (max-width: 850px) {
+				flex-direction: column;
 			}
 
 			@media (max-width: 625px) {
-				display: flex;
-				flex-direction: column;
 				gap: 8px;
 			}
 
-			.stack {
-				@media (max-width: 625px) {
-					display: flex;
-					flex-direction: column;
-				}
-			}
-
-			.Inputs {
+			.inputs {
 				display: flex;
 				gap: 5px;
 				align-items: center;
 
 				input {
 					width: 40px;
+				}
+
+				.text {
+					display: block;
+
+					@media (max-width: 850px) {
+						display: none;
+					}
+				}
+
+				.pagination_element {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+					}
+				}
+			}
+
+			.stack {
+				@media (max-width: 650px) {
+					flex-direction: column;
 				}
 			}
 		}

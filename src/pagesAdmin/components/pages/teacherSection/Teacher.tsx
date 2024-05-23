@@ -1,7 +1,12 @@
 import React, { useState, MouseEvent, KeyboardEvent } from 'react';
 import scss from './Teacher.module.scss';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
-import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
+import {
+	IconArticle,
+	IconBook,
+	IconDotsVertical,
+	IconPlus
+} from '@tabler/icons-react';
 import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { Menu, MenuItem } from '@mui/material';
@@ -12,6 +17,7 @@ import Stack from '@mui/material/Stack';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import Button from '@mui/material/Button';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher.tsx';
+import { Box, ScrollArea } from '@mantine/core';
 
 const Teacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -104,130 +110,147 @@ const Teacher = () => {
 						</Button>
 					</div>
 					<h1 className={scss.title}>Учителя</h1>
-					<div
-						style={{
-							height: '577px',
-							background: '#eff0f4'
-						}}
+					<ScrollArea
+						scrollbars="xy"
+						type="always"
+						offsetScrollbars
+						classNames={scss}
 					>
-						<div style={{ display: 'flex', justifyContent: 'center' }}>
-							<div className={scss.TeacherContainer}>
-								<table className={scss.Table}>
-									<thead>
-										<tr>
-											<th style={{ textAlign: 'start' }}>№</th>
-											<th>Имя</th>
-											<th> Фамилия</th>
-											<th>Специализация</th>
-											<th>Номер телефона</th>
-											<th>E-mail</th>
-											<th>Группа</th>
-											<th style={{ textAlign: 'end', paddingRight: '10px' }}>
-												Действия
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										{data &&
-											data
-												.slice(
-													(currentPage - 1) * rowsPerPage,
-													currentPage * rowsPerPage
-												)
-												.map((item, index) => (
-													<tr
-														key={item.id}
-														className={
-															index % 2 === 1
-																? scss.TableAlternateRow
-																: '' || scss.TableContainerSecond
-														}
+						<Box>
+							<div
+								style={{
+									height: '577px',
+									background: '#eff0f4'
+								}}
+							>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
+									<div className={scss.TeacherContainer}>
+										<table className={scss.Table}>
+											<thead>
+												<tr>
+													<th style={{ textAlign: 'start' }}>№</th>
+													<th>Имя</th>
+													<th> Фамилия</th>
+													<th>Специализация</th>
+													<th>Номер телефона</th>
+													<th>E-mail</th>
+													<th>Группа</th>
+													<th
+														style={{ textAlign: 'end', paddingRight: '10px' }}
 													>
-														<td>
-															{index + 1 + (currentPage - 1) * rowsPerPage}
-														</td>
-
-														<td className={scss.TableCell}>{item.firstName}</td>
-														<td className={scss.TableCell}>{item.lastName}</td>
-														<td className={scss.TableCell}>
-															{item.specialization}
-														</td>
-														<td className={scss.TableCell}>
-															{item.phoneNumber}
-														</td>
-														<td className={scss.TableCell}>{item.email}</td>
-														<td className={scss.TableCell}>{item.group}</td>
-														<td className={scss.TableCellIcon}>
-															<button
-																className={scss.button}
-																aria-controls={open ? 'basic-menu' : undefined}
-																aria-haspopup="true"
-																onClick={(e) => {
-																	handleClick(e);
-																	setDeleteById(item.id!);
-																}}
+														Действия
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												{data &&
+													data
+														.slice(
+															(currentPage - 1) * rowsPerPage,
+															currentPage * rowsPerPage
+														)
+														.map((item, index) => (
+															<tr
+																key={item.id}
+																className={
+																	index % 2 === 1
+																		? scss.TableAlternateRow
+																		: '' || scss.TableContainerSecond
+																}
 															>
-																<IconDotsVertical stroke={2} />
-															</button>
-															<Menu
-																id="basic-menu"
-																anchorEl={anchorEl}
-																open={open}
-																onClose={handleClose}
-																MenuListProps={{
-																	'aria-labelledby': 'basic-button'
-																}}
-																elevation={0}
-																anchorOrigin={{
-																	vertical: 'bottom',
-																	horizontal: 'right'
-																}}
-																transformOrigin={{
-																	vertical: 'top',
-																	horizontal: 'right'
-																}}
-																PaperProps={{
-																	style: {
-																		boxShadow: 'none',
-																		border: '1px solid gray'
-																	}
-																}}
-															>
-																<MenuItem
-																	style={{ display: 'flex', gap: '10px' }}
-																	onClick={() => {
-																		setOpenModalEdit(true);
-																		setAnchorEl(null);
-																	}}
-																>
-																	<img src={editIcon} alt="Edit" />
-																	<p>Редактировать</p>
-																</MenuItem>
-																<MenuItem
-																	style={{ display: 'flex', gap: '10px' }}
-																	onClick={() => {
-																		setOpenModalDelete(true);
-																		setAnchorEl(null);
-																	}}
-																>
-																	<img src={deleteIcon} alt="Delete" />
-																	<p>Удалить</p>
-																</MenuItem>
-															</Menu>
-														</td>
-													</tr>
-												))}
-									</tbody>
-								</table>
+																<td>
+																	{index + 1 + (currentPage - 1) * rowsPerPage}
+																</td>
 
-								<ModalEditTeacher
-									openModalEdit={openModalEdit}
-									closeModalEdit={() => setOpenModalEdit(false)}
-									deleteById={deleteById}
-								/>
+																<td className={scss.TableCell}>
+																	{item.firstName}
+																</td>
+																<td className={scss.TableCell}>
+																	{item.lastName}
+																</td>
+																<td className={scss.TableCell}>
+																	{item.specialization}
+																</td>
+																<td className={scss.TableCell}>
+																	{item.phoneNumber}
+																</td>
+																<td className={scss.TableCell}>{item.email}</td>
+																<td className={scss.TableCell}>{item.group}</td>
+																<td className={scss.TableCellIcon}>
+																	<button
+																		className={scss.button}
+																		aria-controls={
+																			open ? 'basic-menu' : undefined
+																		}
+																		aria-haspopup="true"
+																		onClick={(e) => {
+																			handleClick(e);
+																			setDeleteById(item.id!);
+																		}}
+																	>
+																		<IconDotsVertical stroke={2} />
+																	</button>
+																	<Menu
+																		id="basic-menu"
+																		anchorEl={anchorEl}
+																		open={open}
+																		onClose={handleClose}
+																		MenuListProps={{
+																			'aria-labelledby': 'basic-button'
+																		}}
+																		elevation={0}
+																		anchorOrigin={{
+																			vertical: 'bottom',
+																			horizontal: 'right'
+																		}}
+																		transformOrigin={{
+																			vertical: 'top',
+																			horizontal: 'right'
+																		}}
+																		PaperProps={{
+																			style: {
+																				boxShadow: 'none',
+																				border: '1px solid gray'
+																			}
+																		}}
+																	>
+																		<MenuItem
+																			style={{ display: 'flex', gap: '10px' }}
+																			onClick={() => {
+																				setOpenModalEdit(true);
+																				setAnchorEl(null);
+																			}}
+																		>
+																			<img src={editIcon} alt="Edit" />
+																			<p>Редактировать</p>
+																		</MenuItem>
+																		<MenuItem
+																			style={{ display: 'flex', gap: '10px' }}
+																			onClick={() => {
+																				setOpenModalDelete(true);
+																				setAnchorEl(null);
+																			}}
+																		>
+																			<img src={deleteIcon} alt="Delete" />
+																			<p>Удалить</p>
+																		</MenuItem>
+																	</Menu>
+																</td>
+															</tr>
+														))}
+											</tbody>
+										</table>
+
+										<ModalEditTeacher
+											openModalEdit={openModalEdit}
+											closeModalEdit={() => setOpenModalEdit(false)}
+											deleteById={deleteById}
+										/>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</Box>
+					</ScrollArea>
 					<DeleteTeacherModal
 						openModalDelete={openModalDelete}
 						closeModalDelete={setOpenModalDelete}
@@ -235,9 +258,11 @@ const Teacher = () => {
 					/>
 				</div>
 				<div className={scss.pagination}>
-					{/* //! 1 */}
-					<div className={scss.callInput}>
-						<p>Перейти на страницу</p>
+					<div className={scss.inputs}>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPart}
@@ -250,7 +275,6 @@ const Teacher = () => {
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
-							{/* //! 2 */}
 							<Pagination
 								count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
@@ -260,13 +284,15 @@ const Teacher = () => {
 							/>
 						</Stack>
 					</div>
-					{/* //! 3 */}
-					<div className={scss.callInput}>
-						<p>Показать</p>
+					<div className={scss.inputs}>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPage}
-							onChange={(e) => setOpenPage(e.target.value)}
+							onChange={(e) => setOpenPage(+e.target.value)}
 							onKeyDown={(e) => {
 								handleAppend(e);
 								openPartPage();

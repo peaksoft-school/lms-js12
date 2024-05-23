@@ -13,15 +13,12 @@
 
 			.internal_container {
 				border-radius: 8px;
-				overflow-x: auto;
-				overflow-y: scroll !important;
 				table-layout: fixed;
 				width: 100%;
 				background: #fff;
 				border: 1px solid #dbd2d2;
 				transition: all 0.5s;
-				scrollbar-width: thin;
-				scrollbar-color: #3772ff #fff;
+
 
 				@media screen and (min-width: 1170px) and (max-width: 1205px) {
 					width: 100%;
@@ -47,9 +44,8 @@
 						height: 50px;
 						background: #fff;
 						th {
-							font-size: 14px;
+						
 							font-weight: 600;
-							line-height: 19.07px;
 							text-align: start;
 							padding-left: 20px;
 							flex-wrap: nowrap;
@@ -76,7 +72,7 @@
 		}
 		.pagination {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
 			width: 100%;
 			background: #efeff6;

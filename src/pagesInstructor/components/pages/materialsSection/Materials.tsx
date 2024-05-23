@@ -22,6 +22,7 @@ import {
 	DropResult
 } from '@hello-pangea/dnd';
 import { useNavigate } from 'react-router-dom';
+import { Box, ScrollArea } from '@mantine/core';
 interface TodoProps {
 	title: string;
 	_id: number;
@@ -120,168 +121,189 @@ const Materials: FC = () => {
 						</Button>
 					</div>
 					<h1>{item}</h1>
-					<div style={{ height: '577px', background: '#eff0f4' }}>
-						<div className={scss.table_container}>
-							<div className={scss.material_content}>
-								<table className={scss.table}>
-									<thead>
-										<tr>
-											<th>Название урока</th>
-											<th className={scss.date}>Дата публикации</th>
-											<th className={scss.last_th}>Действие</th>
-										</tr>
-									</thead>
-									<Droppable droppableId="todos">
-										{(droppableProvider) => (
-											<tbody
-												ref={droppableProvider.innerRef}
-												{...droppableProvider.droppableProps}
-											>
-												{todos
-													.slice(
-														(currentPage - 1) * rowsPerPage,
-														currentPage * rowsPerPage
-													)
-													.map((todo, index) => (
-														<Draggable
-															index={index}
-															key={todo._id}
-															draggableId={`${todo._id}`}
-														>
-															{(draggableProvider) => (
-																<tr
-																	onClick={() =>
-																		localStorage.setItem('taskName', todo.title)
-																	}
-																	className={
-																		index % 2 === 1
-																			? scss.table_alternate_row
-																			: '' || scss.table_container_second
-																	}
-																	ref={draggableProvider.innerRef}
-																	{...draggableProvider.draggableProps}
-																	{...draggableProvider.dragHandleProps}
+					<ScrollArea
+						type="always"
+						scrollbars="xy"
+						offsetScrollbars
+						classNames={scss}
+					>
+						<Box>
+							<div style={{ height: '577px', background: '#eff0f4' }}>
+								<div className={scss.table_container}>
+									<div className={scss.material_content}>
+										<table className={scss.table}>
+											<thead>
+												<tr>
+													<th>Название урока</th>
+													<th className={scss.date}>Дата публикации</th>
+													<th className={scss.last_th}>Действие</th>
+												</tr>
+											</thead>
+											<Droppable droppableId="todos">
+												{(droppableProvider) => (
+													<tbody
+														ref={droppableProvider.innerRef}
+														{...droppableProvider.droppableProps}
+													>
+														{todos
+															.slice(
+																(currentPage - 1) * rowsPerPage,
+																currentPage * rowsPerPage
+															)
+															.map((todo, index) => (
+																<Draggable
+																	index={index}
+																	key={todo._id}
+																	draggableId={`${todo._id}`}
 																>
-																	<td
-																		onClick={() => {
-																			setSaveIdStorege(String(todo._id));
-
-																			setTimeout(() => {
-																				navigate(
-																					`/instructor/course/${id}/materials/${todo._id}`
-																				);
-																			}, 1000);
-																		}}
-																		style={{
-																			paddingLeft: '20px',
-																			paddingTop: '12px',
-																			display: 'flex',
-																			gap: '10px',
-																			alignItems: 'center',
-																			cursor: 'pointer'
-																		}}
-																	>
-																		<IconEqual stroke={2} />
-																		{todo.title}
-																	</td>
-																	<td
-																		onClick={() => {
-																			setSaveIdStorege(String(todo._id));
-																			setTimeout(() => {
-																				navigate(
-																					`/instructor/course/${id}/materials/${todo._id}`
-																				);
-																			}, 1000);
-																		}}
-																		style={{
-																			textAlign: 'end',
-																			paddingRight: '70px',
-																			cursor: 'pointer'
-																		}}
-																	>
-																		{todo.date}
-																	</td>
-																	<td className={scss.TableCellIcon}>
-																		<button
-																			className={scss.button}
-																			aria-controls={
-																				open ? 'basic-menu' : undefined
+																	{(draggableProvider) => (
+																		<tr
+																			onClick={() =>
+																				localStorage.setItem(
+																					'taskName',
+																					todo.title
+																				)
 																			}
-																			aria-haspopup="true"
-																			onClick={(e) => {
-																				handleClick(e);
-																				setDeleteById(todo._id);
-																			}}
+																			className={
+																				index % 2 === 1
+																					? scss.table_alternate_row
+																					: '' || scss.table_container_second
+																			}
+																			ref={draggableProvider.innerRef}
+																			{...draggableProvider.draggableProps}
+																			{...draggableProvider.dragHandleProps}
 																		>
-																			<IconDotsVertical stroke={2} />
-																		</button>
-																		<Menu
-																			id="basic-menu"
-																			anchorEl={anchorEl}
-																			open={open}
-																			onClose={handleClose}
-																			MenuListProps={{
-																				'aria-labelledby': 'basic-button'
-																			}}
-																			elevation={0}
-																			anchorOrigin={{
-																				vertical: 'bottom',
-																				horizontal: 'right'
-																			}}
-																			transformOrigin={{
-																				vertical: 'top',
-																				horizontal: 'right'
-																			}}
-																			PaperProps={{
-																				style: {
-																					boxShadow: 'none',
-																					border: '1px solid gray'
-																				}
-																			}}
-																		>
-																			<MenuItem
-																				style={{ display: 'flex', gap: '10px' }}
+																			<td
 																				onClick={() => {
-																					setOpenModalEdit(true);
-																					setAnchorEl(null);
+																					setSaveIdStorege(String(todo._id));
+
+																					setTimeout(() => {
+																						navigate(
+																							`/instructor/course/${id}/materials/${todo._id}`
+																						);
+																					}, 1000);
+																				}}
+																				style={{
+																					paddingLeft: '20px',
+																					paddingTop: '12px',
+																					display: 'flex',
+																					gap: '10px',
+																					alignItems: 'center',
+																					cursor: 'pointer'
 																				}}
 																			>
-																				<img src={editIcon} alt="Edit" />
-																				<p>Редактировать</p>
-																			</MenuItem>
-																			<MenuItem
-																				style={{ display: 'flex', gap: '10px' }}
+																				<IconEqual stroke={2} />
+																				{todo.title}
+																			</td>
+																			<td
 																				onClick={() => {
-																					setOpenModalDelete(true);
-																					setAnchorEl(null);
+																					setSaveIdStorege(String(todo._id));
+																					setTimeout(() => {
+																						navigate(
+																							`/instructor/course/${id}/materials/${todo._id}`
+																						);
+																					}, 1000);
+																				}}
+																				style={{
+																					textAlign: 'end',
+																					paddingRight: '70px',
+																					cursor: 'pointer'
 																				}}
 																			>
-																				<img src={deleteIcon} alt="Delete" />
-																				<p>Удалить</p>
-																			</MenuItem>
-																		</Menu>
-																	</td>
-																</tr>
-															)}
-														</Draggable>
-													))}
-											</tbody>
-										)}
-									</Droppable>
-								</table>
-								<ModalMaterialEdit
-									openModalEdit={openModalEdit}
-									closeModalEdit={() => setOpenModalEdit(false)}
-									deleteById={deleteById}
-								/>
-								<DeleteMaterial
-									open={openModalDelete}
-									handleCloseModal={() => setOpenModalDelete(false)}
-									deleteById={deleteById}
-								/>
+																				{todo.date}
+																			</td>
+																			<td className={scss.TableCellIcon}>
+																				<button
+																					className={scss.button}
+																					aria-controls={
+																						open ? 'basic-menu' : undefined
+																					}
+																					aria-haspopup="true"
+																					onClick={(e) => {
+																						handleClick(e);
+																						setDeleteById(todo._id);
+																					}}
+																				>
+																					<IconDotsVertical stroke={2} />
+																				</button>
+																				<Menu
+																					id="basic-menu"
+																					anchorEl={anchorEl}
+																					open={open}
+																					onClose={handleClose}
+																					MenuListProps={{
+																						'aria-labelledby': 'basic-button'
+																					}}
+																					elevation={0}
+																					anchorOrigin={{
+																						vertical: 'bottom',
+																						horizontal: 'right'
+																					}}
+																					transformOrigin={{
+																						vertical: 'top',
+																						horizontal: 'right'
+																					}}
+																					PaperProps={{
+																						style: {
+																							boxShadow: 'none',
+																							border: '1px solid gray'
+																						}
+																					}}
+																				>
+																					<MenuItem
+																						style={{
+																							display: 'flex',
+																							gap: '10px'
+																						}}
+																						onClick={() => {
+																							setOpenModalEdit(true);
+																							setAnchorEl(null);
+																						}}
+																					>
+																						<img src={editIcon} alt="Edit" />
+																						<p>Редактировать</p>
+																					</MenuItem>
+																					<MenuItem
+																						style={{
+																							display: 'flex',
+																							gap: '10px'
+																						}}
+																						onClick={() => {
+																							setOpenModalDelete(true);
+																							setAnchorEl(null);
+																						}}
+																					>
+																						<img
+																							src={deleteIcon}
+																							alt="Delete"
+																						/>
+																						<p>Удалить</p>
+																					</MenuItem>
+																				</Menu>
+																			</td>
+																		</tr>
+																	)}
+																</Draggable>
+															))}
+													</tbody>
+												)}
+											</Droppable>
+										</table>
+										<ModalMaterialEdit
+											openModalEdit={openModalEdit}
+											closeModalEdit={() => setOpenModalEdit(false)}
+											deleteById={deleteById}
+										/>
+										<DeleteMaterial
+											open={openModalDelete}
+											handleCloseModal={() => setOpenModalDelete(false)}
+											deleteById={deleteById}
+										/>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</Box>
+					</ScrollArea>
 					<div className={scss.pagination}>
 						<div className={scss.Inputs}>
 							<p className={scss.text}>Перейти на страницу</p>
