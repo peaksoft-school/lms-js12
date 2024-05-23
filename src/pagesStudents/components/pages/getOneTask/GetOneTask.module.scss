@@ -1,16 +1,103 @@
 .get_task {
 	padding-inline: 20px;
 	width: 100%;
+	padding-bottom: 300px;
 
 	h1 {
 		margin-bottom: 20px;
 		width: 100%;
 	}
 	.Task {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
 		height: 70vh;
 		background: #fff;
 		border-radius: 10px;
 		overflow-y: scroll;
+		.comment {
+			padding-inline: 20px;
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+			.student_comment {
+				border: 1px solid rgb(208, 209, 214);
+				padding-top: 20px;
+				padding-bottom: 20px;
+				border-radius: 10px;
+				padding-inline: 10px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				.data {
+					display: flex;
+					justify-content: flex-end;
+					align-items: end;
+					font-size: 13px;
+					color: rgb(141, 148, 158);
+				}
+			}
+
+			.user {
+				display: flex;
+				gap: 10px;
+				align-items: center;
+			}
+
+			.correct_hw {
+				border-radius: 10px;
+				padding-top: 20px;
+				padding-bottom: 20px;
+				background: #e8eff9;
+				padding-inline: 10px;
+				margin-left: 100px;
+				.data {
+					display: flex;
+					justify-content: flex-end;
+					align-items: end;
+					font-size: 13px;
+					color: rgb(141, 148, 158);
+				}
+			}
+			.getHw {
+				background: rgb(255, 159, 10);
+				padding-top: 15px;
+				padding-bottom: 15px;
+				color: #fff;
+				display: flex;
+				border-radius: 10px;
+				justify-content: space-between;
+				align-items: center;
+				padding-inline: 20px;
+				gap: 9px;
+
+				.data {
+					display: flex;
+					justify-content: flex-end;
+					align-items: end;
+					font-size: 13px;
+					color: rgb(141, 148, 158);
+				}
+			}
+			.notGetHw {
+				background: rgb(54, 172, 12);
+				padding-top: 15px;
+				padding-bottom: 15px;
+				border-radius: 10px;
+				padding-inline: 20px;
+				color: #fff;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				.data {
+					display: flex;
+					justify-content: flex-end;
+					align-items: end;
+					font-size: 13px;
+				}
+			}
+		}
 		.card {
 			padding-inline: 20px;
 			img {

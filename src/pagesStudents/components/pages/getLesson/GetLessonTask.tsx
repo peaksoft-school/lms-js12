@@ -10,7 +10,7 @@ const GetLessonTask = () => {
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
 	const { data: lesson = [] } = useGetTaskInstructorQuery();
-	const { lessonStudent } = useParams();
+	// const { lessonStudent } = useParams();
 	const id = localStorage.getItem('id');
 
 	console.log(saveId);
@@ -18,9 +18,10 @@ const GetLessonTask = () => {
 	const lessonId = localStorage.getItem('lessonId');
 	const task = localStorage.getItem('task');
 
-	const GetLessonTask = () => {
+	const lastId = localStorage.getItem('lastId');
+	const GetLessonTaskFunc = () => {
 		navigate(
-			`/courses/${id}/materials/${lessonId}/lesson/${task}/lesson/${lessonStudent}`
+			`/courses/${id}/materials/${lessonId}/lesson/${task}/lesson/${lastId}`
 		);
 	};
 	return (
@@ -31,12 +32,12 @@ const GetLessonTask = () => {
 						className={scss.card_container}
 						onClick={() => {
 							console.log(item._id + 'Проблема!');
-
+							localStorage.setItem('lastId', String(item._id));
 							localStorage.setItem('task', item._id);
 
 							setSaveId(item._id);
 							setTimeout(() => {
-								GetLessonTask();
+								GetLessonTaskFunc();
 							}, 1000);
 						}}
 					>

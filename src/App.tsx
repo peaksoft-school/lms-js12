@@ -5,6 +5,7 @@ import LayoutInstructor from './pagesInstructor/components/layout/LayoutInstruct
 import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
 import { Preloader } from './ui/preloader/Preloader';
 import { useEffect, useState } from 'react';
+// import SendOneTask from './pagesStudents/components/pages/sendOneTask/SendOneTask';
 
 const App = () => {
 	const [isPreLoaded, setPreLoader] = useState(true);
@@ -28,6 +29,7 @@ const App = () => {
 						<Route path="/instructor/*" element={<LayoutInstructor />} />
 						<Route path="/auth/*" element={<LayoutAuth />} />
 					</Routes>
+					{/* <SendOneTask /> */}
 				</>
 			)}
 		</>

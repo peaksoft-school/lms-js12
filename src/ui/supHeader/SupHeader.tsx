@@ -5,17 +5,23 @@ import {
 	IconUserCircle
 } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Menu, MenuItem, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
 import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
 
 const SupHeader = () => {
 	const { pathname } = useLocation();
-	const [open, setOpen] = useState(false);
 	const [openNotification, setOpenNotification] = useState(false);
 	const navigate = useNavigate();
-
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 	const handleOpenNotification = () => {
 		setOpenNotification(true);
 	};
@@ -23,9 +29,6 @@ const SupHeader = () => {
 	const handleCloseNotification = () => {
 		setOpenNotification(false);
 	};
-
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
 	const [value, setValue] = useState(0);
 
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -69,12 +72,7 @@ const SupHeader = () => {
 			'aria-controls': `simple-tabpanel-${index}`
 		};
 	};
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleLogout = () => {
-		navigate('/registration');
-	};
+
 	const isAdminCourseWithId = /^\/admin\/courses\/\w+$/.test(
 		window.location.pathname
 	);
@@ -180,13 +178,7 @@ const SupHeader = () => {
 							</div>
 						)}
 						<IconUserCircle className={scss.profile} stroke={2} />
-						<div
-							id="basic-button"
-							aria-controls={open ? 'basic-menu' : undefined}
-							aria-haspopup="true"
-							aria-expanded={open ? 'true' : undefined}
-							onClick={handleClick}
-						>
+						<div>
 							{pathname.startsWith('/admin') && (
 								<div style={{ fontSize: '18px', fontWeight: '500' }}>
 									{pathname.startsWith('/admin') && (
@@ -194,6 +186,19 @@ const SupHeader = () => {
 											<p> Aдминистратор</p>
 										</>
 									)}
+									<Menu
+										id="basic-menu"
+										anchorEl={anchorEl}
+										open={open}
+										onClose={handleClose}
+										MenuListProps={{
+											'aria-labelledby': 'basic-button'
+										}}
+									>
+										<MenuItem onClick={handleClose}>Profile</MenuItem>
+										<MenuItem onClick={handleClose}>My account</MenuItem>
+										<MenuItem onClick={handleClose}>Logout</MenuItem>
+									</Menu>
 								</div>
 							)}
 							{pathname.startsWith('/instructor') && (
@@ -209,18 +214,6 @@ const SupHeader = () => {
 								</div>
 							)}
 						</div>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-						<Menu
-							id="basic-menu"
-							anchorEl={anchorEl}
-							open={open}
-							onClose={() => setOpen(false)}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button'
-							}}
-						>
-							<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-						</Menu>
 					</div>
 				)}
 			{/* //! admin header для /admin/courses */}
@@ -260,7 +253,7 @@ const SupHeader = () => {
 								aria-controls={open ? 'basic-menu' : undefined}
 								aria-haspopup="true"
 								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
+								// onClick={handleClick}
 							>
 								{pathname.startsWith('/admin') && (
 									<div style={{ fontSize: '18px', fontWeight: '500' }}>
@@ -291,17 +284,6 @@ const SupHeader = () => {
 								)}
 							</div>
 							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
 						</div>
 					</div>
 				)}
@@ -341,7 +323,6 @@ const SupHeader = () => {
 								aria-controls={open ? 'basic-menu' : undefined}
 								aria-haspopup="true"
 								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
 							>
 								{pathname.startsWith('/admin') && (
 									<div style={{ fontSize: '18px', fontWeight: '500' }}>
@@ -369,17 +350,6 @@ const SupHeader = () => {
 								)}
 							</div>
 							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
 						</div>
 					</div>
 				)}
@@ -424,7 +394,6 @@ const SupHeader = () => {
 								aria-controls={open ? 'basic-menu' : undefined}
 								aria-haspopup="true"
 								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
 							>
 								{pathname.startsWith('/admin') && (
 									<div className={scss.instructor_elements}>
@@ -450,17 +419,6 @@ const SupHeader = () => {
 								)}
 							</div>
 							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
 						</div>
 					</div>
 				)}
@@ -509,7 +467,6 @@ const SupHeader = () => {
 							aria-controls={open ? 'basic-menu' : undefined}
 							aria-haspopup="true"
 							aria-expanded={open ? 'true' : undefined}
-							onClick={handleClick}
 						>
 							{pathname.startsWith('/courses') && (
 								<div style={{ fontSize: '18px', fontWeight: '500' }}>
@@ -528,17 +485,6 @@ const SupHeader = () => {
 							)}
 						</div>
 						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-						<Menu
-							id="basic-menu"
-							anchorEl={anchorEl}
-							open={open}
-							onClose={() => setOpen(false)}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button'
-							}}
-						>
-							<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-						</Menu>
 					</div>
 				</div>
 			)}
