@@ -19,11 +19,7 @@ export const api = index.injectEndpoints({
 			query: ({ dateOfEnd, image, description, title }) => ({
 				url: '/api/groups',
 				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`,
-					'Content-Type': 'application/json' // Убедитесь, что заголовок Content-Type установлен правильно
-				},
-				body: JSON.stringify({ dateOfEnd, image, description, title }) // Преобразуем тело запроса в JSON
+				body: { dateOfEnd, image, description, title }
 			}),
 			invalidatesTags: ['groups']
 		}),
@@ -57,6 +53,14 @@ export const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['groups']
+		}),
+		createGroupFile: builder.mutation({
+			query: (file) => ({
+				url: '/file',
+				method: 'POST',
+				body: file
+			}),
+			invalidatesTags: ['groups']
 		})
 	})
 });
@@ -66,5 +70,6 @@ export const {
 	useCreateGroupMutation,
 	useUpdateGroupMutation,
 	useDeleteGroupMutation,
-	useGetGroupStudentQuery
+	useGetGroupStudentQuery,
+	useCreateGroupFileMutation
 } = api;

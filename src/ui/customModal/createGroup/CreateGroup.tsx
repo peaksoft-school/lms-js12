@@ -9,7 +9,10 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useRef, useState } from 'react';
 // import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useCreateGroupMutation } from '@/src/redux/api/admin/groups';
+import {
+	useCreateGroupFileMutation,
+	useCreateGroupMutation
+} from '@/src/redux/api/admin/groups';
 
 const style = {
 	position: 'absolute',
@@ -32,7 +35,7 @@ interface CreateGroupsProps {
 	handleClose: () => void;
 }
 const CreateGroup: FC<CreateGroupsProps> = ({
-	handleOpen,
+	// handleOpen,
 	open,
 	handleClose
 }) => {
@@ -43,6 +46,8 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [createGroup] = useCreateGroupMutation();
+	const [createGroupFile] = useCreateGroupFileMutation();
+	const [urlImg, setUrlImg] = useState('');
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -50,14 +55,27 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 		}
 	};
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFileChange = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
 		const file = event.target.files?.[0];
 		if (file) {
 			const reader = new FileReader();
 			setHidePhoto(true);
-			reader.onload = (e) => {
+
+			reader.onload = async (e) => {
 				if (e.target) {
-					setImage(e.target.result as string);
+					const imageUrl = e.target.result as string;
+					setImage(imageUrl);
+
+					const fileObj = {
+						fileName: file.name,
+						urlFile: imageUrl
+					};
+
+					await createGroupFile(fileObj);
+					setUrlImg(file.name);
+					console.log(imageUrl);
 				}
 			};
 			reader.readAsDataURL(file);
@@ -67,16 +85,16 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 	// const notifySuccess = () => toast.success('Группа успешно создана !');
 	// const notifyError = () => toast.error('Произошла ошибка при создании группы');
 
-	const handleCreateGroup = async () => {		
+	const handleCreateGroup = async () => {
 		const newGroup = {
 			title: value,
-			image: image,
+			image: urlImg,
 			dateOfEnd: data,
 			description: text
 		};
-		
-		
+
 		await createGroup(newGroup);
+
 		console.log(newGroup);
 
 		// try {
@@ -89,7 +107,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 		// 	setValue('');
 		// 	handleClose();
 		// 	console.log('test');
-			
+
 		// } catch (error) {
 		// 	// notifyError();
 		// 	console.log('error');
