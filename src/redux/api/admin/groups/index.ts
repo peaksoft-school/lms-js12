@@ -16,10 +16,13 @@ export const api = index.injectEndpoints({
 			GROUPS.CreateGroupResponse,
 			GROUPS.CreateGroupRequest
 		>({
-			query: ({ dateOfEnd, image, description, title }) => ({
+			query: (newGroup) => ({
 				url: '/api/groups',
 				method: 'POST',
-				body: { dateOfEnd, image, description, title }
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				},
+				body: newGroup
 			}),
 			invalidatesTags: ['groups']
 		}),
@@ -28,21 +31,21 @@ export const api = index.injectEndpoints({
 			GROUPS.UpdateGroupRequest
 		>({
 			query: ({ newGroup, saveId }) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/group/${saveId}`,
+				url: `/api/groups/${saveId}`,
 				method: 'PATCH',
-				body: JSON.stringify(newGroup),
 				headers: {
-					'Content-Type': 'application/json'
-				}
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				},
+				body: newGroup
 			}),
 			invalidatesTags: ['groups']
 		}),
 		deleteGroup: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/group/${deleteById}`,
+				url: `/api/groups/${deleteById}`,
 				method: 'DELETE',
 				headers: {
-					'Content-Type': 'application/json'
+					Authorization: `Bearer ${localStorage.getItem('token')}`
 				}
 			}),
 			invalidatesTags: ['groups']
@@ -54,11 +57,17 @@ export const api = index.injectEndpoints({
 			}),
 			providesTags: ['groups']
 		}),
-		createGroupFile: builder.mutation({
-			query: (file) => ({
-				url: '/file',
+		createGroupFile: builder.mutation<
+			GROUPS.CreateGroupFileResponse,
+			GROUPS.CreateGroupFileRequest
+		>({
+			query: (fileObj) => ({
+				url: '/file',		
 				method: 'POST',
-				body: file
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				},
+				body: fileObj
 			}),
 			invalidatesTags: ['groups']
 		})

@@ -11,10 +11,10 @@ namespace GROUPS {
 	type GroupsResponse = {
 		groupResponses: GroupResponses[];
 		page: number;
-		size: number
+		size: number;
 	};
 	type GroupsRequest = void;
-	type CreateGroupResponse = {
+	type CreateGroupResponse = {	
 		title: string;
 		dateOfEnd: string;
 		description: string;
@@ -43,5 +43,14 @@ namespace GROUPS {
 			description: string;
 			image: string;
 		};
+	};
+
+	type CreateGroupFileResponse = {
+		fileName: string;
+		urlFile: string;
+	}[];
+	type CreateGroupFileRequest = {
+		fileName: string;
+		urlFile: string;
 	};
 }

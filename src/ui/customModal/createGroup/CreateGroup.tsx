@@ -35,7 +35,7 @@ interface CreateGroupsProps {
 	handleClose: () => void;
 }
 const CreateGroup: FC<CreateGroupsProps> = ({
-	// handleOpen,
+	handleOpen,
 	open,
 	handleClose
 }) => {
@@ -67,17 +67,23 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 				if (e.target) {
 					const imageUrl = e.target.result as string;
 					setImage(imageUrl);
-
 					const fileObj = {
 						fileName: file.name,
 						urlFile: imageUrl
 					};
 
-					await createGroupFile(fileObj);
-					setUrlImg(file.name);
-					console.log(imageUrl);
+					try {
+						await createGroupFile(fileObj);
+						console.log('jbljkbkj');
+
+						setUrlImg(file.name);
+						console.log(imageUrl);
+					} catch (error) {
+						console.error('Error uploading file:', error);
+					}
 				}
 			};
+
 			reader.readAsDataURL(file);
 		}
 	};
@@ -97,21 +103,11 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 
 		console.log(newGroup);
 
-		// try {
-		// 	createGroup(newGroup).unwrap();
-		// 	// notifySuccess();
-		// 	handleOpen(false);
-		// 	setData('');
-		// 	setText('');
-		// 	setImage('');
-		// 	setValue('');
-		// 	handleClose();
-		// 	console.log('test');
-
-		// } catch (error) {
-		// 	// notifyError();
-		// 	console.log('error');
-		// }
+		handleOpen(false);
+		setData('');
+		setText('');
+		setImage('');
+		setValue('');
 	};
 
 	return (

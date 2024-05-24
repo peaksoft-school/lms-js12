@@ -70,6 +70,7 @@ const Groups: FC = () => {
 			}
 		}
 	};
+	console.log(data);
 
 	return (
 		<div className={scss.group}>
@@ -94,101 +95,116 @@ const Groups: FC = () => {
 
 					<div>
 						<div className={scss.cards}>
-							{data && Array.isArray(data) && data.length > 0 ? (
+							{
+								// data && Array.isArray(data) && data.length > 0 ?
 								<div className={scss.card}>
-									{data
-										.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)
-										.map((item) => (
-											<div key={item.id} className={scss.zero_block_container}>
-												<Link to={`/admin/group/${item.id}`}>
-													<div className={scss.block_photo_cards}>
-														<img src={item.image} alt="images" />
-													</div>
-													<div className={scss.block_cont}>
-														<div className={scss.second_block_container}>
-															<p className={scss.block_title}>{item.title}</p>
-															<p className={scss.block_date}>
-																{item.dateOfEnd}
-															</p>
-														</div>
-														<div className={scss.text_card}>
-															<span className={scss.block_text}>
-																{item.description &&
-																item.description.length > 60
-																	? `${item.description.substring(0, 60)}...`
-																	: item.description}
-															</span>
-														</div>
-													</div>
-												</Link>
+									{
+										(console.log(data?.groupResponses),
+										data?.groupResponses
+											// .slice(
+											// 	(currentPage - 1) * rowsPerPage,
+											// 	currentPage * rowsPerPage
+											// )
+											.map(
+												(item) => (
+													console.log(item),
+													(
+														<div
+															key={item.id}
+															className={scss.zero_block_container}
+														>
+															<Link to={`/admin/group/${item.id}`}>
+																<div className={scss.block_photo_cards}>
+																	<img src={item.image} alt="images" />
+																</div>
+																<div className={scss.block_cont}>
+																	<div className={scss.second_block_container}>
+																		<p className={scss.block_title}>
+																			{item.title}
+																		</p>
+																		<p className={scss.block_date}>
+																			{item.dateOfEnd}
+																		</p>
+																	</div>
+																	<div className={scss.text_card}>
+																		<span className={scss.block_text}>
+																			{item.description &&
+																			item.description.length > 60
+																				? `${item.description.substring(0, 60)}...`
+																				: item.description}
+																		</span>
+																	</div>
+																</div>
+															</Link>
 
-												<div className={scss.block_button_div}>
-													<div onClick={handleClick}>
-														<button
-															className={scss.block_button_dots}
-															onClick={() => {
-																setSaveId(item.id);
-															}}
-														>
-															<IconDots stroke={2} />
-														</button>
-													</div>
-													{
-														<Menu
-															anchorEl={anchorEl}
-															id="positioned-menu"
-															open={open}
-															onClose={handleClose}
-															anchorOrigin={{
-																vertical: 'bottom',
-																horizontal: 'right'
-															}}
-															transformOrigin={{
-																vertical: 'top',
-																horizontal: 'right'
-															}}
-															PaperProps={{
-																style: {
-																	boxShadow: 'none',
-																	border: '1px solid gray'
+															<div className={scss.block_button_div}>
+																<div onClick={handleClick}>
+																	<button
+																		className={scss.block_button_dots}
+																		onClick={() => {
+																			setSaveId(item.id);
+																		}}
+																	>
+																		<IconDots stroke={2} />
+																	</button>
+																</div>
+																{
+																	<Menu
+																		anchorEl={anchorEl}
+																		id="positioned-menu"
+																		open={open}
+																		onClose={handleClose}
+																		anchorOrigin={{
+																			vertical: 'bottom',
+																			horizontal: 'right'
+																		}}
+																		transformOrigin={{
+																			vertical: 'top',
+																			horizontal: 'right'
+																		}}
+																		PaperProps={{
+																			style: {
+																				boxShadow: 'none',
+																				border: '1px solid gray'
+																			}
+																		}}
+																	>
+																		<MenuItem
+																			style={{ display: 'flex', gap: '10px' }}
+																			onClick={() => {
+																				setOpenEditModal(true);
+																				handleClose();
+																			}}
+																		>
+																			<img src={editImg} alt="#" />
+																			Редактировать
+																		</MenuItem>
+																		<MenuItem
+																			style={{ display: 'flex', gap: '10px' }}
+																			onClick={() => {
+																				setDeleteModal(true);
+																				handleClose();
+																			}}
+																		>
+																			<img src={deleteImg} alt="#" />
+																			Удалить
+																		</MenuItem>
+																	</Menu>
 																}
-															}}
-														>
-															<MenuItem
-																style={{ display: 'flex', gap: '10px' }}
-																onClick={() => {
-																	setOpenEditModal(true);
-																	handleClose();
-																}}
-															>
-																<img src={editImg} alt="#" />
-																Редактировать
-															</MenuItem>
-															<MenuItem
-																style={{ display: 'flex', gap: '10px' }}
-																onClick={() => {
-																	setDeleteModal(true);
-																	handleClose();
-																}}
-															>
-																<img src={deleteImg} alt="#" />
-																Удалить
-															</MenuItem>
-														</Menu>
-													}
-												</div>
-											</div>
-										))}
+															</div>
+														</div>
+													)
+												)
+											))
+									}
 									<EditGroup
 										open={openEditModal}
 										handleClose={handleCloseEditModal}
 										saveId={saveId}
 									/>
 								</div>
-							) : null}
+								// : null
+							}
 							<DeleteGroupModal
 								openModalDelete={deleteModal}
 								closeModalDelete={() => setDeleteModal(false)}
@@ -216,7 +232,7 @@ const Groups: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(data?.groupResponses.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
