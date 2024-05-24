@@ -8,7 +8,7 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MyCoursePage from '../pages/MyCoursePage';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
-import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCourse';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
 import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';

@@ -1,5 +1,4 @@
 import { api as index } from '../../../api';
-
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getAdminCourse: builder.query<
@@ -7,7 +6,7 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.CoursesAdminRequest
 		>({
 			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse',
+				url: '/api/course/findAllCourse',
 				method: 'GET'
 			}),
 			providesTags: ['courses']
@@ -17,18 +16,22 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.CreateAdminCourseRequest
 		>({
 			query: (newCourse) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse',
+				url: '/api/course/createCourse',
 				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				},
 				body: newCourse
 			}),
 			invalidatesTags: ['courses']
 		}),
+
 		updateAdminCourse: builder.mutation<
 			ADMINCOURSES.UpdateCourseResponse,
 			ADMINCOURSES.UpdateCourseRequest
 		>({
 			query: ({ newCourse, saveId }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse${saveId}`,
+				url: `/createCourse/${saveId}`,
 				method: 'PATCH',
 				body: newCourse
 			}),
@@ -36,8 +39,16 @@ export const api = index.injectEndpoints({
 		}),
 		deleteCourse: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse${deleteById}`,
+				url: `/createCourse/${deleteById}`,
 				method: 'DELETE'
+			}),
+			invalidatesTags: ['courses']
+		}),
+		fileCourse: builder.mutation({
+			query: (file) => ({
+				url: `/file`,
+				method: 'POST',
+				body: file
 			}),
 			invalidatesTags: ['courses']
 		})
@@ -48,5 +59,6 @@ export const {
 	useGetAdminCourseQuery,
 	useCreateAdminCourseMutation,
 	useUpdateAdminCourseMutation,
-	useDeleteCourseMutation
+	useDeleteCourseMutation,
+	useFileCourseMutation
 } = api;

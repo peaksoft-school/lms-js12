@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ADMINCOURSES {
 	type CoursesAdminResponse = {
-		_id: number;
+		id: number;
 		image: string | undefined;
 		title: string;
 		description: string;
-		dateOfEnd: Dayjs | null | undefined;
+		dateOfEnd: string;
 	}[];
 	type CoursesAdminRequest = void;
 	type CreateAdminCourseResponse = {
@@ -13,14 +13,14 @@ namespace ADMINCOURSES {
 			image: string | undefined;
 			title: string;
 			description: string;
-			dateOfEnd: Dayjs | null | undefined;
+			dateOfEnd: string;
 		};
 	}[];
 	type CreateAdminCourseRequest = {
 		image: string | undefined;
 		title: string;
 		description: string;
-		dateOfEnd: Dayjs | null | undefined;
+		dateOfEnd: string;
 	};
 	type UpdateCourseResponse = {
 		saveId: number | null;

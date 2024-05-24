@@ -8,7 +8,7 @@ import scss from './Course.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
-import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCourse';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
 import { useNavigate } from 'react-router-dom';

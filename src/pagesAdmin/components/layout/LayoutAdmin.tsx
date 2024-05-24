@@ -22,7 +22,7 @@ import StudentsPage from '../pages/StudentsPage.tsx';
 import InternalStudentsPage from '../pages/InternalStudentsPage.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader.tsx';
 import AnnouncementPage from '../pages/AnnouncementPage.tsx';
-import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse.tsx';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCourse.tsx';
 import InternalCoursesPage from '../pages/InternalCoursesPage.tsx';
 import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';

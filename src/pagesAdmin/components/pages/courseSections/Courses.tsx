@@ -9,7 +9,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
-import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
+import CreateCourse from '@/src/ui/customModal/createCourse/CreateCourse';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
@@ -29,6 +29,8 @@ const Courses: FC = () => {
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
 	const navigate = useNavigate();
+
+	// console.log(data.courseResponse);
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -95,21 +97,22 @@ const Courses: FC = () => {
 					<h1 className={scss.title}>Курсы</h1>
 					<div>
 						<div className={scss.cards}>
-							{data && Array.isArray(data) && data.length > 0 ? (
+							{
+								// data && Array.isArray(data) && data.length > 0 ?
 								<div className={scss.card}>
 									{data
-										.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)
+										// .slice(
+										// 	(currentPage - 1) * rowsPerPage,
+										// 	currentPage * rowsPerPage
+										// )
 										.map((item) => (
-											<div key={item._id} className={scss.zero_block_container}>
+											<div key={item.id} className={scss.zero_block_container}>
 												<div>
 													<div
 														onClick={() => {
-															setSaveIdStorege(String(item._id));
+															setSaveIdStorege(String(item.id));
 															setTimeout(() => {
-																navigate(`/admin/courses/${item._id}/teacher`);
+																navigate(`/admin/courses/${item.id}/teacher`);
 															}, 1000);
 														}}
 													>
@@ -137,14 +140,14 @@ const Courses: FC = () => {
 												<div
 													className={scss.block_button_div}
 													onClick={() => {
-														setSaveIdStorege(String(item._id));
+														setSaveIdStorege(String(item.id));
 													}}
 												>
 													<div onClick={handleClick}>
 														<button
 															className={scss.button_dots}
 															onClick={() => {
-																setSaveId(item._id);
+																setSaveId(item.id);
 															}}
 														>
 															<IconDots stroke={2} />
@@ -202,7 +205,8 @@ const Courses: FC = () => {
 										saveId={saveId}
 									/>
 								</div>
-							) : null}
+								// : null
+							}
 							<DeleteCourses
 								openModalDelete={deleteModal}
 								closeModalDelete={() => setDeleteModal(false)}

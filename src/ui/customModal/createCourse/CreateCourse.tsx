@@ -1,4 +1,4 @@
-import scss from './CreateCurse.module.scss';
+import scss from './CreateCourse.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -9,7 +9,10 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useCreateAdminCourseMutation } from '@/src/redux/api/admin/courses';
+import {
+	useCreateAdminCourseMutation,
+	useFileCourseMutation
+} from '@/src/redux/api/admin/courses';
 
 const style = {
 	position: 'absolute',
@@ -44,6 +47,8 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [createCourse] = useCreateAdminCourseMutation();
+	const [fileCourse] = useFileCourseMutation();
+	const [saveUrl, setSaveUrl] = useState('');
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -51,44 +56,54 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		}
 	};
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFileChange = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
 		const file = event.target.files?.[0];
 		if (file) {
 			const reader = new FileReader();
 			setHidePhoto(true);
-			reader.onload = (e) => {
+			reader.onload = async (e) => {
 				if (e.target) {
-					setImage(e.target.result as string);
+					const imageUrl = e.target.result as string;
+					setImage(imageUrl);
+					const fileObj = {
+						fileName: file.name,
+						urlFile: imageUrl
+					};
+					await fileCourse(fileObj);
+					setSaveUrl(file.name);
+					console.log(imageUrl);
 				}
 			};
 			reader.readAsDataURL(file);
 		}
 	};
 
-	const notifySuccess = () => toast.success('Курс успешно создан !');
-	const notifyError = () => toast.error('Произошла ошибка при создании курса');
+	// const notifySuccess = () => toast.success('Курс успешно создан !');
+	// const notifyError = () => toast.error('Произошла ошибка при создании курса');
 
-	const handleCreateCourse = () => {
-		if (value !== '' && image !== '' && data !== '' && text !== '') {
-			const newCourse = {
-				title: value,
-				image: image,
-				dateOfEnd: data,
-				description: text
-			};
-			createCourse(newCourse).unwrap();
-			try {
-				createCourse(newCourse).unwrap();
-				notifySuccess();
-				handleOpenCourse(false);
-				setData('');
-				setText('');
-				setImage('');
-				setValue('');
-			} catch (error) {
-				notifyError();
-			}
-		}
+	const handleCreateCourse = async () => {
+		const newCourse = {
+			title: value,
+			image: saveUrl,
+			dateOfEnd: data,
+			description: text
+		};
+		await createCourse(newCourse);
+		// if (value !== '' && image !== '' && data !== '' && text !== '') {
+		// 	try {
+		// 		// await createCourse(newCourse).unwrap();
+		// 		notifySuccess();
+		// 		handleOpenCourse(false);
+		// 		setData('');
+		// 		setText('');
+		// 		setImage('');
+		// 		setValue('');
+		// 	} catch (error) {
+		// 		notifyError();
+		// 	}
+		// }
 	};
 
 	return (
