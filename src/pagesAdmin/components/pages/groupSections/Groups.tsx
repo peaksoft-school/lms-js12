@@ -13,7 +13,7 @@ import EditGroup from '@/src/ui/customModal/editGroup/EditGroup';
 import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-
+//beksultan
 const Groups: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const { data } = useGetGroupQuery();
