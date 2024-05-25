@@ -19,7 +19,6 @@ const Courses: FC = () => {
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const { data } = useGetAdminCourseQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
-	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -73,7 +72,6 @@ const Courses: FC = () => {
 			}
 		}
 	};
-	localStorage.setItem('id', saveIdSrorege);
 
 	return (
 		<div className={scss.course}>
@@ -118,7 +116,6 @@ const Courses: FC = () => {
 														<div>
 															<div
 																onClick={() => {
-																	setSaveIdStorege(String(item._id));
 																	setTimeout(() => {
 																		navigate(
 																			`/admin/courses/${item._id}/teacher`
@@ -149,12 +146,7 @@ const Courses: FC = () => {
 																</div>
 															</div>
 														</div>
-														<div
-															className={scss.block_button_div}
-															onClick={() => {
-																setSaveIdStorege(String(item._id));
-															}}
-														>
+														<div className={scss.block_button_div}>
 															<div onClick={handleClick}>
 																<button
 																	className={scss.button_dots}

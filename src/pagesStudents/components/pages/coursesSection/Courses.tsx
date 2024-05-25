@@ -9,7 +9,6 @@ import { Box, ScrollArea } from '@mantine/core';
 
 const Courses: FC = () => {
 	const { data: data = [] } = useGetAdminCourseQuery();
-	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
@@ -51,7 +50,7 @@ const Courses: FC = () => {
 			}
 		}
 	};
-	localStorage.setItem('id', saveIdSrorege);
+
 	localStorage.setItem('item', saveItem);
 
 	return (
@@ -82,7 +81,6 @@ const Courses: FC = () => {
 													>
 														<div
 															onClick={() => {
-																setSaveIdStorege(String(item._id));
 																setSaveItem(item.title);
 															}}
 														>
@@ -90,7 +88,7 @@ const Courses: FC = () => {
 																onClick={() => {
 																	setTimeout(() => {
 																		navigate(`/courses/${item._id}/materials`);
-																	}, 1000);
+																	}, 500);
 																}}
 															>
 																<div className={scss.block_photo_cards}>

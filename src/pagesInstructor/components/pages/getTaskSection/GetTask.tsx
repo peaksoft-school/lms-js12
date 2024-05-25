@@ -2,7 +2,7 @@ import { useGetTaskInstructorQuery } from '@/src/redux/api/instructor/addTask';
 import scss from './GetTask.module.scss';
 import { Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 // import PandingPage from '../PandingPage';
 // import Accepted from '../acceptedSection/Accepted';
 // import NotAccepted from '../notAccepted/NotAccepted';
@@ -21,60 +21,60 @@ const GetTask = () => {
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-	const id = localStorage.getItem('id');
-	const lessonId = localStorage.getItem('lessonId');
-	const task = localStorage.getItem('task');
+
+	const { courseId, lessonId, getTaskId } = useParams();
+	
 	useEffect(() => {
 		if (
 			pathname ===
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
 		) {
 			setValue(0);
 		} else if (
 			pathname ==
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/accepted`
 		) {
 			setValue(1);
 		} else if (
 			pathname ==
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/late`
 		) {
 			setValue(3);
 		} else if (
 			pathname ===
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notAccepted`
 		) {
 			setValue(2);
 		} else if (
 			pathname ===
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted`
 		) {
 			setValue(4);
 		}
 	}, [pathname]);
 	const handleOpenPanding = () => {
 		navigate(
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
 		);
 	};
 	const handleOpenAccepted = () => {
 		navigate(
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/accepted`
 		);
 	};
 	const handleOpenNotAccepted = () => {
 		navigate(
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notAccepted`
 		);
 	};
 	const handleOpenLate = () => {
 		navigate(
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/late`
 		);
 	};
 	const handleOpenNotSubmitted = () => {
 		navigate(
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted`
 		);
 	};
 	return (
@@ -141,31 +141,31 @@ const GetTask = () => {
 					</Box>
 				</ScrollArea>
 				{pathname ===
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding` && (
+					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding` && (
 					<>
 						<Panding />
 					</>
 				)}
 				{pathname ===
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted` && (
+					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/accepted` && (
 					<>
 						<Accepted />
 					</>
 				)}
 				{pathname ===
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted` && (
+					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notAccepted` && (
 					<>
 						<NotAccepted />
 					</>
 				)}
 				{pathname ===
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted` && (
+					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted` && (
 					<>
 						<NotSubmitted />
 					</>
 				)}
 				{pathname ===
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late` && (
+					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/late` && (
 					<>
 						<Late />
 					</>

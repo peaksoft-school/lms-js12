@@ -12,6 +12,7 @@ import RatingPage from '../pages/RatingPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import GetTest from '../pages/getTestSection/GetTest';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
+import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +52,10 @@ const LayoutStudents = () => {
 				<main style={{ width: '100%' }}>
 					{!isMobile && (
 						<>
-							<SupHeader />
+							<Routes>
+								<Route path="/courses/:courseId/*" element={<SupHeader />} />
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					{isMobile && (
@@ -70,26 +74,30 @@ const LayoutStudents = () => {
 							element={<LessonListPage />}
 						/>
 						<Route
-							path="/courses/:coursesId/materials/:sectionStudentId"
+							path="/courses/:coursesId/materials/:lessonId"
 							element={<LessonsStudentPage />}
 						/>
 						<Route
-							path="/courses/:coursesId/materials/:sectionStudentId/video"
+							path="/courses/:coursesId/materials/:lessonId/video"
 							element={<LessonsStudentPage />}
 						/>
 						<Route
-							path="/courses/:coursesId/materials/:sectionStudentId/presentation"
+							path="/courses/:coursesId/materials/:lessonId/lesson/:getTaskId"
 							element={<LessonsStudentPage />}
 						/>
 						<Route
-							path="/courses/:coursesId/materials/:sectionStudentId/test"
+							path="/courses/:coursesId/materials/:lessonId/presentation"
 							element={<LessonsStudentPage />}
 						/>
 						<Route
-							path="/courses/:coursesId/materials/:sectionStudentId/showTest"
+							path="/courses/:coursesId/materials/:lessonId/test"
+							element={<LessonsStudentPage />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:lessonId/showTest"
 							element={<GetTest />}
 						/>
-						<Route path="/courses/:ratingId/rating" element={<RatingPage />} />
+						<Route path="/courses/:coursesId/rating" element={<RatingPage />} />
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

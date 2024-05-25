@@ -1,19 +1,16 @@
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import scss from './Late.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Late = () => {
 	const { data } = useGetStudentTableQuery();
-	const id = localStorage.getItem('id');
-	const lessonId = localStorage.getItem('lessonId');
-	const task = localStorage.getItem('task');
+	const { courseId, lessonId, getTaskId } = useParams();
 	return (
 		<div className={scss.main_part}>
 			<div className={scss.late}>
 				{data?.map((item) => (
 					<Link
-						onClick={() => localStorage.setItem('taskId', String(item._id))}
-						to={`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/answer/${item._id}`}
+						to={`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/answer/${item._id}`}
 					>
 						<div className={scss.card_container}>
 							<p className={scss.card_link}>

@@ -10,7 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
 	useEditTaskInstructorMutation,
 	useGetTaskInstructorQuery
@@ -23,9 +23,9 @@ const EditTask = () => {
 	const { data } = useGetTaskInstructorQuery();
 	const navigate = useNavigate();
 	const id = data?.find((item) => item._id === Number(task));
-	console.log(id?.title);
 	const [title, setTitle] = useState<string>(id!.title);
 	const [value, setValue] = useState(id!.description);
+	const { courseId, lessonId } = useParams();
 	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
 		null
 	);
@@ -59,8 +59,7 @@ const EditTask = () => {
 	const openFilePicker = () => {
 		fileInputRef.current?.click();
 	};
-	const lessonId = localStorage.getItem('lessonId');
-	const _id = localStorage.getItem('id');
+
 	const addTask = async () => {
 		const selectedFile = fileInputRef.current?.files?.[0];
 		const newtask = {
@@ -69,10 +68,9 @@ const EditTask = () => {
 			file: selectedFile,
 			dedline: selectedDate
 		};
-		console.log(task);
 
 		await editTaskInstructor({ newtask, task });
-		navigate(`/instructor/course/${_id}/materials/${lessonId}/lesson`);
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/lesson`);
 	};
 
 	return (
@@ -142,7 +140,9 @@ const EditTask = () => {
 						type="button"
 						disabled={false}
 						onClick={() =>
-							navigate(`/instructor/course/${_id}/materials/${lessonId}/lesson`)
+							navigate(
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson`
+							)
 						}
 						width="105px"
 					>

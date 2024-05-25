@@ -27,6 +27,7 @@ import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import Groups from '../pages/groupSection/Group.tsx';
+import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -100,7 +101,10 @@ const LayoutAdmin = () => {
 				<main style={{ width: '100%' }}>
 					{!isMobile && (
 						<>
-							<SupHeader />
+							<Routes>
+								<Route path="/courses/:courseId/*" element={<SupHeader />} />
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					{isMobile && (
@@ -165,11 +169,11 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route
-							path="/courses/:coursesPart/student"
+							path="/courses/:courseId/student"
 							element={<InternalCoursesPage />}
 						/>
 						<Route
-							path="/courses/:coursesTeacher/teacher"
+							path="/courses/:courseId/teacher"
 							element={<CoursesTeacher />}
 						/>
 						<Route
