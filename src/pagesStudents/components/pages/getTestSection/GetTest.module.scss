@@ -7,8 +7,13 @@
 		padding-bottom: 20px;
 		justify-content: space-between;
 
+		position: sticky;
+		z-index: 50;
+		top: 80px;
+		background: #eff0f4;
+
 		.get_test_time {
-			color: blue;
+			color: #0000ff;
 		}
 	}
 
@@ -17,10 +22,15 @@
 		height: auto;
 		display: flex;
 		flex-direction: column;
-		background-color: white;
+		background: #fff;
 		border: 1px solid #d4d4d4;
 		border-radius: 10px;
 		padding-left: 10px;
+
+		overflow-y: scroll;
+		max-height: 78vh;
+		min-height: 78vh;
+		height: 100%;
 
 		.question {
 			height: auto;

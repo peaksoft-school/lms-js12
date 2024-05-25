@@ -17,10 +17,10 @@ import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import AddTaskPage from '../pages/AddTaskPage';
-import EditTask from '../pages/editTask/EditTask';
-import GetTask from '../pages/getTask/GetTask';
+import EditTask from '../pages/editTaskSection/EditTask';
+import GetTask from '../pages/getTaskSection/GetTask';
 import Answer from '../pages/answerSection/Answer';
-import GetTestInstructor from '../pages/getTest/GetTestInstructor';
+import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
 
 import RatingStudentsPage from '../pages/RatingStudentsPage';
 // import { Breadcrumbs } from '@mui/material';

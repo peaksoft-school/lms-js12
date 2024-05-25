@@ -2,6 +2,7 @@
 	padding-top: 20px;
 	.container {
 		padding-inline: 20px;
+		min-height: 89vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -13,6 +14,11 @@
 				justify-content: space-between;
 				gap: 10px;
 				width: 100%;
+
+				position: sticky;
+				z-index: 50;
+				top: 80px;
+				background: #eff0f4;
 				.search_input {
 					position: relative;
 					display: flex;
@@ -42,6 +48,7 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
+
 						.button {
 							padding: 5px;
 							display: flex;
@@ -186,8 +193,8 @@
 			background: #efeff6;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 10px;
 			position: sticky;
+			margin-top: auto;
 			bottom: 0;
 			left: 0;
 

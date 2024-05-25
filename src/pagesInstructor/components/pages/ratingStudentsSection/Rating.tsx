@@ -66,14 +66,9 @@ const Rating = () => {
 	return (
 		<div className={scss.rating}>
 			<h1>Студенты</h1>
-			<div
-				style={{
-					height: '577px',
-					background: '#eff0f4'
-				}}
-			>
-				<ScrollArea type={'always'} offsetScrollbars classNames={scss}>
-					<Box w={600}>
+			<div className={scss.scroll_table}>
+				<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
+					<Box>
 						<div style={{ display: 'flex', justifyContent: 'center' }}>
 							<div className={scss.rating_container}>
 								<table className={scss.Table}>

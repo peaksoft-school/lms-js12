@@ -25,7 +25,7 @@ const HeaderMobile = () => {
 						{pathname.startsWith('/admin') && (
 							<>
 								{links.admin.map((item, index) => (
-									<li  key={index}>
+									<li key={index}>
 										<Link
 											to={`/admin/${item.link!}`}
 											className={

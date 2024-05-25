@@ -62,7 +62,7 @@ const VideoLesson = () => {
 				style={{
 					paddingInline: '20px',
 					display: 'flex',
-					justifyContent: 'flex-end',
+					justifyContent: 'flex-end'
 				}}
 			>
 				<Button

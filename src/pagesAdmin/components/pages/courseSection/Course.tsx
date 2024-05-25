@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
 import { IconArticle, IconBook, IconDots, IconPlus } from '@tabler/icons-react';
-import scss from './Courses.module.scss';
+import scss from './Course.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';

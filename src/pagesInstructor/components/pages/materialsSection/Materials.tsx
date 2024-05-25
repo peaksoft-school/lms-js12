@@ -107,28 +107,28 @@ const Materials: FC = () => {
 		<div className={scss.material}>
 			<div className={scss.container}>
 				<DragDropContext onDragEnd={handleDragEnd}>
-					<div className={scss.button_title_elements}>
-						<Button
-							size="large"
-							className={scss.button}
-							onClick={() => setOpenModal(true)}
-							variant="contained"
+					<div style={{ minHeight: '76vh' }}>
+						<div className={scss.button_title_elements}>
+							<Button
+								size="large"
+								className={scss.button}
+								onClick={() => setOpenModal(true)}
+								variant="contained"
+							>
+								<div className={scss.icon}>
+									<IconPlus stroke={2} />
+								</div>
+								<span>Создать урок</span>
+							</Button>
+						</div>
+						<h1>{item}</h1>
+						<ScrollArea
+							type="always"
+							scrollbars="xy"
+							offsetScrollbars
+							classNames={scss}
 						>
-							<div className={scss.icon}>
-								<IconPlus stroke={2} />
-							</div>
-							<span>Создать урок</span>
-						</Button>
-					</div>
-					<h1>{item}</h1>
-					<ScrollArea
-						type="always"
-						scrollbars="xy"
-						offsetScrollbars
-						classNames={scss}
-					>
-						<Box>
-							<div style={{ height: '577px', background: '#eff0f4' }}>
+							<Box>
 								<div className={scss.table_container}>
 									<div className={scss.material_content}>
 										<table className={scss.table}>
@@ -301,9 +301,10 @@ const Materials: FC = () => {
 										/>
 									</div>
 								</div>
-							</div>
-						</Box>
-					</ScrollArea>
+							</Box>
+						</ScrollArea>
+					</div>
+
 					<div className={scss.pagination}>
 						<div className={scss.Inputs}>
 							<p className={scss.text}>Перейти на страницу</p>

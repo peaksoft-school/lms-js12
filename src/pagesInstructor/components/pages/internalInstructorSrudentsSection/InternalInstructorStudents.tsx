@@ -4,6 +4,7 @@ import { Button, Pagination, Stack } from '@mui/material';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
+import { Box, ScrollArea } from '@mantine/core';
 
 interface Student {
 	id: number;
@@ -87,57 +88,58 @@ const InternalInstructorStudents = () => {
 						</Button>
 					</div>
 					<h1 className={scss.title}>Data Engineer</h1>
-					<div
-						style={{
-							height: '577px',
-							background: '#eff0f4'
-						}}
-					>
-						<div style={{ display: 'flex', justifyContent: 'center' }}>
-							<div className={scss.internal_container}>
-								<table className={scss.table}>
-									<thead>
-										<tr>
-											<th style={{ textAlign: 'start' }}>№</th>
-											<th>Имя</th>
-											<th>Фамилия</th>
-											<th>Группа</th>
-											<th>Формат обучения</th>
-											<th>Номер телефона</th>
-											<th>E-mail</th>
-										</tr>
-									</thead>
-									<tbody>
-										{data
-
-											?.slice(
-												(currentPage - 1) * rowsPerPage,
-												currentPage * rowsPerPage
-											)
-											.map((item: Student, index) => (
-												<tr
-													key={item.id}
-													className={
-														index % 2 === 1
-															? scss.table_alternate_row
-															: '' || scss.internal
-													}
-												>
-													<td>{index + 1 + (currentPage - 1) * rowsPerPage}</td>
-
-													<td>{item.firstName}</td>
-													<td>{item.lastName}</td>
-													<td>{item.group}</td>
-													<td>{item.TrainingFormat}</td>
-													<td>{item.phone_number}</td>
-													<td>{item.email}</td>
+					<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
+						<Box>
+							<div>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
+									<div className={scss.internal_container}>
+										<table className={scss.table}>
+											<thead>
+												<tr>
+													<th style={{ textAlign: 'start' }}>№</th>
+													<th>Имя</th>
+													<th>Фамилия</th>
+													<th>Группа</th>
+													<th>Формат обучения</th>
+													<th>Номер телефона</th>
+													<th>E-mail</th>
 												</tr>
-											))}
-									</tbody>
-								</table>
+											</thead>
+											<tbody>
+												{data
+
+													?.slice(
+														(currentPage - 1) * rowsPerPage,
+														currentPage * rowsPerPage
+													)
+													.map((item: Student, index) => (
+														<tr
+															key={item.id}
+															className={
+																index % 2 === 1
+																	? scss.table_alternate_row
+																	: '' || scss.internal
+															}
+														>
+															<td>
+																{index + 1 + (currentPage - 1) * rowsPerPage}
+															</td>
+
+															<td>{item.firstName}</td>
+															<td>{item.lastName}</td>
+															<td>{item.group}</td>
+															<td>{item.TrainingFormat}</td>
+															<td>{item.phone_number}</td>
+															<td>{item.email}</td>
+														</tr>
+													))}
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</Box>
+					</ScrollArea>
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.inputs}>

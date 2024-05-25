@@ -88,11 +88,16 @@ const AddTask = () => {
 	return (
 		<div className={scss.addTask}>
 			<h1>Материалы</h1>
-			<ScrollArea type="always" scrollbars="y" offsetScrollbars classNames={scss}>
+			<ScrollArea
+				type="always"
+				scrollbars="y"
+				offsetScrollbars
+				classNames={scss}
+			>
 				<Box>
 					<div className={scss.container}>
 						<div className={scss.main_task}>
-							<p style={{ color: 'rgb(31, 110, 212)' }}>Создать задание</p>
+							<p style={{ color: '#1f6ed4' }}>Создать задание</p>
 							<div className={scss.save_file}>
 								<input
 									type="file"

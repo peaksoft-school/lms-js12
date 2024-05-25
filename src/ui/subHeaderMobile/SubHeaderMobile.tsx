@@ -58,6 +58,12 @@ const SupHeaderMobile = () => {
 	const openInstructorStudent = () => {
 		navigate(`/instructor/course/${id}/student`);
 	};
+	const openRatingStudent = () => {
+		navigate(`/courses/${id}/rating`);
+	};
+	const openMaterialStudent = () => {
+		navigate(`/courses/${id}/materials`);
+	};
 
 	const lessonId = localStorage.getItem('lessonId');
 	const openel = Boolean(anchorElOpen);
@@ -79,6 +85,7 @@ const SupHeaderMobile = () => {
 				pathname !== '/instructor/course/' &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}/video` &&
 				pathname !== `/instructor/course/${id}/materials/${lessonId}/lesson` &&
+				pathname !== `/courses/${id}/materials` &&
 				pathname !==
 					`/instructor/course/${id}/materials/${lessonId}/lesson/update` &&
 				pathname !==
@@ -100,6 +107,9 @@ const SupHeaderMobile = () => {
 					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late` &&
 				pathname !==
 					`/instructor/course/${id}/materials/${lessonId}/presentation` &&
+				pathname !== `/courses/${id}/materials/${lessonId}/video` &&
+				pathname !== `/courses/${id}/materials/${lessonId}/presentation` &&
+				pathname !== `/courses/${id}/materials/${lessonId}/test` &&
 				!isAdminCourseWithId &&
 				!isInstructorCourseWithId && (
 					<div className={scss.header_elements}>
@@ -118,21 +128,16 @@ const SupHeaderMobile = () => {
 											<p> Aдминистратор</p>
 										</>
 									)}
-									{pathname.startsWith('/instructor') && (
-										<>
-											<p>Учитель</p>
-										</>
-									)}
-									{pathname === '/' && (
-										<>
-											<p>Студент</p>
-										</>
-									)}
 								</div>
 							)}
 							{pathname.startsWith('/instructor') && (
 								<div style={{ fontSize: '18px', fontWeight: '500' }}>
 									Учитель
+								</div>
+							)}
+							{pathname.startsWith('/courses') && (
+								<div style={{ fontSize: '18px', fontWeight: '500' }}>
+									Студент
 								</div>
 							)}
 						</div>
@@ -407,6 +412,75 @@ const SupHeaderMobile = () => {
 										)}
 									</div>
 								)}
+								{pathname.startsWith('/instructor') && (
+									<div className={scss.instructor_profile}>Учитель</div>
+								)}
+							</div>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+							<Menu
+								id="basic-menu"
+								anchorEl={anchorEl}
+								open={open}
+								onClose={() => setOpen(false)}
+								MenuListProps={{
+									'aria-labelledby': 'basic-button'
+								}}
+							>
+								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
+							</Menu>
+						</div>
+					</div>
+				)}
+			{pathname.startsWith(`/courses/${id}/materials`) &&
+				pathname !== `/courses/${id}/rating` &&
+				pathname !== '/courses' && (
+					<div className={scss.subHeaderCourses}>
+						<Button
+							id="basic-button"
+							aria-controls={openel ? 'basic-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={openel ? 'true' : undefined}
+							onClick={handleClickOpen}
+						>
+							<IconAlignJustified stroke={2} />
+						</Button>
+						<Menu
+							id="basic-menu"
+							anchorEl={anchorElOpen}
+							open={openel}
+							onClose={handleClose}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button'
+							}}
+						>
+							<MenuItem
+								onClick={() => {
+									openMaterialStudent();
+								}}
+							>
+								Материалы
+							</MenuItem>
+
+							<MenuItem
+								onClick={() => {
+									openRatingStudent();
+								}}
+							>
+								Рейтинг студентов
+							</MenuItem>
+						</Menu>
+
+						<div className={scss.header_elements}>
+							<IconUserCircle className={scss.profile} stroke={2} />
+							<div
+								id="basic-button"
+								aria-controls={open ? 'basic-menu' : undefined}
+								aria-haspopup="true"
+								aria-expanded={open ? 'true' : undefined}
+								onClick={handleClick}
+							>
+								<p>Студент</p>
+
 								{pathname.startsWith('/instructor') && (
 									<div className={scss.instructor_profile}>Учитель</div>
 								)}

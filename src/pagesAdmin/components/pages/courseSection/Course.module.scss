@@ -2,6 +2,8 @@
 	padding-top: 20px;
 	.content {
 		padding-inline: 20px;
+		min-height: 89vh;
+
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -13,6 +15,11 @@
 				justify-content: flex-end;
 				align-items: center;
 				width: 100%;
+
+				position: sticky;
+				z-index: 50;
+				top: 80px;
+				background: #eff0f4;
 
 				.button {
 					display: flex;
@@ -42,6 +49,10 @@
 			.title {
 				margin-bottom: 20px;
 				width: 100%;
+
+				position: sticky;
+				z-index: 50;
+				top: 80px;
 			}
 			.cards {
 				display: flex;
@@ -210,10 +221,10 @@
 			background: #efeff6;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 21px;
 			position: sticky;
 			bottom: 0;
 			left: 0;
+			margin-top: auto;
 
 			@media (max-width: 1000px) {
 				padding-bottom: 96px;

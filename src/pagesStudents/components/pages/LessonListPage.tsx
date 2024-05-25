@@ -1,4 +1,4 @@
-import LessonsList from './lessonsList/LessonsList';
+import LessonsList from './lessonsListSection/LessonsList';
 
 const LessonListPage = () => {
 	return (

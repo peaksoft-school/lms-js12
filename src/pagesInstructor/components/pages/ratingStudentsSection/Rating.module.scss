@@ -1,89 +1,75 @@
 .rating {
-	// overflow-y: auto !important;
-	padding-top: 80px;
+	padding-top: 60px;
 	padding-inline: 20px;
 
 	h1 {
 		margin-bottom: 20px;
 		width: 100%;
 	}
-	.rating_container {
-		border-radius: 8px;
-		// overflow-x: auto;
-		table-layout: fixed;
 
-		background: #fff;
-		border: 1px solid #dbd2d2;
-		transition: all 0.5s;
-		// scrollbar-width: thin;
-		// scrollbar-color: #3772ff #fff;
-		background: #fff;
-		padding-inline: 20px;
-		padding-top: 20px;
+	.scroll_table {
+		// width: 100%;
+		// overflow: auto;
+		.rating_container {
+			border-radius: 8px;
+			table-layout: fixed;
+			background: #fff;
+			border: 1px solid #dbd2d2;
+			transition: all 0.5s;
+			padding: 10px;
+			// display: inline-block;
 
-		@media screen and (min-width: 1185px) and (max-width: 1260px) {
-			width: 100%;
-			max-width: 953px;
-		}
-		@media screen and (min-width: 1105px) and (max-width: 1185px) {
-			width: 100%;
-			max-width: 870px;
-		}
-		@media screen and (min-width: 1070px) and (max-width: 1105px) {
-			width: 100%;
-			max-width: 830px;
-		}
-		@media screen and (min-width: 1000px) and (max-width: 1070px) {
-			width: 100%;
-			max-width: 760px;
-		}
-
-		.Table {
-			width: 100%;
-			border: 1px solid rgb(212, 212, 212);
-			border-collapse: collapse;
-
-			th,
-			td {
-				height: 50px;
-				border: 1px solid rgb(212, 212, 212);
+			@media screen and (min-width: 1185px) and (max-width: 1260px) {
+				width: 100%;
+				max-width: 953px;
+			}
+			@media screen and (min-width: 1105px) and (max-width: 1185px) {
+				width: 100%;
+				max-width: 870px;
+			}
+			@media screen and (min-width: 1070px) and (max-width: 1105px) {
+				width: 100%;
+				max-width: 830px;
+			}
+			@media screen and (min-width: 1000px) and (max-width: 1070px) {
+				width: 100%;
+				max-width: 760px;
 			}
 
-			th {
-				text-wrap: nowrap;
-				background: #eff0f4;
-			}
-			.TableCell {
-				width: 50px;
-				text-align: start;
-			}
+			.Table {
+				width: max-content;
+				border: 1px solid #d4d4d4;
+				border-collapse: collapse;
 
-			td {
-				text-align: center;
-				width: 150px;
-				height: 50px;
-				padding: 10px;
-			}
-			.name {
-				width: 220px;
-			}
-			.button {
-				width: 30px !important;
-				height: 30px;
+				th,
+				td {
+					height: 50px;
+					border: 1px solid #d4d4d4;
+				}
+
+				th {
+					text-wrap: nowrap;
+					background: #eff0f4;
+				}
+				.TableCell {
+					width: 50px;
+					text-align: start;
+				}
+
+				td {
+					text-align: center;
+					width: 150px;
+					height: 50px;
+					padding: 10px;
+				}
+				.name {
+					width: 220px;
+				}
+				.button {
+					width: 30px !important;
+					height: 30px;
+				}
 			}
 		}
 	}
 }
-
-// .scrollbar {
-//   &,
-//   &:hover {
-//     background: #EEEDED;
-//   }
-//   &[data-orientation='vertical'] .thumb {
-//     background: #EEEDED;
-//   }
-//   &[data-orientation='horizontal'] .thumb {
-//     background: #EEEDED;
-//   }
-// }

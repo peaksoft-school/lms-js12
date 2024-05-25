@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
 import { IconArticle, IconBook, IconDots, IconPlus } from '@tabler/icons-react';
-import scss from './Groups.module.scss';
+import scss from './Group.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';

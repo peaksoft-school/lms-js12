@@ -10,7 +10,8 @@ import LessonListPage from '../pages/LessonListPage';
 import LessonsStudentPage from '../pages/LessonsStudentPage';
 import RatingPage from '../pages/RatingPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
-import GetTest from '../pages/getTest/GetTest';
+import GetTest from '../pages/getTestSection/GetTest';
+import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +49,16 @@ const LayoutStudents = () => {
 					</>
 				)}
 				<main style={{ width: '100%' }}>
-					<SupHeader />
+					{!isMobile && (
+						<>
+							<SupHeader />
+						</>
+					)}
+					{isMobile && (
+						<>
+							<SupHeaderMobile />
+						</>
+					)}
 					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>
 						<BasicBreadcrumbs />
 					</p>

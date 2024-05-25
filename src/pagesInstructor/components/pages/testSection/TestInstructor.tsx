@@ -113,7 +113,7 @@ const TestInstructor = () => {
 			number: '№',
 			text: 'Название теста 2',
 			time: '40'
-		},
+		}
 	]);
 
 	const id = localStorage.getItem('id');

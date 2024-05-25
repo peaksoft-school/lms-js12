@@ -73,12 +73,7 @@ const InternalStudents = () => {
 						classNames={scss}
 					>
 						<Box>
-							<div
-								style={{
-									height: '577px',
-									background: '#EFF0F4'
-								}}
-							>
+							<div>
 								<div style={{ display: 'flex', justifyContent: 'center' }}>
 									<div className={scss.internal_container}>
 										<table className={scss.table}>

@@ -102,12 +102,7 @@ const CoursesTeacher = () => {
 						classNames={scss}
 					>
 						<Box>
-							<div
-								style={{
-									height: '577px',
-									background: '#eff0f4'
-								}}
-							>
+							<div>
 								<div style={{ display: 'flex', justifyContent: 'center' }}>
 									<div className={scss.TeacherContainer}>
 										<table className={scss.Table}>

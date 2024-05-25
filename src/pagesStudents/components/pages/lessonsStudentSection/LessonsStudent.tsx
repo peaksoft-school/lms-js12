@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import scss from './LessonsStudent.module.scss';
 import { useState } from 'react';
 import {
@@ -11,7 +11,7 @@ import {
 import 'keen-slider/keen-slider.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StudentVideoLessonPage from '../StudentVideoLessonPage';
-import { ScrollArea } from '@mantine/core';
+import { Box, ScrollArea } from '@mantine/core';
 import StudentPresentationPage from '../StudentPresentationPage';
 import TestSection from '../TestSection';
 
@@ -47,7 +47,7 @@ const LessonsStudent = () => {
 					background: '#fff',
 					borderRadius: '10px',
 					width: '100%',
-					height: '737px'
+					overflowY: 'scroll'
 				}}
 			>
 				<div

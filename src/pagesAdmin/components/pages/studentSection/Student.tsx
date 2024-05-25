@@ -12,7 +12,13 @@ import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import { Button } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { IconArticle, IconBook, IconDotsVertical, IconPlus, IconUpload } from '@tabler/icons-react';
+import {
+	IconArticle,
+	IconBook,
+	IconDotsVertical,
+	IconPlus,
+	IconUpload
+} from '@tabler/icons-react';
 import React, { KeyboardEvent, MouseEvent, useState } from 'react';
 import scss from './Student.module.scss';
 import { Box, ScrollArea } from '@mantine/core';
@@ -178,12 +184,7 @@ const Student = () => {
 						classNames={scss}
 					>
 						<Box>
-							<div
-								style={{
-									height: '577px',
-									background: '#eff0f4'
-								}}
-							>
+							<div>
 								<div
 									style={{
 										display: 'flex',

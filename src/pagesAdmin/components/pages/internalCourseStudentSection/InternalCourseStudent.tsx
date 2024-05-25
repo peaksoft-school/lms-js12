@@ -6,7 +6,7 @@ import {
 } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
-import scss from './InternalCoursesSection.module.scss';
+import scss from './InternalCourseStudent.module.scss';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import { Box, ScrollArea } from '@mantine/core';
@@ -94,7 +94,7 @@ const InternalCourses = () => {
 						classNames={scss}
 					>
 						<Box>
-							<div style={{ height: '577px', background: '#eff0f4' }}>
+							<div>
 								<div style={{ display: 'flex', justifyContent: 'center' }}>
 									<div className={scss.internal_container}>
 										<table className={scss.table}>

@@ -69,7 +69,7 @@ const Trash: FC = () => {
 					classNames={scss}
 				>
 					<Box>
-						<div style={{ height: '577px', background: '#eff0f4' }}>
+						<div style={{ minHeight: '64vh' }}>
 							<div className={scss.table_container}>
 								<div className={scss.text}>
 									<p>

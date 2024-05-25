@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import scss from './GetTest.module.scss';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { Box, ScrollArea } from '@mantine/core';
 
 function GetTest() {
 	const [questions, setQuestions] = useState([
@@ -70,43 +71,50 @@ function GetTest() {
 				<h2>Название теста</h2>
 				<p className={scss.get_test_time}>59:39</p>
 			</div>
-			<div className={scss.testing_container}>
-				{questions.map((question) => (
-					<div key={question.id} className={scss.question}>
-						<div className={scss.get_test_testing_second_container}>
-							<h4>{question.id}.</h4>
-							<h4>{question.text}</h4>
-						</div>
-						{question.options.map((option) => (
-							<div key={option.id} className={scss.option}>
-								<input
-									type={
-										question.options.filter((opt) => opt.isCorrect).length === 2
-											? 'checkbox'
-											: 'radio'
-									}
-									checked={option.isChecked}
-									onChange={() => handleCheckboxChange(question.id, option.id)}
-									className={option.isCorrect ? scss.correct_checkbox : ''}
-								/>
-								<label>{option.text}</label>
+			<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
+				<Box>
+					<div className={scss.testing_container}>
+						{questions.map((question) => (
+							<div key={question.id} className={scss.question}>
+								<div className={scss.get_test_testing_second_container}>
+									<h4>{question.id}.</h4>
+									<h4>{question.text}</h4>
+								</div>
+								{question.options.map((option) => (
+									<div key={option.id} className={scss.option}>
+										<input
+											type={
+												question.options.filter((opt) => opt.isCorrect)
+													.length === 2
+													? 'checkbox'
+													: 'radio'
+											}
+											checked={option.isChecked}
+											onChange={() =>
+												handleCheckboxChange(question.id, option.id)
+											}
+											className={option.isCorrect ? scss.correct_checkbox : ''}
+										/>
+										<label>{option.text}</label>
+									</div>
+								))}
+								<hr className={scss.getTest_hr} />
 							</div>
 						))}
-						<hr className={scss.getTest_hr} />
+						<div className={scss.getTest_button}>
+							<ButtonSave
+								type={'button'}
+								width={'92px'}
+								children={'Отправить'}
+								disabled={false}
+								onClick={() => {
+									console.log('Отправить');
+								}}
+							></ButtonSave>
+						</div>
 					</div>
-				))}
-				<div className={scss.getTest_button}>
-					<ButtonSave
-						type={'button'}
-						width={'92px'}
-						children={'Отправить'}
-						disabled={false}
-						onClick={() => {
-							console.log('Отправить');
-						}}
-					></ButtonSave>
-				</div>
-			</div>
+				</Box>
+			</ScrollArea>
 		</div>
 	);
 }

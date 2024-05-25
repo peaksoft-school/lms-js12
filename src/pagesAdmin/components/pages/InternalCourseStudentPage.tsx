@@ -1,4 +1,4 @@
-import InternalCourses from './internalCourses/InternalCoursesSection';
+import InternalCourses from './internalCourseStudentSection/InternalCourseStudent';
 
 const InternalCoursesPage = () => {
 	return (

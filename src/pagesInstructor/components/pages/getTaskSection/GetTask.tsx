@@ -6,11 +6,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // import PandingPage from '../PandingPage';
 // import Accepted from '../acceptedSection/Accepted';
 // import NotAccepted from '../notAccepted/NotAccepted';
-import Late from '../late/Late';
-import Panding from '../panding/Panding';
+import Late from '../lateSection/Late';
+import Panding from '../pandingSection/Panding';
 import Accepted from '../acceptedSection/Accepted';
-import NotAccepted from '../notAccepted/NotAccepted';
-import NotSubmitted from '../notSubmitted/NotSubmitted';
+import NotAccepted from '../notAcceptedSection/NotAccepted';
+import NotSubmitted from '../notSubmittedSection/NotSubmitted';
 import { Box, ScrollArea } from '@mantine/core';
 // import NotSubmitted from '../notSubmitted/NotSubmitted';
 const GetTask = () => {

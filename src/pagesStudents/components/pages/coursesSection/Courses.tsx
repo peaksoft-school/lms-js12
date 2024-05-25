@@ -5,6 +5,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
+import { Box, ScrollArea } from '@mantine/core';
 
 const Courses: FC = () => {
 	const { data: data = [] } = useGetAdminCourseQuery();
@@ -58,58 +59,71 @@ const Courses: FC = () => {
 			<div className={scss.content}>
 				<div className={scss.container}>
 					<h1 className={scss.title}>Мои курсы</h1>
-				
-					<div>
-						<div className={scss.cards}>
-							{data && Array.isArray(data) && data.length > 0 ? (
-								<div className={scss.card}>
-									{data
-										.slice(
-											(currentPage - 1) * rowsPerPage,
-											currentPage * rowsPerPage
-										)
-										.map((item) => (
-											<div key={item._id} className={scss.zero_block_container}>
-												<div
-													onClick={() => {
-														setSaveIdStorege(String(item._id));
-														setSaveItem(item.title);
-													}}
-												>
+					<ScrollArea
+						type="always"
+						scrollbars="xy"
+						offsetScrollbars
+						classNames={scss}
+					>
+						<Box>
+							<div>
+								<div className={scss.cards}>
+									{data && Array.isArray(data) && data.length > 0 ? (
+										<div className={scss.card}>
+											{data
+												.slice(
+													(currentPage - 1) * rowsPerPage,
+													currentPage * rowsPerPage
+												)
+												.map((item) => (
 													<div
-														onClick={() => {
-															setTimeout(() => {
-																navigate(`/courses/${item._id}/materials`);
-															}, 1000);
-														}}
+														key={item._id}
+														className={scss.zero_block_container}
 													>
-														<div className={scss.block_photo_cards}>
-															<img src={item.image} alt="images" />
-														</div>
-														<div className={scss.block_cont}>
-															<div className={scss.second_block}>
-																<p className={scss.block_title}>{item.title}</p>
-																<p className={scss.block_date}>
-																	{item.dateOfEnd}
-																</p>
-															</div>
-															<div className={scss.text_card}>
-																<span className={scss.block_text}>
-																	{item.description &&
-																	item.description.length > 60
-																		? `${item.description.substring(0, 60)}...`
-																		: item.description}
-																</span>
+														<div
+															onClick={() => {
+																setSaveIdStorege(String(item._id));
+																setSaveItem(item.title);
+															}}
+														>
+															<div
+																onClick={() => {
+																	setTimeout(() => {
+																		navigate(`/courses/${item._id}/materials`);
+																	}, 1000);
+																}}
+															>
+																<div className={scss.block_photo_cards}>
+																	<img src={item.image} alt="images" />
+																</div>
+																<div className={scss.block_cont}>
+																	<div className={scss.second_block}>
+																		<p className={scss.block_title}>
+																			{item.title}
+																		</p>
+																		<p className={scss.block_date}>
+																			{item.dateOfEnd}
+																		</p>
+																	</div>
+																	<div className={scss.text_card}>
+																		<span className={scss.block_text}>
+																			{item.description &&
+																			item.description.length > 60
+																				? `${item.description.substring(0, 60)}...`
+																				: item.description}
+																		</span>
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-											</div>
-										))}
+												))}
+										</div>
+									) : null}
 								</div>
-							) : null}
-						</div>
-					</div>
+							</div>
+						</Box>
+					</ScrollArea>
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.Inputs}>
