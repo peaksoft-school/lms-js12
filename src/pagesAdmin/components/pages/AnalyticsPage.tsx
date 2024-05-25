@@ -1,4 +1,4 @@
-import Analytics from './analyticsSections/Analytics.tsx';
+import Analytics from './analyticsSection/Analytics.tsx';
 
 const AnalyticsPage = () => {
 	return (

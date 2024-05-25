@@ -121,7 +121,7 @@ const Announcements = () => {
 								<span>Добавить обьявление</span>
 							</Button>
 						</div>
-						<div className={scss.top_container}>
+						<div>
 							<h1>Объявление</h1>
 						</div>
 					</div>

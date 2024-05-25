@@ -127,10 +127,16 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 						</Box>
 					</div>
 					<div className={scss.buttons}>
-						<Button variant="outlined" onClick={handleClose}>
+						<Button
+							style={{ borderRadius: '8px' }}
+							variant="outlined"
+							onClick={handleClose}
+						>
 							Отменить
 						</Button>
-						<Button variant="contained">Сохранить</Button>
+						<Button style={{ borderRadius: '8px' }} variant="contained">
+							Сохранить
+						</Button>
 					</div>
 				</Box>
 			</Modal>

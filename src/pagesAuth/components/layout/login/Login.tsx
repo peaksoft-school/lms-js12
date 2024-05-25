@@ -4,7 +4,7 @@ import scss from './Login.module.scss';
 import Logo from '@/src/assets/svgs/logo.svg';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MenLogo from '@/src/assets/svgs/boy-proger.svg';
 import {
 	IconButton,
@@ -21,7 +21,7 @@ type FormData = {
 };
 const Login: FC = () => {
 	const [postLogin] = usePostLoginMutation();
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	// const handleLogin = async () => {
 	//   try {
 	//     const loginData = { username: 'example', password: 'password' };
@@ -44,6 +44,7 @@ const Login: FC = () => {
 		try {
 			const response = await postLogin(data);
 			if ('data' in response) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const { token }: any = response.data;
 				localStorage.setItem('token', token);
 				localStorage.setItem('isAuth', 'true');

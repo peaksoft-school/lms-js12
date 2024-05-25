@@ -3,6 +3,8 @@ import { Pagination, Stack } from '@mui/material';
 import { useState, KeyboardEvent } from 'react';
 import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
 import { useNavigate } from 'react-router-dom';
+import { Box, ScrollArea } from '@mantine/core';
+import { IconArticle, IconBook } from '@tabler/icons-react';
 
 const LessonsList = () => {
 	const [openPart, setOpenPart] = useState(1);
@@ -54,47 +56,46 @@ const LessonsList = () => {
 		<div className={scss.list_lessons}>
 			<div className={scss.container}>
 				<div className={scss.lesson}></div>
-				<div>
-					<h1 className={scss.title_lesson}>{localStorage.getItem('item')}</h1>
+				<div className={scss.title_lesson}>
+					<h1>Материалы</h1>
 				</div>
-
-				<div
-					style={{
-						height: '560px',
-						overflowY: 'scroll',
-						scrollbarWidth: 'thin',
-						scrollbarColor: '#3772ff #fff'
-					}}
-				>
-					<div className={scss.card}>
-						{data
-							?.slice(
-								(currentPage - 1) * rowsPerPage,
-								currentPage * rowsPerPage
-							)
-							.map((item) => (
-								<div
-									className={scss.cards}
-									onClick={() => {
-										localStorage.setItem('lessonId', String(item._id));
-										localStorage.setItem('taskName', String(item.title));
-										setTimeout(() => {
-											navigate(`/courses/${id}/materials/${item._id}`);
-										}, 1000);
-									}}
-									key={item._id}
-								>
-									<a href="#" className={scss.link}>
-										<span className={scss.card_item}>№ {item.title}</span>
-									</a>
-								</div>
-							))}
-					</div>
-				</div>
+				<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
+					<Box>
+						<div style={{ minHeight: '70vh' }}>
+							<div className={scss.card}>
+								{data
+									?.slice(
+										(currentPage - 1) * rowsPerPage,
+										currentPage * rowsPerPage
+									)
+									.map((item) => (
+										<div
+											className={scss.cards}
+											onClick={() => {
+												localStorage.setItem('lessonId', String(item._id));
+												localStorage.setItem('taskName', String(item.title));
+												setTimeout(() => {
+													navigate(`/courses/${id}/materials/${item._id}`);
+												}, 1000);
+											}}
+											key={item._id}
+										>
+											<a href="#" className={scss.link}>
+												<span className={scss.card_item}>№ {item.title}</span>
+											</a>
+										</div>
+									))}
+							</div>
+						</div>
+					</Box>
+				</ScrollArea>
 
 				<div className={scss.pagination}>
-					<div className={scss.callInput}>
-						<p>Перейти на страницу</p>
+					<div className={scss.Inputs}>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPart}
@@ -116,8 +117,11 @@ const LessonsList = () => {
 							/>
 						</Stack>
 					</div>
-					<div className={scss.callInput}>
-						<p>Показать</p>
+					<div className={scss.Inputs}>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
 						<input
 							type="text"
 							value={openPage}

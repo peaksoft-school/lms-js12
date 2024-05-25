@@ -10,6 +10,7 @@ import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import ModalEditVideo from '@/src/ui/InstructorModal/ModalEditVideo';
 import DeleteVideoLesson from '@/src/ui/customModal/deleteModal/DeleteVideoLesson';
+// import { Box, ScrollArea } from '@mantine/core';
 
 const VideoLesson = () => {
 	const { data, isLoading } = useGetVideoLessonQuery();

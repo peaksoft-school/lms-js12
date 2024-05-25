@@ -3,13 +3,16 @@
 
 	.container {
 		padding-inline: 20px;
-
 		.button_title_elements {
 			margin-bottom: 20px;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
 			width: 100%;
+			position: sticky;
+			z-index: 50;
+			top: 80px;
+			background: #eff0f4;
 
 			.button {
 				display: flex;
@@ -39,6 +42,9 @@
 		h1 {
 			padding-bottom: 20px;
 			width: 100%;
+			position: sticky;
+			z-index: 50;
+			top: 80px;
 		}
 		.table_container {
 			background: #fff;
@@ -46,11 +52,8 @@
 			border-radius: 10px;
 
 			.material_content {
-				overflow-x: auto;
 				white-space: nowrap;
-				scrollbar-width: thin;
-				overflow-y: auto !important;
-				scrollbar-color: #3772ff #fff;
+
 				@media screen and (min-width: 480px) and (max-width: 520px) {
 					max-width: 470px;
 					width: 100%;
@@ -121,13 +124,13 @@
 
 		.pagination {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
 			width: 100%;
 			background: #efeff6;
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 21px;
+			margin-top: auto;
 			position: sticky;
 			bottom: 0;
 			left: 0;

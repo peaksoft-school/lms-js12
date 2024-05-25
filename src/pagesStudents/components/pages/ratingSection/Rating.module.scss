@@ -1,5 +1,5 @@
 .rating {
-	padding-top: 20px;
+	padding-top: 60px;
 	padding-inline: 20px;
 
 	h1 {
@@ -19,8 +19,7 @@
 		// scrollbar-width: thin;
 		// scrollbar-color: #3772ff #fff;
 		background: #fff;
-		padding-inline: 20px;
-		padding-top: 20px;
+		padding: 10px;
 
 		@media screen and (min-width: 1185px) and (max-width: 1260px) {
 			width: 100%;
@@ -80,16 +79,3 @@
 		width: 10%;
 	}
 }
-
-// .scrollbar {
-//   &,
-//   &:hover {
-//     background: #EEEDED;
-//   }
-//   &[data-orientation='vertical'] .thumb {
-//     background: #EEEDED;
-//   }
-//   &[data-orientation='horizontal'] .thumb {
-//     background: #EEEDED;
-//   }
-// }

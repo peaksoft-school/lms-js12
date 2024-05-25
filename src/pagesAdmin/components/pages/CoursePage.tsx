@@ -1,8 +1,6 @@
-import Courses from './courseSections/Courses.tsx';
+import Courses from './courseSection/Course.tsx';
 
 const CoursesPage = () => {
-	console.log('CoursesPage');
-
 	return (
 		<>
 			<Courses />

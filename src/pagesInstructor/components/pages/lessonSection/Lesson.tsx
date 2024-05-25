@@ -14,8 +14,8 @@ import VideoLessonPage from '../VideoLessonPage';
 
 import PresentationPage from '../PresentationPage';
 import { ScrollArea } from '@mantine/core';
-import CrateTask from '../createTask/CrateTask';
-import GetTask from '../getTask/GetTask';
+import CrateTask from '../createTaskSection/CrateTask';
+import GetTask from '../getTaskSection/GetTask';
 import Test from '../testSection/TestInstructor';
 
 const Lesson = () => {
@@ -53,7 +53,7 @@ const Lesson = () => {
 					background: '#fff',
 					borderRadius: '10px',
 					width: '100%',
-					height: '737px'
+					overflowY: 'scroll'
 				}}
 			>
 				<div

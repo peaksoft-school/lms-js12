@@ -3,26 +3,20 @@
 
 	.container {
 		padding-inline: 20px;
+
 		.lesson {
 			display: flex;
 			justify-content: flex-start;
 			gap: 15px;
 			align-items: center;
-
-			.title_lesson_1 {
-				text-decoration: none;
-				color: #0000ff;
-			}
-			.img_arrow {
-				color: #b4b2b2;
-			}
-			.title_lesson_2 {
-				text-decoration: none;
-				color: #b4b2b2;
-			}
 		}
 		.title_lesson {
 			margin-bottom: 24px;
+
+			position: sticky;
+			z-index: 50;
+			top: 80px;
+			background: #eff0f4;
 		}
 		.card {
 			display: grid;
@@ -33,6 +27,8 @@
 			gap: 20px;
 			padding-inline: 20px;
 			padding-block: 20px;
+
+			padding-top: 60px;
 
 			@media (max-width: 750px) {
 				grid-template-columns: repeat(1, 1fr);
@@ -63,42 +59,58 @@
 		}
 		.pagination {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
 			width: 100%;
 			background: #efeff6;
-
 			padding-block: 20px;
 			padding-inline: 30px;
-			margin-top: 21px;
+			margin-top: auto;
 			position: sticky;
 			bottom: 0;
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 140px;
+				padding-bottom: 80px;
+			}
+
+			@media (max-width: 850px) {
+				flex-direction: column;
 			}
 
 			@media (max-width: 625px) {
-				display: flex;
-				flex-direction: column;
 				gap: 8px;
 			}
 
-			.stack {
-				@media (max-width: 625px) {
-					display: flex;
-					flex-direction: column;
-				}
-			}
-
-			.callInput {
+			.Inputs {
 				display: flex;
-				gap: 4px;
+				gap: 5px;
 				align-items: center;
 
 				input {
 					width: 40px;
+				}
+
+				.text {
+					display: block;
+
+					@media (max-width: 850px) {
+						display: none;
+					}
+				}
+
+				.pagination_element {
+					display: none;
+
+					@media (max-width: 850px) {
+						display: block;
+					}
+				}
+			}
+
+			.stack {
+				@media (max-width: 650px) {
+					flex-direction: column;
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-import Groups from './groupSections/Groups.tsx';
+import Groups from './groupSection/Group.tsx';
 
 const GroupsPage = () => {
 	return (

@@ -7,7 +7,7 @@ import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useRef, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useCreateAdminCourseMutation } from '@/src/redux/api/admin/courses';
 
@@ -65,10 +65,10 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		}
 	};
 
-	const notifySuccess = () => toast.success('Курс успешно создан !');
-	const notifyError = () => toast.error('Произошла ошибка при создании курса');
+	// const notifySuccess = () => toast.success('Курс успешно создан !');
+	// const notifyError = () => toast.error('Произошла ошибка при создании курса');
 
-	const handleCreateCourse = () => {
+	const handleCreateCourse = async () => {
 		if (value !== '' && image !== '' && data !== '' && text !== '') {
 			const newCourse = {
 				title: value,
@@ -76,17 +76,18 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 				dateOfEnd: data,
 				description: text
 			};
-			createCourse(newCourse).unwrap();
+			await createCourse(newCourse).unwrap();
 			try {
 				createCourse(newCourse).unwrap();
-				notifySuccess();
+				// notifySuccess();
 				handleOpenCourse(false);
 				setData('');
 				setText('');
 				setImage('');
 				setValue('');
 			} catch (error) {
-				notifyError();
+				// notifyError();
+				console.log('liuilu');
 			}
 		}
 	};

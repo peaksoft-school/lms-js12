@@ -6,6 +6,10 @@
 	h1 {
 		margin-bottom: 24px;
 		width: 100%;
+		position: sticky;
+		z-index: 50;
+		top: 80px;
+		background: #eff0f4;
 	}
 	.container {
 		width: 100%;
