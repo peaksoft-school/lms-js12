@@ -8,7 +8,7 @@ export const api = index.injectEndpoints({
 			STUDENT.TablesStudentRequest
 		>({
 			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students',
+				url: '/api/students',
 				method: 'GET'
 			}),
 			providesTags: ['student']
@@ -19,7 +19,7 @@ export const api = index.injectEndpoints({
 			STUDENT.PostStudentPropsRequest
 		>({
 			query: (newStudent) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students',
+				url: '/api/students',
 				method: 'POST',
 				body: newStudent
 			}),
@@ -30,8 +30,8 @@ export const api = index.injectEndpoints({
 			STUDENT.DeleteStudentPropsResponse,
 			STUDENT.DeleteStudentPropsRequest
 		>({
-			query: (_id) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students/${_id}`,
+			query: (id) => ({
+				url: `/api/students/${id}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['student']
@@ -42,15 +42,17 @@ export const api = index.injectEndpoints({
 			STUDENT.PatchStudentPropsRequest
 		>({
 			query: ({ editStudent, saveIdElement }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students/${saveIdElement}`,
+				url: `/api/students/${saveIdElement}`,
 				method: 'PATCH',
 				body: editStudent
 			}),
 			invalidatesTags: ['student']
 		}),
+
+		// ! patch isBlock
 		patchCompletedMutation: builder.mutation({
 			query: ({ updated, saveIdElement }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students/${saveIdElement}`,
+				url: `/api/students/isBlock/${saveIdElement}`,
 				method: 'PATCH',
 				body: updated
 			}),

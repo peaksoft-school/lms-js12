@@ -3,44 +3,46 @@ namespace STUDENT {
 	type Table = {
 		[x: string]: ReactNode;
 		id: ReactNode;
-		_id: number;
-		firstName: string;
-		lastName: string;
+		fullName: string;
 		email: string;
-		group: string;
-		phone_number: string;
-		TrainingFormat: string;
-		password: string;
-		isCompleted: boolean;
+		groupName: string;
+		phoneNumber: string;
+		studyFormat: string;
+		// password: string;
+		isBlock: boolean;
 	};
 
-	type TablesStudentResponse = Table[];
+	type TablesStudentResponse = {
+		students: Table[];
+		page: number;
+		size: number;
+	};
 	type TablesStudentRequest = void;
 
 	type PostStudentPropsResponse = {
 		firstName: string;
 		lastName: string;
+		phoneNumber: string;
 		email: string;
-		group: string;
-		phone_number: string;
-		TrainingFormat: string;
-		password: string;
-		isCompleted: boolean;
+		groupName: string;
+		studyFormat: string;
+		// password: string;
+		isBlock: boolean;
 	}[];
 	type PostStudentPropsRequest = object;
 	type DeleteStudentPropsResponse = number;
 	type DeleteStudentPropsRequest = number | null;
 
 	type PatchStudentPropsResponse = {
-		_id: number;
+		id: number;
 		firstName: string;
 		lastName: string;
+		phoneNumber: string;
 		email: string;
-		group: string[];
-		phone_number: string;
-		TrainingFormat: string[];
-		password: string;
-		isCompleted: boolean;
+		groupName: string[];
+		studyFormat: string[];
+		// password: string;
+		isBlock: boolean;
 	};
 
 	type PatchStudentPropsRequest = {
@@ -49,11 +51,11 @@ namespace STUDENT {
 			firstName: string;
 			lastName: string;
 			email: string;
-			group: string[];
-			phone_number: string;
-			TrainingFormat: string[];
-			password: string;
-			isCompleted: boolean;
+			groupName: string[];
+			phoneNumber: string;
+			studyFormat: string[];
+			// password: string;
+			isBlock: boolean;
 		};
 	};
 	type PatchStudentCompletedPropsResponse = boolean;

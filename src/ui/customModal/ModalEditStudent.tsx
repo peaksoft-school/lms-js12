@@ -67,7 +67,6 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 581,
-	height: 625,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -103,7 +102,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		} = event;
 		setPersonName(typeof value === 'string' ? value.split(',') : value);
 	};
-	const finder = data?.find(
+	const finder = data?.students.find(
 		(id: { id: number | null }) => id.id === saveIdElement
 	);
 	useEffect(() => {
@@ -260,7 +259,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 										Группа
 									</InputLabel>
 									<Select
-										style={{ borderRadius: '20px' }}
+										style={{ borderRadius: '12px' }}
 										labelId="demo-multiple-checkbox-label"
 										id="demo-multiple-checkbox"
 										multiple
@@ -284,7 +283,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 										Формат обучения
 									</InputLabel>
 									<Select
-										style={{ borderRadius: '20px' }}
+										style={{ borderRadius: '12px' }}
 										labelId="demo-multiple-checkbox-label"
 										id="demo-multiple-checkbox"
 										multiple
