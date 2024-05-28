@@ -188,7 +188,9 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
+						<Route path="/group/page/:numberGroup/size/:size" element={<Groups />} />
 						<Route path="/announcement" element={<AnnouncementPage />} />
+
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

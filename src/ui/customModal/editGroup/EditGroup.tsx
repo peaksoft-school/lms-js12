@@ -35,8 +35,8 @@ interface EditModalProps {
 
 const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery();
-	const find = data?.find((id) => id.id === saveId);
-	console.log(find);
+	const findData = data?.groupResponses.find((el) => el.id === saveId);
+	console.log(findData);
 
 	const [value, setValue] = useState<string>('');
 	const [date, setData] = useState<string>('');
@@ -47,11 +47,11 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const [updateGroup] = useUpdateGroupMutation();
 
 	useEffect(() => {
-		setValue(find?.title || '');
-		setData(find?.date || '');
-		setText(find?.text || '');
-		setImage(find?.img || '');
-	}, [find]);
+		setValue(findData?.title || '');
+		setData(findData?.dateOfEnd || '');
+		setText(findData?.description || '');
+		setImage(findData?.image || '');
+	}, [findData]);
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -78,9 +78,9 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const updateGroupFunc = async () => {
 		const newGroup = {
 			title: value,
-			img: image,
-			date: date,
-			text: text
+			image: image,
+			dateOfEnd: date,
+			description: text
 		};
 		await updateGroup({ newGroup, saveId });
 		handleClose();
