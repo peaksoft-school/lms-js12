@@ -19,12 +19,7 @@ const Panding = () => {
 								{item.firstName}
 								{item.lastName}
 							</p>
-							<div
-								onClick={() => {
-									localStorage.setItem('task', String(item._id));
-								}}
-								className={scss.button}
-							></div>
+							<div className={scss.button}></div>
 						</div>
 					</Link>
 				))}

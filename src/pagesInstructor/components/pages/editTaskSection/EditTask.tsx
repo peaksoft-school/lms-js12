@@ -19,13 +19,13 @@ import { IconDownload } from '@tabler/icons-react';
 import { Dayjs } from 'dayjs';
 
 const EditTask = () => {
-	const task = localStorage.getItem('task');
+	const { courseId, lessonId, getTaskId } = useParams();
+
 	const { data } = useGetTaskInstructorQuery();
 	const navigate = useNavigate();
-	const id = data?.find((item) => item._id === Number(task));
+	const id = data?.find((item) => item._id === getTaskId);
 	const [title, setTitle] = useState<string>(id!.title);
 	const [value, setValue] = useState(id!.description);
-	const { courseId, lessonId } = useParams();
 	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
 		null
 	);
@@ -69,7 +69,7 @@ const EditTask = () => {
 			dedline: selectedDate
 		};
 
-		await editTaskInstructor({ newtask, task });
+		await editTaskInstructor({ newtask, getTaskId });
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/lesson`);
 	};
 

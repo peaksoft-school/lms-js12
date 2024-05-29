@@ -10,9 +10,6 @@ const GetLessonTask = () => {
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
 	const { data: lesson = [] } = useGetTaskInstructorQuery();
-
-	console.log(saveId);
-
 	const { courseId, lessonId, getTaskId } = useParams();
 	const GetLessonTaskFunc = () => {
 		navigate(`/courses/${courseId}/materials/${lessonId}/lesson/${getTaskId}`);

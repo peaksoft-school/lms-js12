@@ -24,8 +24,8 @@ export const api = index.injectEndpoints({
 			TASK.UpdateTaskResponse,
 			TASK.UpdateTaskRequest
 		>({
-			query: ({ newtask, task }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask/${task}`,
+			query: ({ newtask, getTaskId }) => ({
+				url: `https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask/${getTaskId}`,
 				method: 'PATCH',
 				body: newtask
 			}),

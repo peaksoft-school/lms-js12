@@ -1,20 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-	IconBellRinging2,
-	IconChevronDown,
-	IconUserCircle
-} from '@tabler/icons-react';
+import { IconBellRinging2, IconChevronDown } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
 import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
 
+import profile from '@/src/assets/svgs/Profile.png';
 const SupHeader = () => {
 	const { pathname } = useLocation();
 	const [openNotification, setOpenNotification] = useState(false);
 	const navigate = useNavigate();
-	const { courseId } = useParams();
+	const { courseId, lessonId } = useParams();
 
 	const handleOpenNotification = () => {
 		setOpenNotification(true);
@@ -86,8 +83,6 @@ const SupHeader = () => {
 		navigate(`/courses/${courseId}/rating`);
 	};
 
-	const lessonId = localStorage.getItem('lessonId');
-
 	return (
 		<div className={scss.header}>
 			{/* //! admin header для /admin/courses */}
@@ -111,11 +106,13 @@ const SupHeader = () => {
 						</Box>
 					</Box>
 					<div className={scss.header_elements}>
-						<IconUserCircle className={scss.profile} stroke={2} />
+						<img src={profile} alt="Profile" />
 						<div>
 							<p> Aдминистратор</p>
 						</div>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						<div>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						</div>
 					</div>
 				</div>
 			)}
@@ -153,7 +150,7 @@ const SupHeader = () => {
 						</Box>
 					</Box>
 					<div className={scss.header_elements}>
-						<IconUserCircle className={scss.profile} stroke={2} />
+						<img src={profile} alt="Profile" />
 						<div>
 							<div className={scss.instructor_profile}>Учитель</div>
 						</div>
@@ -199,7 +196,7 @@ const SupHeader = () => {
 								stroke={2}
 							/>
 						</div>
-						<IconUserCircle className={scss.profile} stroke={2} />
+						<img src={profile} alt="Profile" />
 						<div>
 							<p>Студент</p>
 						</div>

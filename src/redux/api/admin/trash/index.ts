@@ -4,12 +4,36 @@ const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getTrash: builder.query<TRASH.GetCardsResponse, TRASH.GetCardsRequest>({
 			query: () => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/trash',
+				url: '/api/trash/findAll',
 				method: 'GET'
 			}),
 			providesTags: ['trash']
+		}),
+		UpdatedTrash: builder.mutation<
+			TRASH.GetCardsResponse,
+			TRASH.GetCardsRequest
+		>({
+			query: (id) => ({
+				url: `/api/trash/return/${id}`,
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['trash']
+		}),
+		DeleteTrash: builder.mutation<
+			TRASH.GetCardsResponse,
+			TRASH.GetCardsRequest
+		>({
+			query: (id) => ({
+				url: `/api/trash/delete/${id}`,
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['trash']
 		})
 	})
 });
 
-export const { useGetTrashQuery } = api;
+export const {
+	useGetTrashQuery,
+	useUpdatedTrashMutation,
+	useDeleteTrashMutation
+} = api;

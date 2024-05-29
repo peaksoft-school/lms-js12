@@ -14,6 +14,7 @@ import NotSubmitted from '../notSubmittedSection/NotSubmitted';
 import { Box, ScrollArea } from '@mantine/core';
 // import NotSubmitted from '../notSubmitted/NotSubmitted';
 const GetTask = () => {
+	const { courseId, lessonId, getTaskId } = useParams();
 	const navigate = useNavigate();
 	const { data } = useGetTaskInstructorQuery();
 	const [value, setValue] = useState(0);
@@ -22,7 +23,6 @@ const GetTask = () => {
 		setValue(newValue);
 	};
 
-	const { courseId, lessonId, getTaskId } = useParams();
 	
 	useEffect(() => {
 		if (

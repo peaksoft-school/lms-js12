@@ -6,7 +6,7 @@ import { useGetTaskInstructorQuery } from '@/src/redux/api/instructor/addTask';
 
 const Answer = () => {
 	const [comments, setCommmets] = useState('');
-	const [srore, setScore] = useState('');
+	const [score, setScore] = useState('');
 	const { data } = useGetTaskInstructorQuery();
 	return (
 		<div className={scss.Answer}>
@@ -37,7 +37,7 @@ const Answer = () => {
 						</ButtonCancel>
 						<div className={scss.comment_div}>
 							<input
-								value={srore}
+								value={score}
 								onChange={(e) => setScore(e.target.value)}
 								width="100%"
 								type="text"

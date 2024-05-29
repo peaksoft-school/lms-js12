@@ -1,6 +1,6 @@
 import { Tab, Tabs } from '@mui/material';
 import scss from './LessonsStudent.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	IconAB2,
 	IconBrandYoutubeKids,
@@ -38,6 +38,11 @@ const LessonsStudent = () => {
 		navigate(`/courses/${courseId}/materials/${lessonId}/test`);
 	};
 
+	useEffect(() => {
+		if (pathname === `/courses/${courseId}/materials/${lessonId}`) {
+			navigate(`/courses/${courseId}/materials/${lessonId}/video`);
+		}
+	}, [pathname]);
 	return (
 		<div className={scss.lesson}>
 			<h1>Материалы</h1>

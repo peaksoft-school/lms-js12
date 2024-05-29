@@ -109,7 +109,13 @@ const LayoutAdmin = () => {
 					)}
 					{isMobile && (
 						<>
-							<SupHeaderMobile />
+							<Routes>
+								<Route
+									path="/courses/:courseId/*"
+									element={<SupHeaderMobile />}
+								/>
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					<Routes>
@@ -171,6 +177,10 @@ const LayoutAdmin = () => {
 						<Route
 							path="/courses/:courseId/student"
 							element={<InternalCoursesPage />}
+						/>
+						<Route
+							path="/courses/page/:numberGroup/size/:size"
+							element={<CoursesPage />}
 						/>
 						<Route
 							path="/courses/:courseId/teacher"

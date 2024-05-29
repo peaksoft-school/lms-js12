@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import profile from '@/src/assets/svgs/Profile.png';
 import scss from './SupHeaderCourses.module.scss';
 import { IconChevronDown } from '@tabler/icons-react';
@@ -8,7 +8,7 @@ import verctor from '@/src/assets/svgs/Vector.svg';
 
 const SupHeaderCourses = () => {
 	const { pathname } = useLocation();
-	const { courseId } = useParams();
+	const navigate = useNavigate();
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -20,10 +20,10 @@ const SupHeaderCourses = () => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
-	console.log(courseId);
-
-	console.log(pathname, "kmsl'k");
+	const handleNavigate = () => {
+		navigate(`/auth/login`);
+		setAnchorEl(null);
+	};
 
 	return (
 		<div className={scss.all_header}>
@@ -61,7 +61,7 @@ const SupHeaderCourses = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleClose}
+							onClick={handleNavigate}
 							style={{
 								display: 'flex',
 								gap: '10px',

@@ -60,7 +60,13 @@ const LayoutStudents = () => {
 					)}
 					{isMobile && (
 						<>
-							<SupHeaderMobile />
+							<Routes>
+								<Route
+									path="/courses/:courseId/*"
+									element={<SupHeaderMobile />}
+								/>
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>

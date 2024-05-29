@@ -45,7 +45,7 @@ const Lesson = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/test`);
 	};
 
-	console.log(getTaskId);
+
 
 	return (
 		<div className={scss.lesson}>
@@ -55,7 +55,7 @@ const Lesson = () => {
 					background: '#fff',
 					borderRadius: '10px',
 					width: '100%',
-					overflowY: 'scroll'
+					// overflowY: 'scroll'
 				}}
 			>
 				<div

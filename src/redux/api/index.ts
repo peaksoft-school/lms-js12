@@ -5,10 +5,11 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: import.meta.env.VITE_BACEND_URL,
+	baseUrl: import.meta.env.VITE_BACKEND_URL,
 
 	prepareHeaders: (headers) => {
-		const token = localStorage.getItem('token-auth');
+		const token = localStorage.getItem('token');
+
 		if (token) {
 			headers.set('Authorization', `Bearer ${token}`);
 		}
