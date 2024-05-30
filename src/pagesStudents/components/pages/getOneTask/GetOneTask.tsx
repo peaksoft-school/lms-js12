@@ -46,7 +46,7 @@ const GetOneTask = () => {
 							<div className={scss.getHw}>
 								<h3>Ваше ДЗ не принято</h3>
 
-								<ButtonSave >Редактировать задание</ButtonSave>
+								<ButtonSave>Редактировать задание</ButtonSave>
 							</div>
 						</>
 					) : (

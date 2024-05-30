@@ -23,7 +23,6 @@ const GetTask = () => {
 		setValue(newValue);
 	};
 
-	
 	useEffect(() => {
 		if (
 			pathname ===

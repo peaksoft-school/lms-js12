@@ -9,7 +9,6 @@ import scss from './DeleteVideoLesson.module.scss';
 import { useCreateStudentBlockCoursesMutation } from '@/src/redux/api/admin/courses';
 import { Button } from '@mui/material';
 
-
 type VideoLessonProps = {
 	openModalBlock: boolean;
 	handleCloseModal: () => void;

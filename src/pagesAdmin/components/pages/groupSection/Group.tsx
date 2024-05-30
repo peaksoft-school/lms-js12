@@ -16,8 +16,6 @@ import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
 import { Button } from '@mui/material';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-
-
 const Groups: FC = () => {
 	const { numberGroup, size } = useParams();
 	const navigate = useNavigate();

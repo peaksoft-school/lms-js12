@@ -45,8 +45,6 @@ const Lesson = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/test`);
 	};
 
-
-
 	return (
 		<div className={scss.lesson}>
 			<h1>Материалы</h1>
@@ -54,7 +52,7 @@ const Lesson = () => {
 				style={{
 					background: '#fff',
 					borderRadius: '10px',
-					width: '100%',
+					width: '100%'
 					// overflowY: 'scroll'
 				}}
 			>
