@@ -42,7 +42,7 @@ export const api = index.injectEndpoints({
 				url: `/api/instructors/${deleteById}`,
 				method: 'DELETE'
 			}),
-			invalidatesTags: ['teacher']
+			invalidatesTags: ['teacher', 'courses']
 		}),
 		appointTeacher: builder.query<
 			TABLE.GetTeachersResponse,

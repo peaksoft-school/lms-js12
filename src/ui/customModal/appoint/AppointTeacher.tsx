@@ -74,9 +74,9 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 		setSelectedIds((prev) => prev.filter((_, i) => i !== index));
 	};
 
-	const handleSelect = (teacherId: number, fullName: string) => {
+	const handleSelect = (teacherId: string, fullName: string) => {
 		console.log(teacherId);
-		
+
 		setSelectedTeachers((prev) =>
 			prev.includes(fullName) ? prev : [...prev, fullName]
 		);
@@ -84,7 +84,6 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 			prev.includes(teacherId) ? prev : [...prev, teacherId]
 		);
 	};
-
 
 	const appointFunc = async () => {
 		try {

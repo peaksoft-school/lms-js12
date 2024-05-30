@@ -28,6 +28,7 @@ import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import Groups from '../pages/groupSection/Group.tsx';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses.tsx';
+import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -124,7 +125,7 @@ const LayoutAdmin = () => {
 						<Route
 							path="/teacher"
 							element={
-								!data || data.length === 0 ? (
+								!data || data.instructorResponses.length === 0 ? (
 									<NotCreated
 										text="Вы пока не добавили учителей!"
 										name="Учителя"
@@ -202,6 +203,10 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
+						<Route
+							path="/group/page/:numberGroup/size/:size"
+							element={<Groups />}
+						/>
 						<Route path="/announcement" element={<AnnouncementPage />} />
 					</Routes>
 				</main>

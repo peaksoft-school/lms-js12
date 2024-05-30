@@ -3,8 +3,8 @@ import { api as index } from '../../../api';
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getGroup: builder.query<GROUPS.GroupsResponse, GROUPS.GroupsRequest>({
-			query: () => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/group',
+			query: ({ page, size }) => ({
+				url: `/api/groups?page=${page !== null ? page : '1'}&size=${size !== null ? size : '12'}`,
 				method: 'GET'
 			}),
 			providesTags: ['groups']
@@ -14,7 +14,7 @@ export const api = index.injectEndpoints({
 			GROUPS.CreateGroupRequest
 		>({
 			query: (newGroup) => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/group',
+				url: '/api/groups',
 				method: 'POST',
 				body: newGroup
 			}),
@@ -25,7 +25,7 @@ export const api = index.injectEndpoints({
 			GROUPS.UpdateGroupRequest
 		>({
 			query: ({ newGroup, saveId }) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/group/${saveId}`,
+				url: `/api/groups/${saveId}`,
 				method: 'PATCH',
 				body: newGroup
 			}),
@@ -33,14 +33,33 @@ export const api = index.injectEndpoints({
 		}),
 		deleteGroup: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/group/${deleteById}`,
+				url: `/api/groups/${deleteById}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['groups']
 		}),
 		getGroupStudent: builder.query({
 			query: (groupId) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/group/${groupId}`,
+				url: `/api/groups/1${groupId}`,
+				method: 'GET'
+			}),
+			providesTags: ['groups']
+		}),
+		createGroupFile: builder.mutation({
+			query: (fileObj) => ({
+				url: '/file',
+				method: 'POST',
+
+				body: fileObj
+			}),
+			invalidatesTags: ['groups']
+		}),
+		getStudentGroup: builder.query<
+			GROUPS.GetStudentsGroupResponse,
+			GROUPS.GetStudentsGroupRequest
+		>({
+			query: (groupId) => ({
+				url: `/api/students/studentsOfGroup/${groupId}`,
 				method: 'GET'
 			}),
 			providesTags: ['groups']
@@ -53,5 +72,7 @@ export const {
 	useCreateGroupMutation,
 	useUpdateGroupMutation,
 	useDeleteGroupMutation,
-	useGetGroupStudentQuery
+	useGetGroupStudentQuery,
+	useCreateGroupFileMutation,
+	useGetStudentGroupQuery
 } = api;

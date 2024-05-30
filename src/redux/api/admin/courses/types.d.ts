@@ -11,8 +11,11 @@ namespace ADMINCOURSES {
 		page: number;
 		size: number;
 		courses: Courses[];
-	}[];
-	type CoursesAdminRequest = void;
+	};
+	type CoursesAdminRequest = {
+		page: number;
+		size: number;
+	};
 	type CreateAdminCourseResponse = {
 		newCourse: {
 			image: string | undefined;
@@ -53,6 +56,7 @@ namespace ADMINCOURSES {
 		specializationOrStudyFormat: string;
 		phoneNumber: string;
 		email: string;
+		isBlock: false;
 	};
 
 	type GetInstructorCourseResponse = {
@@ -60,10 +64,10 @@ namespace ADMINCOURSES {
 		size: number;
 		saveId: number | null;
 		getAllInstructorsOfCourses: Student[];
-		getAllStudentsOfCourses: Student[]
+		getAllStudentsOfCourses: Student[];
 	};
 	type GetInstructorCourseRequest = {
-		courseId: number;
+		courseId: string;
 		pages: {
 			page: number;
 			size: number;

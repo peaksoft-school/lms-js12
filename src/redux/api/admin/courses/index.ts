@@ -74,10 +74,28 @@ export const api = index.injectEndpoints({
 
 		appointAdminCourse: builder.mutation({
 			query: ({ courseId, selectId }) => ({
-				url: `/api/course/assignInInstructorToCourse/${courseId}/${selectId}`,
+				url: `/api/course/assignInInstructorToCourse/${courseId}/{instructorId}?instructorIds=${selectId}`,
 				method: 'POST'
 			}),
 			invalidatesTags: ['courses']
+		}),
+		createStudentBlockCourses: builder.mutation({
+			query: (id) => ({
+				url: `/api/students/isBlock/${id}`,
+				method: 'POST'
+				// body: updated
+			}),
+			invalidatesTags: ['courses']
+		}),
+		getInstructorCourse: builder.query<
+			ADMINCOURSES.GetInstructorCourseResponse,
+			ADMINCOURSES.GetInstructorCourseRequest
+		>({
+			query: (courseId) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courseId}`,
+				method: 'GET'
+			}),
+			providesTags: ['courses']
 		})
 	})
 });
@@ -89,5 +107,7 @@ export const {
 	useDeleteCourseMutation,
 	useGetAllInstructorCourseQuery,
 	useGetAllStudentsCourseQuery,
-	useAppointAdminCourseMutation
+	useAppointAdminCourseMutation,
+	useCreateStudentBlockCoursesMutation,
+	useGetInstructorCourseQuery
 } = api;

@@ -9,20 +9,14 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['trash']
 		}),
-		UpdatedTrash: builder.mutation<
-			TRASH.GetCardsResponse,
-			TRASH.GetCardsRequest
-		>({
+		UpdatedTrash: builder.mutation({
 			query: (id) => ({
 				url: `/api/trash/return/${id}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['trash']
 		}),
-		DeleteTrash: builder.mutation<
-			TRASH.GetCardsResponse,
-			TRASH.GetCardsRequest
-		>({
+		DeleteTrash: builder.mutation({
 			query: (id) => ({
 				url: `/api/trash/delete/${id}`,
 				method: 'DELETE'

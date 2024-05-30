@@ -1,28 +1,21 @@
 import scss from './InternalStudents.module.scss';
 import { KeyboardEvent, useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
-import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
-interface Student {
-	id: number;
-	firstName: string;
-	lastName: string;
-	group: string;
-	TrainingFormat: string;
-	phone_number: string;
-	email: string;
-	password: string;
-	isCompleted: boolean;
-}
+import { useGetStudentGroupQuery } from '@/src/redux/api/admin/groups';
+import { useParams } from 'react-router-dom';
+
 const InternalStudents = () => {
 	// const { groupId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
-	const { data, isLoading } = useGetStudentTableQuery();
+	const { groupId } = useParams();
+	const { data, isLoading } = useGetStudentGroupQuery(groupId);
+
 	if (isLoading) {
 		return (
 			<div>
@@ -80,8 +73,8 @@ const InternalStudents = () => {
 											<thead>
 												<tr>
 													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя</th>
-													<th>Фамилия</th>
+													<th>Имя Фамилия</th>
+
 													<th>Группа</th>
 													<th>Формат обучения</th>
 													<th>Номер телефона</th>
@@ -89,12 +82,12 @@ const InternalStudents = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data
-													?.slice(
-														(currentPage - 1) * rowsPerPage,
-														currentPage * rowsPerPage
-													)
-													.map((item: Student, index) => (
+												{data?.students
+													// ?.slice(
+													// 	(currentPage - 1) * rowsPerPage,
+													// 	currentPage * rowsPerPage
+													// )
+													.map((item, index) => (
 														<tr
 															key={item.id}
 															className={
@@ -106,11 +99,11 @@ const InternalStudents = () => {
 															<td>
 																{index + 1 + (currentPage - 1) * rowsPerPage}
 															</td>
-															<td>{item.firstName}</td>
-															<td>{item.lastName}</td>
-															<td>{item.group}</td>
-															<td>{item.TrainingFormat}</td>
-															<td>{item.phone_number}</td>
+															<td>{item.fullName}</td>
+
+															<td>{item.groupName}</td>
+															<td>{item.studyFormat}</td>
+															<td>{item.phoneNumber}</td>
 															<td>{item.email}</td>
 														</tr>
 													))}
@@ -141,7 +134,7 @@ const InternalStudents = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

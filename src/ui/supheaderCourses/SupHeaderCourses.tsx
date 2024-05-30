@@ -4,7 +4,7 @@ import scss from './SupHeaderCourses.module.scss';
 import { IconChevronDown } from '@tabler/icons-react';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
-import verctor from '@/src/assets/svgs/Vector.svg';
+import vector from '@/src/assets/svgs/Vector.svg';
 
 const SupHeaderCourses = () => {
 	const { pathname } = useLocation();
@@ -71,7 +71,7 @@ const SupHeaderCourses = () => {
 								alignItems: 'center'
 							}}
 						>
-							<img src={verctor} alt="" />
+							<img src={vector} alt="" />
 							<p> Выйти</p>
 						</MenuItem>
 					</Menu>
@@ -171,7 +171,7 @@ const SupHeaderCourses = () => {
 								alignItems: 'center'
 							}}
 						>
-							<img src={verctor} alt="" />
+							<img src={vector} alt="" />
 							<p> Выйти</p>
 						</MenuItem>
 					</Menu>
