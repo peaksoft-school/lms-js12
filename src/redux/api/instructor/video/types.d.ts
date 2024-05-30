@@ -2,42 +2,42 @@
 namespace VIDEO_LESSON {
 	type VideoLessonGetResponse = {
 		_id: number;
-		title: string;
+		titleOfVideo: string;
 		description: string;
-		link: string;
+		linkOfVideo: string;
 	}[];
 
 	type VideoLessonGetRequest = void;
 
 	type VideoLessonPostResponse = {
-		title: string;
+		titleOfVideo: string;
 		description: string;
-		link: string;
+		linkOfVideo: string;
 	};
 
 	type VideoLessonPostRequest = {
-		title: string;
+		titleOfVideo: string;
 		description: string;
-		link: string;
+		linkOfVideo: string;
 	};
 
 	type VideoLessonPatchResponse = {
 		newVideoLesson: {
-			title: string;
-			description: string;
-			link: string;
+			titleOfVideo: string;
+		description: string;
+		linkOfVideo: string;
 		};
 	};
 
 	type VideoLessonPatchRequest = {
 		deleteById: number | null;
 		newVideoLesson: {
-			title: string;
-			description: string;
-			link: string;
+			titleOfVideo: string;
+		description: string;
+		linkOfVideo: string;
 		};
 	};
-
+  
 	type VideoLessonDeleteResponse = void;
 	type VideoLessonDeleteRequest = number | null;
 }

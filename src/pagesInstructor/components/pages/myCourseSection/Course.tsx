@@ -1,5 +1,4 @@
 import { FC, useState, KeyboardEvent } from 'react';
-
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './Course.module.scss';
 import Pagination from '@mui/material/Pagination';
@@ -70,52 +69,52 @@ const Course: FC = () => {
 						<Box>
 							<div>
 								<div className={scss.cards}>
-									{data && Array.isArray(data) && data.length > 0 ? (
+									{
+										// data && Array.isArray(data) && data.length > 0 ? (
 										<div className={scss.card}>
-											{data
-												.slice(
-													(currentPage - 1) * rowsPerPage,
-													currentPage * rowsPerPage
-												)
-												.map((item) => (
+											{data?.courses.map((item) => (
+												<div
+													className={scss.zero_block_container}
+													key={item.id}
+												>
 													<div
-														className={scss.zero_block_container}
-														key={item.id}
+														onClick={() => {
+															setSaveIdStorege(String(item.id));
+															localStorage.setItem('item', item.title);
+															setTimeout(() => {
+																navigate(
+																	`/instructor/course/${item.id}/materials`
+																);
+															}, 1000);
+														}}
 													>
-														<div
-															onClick={() => {
-																setSaveIdStorege(String(item.id));
-																localStorage.setItem('item', item.title);
-																setTimeout(() => {
-																	navigate(
-																		`/instructor/course/${item.id}/materials`
-																	);
-																}, 1000);
-															}}
-														>
-															<div className={scss.block_photo_cards}>
-																<img src={item.img} alt="images" />
+														<div className={scss.block_photo_cards}>
+															<img
+																src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
+																alt="images"
+															/>
+														</div>
+														<div className={scss.block_cont}>
+															<div className={scss.second_block}>
+																<p className={scss.block_title}>{item.title}</p>
+																<p className={scss.block_date}>
+																	{item.dateOfEnd}
+																</p>
 															</div>
-															<div className={scss.block_cont}>
-																<div className={scss.second_block}>
-																	<p className={scss.block_title}>
-																		{item.title}
-																	</p>
-																	<p className={scss.block_date}>{item.date}</p>
-																</div>
-																<div className={scss.text_card}>
-																	<span className={scss.block_text}>
-																		{item.text && item.text.length > 60
-																			? `${item.text.substring(0, 60)}...`
-																			: item.text}
-																	</span>
-																</div>
+															<div className={scss.text_card}>
+																<span className={scss.block_text}>
+																	{item.description &&
+																	item.description.length > 60
+																		? `${item.description.substring(0, 60)}...`
+																		: item.description}
+																</span>
 															</div>
 														</div>
 													</div>
-												))}
+												</div>
+											))}
 										</div>
-									) : null}
+									}
 								</div>
 							</div>
 						</Box>

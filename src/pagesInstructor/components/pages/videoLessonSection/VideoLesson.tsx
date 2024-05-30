@@ -10,16 +10,20 @@ import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import ModalEditVideo from '@/src/ui/InstructorModal/ModalEditVideo';
 import DeleteVideoLesson from '@/src/ui/customModal/deleteModal/DeleteVideoLesson';
+import { useParams } from 'react-router-dom';
 // import { Box, ScrollArea } from '@mantine/core';
 
 const VideoLesson = () => {
-	const { data, isLoading } = useGetVideoLessonQuery();
+	const { lessonId } = useParams();
+	const { data, isLoading } = useGetVideoLessonQuery(lessonId);
 	const [openEditVideo, setOpenEditVideo] = useState(false);
 	const [openWatch, setWatchOpen] = useState(false);
 	const [openAdd, setOpenAdd] = useState(false);
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+	console.log(lessonId);
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -83,7 +87,7 @@ const VideoLesson = () => {
 						<div className={scss.cards}>
 							<div className={scss.photo}>
 								<img
-									src={`https://img.youtube.com/vi/${item.link}/mqdefault.jpg`}
+									src={`https://img.youtube.com/vi/${item.linkOfVideo}/mqdefault.jpg`}
 									alt=""
 								/>
 								<div onClick={handleOpenWatch} className={scss.button_watch}>
@@ -106,7 +110,7 @@ const VideoLesson = () => {
 							</div>
 							<div className={scss.title}>
 								<div className={scss.text}>
-									<h1>{item.title}</h1>
+									<h1>{item.titleOfVideo}</h1>
 									<p>{item.description}</p>
 								</div>
 								<div className={scss.dots}>

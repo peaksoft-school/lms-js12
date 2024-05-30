@@ -21,12 +21,12 @@ import {
 	Draggable,
 	DropResult
 } from '@hello-pangea/dnd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 interface TodoProps {
+	id: number;
 	title: string;
-	_id: number;
-	date: string;
+	createdAt: string;
 }
 const Materials: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +38,10 @@ const Materials: FC = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
-	const { data, isLoading } = useGetMaterialsQuery();
+	const { courseId } = useParams();
+	console.log(courseId);
+	const { data, isLoading } = useGetMaterialsQuery( courseId );
+	
 	const [todos, setTodos] = useState<TodoProps[]>([]);
 	const navigate = useNavigate();
 	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
@@ -145,16 +148,16 @@ const Materials: FC = () => {
 														ref={droppableProvider.innerRef}
 														{...droppableProvider.droppableProps}
 													>
-														{todos
-															.slice(
-																(currentPage - 1) * rowsPerPage,
-																currentPage * rowsPerPage
-															)
+														{data?.lessonResponses
+															// .slice(
+															// 	(currentPage - 1) * rowsPerPage,
+															// 	currentPage * rowsPerPage
+															// )
 															.map((todo, index) => (
 																<Draggable
 																	index={index}
-																	key={todo._id}
-																	draggableId={`${todo._id}`}
+																	key={todo.id}
+																	draggableId={`${todo.id}`}
 																>
 																	{(draggableProvider) => (
 																		<tr
@@ -175,11 +178,11 @@ const Materials: FC = () => {
 																		>
 																			<td
 																				onClick={() => {
-																					setSaveIdStorege(String(todo._id));
+																					setSaveIdStorege(String(todo.id));
 
 																					setTimeout(() => {
 																						navigate(
-																							`/instructor/course/${id}/materials/${todo._id}`
+																							`/instructor/course/${id}/materials/${todo.id}`
 																						);
 																					}, 1000);
 																				}}
@@ -197,10 +200,10 @@ const Materials: FC = () => {
 																			</td>
 																			<td
 																				onClick={() => {
-																					setSaveIdStorege(String(todo._id));
+																					setSaveIdStorege(String(todo.id));
 																					setTimeout(() => {
 																						navigate(
-																							`/instructor/course/${id}/materials/${todo._id}`
+																							`/instructor/course/${id}/materials/${todo.id}`
 																						);
 																					}, 1000);
 																				}}
@@ -210,7 +213,7 @@ const Materials: FC = () => {
 																					cursor: 'pointer'
 																				}}
 																			>
-																				{todo.date}
+																				{todo.createdAt}
 																			</td>
 																			<td className={scss.TableCellIcon}>
 																				<button
@@ -221,7 +224,7 @@ const Materials: FC = () => {
 																					aria-haspopup="true"
 																					onClick={(e) => {
 																						handleClick(e);
-																						setDeleteById(todo._id);
+																						setDeleteById(todo.id);
 																					}}
 																				>
 																					<IconDotsVertical stroke={2} />
@@ -321,7 +324,7 @@ const Materials: FC = () => {
 						<div className={scss.stack}>
 							<Stack direction="row" spacing={2}>
 								<Pagination
-									count={Math.ceil(data!.length / rowsPerPage)}
+									// count={Math.ceil(data!.length / rowsPerPage)}
 									page={currentPage}
 									onChange={handlePageChangeC}
 									shape="rounded"

@@ -1,41 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace INSTRUCTORCOURSES {
+namespace InstructorCourses {
 	type CoursesResponse = {
+		courses: Courses[];
 		id: number;
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		dateOfEnd: string;
+		description: string;
+		image: string;
 	}[];
+	type CoursesRequest = void;
+	type CoursesRequest = {
+		page: number;
+		size: string;
+	};
 	type CoursesRequest = void;
 	type CreateCourseResponse = {
 		title: string;
-		date: string;
-		text: string;
-		img: string;
+		dateOfEnd: string;
+		description: string;
+		image: string;
 	}[];
-	type CreateCourseRequest = {
-		title: string;
-		date: string;
-		text: string;
-		img: string;
-	};
-	type UpdateCourseResponse = {
-		saveId: number | null;
-		newCourse: {
-			title: string;
-			date: string;
-			text: string;
-			img: string;
-		};
-	}[];
-	type UpdateCourseRequest = {
-		saveId: number | null;
-		newCourse: {
-			title: string;
-			date: string;
-			text: string;
-			img: string;
-		};
-	};
 }

@@ -1,3 +1,4 @@
+// import { identity } from 'node_modules/@mantine/core/lib/core/factory/factory';
 import { api as index } from '../..';
 
 const api = index.injectEndpoints({
@@ -6,8 +7,8 @@ const api = index.injectEndpoints({
 			VIDEO_LESSON.VideoLessonGetResponse,
 			VIDEO_LESSON.VideoLessonGetRequest
 		>({
-			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/43dfa948f2c259145e952f54b5fc3d20/q',
+			query: (lessonId) => ({
+				url: `/api/videos/findAll/1${lessonId}`,
 				method: 'GET'
 			}),
 			providesTags: ['videoLesson']
@@ -16,13 +17,15 @@ const api = index.injectEndpoints({
 			VIDEO_LESSON.VideoLessonPostResponse,
 			VIDEO_LESSON.VideoLessonPostRequest
 		>({
-			query: (postData) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/43dfa948f2c259145e952f54b5fc3d20/q',
+			query: ({ postData, id }) => ({
+				url: `/api/videos/save/${id}`,
 				method: 'POST',
 				body: postData
 			}),
 			invalidatesTags: ['videoLesson']
 		}),
+		// /api/videos/save/${id}`
+		// /api/videos/${lessonId}
 		patchVideoLesson: builder.mutation<
 			VIDEO_LESSON.VideoLessonPatchResponse,
 			VIDEO_LESSON.VideoLessonPatchRequest

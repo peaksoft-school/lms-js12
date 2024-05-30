@@ -42,7 +42,7 @@ const ModalMaterialEdit: FC<modalProps> = ({
 }) => {
 	const [patchMaterial] = usePatchMaterialMutation();
 	const { data } = useGetMaterialsQuery();
-	const find = data?.find((id) => id._id === deleteById);
+	const find = data?.lessonResponses.find((id) => id._id === deleteById);
 	const { control, handleSubmit, reset } = useForm<EditProps>();
 
 	const onSubmit = async (data: EditProps) => {
