@@ -4,11 +4,11 @@ import scss from './Courses.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
-import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { Box, ScrollArea } from '@mantine/core';
+import { useGetStudentsCourseQuery } from '@/src/redux/api/students/courses';
 
 const Courses: FC = () => {
-	const { data: data = [] } = useGetAdminCourseQuery();
+	const { data: data = [] } = useGetStudentsCourseQuery();
 	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(8);
@@ -68,58 +68,61 @@ const Courses: FC = () => {
 						<Box>
 							<div>
 								<div className={scss.cards}>
-									{data && Array.isArray(data) && data.length > 0 ? (
-										<div className={scss.card}>
-											{data
-												.slice(
-													(currentPage - 1) * rowsPerPage,
-													currentPage * rowsPerPage
-												)
-												.map((item) => (
+									{/* {data && Array.isArray(data) && data.length > 0 ? ( */}
+									{/* {data.length > 0 &&
+									data[0].courses &&
+									data[0].courses.length > 0 ? ( */}
+									<div className={scss.card}>
+										{data[0]?.courses
+											// .slice(
+											// 	(currentPage - 1) * rowsPerPage,
+											// 	currentPage * rowsPerPage
+											// )
+											.map((item) => (
+												<div
+													key={item.id}
+													className={scss.zero_block_container}
+												>
 													<div
-														key={item._id}
-														className={scss.zero_block_container}
+														onClick={() => {
+															setSaveIdStorege(String(item.id));
+															setSaveItem(item.title);
+														}}
 													>
 														<div
 															onClick={() => {
-																setSaveIdStorege(String(item._id));
-																setSaveItem(item.title);
+																setTimeout(() => {
+																	navigate(`/courses/${item.id}/materials`);
+																}, 1000);
 															}}
 														>
-															<div
-																onClick={() => {
-																	setTimeout(() => {
-																		navigate(`/courses/${item._id}/materials`);
-																	}, 1000);
-																}}
-															>
-																<div className={scss.block_photo_cards}>
-																	<img src={item.image} alt="images" />
+															<div className={scss.block_photo_cards}>
+																<img src={item.image} alt="images" />
+															</div>
+															<div className={scss.block_cont}>
+																<div className={scss.second_block}>
+																	<p className={scss.block_title}>
+																		{item.title}
+																	</p>
+																	<p className={scss.block_date}>
+																		{item.dateOfEnd}
+																	</p>
 																</div>
-																<div className={scss.block_cont}>
-																	<div className={scss.second_block}>
-																		<p className={scss.block_title}>
-																			{item.title}
-																		</p>
-																		<p className={scss.block_date}>
-																			{item.dateOfEnd}
-																		</p>
-																	</div>
-																	<div className={scss.text_card}>
-																		<span className={scss.block_text}>
-																			{item.description &&
-																			item.description.length > 60
-																				? `${item.description.substring(0, 60)}...`
-																				: item.description}
-																		</span>
-																	</div>
+																<div className={scss.text_card}>
+																	<span className={scss.block_text}>
+																		{item.description &&
+																		item.description.length > 60
+																			? `${item.description.substring(0, 60)}...`
+																			: item.description}
+																	</span>
 																</div>
 															</div>
 														</div>
 													</div>
-												))}
-										</div>
-									) : null}
+												</div>
+											))}
+									</div>
+									{/* ) : null} */}
 								</div>
 							</div>
 						</Box>
