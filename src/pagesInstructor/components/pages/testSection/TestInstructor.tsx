@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import scss from './TestInstructor.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
@@ -17,6 +17,7 @@ interface Question {
 
 const TestInstructor = () => {
 	const navigate = useNavigate();
+	const { courseId, lessonId } = useParams();
 	const [questions, setQuestions] = useState<Question[]>([
 		{
 			id: '1',
@@ -116,9 +117,6 @@ const TestInstructor = () => {
 		}
 	]);
 
-	const id = localStorage.getItem('id');
-	const lessonId = localStorage.getItem('lessonId');
-
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
 		null
@@ -172,7 +170,7 @@ const TestInstructor = () => {
 									className={scss.test_container_third}
 									onClick={() =>
 										navigate(
-											`/instructor/course/${id}/materials/${lessonId}/showTest`
+											`/instructor/course/${courseId}/materials/${lessonId}/showTest`
 										)
 									}
 								>

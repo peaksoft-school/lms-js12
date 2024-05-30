@@ -1,6 +1,5 @@
 import React, { useState, KeyboardEvent } from 'react';
 import scss from './CoursesTeacher.module.scss';
-import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import DeleteTeacherModal from '@/src/ui/customModal/deleteModal/DeleteTeacherModal';
 import ModalEditTeacher from '@/src/ui/customModal/ModalEditTeacher';
@@ -11,7 +10,18 @@ import Button from '@mui/material/Button';
 import AppointTeacher from '@/src/ui/customModal/appoint/AppointTeacher';
 import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
+import { useGetAllInstructorCourseQuery } from '@/src/redux/api/admin/courses';
+import { useParams } from 'react-router-dom';
 
+// interface Teacher {
+// 	id: number;
+// 	fullName: string;
+// 	courseName: string;
+// 	specializationOrStudyFormat: string;
+// 	phoneNumber: string;
+// 	email: string;
+// 	isCompleted: boolean;
+// }
 const CoursesTeacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
@@ -20,7 +30,21 @@ const CoursesTeacher = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [openPage, setOpenPage] = useState<number | string>(12);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const { data, isLoading } = useGetTeacherQuery();
+	const { courseId } = useParams();
+
+	const pages = {
+		page: currentPage,
+		size: rowsPerPage,
+		role: 'INSTRUCTOR'
+	};
+
+	console.log(pages);
+
+	const { data, isLoading } = useGetAllInstructorCourseQuery({
+		courseId,
+		pages
+	});
+
 	const [openPart, setOpenPart] = useState(1);
 
 	const [openAddTeacher, setOpenAddTeacher] = useState(false);
@@ -91,7 +115,7 @@ const CoursesTeacher = () => {
 							<div className={scss.icon}>
 								<IconPlus stroke={2} />
 							</div>
-							<span>Добавить учителя</span>
+							<span>Назначить учителя/лей</span>
 						</Button>
 					</div>
 					<h1 className={scss.title}>Учителя</h1>
@@ -109,8 +133,8 @@ const CoursesTeacher = () => {
 											<thead>
 												<tr>
 													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя</th>
-													<th> Фамилия</th>
+													<th>Имя Фамилия</th>
+
 													<th>Специализация</th>
 													<th>Номер телефона</th>
 													<th>E-mail</th>
@@ -123,57 +147,56 @@ const CoursesTeacher = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data &&
-													data
-														.slice(
-															(currentPage - 1) * rowsPerPage,
-															currentPage * rowsPerPage
-														)
-														.map((item, index) => (
-															<tr
-																key={item.id}
-																className={
-																	index % 2 === 1
-																		? scss.TableAlternateRow
-																		: '' || scss.TableContainerSecond
-																}
-															>
-																<td>
-																	{index + 1 + (currentPage - 1) * rowsPerPage}
-																</td>
+												{data?.getAllInstructorsOfCourses
+													// data
+													// 	.slice(
+													// 		(currentPage - 1) * rowsPerPage,
+													// 		currentPage * rowsPerPage
+													// 	)
+													.map((item, index: number) => (
+														<tr
+															key={item.id}
+															className={
+																index % 2 === 1
+																	? scss.TableAlternateRow
+																	: '' || scss.TableContainerSecond
+															}
+														>
+															<td>
+																{index + 1 + (currentPage - 1) * rowsPerPage}
+															</td>
 
-																<td className={scss.TableCell}>
-																	{item.firstName}
-																</td>
-																<td className={scss.TableCell}>
-																	{item.lastName}
-																</td>
-																<td className={scss.TableCell}>
-																	{item.specialization}
-																</td>
-																<td className={scss.TableCell}>
-																	{item.phoneNumber}
-																</td>
-																<td className={scss.TableCell}>{item.email}</td>
-																<td className={scss.TableCell}>{item.group}</td>
-																<td className={scss.TableCellIcon}>
-																	<button
-																		className={scss.button}
-																		aria-controls={
-																			open ? 'basic-menu' : undefined
-																		}
-																		aria-haspopup="true"
-																		onClick={() => {
-																			setOpenModalDelete(true);
-																			setAnchorEl(null);
-																			setDeleteById(item.id!);
-																		}}
-																	>
-																		<img src={deleteIcon} alt="Delete" />
-																	</button>
-																</td>
-															</tr>
-														))}
+															<td className={scss.TableCell}>
+																{item.fullName}
+															</td>
+															<td className={scss.TableCell}>
+																{item.specializationOrStudyFormat}
+															</td>
+															<td className={scss.TableCell}>
+																{item.phoneNumber}
+															</td>
+															<td className={scss.TableCell}>{item.email}</td>
+															<td className={scss.TableCell}>
+																{item.courseName}
+															</td>
+															<td className={scss.TableCellIcon}>
+																<button
+																	className={scss.button}
+																	aria-controls={
+																		open ? 'basic-menu' : undefined
+																	}
+																	aria-haspopup="true"
+																	onClick={() => {
+																		setOpenModalDelete(true);
+																		setAnchorEl(null);
+																		setDeleteById(item.id!);
+																	}}
+																>
+																	<img src={deleteIcon} alt="Delete" />
+																</button>
+															</td>
+														</tr>
+													))}
 											</tbody>
 										</table>
 
@@ -212,7 +235,9 @@ const CoursesTeacher = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(
+								// 	data!.getAllInstructorsOfCourses.length / rowsPerPage
+								// )}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

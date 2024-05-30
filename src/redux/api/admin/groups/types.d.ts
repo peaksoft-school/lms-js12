@@ -10,15 +10,11 @@ namespace GROUPS {
 	};
 
 	type GroupsResponse = {
-		instructorResponses: any;
 		groupResponses: GroupResponses[];
 		page: number;
 		size: number;
 	};
-	type GroupsRequest = {
-		page: string;
-		size: string;
-	};
+	type GroupsRequest = void;
 	type CreateGroupResponse = {
 		title: string;
 		dateOfEnd: string;
@@ -31,7 +27,7 @@ namespace GROUPS {
 		description: string;
 		image: string;
 	};
-	type UpdateGroupResponse  = {
+	type UpdateGroupResponse = {
 		saveId: number | null;
 		newGroup: {
 			title: string;
@@ -58,4 +54,19 @@ namespace GROUPS {
 		fileName: string;
 		urlFile: string;
 	};
+
+	type Students = {
+		id: 5;
+		fullName: string;
+		phoneNumber: string;
+		groupName: string;
+		studyFormat: string;
+		email: string;
+		isBlock: false;
+	};
+
+	type GetStudentsGroupResponse = {
+		students: Students[];
+	};
+	type GetStudentsGroupRequest = void;
 }

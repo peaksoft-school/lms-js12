@@ -1,6 +1,6 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import scss from './CreateTask.module.scss';
 import { useGetTaskInstructorQuery } from '@/src/redux/api/instructor/addTask';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
@@ -13,11 +13,8 @@ const CrateTask = () => {
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
 	const { data: lesson = [] } = useGetTaskInstructorQuery();
-	const id = localStorage.getItem('id');
+	const { courseId, lessonId, getTaskId } = useParams();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-	console.log(saveId);
-
 	const open = Boolean(anchorEl);
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -26,20 +23,20 @@ const CrateTask = () => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
-	const lessonId = localStorage.getItem('lessonId');
-	const task = localStorage.getItem('task');
-
 	const openLessonAddTask = () => {
-		navigate(`/instructor/course/${id}/materials/${lessonId}/lesson/addTask`);
+		navigate(
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/addTask`
+		);
 	};
 	const openLessonEditTask = () => {
-		navigate(`/instructor/course/${id}/materials/${lessonId}/lesson/update`);
+		navigate(
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/update`
+		);
 	};
 
 	const GetTask = () => {
 		navigate(
-			`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
 		);
 	};
 	return (
@@ -62,9 +59,6 @@ const CrateTask = () => {
 					<div
 						className={scss.card_container}
 						onClick={() => {
-							console.log(item._id + 'Проблема!');
-
-							localStorage.setItem('task', item._id);
 							localStorage.setItem('hwTask', item.title);
 							setSaveId(item._id);
 							setTimeout(() => {

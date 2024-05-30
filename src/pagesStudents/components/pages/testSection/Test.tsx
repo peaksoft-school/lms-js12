@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import scss from './Test.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 
 const Test = () => {
@@ -18,8 +18,7 @@ const Test = () => {
 		}
 	]);
 
-	const id = localStorage.getItem('id');
-	const lessonId = localStorage.getItem('lessonId');
+	const { courseId, lessonId } = useParams();
 
 	return (
 		<div className={scss.test_container}>
@@ -42,7 +41,9 @@ const Test = () => {
 								children={'Начать тест'}
 								disabled={false}
 								onClick={() =>
-									navigate(`/courses/${id}/materials/${lessonId}/showTest`)
+									navigate(
+										`/courses/${courseId}/materials/${lessonId}/showTest`
+									)
 								}
 							></ButtonSave>
 						</div>

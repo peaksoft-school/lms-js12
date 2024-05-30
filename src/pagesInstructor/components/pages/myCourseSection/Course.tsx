@@ -17,7 +17,6 @@ const Course: FC = () => {
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
-	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const navigate = useNavigate();
 
 	const handlePageChangeC = (
@@ -53,7 +52,6 @@ const Course: FC = () => {
 			}
 		}
 	};
-	localStorage.setItem('id', saveIdSrorege);
 
 	return (
 		<div className={scss.course}>
@@ -79,13 +77,12 @@ const Course: FC = () => {
 												>
 													<div
 														onClick={() => {
-															setSaveIdStorege(String(item.id));
 															localStorage.setItem('item', item.title);
 															setTimeout(() => {
 																navigate(
 																	`/instructor/course/${item.id}/materials`
 																);
-															}, 1000);
+															}, 500);
 														}}
 													>
 														<div className={scss.block_photo_cards}>

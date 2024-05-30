@@ -12,7 +12,7 @@ interface LessonType {
 }
 export default function BasicBreadcrumbs() {
 	const { pathname } = useLocation();
-	const { coursesId, matelials } = useParams();
+	const { coursesId, lessonId, matelials } = useParams();
 	const { data } = useGetCardQuery(coursesId);
 	const { data: lessonOne = [] } = useGetLessonQuery();
 	const [course, setCourse] = useState<LessonType>();
@@ -28,9 +28,7 @@ export default function BasicBreadcrumbs() {
 	}, [lessonOne]);
 
 	const item = localStorage.getItem('item');
-	const id = localStorage.getItem('id');
 	const taskName = localStorage.getItem('taskName');
-	const lessonId = localStorage.getItem('lessonId');
 	const task = localStorage.getItem('task');
 	const hwTask = localStorage.getItem('hwTask');
 	return (
@@ -50,7 +48,7 @@ export default function BasicBreadcrumbs() {
 			)}
 
 			{/* //! instructor breadCrumbs*/}
-			{pathname.startsWith(`/instructor/course/${id}/materials`) && (
+			{pathname.startsWith(`/instructor/course/${coursesId}/materials`) && (
 				<>
 					<Breadcrumbs
 						aria-label="breadcrumb"
@@ -61,22 +59,22 @@ export default function BasicBreadcrumbs() {
 						</Link>
 						<Link
 							style={{ fontSize: '14px' }}
-							to={`/instructor/course/${id}/materials`}
+							to={`/instructor/course/${coursesId}/materials`}
 						>
 							{item}
 						</Link>
 						<Link
 							style={
-								pathname === `/instructor/course/${id}/materials`
+								pathname === `/instructor/course/${coursesId}/materials`
 									? { fontSize: '14px', color: 'black' }
 									: { fontSize: '14px' }
 							}
-							to={`/instructor/course/${id}/materials`}
+							to={`/instructor/course/${coursesId}/materials`}
 						>
 							Материалы
 						</Link>
 						{pathname ===
-							`/instructor/course/${id}/materials/${lessonId}/video` && (
+							`/instructor/course/${coursesId}/materials/${lessonId}/video` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
 								separator={<IconChevronRight stroke={2} />}
@@ -90,7 +88,7 @@ export default function BasicBreadcrumbs() {
 							</Breadcrumbs>
 						)}
 						{pathname ===
-							`/instructor/course/${id}/materials/${lessonId}/presentation` && (
+							`/instructor/course/${coursesId}/materials/${lessonId}/presentation` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
 								separator={<IconChevronRight stroke={2} />}
@@ -104,7 +102,7 @@ export default function BasicBreadcrumbs() {
 							</Breadcrumbs>
 						)}
 						{pathname ===
-							`/instructor/course/${id}/materials/${lessonId}/lesson` && (
+							`/instructor/course/${coursesId}/materials/${lessonId}/lesson` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
 								separator={<IconChevronRight stroke={2} />}
@@ -118,7 +116,7 @@ export default function BasicBreadcrumbs() {
 							</Breadcrumbs>
 						)}
 						{pathname ===
-							`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding` && (
+							`/instructor/course/${coursesId}/materials/${lessonId}/lesson/${task}/panding` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
 								separator={<IconChevronRight stroke={2} />}
@@ -137,7 +135,7 @@ export default function BasicBreadcrumbs() {
 					</Breadcrumbs>
 				</>
 			)}
-			{pathname === `/instructor/course/${id}/rating` && (
+			{pathname === `/instructor/course/${coursesId}/rating` && (
 				<>
 					<Breadcrumbs
 						aria-label="breadcrumb"
@@ -148,13 +146,13 @@ export default function BasicBreadcrumbs() {
 						</Link>
 						<Link
 							style={{ fontSize: '14px' }}
-							to={`/instructor/course/${id}/materials`}
+							to={`/instructor/course/${coursesId}/materials`}
 						>
 							Курсы
 						</Link>
 						<Link
 							style={{ fontSize: '14px', color: 'black' }}
-							to={`/instructor/course/${id}/materials`}
+							to={`/instructor/course/${coursesId}/materials`}
 						>
 							Рейтинг
 						</Link>
@@ -174,7 +172,7 @@ export default function BasicBreadcrumbs() {
 						</Link>
 						<Link
 							style={{ fontSize: '14px', color: 'black' }}
-							to={`/courses/${id}/materials`}
+							to={`/courses/${coursesId}/materials`}
 						>
 							{item}
 						</Link>
@@ -182,7 +180,7 @@ export default function BasicBreadcrumbs() {
 					</Breadcrumbs>
 				</>
 			)}
-			{pathname === `/courses/${id}/rating` && (
+			{pathname === `/courses/${coursesId}/rating` && (
 				<>
 					<Breadcrumbs
 						aria-label="breadcrumb"
@@ -191,12 +189,15 @@ export default function BasicBreadcrumbs() {
 						<Link style={{ fontSize: '14px' }} to="/courses">
 							Мои курсы
 						</Link>
-						<Link style={{ fontSize: '14px' }} to={`/courses/${id}/materials`}>
+						<Link
+							style={{ fontSize: '14px' }}
+							to={`/courses/${coursesId}/materials`}
+						>
 							Курсы
 						</Link>
 						<Link
 							style={{ fontSize: '14px', color: 'black' }}
-							to={`/courses/${id}/materials`}
+							to={`/courses/${coursesId}/materials`}
 						>
 							Рейтинг
 						</Link>
@@ -204,7 +205,7 @@ export default function BasicBreadcrumbs() {
 				</>
 			)}
 			{pathname.startsWith(
-				`/courses/${localStorage.getItem('id')}/materials/${localStorage.getItem('lessonId')}`
+				`/courses/${coursesId}/materials/${localStorage.getItem('lessonId')}`
 			) && (
 				<>
 					<Breadcrumbs
@@ -214,20 +215,26 @@ export default function BasicBreadcrumbs() {
 						<Link style={{ fontSize: '14px' }} to="/courses">
 							Мои курсы
 						</Link>
-						<Link style={{ fontSize: '14px' }} to={`/courses/${id}/materials`}>
+						<Link
+							style={{ fontSize: '14px' }}
+							to={`/courses/${coursesId}/materials`}
+						>
 							{item}
 						</Link>
-						<Link style={{ fontSize: '14px' }} to={`/courses/${id}/materials`}>
+						<Link
+							style={{ fontSize: '14px' }}
+							to={`/courses/${coursesId}/materials`}
+						>
 							{taskName}
 						</Link>
 						{pathname ===
-							`/courses/${localStorage.getItem('id')}/materials/${localStorage.getItem('lessonId')}/presentation` && (
+							`/courses/${coursesId}/materials/${localStorage.getItem('lessonId')}/presentation` && (
 							<Link style={{ fontSize: '14px', color: 'black' }} to={`#`}>
 								Презентация
 							</Link>
 						)}
 						{pathname ===
-							`/courses/${localStorage.getItem('id')}/materials/${localStorage.getItem('lessonId')}/video` && (
+							`/courses/${coursesId}/materials/${localStorage.getItem('lessonId')}/video` && (
 							<Link style={{ fontSize: '14px', color: 'black' }} to={`#`}>
 								Видеоурок
 							</Link>

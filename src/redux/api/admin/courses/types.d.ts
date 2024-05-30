@@ -1,43 +1,77 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ADMINCOURSES {
-	type CoursesAdminResponse = {
-		_id: number;
+	type Courses = {
+		id: number;
 		image: string | undefined;
 		title: string;
 		description: string;
-		dateOfEnd: Dayjs | null | undefined;
-	}[];
-	type CoursesAdminRequest = void;
+		dateOfEnd: string;
+	};
+	type CoursesAdminResponse = {
+		page: number;
+		size: number;
+		courses: Courses[];
+	};
+	type CoursesAdminRequest = {
+		page: number;
+		size: number;
+	};
 	type CreateAdminCourseResponse = {
 		newCourse: {
 			image: string | undefined;
 			title: string;
 			description: string;
-			dateOfEnd: Dayjs | null | undefined;
+			dateOfEnd: string;
 		};
 	}[];
 	type CreateAdminCourseRequest = {
 		image: string | undefined;
 		title: string;
 		description: string;
-		dateOfEnd: Dayjs | null | undefined;
+		dateOfEnd: string;
 	};
 	type UpdateCourseResponse = {
 		saveId: number | null;
-		newCourse: {
+		newCourses: {
 			image: string | undefined;
 			title: string;
 			description: string;
-			dateOfEnd: Dayjs | null | undefined;
+			dateOfEnd: string;
 		};
 	}[];
 	type UpdateCourseRequest = {
 		saveId: number | null;
-		newCourse: {
+		newCourses: {
 			image: string | undefined;
 			title: string;
 			description: string;
-			dateOfEnd: Dayjs | null | undefined;
+			dateOfEnd: string;
+		};
+	};
+
+	type Student = {
+		id: number;
+		fullName: string;
+		courseName: string;
+		specializationOrStudyFormat: string;
+		phoneNumber: string;
+		email: string;
+		isBlock: false;
+	};
+
+	type GetInstructorCourseResponse = {
+		page: number;
+		size: number;
+		saveId: number | null;
+		getAllInstructorsOfCourses: Student[];
+		getAllStudentsOfCourses: Student[];
+	};
+	type GetInstructorCourseRequest = {
+		courseId: string;
+		pages: {
+			page: number;
+			size: number;
+			role: string;
 		};
 	};
 }

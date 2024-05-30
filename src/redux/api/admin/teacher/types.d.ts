@@ -2,46 +2,40 @@
 namespace TABLE {
 	type Teacher = {
 		id?: number;
-		firstName: string;
-		lastName: string;
+		fullName: string;
+		login: string;
+		specialization: string;
 		email: string;
 		phoneNumber: string;
-		login: string;
-		specialization: string[];
-		group: string;
 	};
 
-	type GetTeachersResponse = Teacher[];
+	type GetTeachersResponse = {
+		instructorResponses: Teacher[];
+	};
 	type GetTeacherRequest = void;
 
 	type CreateTeachersResponse = {
-		id?: number;
 		firstName: string;
 		lastName: string;
+		specialization: string;
 		email: string;
 		phoneNumber: string;
-		login: string;
-		specialization: string[];
-		group: string[];
 	}[];
 	type CreateTeachersRequest = {
 		firstName: string;
 		lastName: string;
+		specialization: string;
 		email: string;
 		phoneNumber: string;
-		login: string;
-		specialization: string[];
-		group: string[];
 	};
 	type ChangeTeachersResponse = {
 		updateTeacher: {
 			firstName: string;
 			lastName: string;
+			specialization: string;
 			email: string;
 			phoneNumber: string;
-			login: string;
-			specialization: string[];
-			group: string[];
+			courseIds: string[];
 		};
 	}[];
 
@@ -50,11 +44,10 @@ namespace TABLE {
 		updateTeacher: {
 			firstName: string;
 			lastName: string;
+			specialization: string;
 			email: string;
 			phoneNumber: string;
-			login: string;
-			specialization: string[];
-			group: string[];
+			courseIds: string[];
 		};
 	};
 	type DeleteTeacherResponse = void;

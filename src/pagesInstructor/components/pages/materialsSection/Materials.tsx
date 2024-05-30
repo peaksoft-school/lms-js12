@@ -29,6 +29,7 @@ interface TodoProps {
 	createdAt: string;
 }
 const Materials: FC = () => {
+	const { courseId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
@@ -38,13 +39,11 @@ const Materials: FC = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
-	const { courseId } = useParams();
 	console.log(courseId);
-	const { data, isLoading } = useGetMaterialsQuery( courseId );
-	
+	const { data, isLoading } = useGetMaterialsQuery(courseId);
+
 	const [todos, setTodos] = useState<TodoProps[]>([]);
 	const navigate = useNavigate();
-	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 
 	useEffect(() => {
 		if (data) {
@@ -100,11 +99,9 @@ const Materials: FC = () => {
 		}
 	};
 
-	localStorage.setItem('lessonId', saveIdSrorege);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
-	const id = localStorage.getItem('id');
 	const item = localStorage.getItem('item');
 	return (
 		<div className={scss.material}>
@@ -178,11 +175,9 @@ const Materials: FC = () => {
 																		>
 																			<td
 																				onClick={() => {
-																					setSaveIdStorege(String(todo.id));
-
 																					setTimeout(() => {
 																						navigate(
-																							`/instructor/course/${id}/materials/${todo.id}`
+																							`/instructor/course/${courseId}/materials/${todo.id}`
 																						);
 																					}, 1000);
 																				}}
@@ -200,12 +195,11 @@ const Materials: FC = () => {
 																			</td>
 																			<td
 																				onClick={() => {
-																					setSaveIdStorege(String(todo.id));
 																					setTimeout(() => {
 																						navigate(
-																							`/instructor/course/${id}/materials/${todo.id}`
+																							`/instructor/course/${courseId}/materials/${todo.id}`
 																						);
-																					}, 1000);
+																					}, 500);
 																				}}
 																				style={{
 																					textAlign: 'end',
