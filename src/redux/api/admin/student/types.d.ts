@@ -8,7 +8,6 @@ namespace STUDENT {
 		groupName: string;
 		phoneNumber: string;
 		studyFormat: string;
-		// password: string;
 		isBlock: boolean;
 	};
 
@@ -26,10 +25,17 @@ namespace STUDENT {
 		email: string;
 		groupName: string;
 		studyFormat: string;
-		// password: string;
 		isBlock: boolean;
 	}[];
-	type PostStudentPropsRequest = object;
+	type PostStudentPropsRequest = {
+		firstName: string;
+		lastName: string;
+		phoneNumber: string;
+		email: string;
+		groupName: string;
+		studyFormat: string;
+		isBlock: boolean;
+	};
 	type DeleteStudentPropsResponse = number;
 	type DeleteStudentPropsRequest = number | null;
 
@@ -39,9 +45,8 @@ namespace STUDENT {
 		lastName: string;
 		phoneNumber: string;
 		email: string;
-		groupName: string[];
-		studyFormat: string[];
-		// password: string;
+		groupName: string;
+		studyFormat: string;
 		isBlock: boolean;
 	};
 
@@ -51,10 +56,9 @@ namespace STUDENT {
 			firstName: string;
 			lastName: string;
 			email: string;
-			groupName: string[];
+			groupName: string;
 			phoneNumber: string;
-			studyFormat: string[];
-			// password: string;
+			studyFormat: string;
 			isBlock: boolean;
 		};
 	};

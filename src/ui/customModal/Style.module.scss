@@ -41,7 +41,7 @@
 		gap: 15px;
 
 		.seclect {
-			border-radius: 20px !important;
+			border-radius: 12px !important;
 			width: 100% !important;
 		}
 		.input {
@@ -79,5 +79,12 @@
 				width: 80% !important;
 			}
 		}
+	}
+}
+
+.dialog_paper {
+	p {
+		padding-top: 10px;
+		font-size: 18px;
 	}
 }

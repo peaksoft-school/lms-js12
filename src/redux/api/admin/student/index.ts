@@ -15,7 +15,7 @@ export const api = index.injectEndpoints({
 		}),
 		// ! post
 		postStudentTable: builder.mutation<
-			STUDENT.TablesStudentResponse,
+			STUDENT.PostStudentPropsResponse,
 			STUDENT.PostStudentPropsRequest
 		>({
 			query: (newStudent) => ({
@@ -50,11 +50,10 @@ export const api = index.injectEndpoints({
 		}),
 
 		// ! patch isBlock
-		patchCompletedMutation: builder.mutation({
-			query: ({ updated, saveIdElement }) => ({
+		isBlockStudent: builder.mutation({
+			query: (saveIdElement) => ({
 				url: `/api/students/isBlock/${saveIdElement}`,
-				method: 'PATCH',
-				body: updated
+				method: 'POST'
 			}),
 			invalidatesTags: ['student']
 		})
@@ -66,5 +65,5 @@ export const {
 	usePostStudentTableMutation,
 	useDeleteStudentTableMutation,
 	usePatchStudentTableMutation,
-	usePatchCompletedMutationMutation
+	useIsBlockStudentMutation
 } = api;

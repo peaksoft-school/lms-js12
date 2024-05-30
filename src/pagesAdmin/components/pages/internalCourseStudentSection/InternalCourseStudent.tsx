@@ -1,11 +1,11 @@
-import { KeyboardEvent, useEffect, useState } from 'react';
-import { Pagination, Stack } from '@mui/material';
+import {  useEffect, useState } from 'react';
+// import { Pagination, Stack } from '@mui/material';
 import {
 	useGetStudentTableQuery,
-	usePatchCompletedMutationMutation
+	useIsBlockStudentMutation
 } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
-import { IconArticle, IconBook } from '@tabler/icons-react';
+// import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './InternalCourseStudent.module.scss';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
@@ -26,18 +26,18 @@ interface Student {
 const InternalCourses = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const [openPart, setOpenPart] = useState(1);
 	const { data, isLoading, error } = useGetStudentTableQuery();
-	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
-	const [saveItem, setSaveItem] = useState<Student | null>(null);
-	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
+	// const [openPart, setOpenPart] = useState(1);
+	// const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
+	// const [saveItem, setSaveItem] = useState<Student | null>(null);
+	const [patchCompletedMutation] = useIsBlockStudentMutation();
 
-	useEffect(() => {
-		if (!isLoading && !error && data) {
-			setOpenPart(1);
-			setCurrentPage(1);
-		}
-	}, [data, isLoading, error]);
+	// useEffect(() => {
+	// 	if (!isLoading && !error && data) {
+	// 		setOpenPart(1);
+	// 		setCurrentPage(1);
+	// 	}
+	// }, [data, isLoading, error]);
 
 	const updateCompletedFunc = async (
 		id: number | null,
@@ -58,25 +58,25 @@ const InternalCourses = () => {
 		}
 	};
 
-	const handlePageChange = (_e: React.ChangeEvent<unknown>, page: number) => {
-		setCurrentPage(page);
-		if (saveItem !== null && saveIdElement !== null) {
-			updateCompletedFunc(saveIdElement, saveItem);
-		}
-	};
+	// const handlePageChange = (_e: React.ChangeEvent<unknown>, page: number) => {
+	// 	setCurrentPage(page);
+	// 	if (saveItem !== null && saveIdElement !== null) {
+	// 		updateCompletedFunc(saveIdElement, saveItem);
+	// 	}
+	// };
 
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-			} else {
-				setRowsPerPage(12);
-			}
-		}
-	};
+	// const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
+	// 	if (event.key === 'Enter') {
+	// 		const newOpenPage = parseInt(event.currentTarget.value);
+	// 		if (newOpenPage > 12) {
+	// 			setRowsPerPage(newOpenPage);
+	// 			setOpenPart(1);
+	// 			setCurrentPage(1);
+	// 		} else {
+	// 			setRowsPerPage(12);
+	// 		}
+	// 	}
+	// };
 
 	if (isLoading) {
 		return <Preloader />;
@@ -116,11 +116,11 @@ const InternalCourses = () => {
 											</thead>
 											<tbody>
 												{data
-													?.slice(
-														(currentPage - 1) * rowsPerPage,
-														currentPage * rowsPerPage
-													)
-													.map((item: Student, index) => (
+													// ?.slice(
+													// 	(currentPage - 1) * rowsPerPage,
+													// 	currentPage * rowsPerPage
+													// )
+													?.map((item: Student, index) => (
 														<tr
 															key={item._id}
 															className={
@@ -204,7 +204,7 @@ const InternalCourses = () => {
 						</Box>
 					</ScrollArea>
 				</div>
-				<div className={scss.pagination}>
+				{/* <div className={scss.pagination}>
 					<div className={scss.inputs}>
 						<p className={scss.text}>Перейти на страницу</p>
 						<div className={scss.pagination_element}>
@@ -244,7 +244,7 @@ const InternalCourses = () => {
 							}}
 						/>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

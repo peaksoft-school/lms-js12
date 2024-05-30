@@ -38,7 +38,11 @@ const DeleteStudentModal: FC<StudentModalProps> = ({
 		>
 			<DialogContent>
 				<DialogContentText id="alert-dialog-description">
-					<h3>Вы уверены, что хотите удалить этого студента?</h3>
+					<p
+						style={{ fontSize: '21px', fontWeight: '600', fontFamily: 'Inter' }}
+					>
+						Вы уверены, что хотите удалить этого студента?
+					</p>
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions

@@ -1,11 +1,11 @@
 import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
 import SearchPhoto from '@/src/assets/svgs/search.svg';
 import {
-	useGetStudentTableQuery,
-	usePatchCompletedMutationMutation
+	useGetStudentTableQuery
+	// useIsBlockStudentMutation
 } from '@/src/redux/api/admin/student';
 import Input from '@/src/ui/customInput/Input';
-import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
+import ExcelModal from '@/src/ui/customModal/ExcelModal';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
 import { Preloader } from '@/src/ui/preloader/Preloader.tsx';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
@@ -42,7 +42,6 @@ const Student = () => {
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
 	const [saveItem, setSaveItem] = useState<Student | undefined>(undefined);
 	const [open, setOpen] = useState(false);
 	const [openStudent, setOpenStudent] = useState<boolean>(false);
@@ -83,16 +82,14 @@ const Student = () => {
 		}
 	};
 
-	console.log(saveItem);
-
-	const updateCompletedFunc = async () => {
-		if (saveItem) {
-			const updated = {
-				isBlock: !saveItem.isBlock
-			};
-			await patchCompletedMutation({ updated, saveIdElement });
-		}
-	};
+	// const updateCompletedFunc = async () => {
+	// 	if (saveItem) {
+	// 		const updated = {
+	// 			isBlock: !saveItem.isBlock
+	// 		};
+	// 		await isBlockStudent({ updated, saveIdElement });
+	// 	}
+	// };
 
 	const filteredData = data?.students.filter((student) => {
 		const searchTermLower = searchTerm.toLowerCase();
@@ -133,7 +130,12 @@ const Student = () => {
 							</div>
 						</div>
 						<div className={scss.buttons}>
-							<Button size="large" className={scss.button} variant="outlined">
+							<Button
+								size="large"
+								onClick={handleOpenSearch}
+								className={scss.button}
+								variant="outlined"
+							>
 								<div className={scss.icon}>
 									<IconUpload stroke={2} />
 								</div>
@@ -257,7 +259,6 @@ const Student = () => {
 													open={Boolean(anchorEl)}
 													onClose={() => setAnchorEl(null)}
 													setOpenDeleteModal={setOpenDeleteModal}
-													updateCompletedFunc={updateCompletedFunc}
 													item={saveItem}
 													saveIdElement={saveIdElement}
 													openDeleteModal={openDeleteModal}
@@ -312,7 +313,7 @@ const Student = () => {
 					</div>
 				</div>
 			</div>
-			<ExelModal handleClose={handleCloseSearch} open={open} />
+			<ExcelModal handleClose={handleCloseSearch} open={open} />
 			<ModalAddStudent open={openStudent} handleClose={handleCloseStudent} />
 		</div>
 	);

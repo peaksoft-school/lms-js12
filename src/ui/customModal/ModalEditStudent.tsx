@@ -1,54 +1,15 @@
-import { FC, useState, useEffect } from 'react';
-import {
-	Modal,
-	Box,
-	Typography,
-	InputAdornment,
-	IconButton
-} from '@mui/material';
+import { FC, useEffect } from 'react';
+import { Modal, Box, Typography } from '@mui/material';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
-import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import {
 	useGetStudentTableQuery,
 	usePatchStudentTableMutation
 } from '@/src/redux/api/admin/student';
-
 import * as React from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
 import Input from '../customInput/Input';
-
-const names = [
-	'Java 14',
-	'JS 14',
-	'Java 13',
-	'JS 13',
-	'Java 12',
-	'JS 12',
-	'Flutter',
-	'English lesson'
-];
-
-const formats = ['Online', 'OFFLINE'];
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-	PaperProps: {
-		style: {
-			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-			width: 250
-		}
-	}
-};
 
 interface PostStudentProps {
 	firstName: string;
@@ -84,25 +45,12 @@ const ModalEditStudent: FC<EditModalProps> = ({
 	saveIdElement
 }) => {
 	const { handleSubmit, control, reset } = useForm<PostStudentProps>();
-	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
 	const [patchStudentTable] = usePatchStudentTableMutation();
-	const { data } = useGetStudentTableQuery();
-	const handleClickShowSecondPassword = () =>
-		setShowSecondPassword((show) => !show);
-	const handleMouseDownSecondPassword1 = (
-		event: React.MouseEvent<HTMLButtonElement>
-	) => event.preventDefault();
+	const { data: students = [] } = useGetStudentTableQuery();
 	const [personName, setPersonName] = React.useState<string[]>([]);
 	const [formatName, setFormatName] = React.useState<string[]>([]);
 
-	// ! first select
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-		const {
-			target: { value }
-		} = event;
-		setPersonName(typeof value === 'string' ? value.split(',') : value);
-	};
-	const finder = data?.students.find(
+	const finder = students?.students.find(
 		(id: { id: number | null }) => id.id === saveIdElement
 	);
 	useEffect(() => {
@@ -113,14 +61,6 @@ const ModalEditStudent: FC<EditModalProps> = ({
 			setPersonName(Array.isArray(finder.group) ? finder.group : []);
 		}
 	}, [finder]);
-
-	// ! second select
-	const handleFormatChange = (event: SelectChangeEvent<typeof formatName>) => {
-		const {
-			target: { value }
-		} = event;
-		setFormatName(typeof value === 'string' ? value.split(',') : value);
-	};
 
 	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
 		const editStudent = {
@@ -223,84 +163,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											placeholder="Email"
 										/>
 									)}
-								/>{' '}
-								<Controller
-									name="password"
-									control={control}
-									render={({ field }) => (
-										<OutlinedInput
-											style={{ width: '100%', maxWidth: '470px' }}
-											{...field}
-											className={scss.OutlinedInputEyes}
-											placeholder="Password"
-											type={showSecondPassword ? 'text' : 'password'}
-											endAdornment={
-												<InputAdornment position="end">
-													<IconButton
-														aria-label="toggle password visibility"
-														onClick={handleClickShowSecondPassword}
-														onMouseDown={handleMouseDownSecondPassword1}
-														edge="end"
-													>
-														{showSecondPassword ? (
-															<IconOpen_Eye />
-														) : (
-															<IconClosed />
-														)}
-													</IconButton>
-												</InputAdornment>
-											}
-										/>
-									)}
 								/>
-								{/*//! select first  input*/}
-								<FormControl sx={{ width: 300 }}>
-									<InputLabel id="demo-multiple-checkbox-label">
-										Группа
-									</InputLabel>
-									<Select
-										style={{ borderRadius: '12px' }}
-										labelId="demo-multiple-checkbox-label"
-										id="demo-multiple-checkbox"
-										multiple
-										value={personName}
-										onChange={handleChange}
-										input={<OutlinedInput label="group" />}
-										renderValue={(selected) => selected.join(', ')}
-										MenuProps={MenuProps}
-									>
-										{names.map((name) => (
-											<MenuItem key={name} value={name}>
-												<Checkbox checked={personName.indexOf(name) > -1} />
-												<ListItemText primary={name} />
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-								{/* //! second select  */}
-								<FormControl sx={{ width: 300 }}>
-									<InputLabel id="demo-multiple-checkbox-label">
-										Формат обучения
-									</InputLabel>
-									<Select
-										style={{ borderRadius: '12px' }}
-										labelId="demo-multiple-checkbox-label"
-										id="demo-multiple-checkbox"
-										multiple
-										value={formatName}
-										onChange={handleFormatChange}
-										input={<OutlinedInput label="TrainingFormat" />}
-										renderValue={(selected) => selected.join(', ')}
-										MenuProps={MenuProps}
-									>
-										{formats.map((name) => (
-											<MenuItem key={name} value={name}>
-												<Checkbox checked={formatName.indexOf(name) > -1} />
-												<ListItemText primary={name} />
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
 							</div>
 							<div
 								style={{

@@ -6,6 +6,7 @@ import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import DeleteStudentModal from '@/src/ui/customModal/deleteModal/DeleteStudentModal';
 import ModalEditStudent from '../customModal/ModalEditStudent';
+import IsBlock from '../InstructorModal/IsBlock';
 
 interface StudentMenuItem {
 	id: number;
@@ -22,12 +23,12 @@ interface MenuProps {
 	anchorEl: null | HTMLElement;
 	open: boolean;
 	onClose: () => void;
-	setOpenEditModal: (value: boolean) => void;
 	setOpenDeleteModal: (value: boolean) => void;
 	updateCompletedFunc: () => void;
-	item: StudentMenuItem[] | undefined;
+	item: StudentMenuItem | undefined;
 	saveIdElement: number | null;
 	openDeleteModal: boolean;
+	setFilteredData: React.Dispatch<React.SetStateAction<StudentMenuItem[]>>;
 }
 
 const StudentMenu: FC<MenuProps> = ({
@@ -35,19 +36,40 @@ const StudentMenu: FC<MenuProps> = ({
 	open,
 	onClose,
 	setOpenDeleteModal,
-	updateCompletedFunc,
 	item,
 	saveIdElement,
-	openDeleteModal
+	openDeleteModal,
+	setFilteredData
 }) => {
-	const data = item?.find((el) => el.id === saveIdElement);
-
 	const [openEditModalState, setOpenEditModalState] = useState(false);
+	const [openIsBlockModal, setOpenIsBlockModal] = useState(false);
+
 	const handleCloseEditModal = () => {
 		setOpenEditModalState(false);
 	};
+
 	const handleOpenEditModal = () => {
 		setOpenEditModalState(true);
+	};
+
+	const handleOpenIsBlockModal = () => {
+		setOpenIsBlockModal(true);
+		onClose();
+	};
+
+	const handleCloseIsBlockModal = () => {
+		setOpenIsBlockModal(false);
+	};
+
+	const handleBlockUnblock = () => {
+		setFilteredData((prevData) =>
+			prevData.map((student) =>
+				student.id === saveIdElement
+					? { ...student, isBlock: !student.isBlock }
+					: student
+			)
+		);
+		setOpenIsBlockModal(false);
 	};
 
 	return (
@@ -97,17 +119,16 @@ const StudentMenu: FC<MenuProps> = ({
 					key="block-unblock"
 					style={{ display: 'flex', gap: '10px' }}
 					onClick={() => {
-						updateCompletedFunc();
-						onClose();
+						handleOpenIsBlockModal();
 					}}
 				>
-					{data?.isBlock ? (
+					{item?.isBlock ? (
 						<>
-							<img src={LockOpenStudent} alt="Unlock" /> Разблокировать
+							<img src={LockBlockStudent} alt="Lock" /> Заблокировать
 						</>
 					) : (
 						<>
-							<img src={LockBlockStudent} alt="Lock" /> Заблокировать
+							<img src={LockOpenStudent} alt="Unlock" /> Разблокировать
 						</>
 					)}
 				</MenuItem>
@@ -121,6 +142,13 @@ const StudentMenu: FC<MenuProps> = ({
 				open={openDeleteModal}
 				handleCloseModal={() => setOpenDeleteModal(false)}
 				saveIdElement={saveIdElement}
+			/>
+			<IsBlock
+				openIsBlock={openIsBlockModal}
+				handleCloseIsBlock={handleCloseIsBlockModal}
+				saveIdElement={saveIdElement}
+				isBlock={item?.isBlock}
+				handleBlockUnblock={handleBlockUnblock}
 			/>
 		</div>
 	);

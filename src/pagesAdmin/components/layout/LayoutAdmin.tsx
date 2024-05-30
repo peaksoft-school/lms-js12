@@ -9,7 +9,6 @@ import CalendarPage from '../pages/CalendarPage';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup.tsx';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
@@ -27,6 +26,7 @@ import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import Groups from '../pages/groupSection/Group.tsx';
+import { useGetGroupQuery } from '@/src/redux/api/admin/groups/index.ts';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -188,6 +188,10 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
+						<Route
+							path="/group/page/:numberGroup/size/:size"
+							element={<Groups />}
+						/>
 						<Route path="/announcement" element={<AnnouncementPage />} />
 					</Routes>
 				</main>
