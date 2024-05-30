@@ -1,36 +1,39 @@
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
-import {
-	useGetStudentTableQuery,
-	usePatchCompletedMutationMutation
-} from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './InternalCourseStudent.module.scss';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import { Box, ScrollArea } from '@mantine/core';
+import { useGetAllStudentsCourseQuery } from '@/src/redux/api/admin/courses';
+import { useParams } from 'react-router-dom';
+import IsBlockCourses from '@/src/ui/customModal/deleteModal/IsBlockCourses';
 
-interface Student {
-	_id: number;
-	firstName: string;
-	lastName: string;
-	group: string;
-	TrainingFormat: string;
-	phone_number: string;
-	email: string;
-	password: string;
-	isCompleted: boolean;
+interface Pages {
+	page: number;
+	size: number;
+	role: string;
 }
 
 const InternalCourses = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
-	const { data, isLoading, error } = useGetStudentTableQuery();
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
-	const [saveItem, setSaveItem] = useState<Student | null>(null);
-	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
+	const [openBlock, setOpenBlock] = useState(false);
+	const [saveBlock, setSaveBlock] = useState(false);
+	const { courseId } = useParams();
+	const pages: Pages = {
+		page: currentPage,
+		size: rowsPerPage,
+		role: 'STUDENT'
+	};
+
+	const { data, isLoading, error } = useGetAllStudentsCourseQuery({
+		courseId,
+		pages
+	});
 
 	useEffect(() => {
 		if (!isLoading && !error && data) {
@@ -38,32 +41,6 @@ const InternalCourses = () => {
 			setCurrentPage(1);
 		}
 	}, [data, isLoading, error]);
-
-	const updateCompletedFunc = async (
-		id: number | null,
-		item: Student | null
-	) => {
-		if (id !== null && item !== null) {
-			const updated = {
-				firstName: item.firstName,
-				lastName: item.lastName,
-				email: item.email,
-				group: item.group,
-				phone_number: item.phone_number,
-				TrainingFormat: item.TrainingFormat,
-				password: item.password,
-				isCompleted: !item.isCompleted
-			};
-			await patchCompletedMutation({ updated, saveIdElement: id });
-		}
-	};
-
-	const handlePageChange = (_e: React.ChangeEvent<unknown>, page: number) => {
-		setCurrentPage(page);
-		if (saveItem !== null && saveIdElement !== null) {
-			updateCompletedFunc(saveIdElement, saveItem);
-		}
-	};
 
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
@@ -101,8 +78,7 @@ const InternalCourses = () => {
 											<thead>
 												<tr>
 													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя</th>
-													<th>Фамилия</th>
+													<th>Имя Фамилия</th>
 													<th>Группа</th>
 													<th>Формат обучения</th>
 													<th>Номер телефона</th>
@@ -115,87 +91,82 @@ const InternalCourses = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data
-													?.slice(
-														(currentPage - 1) * rowsPerPage,
-														currentPage * rowsPerPage
-													)
-													.map((item: Student, index) => (
-														<tr
-															key={item._id}
-															className={
-																index % 2 === 1
-																	? scss.table_alternate_row
-																	: '' || scss.internal
-															}
-														>
-															<td
+												{data!.getAllStudentsOfCourses &&
+													data!.getAllStudentsOfCourses
+														// ?.slice(
+														// 	(currentPage - 1) * rowsPerPage,
+														// 	currentPage * rowsPerPage
+														// )
+														.map((item, index: number) => (
+															<tr
+																key={item.id}
 																className={
-																	!item.isCompleted ? scss.changeClass : ''
+																	index % 2 === 1
+																		? scss.table_alternate_row
+																		: '' || scss.internal
 																}
 															>
-																{index + 1 + (currentPage - 1) * rowsPerPage}
-															</td>
-															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
-															>
-																{item.firstName}
-															</td>
-															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
-															>
-																{item.lastName}
-															</td>
-															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
-															>
-																{item.group}
-															</td>
-															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
-															>
-																{item.TrainingFormat}
-															</td>
-															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
-															>
-																{item.phone_number}
-															</td>
-															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
-															>
-																{item.email}
-															</td>
-															<td>
-																<button
-																	className={scss.button}
-																	onClick={() => {
-																		setSaveIdElement(item._id);
-																		setSaveItem(item);
-																		updateCompletedFunc(item._id, item);
-																	}}
+																<td
+																	className={
+																		!item.isBlock ? scss.changeClass : ''
+																	}
 																>
-																	{item.isCompleted ? (
-																		<img src={LockOpenStudent} alt="#" />
-																	) : (
-																		<img src={LockBlockStudent} alt="#" />
-																	)}
-																</button>
-															</td>
-														</tr>
-													))}
+																	{index + 1 + (currentPage - 1) * rowsPerPage}
+																</td>
+
+																<td
+																	className={
+																		!item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.fullName}
+																</td>
+																<td
+																	className={
+																		!item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.courseName}
+																</td>
+																<td
+																	className={
+																		!item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.specializationOrStudyFormat}
+																</td>
+																<td
+																	className={
+																		!item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.phoneNumber}
+																</td>
+																<td
+																	className={
+																		!item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.email}
+																</td>
+																<td>
+																	<button
+																		className={scss.button}
+																		onClick={() => {
+																			setOpenBlock(true);
+																			setSaveIdElement(item.id);
+																			setSaveBlock(item.isBlock);
+																		}}
+																	>
+																		{item.isBlock ? (
+																			<img src={LockOpenStudent} alt="#" />
+																		) : (
+																			<img src={LockBlockStudent} alt="#" />
+																		)}
+																	</button>
+																</td>
+															</tr>
+														))}
 											</tbody>
 										</table>
 									</div>
@@ -222,9 +193,11 @@ const InternalCourses = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								count={Math.ceil(
+									data!.getAllStudentsOfCourses.length / rowsPerPage
+								)}
 								page={currentPage}
-								onChange={handlePageChange}
+								// onChange={}
 								shape="rounded"
 								variant="outlined"
 							/>
@@ -246,6 +219,12 @@ const InternalCourses = () => {
 					</div>
 				</div>
 			</div>
+			<IsBlockCourses
+				openModalBlock={openBlock}
+				handleCloseModal={() => setOpenBlock(false)}
+				saveIdElement={saveIdElement}
+				saveBlock={saveBlock}
+			/>
 		</div>
 	);
 };

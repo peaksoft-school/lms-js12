@@ -10,11 +10,12 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IconDownload } from '@tabler/icons-react';
 import { Dayjs } from 'dayjs';
 import { Box, ScrollArea } from '@mantine/core';
 const AddTask = () => {
+	const { courseId, lessonId } = useParams();
 	const [title, setTitle] = useState('');
 	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
 		null
@@ -82,8 +83,6 @@ const AddTask = () => {
 	// 	setTitle('');
 	// 	setSelectedDate(null);
 	// };
-	const lessonId = localStorage.getItem('lessonId');
-	const _id = localStorage.getItem('id');
 
 	return (
 		<div className={scss.addTask}>
@@ -180,7 +179,7 @@ const AddTask = () => {
 								width="105px"
 								onClick={() =>
 									navigate(
-										`/instructor/course/${_id}/materials/${lessonId}/lesson`
+										`/instructor/course/${courseId}/materials/${lessonId}/lesson`
 									)
 								}
 							>

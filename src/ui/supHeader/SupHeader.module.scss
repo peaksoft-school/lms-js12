@@ -15,14 +15,14 @@
 	top: 0;
 	z-index: 50;
 	background: #eff0f4;
+	padding-inline: 20px;
 
 	.header_elements {
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
 		padding-block: 30px;
-		padding-inline: 30px;
-		gap: 10px;
+		gap: 14px;
 
 		.profile {
 			width: 30px;
@@ -62,8 +62,8 @@
 		justify-content: flex-end;
 		align-items: center;
 		padding-block: 30px;
-		padding-inline: 30px;
-		gap: 10px;
+		// padding-inline: 30px;
+		gap: 14px;
 		.profile_text {
 			@media (max-width: 600px) {
 				display: none;

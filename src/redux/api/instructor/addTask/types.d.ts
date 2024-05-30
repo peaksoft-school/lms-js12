@@ -22,7 +22,7 @@ namespace TASK {
 		dedline: Dayjs | null | undefined;
 	};
 	type UpdateTaskResponse = {
-		task: string | null;
+		getTaskId: string | null;
 		newtask: {
 			title: string;
 			description: string!;
@@ -31,7 +31,7 @@ namespace TASK {
 		};
 	}[];
 	type UpdateTaskRequest = {
-		task: string | null;
+		getTaskId: string | null;
 		newtask: {
 			title: string;
 			description: string!;

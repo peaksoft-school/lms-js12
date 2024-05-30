@@ -124,12 +124,11 @@ const Teacher = () => {
 											<thead>
 												<tr>
 													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя</th>
-													<th> Фамилия</th>
+													<th>Имя Фамилия</th>
 													<th>Специализация</th>
 													<th>Номер телефона</th>
 													<th>E-mail</th>
-													<th>Группа</th>
+													{/* <th>Группа</th> */}
 													<th
 														style={{ textAlign: 'end', paddingRight: '10px' }}
 													>
@@ -138,8 +137,8 @@ const Teacher = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data &&
-													data
+												{data?.instructorResponses &&
+													data.instructorResponses
 														.slice(
 															(currentPage - 1) * rowsPerPage,
 															currentPage * rowsPerPage
@@ -158,11 +157,9 @@ const Teacher = () => {
 																</td>
 
 																<td className={scss.TableCell}>
-																	{item.firstName}
+																	{item.fullName}
 																</td>
-																<td className={scss.TableCell}>
-																	{item.lastName}
-																</td>
+
 																<td className={scss.TableCell}>
 																	{item.specialization}
 																</td>
@@ -170,7 +167,7 @@ const Teacher = () => {
 																	{item.phoneNumber}
 																</td>
 																<td className={scss.TableCell}>{item.email}</td>
-																<td className={scss.TableCell}>{item.group}</td>
+																{/* <td className={scss.TableCell}>{item.}</td> */}
 																<td className={scss.TableCellIcon}>
 																	<button
 																		className={scss.button}
@@ -271,7 +268,9 @@ const Teacher = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								count={Math.ceil(
+									data!.instructorResponses.length / rowsPerPage
+								)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

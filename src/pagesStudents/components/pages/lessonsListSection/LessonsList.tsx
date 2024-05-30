@@ -2,7 +2,7 @@ import scss from './LessonsList.module.scss';
 import { Pagination, Stack } from '@mui/material';
 import { useState, KeyboardEvent } from 'react';
 import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 
@@ -12,6 +12,7 @@ const LessonsList = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const { data: data = [] } = useGetMaterialsQuery();
+	const { courseId } = useParams();
 
 	const navigate = useNavigate();
 
@@ -50,8 +51,6 @@ const LessonsList = () => {
 		}
 	};
 
-	const id = localStorage.getItem('id');
-
 	return (
 		<div className={scss.list_lessons}>
 			<div className={scss.container}>
@@ -72,10 +71,11 @@ const LessonsList = () => {
 										<div
 											className={scss.cards}
 											onClick={() => {
-												localStorage.setItem('lessonId', String(item._id));
 												localStorage.setItem('taskName', String(item.title));
 												setTimeout(() => {
-													navigate(`/courses/${id}/materials/${item._id}`);
+													navigate(
+														`/courses/${courseId}/materials/${item._id}`
+													);
 												}, 1000);
 											}}
 											key={item._id}

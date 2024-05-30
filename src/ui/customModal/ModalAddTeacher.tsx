@@ -10,13 +10,8 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
-import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
+
 // import { ToastContainer, toast } from 'react-toastify';
 import { InputAdornment, IconButton } from '@mui/material';
 
@@ -35,37 +30,6 @@ interface TeacherAddProps {
 	handleClose: () => void;
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-	PaperProps: {
-		style: {
-			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-			width: 250
-		}
-	}
-};
-
-const names = [
-	'js-12',
-	'java-12',
-	'js-13',
-	'java-13',
-	'js-14',
-	'java-14',
-	'js-15',
-	'java-15',
-	'Virginia Andrews',
-	'Kelly Snyder'
-];
-
-const profestion = [
-	'js instructor',
-	'java  instructor',
-	'java mentor',
-	'js mentor'
-];
-
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -82,8 +46,7 @@ const style = {
 const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 	const { control, handleSubmit, reset } = useForm<IFormInputs>();
 	const [postTeacher] = usePostTeacherMutation();
-	const [personName, setPersonName] = useState<string[]>([]);
-	const [specialization, setSpecialization] = useState<string[]>([]);
+	// const [personName, setPersonName] = useState<string[]>([]);
 	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
 
 	const handleClickShowSecondPassword = () =>
@@ -97,48 +60,29 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 	// const notifySuccess = () => toast.success('Успешно добовлено');
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-		const { firstName, lastName, email, phoneNumber, login } = data;
+		const { firstName, lastName, email, phoneNumber, specialization } = data;
 
 		if (
 			firstName !== '' &&
 			lastName !== '' &&
 			email !== '' &&
 			phoneNumber !== '' &&
-			login !== '' &&
-			specialization.length > 0
+			specialization !== ''
 		) {
 			const postData = {
 				firstName: firstName,
 				lastName: lastName,
 				email: email,
 				phoneNumber: phoneNumber,
-				login: login,
-				specialization: specialization,
-				group: personName
+				specialization: specialization
 			};
 			await postTeacher(postData);
 
 			handleClose();
 			reset();
-			setPersonName([]);
-			setSpecialization([]);
-			// notifySuccess();
 		} else {
 			// notify();
 		}
-	};
-
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-		const {
-			target: { value }
-		} = event;
-		setPersonName(typeof value === 'string' ? value.split(',') : value);
-	};
-	const handleChangeAge = (event: SelectChangeEvent<typeof personName>) => {
-		const {
-			target: { value }
-		} = event;
-		setSpecialization(value as string[]);
 	};
 
 	return (
@@ -198,7 +142,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 									<Input
 										size="medium"
 										{...field}
-										type="number"
+										type="string"
 										width="100%"
 										placeholder="Phone Number"
 									/>
@@ -247,56 +191,21 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 									/>
 								)}
 							/>
-							<FormControl className={scss.seclect}>
-								<InputLabel id="demo-multiple-checkbox-label">
-									Specialization
-								</InputLabel>
-								<Select
-									className={scss.seclect}
-									labelId="demo-multiple-checkbox-label"
-									id="demo-multiple-checkbox"
-									multiple
-									value={specialization}
-									onChange={handleChangeAge}
-									input={<OutlinedInput label="Tag" />}
-									renderValue={(selected) => selected.join(', ')}
-									MenuProps={MenuProps}
-								>
-									{profestion.map((name) => (
-										<MenuItem key={name} value={name}>
-											<Checkbox
-												checked={
-													specialization && specialization.indexOf(name) > -1
-												}
-											/>
-											<ListItemText primary={name} />
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-							<div>
-								<FormControl className={scss.seclect}>
-									<InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
-									<Select
-										className={scss.seclect}
-										labelId="demo-multiple-checkbox-label"
-										id="demo-multiple-checkbox"
-										multiple
-										value={personName}
-										onChange={handleChange}
-										input={<OutlinedInput label="Tag" />}
-										renderValue={(selected) => selected.join(', ')}
-										MenuProps={MenuProps}
-									>
-										{names.map((name) => (
-											<MenuItem key={name} value={name}>
-												<Checkbox checked={personName.indexOf(name) > -1} />
-												<ListItemText primary={name} />
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							</div>
+
+							<Controller
+								name="specialization"
+								control={control}
+								defaultValue=""
+								render={({ field }) => (
+									<Input
+										size="medium"
+										{...field}
+										type="string"
+										width="100%"
+										placeholder="Специализация"
+									/>
+								)}
+							/>
 						</div>
 
 						<div

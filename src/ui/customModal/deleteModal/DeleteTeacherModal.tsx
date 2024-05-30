@@ -25,6 +25,7 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 		await deleteTeacher(deleteById!);
 		closeModalDelete(false);
 	};
+	console.log(deleteById);
 
 	return (
 		<div>

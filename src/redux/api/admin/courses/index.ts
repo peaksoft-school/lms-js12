@@ -7,7 +7,7 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.CoursesAdminRequest
 		>({
 			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse',
+				url: `/api/course/findAllCourse`,
 				method: 'GET'
 			}),
 			providesTags: ['courses']
@@ -17,7 +17,7 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.CreateAdminCourseRequest
 		>({
 			query: (newCourse) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse',
+				url: '/api/course/createCourse',
 				method: 'POST',
 				body: newCourse
 			}),
@@ -27,19 +27,75 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.UpdateCourseResponse,
 			ADMINCOURSES.UpdateCourseRequest
 		>({
-			query: ({ newCourse, saveId }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse${saveId}`,
-				method: 'PATCH',
-				body: newCourse
+			query: ({ newCourses, saveId }) => ({
+				url: `/api/course/updateCourse/${saveId}`,
+				method: 'PUT',
+				body: newCourses
 			}),
 			invalidatesTags: ['courses']
 		}),
 		deleteCourse: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/cb34195f8b96cae710c21e9eb21c8c08/createCourse${deleteById}`,
+				url: `/api/course/deleteCourse/${deleteById}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['courses']
+		}),
+		getAllInstructorCourse: builder.query<
+			ADMINCOURSES.GetInstructorCourseResponse,
+			ADMINCOURSES.GetInstructorCourseRequest
+		>({
+			query: ({ courseId, pages }) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courseId}`,
+				params: {
+					page: pages.page,
+					size: pages.size,
+					role: pages.role
+				},
+				method: 'GET'
+			}),
+			providesTags: ['courses']
+		}),
+		getAllStudentsCourse: builder.query<
+			ADMINCOURSES.GetInstructorCourseResponse,
+			ADMINCOURSES.GetInstructorCourseRequest
+		>({
+			query: ({ courseId, pages }) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courseId}`,
+				params: {
+					page: pages.page,
+					size: pages.size,
+					role: pages.role
+				},
+				method: 'GET'
+			}),
+			providesTags: ['courses']
+		}),
+
+		appointAdminCourse: builder.mutation({
+			query: ({ courseId, selectId }) => ({
+				url: `/api/course/assignInInstructorToCourse/${courseId}/{instructorId}?instructorIds=${selectId}`,
+				method: 'POST'
+			}),
+			invalidatesTags: ['courses']
+		}),
+		createStudentBlockCourses: builder.mutation({
+			query: (id) => ({
+				url: `/api/students/isBlock/${id}`,
+				method: 'POST'
+				// body: updated
+			}),
+			invalidatesTags: ['courses']
+		}),
+		getInstructorCourse: builder.query<
+			ADMINCOURSES.GetInstructorCourseResponse,
+			ADMINCOURSES.GetInstructorCourseRequest
+		>({
+			query: (courseId) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courseId}`,
+				method: 'GET'
+			}),
+			providesTags: ['courses']
 		})
 	})
 });
@@ -48,5 +104,10 @@ export const {
 	useGetAdminCourseQuery,
 	useCreateAdminCourseMutation,
 	useUpdateAdminCourseMutation,
-	useDeleteCourseMutation
+	useDeleteCourseMutation,
+	useGetAllInstructorCourseQuery,
+	useGetAllStudentsCourseQuery,
+	useAppointAdminCourseMutation,
+	useCreateStudentBlockCoursesMutation,
+	useGetInstructorCourseQuery
 } = api;
