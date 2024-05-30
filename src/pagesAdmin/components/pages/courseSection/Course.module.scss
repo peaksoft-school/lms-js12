@@ -110,6 +110,7 @@
 						flex-direction: column;
 						gap: 10px;
 						display: flex;
+
 						cursor: pointer;
 						@media (max-width: 1670px) {
 							max-width: 300px;
@@ -155,6 +156,7 @@
 
 						.block_cont {
 							padding-top: 12px;
+
 							.second_block {
 								display: flex;
 								justify-content: space-between;
