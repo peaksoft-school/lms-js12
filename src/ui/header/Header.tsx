@@ -6,6 +6,7 @@ import peaksoft from '@/src/assets/header-logo.png';
 import peaksoft2 from '@/src/assets/pealsoft.jpg';
 import { ScrollArea } from '@mantine/core';
 import { Box } from '@mui/material';
+import { IconAlignLeft } from '@tabler/icons-react';
 
 interface LayoutProps {
 	isOpen: boolean;
@@ -40,12 +41,17 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 							<span>CodeCommerse</span>
 						</div>
 						<button
+							style={{
+								background: 'none',
+								border: 'none',
+								paddingLeft: '10px'
+							}}
 							onClick={() => {
 								localStorage.setItem('isOpenNavBar', String(!isOpen));
 								setIsOpen(!isOpen);
 							}}
 						>
-							<i className="bx bx-menu" id="btn"></i>
+							<IconAlignLeft stroke={2} />
 						</button>
 						<ul>
 							<div className={scss.peaksoft_img}>

@@ -9,11 +9,7 @@ import scss from './Style.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
-
 // import { ToastContainer, toast } from 'react-toastify';
-import { InputAdornment, IconButton } from '@mui/material';
 
 interface IFormInputs {
 	firstName: string;
@@ -35,7 +31,7 @@ const style = {
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	width: 581,
+	width: 541,
 	backgroundColor: '#ffffff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
@@ -47,13 +43,13 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 	const { control, handleSubmit, reset } = useForm<IFormInputs>();
 	const [postTeacher] = usePostTeacherMutation();
 	// const [personName, setPersonName] = useState<string[]>([]);
-	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
+	// const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
 
-	const handleClickShowSecondPassword = () =>
-		setShowSecondPassword((show) => !show);
-	const handleMouseDownSecondPassword1 = (
-		event: React.MouseEvent<HTMLButtonElement>
-	) => event.preventDefault();
+	// const handleClickShowSecondPassword = () =>
+	// 	setShowSecondPassword((show) => !show);
+	// const handleMouseDownSecondPassword1 = (
+	// 	event: React.MouseEvent<HTMLButtonElement>
+	// ) => event.preventDefault();
 
 	// const notify = () =>
 	// 	toast.error('Пожалуйста, заполните все обязательные поля');
@@ -101,7 +97,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Добавление учителя</p>
+						<p className={scss.comText}>Добавить учителя</p>
 					</Typography>
 
 					<Box className={scss.input_button_card}>
@@ -116,7 +112,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="First Name"
+										placeholder=" Имя"
 									/>
 								)}
 							/>
@@ -130,7 +126,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Last Name"
+										placeholder="Фамилия"
 									/>
 								)}
 							/>
@@ -162,7 +158,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 									/>
 								)}
 							/>
-							<Controller
+							{/* <Controller
 								name="login"
 								control={control}
 								defaultValue=""
@@ -190,7 +186,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										}
 									/>
 								)}
-							/>
+							/> */}
 
 							<Controller
 								name="specialization"
@@ -216,7 +212,8 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								alignItems: 'center',
 								paddingBottom: '10px',
 								paddingTop: '13px',
-								gap: '10px'
+								gap: '10px',
+								paddingRight: '14px'
 							}}
 						>
 							<ButtonCancel
