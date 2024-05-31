@@ -1,18 +1,13 @@
-import {
-	IconAlignJustified,
-	IconChevronDown,
-	IconUserCircle
-} from '@tabler/icons-react';
+import { IconAlignJustified, IconChevronDown } from '@tabler/icons-react';
+import profile from '@/src/assets/svgs/Profile.png';
 import scss from './SubHeaderMobile.module.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 const SupHeaderMobile = () => {
 	const { pathname } = useLocation();
-	const [open, setOpen] = useState(false);
-
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const { courseId } = useParams();
 	const navigate = useNavigate();
 	const [anchorElOpen, setAnchorElOpen] = useState<null | HTMLElement>(null);
 	const [value, setValue] = useState<number>(0);
@@ -20,52 +15,40 @@ const SupHeaderMobile = () => {
 
 	useEffect(() => {
 		if (
-			pathname === `/admin/courses/${id}/teacher` &&
-			pathname === `/admin/courses/${id}/teacher`
+			pathname === `/admin/courses/${courseId}/teacher` &&
+			pathname === `/admin/courses/${courseId}/teacher`
 		) {
 			setValue(0);
 		}
 	}, [pathname]);
 	useEffect(() => {
 		if (
-			pathname === `/instructor/course/${id}/materials` &&
-			pathname === `/instructor/course/${id}/materials`
+			pathname === `/instructor/course/${courseId}/materials` &&
+			pathname === `/instructor/course/${courseId}/materials`
 		) {
 			setValue(0);
 		}
 	}, [pathname]);
 
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleLogout = () => {
-		navigate('/registration');
-	};
-	const isAdminCourseWithId = /^\/admin\/courses\/\w+$/.test(
-		window.location.pathname
-	);
-	const id = localStorage.getItem('id');
-	const isInstructorCourseWithId = /^\/instructor\/course\/\w+$/.test(pathname);
 	const openStudent = () => {
-		navigate(`/admin/courses/${id}/student`);
+		navigate(`/admin/courses/${courseId}/student`);
 	};
 	const openTeacher = () => {
-		navigate(`/admin/courses/${id}/teacher`);
+		navigate(`/admin/courses/${courseId}/teacher`);
 	};
 	const openMaterial = () => {
-		navigate(`/instructor/course/${id}/materials`);
+		navigate(`/instructor/course/${courseId}/materials`);
 	};
 	const openInstructorStudent = () => {
-		navigate(`/instructor/course/${id}/student`);
+		navigate(`/instructor/course/${courseId}/student`);
 	};
 	const openRatingStudent = () => {
-		navigate(`/courses/${id}/rating`);
+		navigate(`/courses/${courseId}/rating`);
 	};
 	const openMaterialStudent = () => {
-		navigate(`/courses/${id}/materials`);
+		navigate(`/courses/${courseId}/materials`);
 	};
 
-	const lessonId = localStorage.getItem('lessonId');
 	const openel = Boolean(anchorElOpen);
 	const handleClickOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorElOpen(event.currentTarget);
@@ -73,433 +56,206 @@ const SupHeaderMobile = () => {
 	const handleClose = () => {
 		setAnchorElOpen(null);
 	};
-	const task = localStorage.getItem('task');
+
 	return (
 		<div className={scss.header}>
-			{/* //! admin header */}
-			{pathname !== `/admin/courses/${id}/student` &&
-				pathname !== `/admin/courses/${id}/teacher` &&
-				pathname !== `/instructor/course/${id}/materials` &&
-				pathname !== `/instructor/course/${id}/student` &&
-				pathname !== `/instructor/course/${id}/materials/${lessonId}` &&
-				pathname !== '/instructor/course/' &&
-				pathname !== `/instructor/course/${id}/materials/${lessonId}/video` &&
-				pathname !== `/instructor/course/${id}/materials/${lessonId}/lesson` &&
-				pathname !== `/courses/${id}/materials` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/update` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/addTask` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/getTask` &&
-				pathname !== '/instructor/course/' &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/getTask` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notSubmitted` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/notAccepted` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/accepted` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/panding` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/lesson/${task}/late` &&
-				pathname !==
-					`/instructor/course/${id}/materials/${lessonId}/presentation` &&
-				pathname !== `/courses/${id}/materials/${lessonId}/video` &&
-				pathname !== `/courses/${id}/materials/${lessonId}/presentation` &&
-				pathname !== `/courses/${id}/materials/${lessonId}/test` &&
-				!isAdminCourseWithId &&
-				!isInstructorCourseWithId && (
-					<div className={scss.header_elements}>
-						<IconUserCircle className={scss.profile} stroke={2} />
-						<div
-							id="basic-button"
-							aria-controls={open ? 'basic-menu' : undefined}
-							aria-haspopup="true"
-							aria-expanded={open ? 'true' : undefined}
-							onClick={handleClick}
+			{/* //! admin header для /admin/courses */}
+			{pathname.startsWith(`/admin/courses/${courseId}`) && (
+				<div className={scss.subHeaderCourses2}>
+					<Button
+						id="basic-button"
+						aria-controls={openel ? 'basic-menu' : undefined}
+						aria-haspopup="true"
+						aria-expanded={openel ? 'true' : undefined}
+						onClick={handleClickOpen}
+					>
+						<IconAlignJustified stroke={2} />
+					</Button>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorElOpen}
+						open={openel}
+						onClose={handleClose}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								openTeacher();
+								handleClose();
+							}}
 						>
-							{pathname.startsWith('/admin') && (
-								<div style={{ fontSize: '18px', fontWeight: '500' }}>
-									{pathname.startsWith('/admin') && (
-										<>
-											<p> Aдминистратор</p>
-										</>
-									)}
-								</div>
-							)}
-							{pathname.startsWith('/instructor') && (
-								<div style={{ fontSize: '18px', fontWeight: '500' }}>
-									Учитель
-								</div>
-							)}
-							{pathname.startsWith('/courses') && (
-								<div style={{ fontSize: '18px', fontWeight: '500' }}>
-									Студент
-								</div>
-							)}
+							Учителя
+						</MenuItem>
+						<MenuItem
+							onClick={() => {
+								openStudent();
+								handleClose();
+							}}
+						>
+							Студенты
+						</MenuItem>
+					</Menu>
+
+					<div className={scss.header_elements}>
+						<img src={profile} alt="Profile" />
+						<div>
+							<p> Aдминистратор</p>
 						</div>
 						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-						<Menu
-							id="basic-menu"
-							anchorEl={anchorEl}
-							open={open}
-							onClose={() => setOpen(false)}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button'
-							}}
-						>
-							<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-						</Menu>
 					</div>
-				)}
-			{/* //! admin header для /admin/courses */}
-			{pathname === `/admin/courses/${id}/student` &&
-				pathname !== 'admin/courses' && (
-					<div className={scss.subHeaderCourses2}>
-						<Button
-							id="basic-button"
-							aria-controls={openel ? 'basic-menu' : undefined}
-							aria-haspopup="true"
-							aria-expanded={openel ? 'true' : undefined}
-							onClick={handleClickOpen}
-						>
-							<IconAlignJustified stroke={2} />
-						</Button>
-						<Menu
-							id="basic-menu"
-							anchorEl={anchorElOpen}
-							open={openel}
-							onClose={handleClose}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button'
-							}}
-						>
-							<MenuItem
-								onClick={() => {
-									openTeacher();
-									handleClose();
-								}}
-							>
-								Учителя
-							</MenuItem>
-							<MenuItem
-								onClick={() => {
-									openStudent();
-									handleClose();
-								}}
-							>
-								Студенты
-							</MenuItem>
-						</Menu>
-
-						<div className={scss.header_elements}>
-							<IconUserCircle className={scss.profile} stroke={2} />
-							<div
-								className={scss.profile_text}
-								id="basic-button"
-								aria-controls={open ? 'basic-menu' : undefined}
-								aria-haspopup="true"
-								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
-							>
-								{pathname.startsWith('/admin') && (
-									<div style={{ fontSize: '18px', fontWeight: '500' }}>
-										{pathname.startsWith('/admin') && (
-											<>
-												<p> Aдминистратор</p>
-											</>
-										)}
-										{pathname.startsWith('/instructor') && (
-											<>
-												<p>Учитель</p>
-											</>
-										)}
-										{pathname === '/' && (
-											<>
-												<p>Студент</p>
-											</>
-										)}
-									</div>
-								)}
-								{pathname.startsWith('/instructor') && (
-									<div
-										style={{ fontSize: '18px', fontWeight: '500' }}
-										className={scss.person}
-									>
-										Учитель
-									</div>
-								)}
-							</div>
-							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
-						</div>
-					</div>
-				)}
-			{pathname === `/admin/courses/${id}/teacher` &&
-				pathname !== 'admin/courses' && (
-					<div className={scss.subHeaderCourses2}>
-						<Button
-							id="basic-button"
-							aria-controls={openel ? 'basic-menu' : undefined}
-							aria-haspopup="true"
-							aria-expanded={openel ? 'true' : undefined}
-							onClick={handleClickOpen}
-						>
-							<IconAlignJustified stroke={2} />
-						</Button>
-						<Menu
-							id="basic-menu"
-							anchorEl={anchorElOpen}
-							open={openel}
-							onClose={handleClose}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button'
-							}}
-						>
-							<MenuItem
-								onClick={() => {
-									openTeacher();
-									handleClose();
-								}}
-							>
-								Учителя
-							</MenuItem>
-							<MenuItem
-								onClick={() => {
-									openStudent();
-									handleClose();
-								}}
-							>
-								Студенты
-							</MenuItem>
-						</Menu>
-
-						<div className={scss.header_elements}>
-							<IconUserCircle className={scss.profile} stroke={2} />
-							<div
-								className={scss.profile_text}
-								id="basic-button"
-								aria-controls={open ? 'basic-menu' : undefined}
-								aria-haspopup="true"
-								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
-							>
-								{pathname.startsWith('/admin') && (
-									<div style={{ fontSize: '18px', fontWeight: '500' }}>
-										{pathname.startsWith('/admin') && (
-											<>
-												<p> Aдминистратор</p>
-											</>
-										)}
-										{pathname.startsWith('/instructor') && (
-											<>
-												<p>Учитель</p>
-											</>
-										)}
-										{pathname === '/' && (
-											<>
-												<p>Студент</p>
-											</>
-										)}
-									</div>
-								)}
-								{pathname.startsWith('/instructor') && (
-									<div style={{ fontSize: '18px', fontWeight: '500' }}>
-										Учитель
-									</div>
-								)}
-							</div>
-							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
-						</div>
-					</div>
-				)}
+				</div>
+			)}
 			{/* //! ins */}
-			{pathname.startsWith('/instructor/course/') &&
-				pathname !== 'instructor/course' && (
-					<div className={scss.subHeaderCourses}>
-						<Button
-							id="basic-button"
-							aria-controls={openel ? 'basic-menu' : undefined}
-							aria-haspopup="true"
-							aria-expanded={openel ? 'true' : undefined}
-							onClick={handleClickOpen}
-						>
-							<IconAlignJustified stroke={2} />
-						</Button>
-						<Menu
-							id="basic-menu"
-							anchorEl={anchorElOpen}
-							open={openel}
-							onClose={handleClose}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button'
+			{/* {pathname.startsWith(`/courses/${courseId}`) && (
+				<div className={scss.subHeaderCourses2}>
+					<Button
+						id="basic-button"
+						aria-controls={openel ? 'basic-menu' : undefined}
+						aria-haspopup="true"
+						aria-expanded={openel ? 'true' : undefined}
+						onClick={handleClickOpen}
+					>
+						<IconAlignJustified stroke={2} />
+					</Button>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorElOpen}
+						open={openel}
+						onClose={handleClose}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								openTeacher();
+								handleClose();
 							}}
 						>
-							<MenuItem
-								onClick={() => {
-									openMaterial();
-									handleClose();
-								}}
-							>
-								Материалы
-							</MenuItem>
-							<MenuItem
-								onClick={() => {
-									openInstructorStudent();
-									handleClose();
-								}}
-							>
-								Студенты
-							</MenuItem>
-							<MenuItem
-								onClick={() => {
-									handleClose();
-								}}
-							>
-								Рейтинг студентов
-							</MenuItem>
-						</Menu>
-
-						<div className={scss.header_elements}>
-							<IconUserCircle className={scss.profile} stroke={2} />
-							<div
-								id="basic-button"
-								aria-controls={open ? 'basic-menu' : undefined}
-								aria-haspopup="true"
-								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
-							>
-								{pathname.startsWith('/admin') && (
-									<div className={scss.instructor_elements}>
-										{pathname.startsWith('/admin') && (
-											<>
-												<p> Aдминистратор</p>
-											</>
-										)}
-										{pathname.startsWith('/instructor') && (
-											<>
-												<p>Учитель</p>
-											</>
-										)}
-										{pathname === '/' && (
-											<>
-												<p>Студент</p>
-											</>
-										)}
-									</div>
-								)}
-								{pathname.startsWith('/instructor') && (
-									<div className={scss.instructor_profile}>Учитель</div>
-								)}
-							</div>
-							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
-						</div>
-					</div>
-				)}
-			{pathname.startsWith(`/courses/${id}/materials`) &&
-				pathname !== `/courses/${id}/rating` &&
-				pathname !== '/courses' && (
-					<div className={scss.subHeaderCourses}>
-						<Button
-							id="basic-button"
-							aria-controls={openel ? 'basic-menu' : undefined}
-							aria-haspopup="true"
-							aria-expanded={openel ? 'true' : undefined}
-							onClick={handleClickOpen}
-						>
-							<IconAlignJustified stroke={2} />
-						</Button>
-						<Menu
-							id="basic-menu"
-							anchorEl={anchorElOpen}
-							open={openel}
-							onClose={handleClose}
-							MenuListProps={{
-								'aria-labelledby': 'basic-button'
+							Учителя
+						</MenuItem>
+						<MenuItem
+							onClick={() => {
+								openStudent();
+								handleClose();
 							}}
 						>
-							<MenuItem
-								onClick={() => {
-									openMaterialStudent();
-								}}
-							>
-								Материалы
-							</MenuItem>
+							Студенты
+						</MenuItem>
+					</Menu>
 
-							<MenuItem
-								onClick={() => {
-									openRatingStudent();
-								}}
-							>
-								Рейтинг студентов
-							</MenuItem>
-						</Menu>
-
-						<div className={scss.header_elements}>
-							<IconUserCircle className={scss.profile} stroke={2} />
-							<div
-								id="basic-button"
-								aria-controls={open ? 'basic-menu' : undefined}
-								aria-haspopup="true"
-								aria-expanded={open ? 'true' : undefined}
-								onClick={handleClick}
-							>
-								<p>Студент</p>
-
-								{pathname.startsWith('/instructor') && (
-									<div className={scss.instructor_profile}>Учитель</div>
-								)}
-							</div>
-							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-							<Menu
-								id="basic-menu"
-								anchorEl={anchorEl}
-								open={open}
-								onClose={() => setOpen(false)}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button'
-								}}
-							>
-								<MenuItem onClick={handleLogout}>Выйти</MenuItem>
-							</Menu>
+					<div className={scss.header_elements}>
+						<IconUserCircle className={scss.profile} stroke={2} />
+						<div>
+							<p>Учитель</p>
 						</div>
+						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
 					</div>
-				)}
+				</div>
+			)} */}
+			{/* //! ins */}
+			{pathname.startsWith(`/instructor/course/${courseId}`) && (
+				<div className={scss.subHeaderCourses}>
+					<Button
+						id="basic-button"
+						aria-controls={openel ? 'basic-menu' : undefined}
+						aria-haspopup="true"
+						aria-expanded={openel ? 'true' : undefined}
+						onClick={handleClickOpen}
+					>
+						<IconAlignJustified stroke={2} />
+					</Button>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorElOpen}
+						open={openel}
+						onClose={handleClose}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								openMaterial();
+								handleClose();
+							}}
+						>
+							Материалы
+						</MenuItem>
+						<MenuItem
+							onClick={() => {
+								openInstructorStudent();
+								handleClose();
+							}}
+						>
+							Студенты
+						</MenuItem>
+						<MenuItem
+							onClick={() => {
+								handleClose();
+							}}
+						>
+							Рейтинг студентов
+						</MenuItem>
+					</Menu>
+
+					<div className={scss.header_elements}>
+						<img src={profile} alt="Profile" />
+						<div>
+							<p>Учитель</p>
+						</div>
+						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+					</div>
+				</div>
+			)}
+			{pathname.startsWith(`/courses/${courseId}`) && (
+				<div className={scss.subHeaderCourses}>
+					<Button
+						id="basic-button"
+						aria-controls={openel ? 'basic-menu' : undefined}
+						aria-haspopup="true"
+						aria-expanded={openel ? 'true' : undefined}
+						onClick={handleClickOpen}
+					>
+						<IconAlignJustified stroke={2} />
+					</Button>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorElOpen}
+						open={openel}
+						onClose={handleClose}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								openMaterialStudent();
+							}}
+						>
+							Материалы
+						</MenuItem>
+
+						<MenuItem
+							onClick={() => {
+								openRatingStudent();
+							}}
+						>
+							Рейтинг студентов
+						</MenuItem>
+					</Menu>
+
+					<div className={scss.header_elements}>
+						<img src={profile} alt="Profile" />
+						<div>
+							<p>Студент</p>
+						</div>
+						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };

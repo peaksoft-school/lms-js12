@@ -27,6 +27,7 @@ import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import Groups from '../pages/groupSection/Group.tsx';
+import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +41,7 @@ const LayoutAdmin = () => {
 	const [openTeacher, setOpenTeacher] = useState(false);
 	const [openStudent, setOpenModalStudent] = useState(false);
 	const handleOpenStudentModal = () => {
-		setOpenModalStudent(true);git p
+		setOpenModalStudent(true);
 	};
 
 	const handleOpenCourse = () => {
@@ -100,12 +101,21 @@ const LayoutAdmin = () => {
 				<main style={{ width: '100%' }}>
 					{!isMobile && (
 						<>
-							<SupHeader />
+							<Routes>
+								<Route path="/courses/:courseId/*" element={<SupHeader />} />
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					{isMobile && (
 						<>
-							<SupHeaderMobile />
+							<Routes>
+								<Route
+									path="/courses/:courseId/*"
+									element={<SupHeaderMobile />}
+								/>
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					<Routes>
@@ -114,7 +124,7 @@ const LayoutAdmin = () => {
 						<Route
 							path="/teacher"
 							element={
-								!data || data.length === 0 ? (
+								!data || data.instructorResponses.length === 0 ? (
 									<NotCreated
 										text="Вы пока не добавили учителей!"
 										name="Учителя"
@@ -165,11 +175,15 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route
-							path="/courses/:coursesPart/student"
+							path="/courses/:courseId/student"
 							element={<InternalCoursesPage />}
 						/>
 						<Route
-							path="/courses/:coursesTeacher/teacher"
+							path="/courses/page/:numberGroup/size/:size"
+							element={<CoursesPage />}
+						/>
+						<Route
+							path="/courses/:courseId/teacher"
 							element={<CoursesTeacher />}
 						/>
 						<Route
@@ -188,6 +202,10 @@ const LayoutAdmin = () => {
 							}
 						/>
 						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
+						<Route
+							path="/group/page/:numberGroup/size/:size"
+							element={<Groups />}
+						/>
 						<Route path="/announcement" element={<AnnouncementPage />} />
 					</Routes>
 				</main>

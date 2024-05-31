@@ -9,7 +9,7 @@ import {
 	IconLink
 } from '@tabler/icons-react';
 import 'keen-slider/keen-slider.min.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import VideoLessonPage from '../VideoLessonPage';
 
 import PresentationPage from '../PresentationPage';
@@ -22,27 +22,27 @@ const Lesson = () => {
 	const [value, setValue] = useState(0);
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
+	const { courseId, lessonId, getTaskId } = useParams();
 
 	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
 
-	const id = localStorage.getItem('id');
-	const item = localStorage.getItem('lessonId');
-
 	const openInstructorPresentation = () => {
-		navigate(`/instructor/course/${id}/materials/${item}/presentation`);
+		navigate(
+			`/instructor/course/${courseId}/materials/${lessonId}/presentation`
+		);
 	};
 
 	const handleOpenVideo = () => {
-		navigate(`/instructor/course/${id}/materials/${item}/video`);
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/video`);
 	};
 	const openLesson = () => {
-		navigate(`/instructor/course/${id}/materials/${item}/lesson`);
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/lesson`);
 	};
-	const task = localStorage.getItem('task');
+
 	const handleOpenTest = () => {
-		navigate(`/instructor/course/${id}/materials/${item}/test`);
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/test`);
 	};
 
 	return (
@@ -52,8 +52,8 @@ const Lesson = () => {
 				style={{
 					background: '#fff',
 					borderRadius: '10px',
-					width: '100%',
-					overflowY: 'scroll'
+					width: '100%'
+					// overflowY: 'scroll'
 				}}
 			>
 				<div
@@ -114,56 +114,56 @@ const Lesson = () => {
 								</Box>
 							</ScrollArea>
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/video` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/video` && (
 								<>
 									<VideoLessonPage />
 								</>
 							)}
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/presentation` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/presentation` && (
 								<>
 									<PresentationPage />
 								</>
 							)}
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson` && (
 								<>
 									<CrateTask />
 								</>
 							)}
 
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/panding` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding` && (
 								<>
 									<GetTask />
 								</>
 							)}
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/accepted` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/accepted` && (
 								<>
 									<GetTask />
 								</>
 							)}
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/notAccepted` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notAccepted` && (
 								<>
 									<GetTask />
 								</>
 							)}
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/late` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/late` && (
 								<>
 									<GetTask />
 								</>
 							)}
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/lesson/${task}/notSubmitted` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted` && (
 								<>
 									<GetTask />
 								</>
 							)}
 							{pathname ===
-								`/instructor/course/${id}/materials/${item}/test` && (
+								`/instructor/course/${courseId}/materials/${lessonId}/test` && (
 								<>
 									<Test />
 								</>

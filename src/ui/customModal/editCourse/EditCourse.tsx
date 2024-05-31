@@ -8,8 +8,10 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useEffect, useRef, useState } from 'react';
 
-import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
-import { useUpdateGroupMutation } from '@/src/redux/api/admin/groups';
+import {
+	useGetAdminCourseQuery,
+	useUpdateAdminCourseMutation
+} from '@/src/redux/api/admin/courses';
 
 const style = {
 	position: 'absolute',
@@ -31,10 +33,17 @@ interface EditModalProps {
 	handleClose: () => void;
 	saveId: number | null;
 }
+interface UpadteProps {
+	id: number;
+	image: string | undefined;
+	title: string;
+	description: string;
+	dateOfEnd: string;
+}
 
 const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetAdminCourseQuery();
-	const find = data?.find((id) => id._id === saveId);
+	const find = data?.courses.find((el: UpadteProps) => el.id === saveId);
 
 	const [value, setValue] = useState<string>('');
 	const [date, setData] = useState<string>('');
@@ -42,7 +51,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const [hidePhoto, setHidePhoto] = useState<boolean>(false);
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [updateGroup] = useUpdateGroupMutation();
+	const [updateGroup] = useUpdateAdminCourseMutation();
 
 	useEffect(() => {
 		setValue(find?.title || '');
@@ -72,13 +81,15 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	};
 
 	const updateGroupFunc = async () => {
-		const newGroup = {
+		const newCourses = {
 			title: value,
-			img: image,
-			date: date,
-			text: text
+			image: image,
+			dateOfEnd: date,
+			description: text
 		};
-		await updateGroup({ newGroup, saveId });
+		await updateGroup({ newCourses, saveId });
+		console.log(saveId, 'working');
+
 		handleClose();
 	};
 
@@ -116,9 +127,10 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 								className={hidePhoto ? scss.backgroundNone : scss.background}
 								style={{ backgroundImage: `url(${image || galerry})` }}
 							></div>
-							<p className={hidePhoto ? scss.hideText : scss.show}>
+							Нажмите на иконку чтобы загрузить или перетащите фото
+							{/* <p className={hidePhoto ? scss.hideText : scss.show}>
 								Нажмите на иконку чтобы загрузить или перетащите фото
-							</p>
+							</p> */}
 						</div>
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>

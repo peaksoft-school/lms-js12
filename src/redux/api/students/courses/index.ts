@@ -8,10 +8,7 @@ export const api = index.injectEndpoints({
 		>({
 			query: () => ({
 				url: '/api/course/myCourse',
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`
-				}
+				method: 'GET'
 			}),
 			providesTags: ['courses']
 		})

@@ -25,6 +25,7 @@ import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
 import RatingStudentsPage from '../pages/RatingStudentsPage';
 // import { Breadcrumbs } from '@mui/material';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
+import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -74,12 +75,21 @@ const LayoutInstructor = () => {
 				<main style={{ width: '100%' }}>
 					{!isMobile && (
 						<>
-							<SupHeader />
+							<Routes>
+								<Route path="/course/:courseId/*" element={<SupHeader />} />
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					{isMobile && (
 						<>
-							<SupHeaderMobile />
+							<Routes>
+								<Route
+									path="/courses/:courseId/*"
+									element={<SupHeaderMobile />}
+								/>
+								<Route path="/*" element={<SupHeaderCourses />} />
+							</Routes>
 						</>
 					)}
 					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>
@@ -105,111 +115,111 @@ const LayoutInstructor = () => {
 
 						<Route path="/courses/:coursesId" element={<MyCourses />} />
 						<Route
-							path="/course/:studentCourseId/student"
+							path="/course/:courseId/student"
 							element={<InternalInstructorStudentsPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials"
+							path="/course/:courseId/materials"
 							element={<MaterialsPage />}
 						/>
 
 						<Route
-							path="/course/:materialsId/materials/:lessonId"
+							path="/course/:courseId/materials/:lessonId"
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/video"
+							path="/course/:courseId/materials/:lessonId/video"
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/panding"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/panding"
 							element={<LessonPage />}
 						/>
 
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/accepted"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/accepted"
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notAccepted"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/notAccepted"
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/late"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/late"
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
 							element={<GetTask />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
 							element={<Answer />}
 						/>
 
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson"
+							path="/course/:courseId/materials/:lessonId/lesson"
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/addTask"
+							path="/course/:courseId/materials/:lessonId/lesson/addTask"
 							element={<AddTaskPage />}
 						/>
 
 						<Route
-							path="/course/:materialsId/materials/:lessonId/lesson/update"
+							path="/course/:courseId/materials/:lessonId/lesson/update"
 							element={<EditTask />}
 						/>
 						<>
 							<Route
-								path="/course/:materialsId/materials/:lessonId"
+								path="/course/:courseId/materials/:lessonId"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/video"
+								path="/course/:courseId/materials/:lessonId/video"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/presentation"
+								path="/course/:courseId/materials/:lessonId/presentation"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/panding"
+								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/panding"
 								element={<LessonPage />}
 							/>
 
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/accepted"
+								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/accepted"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notAccepted"
+								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/notAccepted"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/late"
+								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/late"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
+								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
+								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
 								element={<Answer />}
 							/>
 
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson"
+								path="/course/:courseId/materials/:lessonId/lesson"
 								element={<LessonPage />}
 							/>
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/addTask"
+								path="/course/:courseId/materials/:lessonId/lesson/addTask"
 								element={<AddTaskPage />}
 							/>
 
 							<Route
-								path="/course/:materialsId/materials/:lessonId/lesson/update"
+								path="/course/:courseId/materials/:lessonId/lesson/update"
 								element={<EditTask />}
 							/>
 						</>
@@ -220,11 +230,11 @@ const LayoutInstructor = () => {
 						<Route path="announcement" element={<AnnouncementPage />} />
 						<Route path="trash" element={<TrashPage />} />
 						<Route
-							path="/course/:materialsId/materials/:lessonId/test"
+							path="/course/:courseId/materials/:lessonId/test"
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:materialsId/materials/:lessonId/showTest"
+							path="/course/:courseId/materials/:lessonId/showTest"
 							element={<GetTestInstructor />}
 						/>
 					</Routes>
