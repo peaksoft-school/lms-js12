@@ -1,6 +1,6 @@
 import { Tab, Tabs } from '@mui/material';
 import scss from './LessonsStudent.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	IconAB2,
 	IconBrandYoutubeKids,
@@ -9,7 +9,7 @@ import {
 	IconLink
 } from '@tabler/icons-react';
 import 'keen-slider/keen-slider.min.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import StudentVideoLessonPage from '../StudentVideoLessonPage';
 import { Box, ScrollArea } from '@mantine/core';
 import StudentPresentationPage from '../StudentPresentationPage';
@@ -25,20 +25,24 @@ const LessonsStudent = () => {
 		setValue(newValue);
 	};
 
-	const id = localStorage.getItem('id');
-	const item = localStorage.getItem('lessonId');
+	const { courseId, lessonId } = useParams();
 
 	const handleOpenVideo = () => {
-		navigate(`/courses/${id}/materials/${item}/video`);
+		navigate(`/courses/${courseId}/materials/${lessonId}/video`);
 	};
 
 	const openStudentPresentation = () => {
-		navigate(`/courses/${id}/materials/${item}/presentation`);
+		navigate(`/courses/${courseId}/materials/${lessonId}/presentation`);
 	};
 	const OpenTest = () => {
-		navigate(`/courses/${id}/materials/${item}/test`);
+		navigate(`/courses/${courseId}/materials/${lessonId}/test`);
 	};
 
+	useEffect(() => {
+		if (pathname === `/courses/${courseId}/materials/${lessonId}`) {
+			navigate(`/courses/${courseId}/materials/${lessonId}/video`);
+		}
+	}, [pathname]);
 	return (
 		<div className={scss.lesson}>
 			<h1>Материалы</h1>
@@ -106,17 +110,20 @@ const LessonsStudent = () => {
 									</Tabs>
 								</Box>
 							</ScrollArea>
-							{pathname === `/courses/${id}/materials/${item}/video` && (
+							{pathname ===
+								`/courses/${courseId}/materials/${lessonId}/video` && (
 								<>
 									<StudentVideoLessonPage />
 								</>
 							)}
-							{pathname === `/courses/${id}/materials/${item}/presentation` && (
+							{pathname ===
+								`/courses/${courseId}/materials/${lessonId}/presentation` && (
 								<>
 									<StudentPresentationPage />
 								</>
 							)}
-							{pathname === `/courses/${id}/materials/${item}/test` && (
+							{pathname ===
+								`/courses/${courseId}/materials/${lessonId}/test` && (
 								<>
 									<TestSection />
 								</>

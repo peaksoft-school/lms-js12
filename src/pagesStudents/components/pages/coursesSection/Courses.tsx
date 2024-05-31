@@ -51,7 +51,7 @@ const Courses: FC = () => {
 			}
 		}
 	};
-	localStorage.setItem('id', saveIdSrorege);
+
 	localStorage.setItem('item', saveItem);
 
 	return (

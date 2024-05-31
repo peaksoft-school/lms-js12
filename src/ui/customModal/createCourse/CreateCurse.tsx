@@ -69,29 +69,19 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	// const notifyError = () => toast.error('Произошла ошибка при создании курса');
 
 	const handleCreateCourse = async () => {
-		if (value !== '' && image !== '' && data !== '' && text !== '') {
-			const newCourse = {
-				title: value,
-				image: image,
-				dateOfEnd: data,
-				description: text
-			};
-			await createCourse(newCourse).unwrap();
-			try {
-				createCourse(newCourse).unwrap();
-				// notifySuccess();
-				handleOpenCourse(false);
-				setData('');
-				setText('');
-				setImage('');
-				setValue('');
-			} catch (error) {
-				// notifyError();
-				console.log('liuilu');
-			}
-		}
+		const newCourse = {
+			image: image,
+			title: value,
+			description: text,
+			dateOfEnd: data
+		};
+		await createCourse(newCourse);
+		setData('');
+		setText('');
+		setImage('');
+		setValue('');
+		handleOpenCourse(false);
 	};
-
 	return (
 		<div>
 			<ToastContainer />
