@@ -40,7 +40,7 @@ const LayoutAdmin = () => {
 	const [openTeacher, setOpenTeacher] = useState(false);
 	const [openStudent, setOpenModalStudent] = useState(false);
 	const handleOpenStudentModal = () => {
-		setOpenModalStudent(true);
+		setOpenModalStudent(true);git p
 	};
 
 	const handleOpenCourse = () => {
