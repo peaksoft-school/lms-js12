@@ -1,0 +1,40 @@
+.test {
+	padding-inline: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	.name_of_the_test {
+		padding-inline: 20px;
+		.input_time {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+		}
+		background: #fff;
+	}
+
+	.div_component2 {
+		background: #fff;
+
+		.input_contain2 {
+			padding: 20px;
+			.input_text {
+				display: flex;
+				gap: 20px;
+			}
+
+			.radio_input {
+				display: flex;
+				gap: 10px;
+				align-items: center;
+				width: 100%;
+				justify-content: flex-end;
+			}
+		}
+	}
+
+	.div_text2 {
+		.components {
+		}
+	}
+}
