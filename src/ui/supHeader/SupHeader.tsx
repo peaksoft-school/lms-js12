@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
 import vector from '@/src/assets/svgs/Vector.svg';
 import profile from '@/src/assets/svgs/Profile.png';
+import bell from '@/src/assets/svgs/Header icons.png';
 
 const SupHeader = () => {
 	const { pathname } = useLocation();
@@ -208,6 +209,7 @@ const SupHeader = () => {
 						</Box>
 					</Box>
 					<div className={scss.header_elements} onClick={handleClick}>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<div className={scss.instructor_profile}>Учитель</div>
@@ -295,6 +297,7 @@ const SupHeader = () => {
 								stroke={2}
 							/>
 						</div>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<p>Студент</p>

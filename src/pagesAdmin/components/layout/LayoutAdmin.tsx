@@ -179,10 +179,7 @@ const LayoutAdmin = () => {
 							path="/courses/:courseId/student"
 							element={<InternalCoursesPage />}
 						/>
-						<Route
-							path="/courses/page/:numberGroup/size/:size"
-							element={<CoursesPage />}
-						/>
+
 						<Route
 							path="/courses/:courseId/teacher"
 							element={<CoursesTeacher />}

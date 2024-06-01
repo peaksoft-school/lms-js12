@@ -5,6 +5,7 @@ import { IconChevronDown } from '@tabler/icons-react';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import vector from '@/src/assets/svgs/Vector.svg';
+import bell from '@/src/assets/svgs/Header icons.png';
 
 const SupHeaderCourses = () => {
 	const { pathname } = useLocation();
@@ -80,6 +81,7 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/instructor') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<p>Учитель</p>
 						<IconChevronDown stroke={2} />
@@ -130,6 +132,7 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/courses') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
+						<img className={scss.bell} src={profile} alt="bell" />
 						<img className={scss.profile} src={profile} alt="Profile" />
 						<p>Студент</p>
 						<IconChevronDown stroke={2} />
@@ -180,6 +183,7 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/calendar') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<p>Студент</p>
 						<IconChevronDown stroke={2} />
