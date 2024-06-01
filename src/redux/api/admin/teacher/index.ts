@@ -7,7 +7,7 @@ export const api = index.injectEndpoints({
 			TABLE.GetTeacherRequest
 		>({
 			query: () => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/teacher',
+				url: '/api/instructors',
 				method: 'GET'
 			}),
 			providesTags: ['teacher']
@@ -17,7 +17,7 @@ export const api = index.injectEndpoints({
 			TABLE.CreateTeachersRequest
 		>({
 			query: (newTeacher) => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/teacher',
+				url: '/api/instructors',
 				method: 'POST',
 				body: newTeacher
 			}),
@@ -28,7 +28,7 @@ export const api = index.injectEndpoints({
 			TABLE.ChangeTeachersRequest
 		>({
 			query: ({ updateTeacher, deleteById }) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/teacher/${deleteById}`,
+				url: `/api/instructors/${deleteById}`,
 				method: 'PATCH',
 				body: updateTeacher
 			}),
@@ -38,11 +38,21 @@ export const api = index.injectEndpoints({
 			TABLE.DeleteTeacherResponse,
 			TABLE.DeleteTeacherRequest
 		>({
-			query: (deleteSt) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/teacher/${deleteSt}`,
+			query: (deleteById) => ({
+				url: `/api/instructors/${deleteById}`,
 				method: 'DELETE'
 			}),
-			invalidatesTags: ['teacher']
+			invalidatesTags: ['teacher', 'courses']
+		}),
+		appointTeacher: builder.query<
+			TABLE.GetTeachersResponse,
+			TABLE.GetTeacherRequest
+		>({
+			query: (instructorId) => ({
+				url: `/api/instructors/${instructorId}`,
+				method: 'GET'
+			}),
+			providesTags: ['teacher']
 		})
 	})
 });

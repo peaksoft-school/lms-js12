@@ -43,7 +43,7 @@ const IsBlock: FC<IsBlockProps> = ({
 				<DialogContentText id="alert-dialog-description">
 					<h3>
 						Вы уверены, что хотите{' '}
-						{isBlock ? 'Заблокировать' : 'Разблокировать'}?
+						{isBlock ? 'Разблокировать' : 'Заблокировать'}?
 					</h3>
 				</DialogContentText>
 			</DialogContent>
@@ -74,7 +74,7 @@ const IsBlock: FC<IsBlockProps> = ({
 					type="submit"
 					disabled={false}
 				>
-					{isBlock ? 'Заблокировать' : 'Разблокировать'}
+					{isBlock ? 'Разблокировать' : 'Заблокировать'}
 				</Button>
 			</DialogActions>
 		</Dialog>

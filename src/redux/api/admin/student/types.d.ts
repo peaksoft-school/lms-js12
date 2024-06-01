@@ -12,7 +12,7 @@ namespace STUDENT {
 	};
 
 	type TablesStudentResponse = {
-		students: Table[];
+		students: [];
 		page: number;
 		size: number;
 	};

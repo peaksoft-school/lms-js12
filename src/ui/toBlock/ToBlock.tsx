@@ -124,11 +124,11 @@ const StudentMenu: FC<MenuProps> = ({
 				>
 					{item?.isBlock ? (
 						<>
-							<img src={LockBlockStudent} alt="Lock" /> Заблокировать
+							<img src={LockOpenStudent} alt="Unlock" /> Разблокировать
 						</>
 					) : (
 						<>
-							<img src={LockOpenStudent} alt="Unlock" /> Разблокировать
+							<img src={LockBlockStudent} alt="Lock" /> Заблокировать
 						</>
 					)}
 				</MenuItem>

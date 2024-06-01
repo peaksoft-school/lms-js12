@@ -4,7 +4,6 @@ import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 
 const MyCourses = () => {
 	const { coursesId } = useParams();
-	console.log(coursesId!);
 	const { data } = useGetStudentTableQuery();
 	const { pathname } = useLocation();
 	console.log('MyCourses');

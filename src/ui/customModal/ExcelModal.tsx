@@ -1,22 +1,20 @@
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import {
 	Modal,
 	Box,
 	Typography,
 	FormControl,
-	OutlinedInput,
 	InputLabel,
 	Select,
 	SelectChangeEvent,
-	MenuItem,
-	Checkbox,
-	ListItemText
+	MenuItem
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './Style.module.scss';
 import Input from '../customInput/Input';
+import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 
 const style = {
 	position: 'absolute',
@@ -30,8 +28,6 @@ const style = {
 	borderRadius: '10px'
 };
 
-const names = ['js-12', 'java-12', 'js-13', 'java-13', 'js-14', 'java-14'];
-
 interface SearchProps {
 	handleClose: () => void;
 	open: boolean;
@@ -40,6 +36,13 @@ interface SearchProps {
 const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	const { handleSubmit } = useForm();
 	const [excelFile, setExcelFile] = useState<string[]>([]);
+	const [selectedFile, setSelectedFile] = useState<string>('');
+	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	const { data } = useGetGroupQuery({
+		page: '1',
+		size: '100'
+	});
 
 	const onSubmit = () => {
 		handleClose();
@@ -50,6 +53,18 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 			target: { value }
 		} = event;
 		setExcelFile(typeof value === 'string' ? value.split(',') : value);
+	};
+
+	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files && event.target.files[0]) {
+			setSelectedFile(event.target.files[0].name);
+		}
+	};
+
+	const handleButtonClick = () => {
+		if (fileInputRef.current) {
+			fileInputRef.current.click();
+		}
 	};
 
 	return (
@@ -73,43 +88,46 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 					<Box className={scss.input_button_card}>
 						<div className={scss.select_div}>
 							<FormControl>
-								
-								<InputLabel id="demo-multiple-checkbox-label">
+								<InputLabel
+									style={{ background: '#fff' }}
+									id="demo-multiple-checkbox-label"
+								>
 									Группа
 								</InputLabel>
 								<Select
-								size='medium'
 									style={{ borderRadius: '12px' }}
-									labelId="demo-multiple-checkbox-label"
-									id="demo-multiple-checkbox"
-									multiple
+									labelId="study-format-label"
+									id="study-format-select"
 									value={excelFile}
 									onChange={handleChange}
-									input={<OutlinedInput label="Группа" />}
-									renderValue={(selected) => selected.join(', ')}
 								>
-									{names.map((name) => (
-										<MenuItem key={name} value={name}>
-											<Checkbox checked={excelFile.indexOf(name) > -1} />
-											<ListItemText primary={name} />
+									{data?.groupResponses.map((item) => (
+										<MenuItem key={item.title} value={item.title}>
+											<h3>{item.title}</h3>
 										</MenuItem>
 									))}
 								</Select>
 							</FormControl>
-							<div style={{display: 'flex', gap: '10px'}}>
+							<div style={{ display: 'flex', gap: '10px' }}>
 								<Input
-								
-									value=""
+									value={selectedFile}
 									size="medium"
 									width="100%"
 									placeholder="Выберите Excel файл для импорта"
 									type="text"
+									onChange={handleFileChange}
+								/>
+								<input
+									type="file"
+									style={{ display: 'none' }}
+									ref={fileInputRef}
+									onChange={handleFileChange}
 								/>
 								<ButtonCancel
 									type="button"
 									width="150px"
 									disabled={false}
-									onClick={() => {}}
+									onClick={handleButtonClick}
 								>
 									Обзор...
 								</ButtonCancel>

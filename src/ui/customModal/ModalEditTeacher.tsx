@@ -11,16 +11,6 @@ import {
 	usePatchTeacherMutation
 } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
-import {
-	Checkbox,
-	FormControl,
-	InputLabel,
-	ListItemText,
-	MenuItem,
-	OutlinedInput,
-	Select,
-	SelectChangeEvent
-} from '@mui/material';
 import { useEffect, useState } from 'react';
 
 const ITEM_HEIGHT = 48;
@@ -34,24 +24,6 @@ const MenuProps = {
 	}
 };
 
-const groups = [
-	'js-12',
-	'js-13',
-	'java-12',
-	'java-13',
-	'Omar Alexander',
-	'Carlos Abbott',
-	'Miriam Wagner',
-	'Bradley Wilkerson',
-	'Virginia Andrews',
-	'Kelly Snyder'
-];
-const profestion = [
-	'js instructor',
-	'java  instructor',
-	'java mentor',
-	'js mentor'
-];
 interface IFormInputs {
 	firstName: string;
 	lastName: string;
@@ -68,8 +40,8 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 581,
-	height: 650,
-	backgroundColor: '#ffffff',
+	height: 580,
+	backgroundColor: '#fff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -88,50 +60,30 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 	const { control, handleSubmit, reset } = useForm<IFormInputs>();
 	const [patchTeacher] = usePatchTeacherMutation();
 	const { data } = useGetTeacherQuery();
-	const find = data?.find((id) => id.id === deleteById);
-	const [specialization, setSpecialization] = useState<string[]>([]);
+	const find = data?.instructorResponses.find((el) => el.id === deleteById);
 	const [personName, setPersonName] = useState<string[]>([]);
-
-	useEffect(() => {
-		if (find) {
-			setSpecialization(
-				Array.isArray(find.specialization) ? find.specialization : []
-			);
-			setPersonName(Array.isArray(find.group) ? find.group : []);
-		}
-	}, [find]);
 
 	const onSubmit = async (data: IFormInputs) => {
 		const updateTeacher = {
 			...data,
-			specialization,
-			group: personName
+			courseIds: personName
 		};
 		await patchTeacher({ updateTeacher, deleteById });
 		closeModalEdit(false);
 	};
 
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-		const {
-			target: { value }
-		} = event;
-		setPersonName(value as string[]);
-	};
-	const handleChangeAge = (event: SelectChangeEvent<typeof specialization>) => {
-		const {
-			target: { value }
-		} = event;
-		setSpecialization(value as string[]);
-	};
+	const fullName = find?.fullName || '';
+	const nameParts = fullName.trim().split(' ');
+
+	const firstName = nameParts[0] || '';
+	const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
 
 	useEffect(() => {
 		reset({
+			firstName: firstName,
+			lastName: lastName,
 			email: find?.email,
-			firstName: find?.firstName,
-			lastName: find?.lastName,
-			group: find?.group,
 			phoneNumber: find?.phoneNumber,
-			login: find?.login,
 			specialization: find?.specialization
 		});
 	}, [find]);
@@ -150,10 +102,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 						variant="h6"
 						component="h2"
 					>
-						<div className={scss.comText}>
-							Редактировать учителя по имени {find?.firstName}
-							{find?.lastName}
-						</div>
+						<div className={scss.comText}>Редактировать</div>
 					</Typography>
 
 					<Box className={scss.input_button_card}>
@@ -167,7 +116,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="First Name"
+										placeholder="Имя"
 									/>
 								)}
 							/>
@@ -180,7 +129,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Last Name"
+										placeholder="Фамилия"
 									/>
 								)}
 							/>
@@ -193,7 +142,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Phone Number"
+										placeholder="+996"
 									/>
 								)}
 							/>
@@ -219,39 +168,26 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Password"
+										placeholder="Пароль"
 									/>
 								)}
 							/>
 
-							<FormControl className={scss.seclect}>
-								<InputLabel id="demo-multiple-checkbox-label">
-									Specialization
-								</InputLabel>
-								<Select
-									className={scss.seclect}
-									labelId="demo-multiple-checkbox-label"
-									id="demo-multiple-checkbox"
-									multiple
-									value={specialization}
-									onChange={handleChangeAge}
-									input={<OutlinedInput label="Tag" />}
-									renderValue={(selected) => selected.join(', ')}
-									MenuProps={MenuProps}
-								>
-									{profestion.map((name) => (
-										<MenuItem key={name} value={name}>
-											<Checkbox
-												checked={
-													specialization && specialization.indexOf(name) > -1
-												}
-											/>
-											<ListItemText primary={name} />
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-							<div>
+							<Controller
+								name="specialization"
+								control={control}
+								defaultValue=""
+								render={({ field }) => (
+									<Input
+										size="medium"
+										{...field}
+										type="string"
+										width="100%"
+										placeholder="Специализация"
+									/>
+								)}
+							/>
+							{/* <div>
 								<FormControl className={scss.seclect}>
 									<InputLabel id="demo-multiple-checkbox-label">
 										Group
@@ -277,7 +213,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 										))}
 									</Select>
 								</FormControl>
-							</div>
+							</div> */}
 							<div className={scss.EditButtons}>
 								<ButtonCancel
 									type="submit"

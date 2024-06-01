@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import React, { FC, useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,7 +17,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const Groups: FC = () => {
 	const { numberGroup, size } = useParams();
-
 	const navigate = useNavigate();
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const [saveId, setSaveId] = useState<null | number>(null);
@@ -54,7 +52,6 @@ const Groups: FC = () => {
 	};
 
 	const handlePageShowChange = (size: string) => {
-		// console.log(size);
 
 		if (e.key === 'Enter') {
 			navigate(`/admin/group/page/${numberGroup}/size/${size}`);
@@ -249,3 +246,7 @@ const Groups: FC = () => {
 };
 
 export default Groups;
+function navigate(arg0: string) {
+	throw new Error('Function not implemented.');
+}
+

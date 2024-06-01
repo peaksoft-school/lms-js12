@@ -2,7 +2,11 @@ import { FC, useState, KeyboardEvent } from 'react';
 import scss from './Trash.module.scss';
 import trash from '@/src/assets/svgs/trash (1).svg';
 import refrash from '@/src/assets/svgs/refresh.svg';
-import { useGetTrashQuery } from '@/src/redux/api/admin/trash';
+import {
+	useDeleteTrashMutation,
+	useGetTrashQuery,
+	useUpdatedTrashMutation
+} from '@/src/redux/api/admin/trash';
 import { Preloader } from '../../../../ui/preloader/Preloader';
 import { Pagination, Stack } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
@@ -14,6 +18,8 @@ const Trash: FC = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
+	const [UpdatedTrash] = useUpdatedTrashMutation();
+	const [DeleteTrash] = useDeleteTrashMutation();
 
 	if (isLoading) {
 		return (
@@ -58,6 +64,12 @@ const Trash: FC = () => {
 		}
 	};
 
+	const updatedTrashFunc = async (id: number) => {
+		await UpdatedTrash(id);
+	};
+	const DeleteTrashFunc = async (id: number) => {
+		await DeleteTrash(id);
+	};
 	return (
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
@@ -88,11 +100,11 @@ const Trash: FC = () => {
 											</tr>
 										</thead>
 										<tbody>
-											{data
-												?.slice(
-													(currentPage - 1) * rowsPerPage,
-													currentPage * rowsPerPage
-												)
+											{data?.trashResponses
+												// ?.slice(
+												// 	(currentPage - 1) * rowsPerPage,
+												// 	currentPage * rowsPerPage
+												// )
 												.map((card, index) => (
 													<tr
 														className={
@@ -118,8 +130,26 @@ const Trash: FC = () => {
 																	cursor: 'pointer'
 																}}
 															>
-																<img src={refrash} alt="#" />
-																<img src={trash} alt="#" />
+																<button
+																	style={{
+																		border: 'none',
+																		background: 'none',
+																		cursor: 'pointer'
+																	}}
+																	onClick={() => updatedTrashFunc(card.id)}
+																>
+																	<img src={refrash} alt="#" />
+																</button>
+																<button
+																	style={{
+																		border: 'none',
+																		background: 'none',
+																		cursor: 'pointer'
+																	}}
+																	onClick={() => DeleteTrashFunc(card.id)}
+																>
+																	<img src={trash} alt="#" />
+																</button>
 															</div>
 														</td>
 													</tr>
@@ -150,7 +180,7 @@ const Trash: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								count={Math.ceil(data!.trashResponses.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

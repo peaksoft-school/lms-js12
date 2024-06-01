@@ -1,7 +1,7 @@
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import scss from './Rating.module.scss';
 import { Preloader } from '@/src/ui/preloader/Preloader';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, Menu, MenuItem, InputBase } from '@mui/material';
 import { ScrollArea, Box } from '@mantine/core';
@@ -16,6 +16,7 @@ import {
 } from '@/src/redux/api/instructor/exem';
 
 const Rating = () => {
+	const { courseId } = useParams();
 	const { data: strudents = [], isLoading } = useGetStudentTableQuery();
 	const { data } = useGetMaterialsQuery();
 	const { data: task = [] } = useGetTaskInstructorQuery();
@@ -46,8 +47,6 @@ const Rating = () => {
 			</div>
 		);
 	}
-
-	const id = localStorage.getItem('id');
 
 	const truncateText = (text: string, maxLength: number) => {
 		if (text.length > maxLength) {
@@ -198,7 +197,9 @@ const Rating = () => {
 													</td>
 													{data?.map((item) => (
 														<td key={item._id}>
-															<Link to={`/instructor/course/${id}/materials`}>
+															<Link
+																to={`/instructor/course/${courseId}/materials`}
+															>
 																0
 															</Link>
 														</td>

@@ -40,7 +40,7 @@ export const api = createApi({
 		'addTask',
 		'presentation',
 		'auth',
-		'exem'
+		'exem',
 	],
 	endpoints: () => ({})
 });

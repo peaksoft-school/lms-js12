@@ -7,7 +7,10 @@ import {
 	SelectChangeEvent,
 	InputLabel,
 	Select,
-	MenuItem
+	MenuItem,
+	useTheme,
+	OutlinedInput,
+	Theme
 } from '@mui/material';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Input from '@/src/ui/customInput/Input.tsx';
@@ -44,12 +47,41 @@ const style = {
 	borderRadius: '12px'
 };
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+			width: 250
+		}
+	}
+};
+
+function getStyles(name: string, personName: string, theme: Theme) {
+	return {
+		fontWeight:
+			personName.indexOf(name) === -1
+				? theme.typography.fontWeightRegular
+				: theme.typography.fontWeightMedium
+	};
+}
+
 const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 	const { handleSubmit, control, reset } = useForm<PostStudentProps>();
 	const [postStudentTable] = usePostStudentTableMutation();
 	const [formatName, setFormatName] = useState<string>('');
-	const [groupName, setGroupName] = useState<string>('');
-	const { data } = useGetGroupQuery();
+	const { data } = useGetGroupQuery({
+		page: '1',
+		size: '100'
+	});
+
+	const theme = useTheme();
+	const [personName, setPersonName] = useState<string>('');
+
+	const handleChange = (event: SelectChangeEvent<string>) => {
+		setPersonName(event.target.value);
+	};
 
 	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
 		const { firstName, lastName, groupName, phoneNumber, email } = data;
@@ -64,7 +96,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 			const newStudent = {
 				firstName,
 				lastName,
-				groupName,
+				groupName: personName,
 				studyFormat: formatName,
 				phoneNumber,
 				email,
@@ -84,10 +116,6 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 
 	const handleFormatChange = (event: SelectChangeEvent<string>) => {
 		setFormatName(event.target.value);
-	};
-
-	const handleGroupChange = (event: SelectChangeEvent<string>) => {
-		setGroupName(event.target.value);
 	};
 
 	return (
@@ -122,7 +150,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="First Name"
+										placeholder="Имя"
 									/>
 								)}
 							/>
@@ -136,21 +164,29 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Last Name"
+										placeholder="Фамилия"
 									/>
 								)}
 							/>
 							<Controller
 								name="phoneNumber"
 								control={control}
-								defaultValue=""
+								defaultValue="+996"
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="string"
 										width="100%"
-										placeholder="Phone Number"
+										placeholder="+996"
+										onChange={(e) => {
+											const value = e.target.value;
+											if (!value.startsWith('+996')) {
+												field.onChange('+996' + value);
+											} else {
+												field.onChange(value);
+											}
+										}}
 									/>
 								)}
 							/>
@@ -168,25 +204,38 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 									/>
 								)}
 							/>
-							<FormControl fullWidth>
-								<InputLabel id="study-format-label">Группа</InputLabel>
+
+							<FormControl>
+								<InputLabel style={{ background: '#fff' }} id="demo-name-label">
+									Группа
+								</InputLabel>
 								<Select
 									style={{ borderRadius: '12px' }}
-									labelId="study-format-label"
-									id="study-format-select"
-									value={groupName}
-									onChange={handleGroupChange}
+									labelId="demo-name-label"
+									id="demo-name"
+									value={personName}
+									onChange={handleChange}
+									input={<OutlinedInput label="groupName" />}
+									MenuProps={MenuProps}
 								>
-									{data?.groupResponses.map((item) => (
-										<MenuItem value={item.title}>
-											<h1>{item.title}</h1>
+									{data?.groupResponses.map((name) => (
+										<MenuItem
+											key={name.id}
+											value={name.title}
+											style={getStyles(name.title, personName, theme)}
+										>
+											{name.title}
 										</MenuItem>
 									))}
 								</Select>
 							</FormControl>
-							{/* //!  */}
 							<FormControl fullWidth>
-								<InputLabel id="study-format-label">Формат обучения</InputLabel>
+								<InputLabel
+									id="study-format-label"
+									style={{ background: '#fff' }}
+								>
+									Формат обучения
+								</InputLabel>
 								<Select
 									style={{ borderRadius: '12px' }}
 									labelId="study-format-label"
