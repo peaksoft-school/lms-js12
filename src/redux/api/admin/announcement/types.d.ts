@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ANNOUNCEMENT {
 	type Table = {
-		id: Key | null | undefined;
+		id: Key | null;
 		id: number;
 		announcement: string;
 		group: string;

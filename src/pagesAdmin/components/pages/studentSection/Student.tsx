@@ -197,44 +197,32 @@ const Student = () => {
 															}
 														>
 															<td
-																className={
-																	item.isBlock ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{index + 1 + (currentPage - 1) * rowsPerPage}
 															</td>
 															<td
-																className={
-																	item.isBlock ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{item.fullName}
 															</td>
 															<td
-																className={
-																	item.isBlock ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{item.groupName}
 															</td>
 															<td
-																className={
-																	item.isBlock ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{item.studyFormat}
 															</td>
 															<td
-																className={
-																	item.isBlock ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{item.phoneNumber}
 															</td>
 															<td
-																className={
-																	item.isBlock ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{item.email}
 															</td>

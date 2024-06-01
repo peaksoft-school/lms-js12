@@ -5,6 +5,7 @@ import { IconChevronDown } from '@tabler/icons-react';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import vector from '@/src/assets/svgs/Vector.svg';
+import bell from '@/src/assets/svgs/Header icons.png';
 
 const SupHeaderCourses = () => {
 	const { pathname } = useLocation();
@@ -30,8 +31,59 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/admin') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
-						<img src={profile} alt="Profile" />
+						<img className={scss.profile} src={profile} alt="Profile" />
 						<p>Администратор</p>
+						<IconChevronDown stroke={2} />
+					</div>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right'
+						}}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+						PaperProps={{
+							style: {
+								boxShadow: 'none',
+								border: '1px solid #336fff',
+								width: '200px',
+								background: 'rgb(221, 233, 249)',
+								borderRadius: '10px'
+							}
+						}}
+					>
+						<MenuItem
+							onClick={handleNavigate}
+							style={{
+								display: 'flex',
+								gap: '10px',
+								color: '#1976d2',
+								fontSize: '18px',
+								fontWeight: '600',
+								alignItems: 'center'
+							}}
+						>
+							<img className={scss.profile} src={vector} alt="" />
+							<p> Выйти</p>
+						</MenuItem>
+					</Menu>
+				</>
+			)}
+			{pathname.startsWith('/instructor') && (
+				<>
+					<div className={scss.courses_admin} onClick={handleClick}>
+						<img src={bell} alt="bell" />
+						<img src={profile} alt="Profile" />
+						<p>Учитель</p>
 						<IconChevronDown stroke={2} />
 					</div>
 					<Menu
@@ -77,60 +129,11 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
-			{pathname.startsWith('/instructor') && (
-				<>
-					<div className={scss.courses_admin} onClick={handleClick}>
-						<img src={profile} alt="Profile" />
-						<p>Учитель</p>
-						<IconChevronDown stroke={2} />
-					</div>
-					<Menu
-						id="basic-menu"
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleClose}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'right'
-						}}
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'right'
-						}}
-						MenuListProps={{
-							'aria-labelledby': 'basic-button'
-						}}
-						PaperProps={{
-							style: {
-								boxShadow: 'none',
-								border: '1px solid #336fff',
-								width: '200px',
-								background: 'rgb(221, 233, 249)',
-								borderRadius: '10px'
-							}
-						}}
-					>
-						<MenuItem
-							onClick={handleClose}
-							style={{
-								display: 'flex',
-								gap: '10px',
-								color: '#1976d2',
-								fontSize: '18px',
-								fontWeight: '600',
-								alignItems: 'center'
-							}}
-						>
-							<img src={vector} alt="" />
-							<p> Выйти</p>
-						</MenuItem>
-					</Menu>
-				</>
-			)}
 			{pathname.startsWith('/courses') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
-						<img src={profile} alt="Profile" />
+						<img className={scss.bell} src={profile} alt="bell" />
+						<img className={scss.profile} src={profile} alt="Profile" />
 						<p>Студент</p>
 						<IconChevronDown stroke={2} />
 					</div>
@@ -161,7 +164,7 @@ const SupHeaderCourses = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleClose}
+							onClick={handleNavigate}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -180,6 +183,7 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/calendar') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<p>Студент</p>
 						<IconChevronDown stroke={2} />

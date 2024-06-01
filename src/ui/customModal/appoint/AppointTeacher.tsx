@@ -140,7 +140,7 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 								<MenuItem
 									key={teacher.id}
 									value={teacher.fullName}
-									onClick={() => handleSelect(teacher.id, teacher.fullName)}
+									onClick={() => handleSelect(teacher.id + '', teacher.fullName)}
 								>
 									<Checkbox
 										checked={selectedTeachers.indexOf(teacher.fullName) > -1}

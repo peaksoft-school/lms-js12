@@ -25,7 +25,7 @@ const Groups: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState("8");
+	const [openPage, setOpenPage] = useState('8');
 	const [openGroups, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
@@ -52,7 +52,6 @@ const Groups: FC = () => {
 	};
 
 	const handlePageShowChange = (size: string) => {
-
 		if (e.key === 'Enter') {
 			navigate(`/admin/group/page/${numberGroup}/size/${size}`);
 		}
@@ -249,4 +248,3 @@ export default Groups;
 function navigate(arg0: string) {
 	throw new Error('Function not implemented.');
 }
-

@@ -39,9 +39,8 @@ const style = {
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	width: 581,
-	height: 580,
-	backgroundColor: '#fff',
+	width: 541,
+	backgroundColor: '#ffffff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -159,7 +158,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 									/>
 								)}
 							/>
-							<Controller
+							{/* <Controller
 								name="login"
 								control={control}
 								render={({ field }) => (
@@ -171,7 +170,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 										placeholder="Пароль"
 									/>
 								)}
-							/>
+							/> */}
 
 							<Controller
 								name="specialization"
@@ -214,7 +213,18 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 									</Select>
 								</FormControl>
 							</div> */}
-							<div className={scss.EditButtons}>
+							<div
+								style={{
+									width: '100%',
+									display: 'flex',
+									justifyContent: 'flex-end',
+									alignItems: 'center',
+									paddingBottom: '10px',
+									paddingTop: '13px',
+									gap: '10px',
+									paddingRight: '0px'
+								}}
+							>
 								<ButtonCancel
 									type="submit"
 									disabled={false}

@@ -130,3 +130,14 @@
 		gap: 8px;
 	}
 }
+:global {
+	.ql-editor {
+		height: 100%;
+		min-height: 200px;
+	}
+
+	.ql-blan {
+		height: auto;
+		min-height: 700px;
+	}
+}
