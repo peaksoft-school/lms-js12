@@ -8,7 +8,7 @@ import { Box, ScrollArea } from '@mantine/core';
 import { useGetStudentsCourseQuery } from '@/src/redux/api/students/courses';
 
 const Courses: FC = () => {
-	const { data: data = [] } = useGetStudentsCourseQuery();
+	const { data } = useGetStudentsCourseQuery();
 	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(8);
@@ -73,7 +73,7 @@ const Courses: FC = () => {
 									data[0].courses &&
 									data[0].courses.length > 0 ? ( */}
 									<div className={scss.card}>
-										{data[0]?.courses
+										{data?.courses
 											// .slice(
 											// 	(currentPage - 1) * rowsPerPage,
 											// 	currentPage * rowsPerPage
@@ -147,7 +147,7 @@ const Courses: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
