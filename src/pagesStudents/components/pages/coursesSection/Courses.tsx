@@ -8,7 +8,7 @@ import { Box, ScrollArea } from '@mantine/core';
 import { useGetStudentsCourseQuery } from '@/src/redux/api/students/courses';
 
 const Courses: FC = () => {
-	const { data: data = [] } = useGetStudentsCourseQuery();
+	const { data } = useGetStudentsCourseQuery();
 	const [saveIdSrorege, setSaveIdStorege] = useState<string>('');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(8);
@@ -52,6 +52,7 @@ const Courses: FC = () => {
 		}
 	};
 
+	localStorage.setItem('id', saveIdSrorege);
 	localStorage.setItem('item', saveItem);
 
 	return (
@@ -68,17 +69,9 @@ const Courses: FC = () => {
 						<Box>
 							<div>
 								<div className={scss.cards}>
-									{/* {data && Array.isArray(data) && data.length > 0 ? ( */}
-									{/* {data.length > 0 &&
-									data[0].courses &&
-									data[0].courses.length > 0 ? ( */}
 									<div className={scss.card}>
-										{data[0]?.courses
-											// .slice(
-											// 	(currentPage - 1) * rowsPerPage,
-											// 	currentPage * rowsPerPage
-											// )
-											.map((item) => (
+										{data?.courses &&
+											data.courses.map((item) => (
 												<div
 													key={item.id}
 													className={scss.zero_block_container}
@@ -122,7 +115,6 @@ const Courses: FC = () => {
 												</div>
 											))}
 									</div>
-									{/* ) : null} */}
 								</div>
 							</div>
 						</Box>
@@ -147,7 +139,7 @@ const Courses: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								count={Math.ceil(data!.courses.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
