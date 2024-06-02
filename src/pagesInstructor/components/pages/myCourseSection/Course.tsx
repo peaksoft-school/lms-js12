@@ -13,7 +13,7 @@ const Course: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(8);
+	const [openPage, setOpenPage] = useState('8');
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
@@ -29,7 +29,7 @@ const Course: FC = () => {
 	const openPartFunc = () => {
 		if (openPart >= 1) {
 			setRowsPerPage(8);
-			setOpenPage(8);
+			setOpenPage();
 			setCurrentPage(openPart);
 		}
 	};
@@ -127,16 +127,21 @@ const Course: FC = () => {
 							type="text"
 							value={openPart}
 							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
+							// onKeyDown={(e) => {
+							// 	handleAppend(e);
+							// 	openPartFunc();
+							// }}
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handlePoginationForFunk(openPart);
+								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -153,9 +158,14 @@ const Course: FC = () => {
 							type="text"
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
+							// onKeyDown={(e) => {
+							// 	handleAppend(e);
+							// 	openPartPage();
+							// }}
 							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
+								if (e.key === 'Enter') {
+									handlePageShowChange(openPage);
+								}
 							}}
 						/>
 					</div>

@@ -10,6 +10,7 @@ import ButtonCancel from '../customButton/ButtonCancel';
 import ButtonSave from '../customButton/ButtonSave';
 import Input from '../customInput/Input';
 import Box from '@mui/material/Box';
+// import { useParams } from 'react-router-dom';
 
 const style = {
 	position: 'absolute',
@@ -32,7 +33,7 @@ interface modalProps {
 
 interface EditProps {
 	title: string;
-	date: string;
+	createdAt: string;
 }
 
 const ModalMaterialEdit: FC<modalProps> = ({
@@ -42,12 +43,13 @@ const ModalMaterialEdit: FC<modalProps> = ({
 }) => {
 	const [patchMaterial] = usePatchMaterialMutation();
 	const { data } = useGetMaterialsQuery();
-	const find = data?.lessonResponses.find((id) => id._id === deleteById);
+	const find = data?.lessonResponses.find((id) => id.id === deleteById);
 	const { control, handleSubmit, reset } = useForm<EditProps>();
 
 	const onSubmit = async (data: EditProps) => {
 		const updateMaterial = {
-			...data
+			title: data.title,
+			createdAt: data?.createdAt
 		};
 		await patchMaterial({ updateMaterial, deleteById });
 	};
@@ -55,7 +57,7 @@ const ModalMaterialEdit: FC<modalProps> = ({
 	useEffect(() => {
 		reset({
 			title: find?.title,
-			date: find?.date
+			createdAt: find?.createdAt
 		});
 	}, [find]);
 
@@ -75,7 +77,7 @@ const ModalMaterialEdit: FC<modalProps> = ({
 					>
 						<div>
 							Редактировать урок {find?.title}
-							{find?.date}
+							{find?.createdAt}
 						</div>
 					</Typography>
 

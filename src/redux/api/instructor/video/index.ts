@@ -8,7 +8,7 @@ const api = index.injectEndpoints({
 			VIDEO_LESSON.VideoLessonGetRequest
 		>({
 			query: (lessonId) => ({
-				url: `/api/videos/findAll/1${lessonId}`,
+				url: `/api/videos/All/${lessonId}`,
 				method: 'GET'
 			}),
 			providesTags: ['videoLesson']

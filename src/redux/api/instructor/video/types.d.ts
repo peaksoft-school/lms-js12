@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace VIDEO_LESSON {
 	type VideoLessonGetResponse = {
-		_id: number;
+		id: number;
 		titleOfVideo: string;
 		description: string;
 		linkOfVideo: string;
-	}[];
+		createdAt: number;
+	};
+	type VideoLessonGetResponse = {
+		lessonVideoResponses: Lesson[];
+	};
 
 	type VideoLessonGetRequest = void;
 
@@ -13,19 +17,22 @@ namespace VIDEO_LESSON {
 		titleOfVideo: string;
 		description: string;
 		linkOfVideo: string;
+		createdAt: number;
 	};
 
 	type VideoLessonPostRequest = {
 		titleOfVideo: string;
 		description: string;
 		linkOfVideo: string;
+		createdAt: number;
 	};
 
 	type VideoLessonPatchResponse = {
 		newVideoLesson: {
 			titleOfVideo: string;
-		description: string;
-		linkOfVideo: string;
+			description: string;
+			linkOfVideo: string;
+			createdAt: number;
 		};
 	};
 
@@ -33,11 +40,12 @@ namespace VIDEO_LESSON {
 		deleteById: number | null;
 		newVideoLesson: {
 			titleOfVideo: string;
-		description: string;
-		linkOfVideo: string;
+			description: string;
+			linkOfVideo: string;
+			createdAt: number;
 		};
 	};
-  
+
 	type VideoLessonDeleteResponse = void;
 	type VideoLessonDeleteRequest = number | null;
 }

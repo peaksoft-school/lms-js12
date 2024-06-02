@@ -8,7 +8,8 @@ export const api = index.injectEndpoints({
 		>({
 			query: () => ({
 				url: '/api/course/myCourse?page=1&size=8',
-				method: 'GET',
+				method: 'GET'
+				// ${page !== null ? page : '1'${size !== null ? size : '12'}
 				// headers: {
 				// 	Authorization: `Bearer ${localStorage.getItem('token')}`
 				// }

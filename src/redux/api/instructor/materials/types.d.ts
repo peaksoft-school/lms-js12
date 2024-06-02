@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace MATERIALS {
 	type Lesson = {
+		[x: string]: number | null;
 		id: number;
 		title: string;
 		createdAt: string;
@@ -11,7 +12,6 @@ namespace MATERIALS {
 	type MaterialsGetRequest = void;
 
 	type MaterialsPostResponse = {
-		id: number;
 		title: string;
 		createdAt: string;
 	};
