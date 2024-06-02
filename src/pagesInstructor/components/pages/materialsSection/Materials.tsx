@@ -374,7 +374,7 @@ import {
 import editIcon from '@/src/assets/svgs/edit.svg';
 import ModalAddLesson from '@/src/ui/InstructorModal/ModalAddLesson';
 import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
-import { Preloader } from '@/src/ui/preloader/Preloader';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import DeleteMaterial from '@/src/ui/customModal/deleteModal/DeleteMaterial';
 import ModalMaterialEdit from '@/src/ui/customModal/ModalMaterialEdit';
 import {
@@ -726,4 +726,3 @@ export default Materials;
 function setOpen(arg0: boolean) {
 	throw new Error('Function not implemented.');
 }
-

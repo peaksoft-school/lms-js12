@@ -1,43 +1,59 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
 	Modal,
 	Box,
 	Typography,
-	InputAdornment,
-	IconButton
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+	SelectChangeEvent,
+	OutlinedInput,
+	Theme,
+	useTheme
 } from '@mui/material';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
-import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import {
 	useGetStudentTableQuery,
 	usePatchStudentTableMutation
 } from '@/src/redux/api/admin/student';
-
-import * as React from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
 import Input from '../customInput/Input';
+import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 
-const names = [
-	'Java 14',
-	'JS 14',
-	'Java 13',
-	'JS 13',
-	'Java 12',
-	'JS 12',
-	'Flutter',
-	'English lesson'
-];
+interface Student {
+	id: number;
+	fullName: string;
+	email: string;
+	groupName: string;
+	phoneNumber: string;
+	studyFormat: string;
+	isBlock: boolean;
+}
 
-const formats = ['Online', 'OFFLINE'];
+interface StudentResponse {
+	students: Student[];
+	page: number;
+	size: number;
+	data: [];
+}
+
+interface PatchStudentProps {
+	firstName: string;
+	lastName: string;
+	groupName: string;
+	studyFormat: string;
+	phoneNumber: string;
+	email: string;
+}
+
+interface EditModalProps {
+	handleClose: () => void;
+	open: boolean;
+	saveIdElement: number | null;
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -50,15 +66,13 @@ const MenuProps = {
 	}
 };
 
-interface PostStudentProps {
-	firstName: string;
-	lastName: string;
-	group: string;
-	TrainingFormat: string;
-	phone_number: string;
-	email: string;
-	password: string;
-	isCompleted: boolean;
+function getStyles(name: string, personName: string, theme: Theme) {
+	return {
+		fontWeight:
+			personName === name
+				? theme.typography.fontWeightMedium
+				: theme.typography.fontWeightRegular
+	};
 }
 
 const style = {
@@ -67,68 +81,46 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 581,
-	height: 625,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '12px'
 };
 
-interface EditModalProps {
-	handleClose: () => void;
-	open: boolean;
-	saveIdElement: number | null;
-}
 const ModalEditStudent: FC<EditModalProps> = ({
 	handleClose,
 	open,
 	saveIdElement
 }) => {
-	const { handleSubmit, control, reset } = useForm<PostStudentProps>();
-	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
+	const { handleSubmit, control, reset } = useForm<PatchStudentProps>();
 	const [patchStudentTable] = usePatchStudentTableMutation();
-	const { data } = useGetStudentTableQuery();
-	const handleClickShowSecondPassword = () =>
-		setShowSecondPassword((show) => !show);
-	const handleMouseDownSecondPassword1 = (
-		event: React.MouseEvent<HTMLButtonElement>
-	) => event.preventDefault();
-	const [personName, setPersonName] = React.useState<string[]>([]);
-	const [formatName, setFormatName] = React.useState<string[]>([]);
+	const { data: studentData } = useGetStudentTableQuery<StudentResponse>();
+	const students = studentData ?? { students: [], page: 1, size: 0 };
+	const [formatName, setFormatName] = useState<string>('');
+	const theme = useTheme();
+	const [personName, setPersonName] = useState<string>('');
 
-	// ! first select
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-		const {
-			target: { value }
-		} = event;
-		setPersonName(typeof value === 'string' ? value.split(',') : value);
+	const handleChange = (event: SelectChangeEvent<string>) => {
+		setPersonName(event.target.value);
 	};
-	const finder = data?.find(
-		(id: { id: number | null }) => id.id === saveIdElement
+
+	const { data: groupData } = useGetGroupQuery({
+		page: '1',
+		size: '100'
+	});
+
+	const handleFormatChange = (event: SelectChangeEvent<string>) => {
+		setFormatName(event.target.value);
+	};
+
+	const finder = students.students.find(
+		(student: Student) => student.id === saveIdElement
 	);
-	useEffect(() => {
-		if (finder) {
-			setFormatName(
-				Array.isArray(finder.TrainingFormat) ? finder.TrainingFormat : []
-			);
-			setPersonName(Array.isArray(finder.group) ? finder.group : []);
-		}
-	}, [finder]);
 
-	// ! second select
-	const handleFormatChange = (event: SelectChangeEvent<typeof formatName>) => {
-		const {
-			target: { value }
-		} = event;
-		setFormatName(typeof value === 'string' ? value.split(',') : value);
-	};
-
-	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
+	const onSubmit = async (data: PatchStudentProps) => {
 		const editStudent = {
 			...data,
-			isCompleted: false,
-			TrainingFormat: formatName,
-			group: personName
+			groupName: personName
 		};
 		await patchStudentTable({
 			editStudent,
@@ -137,17 +129,22 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		handleClose();
 	};
 
+	const fullName = finder?.fullName || '';
+	const nameParts = fullName.trim().split(' ');
+
+	const firstName = nameParts[0] || '';
+	const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+
 	useEffect(() => {
 		reset({
-			firstName: finder?.firstName,
-			lastName: finder?.lastName,
-			group: finder?.group,
-			TrainingFormat: finder?.TrainingFormat,
-			phone_number: finder?.phone_number,
+			firstName: firstName,
+			lastName: lastName,
+			phoneNumber: finder?.phoneNumber,
 			email: finder?.email,
-			password: finder?.password
+			groupName: finder?.groupName,
+			studyFormat: finder?.studyFormat
 		});
-	}, [finder]);
+	}, [finder, reset]);
 
 	return (
 		<form>
@@ -164,7 +161,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Редактировать</p>
+						<p className={scss.comText}>Редактировать </p>
 					</Typography>
 
 					<Box className={scss.input_button_card}>
@@ -182,10 +179,10 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											{...field}
 											width="100%"
 											type="text"
-											placeholder="First Name"
+											placeholder="Имя"
 										/>
 									)}
-								/>{' '}
+								/>
 								<Controller
 									name="lastName"
 									control={control}
@@ -195,23 +192,23 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											width="100%"
 											{...field}
 											type="text"
-											placeholder="Last Name"
+											placeholder="Фамилия"
 										/>
 									)}
 								/>
 								<Controller
-									name="phone_number"
+									name="phoneNumber"
 									control={control}
 									render={({ field }) => (
 										<Input
 											size="medium"
 											{...field}
-											type="number"
+											type="text"
 											width="100%"
-											placeholder="Phone Number"
+											placeholder="+996"
 										/>
 									)}
-								/>{' '}
+								/>
 								<Controller
 									name="email"
 									control={control}
@@ -224,82 +221,45 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											placeholder="Email"
 										/>
 									)}
-								/>{' '}
-								<Controller
-									name="password"
-									control={control}
-									render={({ field }) => (
-										<OutlinedInput
-											style={{ width: '100%', maxWidth: '470px' }}
-											{...field}
-											className={scss.OutlinedInputEyes}
-											placeholder="Password"
-											type={showSecondPassword ? 'text' : 'password'}
-											endAdornment={
-												<InputAdornment position="end">
-													<IconButton
-														aria-label="toggle password visibility"
-														onClick={handleClickShowSecondPassword}
-														onMouseDown={handleMouseDownSecondPassword1}
-														edge="end"
-													>
-														{showSecondPassword ? (
-															<IconOpen_Eye />
-														) : (
-															<IconClosed />
-														)}
-													</IconButton>
-												</InputAdornment>
-											}
-										/>
-									)}
 								/>
-								{/*//! select first  input*/}
-								<FormControl sx={{ width: 300 }}>
-									<InputLabel id="demo-multiple-checkbox-label">
-										Группа
-									</InputLabel>
+								<FormControl>
+									<InputLabel id="demo-multiple-name-label">Группа</InputLabel>
 									<Select
-										style={{ borderRadius: '20px' }}
-										labelId="demo-multiple-checkbox-label"
-										id="demo-multiple-checkbox"
-										multiple
+										style={{ borderRadius: '12px' }}
+										labelId="demo-multiple-name-label"
+										id="demo-multiple-name"
 										value={personName}
 										onChange={handleChange}
-										input={<OutlinedInput label="group" />}
-										renderValue={(selected) => selected.join(', ')}
+										input={<OutlinedInput label="groupName" />}
 										MenuProps={MenuProps}
 									>
-										{names.map((name) => (
-											<MenuItem key={name} value={name}>
-												<Checkbox checked={personName.indexOf(name) > -1} />
-												<ListItemText primary={name} />
+										{groupData?.groupResponses.map((name) => (
+											<MenuItem
+												key={name.id}
+												value={name.title}
+												style={getStyles(name.title, personName, theme)}
+											>
+												{name.title}
 											</MenuItem>
 										))}
 									</Select>
 								</FormControl>
-								{/* //! second select  */}
-								<FormControl sx={{ width: 300 }}>
-									<InputLabel id="demo-multiple-checkbox-label">
+								<FormControl fullWidth>
+									<InputLabel
+										id="study-format-label"
+										style={{ background: '#fff' }}
+									>
 										Формат обучения
 									</InputLabel>
 									<Select
-										style={{ borderRadius: '20px' }}
-										labelId="demo-multiple-checkbox-label"
-										id="demo-multiple-checkbox"
-										multiple
+										style={{ borderRadius: '12px' }}
+										labelId="study-format-label"
+										id="study-format-select"
 										value={formatName}
 										onChange={handleFormatChange}
-										input={<OutlinedInput label="TrainingFormat" />}
-										renderValue={(selected) => selected.join(', ')}
-										MenuProps={MenuProps}
 									>
-										{formats.map((name) => (
-											<MenuItem key={name} value={name}>
-												<Checkbox checked={formatName.indexOf(name) > -1} />
-												<ListItemText primary={name} />
-											</MenuItem>
-										))}
+										<MenuItem value="ONLINE">ONLINE</MenuItem>
+										<MenuItem value="OFFLINE">OFFLINE</MenuItem>
 									</Select>
 								</FormControl>
 							</div>
@@ -315,7 +275,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 								}}
 							>
 								<ButtonCancel
-									type="submit"
+									type="button"
 									disabled={false}
 									onClick={handleClose}
 									width="117px"
@@ -323,10 +283,10 @@ const ModalEditStudent: FC<EditModalProps> = ({
 									Отмена
 								</ButtonCancel>
 								<ButtonSave
+									onClick={() => {}}
 									type="submit"
 									width="117px"
 									disabled={false}
-									onClick={handleSubmit(onSubmit)}
 								>
 									Отправить
 								</ButtonSave>

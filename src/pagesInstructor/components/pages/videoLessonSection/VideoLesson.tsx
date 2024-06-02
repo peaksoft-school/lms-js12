@@ -194,7 +194,7 @@
 
 import { useGetVideoLessonQuery } from '@/src/redux/api/instructor/video';
 import scss from './VideoLesson.module.scss';
-import { Preloader } from '@/src/ui/preloader/Preloader';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { Button, Menu, MenuItem } from '@mui/material';
 import ModalAddVideoLesson from '@/src/ui/InstructorModal/ModalAddVideoLesson';
 import { useState } from 'react';

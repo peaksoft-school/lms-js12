@@ -2,7 +2,7 @@ import scss from './InternalInstructorStudents.module.scss';
 import { KeyboardEvent, useState } from 'react';
 import { Button, Pagination, Stack } from '@mui/material';
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
-import { Preloader } from '@/src/ui/preloader/Preloader';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 

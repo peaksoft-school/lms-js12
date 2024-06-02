@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
-import { Preloader } from '@/src/ui/preloader/Preloader';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './InternalCourseStudent.module.scss';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
@@ -8,7 +8,7 @@ import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetAllStudentsCourseQuery } from '@/src/redux/api/admin/courses';
 import { useParams } from 'react-router-dom';
-import IsBlockCourses from '@/src/ui/customModal/deleteModal/IsBlockCourses';
+import IsBlockCourses from '@/src/ui/customModal/IsBlockCourses';
 
 interface Pages {
 	page: number;

@@ -4,6 +4,7 @@ import scss from './SubHeaderMobile.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useEffect, useState } from 'react';
+import bell from '@/src/assets/svgs/Header icons.png';
 
 const SupHeaderMobile = () => {
 	const { pathname } = useLocation();
@@ -202,6 +203,7 @@ const SupHeaderMobile = () => {
 					</Menu>
 
 					<div className={scss.header_elements}>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<p>Учитель</p>
@@ -248,6 +250,7 @@ const SupHeaderMobile = () => {
 					</Menu>
 
 					<div className={scss.header_elements}>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<p>Студент</p>

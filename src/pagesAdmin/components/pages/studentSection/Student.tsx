@@ -1,13 +1,10 @@
 import FilterPhoto from '@/src/assets/svgs/adjustments-horizontal.svg';
 import SearchPhoto from '@/src/assets/svgs/search.svg';
-import {
-	useGetStudentTableQuery,
-	usePatchCompletedMutationMutation
-} from '@/src/redux/api/admin/student';
+import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import Input from '@/src/ui/customInput/Input';
-import ExelModal from '@/src/ui/customModal/ExelModal.tsx';
+import ExcelModal from '@/src/ui/customModal/ExcelModal';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
-import { Preloader } from '@/src/ui/preloader/Preloader.tsx';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import { Button } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
@@ -24,32 +21,28 @@ import scss from './Student.module.scss';
 import { Box, ScrollArea } from '@mantine/core';
 
 interface Student {
-	_id: number;
-	firstName: string;
-	lastName: string;
-	group: string;
-	TrainingFormat: string;
-	phone_number: string;
+	id: number;
+	fullName: string;
+	groupName: string;
+	studyFormat: string;
+	phoneNumber: string;
 	email: string;
-	password: string;
-	isCompleted: boolean;
+	isBlock: boolean;
 }
 
-const Student = () => {
+const Student: React.FC = () => {
 	const { data, isLoading } = useGetStudentTableQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
-	const [openEditModal, setOpenEditModal] = useState(false);
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const [openDeleteModal, setOpenDeleteModal] = useState(false);
+	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+	const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState(12);
-	const [patchCompletedMutation] = usePatchCompletedMutationMutation();
-	const [saveItem, setSaveItem] = useState<Student>();
-	const [open, setOpen] = useState(false);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [rowsPerPage, setRowsPerPage] = useState<number>(12);
+	const [saveItem, setSaveItem] = useState<Student | undefined>(undefined);
+	const [open, setOpen] = useState<boolean>(false);
 	const [openStudent, setOpenStudent] = useState<boolean>(false);
+	const [openPart, setOpenPart] = useState<number | undefined>(data?.page);
+	const [openPage, setOpenPage] = useState<number | undefined>(data?.size);
 
 	const handleStudentOpen = (e: MouseEvent<HTMLButtonElement>) => {
 		setOpenStudent(true);
@@ -58,80 +51,47 @@ const Student = () => {
 
 	const handleCloseStudent = () => {
 		setOpenStudent(false);
-		console.log('ln;lk');
 	};
 
 	if (isLoading) {
-		return (
-			<div>
-				<Preloader />
-			</div>
-		);
+		return <Preloader />;
 	}
 
-	const handleOpenSearch = () => {
-		setOpen(true);
-	};
-
-	const handleCloseSearch = () => {
-		setOpen(false);
-	};
-
+	const handleOpenSearch = () => setOpen(true);
+	const handleCloseSearch = () => setOpen(false);
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
 		page: number
-	): void => {
-		setCurrentPage(page);
-	};
-
-	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	): void => setCurrentPage(page);
+	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setSearchTerm(event.target.value);
-	};
-
-	const handleCloseEditModal = () => setOpenEditModal(false);
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
 
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 15) {
+			if (newOpenPage > 12) {
 				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
 				setCurrentPage(1);
-				openPartFunc();
 			} else {
 				setRowsPerPage(12);
 			}
 		}
 	};
 
-	const updateCompletedFunc = async () => {
-		if (saveItem) {
-			const updated = {
-				firstName: saveItem.firstName,
-				lastName: saveItem.lastName,
-				email: saveItem.email,
-				group: saveItem.group,
-				phone_number: saveItem.phone_number,
-				TrainingFormat: saveItem.TrainingFormat,
-				password: saveItem.password,
-				isCompleted: !saveItem.isCompleted
-			};
-			await patchCompletedMutation({ updated, saveIdElement });
-		}
-	};
+	const filteredData = data?.students.filter((student: Student) => {
+		const searchTermLower = searchTerm.toLowerCase();
+		return (
+			(student.fullName &&
+				student.fullName.toLowerCase().includes(searchTermLower)) ||
+			(student.groupName &&
+				student.groupName.toLowerCase().includes(searchTermLower)) ||
+			(student.studyFormat &&
+				student.studyFormat.toLowerCase().includes(searchTermLower)) ||
+			(student.phoneNumber &&
+				student.phoneNumber.toLowerCase().includes(searchTermLower)) ||
+			(student.email && student.email.toLowerCase().includes(searchTermLower))
+		);
+	});
 
 	return (
 		<div className={scss.student}>
@@ -157,7 +117,12 @@ const Student = () => {
 							</div>
 						</div>
 						<div className={scss.buttons}>
-							<Button size="large" className={scss.button} variant="outlined">
+							<Button
+								size="large"
+								onClick={handleOpenSearch}
+								className={scss.button}
+								variant="outlined"
+							>
 								<div className={scss.icon}>
 									<IconUpload stroke={2} />
 								</div>
@@ -185,19 +150,13 @@ const Student = () => {
 					>
 						<Box>
 							<div>
-								<div
-									style={{
-										display: 'flex',
-										justifyContent: 'center'
-									}}
-								>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
 									<div className={scss.StudentContainer}>
 										<table className={scss.table}>
 											<thead>
 												<tr>
 													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя</th>
-													<th>Фамилия</th>
+													<th>Имя Фамилия</th>
 													<th>Группа</th>
 													<th>Формат обучения</th>
 													<th>Номер телефона</th>
@@ -210,14 +169,14 @@ const Student = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data
+												{filteredData
 													?.slice(
 														(currentPage - 1) * rowsPerPage,
 														currentPage * rowsPerPage
 													)
 													.map((item: Student, index) => (
 														<tr
-															key={item._id}
+															key={item.id}
 															className={
 																index % 2 === 1
 																	? scss.TableAlternateRow
@@ -225,51 +184,32 @@ const Student = () => {
 															}
 														>
 															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{index + 1 + (currentPage - 1) * rowsPerPage}
 															</td>
 															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
-																{item.firstName}
+																{item.fullName}
 															</td>
 															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
-																{item.lastName}
+																{item.groupName}
 															</td>
 															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
-																{item.group}
+																{item.studyFormat}
 															</td>
 															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
-																{item.TrainingFormat}
+																{item.phoneNumber}
 															</td>
 															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
-															>
-																{item.phone_number}
-															</td>
-															<td
-																className={
-																	!item.isCompleted ? scss.changeClass : ''
-																}
+																className={item.isBlock ? scss.changeClass : ''}
 															>
 																{item.email}
 															</td>
@@ -277,16 +217,14 @@ const Student = () => {
 																<button
 																	onClick={(event) => {
 																		setAnchorEl(event.currentTarget);
-																		setSaveIdElement(item._id);
+																		setSaveIdElement(item.id);
 																		setSaveItem(item);
 																	}}
 																>
-																	<button
+																	<IconDotsVertical
 																		style={{ cursor: 'pointer' }}
 																		onClick={() => setAnchorEl(null)}
-																	>
-																		<IconDotsVertical />
-																	</button>
+																	/>
 																</button>
 															</td>
 														</tr>
@@ -295,15 +233,8 @@ const Student = () => {
 													anchorEl={anchorEl}
 													open={Boolean(anchorEl)}
 													onClose={() => setAnchorEl(null)}
-													setOpenEditModal={() => setOpenEditModal(true)}
 													setOpenDeleteModal={setOpenDeleteModal}
-													updateCompletedFunc={updateCompletedFunc}
-													handleCloseEditModal={handleCloseEditModal}
-													openEditModal={openEditModal}
-													item={data?.slice(
-														(currentPage - 1) * rowsPerPage,
-														currentPage * rowsPerPage
-													)}
+													item={saveItem}
 													saveIdElement={saveIdElement}
 													openDeleteModal={openDeleteModal}
 												/>
@@ -327,14 +258,13 @@ const Student = () => {
 							onChange={(e) => setOpenPart(+e.target.value)}
 							onKeyDown={(e) => {
 								handleAppend(e);
-								openPartFunc();
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								count={Math.ceil((filteredData?.length || 0) / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -353,14 +283,12 @@ const Student = () => {
 							onChange={(e) => setOpenPage(+e.target.value)}
 							onKeyDown={(e) => {
 								handleAppend(e);
-								openPartPage();
 							}}
 						/>
 					</div>
 				</div>
 			</div>
-			<ExelModal handleClose={handleCloseSearch} open={open} />
-
+			<ExcelModal handleClose={handleCloseSearch} open={open} />
 			<ModalAddStudent open={openStudent} handleClose={handleCloseStudent} />
 		</div>
 	);

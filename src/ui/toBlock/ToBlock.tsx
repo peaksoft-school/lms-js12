@@ -1,46 +1,76 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Menu, MenuItem } from '@mui/material';
 import editPhoto from '@/src/assets/svgs/edit.svg';
 import deletePhoto from '@/src/assets/svgs/delete-red.svg';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
-import ModalEditStudent from '../customModal/ModalEditStudent';
 import DeleteStudentModal from '@/src/ui/customModal/deleteModal/DeleteStudentModal';
+import ModalEditStudent from '../customModal/ModalEditStudent';
+import IsBlock from '../InstructorModal/IsBlock';
 
-interface MenuItem {
-	_id: number;
-	isCompleted: boolean;
+interface StudentMenuItem {
+	id: number;
+	firstName: string;
+	lastName: string;
+	phoneNumber: string;
+	email: string;
+	groupName: string[];
+	studyFormat: string[];
+	isBlock: boolean;
 }
 
 interface MenuProps {
 	anchorEl: null | HTMLElement;
 	open: boolean;
 	onClose: () => void;
-	setOpenEditModal: (value: boolean) => void;
 	setOpenDeleteModal: (value: boolean) => void;
 	updateCompletedFunc: () => void;
-
-	item: MenuItem[] | undefined;
-	openEditModal: boolean;
-	handleCloseEditModal: () => void;
+	item: StudentMenuItem | undefined;
 	saveIdElement: number | null;
 	openDeleteModal: boolean;
+	setFilteredData: React.Dispatch<React.SetStateAction<StudentMenuItem[]>>;
 }
 
 const StudentMenu: FC<MenuProps> = ({
 	anchorEl,
 	open,
 	onClose,
-	setOpenEditModal,
 	setOpenDeleteModal,
-	updateCompletedFunc,
 	item,
-	openEditModal,
-	handleCloseEditModal,
 	saveIdElement,
-	openDeleteModal
+	openDeleteModal,
+	setFilteredData
 }) => {
-	const data = item?.find((el: { _id: number }) => el._id === saveIdElement);
+	const [openEditModalState, setOpenEditModalState] = useState(false);
+	const [openIsBlockModal, setOpenIsBlockModal] = useState(false);
+
+	const handleCloseEditModal = () => {
+		setOpenEditModalState(false);
+	};
+
+	const handleOpenEditModal = () => {
+		setOpenEditModalState(true);
+	};
+
+	const handleOpenIsBlockModal = () => {
+		setOpenIsBlockModal(true);
+		onClose();
+	};
+
+	const handleCloseIsBlockModal = () => {
+		setOpenIsBlockModal(false);
+	};
+
+	const handleBlockUnblock = () => {
+		setFilteredData((prevData) =>
+			prevData.map((student) =>
+				student.id === saveIdElement
+					? { ...student, isBlock: !student.isBlock }
+					: student
+			)
+		);
+		setOpenIsBlockModal(false);
+	};
 
 	return (
 		<div>
@@ -64,46 +94,47 @@ const StudentMenu: FC<MenuProps> = ({
 				}}
 			>
 				<MenuItem
+					key="edit"
 					style={{ display: 'flex', gap: '10px' }}
 					onClick={() => {
-						setOpenEditModal(true);
+						handleOpenEditModal();
 						onClose();
 					}}
 				>
-					<img src={editPhoto} alt="#" />
+					<img src={editPhoto} alt="Edit" />
 					Редактировать
 				</MenuItem>
 				<MenuItem
+					key="delete"
 					style={{ display: 'flex', gap: '10px' }}
 					onClick={() => {
 						setOpenDeleteModal(true);
 						onClose();
 					}}
 				>
-					<img src={deletePhoto} alt="#" />
+					<img src={deletePhoto} alt="Delete" />
 					Удалить
 				</MenuItem>
 				<MenuItem
+					key="block-unblock"
 					style={{ display: 'flex', gap: '10px' }}
 					onClick={() => {
-						updateCompletedFunc();
-						onClose();
+						handleOpenIsBlockModal();
 					}}
 				>
-					{data?.isCompleted === true ? (
+					{item?.isBlock ? (
 						<>
-							<img src={LockOpenStudent} alt="#" /> Заблокировать
+							<img src={LockOpenStudent} alt="Unlock" /> Разблокировать
 						</>
 					) : (
 						<>
-							<img src={LockBlockStudent} alt="#" />
-							Разблокировать
+							<img src={LockBlockStudent} alt="Lock" /> Заблокировать
 						</>
 					)}
 				</MenuItem>
 			</Menu>
 			<ModalEditStudent
-				open={openEditModal}
+				open={openEditModalState}
 				handleClose={handleCloseEditModal}
 				saveIdElement={saveIdElement}
 			/>
@@ -111,6 +142,13 @@ const StudentMenu: FC<MenuProps> = ({
 				open={openDeleteModal}
 				handleCloseModal={() => setOpenDeleteModal(false)}
 				saveIdElement={saveIdElement}
+			/>
+			<IsBlock
+				openIsBlock={openIsBlockModal}
+				handleCloseIsBlock={handleCloseIsBlockModal}
+				saveIdElement={saveIdElement}
+				isBlock={item?.isBlock}
+				handleBlockUnblock={handleBlockUnblock}
 			/>
 		</div>
 	);

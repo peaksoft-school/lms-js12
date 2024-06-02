@@ -96,22 +96,30 @@ const AddTask = () => {
 				<Box>
 					<div className={scss.container}>
 						<div className={scss.main_task}>
-							<p style={{ color: '#1f6ed4' }}>Создать задание</p>
-							<div className={scss.save_file}>
-								<input
-									type="file"
-									ref={fileInputRef}
-									style={{ display: 'none' }}
-									onChange={() => {}}
-								/>
-								<ButtonCancel
-									disabled={false}
-									width="207px"
-									onClick={openFilePicker}
-									type="button"
-								>
-									<span> Загрузить файл</span> <IconDownload stroke={2} />
-								</ButtonCancel>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'space-between',
+									alignItems: 'center'
+								}}
+							>
+								<p style={{ color: '#1f6ed4' }}>Создать задание</p>
+								<div className={scss.save_file}>
+									<input
+										type="file"
+										ref={fileInputRef}
+										style={{ display: 'none' }}
+										onChange={() => {}}
+									/>
+									<ButtonCancel
+										disabled={false}
+										width="207px"
+										onClick={openFilePicker}
+										type="button"
+									>
+										<span> Загрузить файл</span> <IconDownload stroke={2} />
+									</ButtonCancel>
+								</div>
 							</div>
 							<div className={scss.input_part}>
 								<Input
