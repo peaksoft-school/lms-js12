@@ -1,12 +1,12 @@
 import { FC, useState, KeyboardEvent } from 'react';
 import { IconArticle, IconBook } from '@tabler/icons-react';
+import { Box, ScrollArea } from '@mantine/core';
 import scss from './Course.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { useNavigate } from 'react-router-dom';
-import { Box, ScrollArea } from '@mantine/core';
 
 const Course: FC = () => {
 	const { data } = useGetCourseInstructorQuery();
