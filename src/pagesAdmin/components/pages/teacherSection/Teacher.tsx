@@ -14,7 +14,7 @@ import DeleteTeacherModal from '@/src/ui/customModal/deleteModal/DeleteTeacherMo
 import ModalEditTeacher from '@/src/ui/customModal/ModalEditTeacher';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { Preloader } from '@/src/ui/preloader/Preloader';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import Button from '@mui/material/Button';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher.tsx';
 import { Box, ScrollArea } from '@mantine/core';

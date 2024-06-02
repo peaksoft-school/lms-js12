@@ -40,14 +40,15 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	const { control, handleSubmit, reset } = useForm<VideoProps>();
 	const [postVideoLesson] = usePostVideoLessonMutation();
 
-	const onSubmit: SubmitHandler<VideoProps> = (data) => {
+	const onSubmit: SubmitHandler<VideoProps> = async (data) => {
 		// const { title, description, link } = data;
 		const postData = {
-			title: data.title,
+			titleOfVideo: data.title,
 			description: data.description,
-			link: data.link
+			linkOfVideo: data.link,
+			createdAt: Date.now()
 		};
-		postVideoLesson(postData);
+		await postVideoLesson(postData);
 		reset();
 		handleCloseVideo();
 	};

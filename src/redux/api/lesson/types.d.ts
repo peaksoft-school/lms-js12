@@ -3,6 +3,7 @@ namespace LESSON {
 	interface LessonType {
 		_id: number;
 		title: string;
+		createdAt: number;
 	}
 
 	type GetCardsResponse = LessonType[];
@@ -10,6 +11,7 @@ namespace LESSON {
 	interface GetLessonType {
 		_id: number;
 		title: string;
+		createdAt: number;
 	}
 
 	type GetLessonsResponse = GetLessonType[];

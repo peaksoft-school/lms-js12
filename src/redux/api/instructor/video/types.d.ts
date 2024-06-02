@@ -1,40 +1,48 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace VIDEO_LESSON {
 	type VideoLessonGetResponse = {
-		_id: number;
-		title: string;
+		id: number;
+		titleOfVideo: string;
 		description: string;
-		link: string;
-	}[];
+		linkOfVideo: string;
+		createdAt: number;
+	};
+	type VideoLessonGetResponse = {
+		lessonVideoResponses: Lesson[];
+	};
 
 	type VideoLessonGetRequest = void;
 
 	type VideoLessonPostResponse = {
-		title: string;
+		titleOfVideo: string;
 		description: string;
-		link: string;
+		linkOfVideo: string;
+		createdAt: number;
 	};
 
 	type VideoLessonPostRequest = {
-		title: string;
+		titleOfVideo: string;
 		description: string;
-		link: string;
+		linkOfVideo: string;
+		createdAt: number;
 	};
 
 	type VideoLessonPatchResponse = {
 		newVideoLesson: {
-			title: string;
+			titleOfVideo: string;
 			description: string;
-			link: string;
+			linkOfVideo: string;
+			createdAt: number;
 		};
 	};
 
 	type VideoLessonPatchRequest = {
 		deleteById: number | null;
 		newVideoLesson: {
-			title: string;
+			titleOfVideo: string;
 			description: string;
-			link: string;
+			linkOfVideo: string;
+			createdAt: number;
 		};
 	};
 
