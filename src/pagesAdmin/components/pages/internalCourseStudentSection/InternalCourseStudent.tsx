@@ -8,7 +8,7 @@ import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetAllStudentsCourseQuery } from '@/src/redux/api/admin/courses';
 import { useParams } from 'react-router-dom';
-import IsBlockCourses from '@/src/ui/customModal/deleteModal/IsBlockCourses';
+import IsBlockCourses from '@/src/ui/customModal/IsBlockCourses';
 
 interface Pages {
 	page: number;

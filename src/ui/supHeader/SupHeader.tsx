@@ -2,19 +2,18 @@
 import { IconBellRinging2, IconChevronDown } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Box, Menu, Tab, Tabs } from '@mui/material';
+import { Box, Menu, MenuItem, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
 import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
 import vector from '@/src/assets/svgs/Vector.svg';
-
 import profile from '@/src/assets/svgs/Profile.png';
-import { MenuItem } from '@mantine/core';
+import bell from '@/src/assets/svgs/Header icons.png';
+
 const SupHeader = () => {
 	const { pathname } = useLocation();
 	const [openNotification, setOpenNotification] = useState(false);
 	const navigate = useNavigate();
 	const { courseId, lessonId } = useParams();
-
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
@@ -96,6 +95,12 @@ const SupHeader = () => {
 		navigate(`/courses/${courseId}/rating`);
 	};
 
+	const handleNavigate = () => {
+		navigate(`/auth/login`);
+		// localStorage.setItem('isAuth', false);
+		setAnchorEl(null);
+	};
+
 	return (
 		<div className={scss.header}>
 			{/* //! admin header для /admin/courses */}
@@ -105,7 +110,7 @@ const SupHeader = () => {
 						<Box
 							sx={{
 								borderColor: 'divider',
-								paddingTop: '20px'
+								paddingTop: '10px'
 							}}
 						>
 							<Tabs
@@ -154,7 +159,7 @@ const SupHeader = () => {
 						}}
 					>
 						<MenuItem
-							// onClick={handleNavigate}
+							onClick={handleNavigate}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -177,7 +182,7 @@ const SupHeader = () => {
 						<Box
 							sx={{
 								borderColor: 'divider',
-								paddingTop: '20px'
+								paddingTop: '10px'
 							}}
 						>
 							<Tabs
@@ -203,13 +208,55 @@ const SupHeader = () => {
 							</Tabs>
 						</Box>
 					</Box>
-					<div className={scss.header_elements}>
+					<div className={scss.header_elements} onClick={handleClick}>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<div className={scss.instructor_profile}>Учитель</div>
 						</div>
 						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
 					</div>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right'
+						}}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+						PaperProps={{
+							style: {
+								boxShadow: 'none',
+								border: '1px solid #336fff',
+								width: '200px',
+								background: 'rgb(221, 233, 249)',
+								borderRadius: '10px'
+							}
+						}}
+					>
+						<MenuItem
+							onClick={handleNavigate}
+							style={{
+								display: 'flex',
+								gap: '10px',
+								color: '#1976d2',
+								fontSize: '18px',
+								fontWeight: '600',
+								alignItems: 'center'
+							}}
+						>
+							<img src={vector} alt="" />
+							<p> Выйти</p>
+						</MenuItem>
+					</Menu>
 				</div>
 			)}
 			{/* //! student header*/}
@@ -250,6 +297,7 @@ const SupHeader = () => {
 								stroke={2}
 							/>
 						</div>
+						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<p>Студент</p>

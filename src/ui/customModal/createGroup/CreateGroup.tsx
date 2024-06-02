@@ -7,7 +7,7 @@ import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useRef, useState } from 'react';
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
 	useCreateGroupFileMutation,
@@ -82,9 +82,8 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 			reader.readAsDataURL(file);
 		}
 	};
-
-	// const notifySuccess = () => toast.success('Группа успешно создана !');
-	// const notifyError = () => toast.error('Произошла ошибка при создании группы');
+	const notifySuccess = () => toast.success('Группа успешно создана !');
+	const notifyError = () => toast.error('Произошла ошибка при создании группы');
 
 	const handleCreateGroup = async () => {
 		const newGroup = {
@@ -94,15 +93,19 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 			description: text
 		};
 
-		await createGroup(newGroup);
+		try {
+			await createGroup(newGroup);
+			notifySuccess();
 
-		handleOpen(false);
-		setData('');
-		setText('');
-		setImage('');
-		setValue('');
+			handleOpen(false);
+			setData('');
+			setText('');
+			setImage('');
+			setValue('');
+		} catch (error) {
+			notifyError();
+		}
 	};
-
 	return (
 		<div>
 			{/* <ToastContainer /> */}

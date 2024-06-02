@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 interface Course {
 	id: number;
 	title: string;
@@ -10,6 +11,6 @@ namespace STUDENTSCOURSES {
 		page: number;
 		size: number;
 		courses: Course[];
-	}[];
+	};
 	type GetStudentsRequest = void;
 }

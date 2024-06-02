@@ -97,7 +97,10 @@ const Courses: FC = () => {
 															}}
 														>
 															<div className={scss.block_photo_cards}>
-																<img src={item.image} alt="images" />
+																<img
+																	src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
+																	alt="images"
+																/>
 															</div>
 															<div className={scss.block_cont}>
 																<div className={scss.second_block}>

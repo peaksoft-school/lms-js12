@@ -16,19 +16,19 @@ import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { Box, ScrollArea } from '@mantine/core';
 
 const Courses: FC = () => {
-	const { data } = useGetAdminCourseQuery();
+	const [currentPage, setCurrentPage] = useState(1);
+	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openEditModal, setOpenEditModal] = useState(false);
+	const { data } = useGetAdminCourseQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
-	console.log(setRowsPerPage);
+	console.log(rowsPerPage, 'sli');
 
 	const navigate = useNavigate();
 
@@ -55,7 +55,6 @@ const Courses: FC = () => {
 		e: KeyboardEvent<HTMLInputElement>
 	) => {
 		if (e.key === 'Enter') {
-			navigate(`/admin/courses/page/${page}/size/${size}`);
 		}
 	};
 
