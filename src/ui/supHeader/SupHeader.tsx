@@ -290,14 +290,8 @@ const SupHeader = () => {
 								alignItems: 'center',
 								cursor: 'pointer'
 							}}
-						>
-							<IconBellRinging2
-								onClick={handleOpenNotification}
-								style={{ width: '30px', height: '30px' }}
-								stroke={2}
-							/>
-						</div>
-						<img src={bell} alt="bell" />
+						></div>
+						<img onClick={handleOpenNotification} src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<p>Студент</p>
