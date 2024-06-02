@@ -27,7 +27,7 @@ const CreateTest = () => {
 	const [copiesData, setCopiesData] = useState<CopyData[]>([]);
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [pointValue, setPointValue] = useState<string>('');
-	const [postTest] = usePostTestMutation();
+	// const [postTest] = usePostTestMutation();
 	const { lessonId } = useParams();
 
 	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

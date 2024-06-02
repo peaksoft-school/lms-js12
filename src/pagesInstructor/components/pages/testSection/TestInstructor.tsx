@@ -21,7 +21,7 @@ const TestInstructor = () => {
 	const navigate = useNavigate();
 	const { courseId, lessonId } = useParams();
 	console.log(lessonId);
-	const { data } = useGetTestQuery(lessonId);
+	// const { data } = useGetTestQuery(lessonId);
 
 	const [questions, setQuestions] = useState<Question[]>([
 		{
