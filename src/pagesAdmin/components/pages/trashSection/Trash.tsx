@@ -7,7 +7,7 @@ import {
 	useGetTrashQuery,
 	useUpdatedTrashMutation
 } from '@/src/redux/api/admin/trash';
-import { Preloader } from '../../../../ui/preloader/Preloader';
+import { Preloader } from '../../../../utils/routes/preloader/Preloader';
 import { Pagination, Stack } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';

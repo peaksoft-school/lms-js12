@@ -4,7 +4,7 @@ import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import Input from '@/src/ui/customInput/Input';
 import ExcelModal from '@/src/ui/customModal/ExcelModal';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
-import { Preloader } from '@/src/ui/preloader/Preloader.tsx';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import { Button } from '@mui/material';
 import Pagination from '@mui/material/Pagination';

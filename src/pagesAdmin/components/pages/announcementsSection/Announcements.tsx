@@ -1,7 +1,7 @@
 import React, { useState, KeyboardEvent } from 'react';
 import scss from './Announcements.module.scss';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
-import { Preloader } from '@/src/ui/preloader/Preloader';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import {
 	useGetAnnouncementTableQuery,
 	usePatchShowdMutationMutation

@@ -1,27 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace MATERIALS {
-	type MaterialsGetResponse = {
-		_id: number;
+	type Lesson = {
+		[x: string]: number | null;
+		id: number;
 		title: string;
-		date: string;
-	}[];
+		createdAt: string;
+	};
+	type MaterialsGetResponse = {
+		lessonResponses: Lesson[];
+	};
 	type MaterialsGetRequest = void;
 
 	type MaterialsPostResponse = {
-		_id: number;
 		title: string;
-		date: string;
+		createdAt: string;
 	};
 
 	type MaterialsPostRequest = {
 		title: string;
-		date: string;
+		createdAt: string;
 	};
 
 	type MaterialsPatchResponse = {
 		updateMaterial: {
 			title: string;
-			date: string;
+			createdAt: string;
 		};
 	};
 
@@ -29,7 +32,7 @@ namespace MATERIALS {
 		deleteById: number | null;
 		updateMaterial: {
 			title: string;
-			date: string;
+			createdAt: string;
 		};
 	};
 

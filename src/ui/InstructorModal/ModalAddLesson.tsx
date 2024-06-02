@@ -8,6 +8,7 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { usePostMaterialsMutation } from '@/src/redux/api/instructor/materials';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 interface FormData {
 	title: string;
@@ -15,6 +16,7 @@ interface FormData {
 }
 
 interface AddLessonProps {
+	handleOpen: (value: boolean) => void;
 	open: boolean;
 	handleClose: () => void;
 }
@@ -31,9 +33,16 @@ const style = {
 	borderRadius: '12px'
 };
 
-const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
+const ModalAddLesson: FC<AddLessonProps> = ({
+	handleOpen,
+	open,
+	handleClose
+}) => {
 	const { handleSubmit, reset, control } = useForm<FormData>();
 	const [postMaterials] = usePostMaterialsMutation();
+	const { courseId } = useParams();
+	console.log(courseId);
+	
 
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		const { title, date } = data;
@@ -41,11 +50,12 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 		if (title !== '' && date !== '') {
 			const postData = {
 				title: title,
-				date: date
+				createdAt: date
 			};
-			await postMaterials(postData);
+			await postMaterials({ postData, courseId });
 			reset();
 			handleClose();
+			handleOpen(false);
 		}
 	};
 
