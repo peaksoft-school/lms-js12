@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -40,7 +40,13 @@ const style = {
 };
 
 const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
-	const { control, handleSubmit, reset } = useForm<IFormInputs>();
+	event?.preventDefault();
+	const {
+		control,
+		handleSubmit,
+		reset,
+		formState: { errors }
+	} = useForm<IFormInputs>();
 	const [postTeacher] = usePostTeacherMutation();
 	// const [personName, setPersonName] = useState<string[]>([]);
 	// const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
@@ -106,6 +112,9 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="firstName"
 								control={control}
 								defaultValue=""
+								rules={{
+									required: 'Имя обязателен для заполнения'
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -113,6 +122,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder=" Имя"
+										error={!!errors.firstName}
 									/>
 								)}
 							/>
@@ -120,6 +130,9 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="lastName"
 								control={control}
 								defaultValue=""
+								rules={{
+									required: 'Фамилия обязателен для заполнения'
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -127,13 +140,14 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Фамилия"
+										error={!!errors.lastName}
 									/>
 								)}
 							/>
 							<Controller
 								name="phoneNumber"
 								control={control}
-								defaultValue=""
+								defaultValue="+996"
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -141,6 +155,14 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="string"
 										width="100%"
 										placeholder="Phone Number"
+										onChange={(e) => {
+											const value = e.target.value;
+											if (!value.startsWith('+996')) {
+												field.onChange('+996' + value);
+											} else {
+												field.onChange(value);
+											}
+										}}
 									/>
 								)}
 							/>
@@ -148,6 +170,9 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="email"
 								control={control}
 								defaultValue=""
+								rules={{
+									required: 'Email обязателен для заполнения'
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -155,6 +180,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="email"
 										width="100%"
 										placeholder="Email"
+										error={!!errors.email}
 									/>
 								)}
 							/>
@@ -192,6 +218,9 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="specialization"
 								control={control}
 								defaultValue=""
+								rules={{
+									required: 'Специализация обязателен для заполнения'
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -199,6 +228,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="string"
 										width="100%"
 										placeholder="Специализация"
+										error={!!errors.specialization}
 									/>
 								)}
 							/>
