@@ -2,7 +2,7 @@ import { api as index } from '../..';
 
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
-		getTest: builder.query<TEST.getTestResponse, TEST.getTestResponsex>({
+		getTest: builder.query<TEST.getTestResponse, TEST.getTestRequest>({
 			query: ({ lessonId }) => ({
 				url: `/api/test/findAll/${lessonId}`,
 				method: 'GET'
