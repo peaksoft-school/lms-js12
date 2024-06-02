@@ -27,6 +27,7 @@ import RatingStudentsPage from '../pages/RatingStudentsPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import CrateTask from '../pages/createTaskSection/CrateTask';
+import CreateTest from '../pages/createTestSection/CreateTest';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -240,7 +241,7 @@ const LayoutInstructor = () => {
 						/>
 						<Route
 							path="/course/:courseId/materials/:lessonId/createTask"
-							element={<CrateTask />}
+							element={<CreateTest />}
 						/>
 					</Routes>
 				</main>

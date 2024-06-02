@@ -6,6 +6,7 @@ import './index.scss';
 import { BrowserRouter } from 'react-router-dom';
 import ReduxProvider from './providers/ReduxProvider.tsx';
 import MantineSettingProvider from './providers/MantineSettingProvider.tsx';
+import '@mantine/core/styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>

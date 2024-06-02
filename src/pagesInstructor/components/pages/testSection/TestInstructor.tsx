@@ -7,6 +7,7 @@ import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import { Button, Menu, MenuItem } from '@mui/material';
+import { useGetTestQuery } from '@/src/redux/api/instructor/test';
 
 interface Question {
 	id: string;
@@ -18,6 +19,9 @@ interface Question {
 const TestInstructor = () => {
 	const navigate = useNavigate();
 	const { courseId, lessonId } = useParams();
+	console.log(lessonId,',,,');
+	const { data } = useGetTestQuery(lessonId);
+	
 	const [questions, setQuestions] = useState<Question[]>([
 		{
 			id: '1',
@@ -151,10 +155,19 @@ const TestInstructor = () => {
 		handleClose();
 	};
 
+	const OpenCreateTest = () => {
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/createTask`);
+	};
+
 	return (
 		<div className={scss.test_container}>
 			<div className={scss.buttons}>
-				<Button size="large" className={scss.button} variant="contained">
+				<Button
+					size="large"
+					className={scss.button}
+					variant="contained"
+					onClick={OpenCreateTest}
+				>
 					<div className={scss.icon}>
 						<IconPlus stroke={2} />
 					</div>
@@ -162,8 +175,8 @@ const TestInstructor = () => {
 				</Button>
 			</div>
 			<div className={scss.container}>
-				{questions.map((question) => (
-					<div className={scss.test_container_second} key={question.number}>
+				{data?.testResponseForGetAll.map((question) => (
+					<div className={scss.test_container_second} key={question.testId}>
 						<div className={scss.test_container_fifth}>
 							<div className={scss.test_cont}>
 								<div
@@ -174,8 +187,8 @@ const TestInstructor = () => {
 										)
 									}
 								>
-									<h4>{question.number}</h4>
-									<h4 className={scss.test_text}>{question.text}</h4>
+									<h4>{question.testId}</h4>
+									<h4 className={scss.test_text}>{question.title}</h4>
 								</div>
 								<div>
 									<button
@@ -189,7 +202,9 @@ const TestInstructor = () => {
 								</div>
 							</div>
 							<div className={scss.test_container_forth}>
-								<p className={scss.text_time}>Время: {question.time} минут</p>
+								<p className={scss.text_time}>
+									Время: {question.hour}.{question.minute} минут
+								</p>
 							</div>
 						</div>
 					</div>

@@ -7,8 +7,9 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCircle from '@/src/ui/customButton/ButtonCircle';
 import { Select } from '@mantine/core';
-// import { usePostTestMutation } from '@/src/redux/api/instructor/test';
 import { Controller, useForm } from 'react-hook-form';
+import { usePostTestMutation } from '@/src/redux/api/instructor/test';
+import { useParams } from 'react-router-dom';
 
 interface CopyData {
 	inputValue3: string;
@@ -17,90 +18,27 @@ interface CopyData {
 	options: string;
 }
 
-const Test = () => {
+const CreateTest = () => {
 	const { control, handleSubmit, reset } = useForm();
 	const [option, setOption] = useState('one');
 	const [options, setOptions] = useState('one');
 	const [time, setTime] = useState('00:00');
 	const [inputs, setInputs] = useState([{ id: 1, value: '', visible: true }]);
 	const [copiesData, setCopiesData] = useState<CopyData[]>([]);
-	const [titleValue, setTitleValiue] = useState<string>('');
+	const [titleValue, setTitleValue] = useState<string>('');
 	const [pointValue, setPointValue] = useState<string>('');
-	const [optionValue, setOptionValue] = useState<any>('');
-	// const [postTest] = usePostTestMutation();
-
-	// ! post submit
-	const onSubmit = async (data) => {
-		const { title, hour, minute } = data;
-
-		console.log(data);
-
-		// const postData = {
-		//   title: data.title,
-		//   hour: time.split(':')[0],4
-		//   minute: time.split(':')[1],
-		//   questionType: option,
-		//   questionRequests: [
-		//     ...inputs.map((input) => ({
-		//       title: data[question_${input.id}_title],
-		//       point: data[question_${input.id}_point],
-		//       optionRequests: inputs.map((input, idx) => ({
-		//         option: option.trim(),
-		//         isTrue: data[option_${input.id}_isTrue_${idx}]  false
-		//       }))
-		//     }))
-		//     // ...copiesData.map((copyData, copyIndex) => ({
-		//     //   title: data[`copy_${copyIndex}_title`],
-		//     //   point: data[`copy_${copyIndex}_point`],
-		//     //   questionType: copyData.options,
-		//     //   optionRequests: copyData.inputs.map((_, idx) => ({
-		//     //     option: data[`copy_${copyIndex}_option_${idx}`],
-		//     //     isTrue: data[`copy_${copyIndex}_isTrue_${idx}`]  false
-		//     //   }))
-		//     // }))option
-		//   ]
-		// };
-
-		let answer = inputs.forEach((el) => {
-			return el.value;
-		});
-		const newData = {
-			title: title,
-			hour: time,
-			minute: time,
-			questionRequests: [
-				{
-					title: titleValue,
-					point: pointValue,
-					questionType: option,
-					optionRequests: [
-						{
-							option: answer,
-							isTrue: false
-						}
-					]
-				}
-			]
-		};
-		await postTest({ newData, id: 1 });
-		console.log(newData, 'newData');
-
-		reset();
-	};
+	const [postTest] = usePostTestMutation();
+	const { lessonId } = useParams();
 
 	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.value;
-		setTime(value);
-		console.log(value);
+		setTime(event.target.value);
 	};
-	const handleChangeTitleValueFunk = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		setTitleValiue(e.target.value);
+
+	const handleChangeTitleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setTitleValue(e.target.value);
 	};
-	const handleChangesetPointValueFunk = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
+
+	const handleChangePointValue = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPointValue(e.target.value);
 	};
 
@@ -127,6 +65,7 @@ const Test = () => {
 		updatedCopiesData.splice(copyDataIndex + 1, 0, newCopyData);
 		setCopiesData(updatedCopiesData);
 	};
+
 	const handleDelete = (copyDataIndex: number) => {
 		const updatedCopiesData = copiesData.filter(
 			(_, index) => index !== copyDataIndex
@@ -141,9 +80,7 @@ const Test = () => {
 			inputs: [''],
 			options: 'one'
 		};
-		const updatedCopiesData = [...copiesData];
-		updatedCopiesData.push(newCopyData);
-		setCopiesData(updatedCopiesData);
+		setCopiesData([...copiesData, newCopyData]);
 	};
 
 	const handleAddInputOption = (copyDataIndex: number) => {
@@ -151,9 +88,58 @@ const Test = () => {
 		updatedCopiesData[copyDataIndex].inputs.push('');
 		setCopiesData(updatedCopiesData);
 	};
+
+	const onSubmit = async (data) => {
+		// Process initial inputs
+		const initialAnswers = inputs.map((input) => input.value);
+
+		const initialQuestion = {
+			title: titleValue,
+			point: pointValue,
+			questionType: option, // This should already be set to either "SINGLE" or "MULTIPLE"
+			optionRequests: initialAnswers.map((ans) => ({
+				option: ans,
+				isTrue: false
+			}))
+		};
+
+		// Process copied data
+		const copiedQuestions = copiesData.map((copyData, index) => {
+			const answers = copyData.inputs.map((input) => input);
+			return {
+				title: copyData.inputValue3,
+				point: copyData.inputValue4,
+				questionType: copyData.options === 'one' ? 'SINGLE' : 'MULTIPLE', // Ensure correct values are set here
+				optionRequests: answers.map((ans) => ({
+					option: ans,
+					isTrue: false
+				}))
+			};
+		});
+
+		// Combine initial question with copied questions
+		const questionRequests = [initialQuestion, ...copiedQuestions];
+
+		const newTest = {
+			title: data.title,
+			hour: time.split(':')[0],
+			minute: time.split(':')[1],
+			questionRequests: questionRequests
+		};
+
+		try {
+			const response = await postTest({ newTest, lessonId });
+			console.log(response, 'response');
+			reset();
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className={scss.test}>
+				<h1>Материалы</h1>
 				<div className={scss.name_of_the_test}>
 					<h2>Название теста</h2>
 					<div className={scss.container}>
@@ -181,16 +167,8 @@ const Test = () => {
 								value={time}
 								onChange={handleTimeChange}
 							/>
-
-							<p
-								style={{
-									display: 'flex',
-									alignItems: 'center',
-									gap: '10px'
-								}}
-							>
+							<p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
 								<span>Тип теста:</span>
-
 								<Select
 									placeholder="  Тип теста:"
 									data={['Soft', 'Medium', 'Hard']}
@@ -201,13 +179,13 @@ const Test = () => {
 						</div>
 					</div>
 				</div>
-				<div>
+				<div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 					<div className={scss.div_component2}>
 						<div className={scss.input_contain2}>
 							<div className={scss.input_text}>
 								<h2 className={scss.h2_number}>1</h2>
 								<Controller
-									name="title"
+									name="titleValue"
 									control={control}
 									render={({ field }) => (
 										<Input
@@ -217,12 +195,12 @@ const Test = () => {
 											size="small"
 											{...field}
 											value={titleValue}
-											onChange={handleChangeTitleValueFunk}
+											onChange={handleChangeTitleValue}
 										/>
 									)}
 								/>
 								<Controller
-									name="point"
+									name="pointValue"
 									control={control}
 									render={({ field }) => (
 										<Input
@@ -231,8 +209,8 @@ const Test = () => {
 											width="100%"
 											size="small"
 											{...field}
-											onChange={handleChangesetPointValueFunk}
 											value={pointValue}
+											onChange={handleChangePointValue}
 										/>
 									)}
 								/>
@@ -261,88 +239,84 @@ const Test = () => {
 							</div>
 							<div className={scss.div_text2}>
 								<div className={scss.components}>
-									{inputs.map((input, index) =>
-										input.visible ? (
-											<div key={index} className={scss.input_div}>
-												{option === 'SINGLE' ? (
-													<div className={scss.radio_checkbox}>
-														<Controller
-															name={`option_1_isTrue_${index}`}
-															control={control}
-															render={({ field }) => (
-																<label>
-																	<input
-																		{...field}
-																		style={{ cursor: 'pointer' }}
-																		type="radio"
-																		name="option_1"
-																		value={index}
-																	/>
-																</label>
-															)}
-														/>
-													</div>
-												) : (
-													<div className={scss.radio_checkbox}>
-														<Controller
-															name={`option_1_isTrue_${index}`}
-															control={control}
-															render={({ field }) => (
-																<label>
-																	<input
-																		{...field}
-																		style={{ cursor: 'pointer' }}
-																		type="checkbox"
-																		value={index}
-																	/>
-																</label>
-															)}
-														/>
-													</div>
-												)}
-												<div className={scss.variant_inputs}>
-													<Controller
-														name="optionV"
-														control={control}
-														render={({ field }) => (
-															<Input
-																{...field}
-																size="small"
-																placeholder={`Вариант  ${index + 1}`}
-																type="text"
-																value={inputs[index].value}
-																// value={optionValue}
-																onChange={(e) => {
-																	const newInputs = [...inputs];
-																	newInputs[index].value = e.target.value;
-																	setInputs(newInputs);
-																	inputs.forEach((el) => {
-																		return setOptionValue(el.value);
-																	});
-																}}
-																// onChange={(e) => setOptionValue(e.target.value)}
-																width="100%"
+									{inputs.map(
+										(input, index) =>
+											input.visible && (
+												<div key={index} className={scss.input_div}>
+													{option === 'SINGLE' ? (
+														<div className={scss.radio_checkbox}>
+															<Controller
+																name={`option_1_isTrue_${index}`}
+																control={control}
+																render={({ field }) => (
+																	<label>
+																		<input
+																			{...field}
+																			style={{ cursor: 'pointer' }}
+																			type="radio"
+																			name="option_1"
+																			value={index}
+																		/>
+																	</label>
+																)}
 															/>
-														)}
-													/>
+														</div>
+													) : (
+														<div className={scss.radio_checkbox}>
+															<Controller
+																name={`option_1_isTrue_${index}`}
+																control={control}
+																render={({ field }) => (
+																	<label>
+																		<input
+																			{...field}
+																			style={{ cursor: 'pointer' }}
+																			type="checkbox"
+																			value={index}
+																		/>
+																	</label>
+																)}
+															/>
+														</div>
+													)}
+													<div className={scss.variant_inputs}>
+														<Controller
+															name={`optionValue_${index}`}
+															control={control}
+															render={({ field }) => (
+																<Input
+																	{...field}
+																	size="small"
+																	placeholder={`Вариант ${index + 1}`}
+																	type="text"
+																	value={inputs[index].value}
+																	onChange={(e) => {
+																		const newInputs = [...inputs];
+																		newInputs[index].value = e.target.value;
+																		setInputs(newInputs);
+																	}}
+																	width="100%"
+																/>
+															)}
+														/>
 
-													<div className={scss.notice}>
-														<button className={scss.button_cancel}>
-															<span
-																className={scss.delete_icon}
-																onClick={() => {
-																	const newInputs = [...inputs];
-																	newInputs.splice(index, 1);
-																	setInputs(newInputs);
-																}}
-															>
-																&times;
-															</span>
-														</button>
+														<div className={scss.notice}>
+															<button className={scss.button_cancel}>
+																<span
+																	className={scss.delete_icon}
+																	onClick={() => {
+																		const newInputs = [...inputs];
+																		newInputs.splice(index, 1);
+																		setInputs(newInputs);
+																	}}
+																>
+																	&times;
+																</span>
+															</button>
+														</div>
 													</div>
 												</div>
-											</div>
-										) : null
+											)
 									)}
 									<p className={scss.p_text2}>
 										<a
@@ -352,12 +326,7 @@ const Test = () => {
 										>
 											Добавить вариант
 										</a>
-										<div
-											style={{
-												display: 'flex',
-												gap: '15px'
-											}}
-										>
+										<div style={{ display: 'flex', gap: '15px' }}>
 											<div
 												className={scss.copy_icon}
 												onClick={() => handleCopy(0)}
@@ -373,8 +342,7 @@ const Test = () => {
 							</div>
 						</div>
 					</div>
-
-					{/* //! */}
+					{/* CopiesData */}
 					{copiesData.map((copyData, copyIndex) => (
 						<div key={copyIndex} className={scss.div_component2}>
 							<div className={scss.input_contain2}>
@@ -475,7 +443,7 @@ const Test = () => {
 															<Input
 																{...field}
 																size="small"
-																placeholder={`Вариант  ${index + 1}`}
+																placeholder={`Вариант ${index + 1}`}
 																type="text"
 																value={input}
 																onChange={(e) => {
@@ -517,17 +485,19 @@ const Test = () => {
 											>
 												Добавить вариант
 											</a>
-											<div
-												className={scss.copy_icon}
-												onClick={() => handleCopy(copyIndex)}
-											>
-												<IconCopy />
-											</div>
-											<div
-												className={scss.delete_icon}
-												onClick={() => handleDelete(copyIndex)}
-											>
-												<IconDelete />
+											<div style={{ display: 'flex', gap: '15px' }}>
+												<div
+													className={scss.copy_icon}
+													onClick={() => handleCopy(copyIndex)}
+												>
+													<IconCopy />
+												</div>
+												<div
+													className={scss.delete_icon}
+													onClick={() => handleDelete(copyIndex)}
+												>
+													<IconDelete />
+												</div>
 											</div>
 										</p>
 									</div>
@@ -537,20 +507,10 @@ const Test = () => {
 					))}
 				</div>
 				<div className={scss.button_contain}>
-					<ButtonCancel
-						width="100px"
-						onClick={() => {}}
-						type={'button'}
-						disabled={false}
-					>
+					<ButtonCancel width="100px" type={'button'} disabled={false}>
 						Отмена
 					</ButtonCancel>
-					<ButtonSave
-						// onClick={handleSubmit(onSubmit)}
-						width="30px"
-						type="submit"
-						disabled={false}
-					>
+					<ButtonSave width="30px" type="submit" disabled={false}>
 						Сохранить
 					</ButtonSave>
 				</div>
@@ -564,4 +524,4 @@ const Test = () => {
 	);
 };
 
-export default Test;
+export default CreateTest;

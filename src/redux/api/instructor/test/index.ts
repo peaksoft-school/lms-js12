@@ -2,27 +2,23 @@ import { api as index } from '../..';
 
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
-		getPresentation: builder.query<
-			MATERIALS.getResponsePresentation,
-			MATERIALS.getRequestPresentation
-		>({
-			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation',
+		getTest: builder.query<TEST.getTestResponse, TEST.getTestResponsex>({
+			query: ({ lessonId }) => ({
+				url: `/api/test/findAll/${lessonId}`,
 				method: 'GET'
 			}),
 			providesTags: ['presentation']
 		}),
-		postPresentation: builder.mutation<
-			MATERIALS.CreateResponsePresentation,
-			MATERIALS.CreateRequestPresentation
-		>({
-			query: (newPresentation) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation',
-				method: 'POST',
-				body: newPresentation
-			}),
-			invalidatesTags: ['presentation']
-		}),
+		postTest: builder.mutation<TEST.CreateTestResponse, TEST.CreateTestRequest>(
+			{
+				query: ({ newTest, lessonId }) => ({
+					url: `/api/test/save/${lessonId}`,
+					method: 'POST',
+					body: newTest
+				}),
+				invalidatesTags: ['presentation']
+			}
+		),
 		deletePresentation: builder.mutation({
 			query: (saveIdElement) => ({
 				url: `https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation/${saveIdElement}`,
@@ -40,9 +36,4 @@ const api = index.injectEndpoints({
 		})
 	})
 });
-export const {
-	useGetPresentationQuery,
-	usePostPresentationMutation,
-	useDeletePresentationMutation,
-	useEditPresentationMutation
-} = api;
+export const { useGetTestQuery, usePostTestMutation } = api;

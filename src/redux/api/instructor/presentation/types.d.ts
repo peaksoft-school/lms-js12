@@ -1,21 +1,50 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace MATERIALS {
-	type getResponsePresentation = {
-		_id: number;
+namespace TEST {
+	type Test = {
+		testId: number;
 		title: string;
-		presentation: string;
-		description: string;
-	}[];
-	type getRequestPresentation = void;
+		hour: number;
+		minute: number;
+	};
+	type getTestResponse = {
+		testResponseForGetAll: Test[];
+	};
+	type getTestRequest = void;
 
-	type CreateResponsePresentation = {
+	type CreateTestResponse = {
 		title: string;
-		presentation: File | null;
-		description: string;
+		hour: number;
+		minute: number;
+		questionRequests: [
+			{
+				title: string;
+				point: number;
+				questionType: string;
+				optionRequests: [
+					{
+						option: string;
+						isTrue: boolean;
+					}
+				];
+			}
+		];
 	}[];
-	type CreateRequestPresentation = {
+	type CreateTestRequest = {
 		title: string;
-		presentation: File | null;
-		description: string;
+		hour: number;
+		minute: number;
+		questionRequests: [
+			{
+				title: string;
+				point: number;
+				questionType: string;
+				optionRequests: [
+					{
+						option: string;
+						isTrue: boolean;
+					}
+				];
+			}
+		];
 	};
 }
