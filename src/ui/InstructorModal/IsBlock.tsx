@@ -4,34 +4,35 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-
-import scss from './DeleteVideoLesson.module.scss';
-import { useCreateStudentBlockCoursesMutation } from '@/src/redux/api/admin/courses';
+import scss from './Styled.module.scss';
+import { useIsBlockStudentMutation } from '@/src/redux/api/admin/student';
 import { Button } from '@mui/material';
 
-type VideoLessonProps = {
-	openModalBlock: boolean;
-	handleCloseModal: () => void;
+type IsBlockProps = {
+	openIsBlock: boolean;
+	handleCloseIsBlock: () => void;
 	saveIdElement: number | null;
-	saveBlock: boolean;
+	isBlock?: boolean;
+	handleBlockUnblock: () => void;
 };
 
-const IsBlockCourses: FC<VideoLessonProps> = ({
-	openModalBlock,
-	handleCloseModal,
-	saveIdElement,
-	saveBlock
+const IsBlock: FC<IsBlockProps> = ({
+	openIsBlock,
+	handleCloseIsBlock,
+	isBlock,
+	saveIdElement
 }) => {
-	const [createStudentBlockCourses] = useCreateStudentBlockCoursesMutation();
+	const [isBlockStudent] = useIsBlockStudentMutation();
 
 	const updateCompletedFunc = async () => {
-		await createStudentBlockCourses(saveIdElement);
-		handleCloseModal();
+		await isBlockStudent(saveIdElement);
+		handleCloseIsBlock();
 	};
 
 	return (
 		<Dialog
-			open={openModalBlock}
+			open={openIsBlock}
+			onClose={handleCloseIsBlock}
 			aria-labelledby="alert-dialog-title"
 			aria-describedby="alert-dialog-description"
 			PaperProps={{
@@ -40,7 +41,10 @@ const IsBlockCourses: FC<VideoLessonProps> = ({
 		>
 			<DialogContent>
 				<DialogContentText id="alert-dialog-description">
-					<h3>Вы уверены, что хотите удалить этого видеоурока?</h3>
+					<h3>
+						Вы уверены, что хотите{' '}
+						{isBlock ? 'Разблокировать' : 'Заблокировать'}?
+					</h3>
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions
@@ -56,13 +60,12 @@ const IsBlockCourses: FC<VideoLessonProps> = ({
 			>
 				<ButtonCancel
 					width="117px"
-					onClick={handleCloseModal}
+					onClick={handleCloseIsBlock}
 					disabled={false}
 					type="submit"
 				>
 					Отмена
 				</ButtonCancel>
-
 				<Button
 					variant="contained"
 					style={{ background: 'red', padding: '10px 24px' }}
@@ -71,11 +74,11 @@ const IsBlockCourses: FC<VideoLessonProps> = ({
 					type="submit"
 					disabled={false}
 				>
-					{saveBlock === false ? 'Разблокировать' : 'Заблокировать'}
+					{isBlock ? 'Разблокировать' : 'Заблокировать'}
 				</Button>
 			</DialogActions>
 		</Dialog>
 	);
 };
 
-export default IsBlockCourses;
+export default IsBlock;

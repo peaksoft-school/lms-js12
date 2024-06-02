@@ -50,13 +50,10 @@ const Login: FC = () => {
 				localStorage.setItem('isAuth', 'true');
 			}
 			console.log('is working ', response);
-			console.log(data);
-			// navigate('/admin');
 			reset();
 		} catch (error) {
 			console.log('not working', error);
 		}
-		console.log(data);
 		reset();
 	};
 	const handleClickShowPassword = () => setShowPassword((show) => !show);

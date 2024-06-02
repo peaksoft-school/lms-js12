@@ -8,18 +8,18 @@ export const api = index.injectEndpoints({
 			STUDENT.TablesStudentRequest
 		>({
 			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students',
+				url: '/api/students',
 				method: 'GET'
 			}),
 			providesTags: ['student']
 		}),
 		// ! post
 		postStudentTable: builder.mutation<
-			STUDENT.TablesStudentResponse,
+			STUDENT.PostStudentPropsResponse,
 			STUDENT.PostStudentPropsRequest
 		>({
 			query: (newStudent) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students',
+				url: '/api/students',
 				method: 'POST',
 				body: newStudent
 			}),
@@ -30,8 +30,8 @@ export const api = index.injectEndpoints({
 			STUDENT.DeleteStudentPropsResponse,
 			STUDENT.DeleteStudentPropsRequest
 		>({
-			query: (_id) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students/${_id}`,
+			query: (id) => ({
+				url: `/api/students/${id}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['student']
@@ -42,17 +42,18 @@ export const api = index.injectEndpoints({
 			STUDENT.PatchStudentPropsRequest
 		>({
 			query: ({ editStudent, saveIdElement }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students/${saveIdElement}`,
+				url: `/api/students/${saveIdElement}`,
 				method: 'PATCH',
 				body: editStudent
 			}),
 			invalidatesTags: ['student']
 		}),
-		patchCompletedMutation: builder.mutation({
-			query: ({ updated, saveIdElement }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/88349af5517ea587ed92ee01067a4735/students/${saveIdElement}`,
-				method: 'PATCH',
-				body: updated
+
+		// ! patch isBlock
+		isBlockStudent: builder.mutation({
+			query: (saveIdElement) => ({
+				url: `/api/students/isBlock/${saveIdElement}`,
+				method: 'POST'
 			}),
 			invalidatesTags: ['student']
 		})
@@ -64,5 +65,5 @@ export const {
 	usePostStudentTableMutation,
 	useDeleteStudentTableMutation,
 	usePatchStudentTableMutation,
-	usePatchCompletedMutationMutation
+	useIsBlockStudentMutation
 } = api;
