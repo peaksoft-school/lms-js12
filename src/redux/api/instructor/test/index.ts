@@ -3,8 +3,18 @@ import { api as index } from '../..';
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getTest: builder.query<TEST.getTestResponse, TEST.getTestRequest>({
-			query: ({ lessonId }) => ({
+			query: (lessonId) => ({
 				url: `/api/test/findAll/${lessonId}`,
+				method: 'GET'
+			}),
+			providesTags: ['presentation']
+		}),
+		getInsideTest: builder.query<
+			TEST.getTestInsideResponse,
+			TEST.getTestInsideRequest
+		>({
+			query: (testId) => ({
+				url: `/api/test/findById/${testId}`,
 				method: 'GET'
 			}),
 			providesTags: ['presentation']
@@ -36,4 +46,5 @@ const api = index.injectEndpoints({
 		})
 	})
 });
-export const { useGetTestQuery, usePostTestMutation } = api;
+export const { useGetTestQuery, useGetInsideTestQuery, usePostTestMutation } =
+	api;

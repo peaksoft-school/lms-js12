@@ -8,6 +8,7 @@ import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useGetTestQuery } from '@/src/redux/api/instructor/test';
+import watch from '@/src/assets/watch.png';
 
 interface Question {
 	id: string;
@@ -19,9 +20,9 @@ interface Question {
 const TestInstructor = () => {
 	const navigate = useNavigate();
 	const { courseId, lessonId } = useParams();
-	console.log(lessonId,',,,');
+	console.log(lessonId);
 	const { data } = useGetTestQuery(lessonId);
-	
+
 	const [questions, setQuestions] = useState<Question[]>([
 		{
 			id: '1',
@@ -159,6 +160,16 @@ const TestInstructor = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/createTask`);
 	};
 
+	const truncateText = (text, maxLength) => {
+		if (text.length <= maxLength) {
+			return text;
+		}
+		return text.substring(0, maxLength) + '...';
+	};
+	const handleOpenWatch = () => {
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/showTest`);
+	};
+
 	return (
 		<div className={scss.test_container}>
 			<div className={scss.buttons}>
@@ -188,7 +199,9 @@ const TestInstructor = () => {
 									}
 								>
 									<h4>{question.testId}</h4>
-									<h4 className={scss.test_text}>{question.title}</h4>
+									<h4 className={scss.test_text}>
+										{truncateText(question.title, 40)}
+									</h4>
 								</div>
 								<div>
 									<button
@@ -203,7 +216,7 @@ const TestInstructor = () => {
 							</div>
 							<div className={scss.test_container_forth}>
 								<p className={scss.text_time}>
-									Время: {question.hour}.{question.minute} минут
+									Время: {question.hour}ч.{question.minute} минут
 								</p>
 							</div>
 						</div>
@@ -228,6 +241,13 @@ const TestInstructor = () => {
 					style: { boxShadow: 'none', border: '1px solid gray' }
 				}}
 			>
+				<MenuItem
+					style={{ display: 'flex', gap: '10px' }}
+					onClick={handleOpenWatch}
+				>
+					<img src={watch} alt="Delete" />
+					<p>Просмотреть тест</p>
+				</MenuItem>
 				<MenuItem style={{ display: 'flex', gap: '10px' }} onClick={handleEdit}>
 					<img src={editIcon} alt="Edit" />
 					<p>Редактировать</p>

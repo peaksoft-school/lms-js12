@@ -43,7 +43,7 @@ const ModalMaterialEdit: FC<modalProps> = ({
 }) => {
 	const [patchMaterial] = usePatchMaterialMutation();
 	const { data } = useGetMaterialsQuery();
-	const find = data?.lessonResponses.find((id) => id.id === deleteById);
+	const find = data?.lessonResponses.find((el) => el.id === deleteById);
 	const { control, handleSubmit, reset } = useForm<EditProps>();
 
 	const onSubmit = async (data: EditProps) => {
@@ -52,14 +52,18 @@ const ModalMaterialEdit: FC<modalProps> = ({
 			createdAt: data?.createdAt
 		};
 		await patchMaterial({ updateMaterial, deleteById });
+		closeModalEdit(false);
 	};
 
 	useEffect(() => {
-		reset({
-			title: find?.title,
-			createdAt: find?.createdAt
-		});
-	}, [find]);
+		if (find) {
+			console.log('find object:', find); // Debug log
+			reset({
+				title: find.title,
+				createdAt: find.createdAt
+			});
+		}
+	}, [find, reset]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className={scss.form}>
@@ -97,7 +101,8 @@ const ModalMaterialEdit: FC<modalProps> = ({
 								)}
 							/>
 							<Controller
-								name="date"
+								name="createdAt"
+								d
 								control={control}
 								render={({ field }) => (
 									<Input
