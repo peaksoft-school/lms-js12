@@ -1,18 +1,20 @@
 import scss from './LessonsList.module.scss';
 import { Pagination, Stack } from '@mui/material';
 import { useState, KeyboardEvent } from 'react';
-import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook } from '@tabler/icons-react';
+import { useGetStudentMaterialsQuery } from '@/src/redux/api/students/materials';
 
 const LessonsList = () => {
+	const { coursesId } = useParams();
+
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const { data: data = [] } = useGetMaterialsQuery();
-	const { courseId } = useParams();
+	
+	const { data } = useGetStudentMaterialsQuery(coursesId);
 
 	const navigate = useNavigate();
 
@@ -62,11 +64,11 @@ const LessonsList = () => {
 					<Box>
 						<div style={{ minHeight: '70vh' }}>
 							<div className={scss.card}>
-								{data
-									?.slice(
-										(currentPage - 1) * rowsPerPage,
-										currentPage * rowsPerPage
-									)
+								{data?.lessonResponses
+									// ?.slice(
+									// 	(currentPage - 1) * rowsPerPage,
+									// 	currentPage * rowsPerPage
+									// )
 									.map((item) => (
 										<div
 											className={scss.cards}
@@ -74,7 +76,7 @@ const LessonsList = () => {
 												localStorage.setItem('taskName', String(item.title));
 												setTimeout(() => {
 													navigate(
-														`/courses/${courseId}/materials/${item._id}`
+														`/courses/${coursesId}/materials/${item.id}`
 													);
 												}, 1000);
 											}}
@@ -109,7 +111,7 @@ const LessonsList = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

@@ -14,6 +14,7 @@ import StudentVideoLessonPage from '../StudentVideoLessonPage';
 import { Box, ScrollArea } from '@mantine/core';
 import StudentPresentationPage from '../StudentPresentationPage';
 import TestSection from '../TestSection';
+import SendOneTask from '../sendOneTask/SendOneTask';
 
 const LessonsStudent = () => {
 	const [value, setValue] = useState(0);
@@ -25,22 +26,25 @@ const LessonsStudent = () => {
 		setValue(newValue);
 	};
 
-	const { courseId, lessonId } = useParams();
+	const { coursesId, lessonId } = useParams();
 
 	const handleOpenVideo = () => {
-		navigate(`/courses/${courseId}/materials/${lessonId}/video`);
+		navigate(`/courses/${coursesId}/materials/${lessonId}/video`);
 	};
 
 	const openStudentPresentation = () => {
-		navigate(`/courses/${courseId}/materials/${lessonId}/presentation`);
+		navigate(`/courses/${coursesId}/materials/${lessonId}/presentation`);
 	};
 	const OpenTest = () => {
-		navigate(`/courses/${courseId}/materials/${lessonId}/test`);
+		navigate(`/courses/${coursesId}/materials/${lessonId}/test`);
+	};
+	const OpenLesson = () => {
+		navigate(`/courses/${coursesId}/materials/${lessonId}/lesson`);
 	};
 
 	useEffect(() => {
-		if (pathname === `/courses/${courseId}/materials/${lessonId}`) {
-			navigate(`/courses/${courseId}/materials/${lessonId}/video`);
+		if (pathname === `/courses/${coursesId}/materials/${lessonId}`) {
+			navigate(`/courses/${coursesId}/materials/${lessonId}/video`);
 		}
 	}, [pathname]);
 	return (
@@ -91,6 +95,7 @@ const LessonsStudent = () => {
 											id="simple-tab-2"
 											className={scss.tab}
 											aria-controls="simple-tabpanel-2"
+											onClick={OpenLesson}
 										/>
 										<Tab
 											icon={<IconLink stroke={2} />}
@@ -111,21 +116,27 @@ const LessonsStudent = () => {
 								</Box>
 							</ScrollArea>
 							{pathname ===
-								`/courses/${courseId}/materials/${lessonId}/video` && (
+								`/courses/${coursesId}/materials/${lessonId}/video` && (
 								<>
 									<StudentVideoLessonPage />
 								</>
 							)}
 							{pathname ===
-								`/courses/${courseId}/materials/${lessonId}/presentation` && (
+								`/courses/${coursesId}/materials/${lessonId}/presentation` && (
 								<>
 									<StudentPresentationPage />
 								</>
 							)}
 							{pathname ===
-								`/courses/${courseId}/materials/${lessonId}/test` && (
+								`/courses/${coursesId}/materials/${lessonId}/test` && (
 								<>
 									<TestSection />
+								</>
+							)}
+							{pathname ===
+								`/courses/${coursesId}/materials/${lessonId}/lesson` && (
+								<>
+									<p>your component</p>
 								</>
 							)}
 						</div>
