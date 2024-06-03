@@ -266,7 +266,7 @@ const SupHeader = () => {
 						<Box
 							sx={{
 								borderColor: 'divider',
-								paddingTop: '20px'
+								paddingTop: '10px'
 							}}
 						>
 							<Tabs
