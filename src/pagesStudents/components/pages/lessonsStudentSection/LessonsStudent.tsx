@@ -15,6 +15,7 @@ import { Box, ScrollArea } from '@mantine/core';
 import StudentPresentationPage from '../StudentPresentationPage';
 import TestSection from '../TestSection';
 import SendOneTask from '../sendOneTask/SendOneTask';
+import Lesson from '../lesson/Lessons';
 
 const LessonsStudent = () => {
 	const [value, setValue] = useState(0);
@@ -136,7 +137,9 @@ const LessonsStudent = () => {
 							{pathname ===
 								`/courses/${coursesId}/materials/${lessonId}/lesson` && (
 								<>
-									<p>your component</p>
+									<p>
+										<Lesson />
+									</p>
 								</>
 							)}
 						</div>
