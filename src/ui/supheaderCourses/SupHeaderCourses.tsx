@@ -132,7 +132,7 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/courses') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
-						<img className={scss.bell} src={profile} alt="bell" />
+						<img className={scss.bell} src={bell} alt="bell" />
 						<img className={scss.profile} src={profile} alt="Profile" />
 						<p>Студент</p>
 						<IconChevronDown stroke={2} />
@@ -231,59 +231,6 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
-<<<<<<< HEAD
-			{pathname.startsWith('/calendar') && (
-				<>
-					<div className={scss.courses_admin} onClick={handleClick}>
-						<img src={profile} alt="Profile" />
-						<p>Студент</p>
-						<IconChevronDown stroke={2} />
-					</div>
-					<Menu
-						id="basic-menu"
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleClose}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'right'
-						}}
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'right'
-						}}
-						MenuListProps={{
-							'aria-labelledby': 'basic-button'
-						}}
-						PaperProps={{
-							style: {
-								boxShadow: 'none',
-								border: '1px solid #336fff',
-								width: '200px',
-								background: 'rgb(221, 233, 249)',
-								borderRadius: '10px'
-							}
-						}}
-					>
-						<MenuItem
-							onClick={handleClose}
-							style={{
-								display: 'flex',
-								gap: '10px',
-								color: '#1976d2',
-								fontSize: '18px',
-								fontWeight: '600',
-								alignItems: 'center'
-							}}
-						>
-							<img src={vector} alt="" />
-							<p> Выйти</p>
-						</MenuItem>
-					</Menu>
-				</>
-			)}
-=======
->>>>>>> 4a1c289f2d1ae3f1b119bdd1ec592676c7066696
 		</div>
 	);
 };
