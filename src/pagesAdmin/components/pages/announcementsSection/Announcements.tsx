@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, KeyboardEvent } from 'react';
 import scss from './Announcements.module.scss';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import {
 	useGetAnnouncementTableQuery,
+	usePutAnnouncementTableMutation,
 	usePatchShowdMutationMutation
 } from '@/src/redux/api/admin/announcement';
 import AnnouncementForm from '@/src/ui/announcementForm/AnnouncementForm';
@@ -19,13 +20,19 @@ import {
 	IconEyeOff,
 	IconPlus
 } from '@tabler/icons-react';
+import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 
 const Announcements = () => {
+	const [addPatchAnnouncement] = usePutAnnouncementTableMutation();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
+	const [dataId, setDataId] = useState('');
 	const { data, isLoading } = useGetAnnouncementTableQuery();
+	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
+
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(4);
@@ -34,6 +41,9 @@ const Announcements = () => {
 	const [patchCompletedMutation] = usePatchShowdMutationMutation();
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
+	};
+	const handleAddPatchAnnouncement = async (id: number) => {
+		await addPatchAnnouncement(id.toString());
 	};
 
 	const handleCloseAnnoucement = () => {
@@ -48,7 +58,7 @@ const Announcements = () => {
 		);
 	}
 
-	const find = data?.find((item) => item.id === deleteById);
+	const find = data?.announcements?.find((item) => item.id === deleteById);
 
 	const open = Boolean(anchorEl);
 
@@ -62,9 +72,9 @@ const Announcements = () => {
 
 	const handleShowFunc = async () => {
 		const updated = {
-			announcement: find?.announcement,
-			group: find?.group,
-			show: !find?.show
+			content: find?.content,
+			groupNames: find?.groupNames,
+			isPublished: !find?.isPublished
 		};
 		await patchCompletedMutation({ updated, deleteById });
 	};
@@ -128,15 +138,15 @@ const Announcements = () => {
 					<div>
 						<div className={scss.announce_box}>
 							<ul className={scss.announce_card}>
-								{data
-									?.slice(
-										(currentPage - 1) * rowsPerPage,
-										currentPage * rowsPerPage
-									)
+								{data?.announcements
+									// ?.slice(
+									// 	(currentPage - 1) * rowsPerPage,
+									// 	currentPage * rowsPerPage
+									// )
 									.map((item) => (
 										<li key={item.id} className={scss.announce_list}>
 											<div className={scss.show_text}>
-												{item?.show === true ? (
+												{item?.isPublished === true ? (
 													<>
 														<p style={{ color: '#0ece22 ', fontSize: '16px' }}>
 															Видно
@@ -148,20 +158,48 @@ const Announcements = () => {
 													</>
 												)}
 											</div>
-											<strong>{item.group}</strong>
-											<p>{item.announcement}</p>
+											<div className={scss.announcement_owners}>
+												<p className={scss.announcement_owner}>
+													<p className={scss.announc_user}>Кем создан:</p>
+													{item.owner}
+												</p>
+											</div>
+											<p>
+												<p className={scss.announce_groups}>Для кого:</p>
+												{item.groupNames.join(', ')}
+											</p>
 
-											<button
-												className={scss.button}
-												aria-controls={open ? 'basic-menu' : undefined}
-												aria-haspopup="true"
-												onClick={(e) => {
-													handleClick(e);
-													setDeleteById(item.id);
+											<p>
+												<p className={scss.announce_content}>Текст:</p>
+												{item.content}
+											</p>
+											<div
+												style={{
+													display: 'flex',
+													flexDirection: 'column',
+													gap: '50px'
 												}}
 											>
-												<DotsHorizont />
-											</button>
+												<div className={scss.cont_date}>
+													<p className={scss.announcement_publishDate}>
+														{item.publishDate}
+													</p>
+													<p> {item.endDate}</p>
+												</div>
+												<div>
+													<button
+														className={scss.button}
+														aria-controls={open ? 'basic-menu' : undefined}
+														aria-haspopup="true"
+														onClick={(e) => {
+															handleClick(e);
+															setDeleteById(item.id);
+														}}
+													>
+														<DotsHorizont />
+													</button>
+												</div>
+											</div>
 
 											<Menu
 												className={scss.deleteEdit}
@@ -192,6 +230,7 @@ const Announcements = () => {
 													onClick={() => {
 														setOpenModalEdit(true);
 														setAnchorEl(null);
+														setDataId(item.id?.toString());
 													}}
 												>
 													<img src={editIcon} alt="Edit" />
@@ -202,11 +241,12 @@ const Announcements = () => {
 													style={{ display: 'flex', gap: '20px' }}
 													className={scss.dropdown}
 													onClick={() => {
-														handleShowFunc();
-														handleClose();
+														// handleShowFunc();
+														// handleClose();
+														handleAddPatchAnnouncement(item.id);
 													}}
 												>
-													{find?.show === true ? (
+													{find?.isPublished === true ? (
 														<>
 															<IconEyeOff stroke={2} />
 															<p>Не показывать</p>
@@ -239,6 +279,7 @@ const Announcements = () => {
 								openModalEdit={openModalEdit}
 								closeModalEdit={() => setOpenModalEdit(false)}
 								saveIdElement={deleteById}
+								dataId={dataId}
 							/>
 
 							<DeleteAnnouncementModal
@@ -272,7 +313,7 @@ const Announcements = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

@@ -4,7 +4,7 @@ import { Pagination, Stack } from '@mui/material';
 import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
-import { useGetStudentGroupQuery } from '@/src/redux/api/admin/groups';
+import { useGetGroupStudentQuery } from '@/src/redux/api/admin/groups';
 import { useParams } from 'react-router-dom';
 
 const InternalStudents = () => {
@@ -14,7 +14,7 @@ const InternalStudents = () => {
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const { groupId } = useParams();
-	const { data, isLoading } = useGetStudentGroupQuery(groupId);
+	const { data, isLoading } = useGetGroupStudentQuery(groupId);
 
 	if (isLoading) {
 		return (
