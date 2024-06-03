@@ -51,11 +51,6 @@ namespace ANNOUNCEMENT {
 		};
 	};
 
-	type PutIsPublishedRequest = {
-		httpStatus:boolean,
-	}
-	}
-
 	type EditAnnouncementRequest = {
 		id: number;
 		announcementContent: string;
