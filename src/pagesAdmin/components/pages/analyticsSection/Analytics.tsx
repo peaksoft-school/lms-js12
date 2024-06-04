@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import scss from './Analytics.module.scss';
 import { useGetAnalyticsQuery } from '@/src/redux/api/analytics';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 
 ChartJS.register(
 	CategoryScale,

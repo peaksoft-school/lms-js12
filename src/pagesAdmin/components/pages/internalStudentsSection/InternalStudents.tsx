@@ -1,7 +1,7 @@
 import scss from './InternalStudents.module.scss';
 import { KeyboardEvent, useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetStudentGroupQuery } from '@/src/redux/api/admin/groups';

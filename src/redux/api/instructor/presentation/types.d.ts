@@ -1,113 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace TEST {
-	type Test = {
-		testId: number;
+namespace MATERIALS {
+	type getResponsePresentation = {
+		_id: number;
 		title: string;
-		hour: number;
-		minute: number;
-	};
-	type getTestResponse = {
-		testResponseForGetAll: Test[];
-	};
-	type getTestRequest = void;
-
-	// type getTestInsideResponse = {
-	// 	title: string;
-	// 	hour: number;
-	// 	minute: number;
-	// 	questionRequests: [
-	// 		{
-	// 			title: string;
-	// 			point: number;
-	// 			questionType: string;
-	// 			optionRequests: [
-	// 				{
-	// 					option: string;
-	// 					isTrue: boolean;
-	// 				}
-	// 			];
-	// 		}
-	// 	];
-	// }[];
-
-	type Question = {
-		questionId: number;
-		title: string;
-		point: number;
-		questionType: string;
-		optionResponses;
-	};
-
-	type Option = {
-		optionId: number;
-		option: string;
-		isTrue: boolean;
-	};
-	type Test = {
-		testId: number;
-		title: string;
-		hour: number;
-		minute: number;
-	};
-
-	type getTestInsideResponse = {
-		testId: number;
-		title: string;
-		hour: number;
-		minute: number;
-		questionResponseList: [
-			{
-				questionId: number;
-				title: string;
-				point: number;
-				questionType: string;
-				optionResponses: [
-					{
-						optionId: number;
-						option: string;
-						isTrue: boolean;
-					}
-				];
-			}
-		];
+		presentation: string;
+		description: string;
 	}[];
+	type getRequestPresentation = void;
 
-	type getTestInsideRequest = void;
-
-	type CreateTestResponse = {
+	type CreateResponsePresentation = {
 		title: string;
-		hour: number;
-		minute: number;
-		questionRequests: [
-			{
-				title: string;
-				point: number;
-				questionType: string;
-				optionRequests: [
-					{
-						option: string;
-						isTrue: boolean;
-					}
-				];
-			}
-		];
+		presentation: File | null;
+		description: string;
 	}[];
-	type CreateTestRequest = {
+	type CreateRequestPresentation = {
 		title: string;
-		hour: number;
-		minute: number;
-		questionRequests: [
-			{
-				title: string;
-				point: number;
-				questionType: string;
-				optionRequests: [
-					{
-						option: string;
-						isTrue: boolean;
-					}
-				];
-			}
-		];
+		presentation: File | null;
+		description: string;
 	};
 }

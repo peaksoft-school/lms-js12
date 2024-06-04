@@ -27,6 +27,7 @@ import RatingStudentsPage from '../pages/RatingStudentsPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import CreateTest from '../pages/createTestSection/CreateTest';
+import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -234,10 +235,10 @@ const LayoutInstructor = () => {
 							path="/course/:courseId/materials/:lessonId/test"
 							element={<LessonPage />}
 						/>
-						{/* <Route
+						<Route
 							path="/course/:courseId/materials/:lessonId/showTest"
 							element={<GetTestInstructor />}
-						/> */}
+						/>
 						<Route
 							path="/course/:courseId/materials/:lessonId/createTask"
 							element={<CreateTest />}

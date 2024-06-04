@@ -1,6 +1,6 @@
 import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import scss from './Rating.module.scss';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 import { Link, useParams } from 'react-router-dom';
 import { InputBase } from '@mui/material';
 import { ScrollArea, Box } from '@mantine/core';

@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+	useDeleteTestMutation,
+	useGetTestQuery
+} from '@/src/redux/api/instructor/test';
 import { useState } from 'react';
 import scss from './TestInstructor.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,8 +11,8 @@ import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import { Button, Menu, MenuItem } from '@mui/material';
-import { useGetTestQuery } from '@/src/redux/api/instructor/test';
 import watch from '@/src/assets/watch.png';
+import DeleteTest from '@/src/ui/customModal/deleteModal/DeleteTest';
 
 interface Question {
 	id: string;
@@ -20,113 +24,14 @@ interface Question {
 const TestInstructor = () => {
 	const navigate = useNavigate();
 	const { courseId, lessonId } = useParams();
-	console.log(lessonId);
-	// const { data } = useGetTestQuery(lessonId);
-
-	const [questions, setQuestions] = useState<Question[]>([
-		{
-			id: '1',
-			number: '№',
-			text: 'Название теста 1',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		},
-		{
-			id: '2',
-			number: '№',
-			text: 'Название теста 2',
-			time: '40'
-		}
-	]);
-
+	const { data } = useGetTestQuery(lessonId);
+	const [deleteTest, setOpenDeleteTest] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
 		null
 	);
 	const open = Boolean(anchorEl);
+	const [saveId, setSaveId] = useState(false);
 
 	const handleClick = (
 		event: React.MouseEvent<HTMLButtonElement>,
@@ -144,14 +49,6 @@ const TestInstructor = () => {
 	const handleEdit = () => {
 		if (selectedQuestion) {
 			console.log('Редактировать', selectedQuestion);
-		}
-		handleClose();
-	};
-
-	const handleDelete = () => {
-		if (selectedQuestion) {
-			console.log('Удалить', selectedQuestion);
-			setQuestions(questions.filter((q) => q.id !== selectedQuestion.id));
 		}
 		handleClose();
 	};
@@ -198,26 +95,31 @@ const TestInstructor = () => {
 										)
 									}
 								>
-									<h4>{question.testId}</h4>
-									<h4 className={scss.test_text}>
-										{truncateText(question.title, 40)}
-									</h4>
-								</div>
-								<div>
-									<button
-										onClick={(event) => handleClick(event, question)}
-										className={scss.button}
-										aria-controls="positioned-menu"
-										aria-haspopup="true"
-									>
-										<IconDotsVertical stroke={2} />
-									</button>
+									<div style={{ display: 'flex', gap: '10px' }}>
+										<h4>{question.testId}</h4>
+										<h4 className={scss.test_text}>
+											{truncateText(question.title, 40)}
+										</h4>
+									</div>
+									<div className={scss.test_container_forth}>
+										<p className={scss.text_time}>
+											Время: {question.hour}ч.{question.minute} минут
+										</p>
+									</div>
 								</div>
 							</div>
-							<div className={scss.test_container_forth}>
-								<p className={scss.text_time}>
-									Время: {question.hour}ч.{question.minute} минут
-								</p>
+							<div>
+								<button
+									onClick={(event) => {
+										handleClick(event, data.testResponseForGetAll);
+										setSaveId(question.testId);
+									}}
+									className={scss.button}
+									aria-controls="positioned-menu"
+									aria-haspopup="true"
+								>
+									<IconDotsVertical stroke={2} />
+								</button>
 							</div>
 						</div>
 					</div>
@@ -254,12 +156,18 @@ const TestInstructor = () => {
 				</MenuItem>
 				<MenuItem
 					style={{ display: 'flex', gap: '10px' }}
-					onClick={handleDelete}
+					onClick={() => setOpenDeleteTest(true)}
 				>
 					<img src={deleteIcon} alt="Delete" />
 					<p>Удалить</p>
 				</MenuItem>
 			</Menu>
+
+			<DeleteTest
+				openModalDelete={deleteTest}
+				closeModalDelete={() => setOpenDeleteTest(false)}
+				deleteById={saveId}
+			/>
 		</div>
 	);
 };

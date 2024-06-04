@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './InternalCourseStudent.module.scss';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';

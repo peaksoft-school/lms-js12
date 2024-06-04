@@ -1,21 +1,99 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace MATERIALS {
-	type getResponsePresentation = {
-		_id: number;
+namespace TEST {
+	type Test = {
+		testId: number;
 		title: string;
-		presentation: string;
-		description: string;
-	}[];
-	type getRequestPresentation = void;
+		hour: number;
+		minute: number;
+	};
+	type getTestResponse = {
+		testResponseForGetAll: Test[];
+	};
+	type getTestRequest = void;
+	type Question = {
+		questionId: number;
+		title: string;
+		point: number;
+		questionType: string;
+		optionResponses;
+	};
 
-	type CreateResponsePresentation = {
+	type Option = {
+		optionId: number;
+		option: string;
+		isTrue: boolean;
+	};
+	type Test = {
+		testId: number;
 		title: string;
-		presentation: File | null;
-		description: string;
+		hour: number;
+		minute: number;
+	};
+
+	type getTestInsideResponse = {
+		testId: number;
+		title: string;
+		hour: number;
+		minute: number;
+		questionResponseList: [
+			{
+				questionId: number;
+				title: string;
+				point: number;
+				questionType: string;
+				optionResponses: [
+					{
+						optionId: number;
+						option: string;
+						isTrue: boolean;
+					}
+				];
+			}
+		];
 	}[];
-	type CreateRequestPresentation = {
-		title: string;
-		presentation: File | null;
-		description: string;
+
+	type getTestInsideRequest = void;
+
+	type CreateTestResponse = {
+		lessonId: number;
+		newTest: {
+			title: string;
+			hour: number;
+			minute: number;
+			questionRequests: [
+				{
+					title: string;
+					point: number;
+					questionType: string;
+					optionRequests: [
+						{
+							option: string;
+							isTrue: boolean;
+						}
+					];
+				}
+			];
+		};
+	}[];
+	type CreateTestRequest = {
+		lessonId: number;
+		newTest: {
+			title: string;
+			hour: number;
+			minute: number;
+			questionRequests: [
+				{
+					title: string;
+					point: number;
+					questionType: string;
+					optionRequests: [
+						{
+							option: string;
+							isTrue: boolean;
+						}
+					];
+				}
+			];
+		};
 	};
 }

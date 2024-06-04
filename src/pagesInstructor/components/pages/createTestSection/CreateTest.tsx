@@ -20,14 +20,14 @@ interface CopyData {
 
 const CreateTest = () => {
 	const { control, handleSubmit, reset } = useForm();
-	const [option, setOption] = useState('one');
-	const [options, setOptions] = useState('one');
+	const [option, setOption] = useState('SINGLE');
+	const [options, setOptions] = useState('SINGLE');
 	const [time, setTime] = useState('00:00');
 	const [inputs, setInputs] = useState([{ id: 1, value: '', visible: true }]);
 	const [copiesData, setCopiesData] = useState<CopyData[]>([]);
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [pointValue, setPointValue] = useState<string>('');
-	// const [postTest] = usePostTestMutation();
+	const [postTest] = usePostTestMutation();
 	const { lessonId } = useParams();
 
 	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +59,7 @@ const CreateTest = () => {
 			inputValue3: '',
 			inputValue4: '',
 			inputs: [''],
-			options: 'one'
+			options: 'SINGLE'
 		};
 		const updatedCopiesData = [...copiesData];
 		updatedCopiesData.splice(copyDataIndex + 1, 0, newCopyData);
@@ -78,7 +78,7 @@ const CreateTest = () => {
 			inputValue3: '',
 			inputValue4: '',
 			inputs: [''],
-			options: 'one'
+			options: 'SINGLE'
 		};
 		setCopiesData([...copiesData, newCopyData]);
 	};
@@ -90,26 +90,24 @@ const CreateTest = () => {
 	};
 
 	const onSubmit = async (data) => {
-		// Process initial inputs
 		const initialAnswers = inputs.map((input) => input.value);
 
 		const initialQuestion = {
 			title: titleValue,
 			point: pointValue,
-			questionType: option, // This should already be set to either "SINGLE" or "MULTIPLE"
+			questionType: option,
 			optionRequests: initialAnswers.map((ans) => ({
 				option: ans,
 				isTrue: false
 			}))
 		};
 
-		// Process copied data
 		const copiedQuestions = copiesData.map((copyData, index) => {
 			const answers = copyData.inputs.map((input) => input);
 			return {
 				title: copyData.inputValue3,
 				point: copyData.inputValue4,
-				questionType: copyData.options === 'one' ? 'SINGLE' : 'MULTIPLE', // Ensure correct values are set here
+				questionType: copyData.options === 'SINGLE' ? 'SINGLE' : 'MULTIPLE',
 				optionRequests: answers.map((ans) => ({
 					option: ans,
 					isTrue: false
@@ -117,7 +115,6 @@ const CreateTest = () => {
 			};
 		});
 
-		// Combine initial question with copied questions
 		const questionRequests = [initialQuestion, ...copiedQuestions];
 
 		const newTest = {
@@ -349,7 +346,7 @@ const CreateTest = () => {
 								<div className={scss.input_text}>
 									<h2 className={scss.h2_number}>{copyIndex + 2}</h2>
 									<Controller
-										name="optionV"
+										name={`copyData_${copyIndex}_inputValue3`}
 										control={control}
 										render={({ field }) => (
 											<Input
@@ -358,19 +355,34 @@ const CreateTest = () => {
 												width="100%"
 												size="small"
 												{...field}
+												value={copyData.inputValue3}
+												onChange={(e) => {
+													const updatedCopiesData = [...copiesData];
+													updatedCopiesData[copyIndex].inputValue3 =
+														e.target.value;
+													setCopiesData(updatedCopiesData);
+												}}
 											/>
 										)}
 									/>
+
 									<Controller
-										name="point"
+										name={`copyData_${copyIndex}_inputValue4`}
 										control={control}
 										render={({ field }) => (
 											<Input
-												type="text"
+												type="number"
 												placeholder="Введите кол-во баллов"
 												width="100%"
 												size="small"
 												{...field}
+												value={copyData.inputValue4}
+												onChange={(e) => {
+													const updatedCopiesData = [...copiesData];
+													updatedCopiesData[copyIndex].inputValue4 =
+														e.target.value;
+													setCopiesData(updatedCopiesData);
+												}}
 											/>
 										)}
 									/>

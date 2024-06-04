@@ -1,5 +1,5 @@
 import { useGetVideoLessonQuery } from '@/src/redux/api/instructor/video';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 import { useState } from 'react';
 import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import scss from './StudentVideoLesson.module.scss';
