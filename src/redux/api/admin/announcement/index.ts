@@ -18,23 +18,10 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.PostAnnouncementPropsResponse,
 			ANNOUNCEMENT.PostAnnouncementPropsRequest
 		>({
-			query: ({
-				announcementContent,
-				expirationDate,
-				publishedDate,
-				targetGroupIds
-			}) => ({
+			query: (newAnnouncement) => ({
 				url: '/api/announcement',
 				method: 'POST',
-				body: {
-					announcementContent,
-					expirationDate,
-					publishedDate,
-					targetGroupIds
-				},
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`
-				}
+				body: newAnnouncement
 			}),
 			invalidatesTags: ['announcement']
 		}),
@@ -50,57 +37,25 @@ export const api = index.injectEndpoints({
 			invalidatesTags: ['announcement']
 		}),
 		// ! patch
-		putAnnouncementTable: builder.mutation<
-			ANNOUNCEMENT.PutAnnouncementPropsResponse,
-			ANNOUNCEMENT.PutAnnouncementPropsRequest
-		>({
-			query: ({ id, editAnnouncement }) => ({
-				url: `/api/announcement/view/${id}`,
-				method: 'PUT',
-				body: editAnnouncement,
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`
-				}
-			}),
-			invalidatesTags: ['announcement']
-		}),
-		patchShowdMutation: builder.mutation({
-			query: ({ updated, deleteById }) => ({
-				url: `/api/announcement/${deleteById}`,
-				method: 'PATCH',
-				body: updated
-			}),
-			invalidatesTags: ['announcement']
-		}),
-		putIsPublishedMutation: builder.mutation({
-			query: () => ({
-				url: `/api/announcement`,
-				method: 'PUT',
-			}),
-			invalidatesTags: ['announcement']
-		}),
 		editAnnouncement: builder.mutation<
 			ANNOUNCEMENT.EditAnnouncementResponse,
 			ANNOUNCEMENT.EditAnnouncementRequest
 		>({
-			query: ({
-				id,
-				announcementContent,
-				expirationDate,
-				publishedDate,
-				targetGroupIds,
-			}) => ({
-				url: `/api/announcement/${id}`,
+			query: ({ editAnnounCement, saveIdElement }) => ({
+				url: `/api/announcement/${saveIdElement}`,
 				method: 'PATCH',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`
-				},
-				body: {
-					announcementContent,
-					expirationDate,
-					publishedDate,
-					targetGroupIds
-				}
+				body: editAnnounCement
+			}),
+			invalidatesTags: ['announcement']
+		}),
+		showAnnouncement: builder.mutation<
+			ANNOUNCEMENT.EditAnnouncementResponse,
+			ANNOUNCEMENT.EditAnnouncementRequest
+		>({
+			query: ({ deleteById, newAnnoun }) => ({
+				url: `/api/announcement/view/${deleteById}`,
+				method: 'PUT',
+				body: newAnnoun
 			}),
 			invalidatesTags: ['announcement']
 		})
@@ -111,8 +66,6 @@ export const {
 	useGetAnnouncementTableQuery,
 	usePostAnnouncementTableMutation,
 	useDeleteAnnouncementTableMutation,
-	usePutAnnouncementTableMutation,
-	usePutIsPublishedMutationMutation,
-	usePatchShowdMutationMutation,
-	useEditAnnouncementMutation
+	useEditAnnouncementMutation,
+	useShowAnnouncementMutation
 } = api;

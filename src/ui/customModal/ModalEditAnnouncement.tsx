@@ -18,11 +18,11 @@ import {
 } from '@mui/material';
 import {
 	useEditAnnouncementMutation,
-	useGetAnnouncementTableQuery,
-	usePutAnnouncementTableMutation
+	useGetAnnouncementTableQuery
 } from '@/src/redux/api/admin/announcement';
 import scss from './EditAnnouncement.module.scss';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+import Input from '../customInput/Input';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -42,21 +42,6 @@ interface PostAnnouncementProps {
 	publishedDate: boolean;
 }
 
-const names = [
-	'JS-10',
-	'JS-11',
-	'JS-12',
-	'JS-12-senior',
-	'JS-13',
-	'JS-14',
-	'JS-ehglish',
-	'JAVA-10',
-	'JAVA-11',
-	'JAVA-12',
-	'JAVA-13',
-	'JAVA-14'
-];
-
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -74,21 +59,17 @@ interface modalProps {
 	openModalEdit: boolean;
 	closeModalEdit: (openModalEdit: boolean) => void;
 	saveIdElement: number | null;
-	dataId: string;
 }
 
 const ModalEditAnnouncement: FC<modalProps> = ({
 	openModalEdit,
 	closeModalEdit,
-	saveIdElement,
-	dataId
+	saveIdElement
 }) => {
-	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
 	const [editAnnouncement] = useEditAnnouncementMutation();
-	const [dateInputValue, setDateInputValue] = useState('');
-	const [dateInputValue2, setDateInputValue2] = useState('');
+	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
+	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
-	const [patchAnnouncementTable] = usePutAnnouncementTableMutation();
 	const { data } = useGetAnnouncementTableQuery();
 	const find = data?.announcements?.find((item) => item.id === saveIdElement);
 	const [personName, setPersonName] = useState<number[]>([]);
@@ -98,34 +79,40 @@ const ModalEditAnnouncement: FC<modalProps> = ({
 			setPersonName(Array.isArray(find.groupNames) ? find.groupNames : []);
 		}
 	}, [find]);
+	const handleSelect = (groupId: string) => {
+		// console.log(title);
 
-	const onSubmit = async (data: PostAnnouncementProps) => {
-		console.log(data, 'data form');
-
-		const editAnnounCement = {
-			announcementContent: data.announcementContent,
-			expirationDate: dateInputValue,
-			targetGroupIds: [...personName],
-			publishedDate: dateInputValue2
-		};
-		// await patchAnnouncementTable({ id: saveIdElement, editAnnouncement });
-		await editAnnouncement({
-			id: Number(dataId),
-			...editAnnounCement
-		});
-		closeModalEdit(false);
+		// setSelectedIds((prev) => (prev.includes(title) ? prev : [...prev, title]));
+		setSelectedIds((prev) =>
+			prev.includes(groupId) ? prev : [...prev, groupId]
+		);
 	};
-
 	const handleChange = (event: SelectChangeEvent<string[]>) => {
 		const { value } = event.target;
 		setPersonName(typeof value === 'string' ? value.split(',') : value);
 	};
 
+	const onSubmit = async (data: PostAnnouncementProps) => {
+		const editAnnounCement = {
+			announcementContent: data.announcementContent,
+			expirationDate: data.publishedDate,
+			targetGroupIds: selectedIds,
+			publishedDate: data.expirationDate
+		};
+
+		console.log(editAnnounCement);
+
+		await editAnnouncement({ editAnnounCement, saveIdElement });
+		closeModalEdit(false);
+	};
+
 	useEffect(() => {
 		if (find) {
 			reset({
-				announcement: find.content,
-				group: find.groupNames
+				announcementContent: find.content,
+				personName: find.groupNames,
+				expirationDate: find.expirationDate,
+				publishedDate: find.publishedDate
 			});
 		}
 	}, [find, reset]);
@@ -195,16 +182,32 @@ const ModalEditAnnouncement: FC<modalProps> = ({
 								>
 									{groupData &&
 										groupData.groupResponses.map((name) => (
-											<MenuItem key={name.id} value={name.id}>
-												<Checkbox
-													checked={personName.indexOf(name.title) > -1}
-												/>
-												{/* <ListItemText primary={name} /> */}
+											<MenuItem
+												key={name.id}
+												value={name.title}
+												onClick={() => handleSelect(name.id)}
+											>
+												<Checkbox checked={personName.indexOf(name.id) > -1} />
 												<ListItemText primary={name.title} />
 											</MenuItem>
 										))}
 								</Select>
-								<input
+								<div className={scss.inputText}>
+									<Controller
+										name="publishedDate"
+										control={control}
+										render={({ field }) => <Input {...field} type="date" />}
+									/>
+								</div>
+								<div className={scss.inputText}>
+									<Controller
+										name="expirationDate"
+										control={control}
+										render={({ field }) => <Input {...field} type="date" />}
+									/>
+								</div>
+
+								{/* <input
 									type="date"
 									value={dateInputValue}
 									onChange={(e) => setDateInputValue(e.target.value)}
@@ -213,7 +216,7 @@ const ModalEditAnnouncement: FC<modalProps> = ({
 									type="date"
 									value={dateInputValue2}
 									onChange={(e) => setDateInputValue2(e.target.value)}
-								/>
+								/> */}
 							</FormControl>
 							<div className={scss.btn_form}>
 								<ButtonCancel

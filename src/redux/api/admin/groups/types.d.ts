@@ -9,13 +9,7 @@ namespace GROUPS {
 		image: string;
 	};
 
-	type GroupsResponse = {
-		groups: any;
-		instructorResponses: any;
-		groupResponses: GroupResponses[];
-		page: number;
-		size: number;
-	};
+	
 	type GroupsRequest = {
 		page?: string;
 		size?: string;

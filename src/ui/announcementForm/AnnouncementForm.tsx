@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
-import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import scss from './AnnouncementForm.module.scss';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
-import * as React from 'react';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Box, Typography } from '@mui/material';
@@ -19,10 +17,13 @@ import Checkbox from '@mui/material/Checkbox';
 import { usePostAnnouncementTableMutation } from '@/src/redux/api/admin/announcement';
 import InputAnnouncement from '../customInput/InputAnnouncement';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+import Input from '../customInput/Input';
 
 interface PostAnnouncementProps {
 	announcementContent: string;
 	targetGroupIds: number[];
+	publishedDate: string;
+	expirationDate: string;
 }
 
 const ITEM_HEIGHT = 48;
@@ -43,7 +44,6 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	minHeight: 330,
 	backgroundColor: '#ffffff',
-	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
@@ -57,49 +57,49 @@ interface AnnouncementProps {
 const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
 	const [postAnnouncementTable] = usePostAnnouncementTableMutation();
-	const [personName, setPersonName] = React.useState<string[]>([]);
-	const [date1, setDate1] = React.useState<string>('');
-	const [date2, setDate2] = React.useState<string>('');
-	const { data } = useGetGroupQuery({ page: '1', size: '8' });
+	const [personName, setPersonName] = useState<string[]>([]);
+	const [selectedIds, setSelectedIds] = useState<string[]>([]);
+	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
 
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-		const {
-			target: { value }
-		} = event;
+	const handleSelect = (groupId: string, title: string) => {
+		setSelectedIds((prev) =>
+			prev.includes(groupId) ? prev : [...prev, groupId]
+		);
+		setPersonName((prev) => (prev.includes(title) ? prev : [...prev, title]));
+	};
+
+	const handleChange = (event: SelectChangeEvent<string[]>) => {
+		const { value } = event.target;
 		setPersonName(typeof value === 'string' ? value.split(',') : value);
-		console.log(personName, 'value');
 	};
 
 	const notify = () =>
 		toast.error('Пожалуйста, заполните все обязательные поля');
-	const notifySuccess = () => toast.success('Успешно добовлено');
+	const notifySuccess = () => toast.success('Успешно добавлено');
 
 	const onSubmit: SubmitHandler<PostAnnouncementProps> = async (data) => {
-		const { announcementContent } = data;
-		console.log(data, announcementContent, 'test');
-
-		console.log(onSubmit);
-		if (announcementContent.length > 0 && personName.length > 0) {
+		if (data.announcementContent.length > 0 && personName.length > 0) {
 			const newAnnouncement = {
-				announcementContent: announcementContent,
-				expirationDate: date1,
-				publishedDate: date2,
-				targetGroupIds: [...personName]
+				announcementContent: data.announcementContent,
+				expirationDate: data.expirationDate,
+				publishedDate: data.publishedDate,
+				targetGroupIds: selectedIds
 			};
+			console.log(newAnnouncement);
+
 			await postAnnouncementTable(newAnnouncement);
-			// handleClose();
-			// reset();
-			// setPersonName([]);
-			// notifySuccess();
+			handleClose();
+			reset();
+			setPersonName([]);
+			notifySuccess();
 		} else {
 			notify();
 		}
 	};
 
 	return (
-		<form onClick={handleSubmit(onSubmit)}>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<ToastContainer />
-			<div className={scss.button}></div>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -142,7 +142,13 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 								</div>
 
 								<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
-									<InputLabel id="demo-multiple-checkbox-label">
+									<InputLabel
+										id="demo-multiple-checkbox-label"
+										style={{
+											paddingLeft: '20px',
+											textAlign: 'center'
+										}}
+									>
 										Группы
 									</InputLabel>
 									<Select
@@ -163,30 +169,36 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 											top: '0'
 										}}
 									>
-										{data?.groupResponses &&
-											data.groupResponses.map((name) => (
-												<MenuItem key={name.id} value={name.id}>
+										{groupData &&
+											groupData.groupResponses.map((name) => (
+												<MenuItem
+													key={name.id}
+													value={name.title}
+													onClick={() => handleSelect(name.id, name.title)}
+												>
 													<Checkbox
 														checked={personName.indexOf(name.title) > -1}
 													/>
-													{/* <ListItemText primary={name} /> */}
 													<ListItemText primary={name.title} />
 												</MenuItem>
 											))}
 									</Select>
 								</FormControl>
+
 								<div className={scss.inputText}>
-									<div className={scss.inputText}>
-										<input
-											type="date"
-											onChange={(e) => setDate2(e.target.value)}
-											value={date2}
-										/>
-									</div>
-									<input
-										type="date"
-										onChange={(e) => setDate1(e.target.value)}
-										value={date1}
+									<Controller
+										name="publishedDate"
+										control={control}
+										defaultValue=""
+										render={({ field }) => <Input {...field} type="date" />}
+									/>
+								</div>
+								<div className={scss.inputText}>
+									<Controller
+										name="expirationDate"
+										control={control}
+										defaultValue=""
+										render={({ field }) => <Input {...field} type="date" />}
 									/>
 								</div>
 							</div>
@@ -202,19 +214,13 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									gap: '10px'
 								}}
 							>
-								<ButtonCancel
-									type="submit"
-									disabled={false}
-									onClick={handleClose}
-									width="117px"
-								>
+								<ButtonCancel type="button" onClick={handleClose} width="117px">
 									Отмена
 								</ButtonCancel>
 								<ButtonSave
 									width="100px"
 									type="submit"
-									disabled={false}
-									// onClick={handleSubmit(onSubmit)}
+									onClick={handleSubmit(onSubmit)}
 								>
 									Отправить
 								</ButtonSave>
@@ -226,4 +232,5 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 		</form>
 	);
 };
+
 export default AnnouncementForm;

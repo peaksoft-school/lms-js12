@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ANNOUNCEMENT {
 	type Table = {
-		_id: number | null;
-		id: string;
+		id: number;
 		content: string;
 		owner: string;
 		groupNames: string[];
@@ -34,13 +33,10 @@ namespace ANNOUNCEMENT {
 	type DeleteAnnouncementPropsRequest = number | null;
 
 	type PutAnnouncementPropsResponse = {
-		id: number;
-		content: string;
-		owner: string;
-		groupNames: string[];
-		publishDate: string;
-		endDate: string;
-		isPublished: true;
+		announcementContent: string;
+		expirationDate: string;
+		targetGroupIds: number[];
+		publishedDate: string;
 	};
 	type PutAnnouncementPropsRequest = {
 		id: number;

@@ -4,8 +4,7 @@ import scss from './Announcements.module.scss';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
 import {
 	useGetAnnouncementTableQuery,
-	usePutAnnouncementTableMutation,
-	usePatchShowdMutationMutation
+	useShowAnnouncementMutation
 } from '@/src/redux/api/admin/announcement';
 import AnnouncementForm from '@/src/ui/announcementForm/AnnouncementForm';
 import editIcon from '@/src/assets/svgs/edit.svg';
@@ -20,32 +19,28 @@ import {
 	IconEyeOff,
 	IconPlus
 } from '@tabler/icons-react';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 
 const Announcements = () => {
-	const [addPatchAnnouncement] = usePutAnnouncementTableMutation();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const [dataId, setDataId] = useState('');
 	const { data, isLoading } = useGetAnnouncementTableQuery();
-	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
+	const [dataId, setDataId] = useState('');
+	console.log(data, 'card');
 
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(4);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(4);
-	const [patchCompletedMutation] = usePatchShowdMutationMutation();
+	const [showAnnouncement] = useShowAnnouncementMutation();
+	const [saveShow, setSaveShow] = useState(false);
+
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
 	};
-	const handleAddPatchAnnouncement = async (id: number) => {
-		await addPatchAnnouncement(id.toString());
-	};
-
 	const handleCloseAnnoucement = () => {
 		setOpenAnnouncement(false);
 	};
@@ -68,15 +63,6 @@ const Announcements = () => {
 
 	const handleClose = () => {
 		setAnchorEl(null);
-	};
-
-	const handleShowFunc = async () => {
-		const updated = {
-			content: find?.content,
-			groupNames: find?.groupNames,
-			isPublished: !find?.isPublished
-		};
-		await patchCompletedMutation({ updated, deleteById });
 	};
 
 	const handlePageChangeC = (
@@ -111,6 +97,17 @@ const Announcements = () => {
 				setRowsPerPage(4);
 			}
 		}
+	};
+
+	const handleShow = async (deleteById, item) => {
+		const newAnnoun = {
+			announcementContent: item.announcementContent,
+			expirationDate: item.expirationDate,
+			publishedDate: item.publishedDate,
+			targetGroupIds: item.targetGroupIds,
+			isPublished: !item.isPublished
+		};
+		await showAnnouncement({ deleteById, newAnnoun });
 	};
 
 	return (
@@ -230,7 +227,7 @@ const Announcements = () => {
 													onClick={() => {
 														setOpenModalEdit(true);
 														setAnchorEl(null);
-														setDataId(item.id?.toString());
+														setDataId(item.id.toString());
 													}}
 												>
 													<img src={editIcon} alt="Edit" />
@@ -241,9 +238,7 @@ const Announcements = () => {
 													style={{ display: 'flex', gap: '20px' }}
 													className={scss.dropdown}
 													onClick={() => {
-														// handleShowFunc();
-														// handleClose();
-														handleAddPatchAnnouncement(item.id);
+														handleShow(item.id, item);
 													}}
 												>
 													{find?.isPublished === true ? (
@@ -279,7 +274,6 @@ const Announcements = () => {
 								openModalEdit={openModalEdit}
 								closeModalEdit={() => setOpenModalEdit(false)}
 								saveIdElement={deleteById}
-								dataId={dataId}
 							/>
 
 							<DeleteAnnouncementModal
