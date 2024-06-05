@@ -5,23 +5,13 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { useGetStudentTestsQuery } from '@/src/redux/api/students/test';
 
 const Test = () => {
-	const { courseId, lessonId } = useParams();
+	const { courseId, lessonId, testId } = useParams();
 	// console.log(courseId, lessonId);
 	const { data } = useGetStudentTestsQuery(lessonId);
+	console.log(data);
+
 	const navigate = useNavigate();
 	console.log(data, 'data');
-	// const [questions] = useState([
-	// 	{
-	// 		number: '№',
-	// 		text: 'Название теста',
-	// 		time: '40'
-	// 	},
-	// 	{
-	// 		number: '№',
-	// 		text: 'Название теста',
-	// 		time: '40'
-	// 	}
-	// ]);
 
 	return (
 		<div className={scss.test_container}>
@@ -45,7 +35,7 @@ const Test = () => {
 								disabled={false}
 								onClick={() =>
 									navigate(
-										`/courses/${courseId}/materials/${lessonId}/showTest`
+										`/courses/${courseId}/materials/${lessonId}/${testId}/showTest`
 									)
 								}
 							></ButtonSave>

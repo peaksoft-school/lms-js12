@@ -8,12 +8,12 @@ import { useGetStudentMaterialsQuery } from '@/src/redux/api/students/materials'
 
 const LessonsList = () => {
 	const { coursesId } = useParams();
-
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	
+	console.log(coursesId);
+
 	const { data } = useGetStudentMaterialsQuery(coursesId);
 
 	const navigate = useNavigate();

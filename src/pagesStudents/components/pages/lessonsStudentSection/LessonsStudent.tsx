@@ -27,7 +27,7 @@ const LessonsStudent = () => {
 		setValue(newValue);
 	};
 
-	const { coursesId, lessonId } = useParams();
+	const { coursesId, lessonId, testId } = useParams();
 
 	const handleOpenVideo = () => {
 		navigate(`/courses/${coursesId}/materials/${lessonId}/video`);
@@ -37,7 +37,7 @@ const LessonsStudent = () => {
 		navigate(`/courses/${coursesId}/materials/${lessonId}/presentation`);
 	};
 	const OpenTest = () => {
-		navigate(`/courses/${coursesId}/materials/${lessonId}/test`);
+		navigate(`/courses/${coursesId}/materials/${lessonId}/${testId}`);
 	};
 	const OpenLesson = () => {
 		navigate(`/courses/${coursesId}/materials/${lessonId}/lesson`);
@@ -129,7 +129,7 @@ const LessonsStudent = () => {
 								</>
 							)}
 							{pathname ===
-								`/courses/${coursesId}/materials/${lessonId}/test` && (
+								`/courses/${coursesId}/materials/${lessonId}/${testId}` && (
 								<>
 									<TestSection />
 								</>

@@ -3,9 +3,12 @@ import scss from './GetTest.module.scss';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetQuestionListTestsQuery } from '@/src/redux/api/students/test';
+import { useParams } from 'react-router-dom';
 
 function GetTest() {
-	const { data } = useGetQuestionListTestsQuery();
+	const { testId } = useParams();
+	console.log(testId);
+	const { data } = useGetQuestionListTestsQuery(testId);
 
 	const [questions, setQuestions] = useState([
 		{
