@@ -132,7 +132,7 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/courses') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
-						<img className={scss.bell} src={profile} alt="bell" />
+						<img className={scss.bell} src={bell} alt="bell" />
 						<img className={scss.profile} src={profile} alt="Profile" />
 						<p>Студент</p>
 						<IconChevronDown stroke={2} />
@@ -231,6 +231,7 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
+<<<<<<< HEAD
 			{pathname.startsWith('/calendar') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
@@ -281,6 +282,8 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
+=======
+>>>>>>> d942375fa8fd2b4d5b841d05631866f4113ac0ec
 		</div>
 	);
 };

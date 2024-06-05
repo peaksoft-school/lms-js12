@@ -13,6 +13,7 @@ import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import GetTest from '../pages/getTestSection/GetTest';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
+import GetOneTask from '../pages/getOneTask/GetOneTask';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -89,8 +90,13 @@ const LayoutStudents = () => {
 						/>
 						<Route
 							path="/courses/:coursesId/materials/:lessonId/lesson/:getTaskId"
+							element={<GetOneTask />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:lessonId/lesson"
 							element={<LessonsStudentPage />}
 						/>
+
 						<Route
 							path="/courses/:coursesId/materials/:lessonId/presentation"
 							element={<LessonsStudentPage />}
