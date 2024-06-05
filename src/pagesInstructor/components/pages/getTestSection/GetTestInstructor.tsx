@@ -21,7 +21,7 @@ interface Question {
 
 const GetTestInstructor = () => {
 
-	const { data } = useGetInsideTestQuery();
+	// const { data } = useGetInsideTestQuery();
 	const [questions, setQuestions] = useState<Question[]>([
 		{
 			id: 1,

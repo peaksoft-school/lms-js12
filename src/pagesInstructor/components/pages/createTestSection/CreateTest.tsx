@@ -16,6 +16,7 @@ interface CopyData {
 	inputValue4: string;
 	inputs: string[];
 	options: string;
+	
 }
 
 const CreateTest = () => {

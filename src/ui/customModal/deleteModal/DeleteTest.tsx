@@ -1,5 +1,4 @@
 import scss from './DeleteTeacher.module.scss';
-import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteTestMutation } from '@/src/redux/api/instructor/test';
+import { FC, Fragment } from 'react';
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -14,7 +14,7 @@ interface DeleteProps {
 	deleteById: number | null;
 }
 
-const DeleteTest: React.FC<DeleteProps> = ({
+const DeleteTest: FC<DeleteProps> = ({
 	openModalDelete,
 	closeModalDelete,
 	deleteById
@@ -22,13 +22,15 @@ const DeleteTest: React.FC<DeleteProps> = ({
 	const [deleteTest] = useDeleteTestMutation();
 
 	const handleDelete = async () => {
-		await deleteTest(deleteById);
-		closeModalDelete();
+		if (deleteById !== null) {
+			await deleteTest(deleteById);
+			closeModalDelete(false);
+		}
 	};
 
 	return (
 		<div>
-			<React.Fragment>
+			<Fragment>
 				<div>
 					<Dialog
 						open={openModalDelete}
@@ -69,7 +71,7 @@ const DeleteTest: React.FC<DeleteProps> = ({
 						</DialogActions>
 					</Dialog>
 				</div>
-			</React.Fragment>
+			</Fragment>
 		</div>
 	);
 };
