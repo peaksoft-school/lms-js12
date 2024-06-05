@@ -1,37 +1,40 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import scss from './Test.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { useGetStudentTestsQuery } from '@/src/redux/api/students/test';
 
 const Test = () => {
-	const navigate = useNavigate();
-	const [questions] = useState([
-		{
-			number: '№',
-			text: 'Название теста',
-			time: '40'
-		},
-		{
-			number: '№',
-			text: 'Название теста',
-			time: '40'
-		}
-	]);
-
 	const { courseId, lessonId } = useParams();
+	// console.log(courseId, lessonId);
+	const { data } = useGetStudentTestsQuery(lessonId);
+	const navigate = useNavigate();
+	console.log(data, 'data');
+	// const [questions] = useState([
+	// 	{
+	// 		number: '№',
+	// 		text: 'Название теста',
+	// 		time: '40'
+	// 	},
+	// 	{
+	// 		number: '№',
+	// 		text: 'Название теста',
+	// 		time: '40'
+	// 	}
+	// ]);
 
 	return (
 		<div className={scss.test_container}>
 			<div className={scss.container}>
-				{questions.map((question) => (
-					<div className={scss.test_container_second}>
+				{data?.testResponseForGetAll.map((question) => (
+					<div key={question.testId} className={scss.test_container_second}>
 						<div className={scss.test_container_fifth}>
 							<div className={scss.test_container_third}>
-								<h4>{question.number}</h4>
-								<h4 className={scss.test_text}>{question.text}</h4>
+								<h4 className={scss.test_text}>{question.title}</h4>
 							</div>
 							<div className={scss.test_container_forth}>
-								<p className={scss.text_time}>Время: {question.time} минут</p>
+								<p className={scss.text_time}>Время: {question.hour} час</p>
+								<p className={scss.text_time}>Время: {question.minute} минут</p>
 							</div>
 						</div>
 						<div className={scss.test_buttons_container}>

@@ -2,8 +2,11 @@ import { useState } from 'react';
 import scss from './GetTest.module.scss';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { Box, ScrollArea } from '@mantine/core';
+import { useGetQuestionListTestsQuery } from '@/src/redux/api/students/test';
 
 function GetTest() {
+	const { data } = useGetQuestionListTestsQuery();
+
 	const [questions, setQuestions] = useState([
 		{
 			id: 1,
@@ -74,28 +77,32 @@ function GetTest() {
 			<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
 				<Box>
 					<div className={scss.testing_container}>
-						{questions.map((question) => (
-							<div key={question.id} className={scss.question}>
+						{data?.questionResponseList.map((question) => (
+							<div key={question.questionId} className={scss.question}>
 								<div className={scss.get_test_testing_second_container}>
-									<h4>{question.id}.</h4>
-									<h4>{question.text}</h4>
+									<h4>{question.title}.</h4>
+									<h4>{question.point}</h4>
+									<h4>{question.questionType}</h4>
 								</div>
-								{question.options.map((option) => (
-									<div key={option.id} className={scss.option}>
+								{question.optionResponses.map((option) => (
+									<div key={option.optionId} className={scss.option}>
 										<input
 											type={
-												question.options.filter((opt) => opt.isCorrect)
+												question.optionResponses.filter((opt) => opt.isTrue)
 													.length === 2
 													? 'checkbox'
 													: 'radio'
 											}
-											checked={option.isChecked}
+											checked={option.isTrue}
 											onChange={() =>
-												handleCheckboxChange(question.id, option.id)
+												handleCheckboxChange(
+													question.questionId,
+													option.optionId
+												)
 											}
-											className={option.isCorrect ? scss.correct_checkbox : ''}
+											className={option.isTrue ? scss.correct_checkbox : ''}
 										/>
-										<label>{option.text}</label>
+										<label>{option.option}</label>
 									</div>
 								))}
 								<hr className={scss.getTest_hr} />
