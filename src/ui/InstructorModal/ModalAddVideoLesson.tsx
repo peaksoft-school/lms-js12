@@ -23,33 +23,56 @@ const style = {
 };
 
 interface VideoProps {
-	link: string;
-	title: string;
+	titleOfVideo: string;
 	description: string;
+	linkOfVideo: string;
 }
 
 interface LessonVideoProps {
 	open: boolean;
 	handleCloseVideo: () => void;
+	lessonId: number;
 }
 
 const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	open,
-	handleCloseVideo
+	handleCloseVideo,
+	lessonId
 }) => {
 	const { control, handleSubmit, reset } = useForm<VideoProps>();
 	const [postVideoLesson] = usePostVideoLessonMutation();
 
-	const onSubmit: SubmitHandler<VideoProps> = (data) => {
-		// const { title, description, link } = data;
-		const postData = {
-			title: data.title,
-			description: data.description,
-			link: data.link
-		};
-		postVideoLesson(postData);
-		reset();
-		handleCloseVideo();
+	const extractVideoId = (url: string): string => {
+		if (url.includes('youtube.com/watch?v=')) {
+			return url.split('v=')[1].split('&')[0];
+		} else if (url.includes('youtu.be/')) {
+			return url.split('youtu.be/')[1].split('?')[0];
+		}
+		return '';
+	};
+
+	const onSubmit: SubmitHandler<VideoProps> = async (data) => {
+		const { titleOfVideo, description, linkOfVideo } = data;
+
+		if (titleOfVideo !== '' && description !== '' && linkOfVideo !== '') {
+			const videoId = extractVideoId(linkOfVideo);
+
+			if (videoId) {
+				const postData = {
+					titleOfVideo: titleOfVideo,
+					description: description,
+					linkOfVideo: videoId
+				};
+
+				await postVideoLesson({ postData, lessonId });
+				console.log(lessonId);
+				
+				reset();
+				handleCloseVideo();
+			} else {
+				console.error('Invalid YouTube URL');
+			}
+		}
 	};
 
 	return (
@@ -72,7 +95,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="title"
+								name="titleOfVideo"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите название видеоурока' }}
@@ -104,7 +127,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 							/>
 
 							<Controller
-								name="link"
+								name="linkOfVideo"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Вставьте ссылку на видеоурок' }}

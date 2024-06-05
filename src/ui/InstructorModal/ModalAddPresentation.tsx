@@ -1,12 +1,13 @@
 import scss from './Styled.module.scss';
 import { FC, useRef, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import { usePostPresentationMutation } from '@/src/redux/api/instructor/presentation';
 
 const style = {
 	position: 'absolute',
@@ -26,13 +27,31 @@ interface ModalAddPresentationProps {
 	handleClose: () => void;
 }
 
+interface PostModalAddPresentation {
+	title: string;
+	description: string;
+	file: string;
+}
+
 const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	handleClose,
 	open
 }) => {
-	const { control } = useForm();
+	const { control, handleSubmit, reset } = useForm();
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	const [postPresentation] = usePostPresentationMutation();
+
+	const onSubmit: SubmitHandler<PostModalAddPresentation> = (data) => {
+		const newPresentation = {
+			title: data.title,
+			description: data.description,
+			file: data.file
+		};
+		postPresentation(newPresentation);
+		reset();
+	};
 
 	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0] || null;
@@ -44,7 +63,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	};
 
 	return (
-		<form>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -153,7 +172,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
-								onClick={() => {}}
+								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="117px"
 								disabled={false}

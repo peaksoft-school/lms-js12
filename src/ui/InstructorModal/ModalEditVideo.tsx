@@ -14,9 +14,9 @@ import {
 } from '@/src/redux/api/instructor/video';
 
 interface IFormInputs {
-	title: string;
+	titleOfVideo: string;
 	description: string;
-	link: string;
+	linkOfVideo: string;
 }
 
 const style = {
@@ -45,7 +45,7 @@ const ModalEditVideo: React.FC<modalProps> = ({
 	const { control, handleSubmit, reset } = useForm<IFormInputs>();
 	const [patchVideo] = usePatchVideoLessonMutation();
 	const { data } = useGetVideoLessonQuery();
-	const find = data?.find((id) => id._id === deleteById);
+	const find = data?.find((id) => id.id === deleteById);
 
 	const onSubmit = async (data: IFormInputs) => {
 		const newVideoLesson = {
@@ -57,9 +57,9 @@ const ModalEditVideo: React.FC<modalProps> = ({
 
 	useEffect(() => {
 		reset({
-			title: find?.title,
+			titleOfVideo: find?.titleOfVideo,
 			description: find?.description,
-			link: find?.link
+			linkOfVideo: find?.linkOfVideo
 		});
 	}, [find]);
 
@@ -83,7 +83,7 @@ const ModalEditVideo: React.FC<modalProps> = ({
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="title"
+								name="titleOfVideo"
 								control={control}
 								render={({ field }) => (
 									<Input
@@ -109,7 +109,7 @@ const ModalEditVideo: React.FC<modalProps> = ({
 								)}
 							/>
 							<Controller
-								name="link"
+								name="linkOfVideo"
 								control={control}
 								render={({ field }) => (
 									<Input

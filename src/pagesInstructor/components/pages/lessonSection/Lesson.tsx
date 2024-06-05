@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from '@mui/material';
+import {  Tab, Tabs } from '@mui/material';
 import scss from './Lesson.module.scss';
 import { useState } from 'react';
 import {
@@ -13,7 +13,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import VideoLessonPage from '../VideoLessonPage';
 
 import PresentationPage from '../PresentationPage';
-import { ScrollArea } from '@mantine/core';
+import { Box, ScrollArea } from '@mantine/core';
 import CrateTask from '../createTaskSection/CrateTask';
 import GetTask from '../getTaskSection/GetTask';
 import Test from '../testSection/TestInstructor';
@@ -52,8 +52,8 @@ const Lesson = () => {
 				style={{
 					background: '#fff',
 					borderRadius: '10px',
-					width: '100%'
-					// overflowY: 'scroll'
+					width: '100%',
+					overflowY: 'scroll'
 				}}
 			>
 				<div
@@ -64,7 +64,7 @@ const Lesson = () => {
 				>
 					<div className={scss.container}>
 						<div className={scss.content}>
-							<ScrollArea type="always" offsetScrollbars classNames={scss}>
+							<ScrollArea type="always" scrollbars='x' offsetScrollbars classNames={scss}>
 								<Box>
 									<Tabs
 										value={value}
