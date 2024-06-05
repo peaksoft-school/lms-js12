@@ -231,7 +231,6 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
-<<<<<<< HEAD
 			{pathname.startsWith('/calendar') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
@@ -282,8 +281,6 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
-=======
->>>>>>> 4a1c289f2d1ae3f1b119bdd1ec592676c7066696
 		</div>
 	);
 };

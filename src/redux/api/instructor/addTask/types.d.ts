@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace TASK {
 	type TaskResponse = {
-		_id: number;
+		id: number;
 		title: string;
 		description: string!;
 		file: File | undefined;
@@ -9,7 +9,7 @@ namespace TASK {
 	}[];
 	type TaskRequest = void;
 	type CreateTaskResponse = {
-		_id: number;
+		id: number;
 		title: string;
 		description: string!;
 		file: File | undefined;

@@ -3,8 +3,8 @@ import { api as index } from '../../../api';
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getTaskInstructor: builder.query<TASK.TaskResponse, TASK.TaskRequest>({
-			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask',
+			query: (lessonId) => ({
+				url: `/api/tasks/taskOfLesson/${lessonId}`,
 				method: 'GET'
 			}),
 			providesTags: ['addTask']
@@ -13,8 +13,8 @@ export const api = index.injectEndpoints({
 			TASK.CreateTaskResponse,
 			TASK.CreateTaskRequest
 		>({
-			query: (newtask) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask',
+			query: ({ newtask, lessonId }) => ({
+				url: `/api/tasks/${lessonId}`,
 				method: 'POST',
 				body: newtask
 			}),
@@ -24,16 +24,16 @@ export const api = index.injectEndpoints({
 			TASK.UpdateTaskResponse,
 			TASK.UpdateTaskRequest
 		>({
-			query: ({ newtask, getTaskId }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask/${getTaskId}`,
+			query: ({ newtask, getTaskId,taskId }) => ({
+				url: `/api/tasks/${taskId}`,
 				method: 'PATCH',
 				body: newtask
 			}),
 			invalidatesTags: ['addTask']
 		}),
 		deleteTaskInstructor: builder.mutation({
-			query: (deleteById) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask/${deleteById}`,
+			query: ({deleteById,taskId}) => ({
+				url: `/api/tasks/${taskId}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['addTask']
