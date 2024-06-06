@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 import scss from './Styled.module.scss';
+import { useGetFileQuery } from '@/src/redux/api/instructor/presentation';
 
 const style = {
 	position: 'absolute',
@@ -21,9 +22,16 @@ const style = {
 interface TeacherAddProps {
 	open: boolean;
 	handleClose: () => void;
+	saveId: number | null;
 }
 
-const ModalPresentation: FC<TeacherAddProps> = ({ open, handleClose }) => {
+const ModalPresentation: FC<TeacherAddProps> = ({
+	open,
+	handleClose,
+	saveId
+}) => {
+	const { data } = useGetFileQuery(saveId || 0);
+
 	return (
 		<div>
 			<Modal
@@ -32,7 +40,17 @@ const ModalPresentation: FC<TeacherAddProps> = ({ open, handleClose }) => {
 				aria-labelledby="child-modal-title"
 				aria-describedby="child-modal-description"
 			>
-				<Box className={scss.main_modal_vid} sx={{ ...style }}></Box>
+				<Box className={scss.main_modal_vid} sx={{ ...style }}>
+					{data && (
+						<div>
+							<iframe
+								src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${data.file}`}
+								frameBorder="0"
+								style={{ width: '100%', height: '567px' }}
+							></iframe>
+						</div>
+					)}
+				</Box>
 			</Modal>
 		</div>
 	);

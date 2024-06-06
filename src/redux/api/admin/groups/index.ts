@@ -49,7 +49,7 @@ export const api = index.injectEndpoints({
 			query: (fileObj) => ({
 				url: '/file',
 				method: 'POST',
-
+				headers: { 'Content-Type': 'multipart/form-data' },
 				body: fileObj
 			}),
 			invalidatesTags: ['groups']

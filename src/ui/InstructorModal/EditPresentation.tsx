@@ -13,9 +13,11 @@ import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import {
+	useCreatePresentationFileMutation,
 	useEditPresentationMutation,
 	useGetPresentationQuery
 } from '@/src/redux/api/instructor/presentation';
+import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 
 const style = {
 	position: 'absolute',
@@ -44,36 +46,90 @@ const EditPresentation: FC<PresentationProps1> = ({
 	const { control, handleSubmit, reset } = useForm();
 	const { data } = useGetPresentationQuery();
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [selectedFile, setSelectedFile] = useState<string>(null);
 	const [editPresentation] = useEditPresentationMutation();
+	const [createPresentationFile] = useCreatePresentationFileMutation();
 
 	const openFilePicker = () => {
 		fileInputRef.current?.click();
 	};
 
-	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0] || null;
-		setSelectedFile(file);
+	// const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const file = event.target.files?.[0] || null;
+	// 	if (file) {
+	// 		const reader = new FileReader();
+	// 		// setHidePhoto(true);
+
+	// 		reader.onload = async (e) => {
+	// 			if (e.target) {
+	// 				const imageUrl = e.target.result as string;
+	// 				setSelectedFile(imageUrl);
+	// 				const fileObj = {
+	// 					fileName: file.name,
+	// 					urlFile: imageUrl
+	// 				};
+	// 				// console.log(fileObj);
+
+	// 				await createPresentationFile(fileObj);
+	// 				setSelectedFile(file.name);
+	// 				// console.log(imageUrl);
+	// 			}
+	// 		};
+
+	// 		reader.readAsDataURL(file);
+	// 	}
+	// };
+
+	const handleFileSelect = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const files = event.target.files;
+		if (files && files[0]) {
+			const file = files[0];
+			const newFileUrls: string[] = [];
+			const formData = new FormData();
+			formData.append('file', file);
+			try {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const response: any = await createPresentationFile(formData as any);
+				const test = JSON.parse(response.data);
+				newFileUrls.push(test.object);
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				setSelectedFile(newFileUrls as any);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			}
+		}
 	};
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const newPresentation = {
-			title: data.title,
-			presentation: selectedFile,
-			description: data.description
-		};
-		await editPresentation({ newPresentation, saveIdElement });
-		reset();
+		if (selectedFile && saveIdElement !== null) {
+			const newPresentation = {
+				title: data.title,
+				file: selectedFile,
+				description: data.description
+			};
+			await editPresentation({ newPresentation, saveIdElement });
+			reset();
+			handleClose();
+		}
 	};
-	const finder = data?.find((item) => item._id === saveIdElement);
+
+	// const finder = data?.find((item) => item.id === saveIdElement);
 
 	useEffect(() => {
-		reset({
-			title: finder?.title,
-			presentation: finder?.presentation,
-			description: finder?.description
-		});
-	}, [finder]);
+		console.log('Data:', data);
+		const finder = data?.find((item) => item.id === saveIdElement);
+		console.log('Finder:', finder);
+		if (finder) {
+			reset({
+				title: finder.title,
+				file: finder.file,
+				description: finder.description
+			});
+		}
+	}, [saveIdElement, data, reset]);
+
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
@@ -147,7 +203,7 @@ const EditPresentation: FC<PresentationProps1> = ({
 										/>
 										<input
 											type="text"
-											value={selectedFile ? selectedFile.name : ''}
+											value={selectedFile ? selectedFile : ''}
 											readOnly
 											placeholder="Выберите файл в формате ppt"
 											className={scss.input}

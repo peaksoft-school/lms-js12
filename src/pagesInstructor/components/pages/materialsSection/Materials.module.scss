@@ -105,20 +105,19 @@
 
 		.table_alternate_row {
 			background: #1a237e12;
+			height: 45px;
+
 			.tbody {
 				width: 100%;
 			}
 		}
 
 		.table_container_second {
-			height: 50px;
+			height: 45px;
 
 			.tbody {
 				width: 100%;
 				text-align: end;
-			}
-			.TableCell_main {
-				padding-left: 20px;
 			}
 		}
 

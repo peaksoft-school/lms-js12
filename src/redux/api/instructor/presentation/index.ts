@@ -6,18 +6,30 @@ const api = index.injectEndpoints({
 			MATERIALS.getResponsePresentation,
 			MATERIALS.getRequestPresentation
 		>({
-			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation',
+			query: (lessonId) => ({
+				url: `/api/presentation/All/${lessonId}`,
 				method: 'GET'
 			}),
 			providesTags: ['presentation']
 		}),
+		// !
+		getFile: builder.query<
+			MATERIALS.getResponsePresentation,
+			MATERIALS.getRequestPresentation
+		>({
+			query: (saveId) => ({
+				url: `/api/presentation/${saveId}`,
+				method: 'GET'
+			}),
+			providesTags: ['presentation']
+		}),
+		// !
 		postPresentation: builder.mutation<
 			MATERIALS.CreateResponsePresentation,
 			MATERIALS.CreateRequestPresentation
 		>({
-			query: (newPresentation) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation',
+			query: ({ newPresentation, lessonId }) => ({
+				url: `/api/presentation/${lessonId}`,
 				method: 'POST',
 				body: newPresentation
 			}),
@@ -25,16 +37,31 @@ const api = index.injectEndpoints({
 		}),
 		deletePresentation: builder.mutation({
 			query: (saveIdElement) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation/${saveIdElement}`,
+				url: `/api/presentation/${saveIdElement}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['presentation']
 		}),
 		editPresentation: builder.mutation({
-			query: ({ newPresentation, saveIdElement }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation/${saveIdElement}`,
-				method: 'PUT',
+			query: ({ newPresentation, saveIdElement }) => (
+				{
+				url: `/api/presentation/${saveIdElement}`,
+				method: 'PATCH',
 				body: newPresentation
+			}
+		),
+			invalidatesTags: ['presentation']
+		}),
+		createPresentationFile: builder.mutation({
+			query: (fileObj) => ({
+				url: '/file',
+				method: 'POST',
+				// headers: { 'Content-Type': 'multipart/form-data' },
+				body: fileObj,
+				responseHandler: 'text',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
 			}),
 			invalidatesTags: ['presentation']
 		})
@@ -44,5 +71,7 @@ export const {
 	useGetPresentationQuery,
 	usePostPresentationMutation,
 	useDeletePresentationMutation,
-	useEditPresentationMutation
+	useEditPresentationMutation,
+	useGetFileQuery,
+	useCreatePresentationFileMutation
 } = api;
