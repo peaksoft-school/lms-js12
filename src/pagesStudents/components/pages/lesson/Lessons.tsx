@@ -1,4 +1,4 @@
-import scss from './LessonsList.module.scss';
+import scss from './Lessons.module.scss';
 import { Pagination, Stack } from '@mui/material';
 import { useState, KeyboardEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,14 +6,14 @@ import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { useGetStudentMaterialsQuery } from '@/src/redux/api/students/materials';
 
-const LessonsList = () => {
-	const { coursesId } = useParams();
+const Lesson = () => {
+	const { coursesId, lessonId } = useParams();
 
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	
+
 	const { data } = useGetStudentMaterialsQuery(coursesId);
 
 	const navigate = useNavigate();
@@ -57,9 +57,6 @@ const LessonsList = () => {
 		<div className={scss.list_lessons}>
 			<div className={scss.container}>
 				<div className={scss.lesson}></div>
-				<div className={scss.title_lesson}>
-					<h1>Материалы</h1>
-				</div>
 				<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
 					<Box>
 						<div style={{ minHeight: '70vh' }}>
@@ -76,7 +73,7 @@ const LessonsList = () => {
 												localStorage.setItem('taskName', String(item.title));
 												setTimeout(() => {
 													navigate(
-														`/courses/${coursesId}/materials/${item.id}`
+														`/courses/${coursesId}/materials/${lessonId}/lesson/${item.id}`
 													);
 												}, 1000);
 											}}
@@ -140,4 +137,4 @@ const LessonsList = () => {
 	);
 };
 
-export default LessonsList;
+export default Lesson;

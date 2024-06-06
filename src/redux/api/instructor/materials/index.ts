@@ -6,20 +6,21 @@ const api = index.injectEndpoints({
 			MATERIALS.MaterialsGetResponse,
 			MATERIALS.MaterialsGetRequest
 		>({
-			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users',
+			query: (courseId) => ({
+				url: `/api/lessons/all/${courseId}`,
 				method: 'GET'
 			}),
 			providesTags: ['material']
 		}),
+		// /api/videos/All/${lessonId}
 		postMaterials: builder.mutation<
 			MATERIALS.MaterialsPostResponse,
 			MATERIALS.MaterialsPostRequest
 		>({
-			query: (newLesson) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users',
+			query: ({ postData, courseId }) => ({
+				url: `/api/lessons/${courseId}`,
 				method: 'POST',
-				body: newLesson
+				body: postData
 			}),
 			invalidatesTags: ['material']
 		}),
@@ -28,18 +29,19 @@ const api = index.injectEndpoints({
 			MATERIALS.MaterialsPatchRequest
 		>({
 			query: ({ updateMaterial, deleteById }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users/${deleteById}`,
+				url: `/api/lessons/${deleteById}`,
 				method: 'PATCH',
 				body: updateMaterial
 			}),
 			invalidatesTags: ['material']
 		}),
+		// /api/lessons/{lessonId}
 		deleteMaterial: builder.mutation<
 			MATERIALS.MaterialsDeleteResponse,
 			MATERIALS.MaterialsDeleteRequest
 		>({
-			query: (deleteId) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/1bf67269259866233f57c4be5bbcd2f2/users/${deleteId}`,
+			query: (deleteById) => ({
+				url: `/api/lessons/${deleteById}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['material']

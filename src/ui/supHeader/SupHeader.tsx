@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IconBellRinging2, IconChevronDown } from '@tabler/icons-react';
+import { IconChevronDown } from '@tabler/icons-react';
 import scss from './SupHeader.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box, Menu, MenuItem, Tab, Tabs } from '@mui/material';
@@ -119,7 +119,7 @@ const SupHeader = () => {
 								aria-label="basic tabs example"
 							>
 								<Tab onClick={openTeacher} label="Учителя" {...a11yProps(0)} />
-								<Tab onClick={openStudent} label="Студенты" {...a11yProps(1)} />
+								<Tab  onClick={openStudent} label="Студенты" {...a11yProps(1)} />
 							</Tabs>
 						</Box>
 					</Box>
@@ -189,6 +189,7 @@ const SupHeader = () => {
 								value={value}
 								onChange={handleChange}
 								aria-label="basic tabs example"
+								className={scss.tabs}
 							>
 								<Tab
 									onClick={openMaterial}
@@ -209,12 +210,12 @@ const SupHeader = () => {
 						</Box>
 					</Box>
 					<div className={scss.header_elements} onClick={handleClick}>
-						<img src={bell} alt="bell" />
-						<img src={profile} alt="Profile" />
+						<img style={{ cursor: 'pointer' }} src={bell} alt="bell" />
+						<img style={{ cursor: 'pointer' }} src={profile} alt="Profile" />
 						<div>
 							<div className={scss.instructor_profile}>Учитель</div>
 						</div>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						<IconChevronDown className={scss.photo_profile} stroke={2} />
 					</div>
 					<Menu
 						id="basic-menu"
@@ -266,10 +267,11 @@ const SupHeader = () => {
 						<Box
 							sx={{
 								borderColor: 'divider',
-								paddingTop: '20px'
+								paddingTop: '10px'
 							}}
 						>
 							<Tabs
+								className={scss.tabs}
 								value={value}
 								onChange={handleChange}
 								aria-label="basic tabs example"
@@ -290,16 +292,15 @@ const SupHeader = () => {
 								alignItems: 'center',
 								cursor: 'pointer'
 							}}
-						>
-							<IconBellRinging2
-								onClick={handleOpenNotification}
-								style={{ width: '30px', height: '30px' }}
-								stroke={2}
-							/>
-						</div>
-						<img src={bell} alt="bell" />
-						<img src={profile} alt="Profile" />
-						<div>
+						></div>
+						<img
+							style={{ cursor: 'pointer' }}
+							onClick={handleOpenNotification}
+							src={bell}
+							alt="bell"
+						/>
+						<img style={{ cursor: 'pointer' }} src={profile} alt="Profile" />
+						<div style={{ cursor: 'pointer' }}>
 							<p>Студент</p>
 						</div>
 						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />

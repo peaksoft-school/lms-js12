@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace STUDENTLESSON {
+namespace MATERIALS {
 	type Lesson = {
 		[x: string]: number | null;
 		id: number;

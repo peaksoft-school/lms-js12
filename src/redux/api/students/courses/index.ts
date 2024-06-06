@@ -2,14 +2,13 @@ import { api as index } from '../../../api';
 
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
-		getCourseInstructor: builder.query<
-			InstructorCourses.CoursesResponse,
-			InstructorCourses.CoursesRequest
+		getStudentsCourse: builder.query<
+			STUDENTSCOURSES.GetStudentsResponse,
+			STUDENTSCOURSES.GetStudentsRequest
 		>({
 			query: () => ({
-				url: '/api/course/myCourse?page=1&size=8',
+				url: '/api/course/myCourse',
 				method: 'GET'
-				// ${page !== null ? page : '1'${size !== null ? size : '12'}
 				// headers: {
 				// 	Authorization: `Bearer ${localStorage.getItem('token')}`
 				// }
@@ -19,4 +18,4 @@ export const api = index.injectEndpoints({
 	})
 });
 
-export const { useGetCourseInstructorQuery } = api;
+export const { useGetStudentsCourseQuery } = api;

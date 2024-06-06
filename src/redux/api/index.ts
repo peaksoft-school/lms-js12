@@ -41,7 +41,7 @@ export const api = createApi({
 		'presentation',
 		'auth',
 		'exem',
-		'student'
-	],
+		'student',
+		"materialslesson"	],
 	endpoints: () => ({})
 });

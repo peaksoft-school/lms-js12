@@ -14,21 +14,18 @@ namespace VIDEO_LESSON {
 		titleOfVideo: string;
 		description: string;
 		linkOfVideo: string;
-	}[];
+	};
 
 	type VideoIDGetRequest = void;
 
 	type VideoLessonPostResponse = {
-		lessonId: number;
-		postData: {
-			titleOfVideo: string;
-			description: string;
-			linkOfVideo: string;
-		};
+		titleOfVideo: string;
+		description: string;
+		linkOfVideo: string;
 	};
 
 	type VideoLessonPostRequest = {
-		lessonId: number;
+		lessonId: number | null;
 		postData: {
 			titleOfVideo: string;
 			description: string;

@@ -3,29 +3,26 @@ import Modal from '@mui/material/Modal';
 import { FC, useEffect } from 'react';
 import scss from './Styled.module.scss';
 import { useGetIdVideoLessonQuery } from '@/src/redux/api/instructor/video';
-import ReactPlayer from 'react-player/youtube';
 
 interface ModalWatchVideoProps {
 	open: boolean;
 	handleClose: () => void;
-	saveId: number | null;
+	saveId?: number;
 }
 
 const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 	open,
 	handleClose,
-	saveId
+	saveId = 0
 }) => {
 	const style = {
 		position: 'absolute',
 		top: '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
-		bgcolor: 'background.paper',
 		boxShadow: 24,
 		p: 4,
 		sx: {
-			bgcolor: 'background.paper',
 			padding: '0px'
 		}
 	};
@@ -46,17 +43,38 @@ const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 			onClose={handleClose}
 			aria-labelledby="child-modal-title"
 			aria-describedby="child-modal-description"
+			sx={{
+				backgroundColor: 'rgba(0, 0, 0, 0)',
+				backdropFilter: 'none',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center'
+			}}
+			BackdropProps={{
+				style: {
+					backgroundColor: 'rgba(0, 0, 0, 0)'
+				}
+			}}
 		>
-			<Box className={scss.main_modal_vid} sx={{ ...style }}>
+			<Box
+				className={scss.main_modal_vid}
+				sx={{
+					...style,
+					backgroundColor: 'transparent',
+					boxShadow: 'none'
+				}}
+			>
 				{isError && <p>Error fetching video.</p>}
 				{isLoading && <p>Loading video...</p>}
 				{data && data.linkOfVideo ? (
-					<div>
-						<ReactPlayer
-							url={`https://www.youtube.com/embed/${data.linkOfVideo}`}
+					<div className={scss.iframe}>
+						<iframe
+							style={{ borderRadius: '10px' }}
+							src={`https://www.youtube.com/embed/${data.linkOfVideo}`}
 							width="100%"
-							height="500px"
-						/>
+							height="480px"
+							allowFullScreen
+						></iframe>
 					</div>
 				) : (
 					<p>No video available.</p>

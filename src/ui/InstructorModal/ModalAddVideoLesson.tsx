@@ -8,6 +8,7 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { FC } from 'react';
 import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
+import { useParams } from 'react-router-dom';
 
 const style = {
 	position: 'absolute',
@@ -31,16 +32,18 @@ interface VideoProps {
 interface LessonVideoProps {
 	open: boolean;
 	handleCloseVideo: () => void;
-	lessonId: number;
+	// lessonId: number;
 }
 
 const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	open,
-	handleCloseVideo,
-	lessonId
+	handleCloseVideo
+	// lessonId
 }) => {
 	const { control, handleSubmit, reset } = useForm<VideoProps>();
 	const [postVideoLesson] = usePostVideoLessonMutation();
+
+	const { lessonId } = useParams();
 
 	const extractVideoId = (url: string): string => {
 		if (url.includes('youtube.com/watch?v=')) {
@@ -65,12 +68,9 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 				};
 
 				await postVideoLesson({ postData, lessonId });
-				console.log(lessonId);
-				
+
 				reset();
 				handleCloseVideo();
-			} else {
-				console.error('Invalid YouTube URL');
 			}
 		}
 	};

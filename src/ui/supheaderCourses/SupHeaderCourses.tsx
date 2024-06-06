@@ -132,10 +132,10 @@ const SupHeaderCourses = () => {
 			{pathname.startsWith('/courses') && (
 				<>
 					<div className={scss.courses_admin} onClick={handleClick}>
-						<img className={scss.bell} src={profile} alt="bell" />
+						<img className={scss.bell} src={bell} alt="bell" />
 						<img className={scss.profile} src={profile} alt="Profile" />
-						<p>Студент</p>
-						<IconChevronDown stroke={2} />
+						<p style={{ cursor: 'pointer' }}>Студент</p>
+						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
 					</div>
 					<Menu
 						id="basic-menu"

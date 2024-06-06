@@ -14,7 +14,7 @@ const api = index.injectEndpoints({
 			LESSON.GetLessonssRequest
 		>({
 			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/766410211a1543e59fb92144240751ef/lesson',
+				url: '',
 				method: 'GET'
 			}),
 			providesTags: ['lesson']
@@ -23,3 +23,4 @@ const api = index.injectEndpoints({
 });
 
 export const { useGetCardQuery, useGetLessonQuery } = api;
+// https://api-v2.elchocrud.pro/api/v1/766410211a1543e59fb92144240751ef/lesson

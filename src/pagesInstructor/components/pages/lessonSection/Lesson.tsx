@@ -1,4 +1,4 @@
-import {  Tab, Tabs } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import scss from './Lesson.module.scss';
 import { useState } from 'react';
 import {
@@ -52,8 +52,8 @@ const Lesson = () => {
 				style={{
 					background: '#fff',
 					borderRadius: '10px',
-					width: '100%',
-					overflowY: 'scroll'
+					width: '100%'
+					// overflowY: 'scroll'
 				}}
 			>
 				<div
@@ -64,12 +64,13 @@ const Lesson = () => {
 				>
 					<div className={scss.container}>
 						<div className={scss.content}>
-							<ScrollArea type="always" scrollbars='x' offsetScrollbars classNames={scss}>
+							<ScrollArea type="always" scrollbars="xy">
 								<Box>
 									<Tabs
 										value={value}
 										onChange={handleChange}
 										aria-label="basic tabs example"
+										className={scss.tabs}
 									>
 										<Tab
 											icon={<IconBrandYoutubeKids stroke={2} />}
