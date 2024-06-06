@@ -80,7 +80,7 @@ const LessonsList = () => {
 													);
 												}, 1000);
 											}}
-											key={item._id}
+											key={item.id}
 										>
 											<a href="#" className={scss.link}>
 												<span className={scss.card_item}>№ {item.title}</span>

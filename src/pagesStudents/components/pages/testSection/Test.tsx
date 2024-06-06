@@ -5,7 +5,7 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { useGetStudentTestsQuery } from '@/src/redux/api/students/test';
 
 const Test = () => {
-	const { courseId, lessonId, testId } = useParams();
+	const { coursesId, lessonId, testId } = useParams();
 	// console.log(courseId, lessonId);
 	const { data } = useGetStudentTestsQuery(lessonId);
 	console.log(data);
@@ -31,14 +31,15 @@ const Test = () => {
 							<ButtonSave
 								type={'button'}
 								width={''}
-								children={'Начать тест'}
 								disabled={false}
 								onClick={() =>
 									navigate(
-										`/courses/${courseId}/materials/${lessonId}/${testId}/showTest`
+										`/courses/${coursesId}/materials/${lessonId}/${question.testId}/showTest`
 									)
 								}
-							></ButtonSave>
+							>
+								Начать тест
+							</ButtonSave>
 						</div>
 					</div>
 				))}

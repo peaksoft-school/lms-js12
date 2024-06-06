@@ -14,6 +14,7 @@ import GetTest from '../pages/getTestSection/GetTest';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import GetOneTask from '../pages/getOneTask/GetOneTask';
+import ResultTest from '../pages/resultTest/ResultTest';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -102,12 +103,16 @@ const LayoutStudents = () => {
 							element={<LessonsStudentPage />}
 						/>
 						<Route
-							path="/courses/:coursesId/materials/:lessonId/:testId"
+							path="/courses/:coursesId/materials/:lessonId/test"
 							element={<LessonsStudentPage />}
 						/>
 						<Route
 							path="/courses/:coursesId/materials/:lessonId/:testId/showTest"
 							element={<GetTest />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:lessonId/:testId/resultTest"
+							element={<ResultTest />}
 						/>
 						<Route path="/courses/:coursesId/rating" element={<RatingPage />} />
 					</Routes>

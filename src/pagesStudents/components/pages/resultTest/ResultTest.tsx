@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import scss from './GetTest.module.scss';
+import scss from './ResultTest.module.scss';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetQuestionListTestsQuery } from '@/src/redux/api/students/test';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-function GetTest() {
-	const { coursesId, lessonId, testId } = useParams();
-
+function ResultTest() {
+	const { testId } = useParams();
+	console.log(testId);
 	const { data } = useGetQuestionListTestsQuery(testId);
-	const navigate = useNavigate();
 
 	const [questions, setQuestions] = useState([
 		{
@@ -116,15 +115,12 @@ function GetTest() {
 							<ButtonSave
 								type={'button'}
 								width={'92px'}
+								children={'Отправить'}
 								disabled={false}
-								onClick={() =>
-									navigate(
-										`/courses/${lessonId}/materials/${lessonId}/${testId}/resultTest`
-									)
-								}
-							>
-								Отправить
-							</ButtonSave>
+								onClick={() => {
+									console.log('Отправить');
+								}}
+							></ButtonSave>
 						</div>
 					</div>
 				</Box>
@@ -133,4 +129,4 @@ function GetTest() {
 	);
 }
 
-export default GetTest;
+export default ResultTest;

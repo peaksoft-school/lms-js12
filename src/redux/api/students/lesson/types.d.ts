@@ -5,7 +5,7 @@ namespace STUDENTLESSONMATERIALS {
 		title: string;
 		createdAt: string;
 		lessonId: number;
-	};
+	}[];
 	type MaterialsWorkGetRequest = void;
 
 	type MaterialsHomeWorkGetResponse = {
