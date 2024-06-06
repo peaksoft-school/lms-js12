@@ -47,14 +47,11 @@ const TestInstructor = () => {
 	};
 
 	const handleEdit = () => {
-		if (selectedQuestion) {
-			console.log('Редактировать', selectedQuestion);
-		}
-		handleClose();
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/editTest`);
 	};
 
 	const OpenCreateTest = () => {
-		navigate(`/instructor/course/${courseId}/materials/${lessonId}/createTask`);
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/createTest`);
 	};
 
 	const truncateText = (text, maxLength) => {

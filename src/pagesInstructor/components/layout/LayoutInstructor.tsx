@@ -21,13 +21,13 @@ import EditTask from '../pages/editTaskSection/EditTask';
 import GetTask from '../pages/getTaskSection/GetTask';
 import Answer from '../pages/answerSection/Answer';
 
-
 import RatingStudentsPage from '../pages/RatingStudentsPage';
 // import { Breadcrumbs } from '@mui/material';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import CreateTest from '../pages/createTestSection/CreateTest';
 import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
+import EditTest from '../pages/editTest/EditTest';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -240,8 +240,12 @@ const LayoutInstructor = () => {
 							element={<GetTestInstructor />}
 						/>
 						<Route
-							path="/course/:courseId/materials/:lessonId/createTask"
+							path="/course/:courseId/materials/:lessonId/createTest"
 							element={<CreateTest />}
+						/>
+						<Route
+							path="/course/:courseId/materials/:lessonId/editTest"
+							element={<EditTest />}
 						/>
 					</Routes>
 				</main>

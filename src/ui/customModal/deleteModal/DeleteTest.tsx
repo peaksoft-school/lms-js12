@@ -19,7 +19,7 @@ const DeleteTest: FC<DeleteProps> = ({
 	closeModalDelete,
 	deleteById
 }) => {
-	const [deleteTest] = useDeleteTestMutation();
+	// const [deleteTest] = useDeleteTestMutation();
 
 	const handleDelete = async () => {
 		if (deleteById !== null) {
