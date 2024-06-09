@@ -114,13 +114,13 @@ const SupHeader = () => {
 							}}
 						>
 							<Tabs
-							className={scss.tabs}
+								className={scss.tabs}
 								value={value}
 								onChange={handleChange}
 								aria-label="basic tabs example"
 							>
 								<Tab onClick={openTeacher} label="Учителя" {...a11yProps(0)} />
-								<Tab  onClick={openStudent} label="Студенты" {...a11yProps(1)} />
+								<Tab onClick={openStudent} label="Студенты" {...a11yProps(1)} />
 							</Tabs>
 						</Box>
 					</Box>

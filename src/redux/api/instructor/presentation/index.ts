@@ -18,7 +18,7 @@ const api = index.injectEndpoints({
 		>({
 			query: (saveId) => ({
 				url: `/api/presentation/${saveId}`,
-				method: 'GET'				
+				method: 'GET'
 			}),
 			providesTags: ['presentation']
 		}),

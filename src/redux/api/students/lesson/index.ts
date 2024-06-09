@@ -28,11 +28,3 @@ export const {
 	useGetStudentMaterialsWorkQuery,
 	useGetStudentMaterialsHomeWorkQuery
 } = api;
-
-
-
-
-
-
-
-
