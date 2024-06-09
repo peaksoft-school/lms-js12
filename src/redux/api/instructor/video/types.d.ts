@@ -7,7 +7,7 @@ namespace VIDEO_LESSON {
 		linkOfVideo: string;
 	}[];
 
-	type VideoLessonGetRequest = void;
+	type VideoLessonGetRequest = number;
 
 	type VideoIDGetResponse = {
 		id: number;
@@ -16,7 +16,7 @@ namespace VIDEO_LESSON {
 		linkOfVideo: string;
 	};
 
-	type VideoIDGetRequest = void;
+	type VideoIDGetRequest = number;
 
 	type VideoLessonPostResponse = {
 		titleOfVideo: string;
@@ -25,7 +25,7 @@ namespace VIDEO_LESSON {
 	};
 
 	type VideoLessonPostRequest = {
-		lessonId: number | null;
+		lessonId: number;
 		postData: {
 			titleOfVideo: string;
 			description: string;
@@ -42,7 +42,7 @@ namespace VIDEO_LESSON {
 	};
 
 	type VideoLessonPatchRequest = {
-		saveIdElement: number | null;
+		saveIdElement: number;
 		newVideoLesson: {
 			titleOfVideo: string;
 			description: string;
@@ -51,5 +51,5 @@ namespace VIDEO_LESSON {
 	};
 
 	type VideoLessonDeleteResponse = void;
-	type VideoLessonDeleteRequest = number | null;
+	type VideoLessonDeleteRequest = number;
 }

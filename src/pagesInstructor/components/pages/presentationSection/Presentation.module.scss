@@ -20,12 +20,21 @@
 					flex-direction: column;
 				}
 
-				.img {
+				.photo {
 					width: 100%;
-					max-width: 300px;
+					max-width: 320px;
 					position: relative;
 					display: flex;
 					align-items: center;
+
+					.iframe {
+						width: 100%;
+						max-width: 300px;
+						height: 100%;
+						max-height: 220px;
+						border-radius: 8px;
+						transition: 0.3s;
+					}
 
 					.button_watch {
 						position: absolute;

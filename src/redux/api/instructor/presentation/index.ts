@@ -3,8 +3,8 @@ import { api as index } from '../..';
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getPresentation: builder.query<
-			MATERIALS.getResponsePresentation,
-			MATERIALS.getRequestPresentation
+			PRESENTATION.getResponsePresentation,
+			PRESENTATION.getRequestPresentation
 		>({
 			query: (lessonId) => ({
 				url: `/api/presentation/All/${lessonId}`,
@@ -12,26 +12,24 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['presentation']
 		}),
-		// !
 		getFile: builder.query<
-			MATERIALS.getResponsePresentation,
-			MATERIALS.getRequestPresentation
+			PRESENTATION.getResponsePresentation,
+			PRESENTATION.getRequestPresentation
 		>({
 			query: (saveId) => ({
 				url: `/api/presentation/${saveId}`,
-				method: 'GET'
+				method: 'GET'				
 			}),
 			providesTags: ['presentation']
 		}),
-		// !
 		postPresentation: builder.mutation<
-			MATERIALS.CreateResponsePresentation,
-			MATERIALS.CreateRequestPresentation
+			PRESENTATION.CreateResponsePresentation,
+			PRESENTATION.CreateRequestPresentation
 		>({
-			query: ({ newPresentation, lessonId }) => ({
+			query: ({ presentationData, lessonId }) => ({
 				url: `/api/presentation/${lessonId}`,
 				method: 'POST',
-				body: newPresentation
+				body: presentationData
 			}),
 			invalidatesTags: ['presentation']
 		}),
@@ -43,20 +41,17 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['presentation']
 		}),
 		editPresentation: builder.mutation({
-			query: ({ newPresentation, saveIdElement }) => (
-				{
-				url: `/api/presentation/${saveIdElement}`,
+			query: ({ newPresentation, presentationId }) => ({
+				url: `/api/presentation/${presentationId}`,
 				method: 'PATCH',
 				body: newPresentation
-			}
-		),
+			}),
 			invalidatesTags: ['presentation']
 		}),
 		createPresentationFile: builder.mutation({
 			query: (fileObj) => ({
 				url: '/file',
 				method: 'POST',
-				// headers: { 'Content-Type': 'multipart/form-data' },
 				body: fileObj,
 				responseHandler: 'text',
 				headers: {

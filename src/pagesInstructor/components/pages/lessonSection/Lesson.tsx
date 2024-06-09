@@ -53,7 +53,6 @@ const Lesson = () => {
 					background: '#fff',
 					borderRadius: '10px',
 					width: '100%'
-					// overflowY: 'scroll'
 				}}
 			>
 				<div

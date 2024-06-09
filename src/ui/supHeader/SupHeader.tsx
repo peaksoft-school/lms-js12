@@ -114,6 +114,7 @@ const SupHeader = () => {
 							}}
 						>
 							<Tabs
+							className={scss.tabs}
 								value={value}
 								onChange={handleChange}
 								aria-label="basic tabs example"

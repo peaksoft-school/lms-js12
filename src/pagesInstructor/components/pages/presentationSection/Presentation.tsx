@@ -16,7 +16,8 @@ const Presentation = () => {
 	const [open1, setOpen1] = useState<boolean>(false);
 	const [openEdit, setOpenEdit] = useState<boolean>(false);
 	const { lessonId } = useParams();
-	const { data } = useGetPresentationQuery(lessonId);
+	const test = Number(lessonId);
+	const { data } = useGetPresentationQuery(test);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openDelete, setOpenDelete] = useState<boolean>(false);
 	const [saveIdElement, setSaveIdElement] = useState<null | number>(null);
@@ -51,9 +52,8 @@ const Presentation = () => {
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
 	};
-	const handleOpenEdit = (id: number) => {
+	const handleOpenEdit = () => {
 		setOpenEdit(true);
-		setSaveIdElement(id);
 	};
 	const openDeleteFunc = () => {
 		setOpenDelete(true);
@@ -87,8 +87,10 @@ const Presentation = () => {
 				{data?.map((item) => (
 					<div key={item.id} className={scss.content}>
 						<div className={scss.cards}>
-							<div className={scss.img}>
+							<div className={scss.photo}>
 								<iframe
+									style={{ height: '200px' }}
+									className={scss.iframe}
 									src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.file}`}
 									frameBorder="0"
 								></iframe>
@@ -119,7 +121,7 @@ const Presentation = () => {
 									<div onClick={handleClick}>
 										<button
 											onClick={() => {
-												setSaveIdElement(item.id); 
+												setSaveIdElement(item.id);
 											}}
 											className={scss.button}
 											aria-controls={open ? 'basic-menu' : undefined}
@@ -148,8 +150,7 @@ const Presentation = () => {
 										<MenuItem
 											style={{ display: 'flex', gap: '10px' }}
 											onClick={() => {
-												setSaveIdElement(item.id);
-												handleOpenEdit(item.id);
+												handleOpenEdit();
 												handleCloseDrop();
 											}}
 										>
@@ -159,7 +160,6 @@ const Presentation = () => {
 										<MenuItem
 											style={{ display: 'flex', gap: '10px' }}
 											onClick={() => {
-												setSaveIdElement(item.id);
 												openDeleteFunc();
 												handleCloseDrop();
 											}}
@@ -178,7 +178,7 @@ const Presentation = () => {
 			<EditPresentation
 				open={openEdit}
 				handleClose={handleCloseEdit}
-				saveIdElement={saveIdElement}
+				presentationId={saveIdElement}
 			/>
 			<DeletePresentation
 				openModalDelete={openDelete}

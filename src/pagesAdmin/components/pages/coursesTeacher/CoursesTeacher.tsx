@@ -38,15 +38,12 @@ const CoursesTeacher = () => {
 		role: 'INSTRUCTOR'
 	};
 
-	console.log(pages);
-
 	const { data, isLoading } = useGetAllInstructorCourseQuery({
 		courseId,
 		pages
 	});
 
 	const [openPart, setOpenPart] = useState(1);
-
 	const [openAddTeacher, setOpenAddTeacher] = useState(false);
 
 	const handleOpenAppoint = () => {
@@ -165,7 +162,6 @@ const CoursesTeacher = () => {
 															<td>
 																{index + 1 + (currentPage - 1) * rowsPerPage}
 															</td>
-
 															<td className={scss.TableCell}>
 																{item.fullName}
 															</td>
@@ -199,7 +195,6 @@ const CoursesTeacher = () => {
 													))}
 											</tbody>
 										</table>
-
 										<ModalEditTeacher
 											openModalEdit={openModalEdit}
 											closeModalEdit={() => setOpenModalEdit(false)}
