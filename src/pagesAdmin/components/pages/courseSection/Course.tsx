@@ -75,7 +75,6 @@ const Courses: FC = () => {
 							<span>Создать курс</span>
 						</Button>
 					</div>
-
 					<h1 className={scss.title}>Курсы</h1>
 					<ScrollArea
 						type="always"
@@ -248,7 +247,6 @@ const Courses: FC = () => {
 					</div>
 				</div>
 			</div>
-
 			<CreateCourse
 				handleOpenCourse={handleOpenCourse}
 				open={openCurse}
