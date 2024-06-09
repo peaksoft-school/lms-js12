@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useRef, useState } from 'react';
 import scss from './Styled.module.scss';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
@@ -7,7 +8,10 @@ import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import { usePostPresentationMutation } from '@/src/redux/api/instructor/presentation';
+import {
+	useCreatePresentationFileMutation,
+	usePostPresentationMutation
+} from '@/src/redux/api/instructor/presentation';
 import { useParams } from 'react-router-dom';
 
 const style = {
@@ -41,39 +45,48 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	const { control, handleSubmit, reset } = useForm<PostModalAddPresentation>();
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-
-	const { lessonId } = useParams<{ lessonId: string }>();
-
+	const [createPresentationFile] = useCreatePresentationFileMutation();
+	const { lessonId } = useParams();
 	const [postPresentation] = usePostPresentationMutation();
 
 	const onSubmit: SubmitHandler<PostModalAddPresentation> = async (data) => {
-		const { title, description, file } = data;
+		const { title, description } = data;
 
-		if (title && description && file) {
+		if (title !== '' && description !== '' && selectedFile !== null) {
+			const presentationData = {
+				title,
+				description,
+				file: selectedFile
+			};
+
+			try {
+				await postPresentation({ lessonId, presentationData }).unwrap();
+				reset();
+				handleClose();
+			} catch (error) {
+				console.error('Failed to upload presentation:', error);
+			}
+		}
+	};
+
+	const handleFileSelect = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const files = event.target.files;
+		if (files && files[0]) {
+			const file = files[0];
 			const formData = new FormData();
-			formData.append('title', title);
-			formData.append('description', description);
 			formData.append('file', file);
+			try {
+				const response: any = await createPresentationFile(formData as any);
+				const test = JSON.parse(response.data);
 
-			await postPresentation({ lessonId, formData });
-			reset();
+				setSelectedFile(test.fileName as any);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			}
 		}
 	};
-
-	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0] || null;
-		if (
-			file &&
-			(file.type === 'application/vnd.ms-powerpoint' ||
-				file.type ===
-					'application/vnd.openxmlformats-officedocument.presentationml.presentation')
-		) {
-			setSelectedFile(file);
-		} else {
-			setSelectedFile(null);
-		}
-	};
-
 	const openFilePicker = () => {
 		fileInputRef.current?.click();
 	};
@@ -95,7 +108,6 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 					>
 						<p className={scss.com_text}>Добавить презентацию</p>
 					</Typography>
-
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
@@ -113,7 +125,6 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 									/>
 								)}
 							/>
-
 							<Controller
 								name="description"
 								control={control}
@@ -130,18 +141,17 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 								)}
 							/>
 						</div>
-
 						<div className={scss.button_review}>
 							<Controller
 								name="file"
 								control={control}
 								defaultValue={null}
-								rules={{ required: 'Выберите файл в формате ppt' }}
+								rules={{ required: 'Выберите файл в формате PDF' }}
 								render={({ field }) => (
 									<div className={scss.review}>
 										<input
 											type="file"
-											accept=".ppt, .pptx"
+											accept=".pdf"
 											onChange={(e) => {
 												handleFileSelect(e);
 												field.onChange(e.target.files?.[0] || null);
@@ -151,11 +161,12 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 										/>
 										<input
 											type="text"
-											value={selectedFile ? selectedFile.name : ''}
+											value={(selectedFile as string | null) || ''}
 											readOnly
-											placeholder="Выберите файл в формате ppt"
+											placeholder="Выберите файл в формате только PDF"
 											className={scss.input}
 										/>
+
 										<ButtonCancel
 											type="button"
 											disabled={false}

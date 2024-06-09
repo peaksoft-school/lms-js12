@@ -14,14 +14,14 @@ import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 
 const VideoLesson = () => {
 	const { lessonId } = useParams();
-	const { data, isLoading } = useGetVideoLessonQuery(lessonId);
+	const test = Number(lessonId);
+	const { data, isLoading } = useGetVideoLessonQuery(test);
 	const [openEditVideo, setOpenEditVideo] = useState(false);
 	const [openWatch, setWatchOpen] = useState(false);
 	const [openAdd, setOpenAdd] = useState(false);
-	const [saveId, setSaveId] = useState<null | number>(null);
+	const [saveId, setSaveId] = useState<number | null>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
 	const [openVideoId, setOpenVideoId] = useState<null | number>(null);
 
 	const open = Boolean(anchorEl);
@@ -176,7 +176,7 @@ const VideoLesson = () => {
 			</div>
 			<ModalAddVideoLesson open={openAdd} handleCloseVideo={handleCloseVideo} />
 			<ModalWatchVideo
-				saveId={openVideoId}
+				saveId={openVideoId!}
 				open={openWatch}
 				handleClose={handleCloseWatch}
 			/>

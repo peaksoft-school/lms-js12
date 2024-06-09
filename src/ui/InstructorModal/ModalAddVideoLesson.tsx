@@ -32,13 +32,11 @@ interface VideoProps {
 interface LessonVideoProps {
 	open: boolean;
 	handleCloseVideo: () => void;
-	// lessonId: number;
 }
 
 const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	open,
 	handleCloseVideo
-	// lessonId
 }) => {
 	const { control, handleSubmit, reset } = useForm<VideoProps>();
 	const [postVideoLesson] = usePostVideoLessonMutation();
@@ -66,9 +64,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 					description: description,
 					linkOfVideo: videoId
 				};
-
 				await postVideoLesson({ postData, lessonId });
-
 				reset();
 				handleCloseVideo();
 			}
@@ -109,7 +105,6 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 									/>
 								)}
 							/>
-
 							<Controller
 								name="description"
 								control={control}
@@ -125,7 +120,6 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 									/>
 								)}
 							/>
-
 							<Controller
 								name="linkOfVideo"
 								control={control}
@@ -142,7 +136,6 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 								)}
 							/>
 						</div>
-
 						<div
 							style={{
 								width: '100%',
