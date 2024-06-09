@@ -23,34 +23,27 @@ namespace TEST {
 		option: string;
 		isTrue: boolean;
 	};
-	type Test = {
+	interface getTestInsideResponse {
 		testId: number;
 		title: string;
 		hour: number;
 		minute: number;
-	};
+		questionResponseList: QuestionResponseList[];
+	}
 
-	type getTestInsideResponse = {
-		testId: number;
+	interface QuestionResponseList {
+		questionId: number;
 		title: string;
-		hour: number;
-		minute: number;
-		questionResponseList: [
-			{
-				questionId: number;
-				title: string;
-				point: number;
-				questionType: string;
-				optionResponses: [
-					{
-						optionId: number;
-						option: string;
-						isTrue: boolean;
-					}
-				];
-			}
-		];
-	}[];
+		point: number;
+		questionType: string;
+		optionResponses: OptionResponse[];
+	}
+
+	interface OptionResponse {
+		optionId: number;
+		option: string;
+		isTrue: boolean;
+	}
 
 	type getTestInsideRequest = void;
 

@@ -14,7 +14,7 @@ const api = index.injectEndpoints({
 			TEST.getTestInsideRequest
 		>({
 			query: (testId) => ({
-				url: `/api/test/findById/${testId}`,
+				url: `/api/test/findByIdForEdit/${testId}`,
 				method: 'GET'
 			}),
 			providesTags: ['test']
@@ -36,13 +36,23 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['test']
 		}),
-		editPresentation: builder.mutation({
-			query: ({ newPresentation, saveIdElement }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/e4ceabb8449720a434bf0d470eb288cd/prezentation/${saveIdElement}`,
-				method: 'PUT',
+		editTest: builder.mutation({
+			query: ({ newPresentation, testId }) => ({
+				url: `/api/test/update/2`,
+				method: 'PATCH',
 				body: newPresentation
 			}),
 			invalidatesTags: ['test']
+		}),
+		getInsideEditTest: builder.query<
+			TEST.getTestInsideResponse,
+			TEST.getTestInsideRequest
+		>({
+			query: (testId) => ({
+				url: `/api/test/findByIdForEdit/2`,
+				method: 'GET'
+			}),
+			providesTags: ['test']
 		})
 	})
 });
@@ -50,5 +60,7 @@ export const {
 	useGetTestQuery,
 	useGetInsideTestQuery,
 	usePostTestMutation,
-	useDeleteTestMutation
+	useDeleteTestMutation,
+	useGetInsideEditTestQuery,
+	useEditTestMutation
 } = api;

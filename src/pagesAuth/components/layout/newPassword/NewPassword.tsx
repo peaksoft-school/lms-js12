@@ -110,7 +110,7 @@ const NewPassword: FC = () => {
 										)}
 										{/* //! second input */}
 										<InputLabel htmlFor="outlined-adornment-password">
-											<p>Подверждение : </p>
+											<p>Подтверждение: </p>
 										</InputLabel>
 										<Controller
 											name="confirmPassword"

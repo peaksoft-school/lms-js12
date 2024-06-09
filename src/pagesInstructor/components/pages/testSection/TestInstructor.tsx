@@ -23,15 +23,15 @@ interface Question {
 
 const TestInstructor = () => {
 	const navigate = useNavigate();
-	const { courseId, lessonId } = useParams();
+	const { courseId, lessonId, testId } = useParams();
 	const { data } = useGetTestQuery(lessonId);
 	const [deleteTest, setOpenDeleteTest] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
 		null
 	);
-	const open = Boolean(anchorEl);
 	const [saveId, setSaveId] = useState(false);
+	const open = Boolean(anchorEl);
 
 	const handleClick = (
 		event: React.MouseEvent<HTMLButtonElement>,
@@ -47,7 +47,9 @@ const TestInstructor = () => {
 	};
 
 	const handleEdit = () => {
-		navigate(`/instructor/course/${courseId}/materials/${lessonId}/editTest`);
+		navigate(
+			`/instructor/course/${courseId}/materials/${lessonId}/${testId}/editTest`
+		);
 	};
 
 	const OpenCreateTest = () => {
@@ -61,8 +63,11 @@ const TestInstructor = () => {
 		return text.substring(0, maxLength) + '...';
 	};
 	const handleOpenWatch = () => {
-		navigate(`/instructor/course/${courseId}/materials/${lessonId}/showTest`);
+		navigate(
+			`/instructor/course/${courseId}/materials/${lessonId}/${saveId}/showTest`
+		);
 	};
+	console.log(saveId);
 
 	return (
 		<div className={scss.test_container}>
@@ -86,11 +91,14 @@ const TestInstructor = () => {
 							<div className={scss.test_cont}>
 								<div
 									className={scss.test_container_third}
-									onClick={() =>
-										navigate(
-											`/instructor/course/${courseId}/materials/${lessonId}/showTest`
-										)
-									}
+									onClick={() => {
+										setSaveId(question.testId);
+										setTimeout(() => {
+											navigate(
+												`/instructor/course/${courseId}/materials/${lessonId}/${question.testId}/showTest`
+											);
+										}, 500);
+									}}
 								>
 									<div style={{ display: 'flex', gap: '10px' }}>
 										<h4>{question.testId}</h4>
@@ -153,7 +161,10 @@ const TestInstructor = () => {
 				</MenuItem>
 				<MenuItem
 					style={{ display: 'flex', gap: '10px' }}
-					onClick={() => setOpenDeleteTest(true)}
+					onClick={() => {
+						setOpenDeleteTest(true);
+						handleClose();
+					}}
 				>
 					<img src={deleteIcon} alt="Delete" />
 					<p>Удалить</p>
