@@ -1,4 +1,5 @@
-import Materials from './materialsSection/Materials';
+import Materials from "./materialsSection/Materials";
+
 
 const MaterialsPage = () => {
 	return (

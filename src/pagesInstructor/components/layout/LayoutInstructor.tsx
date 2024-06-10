@@ -132,6 +132,10 @@ const LayoutInstructor = () => {
 							element={<LessonPage />}
 						/>
 						<Route
+							path="/course/:courseId/materials/:lessonId/link"
+							element={<LessonPage />}
+						/>
+						<Route
 							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/panding"
 							element={<LessonPage />}
 						/>
@@ -181,10 +185,6 @@ const LayoutInstructor = () => {
 							/>
 							<Route
 								path="/course/:courseId/materials/:lessonId/presentation"
-								element={<LessonPage />}
-							/>
-							<Route
-								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/panding"
 								element={<LessonPage />}
 							/>
 
