@@ -7,15 +7,15 @@ import { green, red } from '@mui/material/colors';
 import { useGetMyResultTestQuery } from '@/src/redux/api/students/answerTest';
 
 function ResultTest() {
-	const { testId } = useParams();
-	const { data } = useGetMyResultTestQuery(testId);
+	const { getTaskId } = useParams();
+	const { data } = useGetMyResultTestQuery(getTaskId);
 	console.log(data, 'data');
 	const [questions, setQuestions] = useState<
 		ANSWERTEST.AnswerQuestionResponse[]
 	>([]);
 
 	useEffect(() => {
-		console.log('testId:', testId);
+		console.log('testId:', getTaskId);
 		console.log('data:', data);
 		if (data) {
 			setQuestions(data.answerQuestionResponses);

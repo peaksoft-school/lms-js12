@@ -7,8 +7,8 @@ export const api = index.injectEndpoints({
 			string
 			// 	ANSWERTEST.GetResultTestRequest,
 		>({
-			query: (testId) => ({
-				url: `/api/answerTest/myResultTest/${testId}`,
+			query: (getTaskId) => ({
+				url: `/api/answerTest/myResultTest/${getTaskId}`,
 				method: 'GET'
 			}),
 			providesTags: ['answerTest']

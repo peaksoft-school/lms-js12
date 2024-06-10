@@ -21,19 +21,20 @@ export const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['test']
+		}),
+		postTest: builder.mutation({
+			query: ({ getTaskId, saveIds }) => ({
+				url: `/api/answerTest/1`,
+				method: 'POST',
+				body: saveIds
+			}),
+			invalidatesTags: ['test']
 		})
-
-		// getMyResultTest: builder.query<
-		// 	STUDENTTEST.GetResultTestResponse,
-		// 	STUDENTTEST.GetResultTestRequest
-		// >({
-		// 	query: (testId) => ({
-		// 		url: `/api/answerTest/myResultTest/${testId}`,
-		// 		method: 'GET'
-		// 	}),
-		// 	providesTags: ['test']
-		// })
 	})
 });
 
-export const { useGetStudentTestsQuery, useGetQuestionListTestsQuery } = api;
+export const {
+	useGetStudentTestsQuery,
+	useGetQuestionListTestsQuery,
+	usePostTestMutation
+} = api;
