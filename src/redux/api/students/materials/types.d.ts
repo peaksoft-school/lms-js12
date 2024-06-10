@@ -46,5 +46,5 @@ namespace MATERIALS {
 			url: string;
 		}[];
 	};
-	type getRequestLinkStudents = void;
+	type getRequestLinkStudents = number;
 }

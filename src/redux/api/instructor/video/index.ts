@@ -1,4 +1,3 @@
-// import { identity } from 'node_modules/@mantine/core/lib/core/factory/factory';
 import { api as index } from '../..';
 
 const api = index.injectEndpoints({
@@ -13,26 +12,36 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['videoLesson']
 		}),
+		// !
+		getIdVideoLesson: builder.query<
+			VIDEO_LESSON.VideoIDGetResponse,
+			VIDEO_LESSON.VideoIDGetRequest
+		>({
+			query: (saveId) => ({
+				url: `/api/videos/ById/${saveId}`,
+				method: 'GET'
+			}),
+			providesTags: ['videoLesson']
+		}),
+		// !
 		postVideoLesson: builder.mutation<
 			VIDEO_LESSON.VideoLessonPostResponse,
 			VIDEO_LESSON.VideoLessonPostRequest
 		>({
-			query: ({ postData, id }) => ({
-				url: `/api/videos/save/${id}`,
+			query: ({ postData, lessonId }) => ({
+				url: `/api/videos/${lessonId}`,
 				method: 'POST',
 				body: postData
 			}),
 			invalidatesTags: ['videoLesson']
 		}),
-		// /api/videos/save/${id}`
-		// /api/videos/${lessonId}
 		patchVideoLesson: builder.mutation<
 			VIDEO_LESSON.VideoLessonPatchResponse,
 			VIDEO_LESSON.VideoLessonPatchRequest
 		>({
-			query: ({ newVideoLesson, deleteById }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/43dfa948f2c259145e952f54b5fc3d20/q/${deleteById}`,
-				method: 'PATCH',
+			query: ({ newVideoLesson, saveIdElement }) => ({
+				url: `/api/videos/${saveIdElement}`,
+				method: 'PUT',
 				body: newVideoLesson
 			}),
 			invalidatesTags: ['videoLesson']
@@ -42,7 +51,7 @@ const api = index.injectEndpoints({
 			VIDEO_LESSON.VideoLessonDeleteRequest
 		>({
 			query: (deleteId) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/43dfa948f2c259145e952f54b5fc3d20/q/${deleteId}`,
+				url: `/api/videos/${deleteId}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['videoLesson']
@@ -54,5 +63,6 @@ export const {
 	useGetVideoLessonQuery,
 	usePostVideoLessonMutation,
 	usePatchVideoLessonMutation,
-	useDeleteVideoLessonMutation
+	useDeleteVideoLessonMutation,
+	useGetIdVideoLessonQuery
 } = api;

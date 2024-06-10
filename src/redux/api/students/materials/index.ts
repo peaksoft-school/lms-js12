@@ -16,8 +16,8 @@ const api = index.injectEndpoints({
 			MATERIALS.getResponseLinkStudents,
 			MATERIALS.getRequestLinkStudents
 		>({
-			query: (lessonId) => ({
-				url: `/api/links/findAll/${lessonId}`,
+			query: (lesson) => ({
+				url: `/api/links/findAll/${lesson}`,
 				method: 'GET'
 			}),
 			providesTags: ['link']

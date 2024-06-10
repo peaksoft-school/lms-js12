@@ -4,7 +4,8 @@ import { useGetLinkStudentsQuery } from '@/src/redux/api/students/materials';
 
 const Link = () => {
 	const { lessonId } = useParams();
-	const { data,  isLoading } = useGetLinkStudentsQuery(lessonId);
+	const lesson = Number(lessonId);
+	const { data, isLoading } = useGetLinkStudentsQuery(lesson);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -13,14 +14,12 @@ const Link = () => {
 	return (
 		<div className={scss.card}>
 			{data?.linkResponses.map((link) => (
-				<div key={link.id} className={scss.content}>
-					<div className={scss.cards}>
-						<div className={scss.title}>
-							<div className={scss.text}>
-								<a href={link.url} target="_blank" rel="noopener noreferrer">
-									{link.title}
-								</a>
-							</div>
+				<div className={scss.cards}>
+					<div className={scss.title}>
+						<div className={scss.text}>
+							<a href={link.url} target="_blank" rel="noopener noreferrer">
+								{link.title}
+							</a>
 						</div>
 					</div>
 				</div>

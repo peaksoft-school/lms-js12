@@ -1,11 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FC, useRef, useState, useEffect } from 'react';
 import scss from './Styled.module.scss';
-import { FC, useEffect, useRef, useState } from 'react';
-import {
-	useForm,
-	Controller,
-	SubmitHandler,
-	FieldValues
-} from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -13,9 +9,11 @@ import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import {
+	useCreatePresentationFileMutation,
 	useEditPresentationMutation,
 	useGetPresentationQuery
 } from '@/src/redux/api/instructor/presentation';
+import { useParams } from 'react-router-dom';
 
 const style = {
 	position: 'absolute',
@@ -23,57 +21,96 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
-	height: 368,
+	height: 357,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
 };
 
-interface PresentationProps1 {
+interface EditPresentationProps {
 	open: boolean;
 	handleClose: () => void;
-	saveIdElement: number | null;
+	presentationId: number | null;
 }
 
-const EditPresentation: FC<PresentationProps1> = ({
+interface EditPresentationForm {
+	title: string;
+	description: string;
+	file: string | null;
+}
+
+const EditPresentation: FC<EditPresentationProps> = ({
 	open,
 	handleClose,
-	saveIdElement
+	presentationId
 }) => {
-	const { control, handleSubmit, reset } = useForm();
-	const { data } = useGetPresentationQuery();
+	const { control, handleSubmit, reset } = useForm<EditPresentationForm>();
+	const [selectedFile, setSelectedFile] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const { lessonId } = useParams();
+	const test = Number(lessonId);
+	const { data } = useGetPresentationQuery(test);
 	const [editPresentation] = useEditPresentationMutation();
+	const [createPresentationFile] = useCreatePresentationFileMutation();
+	console.log(presentationId, lessonId);
 
+	const onSubmit: SubmitHandler<EditPresentationForm> = async (formData) => {
+		if (presentationId !== null) {
+			const presentationData = {
+				title: formData.title,
+				description: formData.description,
+				file: selectedFile
+			};
+			try {
+				const response = await editPresentation({
+					newPresentation: presentationData,
+					presentationId
+				}).unwrap();
+
+				console.log('Response from server:', response);
+				reset();
+				handleClose();
+			} catch (error) {
+				console.error('Failed to edit presentation:', error);
+			}
+		}
+	};
+
+	const handleFileSelect = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const files = event.target.files;
+		if (files && files[0]) {
+			const file = files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+			try {
+				const response: any = await createPresentationFile(formData as any);
+				const test = JSON.parse(response.data);
+				setSelectedFile(test.fileName as any);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			}
+		}
+	};
 	const openFilePicker = () => {
 		fileInputRef.current?.click();
 	};
-
-	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0] || null;
-		setSelectedFile(file);
-	};
-
-	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const newPresentation = {
-			title: data.title,
-			presentation: selectedFile,
-			description: data.description
-		};
-		await editPresentation({ newPresentation, saveIdElement });
-		reset();
-	};
-	const finder = data?.find((item) => item._id === saveIdElement);
-
 	useEffect(() => {
-		reset({
-			title: finder?.title,
-			presentation: finder?.presentation,
-			description: finder?.description
-		});
-	}, [finder]);
+		if (data && presentationId !== null) {
+			const finder = data.find((item) => item.id === presentationId);
+			if (finder) {
+				reset({
+					title: finder.title,
+					description: finder.description,
+					file: finder.file
+				});
+				setSelectedFile(finder.file);
+			}
+		}
+	}, [data, presentationId, reset]);
+
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
@@ -91,7 +128,6 @@ const EditPresentation: FC<PresentationProps1> = ({
 					>
 						<p className={scss.com_text}>Редактировать презентацию</p>
 					</Typography>
-
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
@@ -109,7 +145,6 @@ const EditPresentation: FC<PresentationProps1> = ({
 									/>
 								)}
 							/>
-
 							<Controller
 								name="description"
 								control={control}
@@ -126,30 +161,29 @@ const EditPresentation: FC<PresentationProps1> = ({
 								)}
 							/>
 						</div>
-
 						<div className={scss.button_review}>
 							<Controller
-								name="presentation"
+								name="file"
 								control={control}
-								defaultValue=""
-								rules={{ required: 'Выберите файл в формате ppt' }}
+								defaultValue={null}
+								rules={{ required: 'Выберите файл в формате PDF' }}
 								render={({ field }) => (
 									<div className={scss.review}>
 										<input
 											type="file"
-											accept=".ppt, .pptx"
+											accept=".pdf"
 											onChange={(e) => {
 												handleFileSelect(e);
-												field.onChange(e);
+												field.onChange(e.target.files?.[0] || null);
 											}}
 											ref={fileInputRef}
 											style={{ display: 'none' }}
 										/>
 										<input
 											type="text"
-											value={selectedFile ? selectedFile.name : ''}
+											value={selectedFile ? selectedFile : ''}
 											readOnly
-											placeholder="Выберите файл в формате ppt"
+											placeholder="Выберите файл в формате только PDF"
 											className={scss.input}
 										/>
 										<ButtonCancel
@@ -176,7 +210,7 @@ const EditPresentation: FC<PresentationProps1> = ({
 							}}
 						>
 							<ButtonCancel
-								type="submit"
+								type="button"
 								disabled={false}
 								onClick={handleClose}
 								width="117px"
@@ -189,7 +223,7 @@ const EditPresentation: FC<PresentationProps1> = ({
 								width="117px"
 								disabled={false}
 							>
-								Добавить
+								Сохранить
 							</ButtonSave>
 						</div>
 					</Box>
