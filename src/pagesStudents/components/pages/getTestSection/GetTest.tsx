@@ -78,16 +78,19 @@ function GetTest() {
 									<div key={option.optionId} className={scss.option}>
 										<input
 											type={
-												question.optionResponses.some((item) => item.isTrue)
+												question.optionResponses.length === 1
 													? 'checkbox'
 													: 'radio'
 											}
 											onClick={() =>
-												handleOptionChange(question.questionId, option.optionId)
+												handleCheckboxChange(
+													question.questionId,
+													option.optionId
+												)
 											}
+											// Помечаем чекбокс, если его id соответствует выбранному в saveIds
 											checked={saveIds[question.questionId] === option.optionId}
 										/>
-
 										<label>{option.option}</label>
 									</div>
 								))}
