@@ -1,18 +1,30 @@
-import { api as index } from '../../api';
+import { api as index } from '../';
 
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
-		getAnalytics: builder.query<
+		getAnalyticsGroups: builder.query<
 			ANALYTIC.AnalyticsResponse,
 			ANALYTIC.AnalyticsRequest
 		>({
 			query: () => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/analytic',
+				url: '/api/analytics/getAllCoursesCount',
 				method: 'GET'
 			}),
 			providesTags: ['analyticsSections']
-		})
+		}),
+		// getAnalyticsStudents: builder.mutation<
+		// 	ANALYTIC.AnotherDataResponse,
+		// 	ANALYTIC.AnotherDataRequest
+		// >({
+		// 	query: () => ({
+		// 		url: '/api/analytics/getAllStudentsCount',
+		// 		method: 'GET'
+		// 	}),
+		// 	providesTags: ['analyticsSections']
+		// })
 	})
 });
 
-export const { useGetAnalyticsQuery } = api;
+export const { useGetAnalyticsGroupsQuery
+	// ,useGetAnalyticsStudentsQuery 
+} = api;

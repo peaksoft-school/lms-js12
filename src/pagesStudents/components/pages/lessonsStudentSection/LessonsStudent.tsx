@@ -14,8 +14,8 @@ import StudentVideoLessonPage from '../StudentVideoLessonPage';
 import { Box, ScrollArea } from '@mantine/core';
 import StudentPresentationPage from '../StudentPresentationPage';
 import TestSection from '../TestSection';
-import SendOneTask from '../sendOneTask/SendOneTask';
 import Lesson from '../lesson/Lessons';
+import LinkPage from '../LinkPage';
 
 const LessonsStudent = () => {
 	const [value, setValue] = useState(0);
@@ -41,6 +41,9 @@ const LessonsStudent = () => {
 	};
 	const OpenLesson = () => {
 		navigate(`/courses/${coursesId}/materials/${lessonId}/lesson`);
+	};
+	const OpenLink = () => {
+		navigate(`/courses/${coursesId}/materials/${lessonId}/link`);
 	};
 
 	useEffect(() => {
@@ -100,6 +103,7 @@ const LessonsStudent = () => {
 										/>
 										<Tab
 											icon={<IconLink stroke={2} />}
+											onClick={OpenLink}
 											label="Ссылка"
 											className={scss.tab}
 											id="simple-tab-3"
@@ -139,6 +143,14 @@ const LessonsStudent = () => {
 								<>
 									<p>
 										<Lesson />
+									</p>
+								</>
+							)}
+							{pathname ===
+								`/courses/${coursesId}/materials/${lessonId}/link` && (
+								<>
+									<p>
+										<LinkPage />
 									</p>
 								</>
 							)}
