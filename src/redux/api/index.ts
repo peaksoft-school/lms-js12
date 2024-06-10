@@ -17,7 +17,9 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryExtended: BaseQueryFn = async (args, api, extraOptions) => {
+	console.log('Args:', args);
 	const result = await baseQuery(args, api, extraOptions);
+	console.log('Result:', result);
 	return result;
 };
 
@@ -43,7 +45,8 @@ export const api = createApi({
 		'exem',
 		'student',
 		'materialslesson',
-		'test'
+		'test',
+		'answerTest'
 	],
 	endpoints: () => ({})
 });

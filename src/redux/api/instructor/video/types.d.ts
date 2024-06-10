@@ -5,26 +5,32 @@ namespace VIDEO_LESSON {
 		titleOfVideo: string;
 		description: string;
 		linkOfVideo: string;
-		createdAt: number;
-	};
-	type VideoLessonGetResponse = {
-		lessonVideoResponses: Lesson[];
-	};
+	}[];
 
 	type VideoLessonGetRequest = void;
+
+	type VideoIDGetResponse = {
+		id: number;
+		titleOfVideo: string;
+		description: string;
+		linkOfVideo: string;
+	};
+
+	type VideoIDGetRequest = void;
 
 	type VideoLessonPostResponse = {
 		titleOfVideo: string;
 		description: string;
 		linkOfVideo: string;
-		createdAt: number;
 	};
 
 	type VideoLessonPostRequest = {
-		titleOfVideo: string;
-		description: string;
-		linkOfVideo: string;
-		createdAt: number;
+		lessonId: number | null;
+		postData: {
+			titleOfVideo: string;
+			description: string;
+			linkOfVideo: string;
+		};
 	};
 
 	type VideoLessonPatchResponse = {
@@ -32,17 +38,15 @@ namespace VIDEO_LESSON {
 			titleOfVideo: string;
 			description: string;
 			linkOfVideo: string;
-			createdAt: number;
 		};
 	};
 
 	type VideoLessonPatchRequest = {
-		deleteById: number | null;
+		saveIdElement: number | null;
 		newVideoLesson: {
 			titleOfVideo: string;
 			description: string;
 			linkOfVideo: string;
-			createdAt: number;
 		};
 	};
 

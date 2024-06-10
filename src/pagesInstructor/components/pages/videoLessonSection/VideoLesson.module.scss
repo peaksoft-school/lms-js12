@@ -21,15 +21,15 @@
 
 				.photo {
 					width: 100%;
-					max-width: 350px;
+					max-width: 300px;
 					position: relative;
 					display: flex;
 					align-items: center;
 					img {
 						width: 100%;
-						max-width: 350px;
+						max-width: 300px;
 						height: 100%;
-						max-height: 220px;
+						max-height: 190px;
 						border-radius: 10px;
 						transition: 0.3s;
 					}
@@ -53,6 +53,7 @@
 						font-weight: 600;
 						font-size: 20px;
 						color: #1d293f;
+						z-index: 0;
 					}
 
 					p {

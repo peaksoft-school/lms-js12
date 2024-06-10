@@ -22,6 +22,17 @@ export const api = index.injectEndpoints({
 			}),
 			providesTags: ['test']
 		})
+
+		// getMyResultTest: builder.query<
+		// 	STUDENTTEST.GetResultTestResponse,
+		// 	STUDENTTEST.GetResultTestRequest
+		// >({
+		// 	query: (testId) => ({
+		// 		url: `/api/answerTest/myResultTest/${testId}`,
+		// 		method: 'GET'
+		// 	}),
+		// 	providesTags: ['test']
+		// })
 	})
 });
 

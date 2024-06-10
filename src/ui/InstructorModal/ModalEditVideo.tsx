@@ -12,11 +12,12 @@ import {
 	useGetVideoLessonQuery,
 	usePatchVideoLessonMutation
 } from '@/src/redux/api/instructor/video';
+import { useParams } from 'react-router-dom';
 
 interface IFormInputs {
-	title: string;
+	titleOfVideo: string;
 	description: string;
-	link: string;
+	linkOfVideo: string;
 }
 
 const style = {
@@ -35,36 +36,39 @@ const style = {
 interface modalProps {
 	openModalEdit: boolean;
 	closeModalEdit: (openModalEdit: boolean) => void;
-	deleteById: number | null;
+	saveIdElement: number | null;
 }
 const ModalEditVideo: React.FC<modalProps> = ({
 	openModalEdit,
 	closeModalEdit,
-	deleteById
+	saveIdElement
 }) => {
 	const { control, handleSubmit, reset } = useForm<IFormInputs>();
 	const [patchVideo] = usePatchVideoLessonMutation();
-	const { data } = useGetVideoLessonQuery();
-	const find = data?.find((id) => id._id === deleteById);
+
+	const { lessonId } = useParams();
+	const { data } = useGetVideoLessonQuery(lessonId);
+
+	const finder = data?.find((item) => item.id === saveIdElement);
 
 	const onSubmit = async (data: IFormInputs) => {
 		const newVideoLesson = {
 			...data
 		};
-		await patchVideo({ newVideoLesson, deleteById });
+		await patchVideo({ newVideoLesson, saveIdElement });
 		closeModalEdit(false);
 	};
 
 	useEffect(() => {
 		reset({
-			title: find?.title,
-			description: find?.description,
-			link: find?.link
+			titleOfVideo: finder?.titleOfVideo,
+			description: finder?.description,
+			linkOfVideo: finder?.linkOfVideo
 		});
-	}, [find]);
+	}, [finder, reset]);
 
 	return (
-		<form onSubmit={close} className={scss.form}>
+		<form onSubmit={handleSubmit(onSubmit)} className={scss.form}>
 			<Modal
 				open={openModalEdit}
 				aria-labelledby="modal-modal-title"
@@ -83,7 +87,7 @@ const ModalEditVideo: React.FC<modalProps> = ({
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="title"
+								name="titleOfVideo"
 								control={control}
 								render={({ field }) => (
 									<Input
@@ -109,7 +113,7 @@ const ModalEditVideo: React.FC<modalProps> = ({
 								)}
 							/>
 							<Controller
-								name="link"
+								name="linkOfVideo"
 								control={control}
 								render={({ field }) => (
 									<Input

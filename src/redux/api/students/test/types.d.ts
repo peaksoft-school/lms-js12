@@ -10,7 +10,7 @@ namespace STUDENTTEST {
 		testResponseForGetAll: TestResponseForGetAll[];
 	};
 	type GetTestsRequest = void;
-
+	// ************************************************
 	type QuestionResponseList = {
 		questionId: number;
 		title: string;
@@ -34,4 +34,28 @@ namespace STUDENTTEST {
 	};
 
 	type GetQuestionTestsRequest = void;
+	// **********************************************
+	// type AnswerQuestionResponse = {
+	// 	questionId: number;
+	// 	questionTitle: string;
+	// 	questionType: string;
+	// 	answerOptionResponses: AnswerOptionResponse[];
+	// 	point: number;
+	// };
+
+	// type AnswerOptionResponse = {
+	// 	optionId: number;
+	// 	option: string;
+	// 	yourChoice: boolean;
+	// 	true: boolean;
+	// };
+
+	// type GetResultTestResponse = {
+	// 	testId: number;
+	// 	testTitle: string;
+	// 	answerQuestionResponses: AnswerQuestionResponse[];
+	// 	totalPoint: number;
+	// };
+
+	// type GetResultTestRequest = void;
 }
