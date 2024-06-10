@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 import { useGetInsideTestQuery } from '@/src/redux/api/instructor/test';
 
 function GetTestInstructor() {
-	const { testId } = useParams();
-	console.log(testId);
-	const { data: test = {} } = useGetInsideTestQuery(testId);
+	const { getTaskId } = useParams();
+
+	const { data: test = {} } = useGetInsideTestQuery(getTaskId);
 
 	const handleCheckboxChange = (questionId, optionId) => {
 		const updatedQuestions = questions.map((question) =>

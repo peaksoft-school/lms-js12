@@ -22,7 +22,6 @@ import {
 	DropResult
 } from '@hello-pangea/dnd';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { Box, ScrollArea } from '@mantine/core';
 
 interface TodoProps {
@@ -307,7 +306,6 @@ const Materials: FC = () => {
 							</Box>
 						</ScrollArea>
 					</div>
-
 					<div className={scss.pagination}>
 						<div className={scss.Inputs}>
 							<p className={scss.text}>Перейти на страницу</p>

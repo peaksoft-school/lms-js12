@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './EditTest.module.scss';
 import { IconCopy } from '@tabler/icons-react';
@@ -11,21 +11,21 @@ import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import {
 	useEditTestMutation,
-	useGetInsideEditTestQuery
+	useGetInsideTestQuery
 } from '@/src/redux/api/instructor/test';
-
 const EditTest = () => {
 	const { control, handleSubmit, reset } = useForm();
-	const [option, setOption] = useState('SINGLE');
+	const { getTaskId } = useParams();
+	const { data } = useGetInsideTestQuery(getTaskId);
+	const [editTest] = useEditTestMutation();
 	const [time, setTime] = useState('00:00');
 	const [inputs, setInputs] = useState([{ id: 1, value: '', visible: true }]);
 	const [copiesData, setCopiesData] = useState([]);
 	const [titleValue, setTitleValue] = useState('');
 	const [pointValue, setPointValue] = useState('');
-	const { lessonId, testId } = useParams();
 	const [checked, setCheked] = useState(false);
-	const { data } = useGetInsideEditTestQuery();
-	const [editTest] = useEditTestMutation();
+	const [isTrue, setIsTrue] = useState(false);
+	const [option, setOption] = useState('SINGLE');
 
 	const handleTimeChange = (event) => setTime(event.target.value);
 	const handleChangeTitleValue = (e) => setTitleValue(e.target.value);
@@ -36,13 +36,44 @@ const EditTest = () => {
 	const handleOptionClick = (selectedOption) => setOption(selectedOption);
 
 	const handleCopy = (copyDataIndex) => {
-		const newCopyData = JSON.parse(JSON.stringify(copiesData[copyDataIndex]));
+		const newCopyData = JSON.parse(JSON.stringify(copiesData[copyDataIndex])); // Deep copy
 		setCopiesData([
 			...copiesData.slice(0, copyDataIndex + 1),
 			newCopyData,
 			...copiesData.slice(copyDataIndex + 1)
 		]);
 	};
+	useEffect(() => {
+		if (data) {
+			setTime(`${data.hour}:${data.minute}`);
+			setInputs(
+				data.questionResponseList.map((question) => ({
+					id: question.optionResponses.length,
+					value: '',
+					visible: true
+				}))
+			);
+			setCopiesData([]);
+			setTitleValue(...data.questionResponseList.map((item) => item.title));
+			setPointValue(...data.questionResponseList.map((item) => item.point));
+			setIsTrue(data.questionResponseList.map(() => false));
+
+			// reset({
+			// 	title: data.title,
+			// 	hour: data.hour,
+			// 	minute: data.minute,
+			// 	point: data.questionResponseList.map((item) => item.point),
+			// 	questionType: data.questionResponseList.map(
+			// 		(item) => item.questionType
+			// 	),
+			// 	optionRequests: data.questionResponseList.map((item) =>
+			// 		item.optionResponses.map((el) => el.option)
+			// 	),
+			// 	titleValue: data.questionResponseList.map((item) => item.title)
+			// });
+			
+		}
+	}, [data]);
 
 	const handleDelete = (copyDataIndex) => {
 		setCopiesData(copiesData.filter((_, index) => index !== copyDataIndex));
@@ -99,7 +130,7 @@ const EditTest = () => {
 		};
 
 		try {
-			const response = await editTest({ newTest, testId });
+			const response = await editTest({ newTest, getTaskId });
 			console.log(response, 'response');
 			reset();
 		} catch (error) {

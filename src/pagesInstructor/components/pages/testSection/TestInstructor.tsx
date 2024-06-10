@@ -48,7 +48,7 @@ const TestInstructor = () => {
 
 	const handleEdit = () => {
 		navigate(
-			`/instructor/course/${courseId}/materials/${lessonId}/${testId}/editTest`
+			`/instructor/course/${courseId}/materials/${lessonId}/${saveId}/editTest`
 		);
 	};
 

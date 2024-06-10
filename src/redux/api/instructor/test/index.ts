@@ -13,8 +13,8 @@ const api = index.injectEndpoints({
 			TEST.getTestInsideResponse,
 			TEST.getTestInsideRequest
 		>({
-			query: (testId) => ({
-				url: `/api/test/findByIdForEdit/${testId}`,
+			query: (getTaskId) => ({
+				url: `/api/test/findByIdForEdit/${getTaskId}`,
 				method: 'GET'
 			}),
 			providesTags: ['test']
@@ -37,22 +37,12 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['test']
 		}),
 		editTest: builder.mutation({
-			query: ({ newPresentation, testId }) => ({
-				url: `/api/test/update/2`,
+			query: ({ newTest, getTaskId }) => ({
+				url: `/api/test/update/${getTaskId}`,
 				method: 'PATCH',
-				body: newPresentation
+				body: newTest
 			}),
 			invalidatesTags: ['test']
-		}),
-		getInsideEditTest: builder.query<
-			TEST.getTestInsideResponse,
-			TEST.getTestInsideRequest
-		>({
-			query: (testId) => ({
-				url: `/api/test/findByIdForEdit/2`,
-				method: 'GET'
-			}),
-			providesTags: ['test']
 		})
 	})
 });
@@ -61,6 +51,5 @@ export const {
 	useGetInsideTestQuery,
 	usePostTestMutation,
 	useDeleteTestMutation,
-	useGetInsideEditTestQuery,
 	useEditTestMutation
 } = api;

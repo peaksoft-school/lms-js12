@@ -236,7 +236,7 @@ const LayoutInstructor = () => {
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:courseId/materials/:lessonId/:testId/showTest"
+							path="/course/:courseId/materials/:lessonId/:getTaskId/showTest"
 							element={<GetTestInstructor />}
 						/>
 						<Route
@@ -244,7 +244,7 @@ const LayoutInstructor = () => {
 							element={<CreateTest />}
 						/>
 						<Route
-							path="/course/:courseId/materials/:lessonId/:testId/editTest"
+							path="/course/:courseId/materials/:lessonId/:getTaskId/editTest"
 							element={<EditTest />}
 						/>
 					</Routes>

@@ -13,7 +13,7 @@ const LessonsList = () => {
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
-	
+
 	const { data } = useGetStudentMaterialsQuery(coursesId);
 
 	const navigate = useNavigate();

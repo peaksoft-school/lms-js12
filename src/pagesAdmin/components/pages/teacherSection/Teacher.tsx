@@ -128,7 +128,6 @@ const Teacher = () => {
 													<th>Специализация</th>
 													<th>Номер телефона</th>
 													<th>E-mail</th>
-													{/* <th>Группа</th> */}
 													<th
 														style={{ textAlign: 'end', paddingRight: '10px' }}
 													>
@@ -155,11 +154,9 @@ const Teacher = () => {
 																<td>
 																	{index + 1 + (currentPage - 1) * rowsPerPage}
 																</td>
-
 																<td className={scss.TableCell}>
 																	{item.fullName}
 																</td>
-
 																<td className={scss.TableCell}>
 																	{item.specialization}
 																</td>
@@ -167,7 +164,6 @@ const Teacher = () => {
 																	{item.phoneNumber}
 																</td>
 																<td className={scss.TableCell}>{item.email}</td>
-																{/* <td className={scss.TableCell}>{item.}</td> */}
 																<td className={scss.TableCellIcon}>
 																	<button
 																		className={scss.button}
@@ -232,7 +228,6 @@ const Teacher = () => {
 														))}
 											</tbody>
 										</table>
-
 										<ModalEditTeacher
 											openModalEdit={openModalEdit}
 											closeModalEdit={() => setOpenModalEdit(false)}

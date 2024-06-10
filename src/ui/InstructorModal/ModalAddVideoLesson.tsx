@@ -8,6 +8,7 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { FC } from 'react';
 import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
+import { useParams } from 'react-router-dom';
 
 const style = {
 	position: 'absolute',
@@ -23,9 +24,9 @@ const style = {
 };
 
 interface VideoProps {
-	link: string;
-	title: string;
+	titleOfVideo: string;
 	description: string;
+	linkOfVideo: string;
 }
 
 interface LessonVideoProps {
@@ -40,17 +41,34 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	const { control, handleSubmit, reset } = useForm<VideoProps>();
 	const [postVideoLesson] = usePostVideoLessonMutation();
 
+	const { lessonId } = useParams();
+
+	const extractVideoId = (url: string): string => {
+		if (url.includes('youtube.com/watch?v=')) {
+			return url.split('v=')[1].split('&')[0];
+		} else if (url.includes('youtu.be/')) {
+			return url.split('youtu.be/')[1].split('?')[0];
+		}
+		return '';
+	};
+
 	const onSubmit: SubmitHandler<VideoProps> = async (data) => {
-		// const { title, description, link } = data;
-		const postData = {
-			titleOfVideo: data.title,
-			description: data.description,
-			linkOfVideo: data.link,
-			createdAt: Date.now()
-		};
-		await postVideoLesson(postData);
-		reset();
-		handleCloseVideo();
+		const { titleOfVideo, description, linkOfVideo } = data;
+
+		if (titleOfVideo !== '' && description !== '' && linkOfVideo !== '') {
+			const videoId = extractVideoId(linkOfVideo);
+
+			if (videoId) {
+				const postData = {
+					titleOfVideo: titleOfVideo,
+					description: description,
+					linkOfVideo: videoId
+				};
+				await postVideoLesson({ postData, lessonId });
+				reset();
+				handleCloseVideo();
+			}
+		}
 	};
 
 	return (
@@ -73,7 +91,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="title"
+								name="titleOfVideo"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Введите название видеоурока' }}
@@ -87,7 +105,6 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 									/>
 								)}
 							/>
-
 							<Controller
 								name="description"
 								control={control}
@@ -103,9 +120,8 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 									/>
 								)}
 							/>
-
 							<Controller
-								name="link"
+								name="linkOfVideo"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'Вставьте ссылку на видеоурок' }}
@@ -120,7 +136,6 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 								)}
 							/>
 						</div>
-
 						<div
 							style={{
 								width: '100%',

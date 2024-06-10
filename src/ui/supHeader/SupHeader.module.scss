@@ -6,6 +6,26 @@
 	align-items: center;
 	width: 100%;
 	height: 80px;
+	cursor: pointer;
+
+	.tabs {
+		:global {
+			.MuiTabs-indicator .css-1aquho2-MuiTabs-indicator {
+				padding-bottom: 100px;
+			}
+
+			.css-jpln7h-MuiTabs-scroller {
+				overflow: inherit !important;
+			}
+			.css-1ujnqem-MuiTabs-root {
+				overflow: inherit !important;
+			}
+			.css-1aquho2-MuiTabs-indicator {
+				position: absolute !important;
+				top: 120% !important;
+			}
+		}
+	}
 }
 
 .header {
@@ -17,6 +37,7 @@
 	background: #eff0f4;
 	padding-inline: 20px;
 	padding-bottom: 20px;
+	cursor: pointer;
 
 	.profile {
 		width: 30px;
@@ -27,19 +48,45 @@
 	.instructor_elements {
 		font-size: 18px;
 		font-weight: 500;
+		cursor: pointer;
 	}
 
 	.instructor_profile {
 		font-size: 18px;
 		font-weight: 500;
+		cursor: pointer;
+	}
+
+	.photo_profile {
+		cursor: pointer;
 	}
 }
 
 .subHeaderCourses2 {
+	cursor: pointer;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	.tabs {
+		:global {
+			.MuiTabs-indicator .css-1aquho2-MuiTabs-indicator {
+				padding-bottom: 100px;
+			}
+
+			.css-jpln7h-MuiTabs-scroller {
+				overflow: inherit !important;
+			}
+			.css-1ujnqem-MuiTabs-root {
+				overflow: inherit !important;
+			}
+			.css-1aquho2-MuiTabs-indicator {
+				position: absolute !important;
+				top: 120% !important;
+			}
+		}
+	}
 }
 
 .header {
@@ -50,6 +97,7 @@
 	top: 0;
 	z-index: 50;
 	background: #eff0f4;
+	cursor: pointer;
 
 	.header_elements {
 		display: flex;
@@ -77,19 +125,19 @@
 		}
 	}
 }
-:global {
-	.MuiTabs-indicator .css-1aquho2-MuiTabs-indicator {
-		padding-bottom: 100px;
-	}
+// :global {
+// 	.MuiTabs-indicator .css-1aquho2-MuiTabs-indicator {
+// 		padding-bottom: 100px;
+// 	}
 
-	.css-jpln7h-MuiTabs-scroller {
-		overflow: inherit !important;
-	}
-	.css-1ujnqem-MuiTabs-root {
-		overflow: inherit !important;
-	}
-	.css-1aquho2-MuiTabs-indicator {
-		position: absolute !important;
-		top: 120% !important;
-	}
-}
+// 	.css-jpln7h-MuiTabs-scroller {
+// 		overflow: inherit !important;
+// 	}
+// 	.css-1ujnqem-MuiTabs-root {
+// 		overflow: inherit !important;
+// 	}
+// 	.css-1aquho2-MuiTabs-indicator {
+// 		position: absolute !important;
+// 		top: 120% !important;
+// 	}
+// }
