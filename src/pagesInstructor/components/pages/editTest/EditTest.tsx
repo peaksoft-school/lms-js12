@@ -18,7 +18,7 @@ const EditTest = () => {
 	const { getTaskId } = useParams();
 	const { data } = useGetInsideTestQuery(getTaskId);
 	const [editTest] = useEditTestMutation();
-	const [time, setTime] = useState('00:00');
+	const [time, setTime] = useState(`${data?.hour}:${data?.minute}`);
 	const [inputs, setInputs] = useState([{ id: 1, value: '', visible: true }]);
 	const [copiesData, setCopiesData] = useState([]);
 	const [titleValue, setTitleValue] = useState('');
@@ -54,9 +54,9 @@ const EditTest = () => {
 				}))
 			);
 			setCopiesData([]);
-			setTitleValue(...data.questionResponseList.map((item) => item.title));
-			setPointValue(...data.questionResponseList.map((item) => item.point));
-			setIsTrue(data.questionResponseList.map(() => false));
+			// setTitleValue(...data.questionResponseList.map((item) => item.title));
+			// setPointValue(...data.questionResponseList.map((item) => item.point));
+			// setIsTrue(data.questionResponseList.map(() => false));
 
 			// reset({
 			// 	title: data.title,
@@ -71,7 +71,6 @@ const EditTest = () => {
 			// 	),
 			// 	titleValue: data.questionResponseList.map((item) => item.title)
 			// });
-			
 		}
 	}, [data]);
 
@@ -189,7 +188,9 @@ const EditTest = () => {
 										size="small"
 										placeholder={`Вариант ${index + 1}`}
 										type="text"
-										value={input.value}
+										value={data?.questionResponseList.map((item) =>
+											item.optionResponses.map((item) => item.option)
+										)}
 										onChange={(e) => {
 											const newInputs = [...inputs];
 											newInputs[index].value = e.target.value;
@@ -236,6 +237,7 @@ const EditTest = () => {
 										placeholder="Введи название теста"
 										size="small"
 										width="100%"
+										value={data?.title}
 									/>
 								)}
 							/>
@@ -264,86 +266,90 @@ const EditTest = () => {
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 					<div className={scss.div_component2}>
 						<div className={scss.input_contain2}>
-							<div className={scss.input_text}>
-								<h2 className={scss.h2_number}>1</h2>
-								<Controller
-									name="titleValue"
-									control={control}
-									render={({ field }) => (
-										<Input
-											type="text"
-											placeholder="Вопрос"
-											width="100%"
-											size="small"
-											{...field}
-											value={titleValue}
-											onChange={handleChangeTitleValue}
+							{data?.questionResponseList.map((item) => (
+								<div>
+									<div className={scss.input_text}>
+										<h2 className={scss.h2_number}>1</h2>
+										<Controller
+											name="titleValue"
+											control={control}
+											render={({ field }) => (
+												<Input
+													type="text"
+													placeholder="Вопрос"
+													width="100%"
+													size="small"
+													{...field}
+													value={item.title}
+													onChange={handleChangeTitleValue}
+												/>
+											)}
 										/>
-									)}
-								/>
-								<Controller
-									name="pointValue"
-									control={control}
-									render={({ field }) => (
-										<Input
-											type="number"
-											placeholder="Введите кол-во баллов"
-											width="100%"
-											size="small"
-											{...field}
-											value={pointValue}
-											onChange={handleChangePointValue}
+										<Controller
+											name="pointValue"
+											control={control}
+											render={({ field }) => (
+												<Input
+													type="number"
+													placeholder="Введите кол-во баллов"
+													width="100%"
+													size="small"
+													{...field}
+													value={item.point}
+													onChange={handleChangePointValue}
+												/>
+											)}
 										/>
-									)}
-								/>
-								<div className={scss.radio_input}>
-									<label style={{ display: 'flex', gap: '5px' }}>
-										<input
-											style={{ cursor: 'pointer' }}
-											type="checkbox"
-											name="option"
-											checked={option === 'SINGLE'}
-											onChange={() => handleOptionClick('SINGLE')}
-										/>
-										Один <span>из списка</span>
-									</label>
-									<label style={{ display: 'flex', gap: '5px' }}>
-										<input
-											style={{ cursor: 'pointer' }}
-											type="checkbox"
-											name="option"
-											checked={option === 'MULTIPLE'}
-											onChange={() => handleOptionClick('MULTIPLE')}
-										/>
-										Несколько <span>из списка</span>
-									</label>
-								</div>
-							</div>
-							<div className={scss.div_text2}>
-								<div className={scss.components}>
-									{renderInputFields(inputs, setInputs, option)}
-									<p className={scss.p_text2}>
-										<a
-											style={{ color: '#258aff' }}
-											href="#"
-											onClick={handleAddInput}
-										>
-											Добавить вариант
-										</a>
-										<div style={{ display: 'flex', gap: '15px' }}>
-											<div
-												className={scss.copy_icon}
-												onClick={() => handleCopy(0)}
-											>
-												<IconCopy />
-											</div>
-											<div className={scss.delete_icon}>
-												<IconDelete />
-											</div>
+										<div className={scss.radio_input}>
+											<label style={{ display: 'flex', gap: '5px' }}>
+												<input
+													style={{ cursor: 'pointer' }}
+													type="checkbox"
+													name="option"
+													checked={option === 'SINGLE'}
+													onChange={() => handleOptionClick('SINGLE')}
+												/>
+												Один <span>из списка</span>
+											</label>
+											<label style={{ display: 'flex', gap: '5px' }}>
+												<input
+													style={{ cursor: 'pointer' }}
+													type="checkbox"
+													name="option"
+													checked={option === 'MULTIPLE'}
+													onChange={() => handleOptionClick('MULTIPLE')}
+												/>
+												Несколько <span>из списка</span>
+											</label>
 										</div>
-									</p>
+									</div>
+									<div className={scss.div_text2}>
+										<div className={scss.components}>
+											{renderInputFields(inputs, setInputs, option)}
+											<p className={scss.p_text2}>
+												<a
+													style={{ color: '#258aff' }}
+													href="#"
+													onClick={handleAddInput}
+												>
+													Добавить вариант
+												</a>
+												<div style={{ display: 'flex', gap: '15px' }}>
+													<div
+														className={scss.copy_icon}
+														onClick={() => handleCopy(0)}
+													>
+														<IconCopy />
+													</div>
+													<div className={scss.delete_icon}>
+														<IconDelete />
+													</div>
+												</div>
+											</p>
+										</div>
+									</div>
 								</div>
-							</div>
+							))}
 						</div>
 					</div>
 					{/* CopiesData */}

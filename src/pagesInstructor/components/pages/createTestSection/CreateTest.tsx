@@ -1,37 +1,69 @@
-import React, { useState } from 'react';
-import Input from '@/src/ui/customInput/Input';
-import scss from './CreateTest.module.scss';
+import { useState } from 'react';
 import { IconCopy } from '@tabler/icons-react';
 import { IconDelete } from '@/src/assets/icons';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import ButtonCircle from '@/src/ui/customButton/ButtonCircle';
 import { Select } from '@mantine/core';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { usePostTestMutation } from '@/src/redux/api/instructor/test';
+import scss from './CreateTest.module.scss';
+import Input from '@/src/ui/customInput/Input';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import ButtonCircle from '@/src/ui/customButton/ButtonCircle';
+
+interface OptionResponse {
+	option: string;
+	isTrue: boolean;
+}
+
+interface QuestionRequest {
+	title: string;
+	point: string;
+	questionType: string;
+	optionRequests: OptionResponse[];
+}
+
+interface TestRequest {
+	title: string;
+	hour: string;
+	minute: string;
+	questionRequests: QuestionRequest[];
+}
+
+interface CopyData {
+	inputValue3: string;
+	inputValue4: string;
+	option: string;
+	inputs: { value: string; visible: boolean }[];
+}
 
 const CreateTest = () => {
 	const { control, handleSubmit, reset } = useForm();
 	const [option, setOption] = useState('SINGLE');
 	const [time, setTime] = useState('00:00');
-	const [inputs, setInputs] = useState([{ id: 1, value: '', visible: true }]);
-	const [copiesData, setCopiesData] = useState([]);
+	const [inputs, setInputs] = useState<
+		{ id: number; value: string; visible: boolean }[]
+	>([{ id: 1, value: '', visible: true }]);
+	const [copiesData, setCopiesData] = useState<CopyData[]>([]);
 	const [titleValue, setTitleValue] = useState('');
 	const [pointValue, setPointValue] = useState('');
 	const [postTest] = usePostTestMutation();
 	const { lessonId } = useParams();
-	const [checked, setCheked] = useState(false);
+	const [checked, setChecked] = useState(false);
 
-	const handleTimeChange = (event) => setTime(event.target.value);
-	const handleChangeTitleValue = (e) => setTitleValue(e.target.value);
-	const handleChangePointValue = (e) => setPointValue(e.target.value);
+	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+		setTime(event.target.value);
+	const handleChangeTitleValue = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setTitleValue(e.target.value);
+	const handleChangePointValue = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setPointValue(e.target.value);
 
 	const handleAddInput = () =>
 		setInputs([...inputs, { id: inputs.length + 1, value: '', visible: true }]);
-	const handleOptionClick = (selectedOption) => setOption(selectedOption);
+	const handleOptionClick = (selectedOption: string) =>
+		setOption(selectedOption);
 
-	const handleCopy = (copyDataIndex) => {
+	const handleCopy = (copyDataIndex: number) => {
 		const newCopyData = JSON.parse(JSON.stringify(copiesData[copyDataIndex])); // Deep copy
 		setCopiesData([
 			...copiesData.slice(0, copyDataIndex + 1),
@@ -40,7 +72,7 @@ const CreateTest = () => {
 		]);
 	};
 
-	const handleDelete = (copyDataIndex) => {
+	const handleDelete = (copyDataIndex: number) => {
 		setCopiesData(copiesData.filter((_, index) => index !== copyDataIndex));
 	};
 
@@ -54,7 +86,7 @@ const CreateTest = () => {
 		setCopiesData([...copiesData, newCopyData]);
 	};
 
-	const handleAddInputOption = (copyDataIndex) => {
+	const handleAddInputOption = (copyDataIndex: number) => {
 		const updatedCopiesData = [...copiesData];
 		updatedCopiesData[copyDataIndex].inputs.push({ value: '', visible: true });
 		setCopiesData(updatedCopiesData);
@@ -62,7 +94,7 @@ const CreateTest = () => {
 
 	const onSubmit = async (data) => {
 		const initialAnswers = inputs.map((input) => input.value);
-		const initialQuestion = {
+		const initialQuestion: QuestionRequest = {
 			title: titleValue,
 			point: pointValue,
 			questionType: option,
@@ -85,9 +117,12 @@ const CreateTest = () => {
 			};
 		});
 
-		const questionRequests = [initialQuestion, ...copiedQuestions];
+		const questionRequests: QuestionRequest[] = [
+			initialQuestion,
+			...copiedQuestions
+		];
 
-		const newTest = {
+		const newTest: TestRequest = {
 			title: data.title,
 			hour: time.split(':')[0],
 			minute: time.split(':')[1],
@@ -103,9 +138,9 @@ const CreateTest = () => {
 		}
 	};
 
-	const renderInputFields = (inputs, setInputs, option) =>
+	const renderInputFields = (inputs, setInputs, option: string) =>
 		inputs.map(
-			(input, index) =>
+			(input, index: number) =>
 				input.visible && (
 					<div key={index} className={scss.input_div}>
 						{option === 'SINGLE' ? (
@@ -363,7 +398,7 @@ const CreateTest = () => {
 												style={{ cursor: 'pointer' }}
 												type="checkbox"
 												name="options"
-												onClick={() => setCheked(!checked)}
+												onClick={() => setChecked(!checked)}
 												checked={copyData.option === 'SINGLE'}
 												onChange={() => {
 													const updatedCopiesData = [...copiesData];
@@ -377,7 +412,7 @@ const CreateTest = () => {
 											<input
 												style={{ cursor: 'pointer' }}
 												type="checkbox"
-												onClick={() => setCheked(!checked)}
+												onClick={() => setChecked(!checked)}
 												checked={copyData.option === 'MULTIPLE'}
 												onChange={() => {
 													const updatedCopiesData = [...copiesData];
@@ -430,17 +465,29 @@ const CreateTest = () => {
 					))}
 				</div>
 				<div className={scss.button_contain}>
-					<ButtonCancel width="100px" type={'button'} disabled={false}>
+					<ButtonCancel
+						onClick={() => {}}
+						width="100px"
+						type={'button'}
+						disabled={false}
+					>
 						Отмена
 					</ButtonCancel>
-					<ButtonSave width="30px" type="submit" disabled={false}>
+					<ButtonSave
+						onClick={() => {}}
+						width="30px"
+						type="submit"
+						disabled={false}
+					>
 						Сохранить
 					</ButtonSave>
 				</div>
 				<div className={scss.button_circle}>
-					<ButtonCircle onClick={handleCopies} type="button" disabled={false}>
-						{' '}
-					</ButtonCircle>
+					<ButtonCircle
+						onClick={handleCopies}
+						type="button"
+						disabled={false}
+					></ButtonCircle>
 				</div>
 			</div>
 		</form>

@@ -9,27 +9,25 @@ namespace TEST {
 	type getTestResponse = {
 		testResponseForGetAll: Test[];
 	};
-	type getTestRequest = void;
-	type Question = {
-		questionId: number;
-		title: string;
-		point: number;
-		questionType: string;
-		optionResponses;
-	};
+	type getTestRequest = number;
 
-	type Option = {
-		optionId: number;
-		option: string;
-		isTrue: boolean;
-	};
-	interface getTestInsideResponse {
+	type getTestInsideResponse = {
 		testId: number;
 		title: string;
 		hour: number;
 		minute: number;
-		questionResponseList: QuestionResponseList[];
-	}
+		questionResponseList: {
+			questionId: number;
+			title: string;
+			point: number;
+			questionType: string;
+			optionResponses: {
+				optionId: number;
+				option: string;
+				isTrue: boolean;
+			}[];
+		}[];
+	};
 
 	interface QuestionResponseList {
 		questionId: number;
@@ -45,7 +43,7 @@ namespace TEST {
 		isTrue: boolean;
 	}
 
-	type getTestInsideRequest = void;
+	type getTestInsideRequest = number;
 
 	type CreateTestResponse = {
 		lessonId: number;

@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-	useDeleteTestMutation,
-	useGetTestQuery
-} from '@/src/redux/api/instructor/test';
+import { useGetTestQuery } from '@/src/redux/api/instructor/test';
 import { useState } from 'react';
 import scss from './TestInstructor.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,35 +12,30 @@ import watch from '@/src/assets/watch.png';
 import DeleteTest from '@/src/ui/customModal/deleteModal/DeleteTest';
 
 interface Question {
-	id: string;
-	number: string;
-	text: string;
-	time: string;
+	testId: number;
+	title: string;
+	hour: number;
+	minute: number;
 }
 
 const TestInstructor = () => {
 	const navigate = useNavigate();
-	const { courseId, lessonId, testId } = useParams();
-	const { data } = useGetTestQuery(lessonId);
+	const { courseId, lessonId } = useParams();
+	const lesson = Number(lessonId);
+
+	const { data } = useGetTestQuery(lesson);
 	const [deleteTest, setOpenDeleteTest] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
-		null
-	);
-	const [saveId, setSaveId] = useState(false);
+
+	const [saveId, setSaveId] = useState<number | boolean>(false);
 	const open = Boolean(anchorEl);
 
-	const handleClick = (
-		event: React.MouseEvent<HTMLButtonElement>,
-		question: Question
-	) => {
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
-		setSelectedQuestion(question);
 	};
 
 	const handleClose = () => {
 		setAnchorEl(null);
-		setSelectedQuestion(null);
 	};
 
 	const handleEdit = () => {
@@ -56,7 +48,7 @@ const TestInstructor = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/createTest`);
 	};
 
-	const truncateText = (text, maxLength) => {
+	const truncateText = (text: string, maxLength: number) => {
 		if (text.length <= maxLength) {
 			return text;
 		}
@@ -116,7 +108,7 @@ const TestInstructor = () => {
 							<div>
 								<button
 									onClick={(event) => {
-										handleClick(event, data.testResponseForGetAll);
+										handleClick(event);
 										setSaveId(question.testId);
 									}}
 									className={scss.button}

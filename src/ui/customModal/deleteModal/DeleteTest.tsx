@@ -11,7 +11,7 @@ import { FC, Fragment } from 'react';
 interface DeleteProps {
 	openModalDelete: boolean;
 	closeModalDelete: (openModalDelete: boolean) => void;
-	deleteById: number | null;
+	deleteById: number | boolean;
 }
 
 const DeleteTest: FC<DeleteProps> = ({
@@ -19,7 +19,7 @@ const DeleteTest: FC<DeleteProps> = ({
 	closeModalDelete,
 	deleteById
 }) => {
-	// const [deleteTest] = useDeleteTestMutation();
+	const [deleteTest] = useDeleteTestMutation();
 
 	const handleDelete = async () => {
 		if (deleteById !== null) {
