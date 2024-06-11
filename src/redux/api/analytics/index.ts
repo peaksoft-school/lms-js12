@@ -7,24 +7,14 @@ const api = index.injectEndpoints({
 			ANALYTIC.AnalyticsRequest
 		>({
 			query: () => ({
-				url: '/api/analytics/getAllCoursesCount',
+				url: '/api/analytics/getAllAnalytics',
 				method: 'GET'
 			}),
 			providesTags: ['analyticsSections']
 		}),
-		// getAnalyticsStudents: builder.mutation<
-		// 	ANALYTIC.AnotherDataResponse,
-		// 	ANALYTIC.AnotherDataRequest
-		// >({
-		// 	query: () => ({
-		// 		url: '/api/analytics/getAllStudentsCount',
-		// 		method: 'GET'
-		// 	}),
-		// 	providesTags: ['analyticsSections']
-		// })
+
 	})
 });
 
 export const { useGetAnalyticsGroupsQuery
-	// ,useGetAnalyticsStudentsQuery 
 } = api;
