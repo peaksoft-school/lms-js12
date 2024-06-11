@@ -1,10 +1,18 @@
-import { IconAlignJustified, IconChevronDown } from '@tabler/icons-react';
+import {
+	IconAlignJustified,
+	IconChartHistogram,
+	IconChevronDown,
+	IconUser,
+	IconUserCheck,
+	IconWallpaper
+} from '@tabler/icons-react';
 import profile from '@/src/assets/svgs/Profile.png';
 import scss from './SubHeaderMobile.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useEffect, useState } from 'react';
 import bell from '@/src/assets/svgs/Header icons.png';
+import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
 
 const SupHeaderMobile = () => {
 	const { pathname } = useLocation();
@@ -12,6 +20,14 @@ const SupHeaderMobile = () => {
 	const navigate = useNavigate();
 	const [anchorElOpen, setAnchorElOpen] = useState<null | HTMLElement>(null);
 	const [value, setValue] = useState<number>(0);
+	const [openNotification, setOpenNotification] = useState(false);
+	const handleOpenNotification = () => {
+		setOpenNotification(true);
+	};
+
+	const handleCloseNotification = () => {
+		setOpenNotification(false);
+	};
 	console.log(value);
 
 	useEffect(() => {
@@ -82,20 +98,24 @@ const SupHeaderMobile = () => {
 						}}
 					>
 						<MenuItem
+							style={{ display: 'flex', gap: '12px' }}
 							onClick={() => {
 								openTeacher();
 								handleClose();
 							}}
 						>
-							Учителя
+							<IconUserCheck stroke={2} />
+							<span> Учителя</span>
 						</MenuItem>
 						<MenuItem
+							style={{ display: 'flex', gap: '12px' }}
 							onClick={() => {
 								openStudent();
 								handleClose();
 							}}
 						>
-							Студенты
+							<IconUser stroke={2} />
+							<span> Студенты</span>
 						</MenuItem>
 					</Menu>
 
@@ -178,32 +198,38 @@ const SupHeaderMobile = () => {
 						}}
 					>
 						<MenuItem
+							style={{ display: 'flex', gap: '10px' }}
 							onClick={() => {
 								openMaterial();
 								handleClose();
 							}}
 						>
-							Материалы
+							<IconWallpaper stroke={2} />
+							<span> Материалы</span>
 						</MenuItem>
 						<MenuItem
+							style={{ display: 'flex', gap: '10px' }}
 							onClick={() => {
 								openInstructorStudent();
 								handleClose();
 							}}
 						>
-							Студенты
+							<IconUser stroke={2} />
+							<span>Студенты</span>
 						</MenuItem>
 						<MenuItem
+							style={{ display: 'flex', gap: '10px' }}
 							onClick={() => {
 								handleClose();
 							}}
 						>
-							Рейтинг студентов
+							<IconChartHistogram stroke={2} />
+							<span> Рейтинг студентов</span>
 						</MenuItem>
 					</Menu>
 
 					<div className={scss.header_elements}>
-						<img src={bell} alt="bell" />
+						<img onClick={handleOpenNotification} src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<p>Учитель</p>
@@ -250,13 +276,17 @@ const SupHeaderMobile = () => {
 					</Menu>
 
 					<div className={scss.header_elements}>
-						<img src={bell} alt="bell" />
+						<img onClick={handleOpenNotification} src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
 						<div>
 							<p>Студент</p>
 						</div>
 						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
 					</div>
+					<NotificationHeader
+						open={openNotification}
+						handleClose={handleCloseNotification}
+					/>
 				</div>
 			)}
 		</div>

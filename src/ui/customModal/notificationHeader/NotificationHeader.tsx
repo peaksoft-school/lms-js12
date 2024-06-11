@@ -1,7 +1,13 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import scss from './NotificationHeader.module.scss';
+import {
+	useGetNotificationInstructorQuery,
+	useGetOneNotificationInstructorQuery
+} from '@/src/redux/api/instructor/notification';
+import { useNavigate, useParams } from 'react-router-dom';
+import { IconDotsVertical } from '@tabler/icons-react';
 
 const style = {
 	position: 'absolute',
@@ -22,98 +28,16 @@ interface NotificationHeaderProps {
 	handleClose: () => void;
 }
 
-const data = [
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	}
-];
-
 const NotificationHeader: FC<NotificationHeaderProps> = ({
 	open,
 	handleClose
 }) => {
+	const [saveId, setSaveId] = useState<number | boolean>(false);
+	const { data } = useGetNotificationInstructorQuery(true);
+	const { data: getTask = [] } = useGetOneNotificationInstructorQuery(saveId);
+	const navigate = useNavigate();
+
+	const { courseId, lessonId, getTaskId } = useParams();
 	return (
 		<div>
 			<Modal
@@ -131,11 +55,26 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 						<h2>НОВЫЕ</h2>
 
 						<div className={scss.messages_content}>
-							{data.map((item) => (
-								<div className={scss.results}>
-									<h1>{item.title}</h1>
-									<p>{item.description}</p>
-									<p>{item.number}</p>
+							{data?.map((item) => (
+								<div
+									className={scss.results}
+									onClick={() => {
+										setSaveId(item.notificationId);
+										setTimeout(() => {
+											navigate(
+												`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/answer/${item.notificationTaskId}`
+											);
+										});
+									}}
+								>
+									<div>
+										<h1>{item.notificationTitle}</h1>
+										<p>{item.notificationDescription}</p>
+										<p>{item.notificationSendDate}</p>
+									</div>
+									<div>
+										<IconDotsVertical stroke={2} />
+									</div>
 								</div>
 							))}
 						</div>

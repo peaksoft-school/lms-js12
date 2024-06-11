@@ -85,7 +85,7 @@ const LayoutInstructor = () => {
 						<>
 							<Routes>
 								<Route
-									path="/courses/:courseId/*"
+									path="/course/:courseId/*"
 									element={<SupHeaderMobile />}
 								/>
 								<Route path="/*" element={<SupHeaderCourses />} />
@@ -113,7 +113,7 @@ const LayoutInstructor = () => {
 						/>
 						<Route path="/calendar" element={<CalendarPage />} />
 
-						<Route path="/courses/:coursesId" element={<MyCourses />} />
+						<Route path="/course/:coursesId" element={<MyCourses />} />
 						<Route
 							path="/course/:courseId/student"
 							element={<InternalInstructorStudentsPage />}

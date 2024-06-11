@@ -85,8 +85,13 @@
 
 			.results {
 				display: flex;
-				flex-direction: column;
-				gap: 7px;
+				justify-content: space-between;
+				.test {
+					display: flex;
+					flex-direction: column;
+					gap: 7px;
+					background: #e0e5f6;
+				}
 			}
 		}
 	}
