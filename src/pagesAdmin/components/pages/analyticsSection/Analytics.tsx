@@ -33,7 +33,6 @@ interface ChartData {
 	}[];
 }
 
-
 function Analytics() {
 	const [chartData, setChartData] = useState<ChartData>({
 		labels: [],
