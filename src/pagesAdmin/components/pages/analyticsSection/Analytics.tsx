@@ -10,8 +10,8 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import scss from './Analytics.module.scss';
-// import { useGetAnalyticsQuery } from '@/src/redux/api/analytics';
-// import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { useGetAnalyticsGroupsQuery } from '@/src/redux/api/analytics';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 
 ChartJS.register(
 	CategoryScale,
@@ -33,54 +33,6 @@ interface ChartData {
 	}[];
 }
 
-export const UserData = [
-	{
-		id: 1,
-		year: 2018,
-		groups: 488,
-		students: 1055,
-		instructors: 103,
-		courses: 30,
-		graduated: 500
-	},
-	{
-		id: 2,
-		year: 2019,
-		groups: 388,
-		students: 955,
-		instructors: 120,
-		courses: 90,
-		graduated: 400
-	},
-	{
-		id: 3,
-		year: 2020,
-		groups: 288,
-		students: 855,
-		instructors: 50,
-		courses: 40,
-		graduated: 300
-	},
-	{
-		id: 4,
-		year: 2021,
-		groups: 188,
-		students: 755,
-		instructors: 30,
-		courses: 60,
-		graduated: 200
-	},
-	{
-		id: 5,
-		year: 2022,
-		groups: 488,
-		students: 655,
-		instructors: 10,
-		courses: 20,
-		graduated: 100
-	}
-];
-
 function Analytics() {
 	const [chartData, setChartData] = useState<ChartData>({
 		labels: [],
@@ -101,16 +53,16 @@ function Analytics() {
 		]
 	});
 
-	// const { data, isLoading } = useGetAnalyticsQuery();
+	const { data, isLoading } = useGetAnalyticsGroupsQuery();
 
 	useEffect(() => {
-		if (UserData && UserData.length) {
-			const labels = UserData.map((item) => item.year.toString());
-			const userStudents = UserData.map((item) => item.students);
-			const userGraduated = UserData.map((item) => item.graduated);
-			const userGroup = UserData.map((item) => item.groups);
-			const userCourse = UserData.map((item) => item.courses);
-			const userInstructors = UserData.map((item) => item.instructors);
+		if (data && data.length) {
+			const labels = data.map((item) => item.year.toString());
+			const userStudents = data.map((item) => item.groups);
+			const userGraduated = data.map((item) => item.courses);
+			const userGroup = data.map((item) => item.instructors);
+			const userCourse = data.map((item) => item.students);
+			const userInstructors = data.map((item) => item.graduated);
 
 			setChartData({
 				labels: labels,
@@ -183,14 +135,14 @@ function Analytics() {
 				]
 			});
 		}
-	}, [UserData]);
+	}, [data]);
 
-	// if (isLoading)
-	// 	return (
-	// 		<div>
-	// 			<Preloader />
-	// 		</div>
-	// 	);
+	if (isLoading)
+		return (
+			<div>
+				<Preloader />
+			</div>
+		);
 
 	return (
 		<div className={scss.chart}>

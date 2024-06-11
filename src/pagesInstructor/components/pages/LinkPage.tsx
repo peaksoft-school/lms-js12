@@ -1,11 +1,11 @@
-import Link from "./linkSection/Link"
+import Link from './linkSection/Link';
 
 const LinkPage = () => {
 	return (
 		<div>
-			<Link/>
+			<Link />
 		</div>
-	)
-}
+	);
+};
 
-export default LinkPage
+export default LinkPage;
