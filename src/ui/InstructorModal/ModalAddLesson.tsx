@@ -42,8 +42,6 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 	const [postMaterials] = usePostMaterialsMutation();
 	const { courseId } = useParams();
 
-	
-
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		const { title, date } = data;
 

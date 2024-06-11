@@ -11,10 +11,8 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['analyticsSections']
-		}),
-
+		})
 	})
 });
 
-export const { useGetAnalyticsGroupsQuery
-} = api;
+export const { useGetAnalyticsGroupsQuery } = api;
