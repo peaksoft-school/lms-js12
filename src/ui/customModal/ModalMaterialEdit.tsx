@@ -10,7 +10,7 @@ import ButtonCancel from '../customButton/ButtonCancel';
 import ButtonSave from '../customButton/ButtonSave';
 import Input from '../customInput/Input';
 import Box from '@mui/material/Box';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const style = {
 	position: 'absolute',
@@ -18,14 +18,14 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 581,
-	backgroundColor: '#ffffff',
+	backgroundColor: '#fff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '12px'
 };
 
-interface modalProps {
+interface ModalProps {
 	openModalEdit: boolean;
 	closeModalEdit: (openModalEdit: boolean) => void;
 	deleteById: number | null;
@@ -36,30 +36,38 @@ interface EditProps {
 	createdAt: string;
 }
 
-const ModalMaterialEdit: FC<modalProps> = ({
+const ModalMaterialEdit: FC<ModalProps> = ({
 	openModalEdit,
 	closeModalEdit,
 	deleteById
 }) => {
 	const [patchMaterial] = usePatchMaterialMutation();
-	const { data } = useGetMaterialsQuery();
-	const find = data?.lessonResponses.find((id) => id.id === deleteById);
+	const { courseId } = useParams<{ courseId: string }>();
+	const { data, refetch } = useGetMaterialsQuery(Number(courseId));
 	const { control, handleSubmit, reset } = useForm<EditProps>();
 
 	const onSubmit = async (data: EditProps) => {
-		const updateMaterial = {
-			title: data.title,
-			createdAt: data?.createdAt
-		};
-		await patchMaterial({ updateMaterial, deleteById });
+		if (deleteById !== null) {
+			const updateMaterial = {
+				title: data.title,
+				createdAt: data.createdAt
+			};
+			await patchMaterial({ updateMaterial, deleteById }).then(() => {
+				refetch();
+				closeModalEdit(false);
+			});
+			
+		}
 	};
+
+	const find = data?.lessonResponses.find((lesson) => lesson.id === deleteById);
 
 	useEffect(() => {
 		reset({
-			title: find?.title,
-			createdAt: find?.createdAt
+			title: find?.title || '',
+			createdAt: find?.createdAt || ''
 		});
-	}, [find]);
+	}, [find, reset]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className={scss.form}>
@@ -97,7 +105,7 @@ const ModalMaterialEdit: FC<modalProps> = ({
 								)}
 							/>
 							<Controller
-								name="date"
+								name="createdAt"
 								control={control}
 								render={({ field }) => (
 									<Input
@@ -130,10 +138,10 @@ const ModalMaterialEdit: FC<modalProps> = ({
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
+								onClick={handleSubmit(onSubmit)}
 								width="117px"
 								type="submit"
 								disabled={false}
-								onClick={handleSubmit(onSubmit)}
 							>
 								Отправить
 							</ButtonSave>

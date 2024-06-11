@@ -1,6 +1,5 @@
 .rating {
-	padding-top: 60px;
-	padding-inline: 20px;
+	padding: 60px 20px 0px;
 
 	h1 {
 		margin-bottom: 20px;
@@ -8,8 +7,10 @@
 	}
 
 	.scroll_table {
-		// width: 100%;
-		// overflow: auto;
+		width: 100%;
+		@media (max-width: 1920px) {
+			max-width: 1680px;
+		}
 		.rating_container {
 			border-radius: 8px;
 			table-layout: fixed;
@@ -17,7 +18,9 @@
 			border: 1px solid #dbd2d2;
 			transition: all 0.5s;
 			padding: 10px;
-			// display: inline-block;
+			overflow: auto;
+			width: 100%;
+			// width: 1600px;
 
 			@media screen and (min-width: 1185px) and (max-width: 1260px) {
 				width: 100%;
@@ -36,10 +39,10 @@
 				max-width: 760px;
 			}
 
-			.Table {
-				width: max-content;
+			table {
 				border: 1px solid #d4d4d4;
 				border-collapse: collapse;
+				width: 100%;
 
 				th,
 				td {
@@ -51,23 +54,24 @@
 					text-wrap: nowrap;
 					background: #eff0f4;
 				}
-				.TableCell {
-					width: 50px;
+				.fullName {
+					width: 100px;
 					text-align: start;
 				}
 
 				td {
 					text-align: center;
-					width: 150px;
+					// width: 150px;
 					height: 50px;
 					padding: 10px;
 				}
-				.name {
-					width: 220px;
-				}
+
 				.button {
 					width: 30px !important;
 					height: 30px;
+				}
+
+				.name_work {
 				}
 			}
 		}

@@ -31,7 +31,7 @@ const style = {
 	borderRadius: '12px'
 };
 
-const AddExem: FC<AddLessonProps> = ({ open, handleClose }) => {
+const AddExam: FC<AddLessonProps> = ({ open, handleClose }) => {
 	const { handleSubmit, reset, control } = useForm<FormData>();
 	const [createExemInstructor] = useCreateExemInstructorMutation();
 
@@ -132,4 +132,4 @@ const AddExem: FC<AddLessonProps> = ({ open, handleClose }) => {
 	);
 };
 
-export default AddExem;
+export default AddExam;
