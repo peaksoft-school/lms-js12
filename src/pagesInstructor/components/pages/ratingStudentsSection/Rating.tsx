@@ -26,10 +26,15 @@ const Rating = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
-	const open2 = Boolean(anchorEl2);
+	
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
+	const handleOpen = () => {
+		setOpenModal(true);
+	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
@@ -53,10 +58,6 @@ const Rating = () => {
 			return text.substring(0, maxLength) + '...';
 		}
 		return text;
-	};
-
-	const handleOpen = () => {
-		setOpenModal(true);
 	};
 
 	const deleteFunc = async (id: number) => {

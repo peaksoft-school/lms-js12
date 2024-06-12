@@ -145,38 +145,7 @@ const CreateTest = () => {
 					<div key={index} className={scss.input_div}>
 						{option === 'SINGLE' ? (
 							<div className={scss.radio_checkbox}>
-								<Controller
-									name={`option_1_isTrue_${index}`}
-									control={control}
-									render={({ field }) => (
-										<label>
-											<input
-												{...field}
-												style={{ cursor: 'pointer' }}
-												type="radio"
-												name="option_1"
-												value={index}
-											/>
-										</label>
-									)}
-								/>
-							</div>
-						) : (
-							<div className={scss.radio_checkbox}>
-								<Controller
-									name={`option_1_isTrue_${index}`}
-									control={control}
-									render={({ field }) => (
-										<label>
-											<input
-												{...field}
-												style={{ cursor: 'pointer' }}
-												type="checkbox"
-												value={index}
-											/>
-										</label>
-									)}
-								/>
+								
 							</div>
 						)}
 						<div className={scss.variant_inputs}>
