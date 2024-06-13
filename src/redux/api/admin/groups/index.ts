@@ -46,23 +46,11 @@ export const api = index.injectEndpoints({
 			providesTags: ['groups']
 		}),
 		createGroupFile: builder.mutation({
-			query: (fileObj) => ({
+			query: () => ({
 				url: '/file',
 				method: 'POST',
-				headers: { 'Content-Type': 'multipart/form-data' },
-				body: fileObj
 			}),
 			invalidatesTags: ['groups']
-		}),
-		getStudentGroup: builder.query<
-			GROUPS.GetStudentsGroupResponse,
-			GROUPS.GetStudentsGroupRequest
-		>({
-			query: (groupId) => ({
-				url: `/api/students/studentsOfGroup/${groupId}`,
-				method: 'GET'
-			}),
-			providesTags: ['groups']
 		})
 	})
 });
@@ -73,6 +61,5 @@ export const {
 	useUpdateGroupMutation,
 	useDeleteGroupMutation,
 	useGetGroupStudentQuery,
-	useCreateGroupFileMutation,
-	useGetStudentGroupQuery
+	useCreateGroupFileMutation
 } = api;

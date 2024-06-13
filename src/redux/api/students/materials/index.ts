@@ -11,8 +11,18 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['material']
+		}),
+		getLinkStudents: builder.query<
+			MATERIALS.getResponseLinkStudents,
+			MATERIALS.getRequestLinkStudents
+		>({
+			query: (lesson) => ({
+				url: `/api/links/findAll/${lesson}`,
+				method: 'GET'
+			}),
+			providesTags: ['link']
 		})
-		// /api/videos/All/${lessonId}
 	})
 });
-export const { useGetStudentMaterialsQuery } = api;
+
+export const { useGetStudentMaterialsQuery, useGetLinkStudentsQuery } = api;

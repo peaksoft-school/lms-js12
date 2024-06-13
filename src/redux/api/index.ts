@@ -43,6 +43,7 @@ export const api = createApi({
 		'exam',
 		'student',
 		'materialsLesson',
+		'link',
 		'rating'
 	],
 	endpoints: () => ({})

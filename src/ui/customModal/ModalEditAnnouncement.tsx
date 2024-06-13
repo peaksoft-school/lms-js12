@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import scss from './EditAnnouncement.module.scss';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import InputAnnouncement from '../customInput/InputAnnouncement';
 import {
 	Checkbox,
@@ -17,11 +16,13 @@ import {
 	Select,
 	SelectChangeEvent
 } from '@mui/material';
-import { useEffect, useState } from 'react';
 import {
-	useGetAnnouncementTableQuery,
-	usePatchAnnouncementTableMutation
+	useEditAnnouncementMutation,
+	useGetAnnouncementTableQuery
 } from '@/src/redux/api/admin/announcement';
+import scss from './EditAnnouncement.module.scss';
+import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+import Input from '../customInput/Input';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -35,25 +36,11 @@ const MenuProps = {
 };
 
 interface PostAnnouncementProps {
-	announcement: string;
-	group: string;
-	show: boolean;
+	announcementContent: string;
+	expirationDate: string;
+	targetGroupIds: number[];
+	publishedDate: boolean;
 }
-
-const names = [
-	'JS-10',
-	'JS-11',
-	'JS-12',
-	'JS-12-senior',
-	'JS-13',
-	'JS-14',
-	'JS-ehglish',
-	'JAVA-10',
-	'JAVA-11',
-	'JAVA-12',
-	'JAVA-13',
-	'JAVA-14'
-];
 
 const style = {
 	position: 'absolute',
@@ -67,55 +54,74 @@ const style = {
 	p: 4,
 	borderRadius: '12px'
 };
+
 interface modalProps {
 	openModalEdit: boolean;
 	closeModalEdit: (openModalEdit: boolean) => void;
 	saveIdElement: number | null;
 }
-const ModalEditAnnouncement: React.FC<modalProps> = ({
+
+const ModalEditAnnouncement: FC<modalProps> = ({
 	openModalEdit,
 	closeModalEdit,
 	saveIdElement
 }) => {
+	const [editAnnouncement] = useEditAnnouncementMutation();
+	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
+	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
-	const [patchAnnouncementTable] = usePatchAnnouncementTableMutation();
 	const { data } = useGetAnnouncementTableQuery();
-	const find = data?.find((id) => id.id === saveIdElement);
-	const [personName, setPersonName] = useState<string[]>([]);
+	const find = data?.announcements?.find((item) => item.id === saveIdElement);
+	const [personName, setPersonName] = useState<number[]>([]);
 
 	useEffect(() => {
 		if (find) {
-			setPersonName(Array.isArray(find.group) ? find.group : []);
+			setPersonName(Array.isArray(find.groupNames) ? find.groupNames : []);
 		}
 	}, [find]);
+	const handleSelect = (groupId: string) => {
+		// console.log(title);
+
+		// setSelectedIds((prev) => (prev.includes(title) ? prev : [...prev, title]));
+		setSelectedIds((prev) =>
+			prev.includes(groupId) ? prev : [...prev, groupId]
+		);
+	};
+	const handleChange = (event: SelectChangeEvent<string[]>) => {
+		const { value } = event.target;
+		setPersonName(typeof value === 'string' ? value.split(',') : value);
+	};
 
 	const onSubmit = async (data: PostAnnouncementProps) => {
-		const editAnnouncement = {
-			...data,
-			group: personName
+		const editAnnounCement = {
+			announcementContent: data.announcementContent,
+			expirationDate: data.publishedDate,
+			targetGroupIds: selectedIds,
+			publishedDate: data.expirationDate
 		};
-		await patchAnnouncementTable({ editAnnouncement, saveIdElement });
+
+		console.log(editAnnounCement);
+
+		await editAnnouncement({ editAnnounCement, saveIdElement });
 		closeModalEdit(false);
 	};
 
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-		const {
-			target: { value }
-		} = event;
-		setPersonName(value as string[]);
-	};
-
 	useEffect(() => {
-		reset({
-			announcement: find?.announcement,
-			group: find?.group
-		});
-	}, [find]);
+		if (find) {
+			reset({
+				announcementContent: find.content,
+				personName: find.groupNames,
+				expirationDate: find.expirationDate,
+				publishedDate: find.publishedDate
+			});
+		}
+	}, [find, reset]);
 
 	return (
-		<form onSubmit={close}>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
 				open={openModalEdit}
+				onClose={() => closeModalEdit(false)}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -127,7 +133,7 @@ const ModalEditAnnouncement: React.FC<modalProps> = ({
 						component="h2"
 					>
 						<div className={scss.comText}>
-							Редактировать объявление по группам{find?.group}
+							Редактировать объявление по группам {find?.groupNames.join(', ')}
 						</div>
 					</Typography>
 
@@ -135,7 +141,7 @@ const ModalEditAnnouncement: React.FC<modalProps> = ({
 						<div className={scss.input}>
 							<div className={scss.inputText}>
 								<Controller
-									name="announcement"
+									name="announcementContent"
 									control={control}
 									render={({ field }) => (
 										<InputAnnouncement
@@ -165,27 +171,56 @@ const ModalEditAnnouncement: React.FC<modalProps> = ({
 									input={<OutlinedInput label="Группы" />}
 									renderValue={(selected) => selected.join(', ')}
 									MenuProps={MenuProps}
-									className={scss.select}
 									style={{
-										marginLeft: '15px',
-										height: '45px',
-										borderRadius: '10px',
+										maxWidth: '540px',
+										width: '100%',
+										height: '55px',
+										borderRadius: '12px',
 										position: 'relative',
-										top: '0',
-										right: '20px'
+										top: '0'
 									}}
 								>
-									{names.map((name) => (
-										<MenuItem key={name} value={name}>
-											<Checkbox checked={personName.indexOf(name) > -1} />
-											<ListItemText primary={name} />
-										</MenuItem>
-									))}
+									{groupData &&
+										groupData.groupResponses.map((name) => (
+											<MenuItem
+												key={name.id}
+												value={name.title}
+												onClick={() => handleSelect(name.id)}
+											>
+												<Checkbox checked={personName.indexOf(name.id) > -1} />
+												<ListItemText primary={name.title} />
+											</MenuItem>
+										))}
 								</Select>
+								<div className={scss.inputText}>
+									<Controller
+										name="publishedDate"
+										control={control}
+										render={({ field }) => <Input {...field} type="date" />}
+									/>
+								</div>
+								<div className={scss.inputText}>
+									<Controller
+										name="expirationDate"
+										control={control}
+										render={({ field }) => <Input {...field} type="date" />}
+									/>
+								</div>
+
+								{/* <input
+									type="date"
+									value={dateInputValue}
+									onChange={(e) => setDateInputValue(e.target.value)}
+								/>
+								<input
+									type="date"
+									value={dateInputValue2}
+									onChange={(e) => setDateInputValue2(e.target.value)}
+								/> */}
 							</FormControl>
 							<div className={scss.btn_form}>
 								<ButtonCancel
-									type="submit"
+									type="button"
 									disabled={false}
 									onClick={() => closeModalEdit(false)}
 									width="117px"

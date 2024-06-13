@@ -7,11 +7,13 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import scss from './Styled.module.scss';
-import { useCreateExemInstructorMutation } from '@/src/redux/api/instructor/exem';
+import { useCreateExamInstructorMutation } from '@/src/redux/api/instructor/examApi';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 interface FormData {
 	title: string;
-	date: string;
+	examDate: string;
 }
 
 interface AddLessonProps {
@@ -33,19 +35,28 @@ const style = {
 
 const AddExam: FC<AddLessonProps> = ({ open, handleClose }) => {
 	const { handleSubmit, reset, control } = useForm<FormData>();
-	const [createExemInstructor] = useCreateExemInstructorMutation();
+	const { courseId } = useParams();
+	const [createExamInstructor] = useCreateExamInstructorMutation();
 
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
-		const { title, date } = data;
+		const { title, examDate } = data;
 
-		if (title !== '' && date !== '') {
-			const postData = {
+		if (title !== '' && examDate !== '') {
+			const examData = {
 				title: title,
-				date: date
+				examDate: examDate
 			};
-			await createExemInstructor(postData);
-			reset();
-			handleClose();
+			try {
+				await createExamInstructor({ examData, courseId });
+				toast.success('Экзамен успешно добавлен');
+				reset();
+				handleClose();
+			} catch (error) {
+				toast.error('Ошибка при добавлении экзамена');
+				console.error('Failed to add exam', error);
+			}
+		} else {
+			toast.error('Заполните все поля');
 		}
 	};
 
@@ -84,7 +95,7 @@ const AddExam: FC<AddLessonProps> = ({ open, handleClose }) => {
 								)}
 							/>
 							<Controller
-								name="date"
+								name="examDate"
 								control={control}
 								render={({ field }) => (
 									<Input

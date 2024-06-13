@@ -1,11 +1,22 @@
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Modal, Box, Typography } from '@mui/material';
+/* eslint-disable react-hooks/exhaustive-deps */
+import scss from './Styled.module.scss';
+import { FC, useEffect } from 'react';
+import {
+	useForm,
+	Controller,
+	SubmitHandler,
+	FieldValues
+} from 'react-hook-form';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import scss from './Styled.module.scss';
-import { FC } from 'react';
-import { usePostLinkMutation } from '@/src/redux/api/instructor/link';
+import {
+	useEditLinkMutation,
+	useGetLinkQuery
+} from '@/src/redux/api/instructor/link';
 import { useParams } from 'react-router-dom';
 
 const style = {
@@ -14,42 +25,57 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
+	height: 285,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
 };
 
-interface LinkProps {
-	titleOfLink: string;
-	urlOfLink: string;
-}
-
-interface LessonLinkProps {
+interface PresentationProps1 {
 	open: boolean;
-	handleCloseLink: () => void;
+	handleClose: () => void;
+	resultId: number | boolean;
 }
 
-const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
-	const { control, handleSubmit, reset } = useForm<LinkProps>();
-	const [postLinkLesson] = usePostLinkMutation();
+const EditLink: FC<PresentationProps1> = ({ open, handleClose, resultId }) => {
+	const { control, handleSubmit, reset } = useForm();
 	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
+	const { data, isFetching } = useGetLinkQuery(lesson);
 
-	const onSubmit: SubmitHandler<LinkProps> = async (data) => {
-		const newLink = {
-			title: data.titleOfLink,
-			url: data.urlOfLink
-		};
-		await postLinkLesson({ lessonId, newLink });
+	const [editLink] = useEditLinkMutation();
+
+	const finder = data?.linkResponses.find((item) => item.id === resultId);
+	console.log(finder?.title);
+
+	useEffect(() => {
+		reset({
+			title: finder?.title,
+			url: finder?.url
+		});
+	}, [finder]);
+	const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
+		if (resultId === undefined) {
+			console.error('resultId is undefined');
+			return;
+		}
+		const { title, url } = formData;
+		await editLink({
+			linkId: resultId,
+			newData: { title, url }
+		});
 		reset();
-		handleCloseLink();
+		handleClose();
 	};
+
+	if (isFetching) return null;
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
 				open={open}
-				onClose={handleCloseLink}
+				onClose={handleClose}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -60,23 +86,23 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.com_text}>Добавить ссылку</p>
+						<p className={scss.com_text}>Редактировать ссылку</p>
 					</Typography>
 
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="titleOfLink"
+								name="title"
 								control={control}
-								defaultValue=""
-								rules={{ required: 'text error' }}
+								defaultValue={finder ? finder.title : ''}
+								rules={{ required: 'Введите название' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Отображаемый текст"
+										placeholder="Введите название"
 									/>
 								)}
 							/>
@@ -84,17 +110,17 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 
 						<div className={scss.input}>
 							<Controller
-								name="urlOfLink"
+								name="url"
 								control={control}
-								defaultValue=""
-								rules={{ required: 'url error' }}
+								defaultValue={finder ? finder.url : ''}
+								rules={{ required: 'Введите ссылку' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Вставьте ссылку"
+										placeholder="Введите ссылку"
 									/>
 								)}
 							/>
@@ -113,8 +139,8 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 						>
 							<ButtonCancel
 								type="button"
-								onClick={handleCloseLink}
 								disabled={false}
+								onClick={handleClose}
 								width="117px"
 							>
 								Отмена
@@ -125,7 +151,7 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 								disabled={false}
 								onClick={handleSubmit(onSubmit)}
 							>
-								Добавить
+								Сохранить
 							</ButtonSave>
 						</div>
 					</Box>
@@ -135,4 +161,4 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 	);
 };
 
-export default ModalAddLink;
+export default EditLink;

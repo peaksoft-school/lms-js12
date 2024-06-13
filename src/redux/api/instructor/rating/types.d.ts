@@ -16,6 +16,8 @@ namespace RATING {
 					};
 				}[];
 			}[];
+			totalScore: number;
+			completionPercentage: number;
 		}[];
 	};
 	type GetRatingStudentsRequest = number;
