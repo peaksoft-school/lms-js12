@@ -12,8 +12,8 @@ const CrateTask = () => {
 	const [openDelete, setOpenDelete] = useState(false);
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
-	const { data: lesson = [] } = useGetTaskInstructorQuery();
 	const { courseId, lessonId, getTaskId } = useParams();
+	const { data } = useGetTaskInstructorQuery(lessonId);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
@@ -28,15 +28,16 @@ const CrateTask = () => {
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/addTask`
 		);
 	};
+
 	const openLessonEditTask = () => {
 		navigate(
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/update`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${saveId}/update`
 		);
 	};
 
-	const GetTask = () => {
+	const GetTask = (id) => {
 		navigate(
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${id}/panding`
 		);
 	};
 	return (
@@ -55,19 +56,18 @@ const CrateTask = () => {
 				</Button>
 			</div>
 			<div className={scss.card_lesson}>
-				{lesson?.map((item) => (
+				{data?.taskResponse.map((item) => (
 					<div
 						className={scss.card_container}
 						onClick={() => {
 							localStorage.setItem('hwTask', item.title);
-							setSaveId(item._id);
-							setTimeout(() => {
-								GetTask();
-							}, 1000);
+							setSaveId(item.id);
 						}}
 					>
-						<p className={scss.card_link}>{item.title}</p>
-						<div className={scss.button}>
+						<p onClick={() => GetTask(item.id)} className={scss.card_link}>
+							{item.title}
+						</p>
+						<div className={scss.button} onClick={() => setSaveId(item.id)}>
 							<button onClick={handleClick}>
 								<IconDotsVertical stroke={2} />
 							</button>
@@ -95,10 +95,11 @@ const CrateTask = () => {
 									<img src={editImg} alt="#" />
 									Редактировать
 								</MenuItem>
+
 								<MenuItem
 									onClick={() => {
 										setOpenDelete(true);
-										handleClose();
+										setAnchorEl(null);
 									}}
 								>
 									<img src={deleteImg} alt="#" />
