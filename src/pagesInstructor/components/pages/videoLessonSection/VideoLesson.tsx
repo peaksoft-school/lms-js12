@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 572161c024e35298438f6d3244f0c897aebf600c
 import { useGetVideoLessonQuery } from '@/src/redux/api/instructor/video';
 import scss from './VideoLesson.module.scss';
 import { Button, Menu, MenuItem } from '@mui/material';

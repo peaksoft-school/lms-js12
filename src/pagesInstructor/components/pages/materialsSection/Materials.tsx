@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 572161c024e35298438f6d3244f0c897aebf600c
 import { FC, useState, useEffect } from 'react';
 import scss from './Materials.module.scss';
 import deleteIcon from '@/src/assets/svgs/delete-red.svg';
