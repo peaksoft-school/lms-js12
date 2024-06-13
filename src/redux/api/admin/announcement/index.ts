@@ -4,22 +4,22 @@ export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		// ! get
 		getAnnouncementTable: builder.query<
-			ANNOUNCEMENT.TablesAnnouncementResponse,
-			ANNOUNCEMENT.TablesAnnouncementRequest
+			ANNOUNCEMENT.GetAnnouncementResponse,
+			ANNOUNCEMENT.GetAnnouncementRequest
 		>({
 			query: () => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/announcement',
+				url: '/api/announcement/search',
 				method: 'GET'
 			}),
 			providesTags: ['announcement']
 		}),
 		// ! post
 		postAnnouncementTable: builder.mutation<
-			ANNOUNCEMENT.TablesAnnouncementResponse,
+			ANNOUNCEMENT.PostAnnouncementPropsResponse,
 			ANNOUNCEMENT.PostAnnouncementPropsRequest
 		>({
 			query: (newAnnouncement) => ({
-				url: 'https://04c2c825595e3dcc.mokky.dev/announcement',
+				url: '/api/announcement',
 				method: 'POST',
 				body: newAnnouncement
 			}),
@@ -31,28 +31,31 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.DeleteAnnouncementPropsRequest
 		>({
 			query: (id) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/announcement/${id}`,
+				url: `/api/announcement/${id}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['announcement']
 		}),
-		// ! patch request
-		patchAnnouncementTable: builder.mutation<
-			ANNOUNCEMENT.PatchAnnouncementPropsResponse,
-			ANNOUNCEMENT.PatchAnnouncementPropsRequest
+		// ! patch
+		editAnnouncement: builder.mutation<
+			ANNOUNCEMENT.EditAnnouncementResponse,
+			ANNOUNCEMENT.EditAnnouncementRequest
 		>({
-			query: ({ editAnnouncement, saveIdElement }) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/announcement/${saveIdElement}`,
+			query: ({ editAnnounCement, saveIdElement }) => ({
+				url: `/api/announcement/${saveIdElement}`,
 				method: 'PATCH',
-				body: editAnnouncement
+				body: editAnnounCement
 			}),
 			invalidatesTags: ['announcement']
 		}),
-		patchShowdMutation: builder.mutation({
-			query: ({ updated, deleteById }) => ({
-				url: `https://04c2c825595e3dcc.mokky.dev/announcement/${deleteById}`,
-				method: 'PATCH',
-				body: updated
+		showAnnouncement: builder.mutation<
+			ANNOUNCEMENT.EditAnnouncementResponse,
+			ANNOUNCEMENT.EditAnnouncementRequest
+		>({
+			query: ({ deleteById, newAnnoun }) => ({
+				url: `/api/announcement/view/${deleteById}`,
+				method: 'PUT',
+				body: newAnnoun
 			}),
 			invalidatesTags: ['announcement']
 		})
@@ -63,6 +66,6 @@ export const {
 	useGetAnnouncementTableQuery,
 	usePostAnnouncementTableMutation,
 	useDeleteAnnouncementTableMutation,
-	usePatchAnnouncementTableMutation,
-	usePatchShowdMutationMutation
+	useEditAnnouncementMutation,
+	useShowAnnouncementMutation
 } = api;

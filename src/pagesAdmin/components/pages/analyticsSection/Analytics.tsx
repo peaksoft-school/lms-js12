@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import scss from './Analytics.module.scss';
-import { useGetAnalyticsQuery } from '@/src/redux/api/analytics';
+import { useGetAnalyticsGroupsQuery } from '@/src/redux/api/analytics';
 import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 
 ChartJS.register(
@@ -53,22 +53,25 @@ function Analytics() {
 		]
 	});
 
-	const { data, isLoading } = useGetAnalyticsQuery();
+	const { data, isLoading } = useGetAnalyticsGroupsQuery();
 
 	useEffect(() => {
 		if (data && data.length) {
 			const labels = data.map((item) => item.year.toString());
-			const userGains = data.map((item) => item.userGain);
-			const userLosts = data.map((item) => item.userLost);
+			const userStudents = data.map((item) => item.groups);
+			const userGraduated = data.map((item) => item.courses);
+			const userGroup = data.map((item) => item.instructors);
+			const userCourse = data.map((item) => item.students);
+			const userInstructors = data.map((item) => item.graduated);
 
 			setChartData({
 				labels: labels,
 				datasets: [
 					{
-						label: 'Users Gained',
-						data: userGains,
+						label: 'Groups',
+						data: userGroup,
 						backgroundColor: [
-							'rgba(75,192,192,1)',
+							'#2a71d0',
 							'#ecf0f1',
 							'#50AF95',
 							'#f3ba2f',
@@ -78,8 +81,47 @@ function Analytics() {
 						borderWidth: 2
 					},
 					{
-						label: 'Users Lost',
-						data: userLosts,
+						label: 'Course',
+						data: userCourse,
+						backgroundColor: [
+							'#2a71d0',
+							'#ecf0f1',
+							'#50AF95',
+							'#f3ba2f',
+							'#2a71d0'
+						],
+						borderColor: 'black',
+						borderWidth: 2
+					},
+					{
+						label: 'Instructor',
+						data: userInstructors,
+						backgroundColor: [
+							'#2a71d0',
+							'#ecf0f1',
+							'#50AF95',
+							'#f3ba2f',
+							'#2a71d0'
+						],
+						borderColor: 'black',
+						borderWidth: 2
+					},
+					{
+						label: ' Students',
+						data: userStudents,
+						backgroundColor: [
+							'#2a71d0',
+							'#ecf0f1',
+							'#50AF95',
+							'#f3ba2f',
+							'#2a71d0'
+						],
+						borderColor: 'black',
+						borderWidth: 2
+					},
+					{
+						label: 'Graduated',
+						data: userGraduated,
 						backgroundColor: [
 							'rgba(255,99,132,1)',
 							'#ecf0f1',
