@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import scss from './Lesson.module.scss';
 import { useState } from 'react';
 import {
@@ -13,10 +13,11 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import VideoLessonPage from '../VideoLessonPage';
 
 import PresentationPage from '../PresentationPage';
-import { ScrollArea } from '@mantine/core';
+import { Box, ScrollArea } from '@mantine/core';
 import CrateTask from '../createTaskSection/CrateTask';
 import GetTask from '../getTaskSection/GetTask';
 import Test from '../testSection/TestInstructor';
+import Link from '../linkSection/Link';
 
 const Lesson = () => {
 	const [value, setValue] = useState(0);
@@ -37,6 +38,9 @@ const Lesson = () => {
 	const handleOpenVideo = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/video`);
 	};
+	const handleOpenLink = () => {
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/link`);
+	};
 	const openLesson = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/lesson`);
 	};
@@ -44,6 +48,7 @@ const Lesson = () => {
 	const handleOpenTest = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/test`);
 	};
+	
 
 	return (
 		<div className={scss.lesson}>
@@ -53,7 +58,6 @@ const Lesson = () => {
 					background: '#fff',
 					borderRadius: '10px',
 					width: '100%'
-					// overflowY: 'scroll'
 				}}
 			>
 				<div
@@ -64,12 +68,13 @@ const Lesson = () => {
 				>
 					<div className={scss.container}>
 						<div className={scss.content}>
-							<ScrollArea type="always" offsetScrollbars classNames={scss}>
+							<ScrollArea type="always" scrollbars="xy">
 								<Box>
 									<Tabs
 										value={value}
 										onChange={handleChange}
 										aria-label="basic tabs example"
+										className={scss.tabs}
 									>
 										<Tab
 											icon={<IconBrandYoutubeKids stroke={2} />}
@@ -99,6 +104,7 @@ const Lesson = () => {
 											icon={<IconLink stroke={2} />}
 											label="Ссылка"
 											className={scss.tab}
+											onClick={handleOpenLink}
 											id="simple-tab-3"
 											aria-controls="simple-tabpanel-3"
 										/>
@@ -166,6 +172,12 @@ const Lesson = () => {
 								`/instructor/course/${courseId}/materials/${lessonId}/test` && (
 								<>
 									<Test />
+								</>
+							)}
+							{pathname ===
+								`/instructor/course/${courseId}/materials/${lessonId}/link` && (
+								<>
+									<Link />
 								</>
 							)}
 						</div>

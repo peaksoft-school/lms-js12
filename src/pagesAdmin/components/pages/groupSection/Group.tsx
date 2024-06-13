@@ -49,13 +49,11 @@ const Groups: FC = () => {
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
-	const handlePoginationForFunk = (page: number) => {
+	const handlePagination = (page: number) => {
 		navigate(`/admin/group/page/${page}/size/${size}`);
 	};
 
 	const handlePageShowChange = (size: string) => {
-		// console.log(size);
-
 		if (e.key === 'Enter') {
 			navigate(`/admin/group/page/${numberGroup}/size/${size}`);
 		}
@@ -84,15 +82,12 @@ const Groups: FC = () => {
 							<span>Создать группу</span>
 						</Button>
 					</div>
-
 					<h1 className={scss.title}>Группы</h1>
-
 					<div>
 						<div className={scss.cards}>
 							{
 								<div className={scss.card}>
 									{data?.groupResponses.map((item) => (
-										// console.log(item),
 										<div key={item.id} className={scss.zero_block_container}>
 											<Link to={`/admin/group/${item.id}`}>
 												<div className={scss.block_photo_cards}>
@@ -115,7 +110,6 @@ const Groups: FC = () => {
 													</div>
 												</div>
 											</Link>
-
 											<div className={scss.block_button_div}>
 												<div onClick={handleClick}>
 													<button
@@ -188,7 +182,6 @@ const Groups: FC = () => {
 						</div>
 					</div>
 				</div>
-
 				<div className={scss.pagination}>
 					<div className={scss.inputs}>
 						<p className={scss.text}>Перейти на страницу</p>
@@ -201,7 +194,7 @@ const Groups: FC = () => {
 							onChange={(e) => setOpenPart(+e.target.value)}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
-									handlePoginationForFunk(openPart);
+									handlePagination(openPart);
 								}
 							}}
 						/>
@@ -236,7 +229,6 @@ const Groups: FC = () => {
 							}}
 						/>
 					</div>
-
 					<CreateGroup
 						handleOpen={handleOpen}
 						open={openGroups}

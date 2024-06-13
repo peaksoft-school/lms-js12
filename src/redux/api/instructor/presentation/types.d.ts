@@ -1,21 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace MATERIALS {
+namespace PRESENTATION {
 	type getResponsePresentation = {
-		_id: number;
+		id: number;
 		title: string;
-		presentation: string;
+		file: string | File;
 		description: string;
 	}[];
-	type getRequestPresentation = void;
+	type getRequestPresentation = number;
 
 	type CreateResponsePresentation = {
-		title: string;
-		presentation: File | null;
-		description: string;
-	}[];
+		lessonId: number;
+		presentationData: {
+			title: string;
+			file: string | File;
+			description: string;
+		}[];
+	};
 	type CreateRequestPresentation = {
-		title: string;
-		presentation: File | null;
-		description: string;
+		lessonId: number;
+		presentationData: {
+			title: string;
+			file: string | File;
+			description: string;
+		};
 	};
 }

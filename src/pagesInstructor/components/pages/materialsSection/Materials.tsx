@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 572161c024e35298438f6d3244f0c897aebf600c
 import { FC, useState, useEffect } from 'react';
 import scss from './Materials.module.scss';
 import deleteIcon from '@/src/assets/svgs/delete-red.svg';
@@ -23,7 +26,6 @@ import {
 	DropResult
 } from '@hello-pangea/dnd';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { Box, ScrollArea } from '@mantine/core';
 
 interface TodoProps {
@@ -308,7 +310,6 @@ const Materials: FC = () => {
 							</Box>
 						</ScrollArea>
 					</div>
-
 					<div className={scss.pagination}>
 						<div className={scss.Inputs}>
 							<p className={scss.text}>Перейти на страницу</p>

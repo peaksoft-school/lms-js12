@@ -10,7 +10,7 @@ const api = index.injectEndpoints({
 				url: `/api/lessons/${lessonId}`,
 				method: 'GET'
 			}),
-			providesTags: ['materialslesson']
+			providesTags: ['materialsLesson']
 		}),
 		getStudentMaterialsHomeWork: builder.query<
 			STUDENTLESSONMATERIALS.MaterialsHomeWorkGetResponse,
@@ -20,7 +20,7 @@ const api = index.injectEndpoints({
 				url: `/api/tasks/taskOfLesson/${lessonId}`,
 				method: 'GET'
 			}),
-			providesTags: ['materialslesson']
+			providesTags: ['materialsLesson']
 		})
 	})
 });
@@ -28,11 +28,3 @@ export const {
 	useGetStudentMaterialsWorkQuery,
 	useGetStudentMaterialsHomeWorkQuery
 } = api;
-
-
-
-
-
-
-
-

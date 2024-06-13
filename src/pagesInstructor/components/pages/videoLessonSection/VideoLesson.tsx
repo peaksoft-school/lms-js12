@@ -1,8 +1,10 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 572161c024e35298438f6d3244f0c897aebf600c
 import { useGetVideoLessonQuery } from '@/src/redux/api/instructor/video';
 import scss from './VideoLesson.module.scss';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { Button, Menu, MenuItem } from '@mui/material';
 import ModalAddVideoLesson from '@/src/ui/InstructorModal/ModalAddVideoLesson';
 import { useState } from 'react';
@@ -13,25 +15,22 @@ import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import ModalEditVideo from '@/src/ui/InstructorModal/ModalEditVideo';
 import DeleteVideoLesson from '@/src/ui/customModal/deleteModal/DeleteVideoLesson';
 import { useParams } from 'react-router-dom';
+import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 
 const VideoLesson = () => {
-	// Получение параметров из URL
 	const { lessonId } = useParams();
-
-	// Запрос на сервер для получения видеоуроков
-	const { data, isLoading } = useGetVideoLessonQuery(lessonId);
-
-	// Состояния модальных окон
+	const test = Number(lessonId);
+	const { data, isLoading } = useGetVideoLessonQuery(test);
 	const [openEditVideo, setOpenEditVideo] = useState(false);
-	const [openWatch, setOpenWatch] = useState(false);
+	const [openWatch, setWatchOpen] = useState(false);
 	const [openAdd, setOpenAdd] = useState(false);
-	const [saveId, setSaveId] = useState(null);
+	const [saveId, setSaveId] = useState<number | null>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
-	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [openVideoId, setOpenVideoId] = useState<null | number>(null);
 
 	const open = Boolean(anchorEl);
-
-	const handleClick = (event) => {
+	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 
@@ -42,7 +41,6 @@ const VideoLesson = () => {
 	const handleOpenVideo = () => {
 		setOpenAdd(true);
 	};
-
 	const handleCloseVideo = () => {
 		setOpenAdd(false);
 	};
@@ -51,16 +49,22 @@ const VideoLesson = () => {
 		setOpenEditVideo(false);
 	};
 
-	const handleOpenWatch = () => {
-		setOpenWatch(true);
+	const handleOpenWatch = (id: number) => {
+		setWatchOpen(true);
+		setOpenVideoId(id);
 	};
 
 	const handleCloseWatch = () => {
-		setOpenWatch(false);
+		setWatchOpen(false);
+		setOpenVideoId(null);
 	};
 
 	if (isLoading) {
-		return <Preloader />;
+		return (
+			<div>
+				<Preloader />
+			</div>
+		);
 	}
 
 	return (
@@ -90,10 +94,13 @@ const VideoLesson = () => {
 						<div className={scss.cards}>
 							<div className={scss.photo}>
 								<img
-									src={`https://img.youtube.com/vi/${item.linkOfVideo}/mqdefault.jpg`}
-									alt=""
+									src={`https://img.youtube.com/vi/${item.linkOfVideo.split('&')[0]}/0.jpg`}
+									alt={item.titleOfVideo}
 								/>
-								<div onClick={handleOpenWatch} className={scss.button_watch}>
+								<div
+									onClick={() => handleOpenWatch(item.id)}
+									className={scss.button_watch}
+								>
 									<Button
 										sx={{
 											borderRadius: '8px',
@@ -105,7 +112,6 @@ const VideoLesson = () => {
 										}}
 										size="medium"
 										variant="contained"
-										onClick={handleOpenWatch}
 									>
 										Смотреть
 									</Button>
@@ -115,7 +121,6 @@ const VideoLesson = () => {
 								<div className={scss.text}>
 									<h1>{item.titleOfVideo}</h1>
 									<p>{item.description}</p>
-									<p>{item.createdAt}</p>
 								</div>
 								<div className={scss.dots}>
 									<div onClick={handleClick}>
@@ -175,9 +180,13 @@ const VideoLesson = () => {
 				))}
 			</div>
 			<ModalAddVideoLesson open={openAdd} handleCloseVideo={handleCloseVideo} />
-			<ModalWatchVideo open={openWatch} handleClose={handleCloseWatch} />
+			<ModalWatchVideo
+				saveId={openVideoId!}
+				open={openWatch}
+				handleClose={handleCloseWatch}
+			/>
 			<ModalEditVideo
-				deleteById={saveId}
+				saveIdElement={saveId}
 				openModalEdit={openEditVideo}
 				closeModalEdit={handleVideoEdit}
 			/>
