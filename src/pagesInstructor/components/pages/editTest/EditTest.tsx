@@ -101,19 +101,19 @@ const EditTest = () => {
 		inputs.map((input, index) => (
 			<div key={index} className={scss.input_div}>
 				<div className={scss.variant_inputs}>
-					{input.isTrue === 2 ? (
+					{data?.questionResponseList[questionIndex].questionType ===
+					'MULTIPLE' ? (
 						<div className={scss.radio_checkbox}>
 							<Controller
-								name={`option_1_isTrue_${index}`}
+								name={`option_${questionIndex}_${index}_isTrue`}
 								control={control}
 								render={({ field }) => (
 									<label>
 										<input
 											{...field}
 											style={{ cursor: 'pointer' }}
-											type="radio"
-											name="option_1"
-											value={index}
+											type="checkbox"
+											// checked{}
 										/>
 									</label>
 								)}
@@ -122,47 +122,49 @@ const EditTest = () => {
 					) : (
 						<div className={scss.radio_checkbox}>
 							<Controller
-								name={`option_1_isTrue_${index}`}
+								name={`option_${questionIndex}_${index}_isTrue`}
 								control={control}
 								render={({ field }) => (
 									<label>
 										<input
 											{...field}
 											style={{ cursor: 'pointer' }}
-											type="checkbox"
-											value={index}
+											type="radio"
+											name={`option_${questionIndex}`}
 										/>
 									</label>
 								)}
 							/>
 						</div>
 					)}
-					<Controller
-						name={`optionValue_${questionIndex}_${index}`}
-						control={control}
-						defaultValue={input.value}
-						render={({ field }) => (
-							<Input
-								{...field}
-								size="small"
-								placeholder={`Вариант ${index + 1}`}
-								type="text"
-								width="100%"
-							/>
-						)}
-					/>
-					<div className={scss.notice}>
-						<button
-							className={scss.button_cancel}
-							type="button"
-							onClick={() => {
-								const newInputs = [...inputs];
-								newInputs.splice(index, 1);
-								setInputs(newInputs);
-							}}
-						>
-							<span className={scss.delete_icon}>&times;</span>
-						</button>
+					<div className={scss.option_input}>
+						<Controller
+							name={`optionValue_${questionIndex}_${index}`}
+							control={control}
+							defaultValue={input.value}
+							render={({ field }) => (
+								<Input
+									{...field}
+									size="small"
+									placeholder={`Вариант ${index + 1}`}
+									type="text"
+									width="100%"
+								/>
+							)}
+						/>
+						<div className={scss.notice}>
+							<button
+								className={scss.button_cancel}
+								type="button"
+								onClick={() => {
+									const newInputs = [...inputs];
+									newInputs.splice(index, 1);
+									setInputs(newInputs);
+								}}
+							>
+								<span className={scss.delete_icon}>&times;</span>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

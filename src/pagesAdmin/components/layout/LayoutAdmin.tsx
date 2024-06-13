@@ -200,7 +200,7 @@ const LayoutAdmin = () => {
 						/>
 						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
 						<Route
-							path="/group/page/:numberGroup/size/:size"
+							path="/group/page"
 							element={<Groups />}
 						/>
 						<Route path="/announcement" element={<AnnouncementPage />} />

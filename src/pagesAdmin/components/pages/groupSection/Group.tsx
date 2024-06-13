@@ -14,22 +14,20 @@ import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup';
 import EditGroup from '@/src/ui/customModal/editGroup/EditGroup';
 import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
 import { Button } from '@mui/material';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 const Groups: FC = () => {
-	const { numberGroup, size } = useParams();
 	const navigate = useNavigate();
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState('12');
+	const [currentPage, setCurrentPage] = useState(0);
+	const [openPage, setOpenPage] = useState(12);
 	const [openGroups, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,21 +44,25 @@ const Groups: FC = () => {
 		setCurrentPage(page);
 	};
 
+	const handleInputValue = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString === '0' ? '1' : valueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/group/page/?${searchParams.toString()}`);
+	};
+
+	const handleInputValuePaginationSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/group/page/?${searchParams.toString()}`);
+	};
+
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
-	const handlePagination = (page: number) => {
-		navigate(`/admin/group/page/${page}/size/${size}`);
-	};
-
-	const handlePageShowChange = (size: string) => {
-		if (e.key === 'Enter') {
-			navigate(`/admin/group/page/${numberGroup}/size/${size}`);
-		}
-	};
-
 	const { data } = useGetGroupQuery({
-		page: numberGroup === ':numberGroup' ? '1' : numberGroup!,
-		size: openPage
+		page: searchParams.toString(),
+		size: searchParams.toString()
 	});
 
 	return (
@@ -189,11 +191,14 @@ const Groups: FC = () => {
 						</div>
 						<input
 							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
+							value={currentPage}
+							onChange={(e) => {
+								handleInputValue(Number(e.target.value));
+							}}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
-									handlePagination(openPart);
+									// navigate(`/${page}`);
+									handleInputValue(currentPage);
 								}
 							}}
 						/>
@@ -201,9 +206,9 @@ const Groups: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(
-									(data?.groupResponses?.length || 0) / rowsPerPage
-								)}
+								// count={Math.ceil(
+								// 	(data?.groupResponses?.length || 0) / rowsPerPage
+								// )}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -220,10 +225,14 @@ const Groups: FC = () => {
 						<input
 							type="text"
 							value={openPage}
-							onChange={(e) => setOpenPage(e.target.value)}
+							onChange={(e) => {
+								setOpenPage(e.target.value);
+								handleInputValuePaginationSize(Number(e.target.value));
+							}}
 							onKeyDown={(e) => {
 								if (e.key === 'Enter') {
-									handlePageShowChange(openPage);
+									// handlePageShowChange(openPage);
+									handleInputValuePaginationSize(openPage);
 								}
 							}}
 						/>

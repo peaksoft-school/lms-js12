@@ -9,12 +9,15 @@ namespace GROUPS {
 		image: string;
 	};
 
+	type GroupsRequest = {
+		page?: string;
+		size?: string;
+	};
 	type GroupsResponse = {
 		groupResponses: GroupResponses[];
-		page: number;
-		size: number;
+		page: string;
+		size: string;
 	};
-	type GroupsRequest = void;
 	type CreateGroupResponse = {
 		title: string;
 		dateOfEnd: string;

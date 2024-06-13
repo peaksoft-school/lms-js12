@@ -43,7 +43,6 @@
 				background: #fff;
 				border-radius: 13px;
 				.input_text {
-				
 					display: flex;
 					gap: 20px;
 					align-items: center;
@@ -82,37 +81,6 @@
 						height: 30px;
 					}
 				}
-
-				.variant_inputs {
-					display: flex;
-					width: 100%;
-					align-items: center;
-					padding-top: 20px;
-				}
-
-				.notice {
-					position: relative;
-
-					.button_cancel {
-						position: absolute;
-						top: 50%;
-						right: 10px;
-						transform: translateY(-50%);
-						border: none;
-						outline: none;
-						background: transparent;
-						border-radius: 4px;
-						cursor: pointer;
-						transition: 0.2s;
-						&:hover {
-							background: #dcdcdc;
-						}
-
-						span {
-							font-size: 20px;
-						}
-					}
-				}
 			}
 
 			.p_text2 {
@@ -134,4 +102,39 @@
 		justify-content: flex-end;
 		gap: 20px;
 	}
+}
+
+.variant_inputs {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 20px;
+	gap: 17px;
+	
+.option_input {
+	position: relative;
+	width: 100%;
+	.notice {
+		.button_cancel {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			border: none;
+			outline: none;
+			background: transparent;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: 0.2s;
+			&:hover {
+				background: #dcdcdc;
+			}
+
+			span {
+				font-size: 20px;
+			}
+		}
+	}
+}
 }

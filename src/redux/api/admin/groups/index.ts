@@ -4,8 +4,11 @@ export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getGroup: builder.query<GROUPS.GroupsResponse, GROUPS.GroupsRequest>({
 			query: ({ page, size }) => ({
-				url: `/api/groups?page=${page !== null ? page : '1'}&size=${size !== null ? size : '12'}`,
-				method: 'GET'
+				url: `/api/groups?${page}&${size}`,
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
 			}),
 			providesTags: ['groups']
 		}),
