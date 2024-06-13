@@ -19,8 +19,9 @@ import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import AddTaskPage from '../pages/AddTaskPage';
 import EditTask from '../pages/editTaskSection/EditTask';
 import GetTask from '../pages/getTaskSection/GetTask';
-import Answer from '../pages/answerSection/Answer';
+// import Answer from '../pages/addTaskSection/answerSection/Answer';
 import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
+import Answer from '../pages/answerSection/Answer';
 
 import RatingStudentsPage from '../pages/RatingStudentsPage';
 // import { Breadcrumbs } from '@mui/material';
@@ -154,7 +155,7 @@ const LayoutInstructor = () => {
 						/>
 						<Route
 							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"
-							element={<Answer />}
+							element={<Answer/>}
 						/>
 
 						<Route
@@ -167,7 +168,7 @@ const LayoutInstructor = () => {
 						/>
 
 						<Route
-							path="/course/:courseId/materials/:lessonId/lesson/update"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/update"
 							element={<EditTask />}
 						/>
 						<>
@@ -216,11 +217,6 @@ const LayoutInstructor = () => {
 							<Route
 								path="/course/:courseId/materials/:lessonId/lesson/addTask"
 								element={<AddTaskPage />}
-							/>
-
-							<Route
-								path="/course/:courseId/materials/:lessonId/lesson/update"
-								element={<EditTask />}
 							/>
 						</>
 						<Route

@@ -21,11 +21,14 @@ const DeleteTask: React.FC<DeleteProps> = ({
 }) => {
 	const [deleteTaskInstructor] = useDeleteTaskInstructorMutation();
 
-	const handleDelete = async () => {
-		await deleteTaskInstructor(deleteById!);
-		closeModalDelete(false);
-	};
 	console.log(deleteById);
+	
+	const handleDelete = async () => {
+		if (deleteById !== null) {
+			await deleteTaskInstructor(deleteById);
+			closeModalDelete(false);
+		}
+	};
 
 	return (
 		<div>
@@ -76,3 +79,71 @@ const DeleteTask: React.FC<DeleteProps> = ({
 };
 
 export default DeleteTask;
+
+
+
+
+
+
+// const DeleteTask: React.FC<DeleteProps> = ({
+// 	openModalDelete,
+// 	closeModalDelete,
+// 	deleteById
+// }) => {
+// 	const [deleteTaskInstructor] = useDeleteTaskInstructorMutation();
+
+// 	const handleDelete = async () => {
+// 		await deleteTaskInstructor(deleteById!);
+// 		closeModalDelete(false);
+// 	};
+// 	console.log(deleteById);
+
+// 	return (
+// 		<div>
+// 			<React.Fragment>
+// 				<div>
+// 					<Dialog
+// 						open={openModalDelete}
+// 						aria-labelledby="alert-dialog-title"
+// 						aria-describedby="alert-dialog-description"
+// 						PaperProps={{
+// 							className: scss.dialog_paper
+// 						}}
+// 					>
+// 						<DialogContent>
+// 							<DialogContentText id="alert-dialog-description">
+// 								<h3>Вы уверены, что хотите удалить этого студента?</h3>
+// 							</DialogContentText>
+// 						</DialogContent>
+// 						<DialogActions className={scss.buttons}>
+// 							<ButtonCancel
+// 								width="103px"
+// 								type="button"
+// 								disabled={false}
+// 								onClick={() => {
+// 									closeModalDelete(false);
+// 								}}
+// 							>
+// 								отмена
+// 							</ButtonCancel>
+// 							<Button
+// 								onClick={handleDelete}
+// 								autoFocus
+// 								style={{
+// 									backgroundColor: '#F70D1A',
+// 									color: '#fff',
+// 									width: '108px',
+// 									height: '40px'
+// 								}}
+// 							>
+// 								Удалить
+// 							</Button>
+// 						</DialogActions>
+// 					</Dialog>
+// 				</div>
+// 			</React.Fragment>
+// 		</div>
+// 	);
+// };
+
+// export default DeleteTask;

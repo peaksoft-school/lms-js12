@@ -24,26 +24,48 @@ export const api = index.injectEndpoints({
 			TASK.UpdateTaskResponse,
 			TASK.UpdateTaskRequest
 		>({
-			query: ({ newtask, getTaskId,taskId }) => ({
-				url: `/api/tasks/${taskId}`,
+			query: ({ newtask, getTaskId }) => ({
+				url: `/api/tasks/${getTaskId}`,
 				method: 'PATCH',
 				body: newtask
 			}),
 			invalidatesTags: ['addTask']
 		}),
 		deleteTaskInstructor: builder.mutation({
-			query: ({deleteById,taskId}) => ({
-				url: `/api/tasks/${taskId}`,
+			query: (deleteById) => ({
+				url: `/api/tasks/${deleteById}`,
 				method: 'DELETE'
+			}),
+			invalidatesTags: ['addTask']
+		}),
+		getInstructorTask: builder.query<TASK.getTask, TASK.getTask>({
+			query: (answerId) => ({
+				url: `/api/resultTask/${answerId}`,
+				method: 'GET'
+			}),
+			providesTags: ['addTask']
+		}),
+
+		patchTaskInstructor: builder.mutation<
+			TASK.patchTaskResponse,
+			TASK.patchTaskResponse
+		>({
+			query: ({ newComment, answerId }) => ({
+				url: `/api/resultTask/${answerId}`,
+				method: 'PATCH',
+				body: newComment
 			}),
 			invalidatesTags: ['addTask']
 		})
 	})
 });
 
+
 export const {
 	useGetTaskInstructorQuery,
 	useCreateTaskInstructorMutation,
 	useEditTaskInstructorMutation,
-	useDeleteTaskInstructorMutation
+	useDeleteTaskInstructorMutation,
+	useGetInstructorTaskQuery,
+	usePatchTaskInstructorMutation
 } = api;

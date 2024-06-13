@@ -1,219 +1,5 @@
-// import Input from '@/src/ui/customInput/Input';
-// import scss from './AddTask.module.scss';
-// import { useRef, useState } from 'react';
-// import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-// import { Button } from '@mui/material';
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
-// import { useCreateTaskInstructorMutation } from '@/src/redux/api/instructor/addTask';
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-// import { useNavigate, useParams } from 'react-router-dom';
-// import { IconDownload } from '@tabler/icons-react';
-// import { Dayjs } from 'dayjs';
-// import { Box, ScrollArea } from '@mantine/core';
-// const AddTask = () => {
-// 	// const { courseId, lessonId } = useParams();
-// 	const [title, setTitle] = useState('');
-// 	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
-// 		null
-// 	);
-// 	const [value, setValue] = useState('');
-// 	// const {lessonId} = useParams()
-// 	const { courseId, lessonId } = useParams();
-
-// 	const [createTaskInstructor] = useCreateTaskInstructorMutation(lessonId);
-// 	const navigate = useNavigate();
-
-// 	const fileInputRef = useRef<HTMLInputElement>(null);
-
-// 	const openFilePicker = () => {
-// 		fileInputRef.current?.click();
-// 	};
-// 	const modules = {
-// 		toolbar: [
-// 			[[{ header: [1, 2, 3, 4, 5, 6, false] }]],
-// 			[{ font: [] }],
-// 			[{ size: [] }],
-// 			[
-// 				'bold',
-// 				'italic',
-// 				'underline',
-// 				'strike',
-// 				'blockquote',
-// 				'link',
-// 				'image',
-// 				'code-block'
-// 			],
-// 			[
-// 				{ list: 'ordered' },
-// 				{ list: 'bullet' },
-// 				{ indent: '-1' },
-// 				{ indent: '+1' }
-// 			],
-// 			[{ color: [] }, { background: [] }]
-// 		]
-// 	};
-
-// 	const addTask = async () => {
-// 		const selectedFile = fileInputRef.current?.files?.[0];
-// 		console.log(selectedFile);
-
-// 		const newtask = {
-// 			title,
-// 			description: value,
-// 			file: selectedFile,
-// 			dedline: selectedDate
-// 		};
-
-// 		await createTaskInstructor(newtask);
-// 		setValue('');
-// 		setTitle('');
-// 		setSelectedDate(null);
-// 	};
-
-// 	// const addTask = async () => {
-// 	// 	const newtask = {
-// 	// 		file: fileInputRef,
-// 	// 		title,
-// 	// 		description: value,
-// 	// 		dedline: selectedDate
-// 	// 	};
-// 	// 	await createTaskInstructor(newtask);
-// 	// 	setValue('');
-// 	// 	setTitle('');
-// 	// 	setSelectedDate(null);
-// 	// };
-
-// 	return (
-// <div className={scss.addTask}>
-// 	<h1>Материалы</h1>
-// 	<ScrollArea
-// 		type="always"
-// 		scrollbars="y"
-// 		offsetScrollbars
-// 		classNames={scss}
-// 	>
-// 		<Box>
-// 			<div className={scss.container}>
-// 				<div className={scss.main_task}>
-// 					<div
-// 						style={{
-// 							display: 'flex',
-// 							justifyContent: 'space-between',
-// 							alignItems: 'center'
-// 						}}
-// 					>
-// 						<p style={{ color: '#1f6ed4' }}>Создать задание</p>
-// 						<div className={scss.save_file}>
-// 							<input
-// 								type="file"
-// 								ref={fileInputRef}
-// 								style={{ display: 'none' }}
-// 								onChange={() => {}}
-// 							/>
-// 							<ButtonCancel
-// 								disabled={false}
-// 								width="207px"
-// 								onClick={openFilePicker}
-// 								type="button"
-// 							>
-// 								<span> Загрузить файл</span> <IconDownload stroke={2} />
-// 							</ButtonCancel>
-// 						</div>
-// 					</div>
-// 					<div className={scss.input_part}>
-// 						<Input
-// 							value={title}
-// 							onChange={(e) => setTitle(e.target.value)}
-// 							size="small"
-// 							type="text"
-// 							width="100%"
-// 							placeholder="Название задания"
-// 						/>
-// 					</div>
-// 					<div className={scss.secon_part}>
-// 						<div className={scss.second_part}>
-// 							<div className={scss.editor}>
-// 								<ReactQuill
-// 									theme="snow"
-// 									value={value}
-// 									onChange={(newValue) => setValue(newValue)}
-// 									className={scss.editorInput}
-// 									modules={modules}
-// 								/>
-// 								{value.includes('<img') && (
-// 									<div className={scss.button}>
-// 										<Button
-// 											className={scss.btn}
-// 											onClick={() => setValue('')}
-// 										>
-// 											Удалить
-// 										</Button>
-// 									</div>
-// 								)}
-// 								{value.includes('<a') && (
-// 									<div className={scss.link}>
-// 										<Button
-// 											className={scss.btn}
-// 											onClick={() => setValue('')}
-// 										>
-// 											x
-// 										</Button>
-// 									</div>
-// 								)}
-// 							</div>
-// 						</div>
-// 					</div>
-// 				</div>
-// 			</div>
-// 			<div className={scss.calendar}>
-// 				<div className={scss.dataInput}>
-// 					<p>Срок сдачи:</p>
-// 					<LocalizationProvider dateAdapter={AdapterDayjs}>
-// 						<DemoContainer components={['DateTimePicker']}>
-// 							<DateTimePicker
-// 								label="Выберите дату и время"
-// 								value={selectedDate}
-// 								onChange={(newDate) => setSelectedDate(newDate)}
-// 							/>
-// 						</DemoContainer>
-// 					</LocalizationProvider>
-// 				</div>
-
-// 				<div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-// 					<ButtonCancel
-// 						type="button"
-// 						disabled={false}
-// 						width="105px"
-// 						onClick={() =>
-// 							navigate(
-// 								`/instructor/course/${courseId}/materials/${lessonId}/lesson`
-// 							)
-// 						}
-// 					>
-// 						Отмена
-// 					</ButtonCancel>
-// 					<Button
-// 						variant="contained"
-// 						style={{ padding: '10px 24px', borderRadius: '8px' }}
-// 						onClick={addTask}
-// 					>
-// 						Добавить
-// 					</Button>
-// 				</div>
-// 			</div>
-// 		</Box>
-// 	</ScrollArea>
-// </div>
-// 	);
-// };
-
-// export default AddTask;
-
-import React, { useState, useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useRef, useEffect } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './AddTask.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
@@ -243,78 +29,103 @@ const AddTask = () => {
 	const [createTaskInstructor] = useCreateTaskInstructorMutation();
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [hidePhoto, setHidePhoto] = useState(false);
+	const [saveSelect, setSelectedFile] = useState(null);
+	const [secondSave, setSecondSave] = useState(null);
+	const [description, setDescription] = useState('');
 
-	// const openFilePicker = () => {
-	// 	fileInputRef.current?.click();
-
-	// };
-	const openFilePicker = async (event: React.ChangeEvent<HTMLInputElement>) => {
-		fileInputRef.current?.click();
-		const file = event.target.files?.[0];
-		if (file) {
-			const reader = new FileReader();
-			setHidePhoto(true);
-
-			reader.onload = async (e) => {
-				if (e.target) {
-					const imageUrl = e.target.result as string;
-					setValue(imageUrl);
-					const fileObjec = {
-						fileName: file.name,
-						urlFile: imageUrl
-					};
-
-					await createGroupFile(fileObjec);
-					setTitle(file.name);
-				}
-			};
-
-			reader.readAsDataURL(file);
+	const handleFileSelect = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const files = event.target.files;
+		if (files && files[0]) {
+			const file = files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+			formData.append('description', description);
+			try {
+				const response: any = await createGroupFile(formData as any);
+				const test = JSON.parse(response.data);
+				const fileName = test.fileName;
+				setSelectedFile(fileName);
+				setDescription(description);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			}
 		}
 	};
 
-	const addTask = async () => {
+	function dataURItoBlob(dataURI) {
+		const [mime, data] = dataURI.split(';base64,');
+
+		const binary = atob(data);
+
+		const arrayBuffer = new ArrayBuffer(binary.length);
+		const uint8Array = new Uint8Array(arrayBuffer);
+
+		for (let i = 0; i < binary.length; i++) {
+			uint8Array[i] = binary.charCodeAt(i);
+		}
+
+		return new Blob([uint8Array], { type: mime });
+	}
+
+	const handleImageUpload = async (imageData, description) => {
+		const blob = dataURItoBlob(imageData);
+		const file = new File([blob], 'filename.jpg', { type: 'image/jpeg' });
+
+		const formData = new FormData();
+		formData.append('file', file);
+		const cleanedDescription = description.replace(/\\/g, '');
+		formData.append('description', cleanedDescription);
+
 		try {
-			const selectedFile = fileInputRef.current?.files?.[0];
-
-			const newtask = {
-				file: selectedFile,
-				title,
-				description: value,
-				deadline: selectedDate
-			};
-
-			console.log(newtask);
-
-			await createTaskInstructor({ newtask, lessonId });
-			setTitle('');
-			setValue('');
-			setSelectedDate(null);
+			const response = await createGroupFile(formData);
+			if (response && response.data && response.data.fileName) {
+				setSecondSave(response.data.urlFile);
+			} else {
+				console.error('Invalid response from server:', response);
+			}
 		} catch (error) {
-			console.error('Ошибка при добавлении задания:', error);
+			console.error('Error uploading image:', error);
 		}
-	
 	};
 
-	// const addTask = async () => {
-	// 	const selectedFile = fileInputRef.current?.files?.[0];
 
-	// 	const newtask = {
-	// 		file: selectedFile,
-	// 		title,
-	// 		description: value,
-	// 		deadline: selectedDate
-	// 	};
+	const handleEditorChange = (content, delta, source, editor) => {
+		setValue(content);
 
-	// 	console.log(newtask);
+		if (source === 'user' && delta.ops.length > 0) {
+			for (let i = 0; i < delta.ops.length; i++) {
+				const operation = delta.ops[i];
 
-	// 	await createTaskInstructor({ newtask, lessonId });
-	// 	setTitle('');
-	// 	setValue('');
-	// 	setSelectedDate(null);
-	// };
+				if (operation.insert && operation.insert.image) {
+					handleImageUpload(operation.insert.image, description);
+				}
+			}
+		}
+	};
+	
+	const addTask = async () => {
+		const newDescription = value.replace(
+			/<img[^>]*>/,
+			`<img src="${secondSave}"/>`
+		);
 
+
+		const newtask = {
+			title,
+			file: saveSelect,
+			description: newDescription,
+			deadline: selectedDate
+		};
+
+		await createTaskInstructor({ newtask, lessonId });
+		setTitle('');
+		setValue('');
+		setSelectedDate(null);
+	};
+
+	console.log(selectedDate);
 	const modules = {
 		toolbar: [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -365,12 +176,12 @@ const AddTask = () => {
 										type="file"
 										ref={fileInputRef}
 										style={{ display: 'none' }}
-										onChange={() => {}}
+										onChange={handleFileSelect}
 									/>
 									<ButtonCancel
 										disabled={false}
 										width="207px"
-										onClick={openFilePicker}
+										onClick={() => fileInputRef.current?.click()}
 										type="button"
 									>
 										<span> Загрузить файл</span> <IconDownload stroke={2} />
@@ -393,30 +204,10 @@ const AddTask = () => {
 										<ReactQuill
 											theme="snow"
 											value={value}
-											onChange={(newValue) => setValue(newValue)}
+											onChange={handleEditorChange}
 											className={scss.editorInput}
 											modules={modules}
 										/>
-										{value.includes('<img') && (
-											<div className={scss.button}>
-												<Button
-													className={scss.btn}
-													onClick={() => setValue('')}
-												>
-													Удалить
-												</Button>
-											</div>
-										)}
-										{value.includes('<a') && (
-											<div className={scss.link}>
-												<Button
-													className={scss.btn}
-													onClick={() => setValue('')}
-												>
-													x
-												</Button>
-											</div>
-										)}
 									</div>
 								</div>
 							</div>

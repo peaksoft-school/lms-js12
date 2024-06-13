@@ -17,6 +17,56 @@
 				padding-top: 30px;
 			}
 		}
+
+		.Osenks {
+			font-size: 15px;
+		}
+		.mainProfile {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+
+			.profile {
+				display: flex;
+				gap: 15px;
+				align-items: center;
+				justify-content: center;
+				margin-left: 530px;
+
+				@media (max-width: 768px) {
+					.profile {
+						// display: flex;
+						// gap: 15px;
+						// align-items: center;
+						// justify-content: center;
+						margin-right: 1600px;
+						margin-left: -1000px;
+					}
+				}
+			}
+			.grade_comment {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				height: 80px;
+
+				.auth {
+					font-size: 16px;
+					font-weight: 600;
+					display: flex;
+					gap: 20px;
+				}
+
+				.content {
+					width: 100%;
+					max-width: 600px;
+					background: #e8eff9;
+					padding-block: 20px;
+					border-radius: 10px;
+					padding-inline: 15px;
+				}
+			}
+		}
 		.comments {
 			margin-top: 30px;
 			display: flex;

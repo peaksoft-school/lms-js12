@@ -31,13 +31,13 @@ const CrateTask = () => {
 
 	const openLessonEditTask = () => {
 		navigate(
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/update`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${saveId}/update`
 		);
 	};
 
-	const GetTask = () => {
+	const GetTask = (id) => {
 		navigate(
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${id}/panding`
 		);
 	};
 	return (
@@ -64,10 +64,10 @@ const CrateTask = () => {
 							setSaveId(item.id);
 						}}
 					>
-						<p onClick={GetTask} className={scss.card_link}>
+						<p onClick={() => GetTask(item.id)} className={scss.card_link}>
 							{item.title}
 						</p>
-						<div className={scss.button}>
+						<div className={scss.button} onClick={() => setSaveId(item.id)}>
 							<button onClick={handleClick}>
 								<IconDotsVertical stroke={2} />
 							</button>
@@ -91,20 +91,12 @@ const CrateTask = () => {
 									onClick={() => {
 										openLessonEditTask();
 									}}
-									// onClick={() => {
-									// 	setOpenEditModal(true);ч
-									// 	setAnchorEl(null);
-									// }}
 								>
 									<img src={editImg} alt="#" />
 									Редактировать
 								</MenuItem>
 
 								<MenuItem
-									// onClick={() => {
-									// 	setOpenDelete(true);
-									// 	handleClose();
-									// }}
 									onClick={() => {
 										setOpenDelete(true);
 										setAnchorEl(null);
