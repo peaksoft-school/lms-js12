@@ -6,8 +6,8 @@ const api = index.injectEndpoints({
 			STUDENT_LESSON.MaterialsGetResponse,
 			STUDENT_LESSON.MaterialsGetRequest
 		>({
-			query: (courseId) => ({
-				url: `/api/lessons/all/${courseId}`,
+			query: (course) => ({
+				url: `/api/lessons/all/${course}`,
 				method: 'GET'
 			}),
 			providesTags: ['material']
@@ -16,8 +16,8 @@ const api = index.injectEndpoints({
 			STUDENT_LESSON.MaterialsPostResponse,
 			STUDENT_LESSON.MaterialsPostRequest
 		>({
-			query: ({ postData, courseId }) => ({
-				url: `/api/lessons/${courseId}`,
+			query: ({ postData, course }) => ({
+				url: `/api/lessons/${course}`,
 				method: 'POST',
 				body: postData
 			}),

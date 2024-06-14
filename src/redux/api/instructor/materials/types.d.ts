@@ -12,19 +12,19 @@ namespace STUDENT_LESSON {
 	type MaterialsGetRequest = number;
 
 	type MaterialsPostResponse = {
-		courseId: number;
+		course: number;
 		postData: {
 			title: string;
 			createdAt: string;
-		}[];
+		};
 	};
 
 	type MaterialsPostRequest = {
-		courseId: number;
+		course: number;
 		postData: {
 			title: string;
 			createdAt: string;
-		}[];
+		};
 	};
 
 	type MaterialsPatchResponse = {

@@ -7,9 +7,10 @@ namespace MATERIALS {
 		createdAt: string;
 	};
 	type MaterialsGetResponse = {
+		course: number;
 		lessonResponses: Lesson[];
 	};
-	type MaterialsGetRequest = void;
+	type MaterialsGetRequest = number;
 
 	type MaterialsPostResponse = {
 		title: string;

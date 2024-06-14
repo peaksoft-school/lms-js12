@@ -56,7 +56,6 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 				refetch();
 				closeModalEdit(false);
 			});
-			
 		}
 	};
 

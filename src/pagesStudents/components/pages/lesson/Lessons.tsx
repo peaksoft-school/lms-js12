@@ -12,9 +12,10 @@ const Lesson = () => {
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
+	const [rowsPerPage, setRowsPerPage] = useState(8);
+	const course = Number(coursesId);
 
-	const { data } = useGetStudentMaterialsQuery(coursesId);
+	const { data } = useGetStudentMaterialsQuery(course);
 
 	const navigate = useNavigate();
 
@@ -61,29 +62,24 @@ const Lesson = () => {
 					<Box>
 						<div style={{ minHeight: '70vh' }}>
 							<div className={scss.card}>
-								{data?.lessonResponses
-									// ?.slice(
-									// 	(currentPage - 1) * rowsPerPage,
-									// 	currentPage * rowsPerPage
-									// )
-									.map((item) => (
-										<div
-											className={scss.cards}
-											onClick={() => {
-												localStorage.setItem('taskName', String(item.title));
-												setTimeout(() => {
-													navigate(
-														`/courses/${coursesId}/materials/${lessonId}/lesson/${item.id}`
-													);
-												}, 1000);
-											}}
-											key={item._id}
-										>
-											<a href="#" className={scss.link}>
-												<span className={scss.card_item}>№ {item.title}</span>
-											</a>
-										</div>
-									))}
+								{data?.lessonResponses.map((item) => (
+									<div
+										className={scss.cards}
+										onClick={() => {
+											localStorage.setItem('taskName', String(item.title));
+											setTimeout(() => {
+												navigate(
+													`/courses/${coursesId}/materials/${lessonId}/lesson/${item.id}`
+												);
+											}, 1000);
+										}}
+										key={item._id}
+									>
+										<a href="#" className={scss.link}>
+											<span className={scss.card_item}>№ {item.title}</span>
+										</a>
+									</div>
+								))}
 							</div>
 						</div>
 					</Box>

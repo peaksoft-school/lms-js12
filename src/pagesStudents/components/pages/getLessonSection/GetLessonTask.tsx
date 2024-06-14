@@ -9,19 +9,21 @@ const GetLessonTask = () => {
 	const [openDelete, setOpenDelete] = useState(false);
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
-	const { data: lesson = [] } = useGetTaskInstructorQuery();
+
 	const { courseId, lessonId, getTaskId } = useParams();
+	const lesson = Number(lessonId);
+	const { data } = useGetTaskInstructorQuery(lesson);
 	const GetLessonTaskFunc = () => {
 		navigate(`/courses/${courseId}/materials/${lessonId}/lesson/${getTaskId}`);
 	};
 	return (
 		<div className={scss.Task}>
 			<div className={scss.card_lesson}>
-				{lesson?.map((item) => (
+				{data?.taskResponse.map((item) => (
 					<div
 						className={scss.card_container}
 						onClick={() => {
-							setSaveId(item._id);
+							setSaveId(item.id);
 							setTimeout(() => {
 								GetLessonTaskFunc();
 							}, 500);

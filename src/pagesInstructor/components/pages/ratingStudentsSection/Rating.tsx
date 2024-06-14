@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from './Rating.module.scss';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useGetRatingStudentsQuery } from '@/src/redux/api/instructor/rating';
@@ -11,6 +10,7 @@ import {
 	useDeleteExamMutation,
 	useGetExamInstructorQuery
 } from '@/src/redux/api/instructor/examApi';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 
 const Rating = () => {
 	const { courseId } = useParams();

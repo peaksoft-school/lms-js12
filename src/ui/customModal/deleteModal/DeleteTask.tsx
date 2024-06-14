@@ -22,7 +22,7 @@ const DeleteTask: React.FC<DeleteProps> = ({
 	const [deleteTaskInstructor] = useDeleteTaskInstructorMutation();
 
 	console.log(deleteById);
-	
+
 	const handleDelete = async () => {
 		if (deleteById !== null) {
 			await deleteTaskInstructor(deleteById);
@@ -79,11 +79,6 @@ const DeleteTask: React.FC<DeleteProps> = ({
 };
 
 export default DeleteTask;
-
-
-
-
-
 
 // const DeleteTask: React.FC<DeleteProps> = ({
 // 	openModalDelete,

@@ -42,7 +42,7 @@ interface UpadteProps {
 }
 
 const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
-	const { data } = useGetAdminCourseQuery();
+	const { data } = useGetAdminCourseQuery({ page: '1', size: '8' });
 	const find = data?.courses.find((el: UpadteProps) => el.id === saveId);
 
 	const [value, setValue] = useState<string>('');

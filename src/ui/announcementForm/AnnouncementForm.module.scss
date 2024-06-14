@@ -14,7 +14,7 @@
 		background: #3772ff;
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
-		margin-bottom: 15px;
+		margin-bottom: 12px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -33,8 +33,17 @@
 		.input {
 			width: 100%;
 			max-width: 560px;
+
+			.date_input {
+				padding-top: 15px;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+			}
 			.inputText {
 				width: 100%;
+
 				max-width: 540px;
 			}
 		}

@@ -21,7 +21,7 @@ import Input from '../customInput/Input';
 
 interface PostAnnouncementProps {
 	announcementContent: string;
-	targetGroupIds: number[];
+	targetGroupIds: string[];
 	publishedDate: string;
 	expirationDate: string;
 }
@@ -61,9 +61,9 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
 
-	const handleSelect = (groupId: string, title: string) => {
+	const handleSelect = (groupId: number, title: string) => {
 		setSelectedIds((prev) =>
-			prev.includes(groupId) ? prev : [...prev, groupId]
+			prev.includes(String(groupId)) ? prev : [...prev, String(groupId)]
 		);
 		setPersonName((prev) => (prev.includes(title) ? prev : [...prev, title]));
 	};
@@ -185,21 +185,40 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									</Select>
 								</FormControl>
 
-								<div className={scss.inputText}>
-									<Controller
-										name="publishedDate"
-										control={control}
-										defaultValue=""
-										render={({ field }) => <Input {...field} type="date" />}
-									/>
-								</div>
-								<div className={scss.inputText}>
-									<Controller
-										name="expirationDate"
-										control={control}
-										defaultValue=""
-										render={({ field }) => <Input {...field} type="date" />}
-									/>
+								<div className={scss.date_input}>
+									{' '}
+									<div className={scss.inputText}>
+										<Controller
+											name="publishedDate"
+											control={control}
+											defaultValue=""
+											render={({ field }) => (
+												<Input
+													placeholder="Enter published date"
+													width="100%"
+													size="medium"
+													type="date"
+													{...field}
+												/>
+											)}
+										/>
+									</div>
+									<div className={scss.inputText}>
+										<Controller
+											name="expirationDate"
+											control={control}
+											defaultValue=""
+											render={({ field }) => (
+												<Input
+													placeholder="Enter expiration date"
+													width="100%"
+													size="medium"
+													type="date"
+													{...field}
+												/>
+											)}
+										/>
+									</div>
 								</div>
 							</div>
 
@@ -214,10 +233,16 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									gap: '10px'
 								}}
 							>
-								<ButtonCancel type="button" onClick={handleClose} width="117px">
+								<ButtonCancel
+									disabled={false}
+									type="button"
+									onClick={handleClose}
+									width="117px"
+								>
 									Отмена
 								</ButtonCancel>
 								<ButtonSave
+									disabled={false}
 									width="100px"
 									type="submit"
 									onClick={handleSubmit(onSubmit)}

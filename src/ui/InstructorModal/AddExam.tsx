@@ -38,6 +38,7 @@ const AddExam: FC<AddLessonProps> = ({ open, handleClose }) => {
 	const { courseId } = useParams();
 	const [createExamInstructor] = useCreateExamInstructorMutation();
 
+	const course = Number(courseId);
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		const { title, examDate } = data;
 
@@ -47,7 +48,7 @@ const AddExam: FC<AddLessonProps> = ({ open, handleClose }) => {
 				examDate: examDate
 			};
 			try {
-				await createExamInstructor({ examData, courseId });
+				await createExamInstructor({ examData, course });
 				toast.success('Экзамен успешно добавлен');
 				reset();
 				handleClose();

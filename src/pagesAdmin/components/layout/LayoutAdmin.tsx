@@ -9,9 +9,7 @@ import CalendarPage from '../pages/CalendarPage';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup.tsx';
-import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
 import AnalyticsPage from '@/src/pagesAdmin/components/pages/AnalyticsPage.tsx';
 import TrashPage from '../pages/TrashPage';
@@ -25,7 +23,6 @@ import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse.tsx';
 import InternalCoursesPage from '../pages/InternalCourseStudentPage.tsx';
 import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
-import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses/index.ts';
 import Groups from '../pages/groupSection/Group.tsx';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses.tsx';
 
@@ -33,16 +30,10 @@ const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
 	const { data } = useGetTeacherQuery();
-	const { data: groups = [] } = useGetGroupQuery();
-	const { data: student = [] } = useGetStudentTableQuery();
-	const { data: courses = [] } = useGetAdminCourseQuery();
 	const [openGroups, setOpen] = useState(false);
 	const [courseHandle, setCourseHandle] = useState(false);
 	const [openTeacher, setOpenTeacher] = useState(false);
 	const [openStudent, setOpenModalStudent] = useState(false);
-	const handleOpenStudentModal = () => {
-		setOpenModalStudent(true);
-	};
 
 	const handleOpenCourse = () => {
 		setCourseHandle(true);
@@ -144,7 +135,7 @@ const LayoutAdmin = () => {
 							path="/courses/:coursesId/:matelials"
 							element={<Material />}
 						/>
-						<Route
+						{/* <Route
 							path={'/students'}
 							element={
 								!student || student.length === 0 ? (
@@ -158,22 +149,9 @@ const LayoutAdmin = () => {
 									<StudentsPage />
 								)
 							}
-						/>
-						<Route
-							path={'/courses'}
-							element={
-								!courses || courses.length === 0 ? (
-									<NotCreated
-										text="Вы пока не создали курсы!"
-										buttonClick={handleOpenCourse}
-										name="Курсы"
-										buttontText="Создать курс"
-									/>
-								) : (
-									<CoursesPage />
-								)
-							}
-						/>
+						/> */}
+						<Route path={'/students'} element={<StudentsPage />} />
+						<Route path={'/courses'} element={<CoursesPage />} />
 						<Route
 							path="/courses/:courseId/student"
 							element={<InternalCoursesPage />}
@@ -183,26 +161,9 @@ const LayoutAdmin = () => {
 							path="/courses/:courseId/teacher"
 							element={<CoursesTeacher />}
 						/>
-						<Route
-							path="/group"
-							element={
-								!groups || groups.length === 0 ? (
-									<NotCreated
-										text="Вы пока не добавили группу!"
-										buttonClick={handleOpen}
-										name="Группы"
-										buttontText="Создать группу"
-									/>
-								) : (
-									<Groups />
-								)
-							}
-						/>
+						<Route path="/group" element={<Groups />} />
 						<Route path="/group/:groupId" element={<InternalStudentsPage />} />
-						<Route
-							path="/group/page/:numberGroup/size/:size"
-							element={<Groups />}
-						/>
+						<Route path="/group/page" element={<Groups />} />
 						<Route path="/announcement" element={<AnnouncementPage />} />
 					</Routes>
 				</main>

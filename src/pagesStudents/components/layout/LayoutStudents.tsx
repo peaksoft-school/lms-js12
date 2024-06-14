@@ -106,7 +106,7 @@ const LayoutStudents = () => {
 							element={<LessonsStudentPage />}
 						/>
 						<Route
-							path="/courses/:coursesId/materials/:lessonId/showTest"
+							path="/courses/:coursesId/materials/:lessonId/:testId/showTest"
 							element={<GetTest />}
 						/>
 						<Route path="/courses/:coursesId/rating" element={<RatingPage />} />

@@ -24,6 +24,19 @@ import scss from './EditAnnouncement.module.scss';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import Input from '../customInput/Input';
 
+interface PostAnnouncementProps {
+	announcementContent: string;
+	expirationDate: string;
+	targetGroupIds: number[];
+	publishedDate: string;
+}
+
+interface ModalProps {
+	openModalEdit: boolean;
+	closeModalEdit: (openModalEdit: boolean) => void;
+	saveIdElement: number | null;
+}
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -34,13 +47,6 @@ const MenuProps = {
 		}
 	}
 };
-
-interface PostAnnouncementProps {
-	announcementContent: string;
-	expirationDate: string;
-	targetGroupIds: number[];
-	publishedDate: boolean;
-}
 
 const style = {
 	position: 'absolute',
@@ -55,54 +61,52 @@ const style = {
 	borderRadius: '12px'
 };
 
-interface modalProps {
-	openModalEdit: boolean;
-	closeModalEdit: (openModalEdit: boolean) => void;
-	saveIdElement: number | null;
-}
-
-const ModalEditAnnouncement: FC<modalProps> = ({
+const ModalEditAnnouncement: FC<ModalProps> = ({
 	openModalEdit,
 	closeModalEdit,
 	saveIdElement
 }) => {
 	const [editAnnouncement] = useEditAnnouncementMutation();
 	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
-	const [selectedIds, setSelectedIds] = useState<string[]>([]);
+	const [selectedIds, setSelectedIds] = useState<number[]>([]); // Corrected type to number[]
 	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
 	const { data } = useGetAnnouncementTableQuery();
 	const find = data?.announcements?.find((item) => item.id === saveIdElement);
-	const [personName, setPersonName] = useState<number[]>([]);
+	const [personName, setPersonName] = useState<string[]>([]); // Corrected type to string[]
 
 	useEffect(() => {
 		if (find) {
 			setPersonName(Array.isArray(find.groupNames) ? find.groupNames : []);
 		}
 	}, [find]);
-	const handleSelect = (groupId: string) => {
-		// console.log(title);
 
-		// setSelectedIds((prev) => (prev.includes(title) ? prev : [...prev, title]));
+	const handleSelect = (groupId: number) => {
 		setSelectedIds((prev) =>
 			prev.includes(groupId) ? prev : [...prev, groupId]
 		);
 	};
-	const handleChange = (event: SelectChangeEvent<string[]>) => {
+
+	const handleChange = (event: SelectChangeEvent<number[] | string[]>) => {
 		const { value } = event.target;
-		setPersonName(typeof value === 'string' ? value.split(',') : value);
+		if (typeof value === 'string') {
+			setPersonName(value.split(','));
+		} else {
+			setPersonName(value.map(String));
+		}
 	};
 
 	const onSubmit = async (data: PostAnnouncementProps) => {
-		const editAnnounCement = {
+		const editAnnouncementData = {
 			announcementContent: data.announcementContent,
-			expirationDate: data.publishedDate,
+			expirationDate: data.expirationDate,
 			targetGroupIds: selectedIds,
-			publishedDate: data.expirationDate
+			publishedDate: data.publishedDate
+			// isPublished: false;
 		};
 
-		console.log(editAnnounCement);
+		console.log(editAnnouncementData);
 
-		await editAnnouncement({ editAnnounCement, saveIdElement });
+		await editAnnouncement({ editAnnouncementData, saveIdElement });
 		closeModalEdit(false);
 	};
 
@@ -111,9 +115,9 @@ const ModalEditAnnouncement: FC<modalProps> = ({
 			reset({
 				announcementContent: find.content,
 				personName: find.groupNames,
-				expirationDate: find.expirationDate,
-				publishedDate: find.publishedDate
-			});
+				expirationDate: find.endDate,
+				publishedDate: find.publishDate
+			} as Partial<PostAnnouncementProps>);
 		}
 	}, [find, reset]);
 
@@ -187,7 +191,7 @@ const ModalEditAnnouncement: FC<modalProps> = ({
 												value={name.title}
 												onClick={() => handleSelect(name.id)}
 											>
-												<Checkbox checked={personName.indexOf(name.id) > -1} />
+												<Checkbox checked={selectedIds.includes(name.id)} />
 												<ListItemText primary={name.title} />
 											</MenuItem>
 										))}
@@ -196,27 +200,32 @@ const ModalEditAnnouncement: FC<modalProps> = ({
 									<Controller
 										name="publishedDate"
 										control={control}
-										render={({ field }) => <Input {...field} type="date" />}
+										render={({ field }) => (
+											<Input
+												placeholder="Enter published date"
+												width="100%"
+												size="medium"
+												type="date"
+												{...field}
+											/>
+										)}
 									/>
 								</div>
 								<div className={scss.inputText}>
 									<Controller
 										name="expirationDate"
 										control={control}
-										render={({ field }) => <Input {...field} type="date" />}
+										render={({ field }) => (
+											<Input
+												placeholder="Enter expiration date"
+												width="100%"
+												size="medium"
+												type="date"
+												{...field}
+											/>
+										)}
 									/>
 								</div>
-
-								{/* <input
-									type="date"
-									value={dateInputValue}
-									onChange={(e) => setDateInputValue(e.target.value)}
-								/>
-								<input
-									type="date"
-									value={dateInputValue2}
-									onChange={(e) => setDateInputValue2(e.target.value)}
-								/> */}
 							</FormControl>
 							<div className={scss.btn_form}>
 								<ButtonCancel

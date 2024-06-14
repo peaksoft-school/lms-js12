@@ -48,7 +48,6 @@ const Lesson = () => {
 	const handleOpenTest = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/test`);
 	};
-	
 
 	return (
 		<div className={scss.lesson}>

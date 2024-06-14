@@ -12,7 +12,7 @@ import {
 import editIcon from '@/src/assets/svgs/edit.svg';
 import ModalAddLesson from '@/src/ui/InstructorModal/ModalAddLesson';
 import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 import DeleteMaterial from '@/src/ui/customModal/deleteModal/DeleteMaterial';
 import ModalMaterialEdit from '@/src/ui/customModal/ModalMaterialEdit';
 import {
@@ -33,9 +33,6 @@ interface TodoProps {
 const Materials: FC = () => {
 	const { courseId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
-	console.log(rowsPerPage, 'just');
-
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -43,17 +40,17 @@ const Materials: FC = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
-
-	const { data, isLoading } = useGetMaterialsQuery(courseId);
+	const course = Number(courseId);
+	const { data, isLoading } = useGetMaterialsQuery(course);
 	const [todos, setTodos] = useState<TodoProps[]>([]);
 	const navigate = useNavigate();
-	const handleOpen = () => setOpen(true);
+	const handleOpen = () => setOpenModal(true);
 
-	useEffect(() => {
-		if (data) {
-			setTodos(data);
-		}
-	}, [data]);
+	// useEffect(() => {
+	// 	if (data) {
+	// 		setTodos(data);
+	// 	}
+	// }, [data]);
 
 	useEffect(() => {
 		if (todos.length > 0) {
@@ -96,18 +93,18 @@ const Materials: FC = () => {
 		setCurrentPage(page);
 	};
 
-	const handleAppend = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (!isNaN(newOpenPage) && newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-			} else {
-				setRowsPerPage(12);
-			}
-		}
-	};
+	// const handleAppend = (event: React.KeyboardEvent<HTMLInputElement>) => {
+	// 	if (event.key === 'Enter') {
+	// 		const newOpenPage = parseInt(event.currentTarget.value);
+	// 		if (!isNaN(newOpenPage) && newOpenPage > 12) {
+	// 			setRowsPerPage(newOpenPage);
+	// 			setOpenPart(1);
+	// 			setCurrentPage(1);
+	// 		} else {
+	// 			setRowsPerPage(12);
+	// 		}
+	// 	}
+	// };
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -318,7 +315,7 @@ const Materials: FC = () => {
 								type="text"
 								value={openPart}
 								onChange={(e) => setOpenPart(+e.target.value)}
-								onKeyDown={(e) => handleAppend(e)}
+								// onKeyDown={(e) => handleAppend(e)}
 							/>
 						</div>
 						<div className={scss.stack}>
@@ -340,7 +337,7 @@ const Materials: FC = () => {
 								type="text"
 								value={openPage}
 								onChange={(e) => setOpenPage(+e.target.value)}
-								onKeyDown={(e) => handleAppend(e)}
+								// onKeyDown={(e) => handleAppend(e)}
 							/>
 						</div>
 					</div>
@@ -361,6 +358,3 @@ const Materials: FC = () => {
 };
 
 export default Materials;
-function setOpen(arg0: boolean) {
-	throw new Error('Function not implemented.');
-}

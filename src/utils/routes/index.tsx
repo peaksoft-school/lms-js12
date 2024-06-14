@@ -19,7 +19,7 @@ export const links = {
 		{
 			name: 'Группы',
 			icon: <IconUsersGroup stroke={2} />,
-			link: 'group/page/:numberGroup/size/:size'
+			link: 'group/page'
 		},
 		{
 			name: 'Курсы ',

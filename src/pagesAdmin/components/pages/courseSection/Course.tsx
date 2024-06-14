@@ -1,4 +1,4 @@
-import { FC, useState, KeyboardEvent } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
@@ -11,24 +11,41 @@ import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { Box, ScrollArea } from '@mantine/core';
+import NotCreated from '@/src/ui/notCreated/NotCreated';
 
 const Courses: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(8);
+	// const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openEditModal, setOpenEditModal] = useState(false);
-	const { data } = useGetAdminCourseQuery();
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
-	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
-	console.log(rowsPerPage, 'sli');
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString === '0' ? '1' : valueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/courses/?${searchParams.toString()}`);
+	};
+
+	const handleInputValuePaginationSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/courses/?${searchParams.toString()}`);
+	};
+	const { data } = useGetAdminCourseQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 
 	const navigate = useNavigate();
 
@@ -49,14 +66,18 @@ const Courses: FC = () => {
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
-	const handlePageShowChange = (
-		page: string,
-		size: string,
-		e: KeyboardEvent<HTMLInputElement>
-	) => {
-		if (e.key === 'Enter') {
+	useEffect(() => {
+		if (!data || data.courses.length === 0) {
+			<>
+				<NotCreated
+					text="Вы пока не создали курсы!"
+					buttonClick={handleOpenCourse}
+					name="Курсы"
+					buttontText="Создать курс"
+				/>
+			</>;
 		}
-	};
+	}, [data]);
 
 	return (
 		<div className={scss.course}>
@@ -205,21 +226,19 @@ const Courses: FC = () => {
 						</div>
 						<input
 							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) =>
-								handlePageShowChange(
-									openPart.toString(),
-									openPage.toString(),
-									e
-								)
-							}
+							value={currentPage}
+							onChange={(e) => handleOpenPage(+e.target.value)}
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									// navigate(`/${page}`);
+									handleOpenPage(currentPage);
+								}
+							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.courses.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -235,14 +254,16 @@ const Courses: FC = () => {
 						<input
 							type="text"
 							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) =>
-								handlePageShowChange(
-									openPart.toString(),
-									openPage.toString(),
-									e
-								)
-							}
+							onChange={(e) => {
+								setOpenPage(+e.target.value);
+								handleInputValuePaginationSize(Number(e.target.value));
+							}}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									// handlePageShowChange(openPage);
+									handleInputValuePaginationSize(openPage);
+								}
+							}}
 						/>
 					</div>
 				</div>

@@ -1,20 +1,20 @@
 import scss from './InternalStudents.module.scss';
 import { KeyboardEvent, useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetGroupStudentQuery } from '@/src/redux/api/admin/groups';
 import { useParams } from 'react-router-dom';
 
 const InternalStudents = () => {
-	// const { groupId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const { groupId } = useParams();
-	const { data, isLoading } = useGetGroupStudentQuery(groupId);
+	const group = Number(groupId);
+	const { data, isLoading } = useGetGroupStudentQuery(group);
 
 	if (isLoading) {
 		return (
@@ -54,6 +54,9 @@ const InternalStudents = () => {
 			}
 		}
 	};
+
+	console.log(data?.students);
+
 	return (
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
@@ -82,12 +85,8 @@ const InternalStudents = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data?.students
-													// ?.slice(
-													// 	(currentPage - 1) * rowsPerPage,
-													// 	currentPage * rowsPerPage
-													// )
-													.map((item, index) => (
+												{data?.students &&
+													data?.students.map((item, index) => (
 														<tr
 															key={item.id}
 															className={

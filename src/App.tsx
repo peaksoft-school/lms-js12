@@ -3,7 +3,7 @@ import LayoutAdmin from './pagesAdmin/components/layout/LayoutAdmin';
 import LayoutStudents from './pagesStudents/components/layout/LayoutStudents';
 import LayoutInstructor from './pagesInstructor/components/layout/LayoutInstructor';
 import LayoutAuth from './pagesAuth/components/layout/LayoutAuth';
-import { Preloader } from './utils/routes/preloader/Preloader';
+import { Preloader } from './ui/preloader/Preloader';
 import { useEffect, useState } from 'react';
 
 const App = () => {

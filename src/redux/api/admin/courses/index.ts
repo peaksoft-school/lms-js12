@@ -6,9 +6,12 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.CoursesAdminResponse,
 			ADMINCOURSES.CoursesAdminRequest
 		>({
-			query: () => ({
-				url: `/api/course/findAllCourse`,
-				method: 'GET'
+			query: ({ page, size }) => ({
+				url: `/api/course/findAllCourse?${page ? page : '1'}&${size ? size : '8'}`,
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
 			}),
 			providesTags: ['courses']
 		}),
@@ -45,8 +48,8 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.GetInstructorCourseResponse,
 			ADMINCOURSES.GetInstructorCourseRequest
 		>({
-			query: ({ courseId, pages }) => ({
-				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courseId}`,
+			query: ({ course, pages }) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}`,
 				params: {
 					page: pages.page,
 					size: pages.size,
@@ -60,8 +63,8 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.GetInstructorCourseResponse,
 			ADMINCOURSES.GetInstructorCourseRequest
 		>({
-			query: ({ courseId, pages }) => ({
-				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courseId}`,
+			query: ({ course, pages }) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}`,
 				params: {
 					page: pages.page,
 					size: pages.size,

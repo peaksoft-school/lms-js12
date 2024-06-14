@@ -19,9 +19,13 @@
 		display: flex;
 		padding-bottom: 20px;
 		flex-direction: column;
-		padding-inline: 20px;
 		padding-block: 20px;
 		gap: 10px;
+		background: #fff;
+		border-radius: 10px;
+		border: 1px solid #d4d4d4;
+		margin-bottom: 16px;
+		padding-inline: 10px;
 
 		.get_test_name {
 			color: #1f6ed4;
@@ -60,6 +64,12 @@
 
 			.option {
 				padding-bottom: 15px;
+				display: flex;
+				gap: 10px;
+
+				input {
+					width: 18px;
+				}
 			}
 		}
 	}

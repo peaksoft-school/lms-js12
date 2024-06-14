@@ -10,23 +10,23 @@ import IsBlock from '../InstructorModal/IsBlock';
 
 interface StudentMenuItem {
 	id: number;
-	firstName: string;
-	lastName: string;
+	fullName: string;
 	phoneNumber: string;
 	email: string;
-	groupName: string[];
-	studyFormat: string[];
+	groupName: string;
+	studyFormat: string;
 	isBlock: boolean;
 }
 
 interface MenuProps {
-	anchorEl: null | HTMLElement;
+	anchorEl: HTMLElement;
 	open: boolean;
 	onClose: () => void;
-	setOpenDeleteModal: (value: boolean) => void;
-	updateCompletedFunc: () => void;
-	item: StudentMenuItem | undefined;
-	saveIdElement: number | null;
+	handleOpenDeleteModal: () => void;
+	handleCloseDeleteModal: () => void;
+	updateCompletedFunc?: () => void;
+	item: StudentMenuItem;
+	saveIdElement: number;
 	openDeleteModal: boolean;
 	setFilteredData: React.Dispatch<React.SetStateAction<StudentMenuItem[]>>;
 }
@@ -35,7 +35,8 @@ const StudentMenu: FC<MenuProps> = ({
 	anchorEl,
 	open,
 	onClose,
-	setOpenDeleteModal,
+	handleOpenDeleteModal,
+	handleCloseDeleteModal,
 	item,
 	saveIdElement,
 	openDeleteModal,
@@ -108,7 +109,7 @@ const StudentMenu: FC<MenuProps> = ({
 					key="delete"
 					style={{ display: 'flex', gap: '10px' }}
 					onClick={() => {
-						setOpenDeleteModal(true);
+						handleOpenDeleteModal();
 						onClose();
 					}}
 				>
@@ -140,7 +141,7 @@ const StudentMenu: FC<MenuProps> = ({
 			/>
 			<DeleteStudentModal
 				open={openDeleteModal}
-				handleCloseModal={() => setOpenDeleteModal(false)}
+				handleCloseModal={() => handleCloseDeleteModal}
 				saveIdElement={saveIdElement}
 			/>
 			<IsBlock

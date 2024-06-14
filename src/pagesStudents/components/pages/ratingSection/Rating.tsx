@@ -1,25 +1,12 @@
-import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import scss from './Rating.module.scss';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { Link, useParams } from 'react-router-dom';
 import { InputBase } from '@mui/material';
 import { ScrollArea, Box } from '@mantine/core';
-import { useGetTaskInstructorQuery } from '@/src/redux/api/instructor/addTask';
 import { useGetMaterialsQuery } from '@/src/redux/api/instructor/materials';
 
 const Rating = () => {
-	const { data: strudents = [], isLoading } = useGetStudentTableQuery();
-	const { data } = useGetMaterialsQuery();
-	const { data: task = [] } = useGetTaskInstructorQuery();
+	const { data } = useGetMaterialsQuery(2);
 	const { courseId } = useParams();
-
-	if (isLoading) {
-		return (
-			<div>
-				<Preloader />
-			</div>
-		);
-	}
 
 	const truncateText = (text: string, maxLength: number) => {
 		if (text.length > maxLength) {
@@ -46,7 +33,7 @@ const Rating = () => {
 												Имя Фамилия
 											</th>
 
-											{data?.map((item) => (
+											{data?.lessonResponses.map((item) => (
 												<>
 													<th key={item._id} className={scss.lesson}>
 														{item.title}
@@ -58,9 +45,9 @@ const Rating = () => {
 											<th rowSpan={2}>Итого</th>
 										</tr>
 										<tr>
-											{task?.map((item) => (
+											{data?.lessonResponses.map((item) => (
 												<>
-													<th key={item._id} className={scss.lesson}>
+													<th key={item.title} className={scss.lesson}>
 														{truncateText(item.title, 10)}
 													</th>
 												</>
@@ -71,7 +58,7 @@ const Rating = () => {
 										<tr className={scss.TableContainerSecond}>
 											<td className={scss.number}>1</td>
 											<td className={scss.TableCell}>Ракатова Нурайым</td>
-											{data?.map((item) => (
+											{data?.lessonResponses.map((item) => (
 												<td key={item._id}>
 													<Link to={`/courses/${courseId}/rating`}>0</Link>
 												</td>
@@ -79,7 +66,9 @@ const Rating = () => {
 											<td>
 												<InputBase defaultValue={0} />
 											</td>
-											<td>{Math.floor((100 * 9) / data!.length)} %</td>
+											<td>
+												{Math.floor((100 * 9) / data!.lessonResponses.length)} %
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -112,57 +101,56 @@ const Rating = () => {
 									>
 										Всего
 									</th>
-									{data &&
-										strudents.map((item, index) => (
-											<tr key={item.id} className={scss.TableContainerSecond}>
-												<td
-													className={scss.rating}
-													style={
-														index % 2
-															? {
-																	textAlign: 'start',
-																	background: '#eff0f4',
-																	height: '40px'
-																}
-															: {
-																	textAlign: 'start'
-																}
-													}
-												>
-													{index + 1}
-												</td>
-												<td
-													style={
-														index % 2
-															? {
-																	textAlign: 'start',
-																	background: '#eff0f4',
-																	height: '40px'
-																}
-															: {
-																	textAlign: 'start'
-																}
-													}
-												>
-													{item.firstName} {item.lastName}
-												</td>
-												<td
-													style={
-														index % 2
-															? {
-																	textAlign: 'end',
-																	background: '#eff0f4',
-																	height: '40px'
-																}
-															: {
-																	textAlign: 'end'
-																}
-													}
-												>
-													{Math.floor((100 * 9) / data.length)} %
-												</td>
-											</tr>
-										))}
+									{data?.lessonResponses.map((item, index) => (
+										<tr key={item.id} className={scss.TableContainerSecond}>
+											<td
+												className={scss.rating}
+												style={
+													index % 2
+														? {
+																textAlign: 'start',
+																background: '#eff0f4',
+																height: '40px'
+															}
+														: {
+																textAlign: 'start'
+															}
+												}
+											>
+												{index + 1}
+											</td>
+											<td
+												style={
+													index % 2
+														? {
+																textAlign: 'start',
+																background: '#eff0f4',
+																height: '40px'
+															}
+														: {
+																textAlign: 'start'
+															}
+												}
+											>
+												{item.firstName} {item.lastName}
+											</td>
+											<td
+												style={
+													index % 2
+														? {
+																textAlign: 'end',
+																background: '#eff0f4',
+																height: '40px'
+															}
+														: {
+																textAlign: 'end'
+															}
+												}
+											>
+												{Math.floor((100 * 9) / data.lessonResponses.length)} %
+											</td>
+										</tr>
+									))}
 								</table>
 							</div>
 						</div>

@@ -13,7 +13,7 @@ namespace EXAM {
 	type GetExamRequest = number;
 
 	type PostExamResponse = {
-		courseId: number;
+		course: number;
 		examData: {
 			title: string;
 			examDate: string;
@@ -21,7 +21,7 @@ namespace EXAM {
 	};
 
 	type PostExamRequest = {
-		courseId: number;
+		course: number;
 		examData: {
 			title: string;
 			examDate: string;

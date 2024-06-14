@@ -44,7 +44,8 @@ export const api = createApi({
 		'student',
 		'materialsLesson',
 		'link',
-		'rating'
+		'rating',
+		'test'
 	],
 	endpoints: () => ({})
 });

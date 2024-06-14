@@ -4,7 +4,7 @@ import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import Input from '@/src/ui/customInput/Input';
 import ExcelModal from '@/src/ui/customModal/ExcelModal';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent.tsx';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 import StudentMenu from '@/src/ui/toBlock/ToBlock.tsx';
 import { Button } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
@@ -49,6 +49,13 @@ const Student: React.FC = () => {
 		e.preventDefault();
 	};
 
+	const handleOpenDeleteModal = () => {
+		setOpenDeleteModal(true);
+	};
+
+	const handleCloseDeleteModal = () => {
+		setOpenDeleteModal(true);
+	};
 	const handleCloseStudent = () => {
 		setOpenStudent(false);
 	};
@@ -230,13 +237,15 @@ const Student: React.FC = () => {
 														</tr>
 													))}
 												<StudentMenu
-													anchorEl={anchorEl}
+													anchorEl={anchorEl!}
 													open={Boolean(anchorEl)}
 													onClose={() => setAnchorEl(null)}
-													setOpenDeleteModal={setOpenDeleteModal}
-													item={saveItem}
-													saveIdElement={saveIdElement}
+													handleOpenDeleteModal={handleOpenDeleteModal}
+													item={saveItem!}
+													saveIdElement={saveIdElement!}
 													openDeleteModal={openDeleteModal}
+													setFilteredData={() => {}}
+													handleCloseDeleteModal={handleCloseDeleteModal}
 												/>
 											</tbody>
 										</table>

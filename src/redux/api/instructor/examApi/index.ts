@@ -15,8 +15,8 @@ const api = index.injectEndpoints({
 			EXAM.PostExamResponse,
 			EXAM.PostExamRequest
 		>({
-			query: ({ courseId, examData }) => ({
-				url: `/api/exam/${courseId}`,
+			query: ({ course, examData }) => ({
+				url: `/api/exam/${course}`,
 				method: 'POST',
 				body: examData
 			}),

@@ -1,5 +1,4 @@
 import { api as index } from '../..';
-
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		// ! get
@@ -41,16 +40,16 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.EditAnnouncementResponse,
 			ANNOUNCEMENT.EditAnnouncementRequest
 		>({
-			query: ({ editAnnounCement, saveIdElement }) => ({
+			query: ({ editAnnouncementData, saveIdElement }) => ({
 				url: `/api/announcement/${saveIdElement}`,
 				method: 'PATCH',
-				body: editAnnounCement
+				body: editAnnouncementData
 			}),
 			invalidatesTags: ['announcement']
 		}),
 		showAnnouncement: builder.mutation<
-			ANNOUNCEMENT.EditAnnouncementResponse,
-			ANNOUNCEMENT.EditAnnouncementRequest
+			ANNOUNCEMENT.ShowAnnouncementResponse,
+			ANNOUNCEMENT.ShowAnnouncementRequest
 		>({
 			query: ({ deleteById, newAnnoun }) => ({
 				url: `/api/announcement/view/${deleteById}`,
@@ -61,7 +60,6 @@ export const api = index.injectEndpoints({
 		})
 	})
 });
-
 export const {
 	useGetAnnouncementTableQuery,
 	usePostAnnouncementTableMutation,

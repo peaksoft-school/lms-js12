@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, KeyboardEvent } from 'react';
 import scss from './Announcements.module.scss';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
@@ -19,24 +18,21 @@ import {
 	IconEyeOff,
 	IconPlus
 } from '@tabler/icons-react';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 
 const Announcements = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const { data, isLoading } = useGetAnnouncementTableQuery();
-	const [dataId, setDataId] = useState('');
-	console.log(data, 'card');
+	const { data } = useGetAnnouncementTableQuery();
 
+	console.log(data, 'card');
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(4);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(4);
 	const [showAnnouncement] = useShowAnnouncementMutation();
-	const [saveShow, setSaveShow] = useState(false);
 
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
@@ -45,33 +41,20 @@ const Announcements = () => {
 		setOpenAnnouncement(false);
 	};
 
-	if (isLoading) {
-		return (
-			<div>
-				<Preloader />
-			</div>
-		);
-	}
-
 	const find = data?.announcements?.find((item) => item.id === deleteById);
-
 	const open = Boolean(anchorEl);
-
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
-
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
 		page: number
 	): void => {
 		setCurrentPage(page);
 	};
-
 	const openPartFunc = () => {
 		if (openPart >= 1) {
 			setRowsPerPage(4);
@@ -84,7 +67,6 @@ const Announcements = () => {
 			setCurrentPage(1);
 		}
 	};
-
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
@@ -98,18 +80,12 @@ const Announcements = () => {
 			}
 		}
 	};
-
-	const handleShow = async (deleteById, item) => {
+	const handleShow = async (deleteById: number, isPublished: boolean) => {
 		const newAnnoun = {
-			announcementContent: item.announcementContent,
-			expirationDate: item.expirationDate,
-			publishedDate: item.publishedDate,
-			targetGroupIds: item.targetGroupIds,
-			isPublished: !item.isPublished
+			isPublished: !isPublished
 		};
 		await showAnnouncement({ deleteById, newAnnoun });
 	};
-
 	return (
 		<div className={scss.Section_announcement}>
 			<div className={scss.main_container}>
@@ -135,147 +111,135 @@ const Announcements = () => {
 					<div>
 						<div className={scss.announce_box}>
 							<ul className={scss.announce_card}>
-								{data?.announcements
-									// ?.slice(
-									// 	(currentPage - 1) * rowsPerPage,
-									// 	currentPage * rowsPerPage
-									// )
-									.map((item) => (
-										<li key={item.id} className={scss.announce_list}>
-											<div className={scss.show_text}>
-												{item?.isPublished === true ? (
+								{data?.announcements.map((item) => (
+									<li key={item.id} className={scss.announce_list}>
+										<div className={scss.show_text}>
+											{item?.isPublished === true ? (
+												<>
+													<p style={{ color: '#0ECE22 ', fontSize: '16px' }}>
+														Видно
+													</p>
+												</>
+											) : (
+												<>
+													<p style={{ color: 'red' }}>Не видно</p>
+												</>
+											)}
+										</div>
+										<div className={scss.announcement_owners}>
+											<p className={scss.announcement_owner}>
+												<p className={scss.announc_user}>Кем создан:</p>
+												{item.owner}
+											</p>
+										</div>
+										<p>
+											<p className={scss.announce_groups}>Для кого:</p>
+											{item.groupNames.join(', ')}
+										</p>
+										<p>
+											<p className={scss.announce_content}>Текст:</p>
+											{item.content}
+										</p>
+										<div
+											style={{
+												display: 'flex',
+												flexDirection: 'column',
+												gap: '50px'
+											}}
+										>
+											<div className={scss.cont_date}>
+												<p className={scss.announcement_publishDate}>
+													{item.publishDate}
+												</p>
+												<p> {item.endDate}</p>
+											</div>
+											<div>
+												<button
+													className={scss.button}
+													aria-controls={open ? 'basic-menu' : undefined}
+													aria-haspopup="true"
+													onClick={(e) => {
+														handleClick(e);
+														setDeleteById(item.id);
+													}}
+												>
+													<DotsHorizont />
+												</button>
+											</div>
+										</div>
+										<Menu
+											className={scss.deleteEdit}
+											id="basic-menu"
+											anchorEl={anchorEl}
+											open={open}
+											onClose={handleClose}
+											MenuListProps={{ 'aria-labelledby': 'basic-button' }}
+											elevation={0}
+											anchorOrigin={{
+												vertical: 'bottom',
+												horizontal: 'right'
+											}}
+											transformOrigin={{
+												vertical: 'top',
+												horizontal: 'right'
+											}}
+											PaperProps={{
+												style: { boxShadow: 'none', border: '1px solid gray' }
+											}}
+										>
+											<MenuItem
+												style={{
+													display: 'flex',
+													gap: '20px'
+												}}
+												className={scss.dropdown}
+												onClick={() => {
+													setOpenModalEdit(true);
+													setAnchorEl(null);
+												}}
+											>
+												<img src={editIcon} alt="Edit" />
+												<p>Редактировать</p>
+											</MenuItem>
+											<MenuItem
+												style={{ display: 'flex', gap: '20px' }}
+												className={scss.dropdown}
+												onClick={() => {
+													handleShow(item.id, item.isPublished);
+												}}
+											>
+												{find?.isPublished === true ? (
 													<>
-														<p style={{ color: '#0ece22 ', fontSize: '16px' }}>
-															Видно
-														</p>
+														<IconEyeOff stroke={2} />
+														<p>Не показывать</p>
 													</>
 												) : (
 													<>
-														<p style={{ color: 'red' }}>Не видно</p>
+														<IconEye stroke={2} />
+														<p>Показывать</p>
 													</>
 												)}
-											</div>
-											<div className={scss.announcement_owners}>
-												<p className={scss.announcement_owner}>
-													<p className={scss.announc_user}>Кем создан:</p>
-													{item.owner}
-												</p>
-											</div>
-											<p>
-												<p className={scss.announce_groups}>Для кого:</p>
-												{item.groupNames.join(', ')}
-											</p>
-
-											<p>
-												<p className={scss.announce_content}>Текст:</p>
-												{item.content}
-											</p>
-											<div
-												style={{
-													display: 'flex',
-													flexDirection: 'column',
-													gap: '50px'
+											</MenuItem>
+											<MenuItem
+												style={{ display: 'flex', gap: '20px' }}
+												className={scss.dropdown}
+												onClick={() => {
+													setOpenModalDelete(true);
+													setAnchorEl(null);
 												}}
 											>
-												<div className={scss.cont_date}>
-													<p className={scss.announcement_publishDate}>
-														{item.publishDate}
-													</p>
-													<p> {item.endDate}</p>
-												</div>
-												<div>
-													<button
-														className={scss.button}
-														aria-controls={open ? 'basic-menu' : undefined}
-														aria-haspopup="true"
-														onClick={(e) => {
-															handleClick(e);
-															setDeleteById(item.id);
-														}}
-													>
-														<DotsHorizont />
-													</button>
-												</div>
-											</div>
-
-											<Menu
-												className={scss.deleteEdit}
-												id="basic-menu"
-												anchorEl={anchorEl}
-												open={open}
-												onClose={handleClose}
-												MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-												elevation={0}
-												anchorOrigin={{
-													vertical: 'bottom',
-													horizontal: 'right'
-												}}
-												transformOrigin={{
-													vertical: 'top',
-													horizontal: 'right'
-												}}
-												PaperProps={{
-													style: { boxShadow: 'none', border: '1px solid gray' }
-												}}
-											>
-												<MenuItem
-													style={{
-														display: 'flex',
-														gap: '20px'
-													}}
-													className={scss.dropdown}
-													onClick={() => {
-														setOpenModalEdit(true);
-														setAnchorEl(null);
-														setDataId(item.id.toString());
-													}}
-												>
-													<img src={editIcon} alt="Edit" />
-													<p>Редактировать</p>
-												</MenuItem>
-
-												<MenuItem
-													style={{ display: 'flex', gap: '20px' }}
-													className={scss.dropdown}
-													onClick={() => {
-														handleShow(item.id, item);
-													}}
-												>
-													{find?.isPublished === true ? (
-														<>
-															<IconEyeOff stroke={2} />
-															<p>Не показывать</p>
-														</>
-													) : (
-														<>
-															<IconEye stroke={2} />
-															<p>Показывать</p>
-														</>
-													)}
-												</MenuItem>
-
-												<MenuItem
-													style={{ display: 'flex', gap: '20px' }}
-													className={scss.dropdown}
-													onClick={() => {
-														setOpenModalDelete(true);
-														setAnchorEl(null);
-													}}
-												>
-													<img src={deleteIcon} alt="Delete" />
-													<p>Удалить</p>
-												</MenuItem>
-											</Menu>
-										</li>
-									))}
+												<img src={deleteIcon} alt="Delete" />
+												<p>Удалить</p>
+											</MenuItem>
+										</Menu>
+									</li>
+								))}
 							</ul>
-
 							<ModalEditAnnouncement
 								openModalEdit={openModalEdit}
 								closeModalEdit={() => setOpenModalEdit(false)}
 								saveIdElement={deleteById}
 							/>
-
 							<DeleteAnnouncementModal
 								openModalDelete={openModalDelete}
 								closeModalDelete={setOpenModalDelete}
@@ -335,5 +299,4 @@ const Announcements = () => {
 		</div>
 	);
 };
-
 export default Announcements;

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './EditTask.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
@@ -20,7 +20,6 @@ import { useGetTaskInstructorAQuery } from '@/src/redux/api/instructor/getTask';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { Sources } from 'quill';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -37,7 +36,6 @@ const EditTask = () => {
 	const { data } = useGetTaskInstructorAQuery(test);
 	const [createGroupFile] = useCreateGroupFileMutation();
 	const [value, setValue] = useState('');
-
 	const navigate = useNavigate();
 	const [editTaskInstructor] = useEditTaskInstructorMutation();
 	const getTask = Number(getTaskId);
@@ -67,28 +65,20 @@ const EditTask = () => {
 		}
 	};
 
-	function dataURItoBlob(dataURI: { split: (arg0: string) => [any, any] }) {
+	function dataURItoBlob(dataURI: string): Blob {
 		const [mime, data] = dataURI.split(';base64,');
-
 		const binary = atob(data);
-
 		const arrayBuffer = new ArrayBuffer(binary.length);
 		const uint8Array = new Uint8Array(arrayBuffer);
-
 		for (let i = 0; i < binary.length; i++) {
 			uint8Array[i] = binary.charCodeAt(i);
 		}
-
 		return new Blob([uint8Array], { type: mime });
 	}
 
-	const handleImageUpload = async (
-		imageData: { split: (arg0: string) => [any, any] },
-		description: string
-	) => {
+	const handleImageUpload = async (imageData: string, description: string) => {
 		const blob = dataURItoBlob(imageData);
 		const file = new File([blob], 'filename.jpg', { type: 'image/jpeg' });
-
 		const formData = new FormData();
 		formData.append('file', file);
 		const cleanedDescription = description.replace(/\\/g, '');
@@ -108,8 +98,9 @@ const EditTask = () => {
 
 	const handleEditorChange = (
 		content: string,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		delta: any,
-		source: Sources
+		source: string
 	): void => {
 		setValue(content);
 		if (source === 'user' && delta.ops.length > 0) {
@@ -129,6 +120,7 @@ const EditTask = () => {
 			return deadline;
 		}
 	};
+
 	useEffect(() => {
 		if (data) {
 			setTitle(data?.title);
@@ -157,6 +149,7 @@ const EditTask = () => {
 		setValue('');
 		setSelectedDate(null);
 	};
+
 	const modules = {
 		toolbar: [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],

@@ -9,29 +9,24 @@ namespace ANNOUNCEMENT {
 		endDate: string;
 		isPublished: true;
 	};
-
 	type GetAnnouncementResponse = {
 		announcements: Table[];
 	};
 	type GetAnnouncementRequest = void;
-
 	type PostAnnouncementPropsResponse = {
-		id: number;
 		announcementContent: string;
 		expirationDate: string;
-		targetGroupIds: number[];
+		targetGroupIds: string[];
 		publishedDate: string;
 	};
 	type PostAnnouncementPropsRequest = {
 		announcementContent: string;
 		expirationDate: string;
-		targetGroupIds: number[];
+		targetGroupIds: string[];
 		publishedDate: string;
 	};
-
 	type DeleteAnnouncementPropsResponse = void;
 	type DeleteAnnouncementPropsRequest = number | null;
-
 	type PutAnnouncementPropsResponse = {
 		announcementContent: string;
 		expirationDate: string;
@@ -46,18 +41,35 @@ namespace ANNOUNCEMENT {
 			isPublished: true;
 		};
 	};
-
 	type EditAnnouncementRequest = {
-		id: number;
-		announcementContent: string;
-		expirationDate: string;
-		targetGroupIds: number[];
-		publishedDate: string;
+		saveIdElement: number | null;
+		editAnnouncementData: {
+			announcementContent: string;
+			expirationDate: string;
+			targetGroupIds: number[];
+			publishedDate: string;
+		};
 	};
 	type EditAnnouncementResponse = {
-		announcementContent: string;
-		expirationDate: string;
-		targetGroupIds: number[];
-		publishedDate: string;
+		saveIdElement: number | null;
+		editAnnouncementData: {
+			announcementContent: string;
+			expirationDate: string;
+			targetGroupIds: number[];
+			publishedDate: string;
+		};
+	};
+
+	type ShowAnnouncementResponse = {
+		deleteById: number;
+		newAnnoun: {
+			isPublished: boolean;
+		};
+	};
+	type ShowAnnouncementRequest = {
+		deleteById: number;
+		newAnnoun: {
+			isPublished: boolean;
+		};
 	};
 }

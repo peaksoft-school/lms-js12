@@ -4,8 +4,11 @@ export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getGroup: builder.query<GROUPS.GroupsResponse, GROUPS.GroupsRequest>({
 			query: ({ page, size }) => ({
-				url: `/api/groups?page=${page !== null ? page : '1'}&size=${size !== null ? size : '12'}`,
-				method: 'GET'
+				url: `/api/groups?${page}&${size}`,
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
 			}),
 			providesTags: ['groups']
 		}),
@@ -38,9 +41,12 @@ export const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['groups']
 		}),
-		getGroupStudent: builder.query({
-			query: (groupId) => ({
-				url: `/api/groups/1${groupId}`,
+		getGroupStudent: builder.query<
+			GROUPS.GetStudentsGroupResponse,
+			GROUPS.GetStudentsGroupRequest
+		>({
+			query: (group) => ({
+				url: `/api/students/studentsOfGroup/${group}`,
 				method: 'GET'
 			}),
 			providesTags: ['groups']

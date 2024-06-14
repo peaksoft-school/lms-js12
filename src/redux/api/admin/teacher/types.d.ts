@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace TABLE {
 	type Teacher = {
-		id?: number;
+		id: number | null;
 		fullName: string;
 		login: string;
 		specialization: string;
@@ -35,7 +35,7 @@ namespace TABLE {
 			specialization: string;
 			email: string;
 			phoneNumber: string;
-			courseIds: string[];
+			courseIds: string;
 		};
 	}[];
 
@@ -47,7 +47,7 @@ namespace TABLE {
 			specialization: string;
 			email: string;
 			phoneNumber: string;
-			courseIds: string[];
+			courseIds: string;
 		};
 	};
 	type DeleteTeacherResponse = void;

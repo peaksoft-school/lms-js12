@@ -12,7 +12,7 @@ namespace STUDENT {
 	};
 
 	type TablesStudentResponse = {
-		students: [];
+		students: Table[];
 		page: number;
 		size: number;
 	};
@@ -59,7 +59,7 @@ namespace STUDENT {
 			groupName: string;
 			phoneNumber: string;
 			studyFormat: string;
-			isBlock: boolean;
+			// isBlock: boolean;
 		};
 	};
 	type PatchStudentCompletedPropsResponse = boolean;

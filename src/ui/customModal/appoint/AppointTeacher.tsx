@@ -74,14 +74,12 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 		setSelectedIds((prev) => prev.filter((_, i) => i !== index));
 	};
 
-	const handleSelect = (teacherId: string, fullName: string) => {
-		console.log(teacherId);
-
+	const handleSelect = (teacherId: number | null, fullName: string) => {
 		setSelectedTeachers((prev) =>
 			prev.includes(fullName) ? prev : [...prev, fullName]
 		);
 		setSelectedIds((prev) =>
-			prev.includes(teacherId) ? prev : [...prev, teacherId]
+			prev.includes(String(teacherId)) ? prev : [...prev, String(teacherId)]
 		);
 	};
 

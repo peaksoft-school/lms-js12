@@ -26,7 +26,8 @@
 
 			.test_container_fifth {
 				display: flex;
-				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
 
 				.test_cont {
 					display: flex;
@@ -42,7 +43,8 @@
 
 			.test_container_third {
 				display: flex;
-				gap: 20px;
+				flex-direction: column;
+				gap: 7px;
 
 				.test_text {
 					color: #020202;

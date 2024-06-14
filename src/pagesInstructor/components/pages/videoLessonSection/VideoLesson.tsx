@@ -10,7 +10,7 @@ import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import ModalEditVideo from '@/src/ui/InstructorModal/ModalEditVideo';
 import DeleteVideoLesson from '@/src/ui/customModal/deleteModal/DeleteVideoLesson';
 import { useParams } from 'react-router-dom';
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 
 const VideoLesson = () => {
 	const { lessonId } = useParams();

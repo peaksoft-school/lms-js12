@@ -16,7 +16,7 @@ import { IconDownload } from '@tabler/icons-react';
 import { Dayjs } from 'dayjs';
 import { Box, ScrollArea } from '@mantine/core';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
-import { Sources } from 'quill';
+import Sources from 'quill';
 
 const AddTask: React.FC = () => {
 	const [title, setTitle] = useState('');
@@ -95,7 +95,7 @@ const AddTask: React.FC = () => {
 	const handleEditorChange = (
 		content: string,
 		delta: any,
-		source: Sources
+		source: Sources | string
 	): void => {
 		setValue(content);
 		if (source === 'user' && delta.ops.length > 0) {

@@ -41,6 +41,7 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 	const { handleSubmit, reset, control } = useForm<FormData>();
 	const [postMaterials] = usePostMaterialsMutation();
 	const { courseId } = useParams();
+	const course = Number(courseId);
 
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		const { title, date } = data;
@@ -50,7 +51,7 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 				title: title,
 				createdAt: date
 			};
-			await postMaterials({ postData, courseId });
+			await postMaterials({ postData, course });
 			reset();
 			handleClose();
 			handleOpen(false);

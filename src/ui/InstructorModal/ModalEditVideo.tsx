@@ -47,7 +47,8 @@ const ModalEditVideo: React.FC<modalProps> = ({
 	const [patchVideo] = usePatchVideoLessonMutation();
 
 	const { lessonId } = useParams();
-	const { data } = useGetVideoLessonQuery(lessonId);
+	const lesson = Number(lessonId);
+	const { data } = useGetVideoLessonQuery(lesson);
 
 	const finder = data?.find((item) => item.id === saveIdElement);
 

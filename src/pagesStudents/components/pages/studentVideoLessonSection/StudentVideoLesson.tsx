@@ -1,16 +1,17 @@
-import { Preloader } from '@/src/utils/routes/preloader/Preloader';
 import { useState } from 'react';
 import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import scss from './StudentVideoLesson.module.scss';
 import { Button } from '@mui/material';
 import { useGetVideoLessonForStudentQuery } from '@/src/redux/api/students/videoStudent';
 import { useParams } from 'react-router-dom';
+import { Preloader } from '@/src/ui/preloader/Preloader';
 
 const StudentVideoLesson = () => {
 	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
 
 	const { data: video = [], isLoading } =
-		useGetVideoLessonForStudentQuery(lessonId);
+		useGetVideoLessonForStudentQuery(lesson);
 
 	const [openWatch, setWatchOpen] = useState(false);
 

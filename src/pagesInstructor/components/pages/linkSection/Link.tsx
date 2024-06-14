@@ -55,7 +55,7 @@ const Link = () => {
 	const handleOpenDelete = (id: number) => {
 		setOpenDelete(true);
 		setIsDeleteId(id);
-		setAnchorEl(null); 
+		setAnchorEl(null);
 	};
 	const handleCloseDelete = () => {
 		setOpenDelete(false);
