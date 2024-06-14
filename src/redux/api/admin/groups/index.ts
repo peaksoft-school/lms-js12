@@ -46,9 +46,13 @@ export const api = index.injectEndpoints({
 			providesTags: ['groups']
 		}),
 		createGroupFile: builder.mutation({
-			query: () => ({
+			query: (formData) => ({
 				url: '/file',
 				method: 'POST',
+				body: formData,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
 			}),
 			invalidatesTags: ['groups']
 		})

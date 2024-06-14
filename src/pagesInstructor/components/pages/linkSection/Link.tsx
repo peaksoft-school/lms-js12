@@ -45,6 +45,7 @@ const Link = () => {
 	const handleOpenEdit = (id: number) => {
 		setOpenEdit(true);
 		setIsEditId(id);
+		setAnchorEl(null);
 	};
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
@@ -54,6 +55,7 @@ const Link = () => {
 	const handleOpenDelete = (id: number) => {
 		setOpenDelete(true);
 		setIsDeleteId(id);
+		setAnchorEl(null); 
 	};
 	const handleCloseDelete = () => {
 		setOpenDelete(false);

@@ -19,7 +19,6 @@ interface Student {
 }
 
 const InternalInstructorStudents = () => {
-	// const { courseId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
@@ -77,7 +76,6 @@ const InternalInstructorStudents = () => {
 						<Button
 							size="large"
 							className={scss.button}
-							// onClick={handleOpen}
 							variant="contained"
 							color="error"
 						>
