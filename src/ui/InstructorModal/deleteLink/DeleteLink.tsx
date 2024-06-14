@@ -43,12 +43,12 @@ const DeleteLink: React.FC<DeleteLinkProps> = ({
 							<ButtonCancel
 								width="103px"
 								type="button"
-								disabled={true}
+								disabled={false}
 								onClick={() => {
 									closeModalDelete(false);
 								}}
 							>
-								отмена
+								Отмена
 							</ButtonCancel>
 							<ButtonDelete
 								type="button"

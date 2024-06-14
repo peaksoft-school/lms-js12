@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './EditTask.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
@@ -16,7 +16,7 @@ import { IconDownload } from '@tabler/icons-react';
 import { Dayjs } from 'dayjs';
 import { Box, ScrollArea } from '@mantine/core';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
-import { useGetTaskInsaitInstructorQuery } from '@/src/redux/api/instructor/getTask';
+import { useGetTaskInstructorAQuery } from '@/src/redux/api/instructor/getTask';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -32,15 +32,15 @@ const EditTask = () => {
 		null
 	);
 	const { courseId, lessonId, getTaskId } = useParams();
-	const { data } = useGetTaskInsaitInstructorQuery(getTaskId);
+	const test = Number(getTaskId);
+	const { data } = useGetTaskInstructorAQuery(test);
 	const [createGroupFile] = useCreateGroupFileMutation();
 	const [value, setValue] = useState('');
-
 	const navigate = useNavigate();
 	const [editTaskInstructor] = useEditTaskInstructorMutation();
-
+	const getTask = Number(getTaskId);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [saveSelect, setSelectedFile] = useState(null);
+	const [saveSelect, setSelectedFile] = useState<null | string>(null);
 	const [secondSave, setSecondSave] = useState(null);
 	const [description, setDescription] = useState('');
 
@@ -65,29 +65,24 @@ const EditTask = () => {
 		}
 	};
 
-	function dataURItoBlob(dataURI) {
+	function dataURItoBlob(dataURI: string): Blob {
 		const [mime, data] = dataURI.split(';base64,');
-
 		const binary = atob(data);
-
 		const arrayBuffer = new ArrayBuffer(binary.length);
 		const uint8Array = new Uint8Array(arrayBuffer);
-
 		for (let i = 0; i < binary.length; i++) {
 			uint8Array[i] = binary.charCodeAt(i);
 		}
-
 		return new Blob([uint8Array], { type: mime });
 	}
 
-	const handleImageUpload = async (imageData, description) => {
+	const handleImageUpload = async (imageData: string, description: string) => {
 		const blob = dataURItoBlob(imageData);
 		const file = new File([blob], 'filename.jpg', { type: 'image/jpeg' });
-
 		const formData = new FormData();
 		formData.append('file', file);
 		const cleanedDescription = description.replace(/\\/g, '');
-		formData.append('description', cleanedDescription); // Доб
+		formData.append('description', cleanedDescription);
 
 		try {
 			const response = await createGroupFile(formData);
@@ -101,23 +96,23 @@ const EditTask = () => {
 		}
 	};
 
-	console.log(secondSave);
-
-	const handleEditorChange = (content, delta, source, editor) => {
+	const handleEditorChange = (
+		content: string,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		delta: any,
+		source: string
+	): void => {
 		setValue(content);
-
 		if (source === 'user' && delta.ops.length > 0) {
 			for (let i = 0; i < delta.ops.length; i++) {
 				const operation = delta.ops[i];
-
 				if (operation.insert && operation.insert.image) {
-					handleImageUpload(operation.insert.image, description); 
+					handleImageUpload(operation.insert.image, description);
 				}
 			}
 		}
 	};
 
-	
 	const transformData = (deadline: Dayjs | string) => {
 		if (typeof deadline === 'string') {
 			return dayjs(deadline).tz('Asia/Bishkek');
@@ -125,6 +120,7 @@ const EditTask = () => {
 			return deadline;
 		}
 	};
+
 	useEffect(() => {
 		if (data) {
 			setTitle(data?.title);
@@ -141,18 +137,19 @@ const EditTask = () => {
 			`<img src="${secondSave}"/>`
 		);
 
-		const newtask = {
+		const newTask = {
 			title,
 			file: saveSelect,
 			description: newDescription,
 			deadline: selectedDate
 		};
 
-		await editTaskInstructor({ newtask, getTaskId });
+		await editTaskInstructor({ newTask, getTask });
 		setTitle('');
 		setValue('');
 		setSelectedDate(null);
 	};
+
 	const modules = {
 		toolbar: [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],

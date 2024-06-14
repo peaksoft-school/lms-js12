@@ -25,7 +25,7 @@ namespace VIDEO_LESSON {
 	};
 
 	type VideoLessonPostRequest = {
-		lessonId: number;
+		lesson: number;
 		postData: {
 			titleOfVideo: string;
 			description: string;
@@ -34,6 +34,7 @@ namespace VIDEO_LESSON {
 	};
 
 	type VideoLessonPatchResponse = {
+		saveIdElement: number | null;
 		newVideoLesson: {
 			titleOfVideo: string;
 			description: string;
@@ -42,7 +43,7 @@ namespace VIDEO_LESSON {
 	};
 
 	type VideoLessonPatchRequest = {
-		saveIdElement: number;
+		saveIdElement: number | null;
 		newVideoLesson: {
 			titleOfVideo: string;
 			description: string;

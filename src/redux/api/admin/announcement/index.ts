@@ -40,10 +40,10 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.EditAnnouncementResponse,
 			ANNOUNCEMENT.EditAnnouncementRequest
 		>({
-			query: ({ editAnnounCement, saveIdElement }) => ({
+			query: ({ editAnnouncementData, saveIdElement }) => ({
 				url: `/api/announcement/${saveIdElement}`,
 				method: 'PATCH',
-				body: editAnnounCement
+				body: editAnnouncementData
 			}),
 			invalidatesTags: ['announcement']
 		}),

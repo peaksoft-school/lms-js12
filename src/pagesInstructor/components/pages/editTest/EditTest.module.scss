@@ -111,30 +111,30 @@
 	align-items: center;
 	padding-top: 20px;
 	gap: 17px;
-	
-.option_input {
-	position: relative;
-	width: 100%;
-	.notice {
-		.button_cancel {
-			position: absolute;
-			top: 50%;
-			right: 10px;
-			transform: translateY(-50%);
-			border: none;
-			outline: none;
-			background: transparent;
-			border-radius: 4px;
-			cursor: pointer;
-			transition: 0.2s;
-			&:hover {
-				background: #dcdcdc;
-			}
 
-			span {
-				font-size: 20px;
+	.option_input {
+		position: relative;
+		width: 100%;
+		.notice {
+			.button_cancel {
+				position: absolute;
+				top: 50%;
+				right: 10px;
+				transform: translateY(-50%);
+				border: none;
+				outline: none;
+				background: transparent;
+				border-radius: 4px;
+				cursor: pointer;
+				transition: 0.2s;
+				&:hover {
+					background: #dcdcdc;
+				}
+
+				span {
+					font-size: 20px;
+				}
 			}
 		}
 	}
-}
 }

@@ -6,20 +6,7 @@ import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 
-interface Student {
-	id: number;
-	firstName: string;
-	lastName: string;
-	group: string;
-	TrainingFormat: string;
-	phone_number: string;
-	email: string;
-	password: string;
-	isCompleted: boolean;
-}
-
 const InternalInstructorStudents = () => {
-	// const { courseId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
@@ -77,7 +64,6 @@ const InternalInstructorStudents = () => {
 						<Button
 							size="large"
 							className={scss.button}
-							// onClick={handleOpen}
 							variant="contained"
 							color="error"
 						>
@@ -106,33 +92,27 @@ const InternalInstructorStudents = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data
+												{data?.students.map((item, index) => (
+													<tr
+														key={item.id}
+														className={
+															index % 2 === 1
+																? scss.table_alternate_row
+																: '' || scss.internal
+														}
+													>
+														<td>
+															{index + 1 + (currentPage - 1) * rowsPerPage}
+														</td>
 
-													?.slice(
-														(currentPage - 1) * rowsPerPage,
-														currentPage * rowsPerPage
-													)
-													.map((item: Student, index) => (
-														<tr
-															key={item.id}
-															className={
-																index % 2 === 1
-																	? scss.table_alternate_row
-																	: '' || scss.internal
-															}
-														>
-															<td>
-																{index + 1 + (currentPage - 1) * rowsPerPage}
-															</td>
-
-															<td>{item.firstName}</td>
-															<td>{item.lastName}</td>
-															<td>{item.group}</td>
-															<td>{item.TrainingFormat}</td>
-															<td>{item.phone_number}</td>
-															<td>{item.email}</td>
-														</tr>
-													))}
+														<td>{item.firstName}</td>
+														<td>{item.lastName}</td>
+														<td>{item.group}</td>
+														<td>{item.TrainingFormat}</td>
+														<td>{item.phone_number}</td>
+														<td>{item.email}</td>
+													</tr>
+												))}
 											</tbody>
 										</table>
 									</div>
@@ -160,7 +140,6 @@ const InternalInstructorStudents = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

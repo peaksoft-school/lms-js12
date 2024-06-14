@@ -9,12 +9,13 @@ import Accepted from '../acceptedSection/Accepted';
 import NotAccepted from '../notAcceptedSection/NotAccepted';
 import NotSubmitted from '../notSubmittedSection/NotSubmitted';
 import { Box, ScrollArea } from '@mantine/core';
-import { useGetTaskInsaitInstructorQuery } from '@/src/redux/api/instructor/getTask';
+import { useGetTaskInstructorAQuery } from '@/src/redux/api/instructor/getTask';
+
 const GetTask = () => {
 	const { courseId, lessonId, getTaskId } = useParams();
 	const navigate = useNavigate();
-	const { data: task = [] } = useGetTaskInsaitInstructorQuery(getTaskId);
-	console.log(task);
+	const getTask = Number(getTaskId);
+	const { data } = useGetTaskInstructorAQuery(getTask);
 
 	const [value, setValue] = useState(0);
 	const { pathname } = useLocation();
@@ -78,21 +79,21 @@ const GetTask = () => {
 	return (
 		<div className={scss.get_task}>
 			<div className={scss.Task}>
-				{task && (
+				{data && (
 					<div className={scss.card}>
 						<div className={scss.text}>
-							<h2>{task.title}</h2>
-							<h2>{task.deadline}</h2>
+							<h2>{data?.title}</h2>
+							<h2>{data?.deadline}</h2>
 
 							<a
-								href={`https://lms-b12.s3.eu-central-1.amazonaws.com/${task.file}`}
+								href={`https://lms-b12.s3.eu-central-1.amazonaws.com/${data?.file}`}
 								type="xxx	"
 							>
-								{task.file}
+								{data?.file}
 							</a>
 						</div>
 
-						<div dangerouslySetInnerHTML={{ __html: task.description }} />
+						<div dangerouslySetInnerHTML={{ __html: data?.description }} />
 					</div>
 				)}
 				<ScrollArea

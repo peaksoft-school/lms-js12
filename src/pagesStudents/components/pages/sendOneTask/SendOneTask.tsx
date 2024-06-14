@@ -4,12 +4,15 @@ import Input from '@/src/ui/customInput/Input';
 import ReactQuill from 'react-quill';
 import { useState } from 'react';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { useParams } from 'react-router-dom';
 
 const SendOneTask = () => {
-	const { data } = useGetTaskInstructorQuery();
+	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
+	const { data } = useGetTaskInstructorQuery(lesson);
 	const [text, setText] = useState('');
 	const [homeWork, setHomeWork] = useState('');
-	const [value, setValue] = useState();
+	const [value, setValue] = useState<string>();
 	const modules = {
 		toolbar: [
 			[[{ header: [1, 2, 3, 4, 5, 6, false] }]],
@@ -21,7 +24,7 @@ const SendOneTask = () => {
 	return (
 		<div className={scss.get_task}>
 			<div className={scss.Task}>
-				{data?.map((item) => (
+				{data?.taskResponse.map((item) => (
 					<div className={scss.card}>
 						<div className={scss.text}>
 							<h2>{item.title}</h2>
@@ -46,7 +49,7 @@ const SendOneTask = () => {
 						<ReactQuill
 							theme="snow"
 							value={value}
-							onChange={(newValue) => setValue(newValue!)}
+							onChange={(newValue) => setValue(newValue)}
 							modules={modules}
 							placeholder="Текст домашнего задания"
 						/>

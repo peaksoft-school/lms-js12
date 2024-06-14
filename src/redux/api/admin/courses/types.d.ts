@@ -67,7 +67,7 @@ namespace ADMINCOURSES {
 		getAllStudentsOfCourses: Student[];
 	};
 	type GetInstructorCourseRequest = {
-		courses: number;
+		course: number;
 		pages: {
 			page: number;
 			size: number;

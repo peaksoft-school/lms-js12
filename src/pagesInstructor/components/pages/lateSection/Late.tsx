@@ -6,7 +6,8 @@ import { useGetTaskResultQuery } from '@/src/redux/api/instructor/getTask';
 const Late = () => {
 	const { courseId, lessonId, getTaskId } = useParams();
 	const page = { answerStatus: 'LATE' };
-	const { data } = useGetTaskResultQuery({ getTaskId, page });
+	const getTask = Number(getTaskId);
+	const { data } = useGetTaskResultQuery({ getTask, page });
 	return (
 		<div className={scss.main_part}>
 			<div className={scss.late}>

@@ -3,7 +3,7 @@ import { api as index } from '../..';
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getPresentation: builder.query<
-			PRESENTATION.getResponsePresentation,
+			PRESENTATION.getResponsePresentationNew,
 			PRESENTATION.getRequestPresentation
 		>({
 			query: (lessonId) => ({
@@ -13,7 +13,7 @@ const api = index.injectEndpoints({
 			providesTags: ['presentation']
 		}),
 		getFile: builder.query<
-			PRESENTATION.getResponsePresentation,
+			PRESENTATION.getResponsePresentationFile,
 			PRESENTATION.getRequestPresentation
 		>({
 			query: (saveId) => ({
@@ -26,8 +26,8 @@ const api = index.injectEndpoints({
 			PRESENTATION.CreateResponsePresentation,
 			PRESENTATION.CreateRequestPresentation
 		>({
-			query: ({ presentationData, lessonId }) => ({
-				url: `/api/presentation/${lessonId}`,
+			query: ({ presentationData, lesson }) => ({
+				url: `/api/presentation/${lesson}`,
 				method: 'POST',
 				body: presentationData
 			}),
@@ -40,7 +40,10 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['presentation']
 		}),
-		editPresentation: builder.mutation({
+		editPresentation: builder.mutation<
+			PRESENTATION.EditPresenTationResponse,
+			PRESENTATION.EditPresenTationRequest
+		>({
 			query: ({ newPresentation, presentationId }) => ({
 				url: `/api/presentation/${presentationId}`,
 				method: 'PATCH',

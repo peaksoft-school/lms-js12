@@ -1,4 +1,4 @@
-import { FC, useState, KeyboardEvent } from 'react';
+import { FC, useState } from 'react';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import scss from './Course.module.scss';
@@ -11,9 +11,9 @@ import { useNavigate } from 'react-router-dom';
 const Course: FC = () => {
 	const { data } = useGetCourseInstructorQuery();
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(8);
+	// const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
-	const [openPage, setOpenPage] = useState('8');
+	const [openPage, setOpenPage] = useState(8);
 	const [openCurse, setOpen] = useState(false);
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
@@ -26,32 +26,32 @@ const Course: FC = () => {
 		setCurrentPage(page);
 	};
 
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(8);
-			setOpenPage();
-			setCurrentPage(openPart);
-		}
-	};
-	const openPartPage = () => {
-		if (rowsPerPage > 8) {
-			setCurrentPage(1);
-		}
-	};
+	// const openPartFunc = () => {
+	// 	if (openPart >= 1) {
+	// 		setRowsPerPage(8);
+	// 		setOpenPage();
+	// 		setCurrentPage(openPart);
+	// 	}
+	// };
+	// const openPartPage = () => {
+	// 	if (rowsPerPage > 8) {
+	// 		setCurrentPage(1);
+	// 	}
+	// };
 
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 8) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(8);
-			}
-		}
-	};
+	// const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
+	// 	if (event.key === 'Enter') {
+	// 		const newOpenPage = parseInt(event.currentTarget.value);
+	// 		if (newOpenPage > 8) {
+	// 			setRowsPerPage(newOpenPage);
+	// 			setOpenPart(1);
+	// 			setCurrentPage(1);
+	// 			openPartFunc();
+	// 		} else {
+	// 			setRowsPerPage(8);
+	// 		}
+	// 	}
+	// };
 
 	return (
 		<div className={scss.course}>
@@ -133,7 +133,7 @@ const Course: FC = () => {
 							// }}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
-									handlePoginationForFunk(openPart);
+									// handlePoginationForFunk(openPart);
 								}
 							}}
 						/>
@@ -164,7 +164,7 @@ const Course: FC = () => {
 							// }}
 							onKeyDown={(e) => {
 								if (e.key === 'Enter') {
-									handlePageShowChange(openPage);
+									// handlePageShowChange(openPage);
 								}
 							}}
 						/>

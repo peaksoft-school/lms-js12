@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect, useState } from 'react';
 import {
 	Modal,
@@ -31,13 +32,6 @@ interface Student {
 	phoneNumber: string;
 	studyFormat: string;
 	isBlock: boolean;
-}
-
-interface StudentResponse {
-	students: Student[];
-	page: number;
-	size: number;
-	data: [];
 }
 
 interface PatchStudentProps {
@@ -94,7 +88,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 }) => {
 	const { handleSubmit, control, reset } = useForm<PatchStudentProps>();
 	const [patchStudentTable] = usePatchStudentTableMutation();
-	const { data: studentData } = useGetStudentTableQuery<StudentResponse>();
+	const { data: studentData } = useGetStudentTableQuery();
 	const students = studentData ?? { students: [], page: 1, size: 0 };
 	const [formatName, setFormatName] = useState<string>('');
 	const theme = useTheme();

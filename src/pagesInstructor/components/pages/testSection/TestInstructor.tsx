@@ -11,13 +11,6 @@ import { Button, Menu, MenuItem } from '@mui/material';
 import watch from '@/src/assets/watch.png';
 import DeleteTest from '@/src/ui/customModal/deleteModal/DeleteTest';
 
-interface Question {
-	testId: number;
-	title: string;
-	hour: number;
-	minute: number;
-}
-
 const TestInstructor = () => {
 	const navigate = useNavigate();
 	const { courseId, lessonId } = useParams();
@@ -29,6 +22,7 @@ const TestInstructor = () => {
 
 	const [saveId, setSaveId] = useState<number | boolean>(false);
 	const open = Boolean(anchorEl);
+	console.log(saveId);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);

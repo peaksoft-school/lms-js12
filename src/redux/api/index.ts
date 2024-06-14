@@ -40,10 +40,11 @@ export const api = createApi({
 		'addTask',
 		'presentation',
 		'auth',
-		'exem',
+		'exam',
 		'student',
 		'materialsLesson',
 		'link',
+		'rating',
 		'test'
 	],
 	endpoints: () => ({})

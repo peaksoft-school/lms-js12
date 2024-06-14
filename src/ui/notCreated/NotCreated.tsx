@@ -3,8 +3,6 @@ import scss from './NotCreated.module.scss';
 import { FC } from 'react';
 import { Button } from '@mui/material';
 import { IconPlus } from '@tabler/icons-react';
-import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
-import { useSearchParams } from 'react-router-dom';
 
 interface NotCreatedProps {
 	text: string;
@@ -13,20 +11,12 @@ interface NotCreatedProps {
 	buttontText: string;
 }
 
-
 const NotCreated: FC<NotCreatedProps> = ({
 	text,
 	name,
 	buttonClick,
 	buttontText
 }) => {
-	const [searchParams, setSearchParams] = useSearchParams();
-		const { data } = useGetAdminCourseQuery({
-			page: searchParams.toString(),
-			size: searchParams.toString()
-		});
-		console.log(data, 'array');
-		
 	return (
 		<div className={scss.mainNot}>
 			<h2>{name}</h2>

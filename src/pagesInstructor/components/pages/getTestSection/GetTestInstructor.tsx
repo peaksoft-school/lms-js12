@@ -8,10 +8,10 @@ import { useParams } from 'react-router-dom';
 import { useGetInsideTestQuery } from '@/src/redux/api/instructor/test';
 
 function GetTestInstructor() {
-	const { getTaskId } = useParams();
+	const { testId } = useParams();
 
-	const testId = Number(getTaskId);
-	const { data } = useGetInsideTestQuery(testId);
+	const test = Number(testId);
+	const { data } = useGetInsideTestQuery(test);
 
 	return (
 		<ScrollArea type="always" scrollbars="xy" offsetScrollbars>

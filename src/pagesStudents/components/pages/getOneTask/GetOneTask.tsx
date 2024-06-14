@@ -3,16 +3,19 @@ import scss from './GetOneTask.module.scss';
 import { IconUserCircle } from '@tabler/icons-react';
 import { useState } from 'react';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { useParams } from 'react-router-dom';
 
 const GetOneTask = () => {
-	const { data } = useGetTaskInstructorQuery();
+	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
+	const { data } = useGetTaskInstructorQuery(lesson);
 	const [isTrue, setIsTrue] = useState(true);
 	console.log(setIsTrue);
 
 	return (
 		<div className={scss.get_task}>
 			<div className={scss.Task}>
-				{data?.map((item) => (
+				{data?.taskResponse.map((item) => (
 					<div className={scss.card}>
 						<div className={scss.text}>
 							<h2>{item.title}</h2>

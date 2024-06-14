@@ -8,6 +8,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
+	useCreateGroupFileMutation,
 	useGetGroupQuery,
 	useUpdateGroupMutation
 } from '@/src/redux/api/admin/groups';
@@ -34,9 +35,8 @@ interface EditModalProps {
 }
 
 const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
-	const { data } = useGetGroupQuery();
+	const { data } = useGetGroupQuery({ page: '1', size: '8' });
 	const findData = data?.groupResponses.find((el) => el.id === saveId);
-	console.log(findData);
 
 	const [value, setValue] = useState<string>('');
 	const [date, setData] = useState<string>('');
@@ -45,6 +45,8 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [updateGroup] = useUpdateGroupMutation();
+	const [saveSelect, setSelectedFile] = useState<string | null>(null);
+	const [createGroupFile] = useCreateGroupFileMutation();
 
 	useEffect(() => {
 		setValue(findData?.title || '');
@@ -61,24 +63,33 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 
 	console.log(saveId);
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
-		if (file) {
-			const reader = new FileReader();
+	const handleFileSelect = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const files = event.target.files;
+		if (files && files[0]) {
+			const file = files[0];
+			console.log(file);
+			const formData = new FormData();
+			formData.append('file', file);
 			setHidePhoto(true);
-			reader.onload = (e) => {
-				if (e.target) {
-					setImage(e.target.result as string);
-				}
-			};
-			reader.readAsDataURL(file);
+
+			try {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const response: any = await createGroupFile(formData);
+				const test = JSON.parse(response.data);
+				const fileName = test.fileName;
+				setSelectedFile(fileName);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			}
 		}
 	};
 
 	const updateGroupFunc = async () => {
 		const newGroup = {
 			title: value,
-			image: image,
+			image: saveSelect,
 			dateOfEnd: date,
 			description: text
 		};
@@ -113,16 +124,14 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 								className={scss.fileInput}
 								type="file"
 								ref={fileInputRef}
-								onChange={handleFileChange}
+								onChange={handleFileSelect}
 							/>
 							<div
 								onClick={handleButtonClick}
 								className={hidePhoto ? scss.background_none : scss.background}
 								style={{ backgroundImage: `url(${image || galerry})` }}
 							></div>
-							<p className={hidePhoto ? scss.hide_text : scss.show}>
-								Нажмите на иконку чтобы загрузить или перетащите фото
-							</p>
+							<p>Нажмите на иконку чтобы загрузить или перетащите фото</p>
 						</div>
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>

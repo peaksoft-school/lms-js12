@@ -1,54 +1,59 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace TASK {
 	type TaskResponse = {
-		id: number;
-		title: string;
-		description: string!;
-		file: File | undefined;
-		deadline: Dayjs | null | undefined;
-	}[];
-	type TaskRequest = void;
+		taskResponse: {
+			id: number;
+			title: string;
+			description: string!;
+			file: File | undefined;
+			deadline: Dayjs | undefined;
+		}[];
+	};
+	type TaskRequest = number;
+
 	type CreateTaskResponse = {
 		id: number;
-		title: string;
-		description: string!;
-		file: File | undefined;
-		deadline: Dayjs | null | undefined;
+		lessonId: number;
+		newTask: {
+			title: string;
+			description: string!;
+			file: File | undefined;
+			deadline: Dayjs | undefined;
+		};
 	}[];
 	type CreateTaskRequest = {
-		title: string;
-		description: string!;
-		file: File | undefined;
-		deadline: Dayjs | null | undefined;
+		newTask: object;
+		lessonId: number | string | undefined;
 	};
 	type Base64Image = `data:image/${'jpeg' | 'png' | 'gif'};base64,${string}`;
 
 	type UpdateTaskResponse = {
-		getTaskId: string | null;
-		newtask: {
+		getTask: number;
+		newTask: {
 			title: string;
 			description: string!;
-			file: File | undefined;
-			deadline: Dayjs | null | undefined;
+			file: string | null;
+			deadline: Dayjs | undefined;
 		};
 	}[];
 	type UpdateTaskRequest = {
-		getTaskId: string | null;
-		newtask: {
+		getTask: number;
+		newTask: {
 			title: string;
-			description: string!;
-			file: File | undefined;
-			deadline: Dayjs | null | undefined;
+			description: string;
+			file: string | null;
+			deadline: Dayjs | undefined;
 		};
 	};
-	type getTask = {
+	type getTaskResponse = {
 		resultTask: string | null;
 		text: string;
-		description: string!;
-		file: File | undefined;
+		description: string;
+		file: string | null;
 		image: string;
 		point: number;
 		taskAnswerStatus: 'Late';
+		answerId: number;
 		comment: {
 			author: string;
 			role: string;
@@ -56,9 +61,14 @@ namespace TASK {
 		}[];
 	};
 
+	type getTaskRequest = number;
+
 	type patchTaskResponse = {
-		point: number;
-		comment: string;
-		isAccept: true;
+		answerId: number | string | undefined;
+		newComment: {
+			point: number | string;
+			comment: string;
+			isAccept: boolean;
+		};
 	};
 }

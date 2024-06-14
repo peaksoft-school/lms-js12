@@ -14,7 +14,6 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
-	height: 285,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -101,7 +100,17 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 							/>
 						</div>
 
-						<div>
+						<div
+							style={{
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'center',
+								paddingBottom: '10px',
+								paddingTop: '13px',
+								gap: '10px'
+							}}
+						>
 							<ButtonCancel
 								type="button"
 								onClick={handleCloseLink}

@@ -14,16 +14,15 @@ namespace ANNOUNCEMENT {
 	};
 	type GetAnnouncementRequest = void;
 	type PostAnnouncementPropsResponse = {
-		id: number;
 		announcementContent: string;
 		expirationDate: string;
-		targetGroupIds: number[];
+		targetGroupIds: string[];
 		publishedDate: string;
 	};
 	type PostAnnouncementPropsRequest = {
 		announcementContent: string;
 		expirationDate: string;
-		targetGroupIds: number[];
+		targetGroupIds: string[];
 		publishedDate: string;
 	};
 	type DeleteAnnouncementPropsResponse = void;
@@ -43,15 +42,21 @@ namespace ANNOUNCEMENT {
 		};
 	};
 	type EditAnnouncementRequest = {
-		saveIdElement: number;
-		editAnnounCement: {
+		saveIdElement: number | null;
+		editAnnouncementData: {
+			announcementContent: string;
+			expirationDate: string;
+			targetGroupIds: number[];
 			publishedDate: string;
 		};
 	};
 	type EditAnnouncementResponse = {
-		saveIdElement: number;
-		editAnnounCement: {
-			isPublished: boo;
+		saveIdElement: number | null;
+		editAnnouncementData: {
+			announcementContent: string;
+			expirationDate: string;
+			targetGroupIds: number[];
+			publishedDate: string;
 		};
 	};
 

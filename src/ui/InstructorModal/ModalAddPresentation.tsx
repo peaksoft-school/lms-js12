@@ -43,10 +43,11 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	open
 }) => {
 	const { control, handleSubmit, reset } = useForm<PostModalAddPresentation>();
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [selectedFile, setSelectedFile] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [createPresentationFile] = useCreatePresentationFileMutation();
 	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
 	const [postPresentation] = usePostPresentationMutation();
 
 	const onSubmit: SubmitHandler<PostModalAddPresentation> = async (data) => {
@@ -60,7 +61,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 			};
 
 			try {
-				await postPresentation({ lessonId, presentationData }).unwrap();
+				await postPresentation({ lesson, presentationData }).unwrap();
 				reset();
 				handleClose();
 			} catch (error) {

@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+import React, { useEffect, useState } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './EditTest.module.scss';
-import { IconCopy } from '@tabler/icons-react';
-import { IconDelete } from '@/src/assets/icons';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCircle from '@/src/ui/customButton/ButtonCircle';
@@ -14,15 +14,45 @@ import {
 	useGetInsideTestQuery
 } from '@/src/redux/api/instructor/test';
 
-const EditTest = () => {
+interface Option {
+	value: string;
+	isTrue: boolean;
+}
+
+interface Question {
+	value?: string;
+	options: Option[];
+	title: string;
+	point: string;
+}
+
+// interface newTest {
+// 	value?: string;
+// 	optionId: number;
+// 	option: string;
+// 	isTrue: boolean;
+// }
+
+interface Test {
+	title: string;
+	hour: string;
+	minute: string;
+	questionRequests: Question[];
+}
+interface FormData {
+	[key: string]: string | undefined;
+}
+
+const EditTest: React.FC = () => {
 	const { control, handleSubmit, reset } = useForm();
-	const { getTaskId } = useParams();
-	const { data } = useGetInsideTestQuery(getTaskId);
+	const { getTaskId } = useParams<{ getTaskId: string }>();
+	const getTask = Number(getTaskId);
+	const { data } = useGetInsideTestQuery(getTask);
 	const [editTest] = useEditTestMutation();
-	const [time, setTime] = useState(`${data?.hour}:${data?.minute}`);
-	const [inputs, setInputs] = useState([]);
-	const [copiesData, setCopiesData] = useState([]);
-	const [option, setOption] = useState('SINGLE');
+	const [time, setTime] = useState<string>('');
+	const [inputs, setInputs] = useState<Question[]>([]);
+	const [copiesData, setCopiesData] = useState<Question[]>([]);
+	const [option, setOption] = useState<'SINGLE' | 'MULTIPLE'>('SINGLE');
 
 	useEffect(() => {
 		if (data) {
@@ -34,23 +64,26 @@ const EditTest = () => {
 						isTrue: option.isTrue
 					})),
 					title: question.title,
-					point: question.point
+					point: question.point.toString()
 				}))
 			);
 			setCopiesData([]);
 		}
 	}, [data]);
 
-	const handleTimeChange = (event) => setTime(event.target.value);
+	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setTime(event.target.value);
+	};
 
-	const handleOptionClick = (selectedOption) => setOption(selectedOption);
+	const handleOptionClick = (selectedOption: 'SINGLE' | 'MULTIPLE') => {
+		setOption(selectedOption);
+	};
 
-	const onSubmit = async (formData) => {
+	const onSubmit = async (formData: FormData) => {
 		const initialQuestions = inputs.map((input, index) => ({
 			title: formData[`titleValue_${index}`],
 			point: formData[`pointValue_${index}`],
-			questionType: option,
-			optionRequests: input.options.map((option, optionIndex) => ({
+			options: input.options.map((option, optionIndex) => ({
 				option: formData[`optionValue_${index}_${optionIndex}`],
 				isTrue:
 					formData[`option_${index}_isTrue_${optionIndex}`] ===
@@ -61,8 +94,7 @@ const EditTest = () => {
 		const copiedQuestions = copiesData.map((copyData, index) => ({
 			title: formData[`copyData_${index}_inputValue3`],
 			point: formData[`copyData_${index}_inputValue4`],
-			questionType: option,
-			optionRequests: copyData.options.map((option, optionIndex) => ({
+			options: copyData.options.map((option, optionIndex) => ({
 				option: formData[`copyData_${index}_optionValue_${optionIndex}`],
 				isTrue:
 					formData[`copyData_${index}_option_${optionIndex}_isTrue`] ===
@@ -72,13 +104,12 @@ const EditTest = () => {
 
 		const allQuestions = [...initialQuestions, ...copiedQuestions];
 
-		const newTest = {
-			title: formData.title,
+		const newTest: Test = {
+			title: formData.title!,
 			hour: time.split(':')[0],
 			minute: time.split(':')[1],
-			questionRequests: allQuestions
+			questionRequests: allQuestions!
 		};
-		console.log(newTest);
 
 		try {
 			const response = await editTest({ newTest, getTaskId });
@@ -90,14 +121,15 @@ const EditTest = () => {
 	};
 
 	const handleCopies = () => {
-		const newCopyData = {
+		const newCopyData: Question = {
 			options: [{ value: '', isTrue: false }],
 			title: '',
 			point: ''
 		};
 		setInputs([...inputs, newCopyData]);
 	};
-	const renderInputFields = (inputs, questionIndex) =>
+
+	const renderInputFields = (inputs: Question[], questionIndex: number) =>
 		inputs.map((input, index) => (
 			<div key={index} className={scss.input_div}>
 				<div className={scss.variant_inputs}>
@@ -113,7 +145,6 @@ const EditTest = () => {
 											{...field}
 											style={{ cursor: 'pointer' }}
 											type="checkbox"
-											// checked{}
 										/>
 									</label>
 								)}
@@ -272,7 +303,7 @@ const EditTest = () => {
 											</label>
 										</div>
 									</div>
-									<div>{renderInputFields(item.options, index)}</div>
+									<div>{renderInputFields(item.options!, index)}</div>
 									<div className={scss.div_text2}>
 										<div className={scss.components}>
 											<p className={scss.p_text2}>
@@ -299,10 +330,20 @@ const EditTest = () => {
 					</div>
 				</div>
 				<div className={scss.button_contain}>
-					<ButtonCancel width="100px" type={'button'} disabled={false}>
+					<ButtonCancel
+						onClick={() => {}}
+						width="100px"
+						type={'button'}
+						disabled={false}
+					>
 						Отмена
 					</ButtonCancel>
-					<ButtonSave width="30px" type="submit" disabled={false}>
+					<ButtonSave
+						onClick={() => {}}
+						width="30px"
+						type="submit"
+						disabled={false}
+					>
 						Сохранить
 					</ButtonSave>
 				</div>

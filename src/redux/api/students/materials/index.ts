@@ -3,8 +3,8 @@ import { api as index } from '../..';
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getStudentMaterials: builder.query<
-			STUDENTLESSON.MaterialsGetResponse,
-			STUDENTLESSON.MaterialsGetRequest
+			MATERIALS.MaterialsGetResponse,
+			MATERIALS.MaterialsGetRequest
 		>({
 			query: (course) => ({
 				url: `/api/lessons/all/${course}`,

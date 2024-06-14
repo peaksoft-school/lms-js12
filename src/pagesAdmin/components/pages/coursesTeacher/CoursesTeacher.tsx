@@ -31,6 +31,7 @@ const CoursesTeacher = () => {
 	const [openPage, setOpenPage] = useState<number | string>(12);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const { courseId } = useParams();
+	const course = Number(courseId);
 
 	const pages = {
 		page: currentPage,
@@ -39,7 +40,7 @@ const CoursesTeacher = () => {
 	};
 
 	const { data, isLoading } = useGetAllInstructorCourseQuery({
-		courseId,
+		course,
 		pages
 	});
 

@@ -5,7 +5,7 @@ const NotSubmitted = () => {
 	return (
 		<div className={scss.main_part}>
 			<div className={scss.not_submited}>
-				{data?.map((item) => (
+				{data?.students.map((item) => (
 					<div className={scss.card_container}>
 						<p className={scss.card_link}>
 							{item.firstName}

@@ -42,6 +42,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	const [postVideoLesson] = usePostVideoLessonMutation();
 
 	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
 
 	const extractVideoId = (url: string): string => {
 		if (url.includes('youtube.com/watch?v=')) {
@@ -64,7 +65,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 					description: description,
 					linkOfVideo: videoId
 				};
-				await postVideoLesson({ postData, lessonId });
+				await postVideoLesson({ postData, lesson });
 				reset();
 				handleCloseVideo();
 			}

@@ -24,7 +24,7 @@ const InternalCourses = () => {
 	const [openBlock, setOpenBlock] = useState(false);
 	const [saveBlock, setSaveBlock] = useState(false);
 	const { courseId } = useParams();
-	const courses = Number(courseId);
+	const course = Number(courseId);
 	const pages: Pages = {
 		page: currentPage,
 		size: rowsPerPage,
@@ -32,7 +32,7 @@ const InternalCourses = () => {
 	};
 
 	const { data, isLoading, error } = useGetAllStudentsCourseQuery({
-		courses,
+		course,
 		pages
 	});
 

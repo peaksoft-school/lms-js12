@@ -36,7 +36,7 @@ namespace GROUPS {
 			title: string;
 			dateOfEnd: string;
 			description: string;
-			image: string;
+			image: string | null;
 		};
 	}[];
 	type UpdateGroupRequest = {
@@ -45,7 +45,7 @@ namespace GROUPS {
 			title: string;
 			dateOfEnd: string;
 			description: string;
-			image: string;
+			image: string | null;
 		};
 	};
 

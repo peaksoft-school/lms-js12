@@ -12,8 +12,9 @@ const CrateTask = () => {
 	const [openDelete, setOpenDelete] = useState(false);
 	const [saveId, setSaveId] = useState<number | null>(null);
 	const navigate = useNavigate();
-	const { courseId, lessonId, getTaskId } = useParams();
-	const { data } = useGetTaskInstructorQuery(lessonId);
+	const { courseId, lessonId } = useParams();
+	const test = Number(lessonId);
+	const { data } = useGetTaskInstructorQuery(test);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
@@ -35,7 +36,7 @@ const CrateTask = () => {
 		);
 	};
 
-	const GetTask = (id) => {
+	const GetTask = (id: number) => {
 		navigate(
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${id}/panding`
 		);
@@ -56,7 +57,7 @@ const CrateTask = () => {
 				</Button>
 			</div>
 			<div className={scss.card_lesson}>
-				{data?.taskResponse.map((item) => (
+				{data?.taskResponse.map((item: { id: number; title: string }) => (
 					<div
 						className={scss.card_container}
 						onClick={() => {
@@ -78,19 +79,26 @@ const CrateTask = () => {
 								anchorEl={anchorEl}
 								open={open}
 								onClose={handleClose}
+								MenuListProps={{
+									'aria-labelledby': 'basic-button'
+								}}
 								anchorOrigin={{
 									vertical: 'bottom',
 									horizontal: 'right'
 								}}
 								transformOrigin={{
 									vertical: 'top',
-									horizontal: 'left'
+									horizontal: 'right'
+								}}
+								PaperProps={{
+									style: { boxShadow: 'none', border: '1px solid gray' }
 								}}
 							>
 								<MenuItem
 									onClick={() => {
 										openLessonEditTask();
 									}}
+									style={{ display: 'flex', gap: '10px' }}
 								>
 									<img src={editImg} alt="#" />
 									Редактировать
@@ -101,6 +109,7 @@ const CrateTask = () => {
 										setOpenDelete(true);
 										setAnchorEl(null);
 									}}
+									style={{ display: 'flex', gap: '10px' }}
 								>
 									<img src={deleteImg} alt="#" />
 									Удалить

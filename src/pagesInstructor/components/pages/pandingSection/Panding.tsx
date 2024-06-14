@@ -6,8 +6,8 @@ const Panding = () => {
 	const page = { answerStatus: 'WAITING' };
 	const { courseId, lessonId, getTaskId } = useParams();
 
-	const { data } = useGetTaskResultQuery({ getTaskId, page });
-	
+	const getTask = Number(getTaskId);
+	const { data } = useGetTaskResultQuery({ getTask, page });
 
 	return (
 		<div className={scss.main_part}>

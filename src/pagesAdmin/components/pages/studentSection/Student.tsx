@@ -49,6 +49,13 @@ const Student: React.FC = () => {
 		e.preventDefault();
 	};
 
+	const handleOpenDeleteModal = () => {
+		setOpenDeleteModal(true);
+	};
+
+	const handleCloseDeleteModal = () => {
+		setOpenDeleteModal(true);
+	};
 	const handleCloseStudent = () => {
 		setOpenStudent(false);
 	};
@@ -230,13 +237,15 @@ const Student: React.FC = () => {
 														</tr>
 													))}
 												<StudentMenu
-													anchorEl={anchorEl}
+													anchorEl={anchorEl!}
 													open={Boolean(anchorEl)}
 													onClose={() => setAnchorEl(null)}
-													setOpenDeleteModal={setOpenDeleteModal}
-													item={saveItem}
-													saveIdElement={saveIdElement}
+													handleOpenDeleteModal={handleOpenDeleteModal}
+													item={saveItem!}
+													saveIdElement={saveIdElement!}
 													openDeleteModal={openDeleteModal}
+													setFilteredData={() => {}}
+													handleCloseDeleteModal={handleCloseDeleteModal}
 												/>
 											</tbody>
 										</table>

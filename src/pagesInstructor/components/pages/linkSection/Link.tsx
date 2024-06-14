@@ -45,6 +45,7 @@ const Link = () => {
 	const handleOpenEdit = (id: number) => {
 		setOpenEdit(true);
 		setIsEditId(id);
+		setAnchorEl(null);
 	};
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
@@ -54,6 +55,7 @@ const Link = () => {
 	const handleOpenDelete = (id: number) => {
 		setOpenDelete(true);
 		setIsDeleteId(id);
+		setAnchorEl(null);
 	};
 	const handleCloseDelete = () => {
 		setOpenDelete(false);
@@ -73,17 +75,19 @@ const Link = () => {
 					justifyContent: 'flex-end'
 				}}
 			>
-				<Button
-					size="large"
-					className={scss.button}
-					variant="contained"
-					onClick={handleOpenAdd}
-				>
-					<div className={scss.icon}>
-						<IconPlus stroke={2} />
-					</div>
-					<span>Добавить ссылку</span>
-				</Button>
+				<div className={scss.buttons}>
+					<Button
+						size="large"
+						className={scss.button}
+						variant="contained"
+						onClick={handleOpenAdd}
+					>
+						<div className={scss.icon}>
+							<IconPlus stroke={2} />
+						</div>
+						<span>Добавить ссылку</span>
+					</Button>
+				</div>
 			</div>
 			<div className={scss.card}>
 				{data?.linkResponses.map((link: LinkData) => (

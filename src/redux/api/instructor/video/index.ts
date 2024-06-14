@@ -28,8 +28,8 @@ const api = index.injectEndpoints({
 			VIDEO_LESSON.VideoLessonPostResponse,
 			VIDEO_LESSON.VideoLessonPostRequest
 		>({
-			query: ({ postData, lessonId }) => ({
-				url: `/api/videos/${lessonId}`,
+			query: ({ postData, lesson }) => ({
+				url: `/api/videos/${lesson}`,
 				method: 'POST',
 				body: postData
 			}),

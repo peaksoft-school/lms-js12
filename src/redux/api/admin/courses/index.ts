@@ -48,8 +48,8 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.GetInstructorCourseResponse,
 			ADMINCOURSES.GetInstructorCourseRequest
 		>({
-			query: ({ courseId, pages }) => ({
-				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courseId}`,
+			query: ({ course, pages }) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}`,
 				params: {
 					page: pages.page,
 					size: pages.size,
@@ -63,8 +63,8 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.GetInstructorCourseResponse,
 			ADMINCOURSES.GetInstructorCourseRequest
 		>({
-			query: ({ courses, pages }) => ({
-				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${courses}`,
+			query: ({ course, pages }) => ({
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}`,
 				params: {
 					page: pages.page,
 					size: pages.size,
