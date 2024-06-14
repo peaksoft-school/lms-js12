@@ -71,5 +71,5 @@ namespace GROUPS {
 	type GetStudentsGroupResponse = {
 		students: Students[];
 	};
-	type GetStudentsGroupRequest = void;
+	type GetStudentsGroupRequest = number;
 }

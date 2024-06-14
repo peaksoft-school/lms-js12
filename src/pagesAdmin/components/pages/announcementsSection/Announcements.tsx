@@ -1,10 +1,9 @@
 import React, { useState, KeyboardEvent } from 'react';
 import scss from './Announcements.module.scss';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
-import { Preloader } from '@/src/ui/preloader/Preloader';
 import {
 	useGetAnnouncementTableQuery,
-	usePatchShowdMutationMutation
+	useShowAnnouncementMutation
 } from '@/src/redux/api/admin/announcement';
 import AnnouncementForm from '@/src/ui/announcementForm/AnnouncementForm';
 import editIcon from '@/src/assets/svgs/edit.svg';
@@ -25,57 +24,37 @@ const Announcements = () => {
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const { data, isLoading } = useGetAnnouncementTableQuery();
+	const { data } = useGetAnnouncementTableQuery();
+
+	console.log(data, 'card');
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(4);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(4);
-	const [patchCompletedMutation] = usePatchShowdMutationMutation();
+	const [showAnnouncement] = useShowAnnouncementMutation();
+
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
 	};
-
 	const handleCloseAnnoucement = () => {
 		setOpenAnnouncement(false);
 	};
 
-	if (isLoading) {
-		return (
-			<div>
-				<Preloader />
-			</div>
-		);
-	}
-
-	const find = data?.find((item) => item.id === deleteById);
-
+	const find = data?.announcements?.find((item) => item.id === deleteById);
 	const open = Boolean(anchorEl);
-
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
-
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
-	const handleShowFunc = async () => {
-		const updated = {
-			announcement: find?.announcement,
-			group: find?.group,
-			show: !find?.show
-		};
-		await patchCompletedMutation({ updated, deleteById });
-	};
-
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
 		page: number
 	): void => {
 		setCurrentPage(page);
 	};
-
 	const openPartFunc = () => {
 		if (openPart >= 1) {
 			setRowsPerPage(4);
@@ -88,7 +67,6 @@ const Announcements = () => {
 			setCurrentPage(1);
 		}
 	};
-
 	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			const newOpenPage = parseInt(event.currentTarget.value);
@@ -102,7 +80,12 @@ const Announcements = () => {
 			}
 		}
 	};
-
+	const handleShow = async (deleteById: number, isPublished: boolean) => {
+		const newAnnoun = {
+			isPublished: !isPublished
+		};
+		await showAnnouncement({ deleteById, newAnnoun });
+	};
 	return (
 		<div className={scss.Section_announcement}>
 			<div className={scss.main_container}>
@@ -128,119 +111,135 @@ const Announcements = () => {
 					<div>
 						<div className={scss.announce_box}>
 							<ul className={scss.announce_card}>
-								{data
-									?.slice(
-										(currentPage - 1) * rowsPerPage,
-										currentPage * rowsPerPage
-									)
-									.map((item) => (
-										<li key={item.id} className={scss.announce_list}>
-											<div className={scss.show_text}>
-												{item?.show === true ? (
+								{data?.announcements.map((item) => (
+									<li key={item.id} className={scss.announce_list}>
+										<div className={scss.show_text}>
+											{item?.isPublished === true ? (
+												<>
+													<p style={{ color: '#0ECE22 ', fontSize: '16px' }}>
+														Видно
+													</p>
+												</>
+											) : (
+												<>
+													<p style={{ color: 'red' }}>Не видно</p>
+												</>
+											)}
+										</div>
+										<div className={scss.announcement_owners}>
+											<p className={scss.announcement_owner}>
+												<p className={scss.announc_user}>Кем создан:</p>
+												{item.owner}
+											</p>
+										</div>
+										<p>
+											<p className={scss.announce_groups}>Для кого:</p>
+											{item.groupNames.join(', ')}
+										</p>
+										<p>
+											<p className={scss.announce_content}>Текст:</p>
+											{item.content}
+										</p>
+										<div
+											style={{
+												display: 'flex',
+												flexDirection: 'column',
+												gap: '50px'
+											}}
+										>
+											<div className={scss.cont_date}>
+												<p className={scss.announcement_publishDate}>
+													{item.publishDate}
+												</p>
+												<p> {item.endDate}</p>
+											</div>
+											<div>
+												<button
+													className={scss.button}
+													aria-controls={open ? 'basic-menu' : undefined}
+													aria-haspopup="true"
+													onClick={(e) => {
+														handleClick(e);
+														setDeleteById(item.id);
+													}}
+												>
+													<DotsHorizont />
+												</button>
+											</div>
+										</div>
+										<Menu
+											className={scss.deleteEdit}
+											id="basic-menu"
+											anchorEl={anchorEl}
+											open={open}
+											onClose={handleClose}
+											MenuListProps={{ 'aria-labelledby': 'basic-button' }}
+											elevation={0}
+											anchorOrigin={{
+												vertical: 'bottom',
+												horizontal: 'right'
+											}}
+											transformOrigin={{
+												vertical: 'top',
+												horizontal: 'right'
+											}}
+											PaperProps={{
+												style: { boxShadow: 'none', border: '1px solid gray' }
+											}}
+										>
+											<MenuItem
+												style={{
+													display: 'flex',
+													gap: '20px'
+												}}
+												className={scss.dropdown}
+												onClick={() => {
+													setOpenModalEdit(true);
+													setAnchorEl(null);
+												}}
+											>
+												<img src={editIcon} alt="Edit" />
+												<p>Редактировать</p>
+											</MenuItem>
+											<MenuItem
+												style={{ display: 'flex', gap: '20px' }}
+												className={scss.dropdown}
+												onClick={() => {
+													handleShow(item.id, item.isPublished);
+												}}
+											>
+												{find?.isPublished === true ? (
 													<>
-														<p style={{ color: '#0ece22 ', fontSize: '16px' }}>
-															Видно
-														</p>
+														<IconEyeOff stroke={2} />
+														<p>Не показывать</p>
 													</>
 												) : (
 													<>
-														<p style={{ color: 'red' }}>Не видно</p>
+														<IconEye stroke={2} />
+														<p>Показывать</p>
 													</>
 												)}
-											</div>
-											<strong>{item.group}</strong>
-											<p>{item.announcement}</p>
-
-											<button
-												className={scss.button}
-												aria-controls={open ? 'basic-menu' : undefined}
-												aria-haspopup="true"
-												onClick={(e) => {
-													handleClick(e);
-													setDeleteById(item.id);
+											</MenuItem>
+											<MenuItem
+												style={{ display: 'flex', gap: '20px' }}
+												className={scss.dropdown}
+												onClick={() => {
+													setOpenModalDelete(true);
+													setAnchorEl(null);
 												}}
 											>
-												<DotsHorizont />
-											</button>
-
-											<Menu
-												className={scss.deleteEdit}
-												id="basic-menu"
-												anchorEl={anchorEl}
-												open={open}
-												onClose={handleClose}
-												MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-												elevation={0}
-												anchorOrigin={{
-													vertical: 'bottom',
-													horizontal: 'right'
-												}}
-												transformOrigin={{
-													vertical: 'top',
-													horizontal: 'right'
-												}}
-												PaperProps={{
-													style: { boxShadow: 'none', border: '1px solid gray' }
-												}}
-											>
-												<MenuItem
-													style={{
-														display: 'flex',
-														gap: '20px'
-													}}
-													className={scss.dropdown}
-													onClick={() => {
-														setOpenModalEdit(true);
-														setAnchorEl(null);
-													}}
-												>
-													<img src={editIcon} alt="Edit" />
-													<p>Редактировать</p>
-												</MenuItem>
-
-												<MenuItem
-													style={{ display: 'flex', gap: '20px' }}
-													className={scss.dropdown}
-													onClick={() => {
-														handleShowFunc();
-														handleClose();
-													}}
-												>
-													{find?.show === true ? (
-														<>
-															<IconEyeOff stroke={2} />
-															<p>Не показывать</p>
-														</>
-													) : (
-														<>
-															<IconEye stroke={2} />
-															<p>Показывать</p>
-														</>
-													)}
-												</MenuItem>
-
-												<MenuItem
-													style={{ display: 'flex', gap: '20px' }}
-													className={scss.dropdown}
-													onClick={() => {
-														setOpenModalDelete(true);
-														setAnchorEl(null);
-													}}
-												>
-													<img src={deleteIcon} alt="Delete" />
-													<p>Удалить</p>
-												</MenuItem>
-											</Menu>
-										</li>
-									))}
+												<img src={deleteIcon} alt="Delete" />
+												<p>Удалить</p>
+											</MenuItem>
+										</Menu>
+									</li>
+								))}
 							</ul>
-
 							<ModalEditAnnouncement
 								openModalEdit={openModalEdit}
 								closeModalEdit={() => setOpenModalEdit(false)}
 								saveIdElement={deleteById}
 							/>
-
 							<DeleteAnnouncementModal
 								openModalDelete={openModalDelete}
 								closeModalDelete={setOpenModalDelete}
@@ -272,7 +271,7 @@ const Announcements = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(data!.length / rowsPerPage)}
+								// count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -300,5 +299,4 @@ const Announcements = () => {
 		</div>
 	);
 };
-
 export default Announcements;

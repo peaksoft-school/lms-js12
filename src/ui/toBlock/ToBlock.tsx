@@ -10,12 +10,11 @@ import IsBlock from '../InstructorModal/IsBlock';
 
 interface StudentMenuItem {
 	id: number;
-	firstName: string;
-	lastName: string;
+	fullName: string;
 	phoneNumber: string;
 	email: string;
-	groupName: string[];
-	studyFormat: string[];
+	groupName: string;
+	studyFormat: string;
 	isBlock: boolean;
 }
 
@@ -23,8 +22,8 @@ interface MenuProps {
 	anchorEl: null | HTMLElement;
 	open: boolean;
 	onClose: () => void;
-	setOpenDeleteModal: (value: boolean) => void;
-	updateCompletedFunc: () => void;
+	setOpenDeleteModal?: (value: boolean) => void;
+	updateCompletedFunc?: () => void;
 	item: StudentMenuItem | undefined;
 	saveIdElement: number | null;
 	openDeleteModal: boolean;

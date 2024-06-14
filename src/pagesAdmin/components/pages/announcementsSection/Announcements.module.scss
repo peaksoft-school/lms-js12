@@ -69,9 +69,10 @@
 					font-size: 20px;
 					box-shadow: 2px 2px 4px #80808066;
 					margin-top: 30px;
-					padding: 25px;
+					padding: 15px;
 					border-radius: 15px;
 					overflow-wrap: break-word;
+				
 					p {
 						font-size: 16px;
 						font-weight: 400;
@@ -188,4 +189,37 @@
 			flex-direction: column;
 		}
 	}
+}
+
+.announcement_owners {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+
+	.announcement_owner {
+		color: blue;
+	}
+}
+
+.announcement_publishDate {
+	color: #8b8b8b;
+}
+
+.announc_user {
+	color: #8b8b8b;
+}
+.announce_content {
+	color: #8b8b8b;
+}
+
+.announce_groups {
+	color: #8b8b8b;
+}
+.announce_groups_name {
+	color: blue;
+}
+
+.cont_date{
+	display: flex;
+	justify-content: space-between;
 }

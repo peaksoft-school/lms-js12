@@ -12,9 +12,10 @@ const Lesson = () => {
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
+	const [rowsPerPage, setRowsPerPage] = useState(8);
+	const course = Number(coursesId);
 
-	const { data } = useGetStudentMaterialsQuery(coursesId);
+	const { data } = useGetStudentMaterialsQuery(course);
 
 	const navigate = useNavigate();
 

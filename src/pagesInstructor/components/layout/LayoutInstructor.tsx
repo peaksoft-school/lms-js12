@@ -19,15 +19,14 @@ import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import AddTaskPage from '../pages/AddTaskPage';
 import EditTask from '../pages/editTaskSection/EditTask';
 import GetTask from '../pages/getTaskSection/GetTask';
+// import Answer from '../pages/addTaskSection/answerSection/Answer';
+import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
 import Answer from '../pages/answerSection/Answer';
 
 import RatingStudentsPage from '../pages/RatingStudentsPage';
 // import { Breadcrumbs } from '@mui/material';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
-import CreateTest from '../pages/createTestSection/CreateTest';
-import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
-import EditTest from '../pages/editTest/EditTest';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -134,6 +133,10 @@ const LayoutInstructor = () => {
 							element={<LessonPage />}
 						/>
 						<Route
+							path="/course/:courseId/materials/:lessonId/link"
+							element={<LessonPage />}
+						/>
+						<Route
 							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/panding"
 							element={<LessonPage />}
 						/>
@@ -169,7 +172,7 @@ const LayoutInstructor = () => {
 						/>
 
 						<Route
-							path="/course/:courseId/materials/:lessonId/lesson/update"
+							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/update"
 							element={<EditTask />}
 						/>
 						<>
@@ -183,10 +186,6 @@ const LayoutInstructor = () => {
 							/>
 							<Route
 								path="/course/:courseId/materials/:lessonId/presentation"
-								element={<LessonPage />}
-							/>
-							<Route
-								path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/panding"
 								element={<LessonPage />}
 							/>
 
@@ -219,11 +218,6 @@ const LayoutInstructor = () => {
 								path="/course/:courseId/materials/:lessonId/lesson/addTask"
 								element={<AddTaskPage />}
 							/>
-
-							<Route
-								path="/course/:courseId/materials/:lessonId/lesson/update"
-								element={<EditTask />}
-							/>
 						</>
 						<Route
 							path="/course/:ratingId/rating"
@@ -236,16 +230,8 @@ const LayoutInstructor = () => {
 							element={<LessonPage />}
 						/>
 						<Route
-							path="/course/:courseId/materials/:lessonId/:getTaskId/showTest"
+							path="/course/:courseId/materials/:lessonId/showTest"
 							element={<GetTestInstructor />}
-						/>
-						<Route
-							path="/course/:courseId/materials/:lessonId/createTest"
-							element={<CreateTest />}
-						/>
-						<Route
-							path="/course/:courseId/materials/:lessonId/:getTaskId/editTest"
-							element={<EditTest />}
 						/>
 					</Routes>
 				</main>

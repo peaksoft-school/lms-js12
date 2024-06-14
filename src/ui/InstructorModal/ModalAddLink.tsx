@@ -1,13 +1,12 @@
-import scss from './Styled.module.scss';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Modal, Box, Typography } from '@mui/material';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import scss from './Styled.module.scss';
+import { FC } from 'react';
+import { usePostLinkMutation } from '@/src/redux/api/instructor/link';
+import { useParams } from 'react-router-dom';
 
 const style = {
 	position: 'absolute',
@@ -22,28 +21,36 @@ const style = {
 	borderRadius: '10px'
 };
 
-const ModalAddLink = () => {
-	const [open, setOpen] = useState<boolean>(false);
-	const handleOpen = () => {
-		setOpen(true);
-	};
+interface LinkProps {
+	titleOfLink: string;
+	urlOfLink: string;
+}
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+interface LessonLinkProps {
+	open: boolean;
+	handleCloseLink: () => void;
+}
 
-	const { control, handleSubmit, reset } = useForm();
+const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
+	const { control, handleSubmit, reset } = useForm<LinkProps>();
+	const [postLinkLesson] = usePostLinkMutation();
+	const { lessonId } = useParams();
 
-	const onSubmit = () => {
+	const onSubmit: SubmitHandler<LinkProps> = async (data) => {
+		const newLink = {
+			title: data.titleOfLink,
+			url: data.urlOfLink
+		};
+		await postLinkLesson({ lessonId, newLink });
 		reset();
+		handleCloseLink();
 	};
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<Button onClick={handleOpen}>Open modal Добавить link</Button>
 			<Modal
 				open={open}
-				onClose={handleClose}
+				onClose={handleCloseLink}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -60,7 +67,7 @@ const ModalAddLink = () => {
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="text"
+								name="titleOfLink"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'text error' }}
@@ -78,7 +85,7 @@ const ModalAddLink = () => {
 
 						<div className={scss.input}>
 							<Controller
-								name="url"
+								name="urlOfLink"
 								control={control}
 								defaultValue=""
 								rules={{ required: 'url error' }}
@@ -94,10 +101,10 @@ const ModalAddLink = () => {
 							/>
 						</div>
 
-						<div className={scss.button_add}>
+						<div>
 							<ButtonCancel
-								type="submit"
-								onClick={handleClose}
+								type="button"
+								onClick={handleCloseLink}
 								disabled={false}
 								width="117px"
 							>
@@ -107,7 +114,7 @@ const ModalAddLink = () => {
 								type="submit"
 								width="117px"
 								disabled={false}
-								onClick={handleOpen}
+								onClick={handleSubmit(onSubmit)}
 							>
 								Добавить
 							</ButtonSave>

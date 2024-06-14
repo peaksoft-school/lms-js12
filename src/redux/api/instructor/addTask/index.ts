@@ -3,8 +3,8 @@ import { api as index } from '../../../api';
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getTaskInstructor: builder.query<TASK.TaskResponse, TASK.TaskRequest>({
-			query: () => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask',
+			query: (lessonId) => ({
+				url: `/api/tasks/taskOfLesson/${lessonId}`,
 				method: 'GET'
 			}),
 			providesTags: ['addTask']
@@ -13,8 +13,8 @@ export const api = index.injectEndpoints({
 			TASK.CreateTaskResponse,
 			TASK.CreateTaskRequest
 		>({
-			query: (newtask) => ({
-				url: 'https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask',
+			query: ({ newtask, lessonId }) => ({
+				url: `/api/tasks/${lessonId}`,
 				method: 'POST',
 				body: newtask
 			}),
@@ -25,7 +25,7 @@ export const api = index.injectEndpoints({
 			TASK.UpdateTaskRequest
 		>({
 			query: ({ newtask, getTaskId }) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask/${getTaskId}`,
+				url: `/api/tasks/${getTaskId}`,
 				method: 'PATCH',
 				body: newtask
 			}),
@@ -33,17 +33,39 @@ export const api = index.injectEndpoints({
 		}),
 		deleteTaskInstructor: builder.mutation({
 			query: (deleteById) => ({
-				url: `https://api-v2.elchocrud.pro/api/v1/837063ed51b0bdbac25627a061a1efd0/addTask/${deleteById}`,
+				url: `/api/tasks/${deleteById}`,
 				method: 'DELETE'
+			}),
+			invalidatesTags: ['addTask']
+		}),
+		getInstructorTask: builder.query<TASK.getTask, TASK.getTask>({
+			query: (answerId) => ({
+				url: `/api/resultTask/${answerId}`,
+				method: 'GET'
+			}),
+			providesTags: ['addTask']
+		}),
+
+		patchTaskInstructor: builder.mutation<
+			TASK.patchTaskResponse,
+			TASK.patchTaskResponse
+		>({
+			query: ({ newComment, answerId }) => ({
+				url: `/api/resultTask/${answerId}`,
+				method: 'PATCH',
+				body: newComment
 			}),
 			invalidatesTags: ['addTask']
 		})
 	})
 });
 
+
 export const {
 	useGetTaskInstructorQuery,
 	useCreateTaskInstructorMutation,
 	useEditTaskInstructorMutation,
-	useDeleteTaskInstructorMutation
+	useDeleteTaskInstructorMutation,
+	useGetInstructorTaskQuery,
+	usePatchTaskInstructorMutation
 } = api;

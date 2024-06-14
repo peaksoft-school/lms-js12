@@ -1,25 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import scss from './Styled.module.scss';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import {
+	useForm,
+	Controller,
+	SubmitHandler,
+	FieldValues
+} from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import { usePostMaterialsMutation } from '@/src/redux/api/instructor/materials';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import {
+	useEditLinkMutation,
+	useGetLinkQuery
+} from '@/src/redux/api/instructor/link';
 import { useParams } from 'react-router-dom';
-
-interface FormData {
-	title: string;
-	date: string;
-}
-
-interface AddLessonProps {
-	handleOpen: (value: boolean) => void;
-	open: boolean;
-	handleClose: () => void;
-}
 
 const style = {
 	position: 'absolute',
@@ -27,35 +25,51 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
+	height: 285,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
-	borderRadius: '12px'
+	borderRadius: '10px'
 };
 
-const ModalAddLesson: FC<AddLessonProps> = ({
-	handleOpen,
-	open,
-	handleClose
-}) => {
-	const { handleSubmit, reset, control } = useForm<FormData>();
-	const [postMaterials] = usePostMaterialsMutation();
-	const { courseId } = useParams();
+interface PresentationProps1 {
+	open: boolean;
+	handleClose: () => void;
+	resultId: number | boolean;
+}
 
-	const onSubmit: SubmitHandler<FormData> = async (data) => {
-		const { title, date } = data;
+const EditLink: FC<PresentationProps1> = ({ open, handleClose, resultId }) => {
+	const { control, handleSubmit, reset } = useForm();
+	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
+	const { data, isFetching } = useGetLinkQuery(lesson);
 
-		if (title !== '' && date !== '') {
-			const postData = {
-				title: title,
-				createdAt: date
-			};
-			await postMaterials({ postData, courseId });
-			reset();
-			handleClose();
-			handleOpen(false);
+	const [editLink] = useEditLinkMutation();
+
+	const finder = data?.linkResponses.find((item) => item.id === resultId);
+	console.log(finder?.title);
+
+	useEffect(() => {
+		reset({
+			title: finder?.title,
+			url: finder?.url
+		});
+	}, [finder]);
+	const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
+		if (resultId === undefined) {
+			console.error('resultId is undefined');
+			return;
 		}
+		const { title, url } = formData;
+		await editLink({
+			linkId: resultId,
+			newData: { title, url }
+		});
+		reset();
+		handleClose();
 	};
+
+	if (isFetching) return null;
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -67,44 +81,51 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 			>
 				<Box sx={style} className={scss.ModalMain}>
 					<Typography
-						className={scss.text}
+						className={scss.add_text}
 						id="modal-modal-title"
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.com_text}>Добавить урок</p>
+						<p className={scss.com_text}>Редактировать ссылку</p>
 					</Typography>
 
-					<Typography className={scss.input_button_card}>
+					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
 								name="title"
 								control={control}
-								defaultValue=""
+								defaultValue={finder ? finder.title : ''}
+								rules={{ required: 'Введите название' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Название урока"
-									/>
-								)}
-							/>
-							<Controller
-								name="date"
-								control={control}
-								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="date"
-										width="100%"
-										placeholder="Дата"
+										placeholder="Введите название"
 									/>
 								)}
 							/>
 						</div>
+
+						<div className={scss.input}>
+							<Controller
+								name="url"
+								control={control}
+								defaultValue={finder ? finder.url : ''}
+								rules={{ required: 'Введите ссылку' }}
+								render={({ field }) => (
+									<Input
+										size="medium"
+										{...field}
+										type="text"
+										width="100%"
+										placeholder="Введите ссылку"
+									/>
+								)}
+							/>
+						</div>
+
 						<div
 							style={{
 								width: '100%',
@@ -118,26 +139,26 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 						>
 							<ButtonCancel
 								type="button"
-								onClick={handleClose}
 								disabled={false}
+								onClick={handleClose}
 								width="117px"
 							>
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
-								type="button"
+								type="submit"
 								width="117px"
 								disabled={false}
 								onClick={handleSubmit(onSubmit)}
 							>
-								Создать
+								Сохранить
 							</ButtonSave>
 						</div>
-					</Typography>
+					</Box>
 				</Box>
 			</Modal>
 		</form>
 	);
 };
 
-export default ModalAddLesson;
+export default EditLink;

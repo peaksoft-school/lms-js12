@@ -6,13 +6,23 @@ const api = index.injectEndpoints({
 			STUDENTLESSON.MaterialsGetResponse,
 			STUDENTLESSON.MaterialsGetRequest
 		>({
-			query: (coursesId) => ({
-				url: `/api/lessons/all/${coursesId}`,
+			query: (course) => ({
+				url: `/api/lessons/all/${course}`,
 				method: 'GET'
 			}),
 			providesTags: ['material']
+		}),
+		getLinkStudents: builder.query<
+			MATERIALS.getResponseLinkStudents,
+			MATERIALS.getRequestLinkStudents
+		>({
+			query: (lesson) => ({
+				url: `/api/links/findAll/${lesson}`,
+				method: 'GET'
+			}),
+			providesTags: ['link']
 		})
-		// /api/videos/All/${lessonId}
 	})
 });
-export const { useGetStudentMaterialsQuery } = api;
+
+export const { useGetStudentMaterialsQuery, useGetLinkStudentsQuery } = api;

@@ -25,7 +25,7 @@ const SendOneTask = () => {
 					<div className={scss.card}>
 						<div className={scss.text}>
 							<h2>{item.title}</h2>
-							<h2>{item.dedline}</h2>
+							<h2>{item.deadline}</h2>
 						</div>
 
 						<div dangerouslySetInnerHTML={{ __html: item.description }} />
@@ -46,7 +46,7 @@ const SendOneTask = () => {
 						<ReactQuill
 							theme="snow"
 							value={value}
-							onChange={(newValue) => setValue(newValue)}
+							onChange={(newValue) => setValue(newValue!)}
 							modules={modules}
 							placeholder="Текст домашнего задания"
 						/>
@@ -60,7 +60,14 @@ const SendOneTask = () => {
 							placeholder="Комментарий к заданию"
 							width="100%"
 						/>
-						<ButtonSave>Отправить</ButtonSave>
+						<ButtonSave
+							disabled={false}
+							onClick={() => {}}
+							width="100%"
+							type="button"
+						>
+							Отправить
+						</ButtonSave>
 					</div>
 				</div>
 			</div>

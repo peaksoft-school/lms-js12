@@ -9,7 +9,7 @@ namespace STUDENTLESSON {
 	type MaterialsGetResponse = {
 		lessonResponses: Lesson[];
 	};
-	type MaterialsGetRequest = void;
+	type MaterialsGetRequest = number;
 
 	type MaterialsPostResponse = {
 		title: string;

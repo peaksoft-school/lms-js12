@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ANALYTIC {
 	type Analytic = {
-		id: number;
+		groups: number;
+		students: number;
+		instructors: number;
+		courses: number;
+		graduated: number;
 		year: number;
-		userGain: number;
-		userLost: number;
 	};
 	type AnalyticsResponse = Analytic[];
 	type AnalyticsRequest = void;

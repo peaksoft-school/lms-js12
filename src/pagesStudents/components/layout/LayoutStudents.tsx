@@ -110,6 +110,10 @@ const LayoutStudents = () => {
 							element={<GetTest />}
 						/>
 						<Route path="/courses/:coursesId/rating" element={<RatingPage />} />
+						<Route
+							path="/courses/:courseId/materials/:lessonId/link"
+							element={<LessonsStudentPage />}
+						/>
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}

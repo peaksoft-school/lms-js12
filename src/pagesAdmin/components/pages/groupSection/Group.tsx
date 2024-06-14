@@ -32,6 +32,7 @@ const Groups: FC = () => {
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
+		
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
@@ -226,7 +227,7 @@ const Groups: FC = () => {
 							type="text"
 							value={openPage}
 							onChange={(e) => {
-								setOpenPage(e.target.value);
+								setOpenPage(+e.target.value);
 								handleInputValuePaginationSize(Number(e.target.value));
 							}}
 							onKeyDown={(e) => {

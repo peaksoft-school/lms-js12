@@ -8,9 +8,10 @@ import { Preloader } from '@/src/ui/preloader/Preloader';
 
 const StudentVideoLesson = () => {
 	const { lessonId } = useParams();
+	const lesson = Number(lessonId);
 
 	const { data: video = [], isLoading } =
-		useGetVideoLessonForStudentQuery(lessonId);
+		useGetVideoLessonForStudentQuery(lesson);
 
 	const [openWatch, setWatchOpen] = useState(false);
 

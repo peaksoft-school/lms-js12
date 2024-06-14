@@ -21,7 +21,7 @@ const GetLessonTask = () => {
 					<div
 						className={scss.card_container}
 						onClick={() => {
-							setSaveId(item._id);
+							setSaveId(item.id);
 							setTimeout(() => {
 								GetLessonTaskFunc();
 							}, 500);

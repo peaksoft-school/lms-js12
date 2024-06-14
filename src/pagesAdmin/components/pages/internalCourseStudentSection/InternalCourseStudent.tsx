@@ -24,6 +24,7 @@ const InternalCourses = () => {
 	const [openBlock, setOpenBlock] = useState(false);
 	const [saveBlock, setSaveBlock] = useState(false);
 	const { courseId } = useParams();
+	const courses = Number(courseId);
 	const pages: Pages = {
 		page: currentPage,
 		size: rowsPerPage,
@@ -31,7 +32,7 @@ const InternalCourses = () => {
 	};
 
 	const { data, isLoading, error } = useGetAllStudentsCourseQuery({
-		courseId,
+		courses,
 		pages
 	});
 
@@ -92,12 +93,8 @@ const InternalCourses = () => {
 											</thead>
 											<tbody>
 												{data!.getAllStudentsOfCourses &&
-													data!.getAllStudentsOfCourses
-														// ?.slice(
-														// 	(currentPage - 1) * rowsPerPage,
-														// 	currentPage * rowsPerPage
-														// )
-														.map((item, index: number) => (
+													data!.getAllStudentsOfCourses.map(
+														(item, index: number) => (
 															<tr
 																key={item.id}
 																className={
@@ -166,7 +163,8 @@ const InternalCourses = () => {
 																	</button>
 																</td>
 															</tr>
-														))}
+														)
+													)}
 											</tbody>
 										</table>
 									</div>

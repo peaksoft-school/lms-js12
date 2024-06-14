@@ -1,45 +1,70 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ANNOUNCEMENT {
 	type Table = {
-		id: Key | null | undefined;
 		id: number;
-		announcement: string;
-		group: string;
-		show: boolean;
+		content: string;
+		owner: string;
+		groupNames: string[];
+		publishDate: string;
+		endDate: string;
+		isPublished: true;
 	};
-
-	type TablesAnnouncementResponse = Table[];
-	type TablesAnnouncementRequest = void;
-
+	type GetAnnouncementResponse = {
+		announcements: Table[];
+	};
+	type GetAnnouncementRequest = void;
 	type PostAnnouncementPropsResponse = {
 		id: number;
-		announcement: string;
-		group: string;
-	}[];
-	type PostAnnouncementPropsRequest = {
-		announcement: string;
-		group: string[];
-		show: boolean;
+		announcementContent: string;
+		expirationDate: string;
+		targetGroupIds: number[];
+		publishedDate: string;
 	};
-
+	type PostAnnouncementPropsRequest = {
+		announcementContent: string;
+		expirationDate: string;
+		targetGroupIds: number[];
+		publishedDate: string;
+	};
 	type DeleteAnnouncementPropsResponse = void;
 	type DeleteAnnouncementPropsRequest = number | null;
-
-	type PatchAnnouncementPropsResponse = {
+	type PutAnnouncementPropsResponse = {
+		announcementContent: string;
+		expirationDate: string;
+		targetGroupIds: number[];
+		publishedDate: string;
+	};
+	type PutAnnouncementPropsRequest = {
+		id: number;
 		editAnnouncement: {
-			id: number;
-			announcement: string;
-			group: string[];
-			show: boolean;
+			content: string;
+			groupNames: string[];
+			isPublished: true;
 		};
-	}[];
+	};
+	type EditAnnouncementRequest = {
+		saveIdElement: number;
+		editAnnounCement: {
+			publishedDate: string;
+		};
+	};
+	type EditAnnouncementResponse = {
+		saveIdElement: number;
+		editAnnounCement: {
+			isPublished: boo;
+		};
+	};
 
-	type PatchAnnouncementPropsRequest = {
-		saveIdElement: number | null;
-		editAnnouncement: {
-			announcement: string;
-			group: string[];
-			show: boolean;
+	type ShowAnnouncementResponse = {
+		deleteById: number;
+		newAnnoun: {
+			isPublished: boolean;
+		};
+	};
+	type ShowAnnouncementRequest = {
+		deleteById: number;
+		newAnnoun: {
+			isPublished: boolean;
 		};
 	};
 }
