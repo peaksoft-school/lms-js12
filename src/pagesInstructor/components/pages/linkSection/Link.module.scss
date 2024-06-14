@@ -2,6 +2,55 @@
 	padding-inline: 20px;
 	width: 100%;
 
+	.buttons {
+		display: flex;
+		gap: 10px;
+		justify-content: center;
+		align-items: center;
+		@media (max-width: 700px) {
+			gap: 0;
+		}
+		.button {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+			align-items: center;
+			border-radius: 8px;
+			text-transform: capitalize;
+			.icon {
+				width: 25px;
+				height: 25px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			span {
+				white-space: nowrap;
+			}
+			@media (max-width: 700px) {
+				span {
+					display: none;
+				}
+			}
+		}
+		:global {
+			.MuiButtonBase-root {
+				max-width: 360px !important;
+				width: 100% !important ;
+				@media (max-width: 700px) {
+					width: 0 !important;
+				}
+			}
+			.MuiButton-outlinedPrimary {
+				max-width: 360px !important;
+				width: 100% !important ;
+				@media (max-width: 700px) {
+					width: 0 !important;
+				}
+			}
+		}
+	}
+
 	.card {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -70,31 +119,6 @@
 					cursor: pointer;
 					align-items: center;
 				}
-			}
-		}
-	}
-
-	.button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-transform: capitalize;
-
-		.icon {
-			width: 25px;
-			height: 25px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-		span {
-			white-space: nowrap;
-		}
-
-		@media (max-width: 700px) {
-			span {
-				display: none;
 			}
 		}
 	}

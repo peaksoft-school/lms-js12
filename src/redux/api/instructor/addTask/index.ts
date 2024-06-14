@@ -13,10 +13,10 @@ export const api = index.injectEndpoints({
 			TASK.CreateTaskResponse,
 			TASK.CreateTaskRequest
 		>({
-			query: ({ newtask, lessonId }) => ({
+			query: ({ newTask, lessonId }) => ({
 				url: `/api/tasks/${lessonId}`,
 				method: 'POST',
-				body: newtask
+				body: newTask
 			}),
 			invalidatesTags: ['addTask']
 		}),
@@ -24,10 +24,10 @@ export const api = index.injectEndpoints({
 			TASK.UpdateTaskResponse,
 			TASK.UpdateTaskRequest
 		>({
-			query: ({ newtask, getTaskId }) => ({
-				url: `/api/tasks/${getTaskId}`,
+			query: ({ newTask, getTask }) => ({
+				url: `/api/tasks/${getTask}`,
 				method: 'PATCH',
-				body: newtask
+				body: newTask
 			}),
 			invalidatesTags: ['addTask']
 		}),
@@ -38,13 +38,15 @@ export const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['addTask']
 		}),
-		getInstructorTask: builder.query<TASK.getTask, TASK.getTask>({
-			query: (answerId) => ({
-				url: `/api/resultTask/${answerId}`,
-				method: 'GET'
-			}),
-			providesTags: ['addTask']
-		}),
+		getInstructorTask: builder.query<TASK.getTaskResponse, TASK.getTaskRequest>(
+			{
+				query: (answerId) => ({
+					url: `/api/resultTask/${answerId}`,
+					method: 'GET'
+				}),
+				providesTags: ['addTask']
+			}
+		),
 
 		patchTaskInstructor: builder.mutation<
 			TASK.patchTaskResponse,
@@ -59,7 +61,6 @@ export const api = index.injectEndpoints({
 		})
 	})
 });
-
 
 export const {
 	useGetTaskInstructorQuery,

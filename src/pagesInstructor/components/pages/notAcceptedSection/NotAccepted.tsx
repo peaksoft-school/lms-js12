@@ -6,7 +6,8 @@ import { Link, useParams } from 'react-router-dom';
 const NotAccepted = () => {
 	const page = { answerStatus: 'REJECTED' };
 	const { courseId, lessonId, getTaskId } = useParams();
-	const { data } = useGetTaskResultQuery({ getTaskId, page });
+	const getTask = Number(getTaskId);
+	const { data } = useGetTaskResultQuery({ getTask, page });
 	// const { data } = useGetStudentTableQuery();
 	// const { courseId, lessonId, getTaskId } = useParams();
 	return (

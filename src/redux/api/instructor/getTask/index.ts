@@ -1,11 +1,11 @@
 import { api as index } from '../../../api';
-import { INSTRUCTORTASK } from './types';
+import { INSTRUCTOR } from './types';
 
 export const api = index.injectEndpoints({
 	endpoints: (builder) => ({
-		getTaskInsaitInstructor: builder.query<
-			INSTRUCTORTASK.TaskResponse,
-			INSTRUCTORTASK.TaskRequest
+		getTaskInstructorA: builder.query<
+			INSTRUCTOR.TaskResponse,
+			INSTRUCTOR.TaskRequest
 		>({
 			query: (getTaskId) => ({
 				url: `/api/tasks/${getTaskId}`,
@@ -14,11 +14,11 @@ export const api = index.injectEndpoints({
 			providesTags: ['addTask']
 		}),
 		getTaskResult: builder.query<
-			INSTRUCTORTASK.GetStudentResultResponse,
-			INSTRUCTORTASK.GetStudentResultRequest
+			INSTRUCTOR.GetStudentResultResponse,
+			INSTRUCTOR.GetStudentResultRequest
 		>({
-			query: ({ getTaskId, page }) => ({
-				url: `/api/resultTask/all/${getTaskId}`,
+			query: ({ getTask, page }) => ({
+				url: `/api/resultTask/all/${getTask}`,
 				params: {
 					answerStatus: page.answerStatus
 				},
@@ -29,4 +29,4 @@ export const api = index.injectEndpoints({
 	})
 });
 
-export const { useGetTaskInsaitInstructorQuery, useGetTaskResultQuery } = api;
+export const { useGetTaskInstructorAQuery, useGetTaskResultQuery } = api;

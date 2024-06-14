@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace INSTRUCTORTASK {
+namespace INSTRUCTOR {
 	type TaskResponse = {
 		id: number;
 		title: string;
 		description: string!;
-		file: File | undefined;
+		file: string;
 		deadline: Dayjs | null | undefined;
 	};
-	type TaskRequest = void;
+	type TaskRequest = number;
 
 	type GetStudentResultResponse = {
 		answerTasId: number;
 		studentName: string;
+		id: number;
 	}[];
 	type GetStudentResultRequest = {
-		answerTasId: number;
-		studentName: string;
+		getTask: number;
+		page: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	};
 }
 
