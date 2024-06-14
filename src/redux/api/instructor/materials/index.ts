@@ -3,8 +3,8 @@ import { api as index } from '../..';
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getMaterials: builder.query<
-			MATERIALS.MaterialsGetResponse,
-			MATERIALS.MaterialsGetRequest
+			STUDENT_LESSON.MaterialsGetResponse,
+			STUDENT_LESSON.MaterialsGetRequest
 		>({
 			query: (courseId) => ({
 				url: `/api/lessons/all/${courseId}`,
@@ -12,10 +12,9 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['material']
 		}),
-		// /api/videos/All/${lessonId}
 		postMaterials: builder.mutation<
-			MATERIALS.MaterialsPostResponse,
-			MATERIALS.MaterialsPostRequest
+			STUDENT_LESSON.MaterialsPostResponse,
+			STUDENT_LESSON.MaterialsPostRequest
 		>({
 			query: ({ postData, courseId }) => ({
 				url: `/api/lessons/${courseId}`,
@@ -25,8 +24,8 @@ const api = index.injectEndpoints({
 			invalidatesTags: ['material']
 		}),
 		patchMaterial: builder.mutation<
-			MATERIALS.MaterialsPatchResponse,
-			MATERIALS.MaterialsPatchRequest
+			STUDENT_LESSON.MaterialsPatchResponse,
+			STUDENT_LESSON.MaterialsPatchRequest
 		>({
 			query: ({ updateMaterial, deleteById }) => ({
 				url: `/api/lessons/${deleteById}`,
@@ -35,10 +34,9 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['material']
 		}),
-		// /api/lessons/{lessonId}
 		deleteMaterial: builder.mutation<
-			MATERIALS.MaterialsDeleteResponse,
-			MATERIALS.MaterialsDeleteRequest
+			STUDENT_LESSON.MaterialsDeleteResponse,
+			STUDENT_LESSON.MaterialsDeleteRequest
 		>({
 			query: (deleteById) => ({
 				url: `/api/lessons/${deleteById}`,

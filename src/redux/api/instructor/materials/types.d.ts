@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace STUDENTLESSON {
+namespace STUDENT_LESSON {
 	type Lesson = {
 		[x: string]: number | null;
 		id: number;
@@ -9,16 +9,22 @@ namespace STUDENTLESSON {
 	type MaterialsGetResponse = {
 		lessonResponses: Lesson[];
 	};
-	type MaterialsGetRequest = void;
+	type MaterialsGetRequest = number;
 
 	type MaterialsPostResponse = {
-		title: string;
-		createdAt: string;
+		courseId: number;
+		postData: {
+			title: string;
+			createdAt: string;
+		}[];
 	};
 
 	type MaterialsPostRequest = {
-		title: string;
-		createdAt: string;
+		courseId: number;
+		postData: {
+			title: string;
+			createdAt: string;
+		}[];
 	};
 
 	type MaterialsPatchResponse = {

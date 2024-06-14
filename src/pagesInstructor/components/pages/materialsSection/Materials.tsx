@@ -34,6 +34,8 @@ const Materials: FC = () => {
 	const { courseId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
+	console.log(rowsPerPage, 'just');
+
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

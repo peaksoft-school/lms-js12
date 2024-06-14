@@ -10,15 +10,12 @@ import { useParams } from 'react-router-dom';
 import person from '@/src/assets/svgs/Profile.png';
 
 const Answer = () => {
-	const [comments, setCommmets] = useState('');
+	const [comments, setComments] = useState('');
 	const [score, setScore] = useState('');
 	const { answerId } = useParams();
-	// console.log(answerId);
 	const [patchTaskInstructor] = usePatchTaskInstructorMutation();
-
-	const { data } = useGetInstructorTaskQuery(answerId);
-
-	// const { click, setClick } = usePatchTaskInstructorMutation();
+	const test = Number(answerId);
+	const { data } = useGetInstructorTaskQuery(test);
 
 	const handleOnClose = async () => {
 		const newComment = {
@@ -51,7 +48,9 @@ const Answer = () => {
 						</div>
 					)}
 				</div>
-				<hr />
+				<div
+					style={{ borderBottom: '1px solid gray', paddingTop: '20px' }}
+				></div>
 				<div>
 					<div>
 						{data?.comment.map((item) => (
@@ -61,14 +60,13 @@ const Answer = () => {
 									<p className={scss.auth}>{item.author}</p>
 								</div>
 								<div className={scss.grade_comment}>
-									{/* <p>{item.role}</p>	 */}
 									<p className={scss.content}>{item.content}</p>
 								</div>
 							</div>
 						))}
 						{data && (
 							<div>
-								<div className={scss.Osenks}>Оценка:{data.point}</div>
+								<div className={scss.score}>Оценка:{data.point}</div>
 							</div>
 						)}
 					</div>
@@ -77,7 +75,7 @@ const Answer = () => {
 					<Input
 						size="small"
 						value={comments}
-						onChange={(e) => setCommmets(e.target.value)}
+						onChange={(e) => setComments(e.target.value)}
 						width="100%"
 						type="text"
 						placeholder="Комментарий  к заданию"
@@ -99,7 +97,9 @@ const Answer = () => {
 								type="text"
 								placeholder="Введите баллы"
 							/>
-							<button onClick={handleScore}>Принято</button>
+							<button style={{ cursor: 'pointer' }} onClick={handleScore}>
+								Принято
+							</button>
 						</div>
 					</div>
 				</div>

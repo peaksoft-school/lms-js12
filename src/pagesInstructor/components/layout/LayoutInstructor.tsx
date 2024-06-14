@@ -220,7 +220,7 @@ const LayoutInstructor = () => {
 							/>
 						</>
 						<Route
-							path="/course/:ratingId/rating"
+							path="/course/:courseId/rating"
 							element={<RatingStudentsPage />}
 						/>
 						<Route path="announcement" element={<AnnouncementPage />} />

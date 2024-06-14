@@ -16,10 +16,11 @@ import { IconDownload } from '@tabler/icons-react';
 import { Dayjs } from 'dayjs';
 import { Box, ScrollArea } from '@mantine/core';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
-import { useGetTaskInsaitInstructorQuery } from '@/src/redux/api/instructor/getTask';
+import { useGetTaskInstructorAQuery } from '@/src/redux/api/instructor/getTask';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import { Sources } from 'quill';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -32,15 +33,16 @@ const EditTask = () => {
 		null
 	);
 	const { courseId, lessonId, getTaskId } = useParams();
-	const { data } = useGetTaskInsaitInstructorQuery(getTaskId);
+	const test = Number(getTaskId);
+	const { data } = useGetTaskInstructorAQuery(test);
 	const [createGroupFile] = useCreateGroupFileMutation();
 	const [value, setValue] = useState('');
 
 	const navigate = useNavigate();
 	const [editTaskInstructor] = useEditTaskInstructorMutation();
-
+	const getTask = Number(getTaskId);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [saveSelect, setSelectedFile] = useState(null);
+	const [saveSelect, setSelectedFile] = useState<null | string>(null);
 	const [secondSave, setSecondSave] = useState(null);
 	const [description, setDescription] = useState('');
 
@@ -65,7 +67,7 @@ const EditTask = () => {
 		}
 	};
 
-	function dataURItoBlob(dataURI) {
+	function dataURItoBlob(dataURI: { split: (arg0: string) => [any, any] }) {
 		const [mime, data] = dataURI.split(';base64,');
 
 		const binary = atob(data);
@@ -80,14 +82,17 @@ const EditTask = () => {
 		return new Blob([uint8Array], { type: mime });
 	}
 
-	const handleImageUpload = async (imageData, description) => {
+	const handleImageUpload = async (
+		imageData: { split: (arg0: string) => [any, any] },
+		description: string
+	) => {
 		const blob = dataURItoBlob(imageData);
 		const file = new File([blob], 'filename.jpg', { type: 'image/jpeg' });
 
 		const formData = new FormData();
 		formData.append('file', file);
 		const cleanedDescription = description.replace(/\\/g, '');
-		formData.append('description', cleanedDescription); // Доб
+		formData.append('description', cleanedDescription);
 
 		try {
 			const response = await createGroupFile(formData);
@@ -101,23 +106,22 @@ const EditTask = () => {
 		}
 	};
 
-	console.log(secondSave);
-
-	const handleEditorChange = (content, delta, source, editor) => {
+	const handleEditorChange = (
+		content: string,
+		delta: any,
+		source: Sources
+	): void => {
 		setValue(content);
-
 		if (source === 'user' && delta.ops.length > 0) {
 			for (let i = 0; i < delta.ops.length; i++) {
 				const operation = delta.ops[i];
-
 				if (operation.insert && operation.insert.image) {
-					handleImageUpload(operation.insert.image, description); 
+					handleImageUpload(operation.insert.image, description);
 				}
 			}
 		}
 	};
 
-	
 	const transformData = (deadline: Dayjs | string) => {
 		if (typeof deadline === 'string') {
 			return dayjs(deadline).tz('Asia/Bishkek');
@@ -141,14 +145,14 @@ const EditTask = () => {
 			`<img src="${secondSave}"/>`
 		);
 
-		const newtask = {
+		const newTask = {
 			title,
 			file: saveSelect,
 			description: newDescription,
 			deadline: selectedDate
 		};
 
-		await editTaskInstructor({ newtask, getTaskId });
+		await editTaskInstructor({ newTask, getTask });
 		setTitle('');
 		setValue('');
 		setSelectedDate(null);
