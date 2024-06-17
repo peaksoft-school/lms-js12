@@ -1,17 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import scss from './InternalInstructorStudents.module.scss';
 import { KeyboardEvent, useState } from 'react';
 import { Button, Pagination, Stack } from '@mui/material';
-import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
+import { useGetStudentsTableQuery } from '@/src/redux/api/instructor/student';
+import { useParams } from 'react-router-dom';
+import ModalEditStudents from '@/src/ui/customModal/ModalEditStudents';
 
 const InternalInstructorStudents = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
-	const { data, isLoading } = useGetStudentTableQuery();
+	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
+	const { courseId } = useParams();
+	const { data, isLoading } = useGetStudentsTableQuery(courseId);
 
 	if (isLoading) {
 		return (
@@ -56,6 +61,8 @@ const InternalInstructorStudents = () => {
 		}
 	};
 
+	
+
 	return (
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
@@ -65,12 +72,16 @@ const InternalInstructorStudents = () => {
 							size="large"
 							className={scss.button}
 							variant="contained"
-							color="error"
+							onClick={() => setOpenModalEdit(true)}
 						>
 							<div className={scss.icon}>
 								<IconPlus stroke={2} />
 							</div>
-							<span>Удалить группу с курса</span>
+							<ModalEditStudents
+								openModalEdit={openModalEdit}
+								// closeModalEdit={() => setOpenModalEdit(false)}
+							/>
+							<span>Добавить группу на курса</span>
 						</Button>
 					</div>
 					<h1 className={scss.title}>Data Engineer</h1>
@@ -92,27 +103,33 @@ const InternalInstructorStudents = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data?.students.map((item, index) => (
-													<tr
-														key={item.id}
-														className={
-															index % 2 === 1
-																? scss.table_alternate_row
-																: '' || scss.internal
-														}
-													>
-														<td>
-															{index + 1 + (currentPage - 1) * rowsPerPage}
-														</td>
-
-														<td>{item.firstName}</td>
-														<td>{item.lastName}</td>
-														<td>{item.group}</td>
-														<td>{item.TrainingFormat}</td>
-														<td>{item.phone_number}</td>
-														<td>{item.email}</td>
-													</tr>
-												))}
+												{data?.getAllStudentsOfCourses &&
+													data?.getAllStudentsOfCourses
+														// ?.slice(
+														// 	(currentPage - 1) * rowsPerPage,
+														// 	currentPage * rowsPerPage
+														// )
+														.map((item, index) => (
+															<tr
+																key={item.id}
+																className={
+																	index % 2 === 1
+																		? scss.table_alternate_row
+																		: '' || scss.internal
+																}
+															>
+																<td>
+																	{index + 1 + (currentPage - 1) * rowsPerPage}
+																</td>
+																<td>{item.id}</td>
+																<td>{item.courseName}</td>
+																<td>{item.fullName}</td>
+																<td>{item.specializationOrStudyFormat}</td>
+																<td>{item.phoneNumber}</td>
+																<td>{item.email}</td>
+																<td>{item.isBlock}</td>
+															</tr>
+														))}
 											</tbody>
 										</table>
 									</div>
@@ -125,6 +142,7 @@ const InternalInstructorStudents = () => {
 					<div className={scss.inputs}>
 						<p className={scss.text}>Перейти на страницу</p>
 						<div className={scss.pagination_element}>
+							
 							<IconBook stroke={2} />
 						</div>
 						<input

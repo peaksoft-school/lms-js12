@@ -228,7 +228,7 @@ const Announcements = () => {
 													setAnchorEl(null);
 												}}
 											>
-												<img src={deleteIcon} alt="Delete" />
+											<img src={deleteIcon} alt="Delete" />
 												<p>Удалить</p>
 											</MenuItem>
 										</Menu>
