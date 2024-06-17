@@ -85,5 +85,5 @@ namespace TASK {
 			dateTime: string;
 		}[];
 	};
-	type answerRequest = void;
+	type answerRequest = number;
 }
