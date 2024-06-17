@@ -18,8 +18,8 @@ export const api = index.injectEndpoints({
 			STUDENT.PostStudentPropsResponse,
 			STUDENT.PostStudentPropsRequest
 		>({
-			query: (newStudent) => ({
-				url: '/api/students',
+			query: ({ newStudent, newData }) => ({
+				url: `/api/students?linkForPassword=${encodeURIComponent(newData.link)}`,
 				method: 'POST',
 				body: newStudent
 			}),

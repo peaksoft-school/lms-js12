@@ -19,22 +19,34 @@ namespace STUDENT {
 	type TablesStudentRequest = void;
 
 	type PostStudentPropsResponse = {
-		firstName: string;
-		lastName: string;
-		phoneNumber: string;
-		email: string;
-		groupName: string;
-		studyFormat: string;
-		isBlock: boolean;
+		newStudent: {
+			firstName: string;
+			lastName: string;
+			phoneNumber: string;
+			email: string;
+			groupName: string;
+			studyFormat: string;
+			isBlock: boolean;
+		};
+
+		newData: {
+			link: string;
+		};
 	}[];
+
 	type PostStudentPropsRequest = {
-		firstName: string;
-		lastName: string;
-		phoneNumber: string;
-		email: string;
-		groupName: string;
-		studyFormat: string;
-		isBlock: boolean;
+		newStudent: {
+			firstName: string;
+			lastName: string;
+			phoneNumber: string;
+			email: string;
+			groupName: string;
+			studyFormat: string;
+			isBlock: boolean;
+		};
+		newData: {
+			link: string;
+		};
 	};
 	type DeleteStudentPropsResponse = number;
 	type DeleteStudentPropsRequest = number | null;

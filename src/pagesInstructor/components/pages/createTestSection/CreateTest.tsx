@@ -108,7 +108,7 @@ const CreateTest = () => {
 		setCopiesData(updatedCopiesData);
 	};
 
-	const onSubmit = async () => {
+	const onSubmit = async (data) => {
 		const initialAnswers = inputs.map((input) => input.value);
 		const initialQuestion: QuestionRequest = {
 			title: titleValue,
@@ -119,8 +119,6 @@ const CreateTest = () => {
 				isTrue: checked
 			}))
 		};
-
-		const lesson = Number(lessonId);
 
 		const copiedQuestions = copiesData.map((copyData) => {
 			const answers = copyData.inputs.map((input) => input.value);
@@ -148,7 +146,7 @@ const CreateTest = () => {
 		};
 
 		try {
-			const response = await postTest({ newTest, lesson });
+			const response = await postTest({ newTest, lessonId });
 			console.log(response, 'response');
 			reset();
 		} catch (error) {
