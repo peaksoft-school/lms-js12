@@ -45,10 +45,26 @@
 				}
 			}
 			.test_buttons_container {
+				padding-bottom: 16px;
 				display: flex;
 				width: 100%;
 				justify-content: flex-end;
 				padding-top: 15px;
+
+				button {
+					font-size: 16px;
+					font-weight: 600;
+					width: 148px;
+					height: 42px;
+					text-align: center;
+					@media (max-width: '1200px') {
+						width: 100%;
+					}
+				}
+				@media (max-width: '1200px') {
+					width: 100%;
+					padding-top: 15px;
+				}
 			}
 		}
 	}

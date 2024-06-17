@@ -80,7 +80,7 @@ const CreateTest = () => {
 		setOption(selectedOption);
 
 	const handleCopy = (copyDataIndex: number) => {
-		const newCopyData = JSON.parse(JSON.stringify(copiesData[copyDataIndex])); // Deep copy
+		const newCopyData = JSON.parse(JSON.stringify(copiesData[copyDataIndex]));
 		setCopiesData([
 			...copiesData.slice(0, copyDataIndex + 1),
 			newCopyData,

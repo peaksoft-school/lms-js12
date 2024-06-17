@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from './NewPassword.module.scss';
 import Logo from '@/src/assets/svgs/logo.svg';
 import MenLogo from '@/src/assets/svgs/boy-proger.svg';
@@ -5,9 +6,10 @@ import { IconClosed, IconOpen_Eye } from '@/src/assets/icons';
 import { IconButton, InputAdornment, InputLabel } from '@mui/material';
 import { FC, useState } from 'react';
 import { OutlinedInput } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { useCreatePasswordMutation } from '@/src/redux/api/auth';
 
 interface FormData {
 	password: string;
@@ -15,6 +17,7 @@ interface FormData {
 }
 
 const NewPassword: FC = () => {
+	const { uuid } = useParams();
 	const {
 		handleSubmit,
 		reset,
@@ -23,9 +26,15 @@ const NewPassword: FC = () => {
 	} = useForm<FormData>();
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
+	const [createPassword] = useCreatePasswordMutation();
 
-	const onSubmit: SubmitHandler<FormData> = (data) => {
-		console.log(data);
+	const onSubmit: SubmitHandler<FormData> = async (data) => {
+		const newData = {
+			password: data.password,
+			confirm: data.confirmPassword,
+			uuid
+		};
+		await createPassword(newData as any);
 		reset();
 	};
 

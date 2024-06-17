@@ -96,8 +96,9 @@ const SupHeader = () => {
 	};
 
 	const handleNavigate = () => {
+		localStorage.removeItem('token');
+		// localStorage.removeItem('isAuth');
 		navigate(`/auth/login`);
-		// localStorage.setItem('isAuth', false);
 		setAnchorEl(null);
 	};
 
@@ -210,10 +211,20 @@ const SupHeader = () => {
 							</Tabs>
 						</Box>
 					</Box>
-					<div className={scss.header_elements} onClick={handleClick}>
-						<img style={{ cursor: 'pointer' }} src={bell} alt="bell" />
-						<img style={{ cursor: 'pointer' }} src={profile} alt="Profile" />
-						<div>
+					<div className={scss.header_elements}>
+						<img
+							onClick={handleOpenNotification}
+							style={{ cursor: 'pointer' }}
+							src={bell}
+							alt="bell"
+						/>
+						<img
+							style={{ cursor: 'pointer' }}
+							onClick={handleClick}
+							src={profile}
+							alt="Profile"
+						/>
+						<div onClick={handleClick}>
 							<div className={scss.instructor_profile}>Учитель</div>
 						</div>
 						<IconChevronDown className={scss.photo_profile} stroke={2} />

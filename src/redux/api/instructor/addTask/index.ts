@@ -58,6 +58,23 @@ export const api = index.injectEndpoints({
 				body: newComment
 			}),
 			invalidatesTags: ['addTask']
+		}),
+		deleteFileTaskInstructor: builder.mutation<
+			TASK.patchTaskResponse,
+			TASK.patchTaskResponse
+		>({
+			query: (fileName) => ({
+				url: `/file/${fileName}`,
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['addTask']
+		}),
+		answerTaskStudent: builder.query<TASK.answerResponse, TASK.answerRequest>({
+			query: (taskId) => ({
+				url: `/api/answer/${taskId}`,
+				method: 'GET'
+			}),
+			providesTags: ['addTask']
 		})
 	})
 });
@@ -68,5 +85,7 @@ export const {
 	useEditTaskInstructorMutation,
 	useDeleteTaskInstructorMutation,
 	useGetInstructorTaskQuery,
-	usePatchTaskInstructorMutation
+	usePatchTaskInstructorMutation,
+	useDeleteFileTaskInstructorMutation,
+	useAnswerTaskStudentQuery
 } = api;

@@ -1,11 +1,10 @@
 .main_modal_vid {
 	width: 27% !important;
 	height: 70% !important;
-	padding: 20px !important;
 	border-radius: 8px !important;
 	overflow-y: scroll !important;
 	scrollbar-width: thin;
-	scrollbar-color: #3772ff #fff;
+	scrollbar-color: #c1c1c1 #f1f1f1;
 	border: none !important;
 	outline: none !important;
 
@@ -65,12 +64,15 @@
 			color: #707070;
 			font-weight: 600;
 			font-size: 20px;
+			padding-inline: 20px;
 		}
 	}
 
 	.notifications {
 		margin-top: 25px;
+
 		h2 {
+			padding-inline: 20px;
 			color: #707070;
 			font-weight: 600;
 			font-size: 18px;
@@ -85,6 +87,14 @@
 
 			.results {
 				display: flex;
+				padding-inline: 20px;
+				flex-direction: column;
+				gap: 7px;
+				background: #e0e5f6;
+			}
+			.results2 {
+				display: flex;
+				padding-inline: 20px;
 				flex-direction: column;
 				gap: 7px;
 			}

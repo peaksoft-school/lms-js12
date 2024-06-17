@@ -15,9 +15,26 @@ const SendOneTask = () => {
 	const [value, setValue] = useState<string>();
 	const modules = {
 		toolbar: [
-			[[{ header: [1, 2, 3, 4, 5, 6, false] }]],
-
-			['link', 'image', 'code-block']
+			[{ header: [1, 2, 3, 4, 5, 6, false] }],
+			[{ font: [] }],
+			[{ size: [] }],
+			[
+				'bold',
+				'italic',
+				'underline',
+				'strike',
+				'blockquote',
+				'link',
+				'image',
+				'code-block'
+			],
+			[
+				{ list: 'ordered' },
+				{ list: 'bullet' },
+				{ indent: '-1' },
+				{ indent: '+1' }
+			],
+			[{ color: [] }, { background: [] }]
 		]
 	};
 

@@ -1,101 +1,118 @@
-import { useState } from 'react';
 import scss from './GetTest.module.scss';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { Box, ScrollArea } from '@mantine/core';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetInsideTestQuery } from '@/src/redux/api/instructor/test';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { usePostTestResultStudentsMutation } from '@/src/redux/api/students/test';
+import { useState, useEffect } from 'react';
 
 function GetTest() {
-	const [questions, setQuestions] = useState([
-		{
-			id: 1,
-			text: 'Какого типа данных нет в java?',
-			options: [
-				{ id: 1, text: ' int ', isCorrect: true, isChecked: false },
-				{ id: 2, text: ' float', isCorrect: true, isChecked: false },
-				{ id: 3, text: ' double', isCorrect: false, isChecked: false },
-				{ id: 4, text: ' bubble', isCorrect: false, isChecked: false }
-			]
-		},
-		{
-			id: 2,
-			text: 'Какого типа данных нет в java?',
-			options: [
-				{ id: 5, text: ' int', isCorrect: true, isChecked: false },
-				{ id: 6, text: ' float', isCorrect: true, isChecked: false },
-				{ id: 7, text: ' double', isCorrect: true, isChecked: false },
-				{ id: 8, text: ' bubble', isCorrect: true, isChecked: false }
-			]
-		},
-		{
-			id: 3,
-			text: 'Какого типа данных нет в java?',
-			options: [
-				{ id: 5, text: ' int', isCorrect: false, isChecked: false },
-				{ id: 6, text: ' float', isCorrect: false, isChecked: false },
-				{ id: 7, text: ' double', isCorrect: true, isChecked: false },
-				{ id: 8, text: ' bubble', isCorrect: true, isChecked: false }
-			]
-		},
-		{
-			id: 4,
-			text: 'Какого типа данных нет в java?',
-			options: [
-				{ id: 5, text: ' int', isCorrect: false, isChecked: false },
-				{ id: 6, text: ' float', isCorrect: false, isChecked: false },
-				{ id: 7, text: ' double', isCorrect: false, isChecked: false },
-				{ id: 8, text: ' bubble', isCorrect: false, isChecked: false }
-			]
-		}
-	]);
+	const { coursesId, lessonId, testId } = useParams();
+	const [postTestResultStudents] = usePostTestResultStudentsMutation();
+	const [testIdSave, setTestIdSave] = useState([]);
+	const [remainingTime, setRemainingTime] = useState(null);
 
-	const handleCheckboxChange = (questionId: number, optionId: number) => {
-		const updatedQuestions = questions.map((question) =>
-			question.id === questionId
-				? {
-						...question,
-						options: question.options.map((option) =>
-							option.id === optionId
-								? { ...option, isChecked: !option.isChecked }
-								: option.isCorrect && option.isChecked
-									? { ...option, isChecked: false }
-									: option
-						)
-					}
-				: question
-		);
-		setQuestions(updatedQuestions);
+	const sendTestResult = async () => {
+		// Convert strings to integers
+		const testIds = testIdSave.map((id) => parseInt(id, 10));
+
+		try {
+			// Call the mutation with the array of integers
+			await postTestResultStudents(testIds);
+		} catch (error) {
+			console.error('Error posting test results:', error);
+			// Handle error if needed
+		}
 	};
 
+	const test = Number(testId);
+	const { data } = useGetInsideTestQuery(test);
+	const navigate = useNavigate();
+
+	const handleOptionChange = (optionId) => {
+		setTestIdSave((prevTestIdSave) =>
+			prevTestIdSave.includes(optionId)
+				? prevTestIdSave.filter((id) => id !== optionId)
+				: [...prevTestIdSave, optionId]
+		);
+	};
+
+	useEffect(() => {
+		if (data) {
+			const endTime = new Date();
+			endTime.setHours(endTime.getHours() + data.hour);
+			endTime.setMinutes(endTime.getMinutes() + data.minute);
+
+			const updateRemainingTime = () => {
+				const now = new Date();
+				const timeLeft = endTime - now;
+
+				if (timeLeft <= 0) {
+					setRemainingTime('00:00:00');
+					clearInterval(timer);
+				} else {
+					const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+					const minutes = Math.floor(
+						(timeLeft % (1000 * 60 * 60)) / (1000 * 60)
+					);
+					const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+					setRemainingTime(
+						`${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+					);
+				}
+			};
+
+			updateRemainingTime();
+			const timer = setInterval(updateRemainingTime, 1000);
+
+			return () => clearInterval(timer);
+		}
+	}, [data]);
+
 	return (
-		<div className={scss.Main_div}>
-			<div className={scss.get_test_name_test}>
-				<h2>Название теста</h2>
-				<p className={scss.get_test_time}>59:39</p>
-			</div>
-			<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
-				<Box>
+		<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
+			<Box>
+				<div className={scss.Main_div}>
+					{data && (
+						<>
+							<div className={scss.get_test_name_test} key={data.testId}>
+								<h2>{data.title}</h2>
+								<p className={scss.get_test_time}>
+									{`Оставшееся время для прохождения теста: ${remainingTime}`}
+								</p>
+							</div>
+						</>
+					)}
 					<div className={scss.testing_container}>
-						{questions.map((question) => (
-							<div key={question.id} className={scss.question}>
+						{data?.questionResponseList?.map((question) => (
+							<div key={question.questionId} className={scss.question}>
 								<div className={scss.get_test_testing_second_container}>
-									<h4>{question.id}.</h4>
-									<h4>{question.text}</h4>
+									<h4>{question.title}</h4>
 								</div>
-								{question.options.map((option) => (
-									<div key={option.id} className={scss.option}>
-										<input
-											type={
-												question.options.filter((opt) => opt.isCorrect)
-													.length === 2
-													? 'checkbox'
-													: 'radio'
-											}
-											checked={option.isChecked}
-											onChange={() =>
-												handleCheckboxChange(question.id, option.id)
-											}
-											className={option.isCorrect ? scss.correct_checkbox : ''}
-										/>
-										<label>{option.text}</label>
+								{question.optionResponses.map((option) => (
+									<div key={option.optionId} className={scss.option}>
+										{question.optionResponses.filter((opt) => opt.isTrue)
+											.length === 1 ? (
+											<>
+												<input
+													type="radio"
+													checked={testIdSave.includes(option.optionId)}
+													onChange={() => handleOptionChange(option.optionId)}
+													className={scss.correct_checkbox}
+												/>
+												<label>{option.option}</label>
+											</>
+										) : (
+											<>
+												<input
+													type="checkbox"
+													checked={testIdSave.includes(option.optionId)}
+													onChange={() => handleOptionChange(option.optionId)}
+													className={scss.correct_checkbox}
+												/>
+												<label>{option.option}</label>
+											</>
+										)}
 									</div>
 								))}
 								<hr className={scss.getTest_hr} />
@@ -108,14 +125,19 @@ function GetTest() {
 								children={'Отправить'}
 								disabled={false}
 								onClick={() => {
-									console.log('Отправить');
+									sendTestResult();
+									setTimeout(() => {
+										navigate(
+											`/courses/${coursesId}/materials/${lessonId}/${testId}/resultTest`
+										);
+									}, 300);
 								}}
 							></ButtonSave>
 						</div>
 					</div>
-				</Box>
-			</ScrollArea>
-		</div>
+				</div>
+			</Box>
+		</ScrollArea>
 	);
 }
 

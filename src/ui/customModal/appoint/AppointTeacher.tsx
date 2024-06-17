@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import { IconX } from '@tabler/icons-react';
 
 import scss from './Appoint.module.scss';
-import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
+import { useAppointAllTeacherQuery } from '@/src/redux/api/admin/teacher';
 import { useAppointAdminCourseMutation } from '@/src/redux/api/admin/courses';
 
 const style = {
@@ -54,7 +54,7 @@ const MenuProps = {
 const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 	const [selectedTeachers, setSelectedTeachers] = useState<string[]>([]);
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
-	const { data, error, isLoading } = useGetTeacherQuery();
+	const { data, error, isLoading } = useAppointAllTeacherQuery();
 	const [appointAdminCourse] = useAppointAdminCourseMutation();
 	const { courseId } = useParams<{ courseId: string }>();
 
@@ -74,9 +74,9 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 		setSelectedIds((prev) => prev.filter((_, i) => i !== index));
 	};
 
-	const handleSelect = (teacherId: number | null, fullName: string) => {
+	const handleSelect = (teacherId: number | null, instructorName: string) => {
 		setSelectedTeachers((prev) =>
-			prev.includes(fullName) ? prev : [...prev, fullName]
+			prev.includes(instructorName) ? prev : [...prev, instructorName]
 		);
 		setSelectedIds((prev) =>
 			prev.includes(String(teacherId)) ? prev : [...prev, String(teacherId)]
@@ -134,16 +134,20 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 							renderValue={(selected) => selected.join(', ')}
 							MenuProps={MenuProps}
 						>
-							{data?.instructorResponses.map((teacher) => (
+							{data?.map((teacher) => (
 								<MenuItem
-									key={teacher.id}
-									value={teacher.fullName}
-									onClick={() => handleSelect(teacher.id, teacher.fullName)}
+									key={teacher.Id}
+									value={teacher.instructorName}
+									onClick={() =>
+										handleSelect(teacher.Id, teacher.instructorName)
+									}
 								>
 									<Checkbox
-										checked={selectedTeachers.indexOf(teacher.fullName) > -1}
+										checked={
+											selectedTeachers.indexOf(teacher.instructorName) > -1
+										}
 									/>
-									<ListItemText primary={teacher.fullName} />
+									<ListItemText primary={teacher.instructorName} />
 								</MenuItem>
 							))}
 						</Select>

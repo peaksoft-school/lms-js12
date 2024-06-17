@@ -7,7 +7,6 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MyCoursePage from '../pages/MyCoursePage';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
-import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
 import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
@@ -25,6 +24,9 @@ import RatingStudentsPage from '../pages/RatingStudentsPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import EditTest from '../pages/editTest/EditTest';
+import ResultTest from '../pages/resultTest/ResultTest';
+import CreateTest from '../pages/createTestSection/CreateTest';
+import AnnouncementPage from '../pages/AnnouncementPage';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -83,7 +85,7 @@ const LayoutInstructor = () => {
 						<>
 							<Routes>
 								<Route
-									path="/courses/:courseId/*"
+									path="/course/:courseId/*"
 									element={<SupHeaderMobile />}
 								/>
 								<Route path="/*" element={<SupHeaderCourses />} />
@@ -216,8 +218,16 @@ const LayoutInstructor = () => {
 							element={<LessonPage />}
 						/>
 						<Route
+							path="/course/:courseId/materials/:lessonId/createTest"
+							element={<CreateTest />}
+						/>
+						<Route
 							path="/course/:courseId/materials/:lessonId/:testId/showTest"
 							element={<GetTestInstructor />}
+						/>
+						<Route
+							path="/course/:courseId/materials/:lessonId/:testId/resultTest"
+							element={<ResultTest />}
 						/>
 					</Routes>
 				</main>

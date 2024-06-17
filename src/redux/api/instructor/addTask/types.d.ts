@@ -71,4 +71,19 @@ namespace TASK {
 			isAccept: boolean;
 		};
 	};
+
+	type answerResponse = {
+		text: string;
+		image: string;
+		file: string;
+		taskAnswerStatus: string;
+		point: number;
+		comment: {
+			author: string;
+			role: string;
+			content: string;
+			dateTime: string;
+		}[];
+	};
+	type answerRequest = void;
 }

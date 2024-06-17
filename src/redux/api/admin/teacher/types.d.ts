@@ -52,4 +52,10 @@ namespace TABLE {
 	};
 	type DeleteTeacherResponse = void;
 	type DeleteTeacherRequest = number | null;
+
+	type appointAllTeacherResponse = {
+		Id: number;
+		instructorName: string;
+	}[];
+	type appointAllTeacherRequest = void;
 }

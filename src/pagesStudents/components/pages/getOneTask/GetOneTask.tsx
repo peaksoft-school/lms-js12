@@ -1,17 +1,33 @@
-import { useGetTaskInstructorQuery } from '@/src/redux/api/instructor/addTask';
+import {
+	useAnswerTaskStudentQuery,
+	useGetTaskInstructorQuery
+} from '@/src/redux/api/instructor/addTask';
 import scss from './GetOneTask.module.scss';
-import { IconUserCircle } from '@tabler/icons-react';
-import { useState } from 'react';
+import profile from '@/src/assets/profile.png';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import SendOneTask from '../sendOneTask/SendOneTask';
+import { useEffect } from 'react';
 
 const GetOneTask = () => {
-	const { lessonId } = useParams();
+	const { lessonId, getTaskId } = useParams();
 	const lesson = Number(lessonId);
 	const { data } = useGetTaskInstructorQuery(lesson);
-	const [isTrue, setIsTrue] = useState(true);
-	console.log(setIsTrue);
+	const getTask = Number(getTaskId);
+	const { data: response } = useAnswerTaskStudentQuery(getTask);
+	const navigate = useNavigate();
 
+	useEffect(() => {
+		if (
+			data?.response?.message ===
+			'Ответ на задание не найден для данного пользователя'
+		) {
+			const { coursesId, lessonId, getTaskId } = data.response;
+			navigate(
+				`/courses/${coursesId}/materials/${lessonId}/lesson/${getTaskId}/send-task`
+			);
+		}
+	}, [data]);
 	return (
 		<div className={scss.get_task}>
 			<div className={scss.Task}>
@@ -26,52 +42,67 @@ const GetOneTask = () => {
 					</div>
 				))}
 				<div className={scss.comment}>
-					<div className={scss.student_comment}>
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora!
-						</p>
-						<p className={scss.data}>12.13.2024</p>
-					</div>
-					<div
-						style={{ display: 'flex', gap: '15px', flexDirection: 'column' }}
-					>
-						<div>
-							<div className={scss.user}>
-								<IconUserCircle stroke={2} />
-								<p>Ракатова Нурайым</p>
-							</div>
-						</div>
-						<div className={scss.correct_hw}>
-							<p>uygui</p>
-							<p className={scss.data}>12.13.2024</p>
-						</div>
-					</div>
-					{isTrue ? (
+					{response && (
 						<>
-							<div className={scss.getHw}>
-								<h3>Ваше ДЗ не принято</h3>
-
-								<ButtonSave
-									onClick={() => {}}
-									width="230px"
-									disabled={false}
-									type="button"
-								>
-									Редактировать задание
-								</ButtonSave>
+							<div className={scss.student_comment}>
+								<p>{response.text}</p>
+								<p className={scss.data}>{132023}</p>
 							</div>
-						</>
-					) : (
-						<>
-							<div className={scss.notGetHw}>
-								<h3>Ваше ДЗ успешно принято</h3>
-								<div
-									style={{ display: 'flex', justifyContent: 'space-between' }}
-								>
-									<p>10 баллов</p>
+							<div
+								style={{
+									display: 'flex',
+									gap: '15px',
+									flexDirection: 'column'
+								}}
+							>
+								<div>
+									<div className={scss.user}>
+										<img src={profile} alt="" />
+										<p>{response.comment.map((item) => item.author)}</p>
+									</div>
+								</div>
+								<div className={scss.correct_hw}>
+									<p>{response.comment.map((item) => item.content)}</p>
 									<p className={scss.data}>12.13.2024</p>
 								</div>
 							</div>
+							{response.taskAnswerStatus === 'ACCEPTED' ? (
+								<>
+									<div className={scss.getHw}>
+										<h3>Ваше ДЗ не принято</h3>
+
+										<ButtonSave
+											onClick={() => {}}
+											width="230px"
+											disabled={false}
+											type="button"
+										>
+											Редактировать задание
+										</ButtonSave>
+									</div>
+								</>
+							) : (
+								<>
+									<div className={scss.notGetHw}>
+										<h3>Ваше ДЗ успешно принято</h3>
+										<div
+											style={{
+												display: 'flex',
+												justifyContent: 'space-between'
+											}}
+										>
+											<p>{response.point}</p>
+											<p className={scss.data}>12.13.2024</p>
+										</div>
+									</div>
+								</>
+							)}
+
+							{!response && (
+								<>
+									<SendOneTask />
+								</>
+							)}
 						</>
 					)}
 				</div>
