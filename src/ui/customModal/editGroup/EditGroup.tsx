@@ -3,10 +3,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
-import galerry from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useEffect, useRef, useState } from 'react';
+import gallery from '@/src/assets/photo-bg.png';
 import {
 	useCreateGroupFileMutation,
 	useGetGroupQuery,
@@ -61,15 +61,12 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 		}
 	};
 
-	console.log(saveId);
-
 	const handleFileSelect = async (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const files = event.target.files;
 		if (files && files[0]) {
 			const file = files[0];
-			console.log(file);
 			const formData = new FormData();
 			formData.append('file', file);
 			setHidePhoto(true);
@@ -129,9 +126,15 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							<div
 								onClick={handleButtonClick}
 								className={hidePhoto ? scss.background_none : scss.background}
-								style={{ backgroundImage: `url(${image || galerry})` }}
-							></div>
-							<p>Нажмите на иконку чтобы загрузить или перетащите фото</p>
+								style={{
+									backgroundImage: `url(${image || gallery})`
+								}}
+							>
+								<img style={{ borderRadius: '8px' }} src={gallery} alt="" />
+							</div>
+							<p className={hidePhoto ? scss.hide_text : scss.show}>
+								Нажмите на иконку чтобы загрузить
+							</p>
 						</div>
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>

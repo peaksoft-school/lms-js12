@@ -47,7 +47,6 @@ const EditLink: FC<PresentationProps1> = ({ open, handleClose, resultId }) => {
 	const [editLink] = useEditLinkMutation();
 
 	const finder = data?.linkResponses.find((item) => item.id === resultId);
-	console.log(finder?.title);
 
 	useEffect(() => {
 		reset({

@@ -185,7 +185,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 							<Controller
 								name="phoneNumber"
 								control={control}
-								defaultValue="+996"
+								defaultValue=""
 								rules={{
 									required: 'Номер обязателен для заполнения'
 								}}
@@ -197,14 +197,6 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										width="100%"
 										placeholder="+996"
 										error={!!errors.phoneNumber}
-										onChange={(e) => {
-											const value = e.target.value;
-											if (!value.startsWith('+996')) {
-												field.onChange('+996' + value);
-											} else {
-												field.onChange(value);
-											}
-										}}
 									/>
 								)}
 							/>

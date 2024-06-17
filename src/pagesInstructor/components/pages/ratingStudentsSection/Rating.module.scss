@@ -17,7 +17,7 @@
 			transition: all 0.5s;
 			padding: 10px;
 			width: 100%;
-			width: 1650px;
+			width: 1600px;
 			overflow-x: auto;
 
 			@media screen and (min-width: 1185px) and (max-width: 1260px) {
@@ -61,11 +61,6 @@
 					text-align: center;
 					height: 50px;
 					padding: 10px;
-				}
-
-				.button {
-					width: 30px !important;
-					height: 30px;
 				}
 			}
 		}

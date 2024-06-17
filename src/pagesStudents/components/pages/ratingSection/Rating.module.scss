@@ -8,18 +8,17 @@
 	}
 	.rating_container {
 		border-radius: 8px;
-		// overflow-x: auto;
 		table-layout: fixed;
 		display: flex;
 		flex-direction: column;
-		gap: 40px;
+		gap: 20px;
 		background: #fff;
 		border: 1px solid #dbd2d2;
 		transition: all 0.5s;
-		// scrollbar-width: thin;
-		// scrollbar-color: #3772ff #fff;
 		background: #fff;
 		padding: 10px;
+		width: 100%;
+		overflow: auto;
 
 		@media screen and (min-width: 1185px) and (max-width: 1260px) {
 			width: 100%;

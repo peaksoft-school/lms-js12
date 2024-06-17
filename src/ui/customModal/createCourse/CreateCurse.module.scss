@@ -3,6 +3,8 @@
 	width: 541px !important;
 	padding: 0px 0px !important;
 	height: auto;
+	background: #eff0f4 !important;
+
 	@media (max-width: 600px) {
 		width: 90% !important;
 		border-radius: 10px;
@@ -59,13 +61,14 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
+			width: 100%;
 			max-width: 309px;
 			gap: 10px;
-			width: 100%;
 			img {
-				width: 173px;
-				height: 145px;
+				width: 173px !important;
+				height: 145px !important;
 			}
+
 			p {
 				color: #8d949e !important;
 				font-size: 18px !important;
@@ -115,6 +118,8 @@
 			opacity: none;
 			outline: none;
 			resize: none;
+			background: #eff0f4 !important;
+
 			&::placeholder {
 				font-size: 17px;
 				font-weight: 500;

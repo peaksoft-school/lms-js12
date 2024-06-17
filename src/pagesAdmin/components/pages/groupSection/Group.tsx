@@ -23,7 +23,7 @@ const Groups: FC = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [currentPage, setCurrentPage] = useState(0);
-	const [openPage, setOpenPage] = useState(12);
+	const [openPage, setOpenPage] = useState(8);
 	const [openGroups, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
@@ -197,7 +197,6 @@ const Groups: FC = () => {
 							}}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
-									// navigate(`/${page}`);
 									handleInputValue(currentPage);
 								}
 							}}
@@ -206,9 +205,6 @@ const Groups: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								// count={Math.ceil(
-								// 	(data?.groupResponses?.length || 0) / rowsPerPage
-								// )}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -231,7 +227,6 @@ const Groups: FC = () => {
 							}}
 							onKeyDown={(e) => {
 								if (e.key === 'Enter') {
-									// handlePageShowChange(openPage);
 									handleInputValuePaginationSize(openPage);
 								}
 							}}
