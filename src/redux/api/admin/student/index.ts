@@ -59,7 +59,7 @@ export const api = index.injectEndpoints({
 		}),
 		postExcelStudent: builder.mutation({
 			query: ({ json, groupId }) => ({
-				url: `/api/students/importStudents/6`,
+				url: `/api/students/importStudents/${groupId}`,
 				method: 'POST',
 				body: json
 			}),

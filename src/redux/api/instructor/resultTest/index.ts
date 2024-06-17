@@ -19,7 +19,10 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['rating']
 		}),
-		GetResultTestOfStudent: builder.query({
+		GetResultTestOfStudent: builder.query<
+			TEST.getTestResultResponse,
+			TEST.getTestResultRequest
+		>({
 			query: (resultTestId) => ({
 				url: `/api/answerTest/resultTestOfStudent/${resultTestId}`,
 				method: 'GET'

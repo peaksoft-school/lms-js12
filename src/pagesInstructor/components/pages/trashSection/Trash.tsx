@@ -6,7 +6,7 @@ import {
 	useDeleteTrashMutation,
 	useGetTrashQuery,
 	useUpdatedTrashMutation
-} from '@/src/redux/api/admin/trash';
+} from '@/src/redux/api/instructor/trash';
 import { Preloader } from '../../../../ui/preloader/Preloader';
 import { Pagination, Stack } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
@@ -110,7 +110,10 @@ const Trash: FC = () => {
 												>
 													<td style={{ paddingLeft: '20px' }}>{card.name}</td>
 													<td
-														style={{ textAlign: 'end', paddingRight: '70px' }}
+														style={{
+															textAlign: 'end',
+															paddingRight: '70px'
+														}}
 													>
 														{card.date}
 													</td>
@@ -126,13 +129,19 @@ const Trash: FC = () => {
 															}}
 														>
 															<button
-																style={{ border: 'none', background: 'none' }}
+																style={{
+																	border: 'none',
+																	background: 'none'
+																}}
 																onClick={() => updatedTrashFunc(card.id)}
 															>
 																<img src={refrash} alt="#" />
 															</button>
 															<button
-																style={{ border: 'none', background: 'none' }}
+																style={{
+																	border: 'none',
+																	background: 'none'
+																}}
 																onClick={() => DeleteTrashFunc(card.id)}
 															>
 																<img src={trash} alt="#" />

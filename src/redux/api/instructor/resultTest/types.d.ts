@@ -10,4 +10,22 @@ namespace TEST {
 		}[];
 	};
 	type GetResultTestRequest = number;
+	type getTestResultResponse = {
+		testId: number;
+		title: string;
+		hour: number;
+		minute: number;
+		questionResponseList: {
+			questionId: number;
+			title: string;
+			point: number;
+			questionType: string;
+			optionResponses: {
+				optionId: number;
+				option: string;
+				isTrue: boolean;
+			}[];
+		}[];
+	};
+	type getTestResultRequest = number | boolean;
 }

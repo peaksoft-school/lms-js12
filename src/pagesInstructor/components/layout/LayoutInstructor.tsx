@@ -7,7 +7,7 @@ import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MyCoursePage from '../pages/MyCoursePage';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
-import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
+import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
@@ -25,7 +25,7 @@ import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import EditTest from '../pages/editTest/EditTest';
 import ResultTest from '../pages/resultTest/ResultTest';
 import CreateTest from '../pages/createTestSection/CreateTest';
-import AnnouncementPage from '../pages/AnnouncementPage';
+import TrashPage from '../pages/TrashPage';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);

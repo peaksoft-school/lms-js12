@@ -58,7 +58,7 @@ function ResultTest() {
 															: item.true
 																? scss.input2
 																: item.true === false &&
-																	item.yourChoice === true
+																	  item.yourChoice === true
 																	? scss.input3
 																	: ''
 													}
