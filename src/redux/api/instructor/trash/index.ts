@@ -2,7 +2,10 @@ import { api as index } from '../..';
 
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
-		getTrash: builder.query<TRASH.GetCardsResponse, TRASH.GetCardsRequest>({
+		getTrash: builder.query<
+			INSTRUCTOR.GetCardsResponse,
+			INSTRUCTOR.GetCardsRequest
+		>({
 			query: () => ({
 				url: '/api/trash/findAll',
 				method: 'GET'

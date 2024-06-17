@@ -8,7 +8,6 @@ import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MyCoursePage from '../pages/MyCoursePage';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
-import TrashPage from '@/src/pagesAdmin/components/pages/TrashPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';
 import LessonPage from '../pages/LessonPage';
@@ -24,6 +23,7 @@ import RatingStudentsPage from '../pages/RatingStudentsPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import EditTest from '../pages/editTest/EditTest';
+import TrashPage from '../pages/TrashPage';
 
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
