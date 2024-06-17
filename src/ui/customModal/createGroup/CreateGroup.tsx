@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from './CreateGroup.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -6,7 +7,7 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -34,11 +35,8 @@ interface CreateGroupsProps {
 	open: boolean;
 	handleClose: () => void;
 }
-const CreateGroup: FC<CreateGroupsProps> = ({
-	handleOpen,
-	open,
-	handleClose
-}) => {
+
+const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 	const [value, setValue] = useState('');
 	const [data, setData] = useState('');
 	const [text, setText] = useState('');
@@ -48,6 +46,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 	const [createGroup] = useCreateGroupMutation();
 	const [createGroupFile] = useCreateGroupFileMutation();
 	const [urlImg, setUrlImg] = useState('');
+	const [isFormValid, setIsFormValid] = useState(false);
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -55,37 +54,42 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 		}
 	};
 
-	const handleFileChange = async (
+	const handleFileSelect = async (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
-		const file = event.target.files?.[0];
-		if (file) {
-			const reader = new FileReader();
-			setHidePhoto(true);
-
-			reader.onload = async (e) => {
-				if (e.target) {
-					const imageUrl = e.target.result as string;
-					setImage(imageUrl);
-					const fileObj = {
-						fileName: file.name,
-						urlFile: imageUrl
-					};
-					// console.log(fileObj);
-
-					await createGroupFile(fileObj);
-					setUrlImg(file.name);
-					// console.log(imageUrl);
+		const files = event.target.files;
+		if (files && files.length > 0) {
+			const file = files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+			try {
+				const response: any = await createGroupFile(formData);
+				const fileName = response?.data?.fileName;
+				if (fileName) {
+					setHidePhoto(true);
+					setUrlImg(fileName);
+					const fileURL = URL.createObjectURL(file);
+					setImage(fileURL);
+				} else {
+					console.error('Unexpected response format:', response);
 				}
-			};
-
-			reader.readAsDataURL(file);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			}
 		}
 	};
-	const notifySuccess = () => toast.success('Группа успешно создана !');
+
+	const notifySuccess = () => toast.success('Группа успешно создана!');
 	const notifyError = () => toast.error('Произошла ошибка при создании группы');
+	const notifyIncomplete = () => toast.error('Заполните все поля');
 
 	const handleCreateGroup = async () => {
+		if (!value || !urlImg || !data || !text) {
+			notifyIncomplete();
+			setIsFormValid(false);
+			return;
+		}
+
 		const newGroup = {
 			title: value,
 			image: urlImg,
@@ -96,20 +100,25 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 		try {
 			await createGroup(newGroup);
 			notifySuccess();
-
-			handleOpen(false);
+			handleClose();
 			setData('');
 			setText('');
 			setImage('');
 			setValue('');
+			setUrlImg('');
+			setHidePhoto(false);
+			setIsFormValid(false);
 		} catch (error) {
 			notifyError();
 		}
 	};
+
+	useEffect(() => {
+		setIsFormValid(!!value && !!urlImg && !!data && !!text);
+	}, [value, urlImg, data, text]);
+
 	return (
 		<div>
-			{/* <ToastContainer /> */}
-
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -135,7 +144,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 								className={scss.fileInput}
 								type="file"
 								ref={fileInputRef}
-								onChange={handleFileChange}
+								onChange={handleFileSelect}
 							/>
 							<div
 								onClick={handleButtonClick}
@@ -143,7 +152,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 								style={{ backgroundImage: `url(${image || gallery})` }}
 							></div>
 							<p className={hidePhoto ? scss.hide_text : scss.show}>
-								Нажмите на иконку чтобы загрузить или перетащите фото
+								Нажмите на иконку чтобы загрузить
 							</p>
 						</div>
 						<div className={scss.inputs}>
@@ -160,7 +169,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 							<div className={scss.second_input}>
 								<Input
 									size="medium"
-									placeholder="Название группы"
+									placeholder="Дата окончания"
 									value={data}
 									onChange={(e) => setData(e.target.value)}
 									width="100%"
@@ -175,7 +184,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 						></textarea>
 						<div className={scss.buttons}>
 							<ButtonCancel
-								type="submit"
+								type="button"
 								onClick={handleClose}
 								disabled={false}
 								width="103px"
@@ -183,9 +192,9 @@ const CreateGroup: FC<CreateGroupsProps> = ({
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
-								type="submit"
+								type="button"
 								onClick={handleCreateGroup}
-								disabled={false}
+								disabled={!isFormValid}
 								width="117px"
 							>
 								Добавить

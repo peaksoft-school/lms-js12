@@ -3,6 +3,7 @@
 	width: 541px !important;
 	padding: 0px 0px !important;
 	height: auto;
+	background: #eff0f4 !important;
 
 	@media (max-width: 600px) {
 		width: 90% !important;
@@ -49,7 +50,7 @@
 			height: 145px;
 		}
 
-		.imgPart {
+		.img_part {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -115,10 +116,14 @@
 			opacity: none;
 			outline: none;
 			resize: none;
+			background: #eff0f4 !important;
+
 			&::placeholder {
 				font-size: 17px;
 				font-weight: 500;
 			}
+
+			border: 1px solid #c2c1c1;
 
 			@media (max-width: 600px) {
 				padding: 20px;

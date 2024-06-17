@@ -86,7 +86,13 @@ const ModalEditStudent: FC<EditModalProps> = ({
 	open,
 	saveIdElement
 }) => {
-	const { handleSubmit, control, reset } = useForm<PatchStudentProps>();
+	event?.preventDefault();
+	const {
+		handleSubmit,
+		control,
+		reset,
+		formState: { errors }
+	} = useForm<PatchStudentProps>();
 	const [patchStudentTable] = usePatchStudentTableMutation();
 	const { data: studentData } = useGetStudentTableQuery();
 	const students = studentData ?? { students: [], page: 1, size: 0 };
@@ -167,6 +173,9 @@ const ModalEditStudent: FC<EditModalProps> = ({
 								<Controller
 									name="firstName"
 									control={control}
+									rules={{
+										required: 'Имя обязателен для заполнения'
+									}}
 									render={({ field }) => (
 										<Input
 											size="medium"
@@ -174,12 +183,16 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											width="100%"
 											type="text"
 											placeholder="Имя"
+											error={!!errors.firstName}
 										/>
 									)}
 								/>
 								<Controller
 									name="lastName"
 									control={control}
+									rules={{
+										required: 'Фамилия обязателен для заполнения'
+									}}
 									render={({ field }) => (
 										<Input
 											size="medium"
@@ -187,12 +200,16 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											{...field}
 											type="text"
 											placeholder="Фамилия"
+											error={!!errors.lastName}
 										/>
 									)}
 								/>
 								<Controller
 									name="phoneNumber"
 									control={control}
+									rules={{
+										required: 'Номер обязателен для заполнения'
+									}}
 									render={({ field }) => (
 										<Input
 											size="medium"
@@ -200,10 +217,14 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											type="text"
 											width="100%"
 											placeholder="+996"
+											error={!!errors.phoneNumber}
 										/>
 									)}
 								/>
 								<Controller
+									rules={{
+										required: 'Email обязателен для заполнения'
+									}}
 									name="email"
 									control={control}
 									render={({ field }) => (
@@ -213,32 +234,77 @@ const ModalEditStudent: FC<EditModalProps> = ({
 											width="100%"
 											type="email"
 											placeholder="Email"
+											error={!!errors.email}
 										/>
 									)}
 								/>
-								<FormControl>
+								<FormControl error={!!errors.groupName} fullWidth>
 									<InputLabel id="demo-multiple-name-label">Группа</InputLabel>
-									<Select
-										style={{ borderRadius: '12px' }}
-										labelId="demo-multiple-name-label"
-										id="demo-multiple-name"
-										value={personName}
-										onChange={handleChange}
-										input={<OutlinedInput label="groupName" />}
-										MenuProps={MenuProps}
-									>
-										{groupData?.groupResponses.map((name) => (
-											<MenuItem
-												key={name.id}
-												value={name.title}
-												style={getStyles(name.title, personName, theme)}
+									<Controller
+										name="groupName"
+										control={control}
+										defaultValue=""
+										rules={{ required: 'Группа обязательна для заполнения' }}
+										render={({ field }) => (
+											<Select
+												{...field}
+												style={{ borderRadius: '12px' }}
+												labelId="demo-multiple-name-label"
+												id="demo-multiple-name"
+												input={<OutlinedInput label="groupName" />}
+												MenuProps={MenuProps}
+												onChange={handleChange}
 											>
-												{name.title}
-											</MenuItem>
-										))}
-									</Select>
+												{groupData?.groupResponses.map((name) => (
+													<MenuItem
+														key={name.id}
+														value={name.title}
+														style={getStyles(name.title, field.value, theme)}
+													>
+														{name.title}
+													</MenuItem>
+												))}
+											</Select>
+										)}
+									/>
+									{errors.groupName && (
+										<p style={{ color: 'red' }}>{errors.groupName.message}</p>
+									)}
 								</FormControl>
-								<FormControl fullWidth>
+
+								<FormControl error={!!errors.studyFormat} fullWidth>
+									<InputLabel id="study-format-label">
+										Формат обучения
+									</InputLabel>
+									<Controller
+										name="studyFormat"
+										control={control}
+										defaultValue=""
+										rules={{
+											required: 'Формат обучения обязателен для заполнения'
+										}}
+										render={({ field }) => (
+											<Select
+												{...field}
+												style={{ borderRadius: '12px' }}
+												labelId="study-format-label"
+												id="study-format-select"
+												input={<OutlinedInput label="studyFormat" />}
+												MenuProps={MenuProps}
+												value={formatName}
+												onChange={handleFormatChange}
+											>
+												<MenuItem value="ONLINE">ONLINE</MenuItem>
+												<MenuItem value="OFFLINE">OFFLINE</MenuItem>
+											</Select>
+										)}
+									/>
+									{errors.studyFormat && (
+										<p style={{ color: 'red' }}>{errors.studyFormat.message}</p>
+									)}
+								</FormControl>
+
+								{/* <FormControl fullWidth>
 									<InputLabel
 										id="study-format-label"
 										style={{ background: '#fff' }}
@@ -255,7 +321,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 										<MenuItem value="ONLINE">ONLINE</MenuItem>
 										<MenuItem value="OFFLINE">OFFLINE</MenuItem>
 									</Select>
-								</FormControl>
+								</FormControl> */}
 							</div>
 							<div
 								style={{

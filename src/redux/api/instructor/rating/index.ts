@@ -11,8 +11,16 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['rating']
+		}),
+
+		getResultRating: builder.query({
+			query: (answerId) => ({
+				url: `/api/resultTask/${answerId}`,
+				method: 'GET'
+			}),
+			providesTags: ['rating']
 		})
 	})
 });
 
-export const { useGetRatingStudentsQuery } = api;
+export const { useGetRatingStudentsQuery, useGetResultRatingQuery } = api;

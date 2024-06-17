@@ -1,15 +1,15 @@
-import scss from './CreateCurse.module.scss';
+import React, { FC, useRef, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
-import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { FC, useRef, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useCreateAdminCourseMutation } from '@/src/redux/api/admin/courses';
+import scss from './CreateCurse.module.scss';
+import gallery from '@/src/assets/photo-bg.png';
 
 const style = {
 	position: 'absolute',
@@ -44,6 +44,20 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [createCourse] = useCreateAdminCourseMutation();
+	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+	useEffect(() => {
+		if (
+			value.trim() === '' ||
+			data === '' ||
+			text.trim() === '' ||
+			image === ''
+		) {
+			setIsButtonDisabled(true);
+		} else {
+			setIsButtonDisabled(false);
+		}
+	}, [value, data, text, image]);
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -65,9 +79,6 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		}
 	};
 
-	// const notifySuccess = () => toast.success('Курс успешно создан !');
-	// const notifyError = () => toast.error('Произошла ошибка при создании курса');
-
 	const handleCreateCourse = async () => {
 		const newCourse = {
 			image: image,
@@ -82,6 +93,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		setValue('');
 		handleOpenCourse(false);
 	};
+
 	return (
 		<div>
 			<ToastContainer />
@@ -118,7 +130,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 								style={{ backgroundImage: `url(${image || gallery})` }}
 							></div>
 							<p className={hidePhoto ? scss.hide_text : scss.show}>
-								Нажмите на иконку чтобы загрузить или перетащите фото
+								Нажмите на иконку чтобы загрузить
 							</p>
 						</div>
 						<div className={scss.inputs}>
@@ -171,7 +183,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 							<ButtonSave
 								type="submit"
 								onClick={handleCreateCourse}
-								disabled={false}
+								disabled={isButtonDisabled}
 								width="117px"
 							>
 								Добавить
@@ -183,4 +195,5 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		</div>
 	);
 };
+
 export default CreateCourse;

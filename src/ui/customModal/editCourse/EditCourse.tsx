@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
-import galerry from '@/src/assets/photo-bg.png';
+import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -94,7 +94,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	};
 
 	return (
-		<div>
+		<>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -115,7 +115,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						id="modal-modal-description"
 						sx={{ mt: 2 }}
 					>
-						<div className={scss.imgPart}>
+						<div className={scss.img_part}>
 							<input
 								className={scss.fileInput}
 								type="file"
@@ -124,13 +124,16 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							/>
 							<div
 								onClick={handleButtonClick}
-								className={hidePhoto ? scss.backgroundNone : scss.background}
-								style={{ backgroundImage: `url(${image || galerry})` }}
-							></div>
-							Нажмите на иконку чтобы загрузить или перетащите фото
-							{/* <p className={hidePhoto ? scss.hideText : scss.show}>
-								Нажмите на иконку чтобы загрузить или перетащите фото
-							</p> */}
+								className={hidePhoto ? scss.background_none : scss.background}
+								style={{
+									backgroundImage: `url(${image || gallery})`
+								}}
+							>
+								<img style={{ borderRadius: '8px' }} src={gallery} alt="" />
+							</div>
+							<p className={hidePhoto ? scss.hide_text : scss.show}>
+								Нажмите на иконку чтобы загрузить
+							</p>
 						</div>
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>
@@ -181,7 +184,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 					</Typography>
 				</Box>
 			</Modal>
-		</div>
+		</>
 	);
 };
 
