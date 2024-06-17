@@ -6,7 +6,7 @@ import {
 } from '@/src/redux/api/instructor/addTask';
 import scss from './GetOneTask.module.scss';
 import profile from '@/src/assets/profile.png';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { Button } from '@mui/material';
 
 const GetOneTask = () => {
 	const { coursesId, lessonId, getTaskId } = useParams();
@@ -45,40 +45,79 @@ const GetOneTask = () => {
 				{response && (
 					<div className={scss.comment}>
 						<div className={scss.student_comment}>
-							<p>{response.text}</p>
+							<div dangerouslySetInnerHTML={{ __html: response.text }}></div>
 							<p className={scss.data}>132023</p>
 						</div>
 
 						<div className={scss.comments_container}>
-							<div className={scss.user}>
-								<img src={profile} alt="profile" />
-								<p>
-									{response.comment.map((item, index) => (
-										<span key={index}>{item.author}</span>
-									))}
-								</p>
-							</div>
-							<div className={scss.correct_hw}>
-								<p>
-									{response.comment.map((item, index) => (
-										<span key={index}>{item.content}</span>
-									))}
-								</p>
-								<p className={scss.data}>12.13.2024</p>
-							</div>
+							{response.comment.map((item) => (
+								<>
+									{item.role === 'STUDENT' ? (
+										<div className={scss.student}>
+											<div className={scss.user}>
+												<img src={profile} alt="profile" />
+												<p>
+													{response.comment.map((item, index) => (
+														<span key={index}>{item.author}</span>
+													))}
+												</p>
+											</div>
+											<div className={scss.correct_hw}>
+												<p>
+													{response.comment.map((item, index) => (
+														<span key={index}>{item.content}</span>
+													))}
+												</p>
+												<p className={scss.data}>{item.dateTime}</p>
+											</div>
+										</div>
+									) : (
+										<>
+											<div className={scss.admin_teacher}>
+												<div></div>
+												<div
+													style={{
+														display: 'flex',
+														flexDirection: 'column',
+														gap: '10px'
+													}}
+												>
+													<div className={scss.teacher}>
+														<img src={profile} alt="profile" />
+														<p>
+															{response.comment.map((item, index) => (
+																<span key={index}>{item.author}</span>
+															))}
+														</p>
+													</div>
+													<div className={scss.correct_hw}>
+														<p>
+															{response.comment.map((item, index) => (
+																<span key={index}>{item.content}</span>
+															))}
+														</p>
+														<p className={scss.data}>{item.dateTime}</p>
+													</div>
+												</div>
+											</div>
+										</>
+									)}
+								</>
+							))}
 						</div>
 
-						{response.taskAnswerStatus === 'ACCEPTED' ? (
+						{response.point === 0 ? (
 							<div className={scss.getHw}>
-								<h3>Ваше ДЗ не принято</h3>
-								<ButtonSave
+								<h3>Ваше ДЗ рассматривается</h3>
+								<Button
+									variant="contained"
 									onClick={() => {}}
-									width="230px"
 									disabled={false}
 									type="button"
+									style={{ textTransform: 'none' }}
 								>
 									Редактировать задание
-								</ButtonSave>
+								</Button>
 							</div>
 						) : (
 							<div className={scss.notGetHw}>

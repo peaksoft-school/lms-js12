@@ -46,7 +46,9 @@ export const api = createApi({
 		'link',
 		'rating',
 		'test',
-		'notification'
+		'ratingStudents',
+		'notification',
+		'send-task'
 	],
 	endpoints: () => ({})
 });

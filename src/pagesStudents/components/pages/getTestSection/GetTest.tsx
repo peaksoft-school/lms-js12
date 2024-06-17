@@ -1,35 +1,34 @@
+import { useState, useEffect } from 'react';
 import scss from './GetTest.module.scss';
 import { Box, ScrollArea } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetInsideTestQuery } from '@/src/redux/api/instructor/test';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { usePostTestResultStudentsMutation } from '@/src/redux/api/students/test';
-import { useState, useEffect } from 'react';
 
 function GetTest() {
 	const { coursesId, lessonId, testId } = useParams();
 	const [postTestResultStudents] = usePostTestResultStudentsMutation();
-	const [testIdSave, setTestIdSave] = useState([]);
-	const [remainingTime, setRemainingTime] = useState(null);
+	const [testIdSave, setTestIdSave] = useState<number[]>([]);
+	const [remainingTime, setRemainingTime] = useState<string | null>(null);
+	const test = Number(testId);
+	console.log(testIdSave);
 
 	const sendTestResult = async () => {
-		// Convert strings to integers
-		const testIds = testIdSave.map((id) => parseInt(id, 10));
-
+		const newData = {
+			optionId: testIdSave
+		};
 		try {
-			// Call the mutation with the array of integers
-			await postTestResultStudents(testIds);
+			await postTestResultStudents({ newData, test });
 		} catch (error) {
 			console.error('Error posting test results:', error);
-			// Handle error if needed
 		}
 	};
 
-	const test = Number(testId);
 	const { data } = useGetInsideTestQuery(test);
 	const navigate = useNavigate();
 
-	const handleOptionChange = (optionId) => {
+	const handleOptionChange = (optionId: number) => {
 		setTestIdSave((prevTestIdSave) =>
 			prevTestIdSave.includes(optionId)
 				? prevTestIdSave.filter((id) => id !== optionId)
@@ -45,7 +44,7 @@ function GetTest() {
 
 			const updateRemainingTime = () => {
 				const now = new Date();
-				const timeLeft = endTime - now;
+				const timeLeft = endTime.getTime() - now.getTime();
 
 				if (timeLeft <= 0) {
 					setRemainingTime('00:00:00');
@@ -132,7 +131,7 @@ function GetTest() {
 										);
 									}, 300);
 								}}
-							></ButtonSave>
+							/>
 						</div>
 					</div>
 				</div>

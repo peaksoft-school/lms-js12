@@ -148,22 +148,14 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 							<Controller
 								name="phoneNumber"
 								control={control}
-								defaultValue="+996"
+								defaultValue=""
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="string"
 										width="100%"
-										placeholder="Phone Number"
-										onChange={(e) => {
-											const value = e.target.value;
-											if (!value.startsWith('+996')) {
-												field.onChange('+996' + value);
-											} else {
-												field.onChange(value);
-											}
-										}}
+										placeholder="+996"
 									/>
 								)}
 							/>

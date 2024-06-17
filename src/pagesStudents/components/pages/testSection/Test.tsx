@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const Test = () => {
 	const navigate = useNavigate();
-	const { courseId, lessonId } = useParams();
+	const { coursesId, lessonId } = useParams();
 	const lesson = Number(lessonId);
 	const [isMobile, setIsMobile] = useState(true);
 	useEffect(() => {
@@ -60,7 +60,7 @@ const Test = () => {
 								variant="contained"
 								onClick={() =>
 									navigate(
-										`/courses/${courseId}/materials/${lessonId}/${question.testId}/showTest`
+										`/courses/${coursesId}/materials/${lessonId}/${question.testId}/showTest`
 									)
 								}
 							>

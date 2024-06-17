@@ -7,6 +7,7 @@ namespace EXAM {
 		exams: {
 			examId: number;
 			examTitle: string;
+			examDate: number;
 			point: number;
 		}[];
 	}[];
@@ -25,6 +26,20 @@ namespace EXAM {
 		examData: {
 			title: string;
 			examDate: string;
+		};
+	};
+
+	type PatchExamResultPointResponse = {
+		examId: number;
+		newPoint: {
+			point: number | null;
+		};
+	};
+
+	type PatchExamResultPointRequest = {
+		examId: number;
+		newPoint: {
+			point: number | null;
 		};
 	};
 }

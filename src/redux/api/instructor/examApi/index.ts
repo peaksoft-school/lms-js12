@@ -28,6 +28,18 @@ const api = index.injectEndpoints({
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['exam']
+		}),
+
+		updateExamPoint: builder.mutation<
+			EXAM.PatchExamResultPointResponse,
+			EXAM.PatchExamResultPointRequest
+		>({
+			query: ({ examId, newPoint }) => ({
+				url: `/api/exam/editExamPoint/${examId}`,
+				method: 'PATCH',
+				body: newPoint
+			}),
+			invalidatesTags: ['exam']
 		})
 	})
 });
@@ -35,5 +47,6 @@ const api = index.injectEndpoints({
 export const {
 	useCreateExamInstructorMutation,
 	useGetExamInstructorQuery,
-	useDeleteExamMutation
+	useDeleteExamMutation,
+	useUpdateExamPointMutation
 } = api;

@@ -23,12 +23,13 @@ const api = index.injectEndpoints({
 			providesTags: ['test']
 		}),
 		postTestResultStudents: builder.mutation<
-			STUDENTTEST.TestGetResultResponse,
-			STUDENTTEST.TestGetResultRequest
+			STUDENTTEST.TestPostResultResponse,
+			STUDENTTEST.TestPostResultRequest
 		>({
-			query: (test) => ({
+			query: ({ newData, test }) => ({
 				url: `/api/answerTest/${test}`,
-				method: 'POST'
+				method: 'POST',
+				body: newData
 			}),
 			invalidatesTags: ['test']
 		})

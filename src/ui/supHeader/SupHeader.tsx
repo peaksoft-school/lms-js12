@@ -155,7 +155,7 @@ const SupHeader = () => {
 								boxShadow: 'none',
 								border: '1px solid #336fff',
 								width: '200px',
-								background: 'rgb(221, 233, 249)',
+								background: '#dde9f9',
 								borderRadius: '10px'
 							}
 						}}
@@ -172,7 +172,7 @@ const SupHeader = () => {
 							}}
 						>
 							<img src={vector} alt="" />
-							<p> Выйти</p>
+							<p>Выйти</p>
 						</MenuItem>
 					</Menu>
 				</div>
@@ -250,7 +250,7 @@ const SupHeader = () => {
 								boxShadow: 'none',
 								border: '1px solid #336fff',
 								width: '200px',
-								background: 'rgb(221, 233, 249)',
+								background: '#dde9f9',
 								borderRadius: '10px'
 							}
 						}}

@@ -56,6 +56,14 @@ export const api = index.injectEndpoints({
 				method: 'POST'
 			}),
 			invalidatesTags: ['student']
+		}),
+		postExcelStudent: builder.mutation({
+			query: ({ json, groupId }) => ({
+				url: `/api/students/importStudents/6`,
+				method: 'POST',
+				body: json
+			}),
+			invalidatesTags: ['student']
 		})
 	})
 });
@@ -65,5 +73,6 @@ export const {
 	usePostStudentTableMutation,
 	useDeleteStudentTableMutation,
 	usePatchStudentTableMutation,
-	useIsBlockStudentMutation
+	useIsBlockStudentMutation,
+	usePostExcelStudentMutation
 } = api;

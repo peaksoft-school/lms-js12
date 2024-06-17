@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from './Rating.module.scss';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useGetRatingStudentsQuery } from '@/src/redux/api/instructor/rating';
+import {
+	useGetRatingStudentsQuery,
+	useGetResultRatingQuery
+} from '@/src/redux/api/instructor/rating';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { IconCaretDown, IconPlus, IconTrash } from '@tabler/icons-react';
 import AddExam from '@/src/ui/InstructorModal/AddExam';
 import {
 	useDeleteExamMutation,
-	useGetExamInstructorQuery
+	useGetExamInstructorQuery,
+	useUpdateExamPointMutation
 } from '@/src/redux/api/instructor/examApi';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 
@@ -20,11 +24,28 @@ const Rating = () => {
 	const [deleteExam] = useDeleteExamMutation();
 	const [openModal, setOpenModal] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [resultTaskStudent, setResultTaskStudent] = useState<number | boolean>(
+		false
+	);
 	const open = Boolean(anchorEl);
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const open2 = Boolean(anchorEl2);
 	const [deleteExamId, setDeleteExamId] = useState<null | number>(null);
-	console.log(deleteExamId);
+	const { data: resultTask } = useGetResultRatingQuery(resultTaskStudent);
+	console.log(resultTask);
+
+	const navigate = useNavigate();
+	const [updateExamPoint] = useUpdateExamPointMutation();
+
+	const [examPoints, setExamPoints] = useState<number>(0);
+
+	const handleSavePoints = async (examId: number) => {
+		const newPoint = {
+			point: examPoints
+		};
+
+		await updateExamPoint({ examId, newPoint });
+	};
 
 	if (isLoading) {
 		return (
@@ -158,22 +179,23 @@ const Rating = () => {
 										<th
 											style={{ minWidth: '170px', maxWidth: '170px' }}
 											rowSpan={2}
+											key={item.examId}
 										>
 											<div
 												style={{
 													display: 'flex',
 													alignItems: 'center',
-													gap: '5px'
+													gap: '5px',
+													flexDirection: 'column'
 												}}
 											>
 												<p style={{ paddingLeft: '5px', flexWrap: 'wrap' }}>
-													{' '}
 													{item.examTitle}
 												</p>
+												<p>{item.examDate}</p>
 												<Button
 													variant="contained"
 													size="small"
-													className={scss.button}
 													onClick={handleClick2}
 												>
 													<IconCaretDown stroke={2} />
@@ -254,13 +276,13 @@ const Rating = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{rating?.studentResponses.map((item, index) => (
-									<tr key={item.id}>
+								{rating?.studentResponses.map((student, index) => (
+									<tr key={student.id}>
 										<td>{index + 1}</td>
 										<td className={scss.fullName}>
-											<h4>{item.fullName}</h4>
+											<h4>{student.fullName}</h4>
 										</td>
-										{item.lessonRatingResponses.map((lesson) => (
+										{student.lessonRatingResponses.map((lesson) => (
 											<>
 												{lesson.taskRatingResponses.length === 0 ? (
 													<>
@@ -268,26 +290,44 @@ const Rating = () => {
 													</>
 												) : (
 													lesson.taskRatingResponses.map((task) => (
-														<td key={task.id}>
+														<td
+															style={{
+																cursor: 'pointer',
+																color: task.answerTaskRatingResponses
+																	? 'blue'
+																	: 'black'
+															}}
+															onClick={() => {
+																setResultTaskStudent(
+																	task.answerTaskRatingResponses.id
+																);
+																navigate(
+																	`/instructor/course/${courseId}/materials/${lesson.id}/lesson/${task.id}/answer/${task.answerTaskRatingResponses.id}`
+																);
+															}}
+															key={task.id}
+														>
 															{task.answerTaskRatingResponses?.point ?? 0}
 														</td>
 													))
 												)}
 											</>
 										))}
-										{exam && <td>0</td>}
-										{exam[0].exams.map((item) => (
-											<td key={item.examId}>{0}</td>
-										))}
 
-										{rating?.studentResponses.length > 0 && (
-											<td>
-												{Math.floor(
-													rating.studentResponses[0].completionPercentage
-												)}
-												%
-											</td>
-										)}
+										{exam &&
+											exam[0]?.exams.map((item) => (
+												<td key={item.examId}>
+													<input
+														style={{ border: 'none', outline: 'none' }}
+														type="number"
+														value={examPoints}
+														onChange={(e) => setExamPoints(+e.target.value)}
+														onClick={() => handleSavePoints(item.examId)}
+													/>
+												</td>
+											))}
+
+										<td>{Math.floor(student.completionPercentage)}%</td>
 									</tr>
 								))}
 							</tbody>

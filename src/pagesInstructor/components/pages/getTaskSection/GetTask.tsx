@@ -24,7 +24,6 @@ const GetTask = () => {
 	};
 
 	console.log(data?.description);
-	
 
 	useEffect(() => {
 		if (
