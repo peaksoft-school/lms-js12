@@ -14,6 +14,8 @@ import GetTest from '../pages/getTestSection/GetTest';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import GetOneTask from '../pages/getOneTask/GetOneTask';
+import ResultTest from '../pages/resultTest/ResultTest';
+import SendOneTask from '../pages/sendOneTask/SendOneTask';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -93,6 +95,10 @@ const LayoutStudents = () => {
 							element={<GetOneTask />}
 						/>
 						<Route
+							path="/courses/:coursesId/materials/:lessonId/lesson/:getTaskId/send-task"
+							element={<SendOneTask />}
+						/>
+						<Route
 							path="/courses/:coursesId/materials/:lessonId/lesson"
 							element={<LessonsStudentPage />}
 						/>
@@ -108,6 +114,10 @@ const LayoutStudents = () => {
 						<Route
 							path="/courses/:coursesId/materials/:lessonId/:testId/showTest"
 							element={<GetTest />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:lessonId/:testId/resultTest"
+							element={<ResultTest />}
 						/>
 						<Route path="/courses/:coursesId/rating" element={<RatingPage />} />
 						<Route

@@ -23,6 +23,8 @@ import RatingStudentsPage from '../pages/RatingStudentsPage';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import EditTest from '../pages/editTest/EditTest';
+import ResultTest from '../pages/resultTest/ResultTest';
+import CreateTest from '../pages/createTestSection/CreateTest';
 import TrashPage from '../pages/TrashPage';
 
 const LayoutInstructor = () => {
@@ -82,7 +84,7 @@ const LayoutInstructor = () => {
 						<>
 							<Routes>
 								<Route
-									path="/courses/:courseId/*"
+									path="/course/:courseId/*"
 									element={<SupHeaderMobile />}
 								/>
 								<Route path="/*" element={<SupHeaderCourses />} />
@@ -215,8 +217,16 @@ const LayoutInstructor = () => {
 							element={<LessonPage />}
 						/>
 						<Route
+							path="/course/:courseId/materials/:lessonId/createTest"
+							element={<CreateTest />}
+						/>
+						<Route
 							path="/course/:courseId/materials/:lessonId/:testId/showTest"
 							element={<GetTestInstructor />}
+						/>
+						<Route
+							path="/course/:courseId/materials/:lessonId/:testId/resultTest"
+							element={<ResultTest />}
 						/>
 					</Routes>
 				</main>

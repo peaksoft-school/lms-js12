@@ -1,51 +1,72 @@
-import { useState } from 'react';
 import scss from './Test.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import { useGetStudentTestQuery } from '@/src/redux/api/students/test';
+import { Button } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const Test = () => {
 	const navigate = useNavigate();
-	const [questions] = useState([
-		{
-			number: '№',
-			text: 'Название теста',
-			time: '40'
-		},
-		{
-			number: '№',
-			text: 'Название теста',
-			time: '40'
-		}
-	]);
+	const { coursesId, lessonId } = useParams();
+	const lesson = Number(lessonId);
+	const [isMobile, setIsMobile] = useState(true);
+	useEffect(() => {
+		const changeIsMobile = () => {
+			if (window.innerWidth < 1200) {
+				setIsMobile(true);
+			} else {
+				setIsMobile(false);
+			}
+		};
 
-	const { courseId, lessonId } = useParams();
+		changeIsMobile();
+		window.addEventListener('resize', changeIsMobile);
+
+		return () => {
+			window.removeEventListener('resize', changeIsMobile);
+		};
+	}, []);
+	const { data } = useGetStudentTestQuery(lesson);
+	const truncateText = (text: string, maxLength: number) => {
+		if (text.length <= maxLength) {
+			return text;
+		}
+		return `${text.substring(0, maxLength)}...`;
+	};
 
 	return (
 		<div className={scss.test_container}>
 			<div className={scss.container}>
-				{questions.map((question) => (
+				{data?.testResponseForGetAll.map((question, index) => (
 					<div className={scss.test_container_second}>
 						<div className={scss.test_container_fifth}>
 							<div className={scss.test_container_third}>
-								<h4>{question.number}</h4>
-								<h4 className={scss.test_text}>{question.text}</h4>
+								<h4>{index + 1}</h4>
+								<h4 className={scss.test_text}>
+									{isMobile ? (
+										<>{truncateText(question.title, 20)}</>
+									) : (
+										<>{truncateText(question.title, 40)}</>
+									)}
+								</h4>
 							</div>
 							<div className={scss.test_container_forth}>
-								<p className={scss.text_time}>Время: {question.time} минут</p>
+								<p className={scss.text_time}>
+									Время: {question.hour}:{question.minute} минут
+								</p>
 							</div>
 						</div>
 						<div className={scss.test_buttons_container}>
-							<ButtonSave
-								type={'button'}
-								width={''}
-								children={'Начать тест'}
-								disabled={false}
+							<Button
+								variant="contained"
 								onClick={() =>
 									navigate(
-										`/courses/${courseId}/materials/${lessonId}/showTest`
+										`/courses/${coursesId}/materials/${lessonId}/${question.testId}/showTest`
 									)
 								}
-							></ButtonSave>
+							>
+								{' '}
+								Начать тест
+							</Button>
 						</div>
 					</div>
 				))}

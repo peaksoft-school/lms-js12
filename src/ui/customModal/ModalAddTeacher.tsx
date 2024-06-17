@@ -76,7 +76,8 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 				lastName: lastName,
 				email: email,
 				phoneNumber: phoneNumber,
-				specialization: specialization
+				specialization: specialization,
+				linkForPassword: 'http://localhost:5173/auth/newPassword'
 			};
 			await postTeacher(postData);
 

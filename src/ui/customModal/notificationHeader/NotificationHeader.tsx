@@ -1,7 +1,9 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import scss from './NotificationHeader.module.scss';
+import { useGetNotificationQuery } from '@/src/redux/api/instructor/notification';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
 	position: 'absolute',
@@ -10,110 +12,48 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	bgcolor: 'background.paper',
 	boxShadow: 24,
-	p: 4,
+
 	sx: {
 		bgcolor: 'background.paper',
 		padding: '0px'
 	}
 };
+interface isViewProps {
+	notificationId: number;
+	courseId: number;
+	lessonId: number;
+	taskId: number;
+	notificationTitle: string;
+	notificationDescription: string;
+	notificationSendDate: string;
+	answerTaskId: number;
+	isView: boolean;
+}
 
 interface NotificationHeaderProps {
 	open: boolean;
 	handleClose: () => void;
 }
 
-const data = [
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Нурайым Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	},
-	{
-		title: 'Название домашнего задания',
-		description: 'Мампар Мампарович оценил  вашу работу',
-		number: '25.05.2022'
-	}
-];
-
 const NotificationHeader: FC<NotificationHeaderProps> = ({
 	open,
 	handleClose
 }) => {
+	const [isView, setIsView] = useState<boolean>(true);
+	const navigate = useNavigate();
+	const notification: isViewProps = {
+		isView: isView,
+		notificationId: 0,
+		courseId: 0,
+		lessonId: 0,
+		taskId: 0,
+		notificationTitle: '',
+		notificationDescription: '',
+		notificationSendDate: '',
+		answerTaskId: 0
+	};
+	const { data } = useGetNotificationQuery(notification);
+
 	return (
 		<div>
 			<Modal
@@ -131,11 +71,43 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 						<h2>НОВЫЕ</h2>
 
 						<div className={scss.messages_content}>
-							{data.map((item) => (
-								<div className={scss.results}>
-									<h1>{item.title}</h1>
-									<p>{item.description}</p>
-									<p>{item.number}</p>
+							{data?.map((item) => (
+								<div
+									className={scss.results}
+									onClick={() => {
+										navigate(
+											`/instructor/course/${item.courseId}/materials/${item.lessonId}/lesson/${item.taskId}/answer/${item.answerTaskId}`
+										);
+
+										setTimeout(() => {
+											setIsView(false);
+										}, 100);
+									}}
+								>
+									{item.isView === true && (
+										<>
+											<h1>{item.notificationTitle}</h1>
+											<p>{item.notificationDescription}</p>
+											<p>{item.notificationSendDate}</p>
+										</>
+									)}
+								</div>
+							))}
+						</div>
+					</div>
+					<div className={scss.notifications}>
+						<h2>Просмотренные</h2>
+
+						<div className={scss.messages_content}>
+							{data?.map((item) => (
+								<div className={scss.results2}>
+									{item.isView === false && (
+										<>
+											<h1>{item.notificationTitle}</h1>
+											<p>{item.notificationDescription}</p>
+											<p>{item.notificationSendDate}</p>
+										</>
+									)}
 								</div>
 							))}
 						</div>

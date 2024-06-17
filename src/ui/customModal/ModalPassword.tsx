@@ -1,12 +1,17 @@
 import scss from './ModalPassword.module.scss';
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Button from '@mui/material/Button';
+import React, { FC, useState } from 'react';
+import {
+	Controller,
+	FieldValues,
+	SubmitHandler,
+	useForm
+} from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
+import { useForgotPasswordMutation } from '@/src/redux/api/auth';
 
 const style = {
 	position: 'absolute',
@@ -20,30 +25,32 @@ const style = {
 	p: 4,
 	borderRadius: '12px'
 };
+interface ModalPasswordProps {
+	open: boolean;
+	handleClose: () => void;
+}
 
-const ModalPassword = () => {
-	const [open, setOpen] = useState<boolean>(false);
-	const { control, handleSubmit } = useForm();
+const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 	const [inputvalue, setInputValue] = useState<string>('');
+	const { control, handleSubmit } = useForm();
 
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
+	const [forgotPasswordMutation] = useForgotPasswordMutation();
 
 	const handleInputChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
 	};
-	const onSubmit = () => {
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const { email } = data;
+		const newData = {
+			email: email,
+			link: 'http://localhost:5173/auth/newPassword'
+		};
+		await forgotPasswordMutation(newData);
 		handleClose();
 	};
 
 	return (
 		<form>
-			<Button onClick={handleOpen}>Open modal Забыли пароль?</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -62,7 +69,7 @@ const ModalPassword = () => {
 
 					<Box className={scss.input_buttonCard}>
 						<p className={scss.textarea}>
-							Вам будет отправлено ссылка для сброса пароля
+							Вам будет отправлена ссылка для сброса пароля
 						</p>
 
 						<div className={scss.input}>

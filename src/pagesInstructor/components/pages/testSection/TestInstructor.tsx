@@ -81,7 +81,7 @@ const TestInstructor = () => {
 										setSaveId(question.testId);
 										setTimeout(() => {
 											navigate(
-												`/instructor/course/${courseId}/materials/${lessonId}/${question.testId}/showTest`
+												`/instructor/course/${courseId}/materials/${lessonId}/${question.testId}/resultTest`
 											);
 										}, 500);
 									}}

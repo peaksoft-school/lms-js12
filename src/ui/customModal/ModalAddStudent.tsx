@@ -108,8 +108,11 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 				email,
 				isBlock: false
 			};
+			const newData = {
+				link: 'http://localhost:5173/auth/newPassword'
+			};
 			try {
-				const response = await postStudentTable(newStudent);
+				const response = await postStudentTable({ newStudent, newData });
 				console.log('Response:', response);
 				handleClose();
 				reset();
