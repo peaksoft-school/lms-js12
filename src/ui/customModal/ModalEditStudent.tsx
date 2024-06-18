@@ -13,7 +13,7 @@ import {
 	Theme,
 	useTheme
 } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
@@ -86,7 +86,6 @@ const ModalEditStudent: FC<EditModalProps> = ({
 	open,
 	saveIdElement
 }) => {
-	event?.preventDefault();
 	const {
 		handleSubmit,
 		control,
@@ -117,6 +116,44 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		(student: Student) => student.id === saveIdElement
 	);
 
+	const [originalData, setOriginalData] = useState<PatchStudentProps | null>(
+		null
+	);
+
+	useEffect(() => {
+		const initialData = {
+			firstName: finder?.fullName.split(' ')[0] || '',
+			lastName: finder?.fullName.split(' ').slice(1).join(' ') || '',
+			phoneNumber: finder?.phoneNumber || '',
+			email: finder?.email || '',
+			groupName: finder?.groupName || '',
+			studyFormat: finder?.studyFormat || ''
+		};
+		reset(initialData);
+		setOriginalData(initialData);
+	}, [finder, reset]);
+
+	const watchedValues = useWatch({
+		control,
+		defaultValue: {
+			firstName: '',
+			lastName: '',
+			phoneNumber: '',
+			email: '',
+			groupName: '',
+			studyFormat: ''
+		}
+	});
+
+	const isButtonDisabled = () => {
+		if (!originalData) return true;
+		return Object.keys(watchedValues).every(
+			(key) =>
+				watchedValues[key as keyof PatchStudentProps] ===
+				originalData[key as keyof PatchStudentProps]
+		);
+	};
+
 	const onSubmit = async (data: PatchStudentProps) => {
 		const editStudent = {
 			...data,
@@ -128,23 +165,6 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		});
 		handleClose();
 	};
-
-	const fullName = finder?.fullName || '';
-	const nameParts = fullName.trim().split(' ');
-
-	const firstName = nameParts[0] || '';
-	const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
-
-	useEffect(() => {
-		reset({
-			firstName: firstName,
-			lastName: lastName,
-			phoneNumber: finder?.phoneNumber,
-			email: finder?.email,
-			groupName: finder?.groupName,
-			studyFormat: finder?.studyFormat
-		});
-	}, [finder, reset]);
 
 	return (
 		<form>
@@ -248,7 +268,9 @@ const ModalEditStudent: FC<EditModalProps> = ({
 										render={({ field }) => (
 											<Select
 												{...field}
-												style={{ borderRadius: '12px' }}
+												style={{
+													borderRadius: '12px'
+												}}
 												labelId="demo-multiple-name-label"
 												id="demo-multiple-name"
 												input={<OutlinedInput label="groupName" />}
@@ -303,25 +325,6 @@ const ModalEditStudent: FC<EditModalProps> = ({
 										<p style={{ color: 'red' }}>{errors.studyFormat.message}</p>
 									)}
 								</FormControl>
-
-								{/* <FormControl fullWidth>
-									<InputLabel
-										id="study-format-label"
-										style={{ background: '#fff' }}
-									>
-										Формат обучения
-									</InputLabel>
-									<Select
-										style={{ borderRadius: '12px' }}
-										labelId="study-format-label"
-										id="study-format-select"
-										value={formatName}
-										onChange={handleFormatChange}
-									>
-										<MenuItem value="ONLINE">ONLINE</MenuItem>
-										<MenuItem value="OFFLINE">OFFLINE</MenuItem>
-									</Select>
-								</FormControl> */}
 							</div>
 							<div
 								style={{
@@ -346,7 +349,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 									onClick={() => {}}
 									type="submit"
 									width="117px"
-									disabled={false}
+									disabled={isButtonDisabled()}
 								>
 									Отправить
 								</ButtonSave>

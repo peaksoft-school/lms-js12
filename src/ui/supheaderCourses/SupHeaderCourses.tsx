@@ -56,7 +56,7 @@ const SupHeaderCourses = () => {
 								boxShadow: 'none',
 								border: '1px solid #336fff',
 								width: '200px',
-								background: 'rgb(221, 233, 249)',
+								background: '#dde9f9',
 								borderRadius: '10px'
 							}
 						}}

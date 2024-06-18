@@ -108,54 +108,7 @@ const SupHeaderMobile = () => {
 					</div>
 				</div>
 			)}
-			{/* //! ins */}
-			{/* {pathname.startsWith(`/courses/${courseId}`) && (
-				<div className={scss.subHeaderCourses2}>
-					<Button
-						id="basic-button"
-						aria-controls={openel ? 'basic-menu' : undefined}
-						aria-haspopup="true"
-						aria-expanded={openel ? 'true' : undefined}
-						onClick={handleClickOpen}
-					>
-						<IconAlignJustified stroke={2} />
-					</Button>
-					<Menu
-						id="basic-menu"
-						anchorEl={anchorElOpen}
-						open={openel}
-						onClose={handleClose}
-						MenuListProps={{
-							'aria-labelledby': 'basic-button'
-						}}
-					>
-						<MenuItem
-							onClick={() => {
-								openTeacher();
-								handleClose();
-							}}
-						>
-							Учителя
-						</MenuItem>
-						<MenuItem
-							onClick={() => {
-								openStudent();
-								handleClose();
-							}}
-						>
-							Студенты
-						</MenuItem>
-					</Menu>
 
-					<div className={scss.header_elements}>
-						<IconUserCircle className={scss.profile} stroke={2} />
-						<div>
-							<p>Учитель</p>
-						</div>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
-					</div>
-				</div>
-			)} */}
 			{/* //! ins */}
 			{pathname.startsWith(`/instructor/course/${courseId}`) && (
 				<div className={scss.subHeaderCourses}>

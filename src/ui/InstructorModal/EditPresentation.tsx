@@ -45,7 +45,10 @@ const EditPresentation: FC<EditPresentationProps> = ({
 	handleClose,
 	presentationId
 }) => {
-	const { control, handleSubmit, reset } = useForm<EditPresentationForm>();
+	const { control, handleSubmit, reset, formState } =
+		useForm<EditPresentationForm>({
+			mode: 'onChange'
+		});
 	const [selectedFile, setSelectedFile] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { lessonId } = useParams();
@@ -53,7 +56,7 @@ const EditPresentation: FC<EditPresentationProps> = ({
 	const { data } = useGetPresentationQuery(test);
 	const [editPresentation] = useEditPresentationMutation();
 	const [createPresentationFile] = useCreatePresentationFileMutation();
-	console.log(presentationId, lessonId);
+	const [isFormChanged, setIsFormChanged] = useState(false);
 
 	const onSubmit: SubmitHandler<EditPresentationForm> = async (formData) => {
 		if (presentationId !== null) {
@@ -110,6 +113,10 @@ const EditPresentation: FC<EditPresentationProps> = ({
 			}
 		}
 	}, [data, presentationId, reset]);
+
+	useEffect(() => {
+		setIsFormChanged(Object.keys(formState.dirtyFields).length > 0);
+	}, [formState]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -221,7 +228,7 @@ const EditPresentation: FC<EditPresentationProps> = ({
 								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="117px"
-								disabled={false}
+								disabled={!isFormChanged}
 							>
 								Сохранить
 							</ButtonSave>

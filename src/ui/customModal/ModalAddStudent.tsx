@@ -73,7 +73,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 		handleSubmit,
 		control,
 		reset,
-		formState: { errors }
+		formState: { dirtyFields }
 	} = useForm<PostStudentProps>();
 	const [postStudentTable] = usePostStudentTableMutation();
 	const [formatName, setFormatName] = useState<string>('');
@@ -88,6 +88,13 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		setPersonName(event.target.value);
 	};
+
+	const isButtonDisabled = !(
+		dirtyFields.firstName &&
+		dirtyFields.lastName &&
+		dirtyFields.email &&
+		dirtyFields.phoneNumber 
+	);
 
 	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
 		const { firstName, lastName, groupName, phoneNumber, email } = data;
@@ -160,7 +167,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Имя"
-										error={!!errors.firstName}
+										// error={!!errors.firstName}
 									/>
 								)}
 							/>
@@ -178,7 +185,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Фамилия"
-										error={!!errors.lastName}
+										// error={!!errors.lastName}
 									/>
 								)}
 							/>
@@ -196,7 +203,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="string"
 										width="100%"
 										placeholder="+996"
-										error={!!errors.phoneNumber}
+										// error={!!errors.phoneNumber}
 									/>
 								)}
 							/>
@@ -214,7 +221,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="email"
 										width="100%"
 										placeholder="Email"
-										error={!!errors.email}
+										// error={!!errors.email}
 									/>
 								)}
 							/>
@@ -285,7 +292,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="117px"
-								disabled={false}
+								disabled={isButtonDisabled}
 							>
 								Отправить
 							</ButtonSave>

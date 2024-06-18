@@ -9,7 +9,6 @@ import scss from './Style.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
-// import { ToastContainer, toast } from 'react-toastify';
 
 interface IFormInputs {
 	firstName: string;
@@ -45,25 +44,19 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 		control,
 		handleSubmit,
 		reset,
-		formState: { errors }
+		formState: { dirtyFields }
 	} = useForm<IFormInputs>();
 	const [postTeacher] = usePostTeacherMutation();
-	// const [personName, setPersonName] = useState<string[]>([]);
-	// const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
-
-	// const handleClickShowSecondPassword = () =>
-	// 	setShowSecondPassword((show) => !show);
-	// const handleMouseDownSecondPassword1 = (
-	// 	event: React.MouseEvent<HTMLButtonElement>
-	// ) => event.preventDefault();
-
-	// const notify = () =>
-	// 	toast.error('Пожалуйста, заполните все обязательные поля');
-	// const notifySuccess = () => toast.success('Успешно добовлено');
+	const isButtonDisabled = !(
+		dirtyFields.firstName &&
+		dirtyFields.lastName &&
+		dirtyFields.email &&
+		dirtyFields.phoneNumber &&
+		dirtyFields.specialization
+	);
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
 		const { firstName, lastName, email, phoneNumber, specialization } = data;
-
 		if (
 			firstName !== '' &&
 			lastName !== '' &&
@@ -79,17 +72,13 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 				specialization: specialization
 			};
 			await postTeacher(postData);
-
 			handleClose();
 			reset();
-		} else {
-			// notify();
 		}
 	};
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			{/* <ToastContainer /> */}
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -105,7 +94,6 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 					>
 						<p className={scss.comText}>Добавить учителя</p>
 					</Typography>
-
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
@@ -122,7 +110,6 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder=" Имя"
-										error={!!errors.firstName}
 									/>
 								)}
 							/>
@@ -140,7 +127,6 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Фамилия"
-										error={!!errors.lastName}
 									/>
 								)}
 							/>
@@ -148,6 +134,9 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="phoneNumber"
 								control={control}
 								defaultValue=""
+								rules={{
+									required: 'Номер обязателен для заполнения'
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -172,40 +161,9 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="email"
 										width="100%"
 										placeholder="Email"
-										error={!!errors.email}
 									/>
 								)}
 							/>
-							{/* <Controller
-								name="login"
-								control={control}
-								defaultValue=""
-								render={({ field }) => (
-									<OutlinedInput
-										{...field}
-										className={scss.outlined_input_eyes}
-										placeholder="Password"
-										type={showSecondPassword ? 'text' : 'password'}
-										endAdornment={
-											<InputAdornment position="end">
-												<IconButton
-													aria-label="toggle password visibility"
-													onClick={handleClickShowSecondPassword}
-													onMouseDown={handleMouseDownSecondPassword1}
-													edge="end"
-												>
-													{showSecondPassword ? (
-														<IconOpen_Eye />
-													) : (
-														<IconClosed />
-													)}
-												</IconButton>
-											</InputAdornment>
-										}
-									/>
-								)}
-							/> */}
-
 							<Controller
 								name="specialization"
 								control={control}
@@ -220,12 +178,10 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										type="string"
 										width="100%"
 										placeholder="Специализация"
-										error={!!errors.specialization}
 									/>
 								)}
 							/>
 						</div>
-
 						<div
 							style={{
 								width: '100%',
@@ -249,7 +205,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								width="117px"
 								type="submit"
-								disabled={false}
+								disabled={isButtonDisabled}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Отправить

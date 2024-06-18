@@ -3,11 +3,9 @@
 	.content {
 		padding-inline: 20px;
 		min-height: 89vh;
-
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-
 		.container {
 			.course_button_modal {
 				margin-bottom: 20px;
@@ -19,6 +17,7 @@
 				z-index: 500;
 				top: 80px;
 				background: #eff0f4;
+				padding: 20px;
 
 				.button {
 					display: flex;
@@ -47,23 +46,25 @@
 			}
 
 			.title {
-				margin-bottom: 24px;
+				margin-bottom: 10px;
 				width: 100%;
 			}
 			.cards {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				justify-content: start;
+				justify-content: center;
 				margin-top: 24px;
 
 				.card {
 					position: relative;
+					height: auto;
+					overflow: hidden;
 					display: grid;
 					flex-wrap: wrap;
 					justify-content: start;
 					width: 100%;
-					column-gap: 70px;
+					column-gap: 40px;
 					row-gap: 40px;
 
 					@media (min-width: 1700px) {
@@ -110,7 +111,6 @@
 						flex-direction: column;
 						gap: 10px;
 						display: flex;
-
 						cursor: pointer;
 						@media (max-width: 1670px) {
 							max-width: 300px;
@@ -225,7 +225,7 @@
 			margin-top: auto;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 96px;
+				padding-bottom: 120px;
 			}
 
 			@media (max-width: 850px) {

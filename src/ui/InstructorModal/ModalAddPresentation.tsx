@@ -42,13 +42,24 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	handleClose,
 	open
 }) => {
-	const { control, handleSubmit, reset } = useForm<PostModalAddPresentation>();
+	const {
+		control,
+		handleSubmit,
+		reset,
+		formState: { dirtyFields }
+	} = useForm<PostModalAddPresentation>();
 	const [selectedFile, setSelectedFile] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [createPresentationFile] = useCreatePresentationFileMutation();
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
 	const [postPresentation] = usePostPresentationMutation();
+
+	const isButtonDisabled = !(
+		dirtyFields.title &&
+		dirtyFields.description &&
+		dirtyFields.file
+	);
 
 	const onSubmit: SubmitHandler<PostModalAddPresentation> = async (data) => {
 		const { title, description } = data;
@@ -203,7 +214,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="117px"
-								disabled={false}
+								disabled={isButtonDisabled}
 							>
 								Добавить
 							</ButtonSave>

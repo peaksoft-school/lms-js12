@@ -1,11 +1,15 @@
 .chart {
 	padding: 10px;
 	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+	max-height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	background: #fff;
-	padding-inline: 20px;
+	padding: 20px;
 	box-shadow:
 		0 0 1px #00000021,
 		0 1px 3px #00000033;

@@ -35,7 +35,7 @@ interface SearchProps {
 
 const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	const { handleSubmit } = useForm();
-	const [excelFile, setExcelFile] = useState<string[]>([]);
+	const [excelFile, setExcelFile] = useState<string>('');
 	const [selectedFile, setSelectedFile] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -52,7 +52,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 		const {
 			target: { value }
 		} = event;
-		setExcelFile(typeof value === 'string' ? value.split(',') : value);
+		setExcelFile(value);
 	};
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +66,14 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 			fileInputRef.current.click();
 		}
 	};
+
+	const handleCancel = () => {
+		handleClose(); // Закрываем модальное окно
+		setExcelFile(''); // Очищаем значение excelFile
+		setSelectedFile(''); // Очищаем значение selectedFile
+	};
+
+	const isButtonDisabled = !selectedFile || !excelFile;
 
 	return (
 		<div>
@@ -101,6 +109,9 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 									value={excelFile}
 									onChange={handleChange}
 								>
+									<MenuItem value="">
+										<p>Выберите группу</p>
+									</MenuItem>
 									{data?.groupResponses.map((item) => (
 										<MenuItem key={item.title} value={item.title}>
 											<h3>{item.title}</h3>
@@ -148,7 +159,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 							<ButtonCancel
 								type="button"
 								disabled={false}
-								onClick={handleClose}
+								onClick={handleCancel}
 								width="117px"
 							>
 								Отмена
@@ -156,7 +167,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 							<ButtonSave
 								type="submit"
 								width="117px"
-								disabled={false}
+								disabled={isButtonDisabled}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Добавить

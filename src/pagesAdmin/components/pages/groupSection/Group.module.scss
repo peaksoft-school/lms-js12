@@ -1,16 +1,14 @@
 .group {
 	padding-top: 20px;
-
 	.content {
 		padding-inline: 20px;
 		min-height: 89vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-
 		.container {
 			h1 {
-				padding-bottom: 20px;
+				padding-bottom: 10px;
 			}
 			.course_button_modal {
 				margin-bottom: 20px;
@@ -18,11 +16,11 @@
 				justify-content: flex-end;
 				align-items: center;
 				width: 100%;
-
 				position: sticky;
 				z-index: 50;
 				top: 80px;
 				background: #eff0f4;
+				padding: 20px;
 
 				.button {
 					display: flex;
@@ -69,7 +67,7 @@
 					flex-wrap: wrap;
 					justify-content: start;
 					width: 100%;
-					column-gap: 70px;
+					column-gap: 40px;
 					row-gap: 40px;
 
 					@media (min-width: 1700px) {
@@ -234,7 +232,7 @@
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 96px;
+				padding-bottom: 120px;
 			}
 
 			@media (max-width: 850px) {

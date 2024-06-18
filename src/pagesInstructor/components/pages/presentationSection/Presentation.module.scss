@@ -51,6 +51,8 @@
 				justify-content: space-between;
 
 				.text {
+					align-items: start;
+					z-index: 9;
 					h1 {
 						font-weight: 600;
 						font-size: 20px;
@@ -61,6 +63,7 @@
 						font-weight: 400;
 						font-size: 14px;
 						color: #1d293f;
+						margin-left: 10px;
 					}
 				}
 

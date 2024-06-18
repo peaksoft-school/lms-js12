@@ -1,6 +1,5 @@
 .SaidBar {
 	position: sticky;
-
 	top: 0;
 	left: 0;
 	height: 100vh !important;
@@ -59,7 +58,6 @@
 			.peaksoft2_url {
 				width: 100%;
 				max-width: 80px;
-				// padding-right: 10px;
 				opacity: 1;
 
 				&.active {
@@ -88,10 +86,12 @@
 				&:hover {
 					background: #dde9f9;
 					color: #1f6ed4;
+					z-index: 999999 !important;
 				}
 				&.active {
 					background: #dde9f9;
 					color: #1f6ed4;
+					z-index: 999999 !important;
 				}
 
 				.icon {
@@ -102,6 +102,7 @@
 					display: flex;
 					justify-content: center;
 					align-items: center;
+					z-index: 99999999 !important;
 				}
 
 				.label {
@@ -122,7 +123,7 @@
 				border-radius: 0.6rem;
 				padding: 0.4rem 1.2rem;
 				line-height: 1.8rem;
-				z-index: 999 !important;
+				z-index: 99999999 !important;
 				opacity: 0;
 				color: #12171e;
 			}
@@ -130,6 +131,7 @@
 				background: #dde9f9;
 				color: #1f6ed4;
 				opacity: 1;
+				z-index: 99999999 !important;
 			}
 		}
 	}

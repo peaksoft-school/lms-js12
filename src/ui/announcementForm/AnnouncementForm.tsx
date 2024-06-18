@@ -1,11 +1,9 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import scss from './AnnouncementForm.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Box, Typography } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -55,7 +53,12 @@ interface AnnouncementProps {
 }
 
 const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
-	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
+	const {
+		control,
+		handleSubmit,
+		reset,
+		formState: { dirtyFields }
+	} = useForm<PostAnnouncementProps>();
 	const [postAnnouncementTable] = usePostAnnouncementTableMutation();
 	const [personName, setPersonName] = useState<string[]>([]);
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -73,9 +76,7 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 		setPersonName(typeof value === 'string' ? value.split(',') : value);
 	};
 
-	const notify = () =>
-		toast.error('Пожалуйста, заполните все обязательные поля');
-	const notifySuccess = () => toast.success('Успешно добавлено');
+	const isButtonDisabled = !dirtyFields.announcementContent;
 
 	const onSubmit: SubmitHandler<PostAnnouncementProps> = async (data) => {
 		if (data.announcementContent.length > 0 && personName.length > 0) {
@@ -91,15 +92,22 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 			handleClose();
 			reset();
 			setPersonName([]);
-			notifySuccess();
-		} else {
-			notify();
 		}
 	};
 
+	useEffect(() => {
+		reset({
+			announcementContent: '',
+			expirationDate: '',
+			publishedDate: '',
+			targetGroupIds: []
+		});
+		setSelectedIds([]);
+		setPersonName([]);
+	}, [open, reset]);
+
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<ToastContainer />
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -141,12 +149,13 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									/>
 								</div>
 
-								<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
+								<FormControl className={scss.input}>
 									<InputLabel
 										id="demo-multiple-checkbox-label"
 										style={{
 											paddingLeft: '20px',
-											textAlign: 'center'
+											textAlign: 'center',
+											background: '#fff'
 										}}
 									>
 										Группы
@@ -186,7 +195,6 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 								</FormControl>
 
 								<div className={scss.date_input}>
-									{' '}
 									<div className={scss.inputText}>
 										<Controller
 											name="publishedDate"
@@ -242,7 +250,7 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									Отмена
 								</ButtonCancel>
 								<ButtonSave
-									disabled={false}
+									disabled={isButtonDisabled}
 									width="100px"
 									type="submit"
 									onClick={handleSubmit(onSubmit)}

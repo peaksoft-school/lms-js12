@@ -1,15 +1,14 @@
 .Task {
-	width: 100%;
 	padding-inline: 20px;
+	width: 100%;
 
 	.course_button_modal {
-		margin-bottom: 20px;
-		margin-top: 14px;
+		margin-top: 20px;
 		display: grid;
 		justify-content: flex-end;
 		align-items: center;
 		width: 100%;
-		padding-inline: 15px;
+		padding-inline: 20px;
 
 		.button {
 			display: flex;
@@ -43,7 +42,8 @@
 		background-color: #fff;
 		border-radius: 8px;
 		gap: 20px;
-		padding-block: 10px;
+		// padding-block: 10px;
+		padding: 15px;
 		cursor: pointer;
 
 		@media (max-width: 750px) {

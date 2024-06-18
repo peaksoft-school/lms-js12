@@ -1,6 +1,6 @@
 import Input from '@/src/ui/customInput/Input';
 import scss from './Answer.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import {
 	useGetInstructorTaskQuery,
@@ -8,14 +8,24 @@ import {
 } from '@/src/redux/api/instructor/addTask';
 import { useParams } from 'react-router-dom';
 import person from '@/src/assets/svgs/Profile.png';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
 
 const Answer = () => {
 	const [comments, setComments] = useState('');
 	const [score, setScore] = useState('');
+	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 	const { answerId } = useParams();
 	const [patchTaskInstructor] = usePatchTaskInstructorMutation();
 	const test = Number(answerId);
 	const { data } = useGetInstructorTaskQuery(test);
+
+	useEffect(() => {
+		if (comments.trim() && score.trim()) {
+			setIsButtonDisabled(false);
+		} else {
+			setIsButtonDisabled(true);
+		}
+	}, [comments, score]);
 
 	const handleOnClose = async () => {
 		const newComment = {
@@ -24,6 +34,8 @@ const Answer = () => {
 			isAccept: false
 		};
 		await patchTaskInstructor({ newComment, answerId });
+		setComments('');
+		setScore('');
 	};
 
 	const handleScore = async () => {
@@ -33,31 +45,33 @@ const Answer = () => {
 			isAccept: true
 		};
 		await patchTaskInstructor({ newComment, answerId });
+		setComments('');
+		setScore('');
 	};
+
 	return (
-		<div className={scss.Answer}>
+		<div className={scss.answer}>
 			<h1>Материалы</h1>
 			<div className={scss.main_task}>
 				<div className={scss.student_task}>
-					<h2>Задание студента:</h2>
+					<h2>Задание студента :</h2>
 					{data && (
-						<div>
-							<div>{data.text}</div>
-
+						<div className={scss.text_task}>
+							<div className={scss.task_sms}>{data.text}</div>
 							<div dangerouslySetInnerHTML={{ __html: data.description }} />
 						</div>
 					)}
 				</div>
 				<div
-					style={{ borderBottom: '1px solid gray', paddingTop: '20px' }}
+					style={{ borderBottom: '1px solid #cfcfcf', paddingTop: '20px' }}
 				></div>
 				<div>
 					<div>
-						{data?.comment.map((item) => (
-							<div className={scss.mainProfile}>
+						{data?.comment.map((item, index) => (
+							<div key={index} className={scss.mainProfile}>
 								<div className={scss.profile}>
 									<img src={person} alt="" className={scss.image} />
-									<p className={scss.auth}>{item.author}</p>
+									<p>{item.author}</p>
 								</div>
 								<div className={scss.grade_comment}>
 									<p className={scss.content}>{item.content}</p>
@@ -66,7 +80,7 @@ const Answer = () => {
 						))}
 						{data && (
 							<div>
-								<div className={scss.score}>Оценка:{data.point}</div>
+								<div className={scss.score}>Оценка: {data.point}</div>
 							</div>
 						)}
 					</div>
@@ -78,7 +92,7 @@ const Answer = () => {
 						onChange={(e) => setComments(e.target.value)}
 						width="100%"
 						type="text"
-						placeholder="Комментарий  к заданию"
+						placeholder="Комментарий к заданию"
 					/>
 					<div className={scss.comment_part}>
 						<ButtonCancel
@@ -97,9 +111,15 @@ const Answer = () => {
 								type="text"
 								placeholder="Введите баллы"
 							/>
-							<button style={{ cursor: 'pointer' }} onClick={handleScore}>
+
+							<ButtonSave
+								type="button"
+								width="117px"
+								onClick={handleScore}
+								disabled={isButtonDisabled}
+							>
 								Принято
-							</button>
+							</ButtonSave>
 						</div>
 					</div>
 				</div>

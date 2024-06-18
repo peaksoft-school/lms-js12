@@ -1,6 +1,6 @@
 .main_part {
 	padding-inline: 20px;
-	.accepted {
+	.acceped {
 		overflow-y: scroll;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
@@ -26,9 +26,6 @@
 			font-weight: bold;
 			font-size: 16px;
 			padding-inline: 15px;
-			p {
-				color: #141414;
-			}
 
 			.card_link {
 				text-decoration: none;

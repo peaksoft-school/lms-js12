@@ -44,7 +44,7 @@ const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 			aria-labelledby="child-modal-title"
 			aria-describedby="child-modal-description"
 			sx={{
-				backgroundColor: 'rgba(0, 0, 0, 0)',
+				backgroundColor: 'rgba(22, 21, 21, 0.74)',
 				backdropFilter: 'none',
 				display: 'flex',
 				alignItems: 'center',

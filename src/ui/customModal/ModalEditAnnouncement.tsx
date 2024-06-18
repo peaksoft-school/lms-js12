@@ -53,7 +53,6 @@ const style = {
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	minHeight: 330,
 	backgroundColor: '#ffffff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
@@ -68,11 +67,11 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 }) => {
 	const [editAnnouncement] = useEditAnnouncementMutation();
 	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
-	const [selectedIds, setSelectedIds] = useState<number[]>([]); // Corrected type to number[]
+	const [selectedIds, setSelectedIds] = useState<number[]>([]);
 	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
 	const { data } = useGetAnnouncementTableQuery();
 	const find = data?.announcements?.find((item) => item.id === saveIdElement);
-	const [personName, setPersonName] = useState<string[]>([]); // Corrected type to string[]
+	const [personName, setPersonName] = useState<string[]>([]);
 
 	useEffect(() => {
 		if (find) {
@@ -101,7 +100,6 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 			expirationDate: data.expirationDate,
 			targetGroupIds: selectedIds,
 			publishedDate: data.publishedDate
-			// isPublished: false;
 		};
 
 		console.log(editAnnouncementData);
@@ -227,7 +225,17 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 									/>
 								</div>
 							</FormControl>
-							<div className={scss.btn_form}>
+							<div
+								style={{
+									width: '100%',
+									display: 'flex',
+									justifyContent: 'flex-end',
+									alignItems: 'center',
+									paddingBottom: '10px',
+									paddingTop: '13px',
+									gap: '10px'
+								}}
+							>
 								<ButtonCancel
 									type="button"
 									disabled={false}

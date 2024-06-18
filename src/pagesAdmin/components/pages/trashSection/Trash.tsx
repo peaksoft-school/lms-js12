@@ -102,9 +102,6 @@ const Trash: FC = () => {
 										<tbody>
 											{data?.trashResponses
 												// ?.slice(
-												// 	(currentPage - 1) * rowsPerPage,
-												// 	currentPage * rowsPerPage
-												// )
 												.map((card, index) => (
 													<tr
 														className={
@@ -131,13 +128,21 @@ const Trash: FC = () => {
 																}}
 															>
 																<button
-																	style={{ border: 'none', background: 'none' }}
+																	style={{
+																		border: 'none',
+																		background: 'none',
+																		cursor: 'pointer'
+																	}}
 																	onClick={() => updatedTrashFunc(card.id)}
 																>
 																	<img src={refrash} alt="#" />
 																</button>
 																<button
-																	style={{ border: 'none', background: 'none' }}
+																	style={{
+																		border: 'none',
+																		background: 'none',
+																		cursor: 'pointer'
+																	}}
 																	onClick={() => DeleteTrashFunc(card.id)}
 																>
 																	<img src={trash} alt="#" />

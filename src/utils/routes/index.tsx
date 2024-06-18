@@ -54,7 +54,7 @@ export const links = {
 	],
 	student: [
 		{
-			name: 'Мои курсы',
+			name: 'Курсы',
 			icon: <IconDeviceDesktop stroke={2} />,
 			link: 'courses'
 		},
@@ -70,7 +70,7 @@ export const links = {
 	],
 	instructor: [
 		{
-			name: 'Мои Курсы',
+			name: ' Курсы',
 			icon: <IconDeviceDesktop stroke={2} />,
 			link: 'course'
 		},

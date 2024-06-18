@@ -83,17 +83,21 @@ const GetTask = () => {
 					<div className={scss.card}>
 						<div className={scss.text}>
 							<h2>{data?.title}</h2>
-							<h2>{data?.deadline}</h2>
-
+							<h3>{data?.deadline} </h3>
+						</div>
+						<div className={scss.result_task}>
 							<a
 								href={`https://lms-b12.s3.eu-central-1.amazonaws.com/${data?.file}`}
-								type="xxx	"
+								type=""
 							>
 								{data?.file}
 							</a>
-						</div>
 
-						<div dangerouslySetInnerHTML={{ __html: data?.description }} />
+							<div
+								className={scss.inner_html}
+								dangerouslySetInnerHTML={{ __html: data?.description }}
+							/>
+						</div>
 					</div>
 				)}
 				<ScrollArea
@@ -102,8 +106,9 @@ const GetTask = () => {
 					classNames={scss}
 					type="always"
 				>
-					<Box>
+					<Box className={scss.box}>
 						<Tabs
+							style={{ borderBottom: '1px solid #dde9f9' }}
 							value={value}
 							onChange={handleChange}
 							aria-label="basic tabs example"

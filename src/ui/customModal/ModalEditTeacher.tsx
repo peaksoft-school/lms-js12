@@ -23,6 +23,16 @@ interface IFormInputs {
 	group: string;
 }
 
+interface initialData {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	login: string;
+	specialization: string;
+	group: string;
+}
+
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -40,16 +50,18 @@ interface modalProps {
 	closeModalEdit: (openModalEdit: boolean) => void;
 	deleteById: number | null;
 }
+
 const ModalEditTeacher: React.FC<modalProps> = ({
 	openModalEdit,
 	closeModalEdit,
 	deleteById
 }) => {
-	const { control, handleSubmit, reset } = useForm<IFormInputs>();
+	const { control, handleSubmit, reset, watch } = useForm<IFormInputs>();
 	const [patchTeacher] = usePatchTeacherMutation();
 	const { data } = useGetTeacherQuery();
 	const find = data?.instructorResponses.find((el) => el.id === deleteById);
 	const [personName, setPersonName] = useState<string>('');
+	const [originalData, setOriginalData] = useState<IFormInputs | null>(null);
 
 	const onSubmit = async (data: IFormInputs) => {
 		const updateTeacher = {
@@ -68,17 +80,32 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 	const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
 
 	useEffect(() => {
-		reset({
+		const initialData: initialData = {
 			firstName: firstName,
 			lastName: lastName,
-			email: find?.email,
-			phoneNumber: find?.phoneNumber,
-			specialization: find?.specialization
-		});
+			email: find?.email || '',
+			phoneNumber: find?.phoneNumber || '',
+			specialization: find?.specialization || '',
+			login: '',
+			group: ''
+		};
+		reset(initialData);
+		setOriginalData(initialData);
 	}, [find]);
 
+	const watchedValues = watch();
+
+	const isButtonDisabled = () => {
+		if (!originalData) return true;
+		return Object.keys(watchedValues).every(
+			(key) =>
+				watchedValues[key as keyof IFormInputs] ===
+				originalData[key as keyof IFormInputs]
+		);
+	};
+
 	return (
-		<form onSubmit={close} className={scss.form}>
+		<form onSubmit={handleSubmit(onSubmit)} className={scss.form}>
 			<Modal
 				open={openModalEdit}
 				aria-labelledby="modal-modal-title"
@@ -150,11 +177,9 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 									/>
 								)}
 							/>
-
 							<Controller
 								name="specialization"
 								control={control}
-								// defaultValue=""
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -178,7 +203,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 								}}
 							>
 								<ButtonCancel
-									type="submit"
+									type="button"
 									disabled={false}
 									onClick={() => closeModalEdit(false)}
 									width="117px"
@@ -186,10 +211,10 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 									Отмена
 								</ButtonCancel>
 								<ButtonSave
+									onClick={handleSubmit(onSubmit)}
 									width="117px"
 									type="submit"
-									disabled={false}
-									onClick={handleSubmit(onSubmit)}
+									disabled={isButtonDisabled()}
 								>
 									Отправить
 								</ButtonSave>

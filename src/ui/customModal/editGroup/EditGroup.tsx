@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FC, useEffect, useRef, useState } from 'react';
 import scss from './EditGroup.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -5,7 +7,6 @@ import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { FC, useEffect, useRef, useState } from 'react';
 import gallery from '@/src/assets/photo-bg.png';
 import {
 	useCreateGroupFileMutation,
@@ -39,21 +40,40 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const findData = data?.groupResponses.find((el) => el.id === saveId);
 
 	const [value, setValue] = useState<string>('');
-	const [date, setData] = useState<string>('');
+	const [initialValue, setInitialValue] = useState<string>('');
+	const [date, setDate] = useState<string>('');
+	const [initialDate, setInitialDate] = useState<string>('');
 	const [text, setText] = useState<string>('');
+	const [initialText, setInitialText] = useState<string>('');
 	const [hidePhoto, setHidePhoto] = useState<boolean>(false);
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [updateGroup] = useUpdateGroupMutation();
 	const [saveSelect, setSelectedFile] = useState<string | null>(null);
 	const [createGroupFile] = useCreateGroupFileMutation();
+	const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
 	useEffect(() => {
-		setValue(findData?.title || '');
-		setData(findData?.dateOfEnd || '');
-		setText(findData?.description || '');
-		setImage(findData?.image || '');
+		if (findData) {
+			setValue(findData.title || '');
+			setInitialValue(findData.title || '');
+			setDate(findData.dateOfEnd || '');
+			setInitialDate(findData.dateOfEnd || '');
+			setText(findData.description || '');
+			setInitialText(findData.description || '');
+			setImage(findData.image || '');
+			setSelectedFile(findData.image || '');
+		}
 	}, [findData]);
+
+	useEffect(() => {
+		const isDisabled =
+			!value ||
+			!date ||
+			!text ||
+			(value === initialValue && date === initialDate && text === initialText);
+		setIsButtonDisabled(isDisabled);
+	}, [value, date, text, initialValue, initialDate, initialText]);
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -70,12 +90,13 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 			const formData = new FormData();
 			formData.append('file', file);
 			setHidePhoto(true);
+			setSelectedFile('');
 
 			try {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const response: any = await createGroupFile(formData);
-				const test = JSON.parse(response.data);
+				const test = response.data;
 				const fileName = test.fileName;
+
 				setSelectedFile(fileName);
 			} catch (error) {
 				console.error('Error uploading file:', error);
@@ -92,6 +113,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 		};
 		await updateGroup({ newGroup, saveId });
 		handleClose();
+		setSelectedFile('');
 	};
 
 	return (
@@ -109,7 +131,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						variant="h6"
 						component="h2"
 					>
-						<p> Редактировать</p>
+						<p>Редактировать</p>
 					</Typography>
 					<Typography
 						className={scss.text_part}
@@ -123,15 +145,23 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 								ref={fileInputRef}
 								onChange={handleFileSelect}
 							/>
-							<div
-								onClick={handleButtonClick}
-								className={hidePhoto ? scss.background_none : scss.background}
-								style={{
-									backgroundImage: `url(${image || gallery})`
-								}}
-							>
-								<img style={{ borderRadius: '8px' }} src={gallery} alt="" />
-							</div>
+							{image === '' ? (
+								<div
+									onClick={handleButtonClick}
+									className={hidePhoto ? scss.background_none : scss.background}
+									style={{
+										backgroundImage: `url(${gallery})`
+									}}
+								>
+									<img style={{ borderRadius: '8px' }} src={gallery} alt="" />
+								</div>
+							) : (
+								<div onClick={handleButtonClick}>
+									<img
+										src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${saveSelect} `}
+									/>
+								</div>
+							)}
 							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить
 							</p>
@@ -150,9 +180,9 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							<div className={scss.second_input}>
 								<Input
 									size="medium"
-									placeholder="Название группы"
+									placeholder="Дата окончания"
 									value={date}
-									onChange={(e) => setData(e.target.value)}
+									onChange={(e) => setDate(e.target.value)}
 									width="100%"
 									type="date"
 								/>
@@ -162,7 +192,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							value={text}
 							onChange={(e) => setText(e.target.value)}
 							placeholder="Описание группы"
-						></textarea>
+						/>
 						<div className={scss.buttons}>
 							<ButtonCancel
 								type="submit"
@@ -176,7 +206,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							<ButtonSave
 								type="submit"
 								onClick={updateGroupFunc}
-								disabled={false}
+								disabled={isButtonDisabled}
 								width="117px"
 							>
 								Добавить

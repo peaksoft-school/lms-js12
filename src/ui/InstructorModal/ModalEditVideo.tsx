@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -7,7 +6,7 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './ModalEditVideo.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import Input from '../customInput/Input';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	useGetVideoLessonQuery,
 	usePatchVideoLessonMutation
@@ -33,28 +32,41 @@ const style = {
 	p: 4,
 	borderRadius: '12px'
 };
+
 interface modalProps {
 	openModalEdit: boolean;
 	closeModalEdit: (openModalEdit: boolean) => void;
 	saveIdElement: number | null;
 }
+
 const ModalEditVideo: React.FC<modalProps> = ({
 	openModalEdit,
 	closeModalEdit,
 	saveIdElement
 }) => {
-	const { control, handleSubmit, reset } = useForm<IFormInputs>();
+	const { control, handleSubmit, reset, formState } = useForm<IFormInputs>({
+		mode: 'onChange'
+	});
 	const [patchVideo] = usePatchVideoLessonMutation();
 
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
 	const { data } = useGetVideoLessonQuery(lesson);
-
 	const finder = data?.find((item) => item.id === saveIdElement);
+	const [isFormChanged, setIsFormChanged] = useState(false);
+
+	const getVideoId = (url: string) => {
+		const match = url.match(
+			/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/
+		);
+		return match ? match[1] : '';
+	};
 
 	const onSubmit = async (data: IFormInputs) => {
+		const videoId = getVideoId(data.linkOfVideo);
 		const newVideoLesson = {
-			...data
+			...data,
+			linkOfVideo: videoId
 		};
 		await patchVideo({ newVideoLesson, saveIdElement });
 		closeModalEdit(false);
@@ -67,6 +79,10 @@ const ModalEditVideo: React.FC<modalProps> = ({
 			linkOfVideo: finder?.linkOfVideo
 		});
 	}, [finder, reset]);
+
+	useEffect(() => {
+		setIsFormChanged(Object.keys(formState.dirtyFields).length > 0);
+	}, [formState]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className={scss.form}>
@@ -129,7 +145,7 @@ const ModalEditVideo: React.FC<modalProps> = ({
 
 							<div className={scss.EditButtons}>
 								<ButtonCancel
-									type="submit"
+									type="button"
 									disabled={false}
 									onClick={() => closeModalEdit(false)}
 									width="117px"
@@ -137,10 +153,10 @@ const ModalEditVideo: React.FC<modalProps> = ({
 									Отмена
 								</ButtonCancel>
 								<ButtonSave
+									onClick={handleSubmit(onSubmit)}
 									width="117px"
 									type="submit"
-									disabled={false}
-									onClick={handleSubmit(onSubmit)}
+									disabled={!isFormChanged}
 								>
 									Отправить
 								</ButtonSave>
