@@ -53,6 +53,16 @@ export const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['teacher']
+		}),
+		appointAllTeacher: builder.query<
+			TABLE.appointAllTeacherResponse,
+			TABLE.appointAllTeacherRequest
+		>({
+			query: () => ({
+				url: `/api/instructors/allInstructorsName`,
+				method: 'GET'
+			}),
+			providesTags: ['teacher']
 		})
 	})
 });
@@ -61,5 +71,6 @@ export const {
 	useGetTeacherQuery,
 	usePostTeacherMutation,
 	usePatchTeacherMutation,
-	useDeleteTeacherMutation
+	useDeleteTeacherMutation,
+	useAppointAllTeacherQuery
 } = api;

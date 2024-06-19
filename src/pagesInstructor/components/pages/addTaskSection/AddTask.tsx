@@ -6,7 +6,10 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { Button } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useCreateTaskInstructorMutation } from '@/src/redux/api/instructor/addTask';
+import {
+	useCreateTaskInstructorMutation
+	// useDeleteFileTaskInstructorMutation
+} from '@/src/redux/api/instructor/addTask';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -17,21 +20,22 @@ import { Dayjs } from 'dayjs';
 import { Box, ScrollArea } from '@mantine/core';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 import Sources from 'quill';
+import ButtonDelete from '@/src/ui/customButton/ButtonDelete';
 
 const AddTask: React.FC = () => {
 	const [title, setTitle] = useState('');
-	const [selectedDate, setSelectedDate] = useState<Dayjs | null | undefined>(
-		null
-	);
+	const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 	const [createGroupFile] = useCreateGroupFileMutation();
 	const [value, setValue] = useState('');
 	const { courseId, lessonId } = useParams();
 	const navigate = useNavigate();
 	const [createTaskInstructor] = useCreateTaskInstructorMutation();
+	// const [deleteFileTaskInstructor] = useDeleteFileTaskInstructorMutation();
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [saveSelect, setSelectedFile] = useState<string | null>(null);
 	const [secondSave, setSecondSave] = useState<string | null>(null);
+	// const [fileName, setFileName] = useState<string | null>(null);
 	const [description, setDescription] = useState('');
 
 	const handleFileSelect = async (
@@ -46,8 +50,8 @@ const AddTask: React.FC = () => {
 			formData.append('description', description);
 			try {
 				const response: any = await createGroupFile(formData);
-				const test = JSON.parse(response.data);
-				const fileName = test.fileName;
+				const parsedData = JSON.parse(response.data);
+				const fileName = parsedData.fileName;
 				setSelectedFile(fileName);
 				setDescription(description);
 			} catch (error) {
@@ -69,21 +73,25 @@ const AddTask: React.FC = () => {
 	}
 
 	const handleImageUpload = async (imageData: string, description: string) => {
-		console.log('asd');
-
-		const blob = dataURItoBlob(imageData);
-		console.log(blob);
-
-		const file = new File([blob], 'filename.jpg', { type: 'image/jpeg' });
-		const formData = new FormData();
-		formData.append('file', file);
-		const cleanedDescription = description.replace(/\\/g, '');
-		formData.append('description', cleanedDescription);
-
 		try {
+			const blob = dataURItoBlob(imageData);
+			const file = new File([blob], 'filename.jpg', { type: 'image/jpeg' });
+			const formData = new FormData();
+			formData.append('file', file);
+			const cleanedDescription = description.replace(/\\/g, '');
+			formData.append('description', cleanedDescription);
+
 			const response = await createGroupFile(formData);
-			if (response && response.data && response.data.fileName) {
-				setSecondSave(response.data.object.urlFile);
+
+			if (response && response.data) {
+				const parsedData = JSON.parse(response.data);
+
+				if (parsedData && parsedData.object && parsedData.object.urlFile) {
+					setSecondSave(parsedData.object.urlFile);
+					console.log(secondSave);
+				} else {
+					console.error('Invalid response structure:', response);
+				}
 			} else {
 				console.error('Invalid response from server:', response);
 			}
@@ -109,22 +117,44 @@ const AddTask: React.FC = () => {
 	};
 
 	const addTask = async () => {
-		const newDescription = value.replace(
-			/<img[^>]*>/,
-			`<img src="${secondSave}"/>`
-		);
+		try {
+			const newDescription = value.replace(
+				/<img[^>]*>/,
+				secondSave ? `<img src="${secondSave}"/>` : ''
+			);
 
-		const newTask = {
-			title,
-			file: saveSelect,
-			description: newDescription,
-			deadline: selectedDate
-		};
+			const newTask = {
+				title,
+				file: saveSelect,
+				description: newDescription,
+				deadline: selectedDate
+			};
 
-		await createTaskInstructor({ newTask, lessonId });
-		setTitle('');
-		setValue('');
-		setSelectedDate(null);
+			const response = await createTaskInstructor({
+				newTask,
+				lessonId
+			}).unwrap();
+
+			if (!response) {
+				throw new Error('Invalid response from server');
+			}
+
+			setTitle('');
+			setValue('');
+			setSelectedDate(null);
+		} catch (error) {
+			console.error('Error creating task:', error);
+		}
+	};
+
+	const handleDeleteFile = async () => {
+		try {
+			setSecondSave(null);
+
+			console.log('File deleted successfully');
+		} catch (error) {
+			console.error('Error deleting file:', error);
+		}
 	};
 
 	const modules = {
@@ -200,7 +230,7 @@ const AddTask: React.FC = () => {
 								/>
 							</div>
 							<div className={scss.secon_part}>
-								<div className={scss.second_part}>
+								<div className={scss.second}>
 									<div className={scss.editor}>
 										<ReactQuill
 											theme="snow"
@@ -209,6 +239,24 @@ const AddTask: React.FC = () => {
 											className={scss.editorInput}
 											modules={modules}
 										/>
+									</div>
+									<div className={scss.button}>
+										{value.includes('<img') && (
+											<>
+												<ButtonDelete
+													disabled={false}
+													type="button"
+													onClick={handleDeleteFile}
+												>
+													Удалить
+												</ButtonDelete>
+											</>
+										)}
+									</div>
+									<div>
+										{saveSelect !== null ? (
+											<a href={saveSelect}>{saveSelect}</a>
+										) : null}
 									</div>
 								</div>
 							</div>

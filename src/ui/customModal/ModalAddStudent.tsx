@@ -68,7 +68,6 @@ function getStyles(name: string, personName: string, theme: Theme) {
 }
 
 const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
-	event?.preventDefault();
 	const {
 		handleSubmit,
 		control,
@@ -93,7 +92,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 		dirtyFields.firstName &&
 		dirtyFields.lastName &&
 		dirtyFields.email &&
-		dirtyFields.phoneNumber 
+		dirtyFields.phoneNumber
 	);
 
 	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
@@ -115,12 +114,16 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 				email,
 				isBlock: false
 			};
+			const newData = {
+				link: 'http://localhost:5173/auth/newPassword'
+			};
 			try {
-				const response = await postStudentTable(newStudent);
+				const response = await postStudentTable({ newStudent, newData });
 				console.log('Response:', response);
 				handleClose();
 				reset();
 				setFormatName('');
+				setPersonName('');
 			} catch (error) {
 				console.error('Error:', error);
 			}
@@ -167,7 +170,6 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Имя"
-										// error={!!errors.firstName}
 									/>
 								)}
 							/>
@@ -185,7 +187,6 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Фамилия"
-										// error={!!errors.lastName}
 									/>
 								)}
 							/>
@@ -202,8 +203,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										{...field}
 										type="string"
 										width="100%"
-										placeholder="+996"
-										// error={!!errors.phoneNumber}
+										placeholder="Номер телефона"
 									/>
 								)}
 							/>
@@ -221,7 +221,6 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="email"
 										width="100%"
 										placeholder="Email"
-										// error={!!errors.email}
 									/>
 								)}
 							/>

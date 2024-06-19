@@ -46,12 +46,9 @@ const api = index.injectEndpoints({
 			}),
 			invalidatesTags: ['videoLesson']
 		}),
-		deleteVideoLesson: builder.mutation<
-			VIDEO_LESSON.VideoLessonDeleteResponse,
-			VIDEO_LESSON.VideoLessonDeleteRequest
-		>({
+		deleteVideoLesson: builder.mutation({
 			query: (deleteId) => ({
-				url: `/api/videos/${deleteId}`,
+				url: `/api/videos/delete/${deleteId}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['videoLesson']

@@ -42,6 +42,14 @@
 
 			.secon_part {
 				padding-top: 40px;
+				.second {
+					position: relative;
+				}
+				.button {
+					position: absolute;
+					top: 50%;
+					left: 45%;
+				}
 
 				.editor {
 					.editorInput {

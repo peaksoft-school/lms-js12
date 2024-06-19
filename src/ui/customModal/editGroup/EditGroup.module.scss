@@ -59,9 +59,14 @@
 			gap: 10px;
 			width: 100%;
 
-			img {
-				width: 173px;
-				height: 145px;
+			.img {
+				img {
+					@media (max-width: 350px) {
+						width: 100%;
+						max-width: 250px !important;
+						min-width: 250px !important;
+					}
+				}
 			}
 
 			p {

@@ -50,7 +50,4 @@ namespace VIDEO_LESSON {
 			linkOfVideo: string;
 		};
 	};
-
-	type VideoLessonDeleteResponse = void;
-	type VideoLessonDeleteRequest = number;
 }

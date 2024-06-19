@@ -11,14 +11,14 @@ const api = index.injectEndpoints({
 		}),
 		UpdatedTrash: builder.mutation({
 			query: (id) => ({
-				url: `/api/trash/return/${id}`,
+				url: `/api/trash/restore/${id}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['trash']
 		}),
 		DeleteTrash: builder.mutation({
 			query: (id) => ({
-				url: `/api/trash/delete/${id}`,
+				url: `/api/trash/${id}`,
 				method: 'DELETE'
 			}),
 			invalidatesTags: ['trash']

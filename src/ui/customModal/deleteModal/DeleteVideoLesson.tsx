@@ -19,12 +19,13 @@ const DeleteVideoLesson: FC<VideoLessonProps> = ({
 	handleCloseModal,
 	saveIdElement
 }) => {
-	const [deleteId] = useDeleteVideoLessonMutation();
+	const [deleteVideoLesson] = useDeleteVideoLessonMutation();
 
 	const handleDelete = async () => {
-		await deleteId(saveIdElement!);
+		await deleteVideoLesson(saveIdElement!);
 		handleCloseModal(false);
 	};
+	console.log(saveIdElement, 'id');
 
 	return (
 		<>
@@ -62,7 +63,7 @@ const DeleteVideoLesson: FC<VideoLessonProps> = ({
 					>
 						Отмена
 					</ButtonCancel>
-					<ButtonDelete onClick={handleDelete} type="submit" disabled={false}>
+					<ButtonDelete onClick={handleDelete} type="button" disabled={false}>
 						Удалить
 					</ButtonDelete>
 				</DialogActions>

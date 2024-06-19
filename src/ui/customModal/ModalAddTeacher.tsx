@@ -39,7 +39,6 @@ const style = {
 };
 
 const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
-	event?.preventDefault();
 	const {
 		control,
 		handleSubmit,
@@ -69,11 +68,16 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 				lastName: lastName,
 				email: email,
 				phoneNumber: phoneNumber,
-				specialization: specialization
+				specialization: specialization,
+				linkForPassword: 'http://localhost:5173/auth/newPassword'
 			};
-			await postTeacher(postData);
-			handleClose();
-			reset();
+			try {
+				await postTeacher(postData);
+				handleClose();
+				reset();
+			} catch (error) {
+				console.error('Error:', error);
+			}
 		}
 	};
 
@@ -143,7 +147,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 										{...field}
 										type="string"
 										width="100%"
-										placeholder="+996"
+										placeholder="Номер телефона"
 									/>
 								)}
 							/>
@@ -195,7 +199,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 							}}
 						>
 							<ButtonCancel
-								type="submit"
+								type="button"
 								disabled={false}
 								onClick={handleClose}
 								width="117px"

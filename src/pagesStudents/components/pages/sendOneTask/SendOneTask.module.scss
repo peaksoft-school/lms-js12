@@ -1,29 +1,47 @@
 .get_task {
 	padding-inline: 20px;
 	width: 100%;
-	padding-bottom: 300px;
 
 	h1 {
 		margin-bottom: 20px;
 		width: 100%;
 	}
-	.Task {
+	.work {
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
-		height: 70vh;
+		height: 100vh;
+		min-height: 100vh;
+		max-height: 100vh;
 		background: #fff;
 		border-radius: 10px;
-		overflow-y: scroll;
-		.comment {
+		overflow-y: scroll !important;
+		.content {
 			padding-inline: 20px;
 			display: flex;
 			flex-direction: column;
 			gap: 24px;
+			margin-top: 40px;
 
 			.saveInput_button {
 				display: flex;
-				gap: 12px;
+				flex-direction: column;
+				gap: 15px;
+			}
+
+			.save_file {
+				display: flex;
+				justify-content: flex-end;
+			}
+
+			:global {
+				.ql-container {
+					border-radius: 10px !important;
+				}
+
+				.ql-toolbar {
+					border-radius: 10px !important;
+				}
 			}
 		}
 		.card {
@@ -33,10 +51,9 @@
 				max-width: 600px;
 				height: auto;
 			}
-			p {
-				font-size: 18px;
-			}
+
 			.text {
+				margin-top: 30px;
 				padding: 10px;
 				display: flex;
 				justify-content: space-between;
@@ -45,52 +62,16 @@
 					flex-wrap: wrap;
 				}
 			}
-		}
-	}
-}
-:global {
-	.quill {
-		display: flex !important;
-		width: 100% !important;
-		justify-content: space-between !important;
-		flex-direction: row-reverse !important;
 
-		.ql-container {
-			width: 100% !important;
-			max-width: 1400px !important;
-			border-radius: 14px !important;
+			.inner_html {
+				padding-inline: 10px;
+				font-size: 16px;
+				border-bottom: 1px solid #d0d0d0;
+				padding-bottom: 25px;
 
-			.ql-editor {
-				border: 1px solid #b8acac !important;
-				border-radius: 14px !important;
-				width: 100% !important;
-				max-width: 1200px !important;
-			}
-		}
-
-		.ql-toolbar {
-			border-radius: 14px !important;
-			border: none !important;
-			width: 100% !important;
-			max-width: 920px !important;
-
-			.ql-link {
-				width: 35px;
-				height: 35px;
-			}
-			.ql-image {
-				width: 35px;
-				height: 35px;
-			}
-			.ql-code-block {
-				width: 35px;
-				height: 35px;
-			}
-
-			.ql-toolbar .ql-snow {
-				display: flex;
-				justify-content: flex-end;
-				align-items: flex-end;
+				p {
+					font-size: 16px;
+				}
 			}
 		}
 	}

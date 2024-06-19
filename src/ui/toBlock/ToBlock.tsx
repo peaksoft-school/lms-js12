@@ -141,7 +141,7 @@ const StudentMenu: FC<MenuProps> = ({
 			/>
 			<DeleteStudentModal
 				open={openDeleteModal}
-				handleCloseModal={() => handleCloseDeleteModal}
+				handleCloseModal={handleCloseDeleteModal}
 				saveIdElement={saveIdElement}
 			/>
 			<IsBlock

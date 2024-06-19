@@ -18,8 +18,8 @@ export const api = index.injectEndpoints({
 			STUDENT.PostStudentPropsResponse,
 			STUDENT.PostStudentPropsRequest
 		>({
-			query: (newStudent) => ({
-				url: '/api/students',
+			query: ({ newStudent, newData }) => ({
+				url: `/api/students?linkForPassword=${encodeURIComponent(newData.link)}`,
 				method: 'POST',
 				body: newStudent
 			}),
@@ -56,6 +56,14 @@ export const api = index.injectEndpoints({
 				method: 'POST'
 			}),
 			invalidatesTags: ['student']
+		}),
+		postExcelStudent: builder.mutation({
+			query: ({ json, groupId }) => ({
+				url: `/api/students/importStudents/${groupId}`,
+				method: 'POST',
+				body: json
+			}),
+			invalidatesTags: ['student']
 		})
 	})
 });
@@ -65,5 +73,6 @@ export const {
 	usePostStudentTableMutation,
 	useDeleteStudentTableMutation,
 	usePatchStudentTableMutation,
-	useIsBlockStudentMutation
+	useIsBlockStudentMutation,
+	usePostExcelStudentMutation
 } = api;

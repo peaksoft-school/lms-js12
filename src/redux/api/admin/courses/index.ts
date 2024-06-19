@@ -109,7 +109,7 @@ export const api = index.injectEndpoints({
 					Authorization: `Bearer ${localStorage.getItem('token')}`
 				}
 			}),
-			invalidatesTags: ['groups']
+			invalidatesTags: ['courses']
 		})
 	})
 });

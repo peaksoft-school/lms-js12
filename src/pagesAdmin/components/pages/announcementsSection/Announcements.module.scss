@@ -2,7 +2,7 @@
 	overflow-y: scroll;
 	padding-inline: 20px;
 	.main_container {
-		height: 89vh;
+		min-height: 89vh !important;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

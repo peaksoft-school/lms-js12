@@ -84,95 +84,99 @@ const Presentation = () => {
 				</Button>
 			</div>
 			<div className={scss.card}>
-				{data?.map((item) => (
-					<div key={item.id} className={scss.content}>
-						<div className={scss.cards}>
-							<div className={scss.photo}>
-								<iframe
-									style={{ height: '200px' }}
-									className={scss.iframe}
-									src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.file}`}
-									frameBorder="0"
-								></iframe>
-								<div className={scss.button_watch}>
-									<Button
-										sx={{
-											borderRadius: '8px',
-											textTransform: 'capitalize',
-											background: '#0000ff7f',
-											'&:hover': {
-												background: '#0000ffb2'
-											}
-										}}
-										size="medium"
-										variant="contained"
-										onClick={() => openPresentationFunc(item.id)}
-									>
-										Смотреть
-									</Button>
-								</div>
-							</div>
-							<div className={scss.title}>
-								<div className={scss.text}>
-									<h1>{item.title}</h1>
-									<p>{item.description}</p>
-								</div>
-								<div className={scss.dots}>
-									<div onClick={handleClick}>
-										<button
-											onClick={() => {
-												setSaveIdElement(item.id);
+				{data?.length ? (
+					data.map((item) => (
+						<div key={item.id} className={scss.content}>
+							<div className={scss.cards}>
+								<div className={scss.photo}>
+									<iframe
+										style={{ height: '200px' }}
+										className={scss.iframe}
+										src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.file}`}
+										frameBorder="0"
+									></iframe>
+									<div className={scss.button_watch}>
+										<Button
+											sx={{
+												borderRadius: '8px',
+												textTransform: 'capitalize',
+												background: '#0000ff7f',
+												'&:hover': {
+													background: '#0000ffb2'
+												}
 											}}
-											className={scss.button}
-											aria-controls={open ? 'basic-menu' : undefined}
-											aria-haspopup="true"
+											size="medium"
+											variant="contained"
+											onClick={() => openPresentationFunc(item.id)}
 										>
-											<IconDotsVertical stroke={2} />
-										</button>
+											Смотреть
+										</Button>
 									</div>
-									<Menu
-										anchorEl={anchorEl}
-										id="positioned-menu"
-										open={open}
-										onClose={handleCloseDrop}
-										anchorOrigin={{
-											vertical: 'bottom',
-											horizontal: 'right'
-										}}
-										transformOrigin={{
-											vertical: 'top',
-											horizontal: 'right'
-										}}
-										PaperProps={{
-											style: { boxShadow: 'none', border: '1px solid gray' }
-										}}
-									>
-										<MenuItem
-											style={{ display: 'flex', gap: '10px' }}
-											onClick={() => {
-												handleOpenEdit();
-												handleCloseDrop();
+								</div>
+								<div className={scss.title}>
+									<div className={scss.text}>
+										<h1>{item.title}</h1>
+										<p>{item.description}</p>
+									</div>
+									<div className={scss.dots}>
+										<div onClick={handleClick}>
+											<button
+												onClick={() => {
+													setSaveIdElement(item.id);
+												}}
+												className={scss.button}
+												aria-controls={open ? 'basic-menu' : undefined}
+												aria-haspopup="true"
+											>
+												<IconDotsVertical stroke={2} />
+											</button>
+										</div>
+										<Menu
+											anchorEl={anchorEl}
+											id="positioned-menu"
+											open={open}
+											onClose={handleCloseDrop}
+											anchorOrigin={{
+												vertical: 'bottom',
+												horizontal: 'right'
+											}}
+											transformOrigin={{
+												vertical: 'top',
+												horizontal: 'right'
+											}}
+											PaperProps={{
+												style: { boxShadow: 'none', border: '1px solid gray' }
 											}}
 										>
-											<img src={editImg} alt="Edit" />
-											<p>Редактировать</p>
-										</MenuItem>
-										<MenuItem
-											style={{ display: 'flex', gap: '10px' }}
-											onClick={() => {
-												openDeleteFunc();
-												handleCloseDrop();
-											}}
-										>
-											<img src={deleteImg} alt="Delete" />
-											<p>Удалить</p>
-										</MenuItem>
-									</Menu>
+											<MenuItem
+												style={{ display: 'flex', gap: '10px' }}
+												onClick={() => {
+													handleOpenEdit();
+													handleCloseDrop();
+												}}
+											>
+												<img src={editImg} alt="Edit" />
+												<p>Редактировать</p>
+											</MenuItem>
+											<MenuItem
+												style={{ display: 'flex', gap: '10px' }}
+												onClick={() => {
+													openDeleteFunc();
+													handleCloseDrop();
+												}}
+											>
+												<img src={deleteImg} alt="Delete" />
+												<p>Удалить</p>
+											</MenuItem>
+										</Menu>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				))}
+					))
+				) : (
+					<h3>Пока что презентацию не загрузили</h3>
+				)}
 			</div>
 			<ModalAddPresentation handleClose={handleClose} open={open1} />
 			<EditPresentation

@@ -6,7 +6,6 @@ import {
 	FormControl,
 	InputLabel,
 	Select,
-	SelectChangeEvent,
 	MenuItem
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -15,6 +14,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './Style.module.scss';
 import Input from '../customInput/Input';
 import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+import { usePostExcelStudentMutation } from '@/src/redux/api/admin/student';
 
 const style = {
 	position: 'absolute',
@@ -35,25 +35,14 @@ interface SearchProps {
 
 const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	const { handleSubmit } = useForm();
-	const [excelFile, setExcelFile] = useState<string>('');
+	const [excelFile, setExcelFile] = useState<number | null>(null);
 	const [selectedFile, setSelectedFile] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
-
+	const [postExcelStudent] = usePostExcelStudentMutation();
 	const { data } = useGetGroupQuery({
 		page: '1',
 		size: '100'
 	});
-
-	const onSubmit = () => {
-		handleClose();
-	};
-
-	const handleChange = (event: SelectChangeEvent<typeof excelFile>) => {
-		const {
-			target: { value }
-		} = event;
-		setExcelFile(value);
-	};
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files[0]) {
@@ -61,19 +50,20 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 		}
 	};
 
+	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+		setExcelFile(event.target.value as number); 
+	};
+
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
+	console.log(excelFile);
 
-	const handleCancel = () => {
-		handleClose(); // Закрываем модальное окно
-		setExcelFile(''); // Очищаем значение excelFile
-		setSelectedFile(''); // Очищаем значение selectedFile
+	const onSubmit = async () => {
+		await postExcelStudent({ excelFile, selectedFile });
 	};
-
-	const isButtonDisabled = !selectedFile || !excelFile;
 
 	return (
 		<div>
@@ -109,11 +99,8 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 									value={excelFile}
 									onChange={handleChange}
 								>
-									<MenuItem value="">
-										<p>Выберите группу</p>
-									</MenuItem>
 									{data?.groupResponses.map((item) => (
-										<MenuItem key={item.title} value={item.title}>
+										<MenuItem key={item.id} value={item.id}>
 											<h3>{item.title}</h3>
 										</MenuItem>
 									))}
@@ -159,7 +146,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 							<ButtonCancel
 								type="button"
 								disabled={false}
-								onClick={handleCancel}
+								onClick={handleClose}
 								width="117px"
 							>
 								Отмена
@@ -167,7 +154,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 							<ButtonSave
 								type="submit"
 								width="117px"
-								disabled={isButtonDisabled}
+								disabled={false}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Добавить

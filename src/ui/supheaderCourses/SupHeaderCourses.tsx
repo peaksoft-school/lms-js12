@@ -6,10 +6,19 @@ import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import vector from '@/src/assets/svgs/Vector.svg';
 import bell from '@/src/assets/svgs/Header icons.png';
+import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
 
 const SupHeaderCourses = () => {
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
+	const [openNotification, setOpenNotification] = useState(false);
+	const handleOpenNotification = () => {
+		setOpenNotification(true);
+	};
+
+	const handleCloseNotification = () => {
+		setOpenNotification(false);
+	};
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -80,11 +89,15 @@ const SupHeaderCourses = () => {
 			)}
 			{pathname.startsWith('/instructor') && (
 				<>
-					<div className={scss.courses_admin} onClick={handleClick}>
-						<img src={bell} alt="bell" />
-						<img src={profile} alt="Profile" />
-						<p>Учитель</p>
-						<IconChevronDown stroke={2} />
+					<div className={scss.courses_admin}>
+						<div onClick={handleOpenNotification}>
+							<img style={{ paddingTop: '5px' }} src={bell} alt="bell" />
+						</div>
+						<img onClick={handleClick} src={profile} alt="Profile" />
+						<p onClick={handleClick}>Учитель</p>
+						<div onClick={handleClick}>
+							<IconChevronDown style={{ paddingTop: '5px' }} stroke={2} />
+						</div>
 					</div>
 					<Menu
 						id="basic-menu"
@@ -107,7 +120,7 @@ const SupHeaderCourses = () => {
 								boxShadow: 'none',
 								border: '1px solid #336fff',
 								width: '200px',
-								background: 'rgb(221, 233, 249)',
+								background: '#dde9f9',
 								borderRadius: '10px'
 							}
 						}}
@@ -131,11 +144,28 @@ const SupHeaderCourses = () => {
 			)}
 			{pathname.startsWith('/courses') && (
 				<>
-					<div className={scss.courses_admin} onClick={handleClick}>
-						<img className={scss.bell} src={bell} alt="bell" />
-						<img className={scss.profile} src={profile} alt="Profile" />
-						<p style={{ cursor: 'pointer' }}>Студент</p>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+					<div className={scss.courses_admin}>
+						<img
+							onClick={handleOpenNotification}
+							className={scss.bell}
+							src={bell}
+							alt="bell"
+						/>
+						<img
+							onClick={handleClick}
+							className={scss.profile}
+							src={profile}
+							alt="Profile"
+						/>
+						<p onClick={handleClick} style={{ cursor: 'pointer' }}>
+							Студент
+						</p>
+						<div
+							onClick={handleClick}
+							style={{ background: 'none ', border: 'none' }}
+						>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						</div>
 					</div>
 					<Menu
 						id="basic-menu"
@@ -158,7 +188,7 @@ const SupHeaderCourses = () => {
 								boxShadow: 'none',
 								border: '1px solid #336fff',
 								width: '200px',
-								background: 'rgb(221, 233, 249)',
+								background: '#dde9f9',
 								borderRadius: '10px'
 							}
 						}}
@@ -182,10 +212,10 @@ const SupHeaderCourses = () => {
 			)}
 			{pathname.startsWith('/calendar') && (
 				<>
-					<div className={scss.courses_admin} onClick={handleClick}>
-						<img src={bell} alt="bell" />
-						<img src={profile} alt="Profile" />
-						<p>Студент</p>
+					<div className={scss.courses_admin}>
+						<img onClick={handleOpenNotification} src={bell} alt="bell" />
+						<img onClick={handleClick} src={profile} alt="Profile" />
+						<p onClick={handleClick}>Студент</p>
 						<IconChevronDown stroke={2} />
 					</div>
 					<Menu
@@ -209,7 +239,7 @@ const SupHeaderCourses = () => {
 								boxShadow: 'none',
 								border: '1px solid #336fff',
 								width: '200px',
-								background: 'rgb(221, 233, 249)',
+								background: '#dde9f9',
 								borderRadius: '10px'
 							}
 						}}
@@ -231,6 +261,10 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
+			<NotificationHeader
+				open={openNotification}
+				handleClose={handleCloseNotification}
+			/>
 		</div>
 	);
 };

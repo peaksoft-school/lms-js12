@@ -53,7 +53,7 @@ const style = {
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	backgroundColor: '#ffffff',
+	backgroundColor: '#fff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -68,10 +68,16 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 	const [editAnnouncement] = useEditAnnouncementMutation();
 	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
 	const [selectedIds, setSelectedIds] = useState<number[]>([]);
-	const { control, handleSubmit, reset } = useForm<PostAnnouncementProps>();
+	const { control, handleSubmit, reset, watch } =
+		useForm<PostAnnouncementProps>();
 	const { data } = useGetAnnouncementTableQuery();
 	const find = data?.announcements?.find((item) => item.id === saveIdElement);
 	const [personName, setPersonName] = useState<string[]>([]);
+
+	const announcementContent = watch('announcementContent');
+
+	const isSubmitDisabled =
+		!announcementContent || announcementContent === find?.content;
 
 	useEffect(() => {
 		if (find) {
@@ -112,7 +118,6 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 		if (find) {
 			reset({
 				announcementContent: find.content,
-				personName: find.groupNames,
 				expirationDate: find.endDate,
 				publishedDate: find.publishDate
 			} as Partial<PostAnnouncementProps>);
@@ -154,14 +159,8 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 									)}
 								/>
 							</div>
-							<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
-								<InputLabel
-									id="demo-multiple-checkbox-label"
-									style={{
-										paddingLeft: '20px',
-										textAlign: 'center'
-									}}
-								>
+							<FormControl className={scss.input}>
+								<InputLabel id="demo-multiple-checkbox-label">
 									Группы
 								</InputLabel>
 								<Select
@@ -247,7 +246,7 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 								<ButtonSave
 									width="117px"
 									type="submit"
-									disabled={false}
+									disabled={isSubmitDisabled}
 									onClick={handleSubmit(onSubmit)}
 								>
 									Отправить
