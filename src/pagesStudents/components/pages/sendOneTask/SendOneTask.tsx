@@ -91,28 +91,20 @@ const SendOneTask = () => {
 
 	return (
 		<div className={scss.get_task}>
-			<div className={scss.Task}>
+			<div className={scss.work}>
 				{data?.taskResponse.map((item) => (
 					<div className={scss.card}>
 						<div className={scss.text}>
 							<h2>{item.title}</h2>
 							<h2>{item.deadline}</h2>
 						</div>
-
-						<div dangerouslySetInnerHTML={{ __html: item.description }} />
-					</div>
-				))}
-				<div className={scss.comment}>
-					<div>
-						<Input
-							type="text"
-							value={text}
-							onChange={(e) => setText(e.target.value)}
-							size="small"
-							placeholder="Текст домашнего задания"
-							width="100%"
+						<div
+							className={scss.inner_html}
+							dangerouslySetInnerHTML={{ __html: item.description }}
 						/>
 					</div>
+				))}
+				<div className={scss.content}>
 					<div className={scss.save_file}>
 						<input
 							type="file"
@@ -126,7 +118,8 @@ const SendOneTask = () => {
 							onClick={() => fileInputRef.current?.click()}
 							type="button"
 						>
-							<span> Загрузить файл</span> <IconDownload stroke={2} />
+							<span style={{ paddingLeft: '10px' }}> Загрузить файл</span>
+							<IconDownload stroke={2} />
 						</ButtonCancel>
 					</div>
 					<div>
@@ -141,16 +134,32 @@ const SendOneTask = () => {
 					<div className={scss.saveInput_button}>
 						<Input
 							type="text"
+							value={text}
+							onChange={(e) => setText(e.target.value)}
+							size="small"
+							placeholder="Текст домашнего задания"
+							width="100%"
+						/>
+						<Input
+							type="text"
 							value={homeWork}
 							onChange={(e) => setHomeWork(e.target.value)}
 							size="small"
 							placeholder="Комментарий к заданию"
 							width="100%"
 						/>
+					</div>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'end',
+							paddingBottom: '30px'
+						}}
+					>
 						<ButtonSave
 							disabled={false}
 							onClick={addTask}
-							width="100%"
+							width="117px"
 							type="button"
 						>
 							Отправить

@@ -38,7 +38,7 @@ const ModalPresentation: FC<TeacherAddProps> = ({
 				aria-labelledby="child-modal-title"
 				aria-describedby="child-modal-description"
 				sx={{
-					backgroundColor: 'rgba(0, 0, 0, 0)',
+					backgroundColor: 'rgba(22, 21, 21, 0.74)',
 					backdropFilter: 'none',
 					display: 'flex',
 					alignItems: 'center',
@@ -54,7 +54,7 @@ const ModalPresentation: FC<TeacherAddProps> = ({
 					{data && (
 						<div className={scss.iframe}>
 							<iframe
-								style={{ borderRadius: '2px' }}
+								style={{ borderRadius: '8px' }}
 								src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${data.file}`}
 								frameBorder="0"
 								width="100%"

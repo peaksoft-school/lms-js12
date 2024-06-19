@@ -230,7 +230,6 @@ const Courses: FC = () => {
 							onChange={(e) => handleOpenPage(+e.target.value)}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
-									// navigate(`/${page}`);
 									handleOpenPage(currentPage);
 								}
 							}}
@@ -260,7 +259,6 @@ const Courses: FC = () => {
 							}}
 							onKeyDown={(e) => {
 								if (e.key === 'Enter') {
-									// handlePageShowChange(openPage);
 									handleInputValuePaginationSize(openPage);
 								}
 							}}

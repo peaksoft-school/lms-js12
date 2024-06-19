@@ -47,12 +47,12 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 	const [postMaterials] = usePostMaterialsMutation();
 	const { courseId } = useParams();
 	const course = Number(courseId);
+	console.log(handleOpen);
 
 	const isButtonDisabled = !(dirtyFields.title && dirtyFields.date);
 
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		const { title, date } = data;
-
 		if (title !== '' && date !== '') {
 			const postData = {
 				title: title,
@@ -61,7 +61,6 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 			await postMaterials({ postData, course });
 			reset();
 			handleClose();
-			handleOpen(false);
 		}
 	};
 
@@ -133,10 +132,10 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
-								type="button"
+								onClick={handleSubmit(onSubmit)}
+								type="submit"
 								width="117px"
 								disabled={isButtonDisabled}
-								onClick={handleSubmit(onSubmit)}
 							>
 								Создать
 							</ButtonSave>

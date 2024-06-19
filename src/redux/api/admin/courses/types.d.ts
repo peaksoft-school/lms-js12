@@ -2,7 +2,7 @@
 namespace ADMINCOURSES {
 	type Courses = {
 		id: number;
-		image: string | undefined;
+		image: string | null;
 		title: string;
 		description: string;
 		dateOfEnd: string;
@@ -18,7 +18,7 @@ namespace ADMINCOURSES {
 	};
 	type CreateAdminCourseResponse = {
 		newCourse: {
-			image: string | undefined;
+			image: string | null;
 			title: string;
 			description: string;
 			dateOfEnd: string;
@@ -33,7 +33,7 @@ namespace ADMINCOURSES {
 	type UpdateCourseResponse = {
 		saveId: number | null;
 		newCourses: {
-			image: string | undefined;
+			image: string | null;
 			title: string;
 			description: string;
 			dateOfEnd: string;
@@ -42,7 +42,7 @@ namespace ADMINCOURSES {
 	type UpdateCourseRequest = {
 		saveId: number | null;
 		newCourses: {
-			image: string | undefined;
+			image: string | null;
 			title: string;
 			description: string;
 			dateOfEnd: string;

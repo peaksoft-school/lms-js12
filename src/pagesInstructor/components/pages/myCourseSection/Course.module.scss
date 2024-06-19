@@ -33,7 +33,7 @@
 					flex-wrap: wrap;
 					justify-content: start;
 					width: 100%;
-					column-gap: 70px;
+					column-gap: 40px;
 					row-gap: 40px;
 
 					@media (min-width: 1700px) {
@@ -195,7 +195,7 @@
 			left: 0;
 
 			@media (max-width: 1000px) {
-				padding-bottom: 96px;
+				padding-bottom: 120px;
 			}
 
 			@media (max-width: 850px) {

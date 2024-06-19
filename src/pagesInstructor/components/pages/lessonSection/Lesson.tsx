@@ -56,7 +56,11 @@ const Lesson = () => {
 				style={{
 					background: '#fff',
 					borderRadius: '10px',
-					width: '100%'
+					width: '100%',
+					height: '100vh !important',
+					maxHeight: '100vh',
+					minHeight: '100vh',
+					overflowY: 'auto'
 				}}
 			>
 				<div

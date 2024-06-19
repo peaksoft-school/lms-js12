@@ -86,7 +86,6 @@ export const api = index.injectEndpoints({
 			query: (id) => ({
 				url: `/api/students/isBlock/${id}`,
 				method: 'POST'
-				// body: updated
 			}),
 			invalidatesTags: ['courses']
 		}),
@@ -99,6 +98,18 @@ export const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['courses']
+		}),
+
+		createCourseFileImg: builder.mutation({
+			query: (formData) => ({
+				url: '/file',
+				method: 'POST',
+				body: formData,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			}),
+			invalidatesTags: ['courses']
 		})
 	})
 });
@@ -112,5 +123,6 @@ export const {
 	useGetAllStudentsCourseQuery,
 	useAppointAdminCourseMutation,
 	useCreateStudentBlockCoursesMutation,
-	useGetInstructorCourseQuery
+	useGetInstructorCourseQuery,
+	useCreateCourseFileImgMutation
 } = api;

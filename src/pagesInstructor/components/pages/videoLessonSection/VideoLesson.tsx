@@ -19,7 +19,7 @@ const VideoLesson = () => {
 	const [openEditVideo, setOpenEditVideo] = useState(false);
 	const [openWatch, setWatchOpen] = useState(false);
 	const [openAdd, setOpenAdd] = useState(false);
-	const [saveId, setSaveId] = useState<number | null>(null);
+	const [saveElementId, setSaveElementId] = useState<number | null>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openVideoId, setOpenVideoId] = useState<null | number>(null);
@@ -84,95 +84,99 @@ const VideoLesson = () => {
 				</Button>
 			</div>
 			<div className={scss.video}>
-				{data?.map((item) => (
-					<div className={scss.content} key={item.id}>
-						<div className={scss.cards}>
-							<div className={scss.photo}>
-								<img
-									src={`https://img.youtube.com/vi/${item.linkOfVideo.split('&')[0]}/0.jpg`}
-									alt={item.titleOfVideo}
-								/>
-								<div
-									onClick={() => handleOpenWatch(item.id)}
-									className={scss.button_watch}
-								>
-									<Button
-										sx={{
-											borderRadius: '8px',
-											textTransform: 'capitalize',
-											background: '#0000ff7f',
-											'&:hover': {
-												background: '#0000ffb2'
-											}
-										}}
-										size="medium"
-										variant="contained"
+				{data?.length ? (
+					data.map((item) => (
+						<div className={scss.content} key={item.id}>
+							<div className={scss.cards}>
+								<div className={scss.photo}>
+									<img
+										src={`https://img.youtube.com/vi/${item.linkOfVideo.split('&')[0]}/0.jpg`}
+										alt={item.titleOfVideo}
+									/>
+									<div
+										onClick={() => handleOpenWatch(item.id)}
+										className={scss.button_watch}
 									>
-										Смотреть
-									</Button>
-								</div>
-							</div>
-							<div className={scss.title}>
-								<div className={scss.text}>
-									<h1>{item.titleOfVideo}</h1>
-									<p>{item.description}</p>
-								</div>
-								<div className={scss.dots}>
-									<div onClick={handleClick}>
-										<button
-											onClick={() => {
-												setSaveId(item.id);
+										<Button
+											sx={{
+												borderRadius: '8px',
+												textTransform: 'capitalize',
+												background: '#0000ff7f',
+												'&:hover': {
+													background: '#0000ffb2'
+												}
 											}}
-											className={scss.button}
-											aria-controls={open ? 'basic-menu' : undefined}
-											aria-haspopup="true"
+											size="medium"
+											variant="contained"
 										>
-											<IconDotsVertical stroke={2} />
-										</button>
+											Смотреть
+										</Button>
 									</div>
-									<Menu
-										anchorEl={anchorEl}
-										id="positioned-menu"
-										open={open}
-										onClose={handleClose}
-										anchorOrigin={{
-											vertical: 'bottom',
-											horizontal: 'right'
-										}}
-										transformOrigin={{
-											vertical: 'top',
-											horizontal: 'right'
-										}}
-										PaperProps={{
-											style: { boxShadow: 'none', border: '1px solid gray' }
-										}}
-									>
-										<MenuItem
-											style={{ display: 'flex', gap: '10px' }}
-											onClick={() => {
-												setOpenEditVideo(true);
-												handleClose();
+								</div>
+								<div className={scss.title}>
+									<div className={scss.text}>
+										<h1>{item.titleOfVideo}</h1>
+										<p>{item.description}</p>
+									</div>
+									<div className={scss.dots}>
+										<div onClick={handleClick}>
+											<button
+												onClick={() => {
+													setSaveElementId(item.id);
+												}}
+												className={scss.button}
+												aria-controls={open ? 'basic-menu' : undefined}
+												aria-haspopup="true"
+											>
+												<IconDotsVertical stroke={2} />
+											</button>
+										</div>
+										<Menu
+											anchorEl={anchorEl}
+											id="positioned-menu"
+											open={open}
+											onClose={handleClose}
+											anchorOrigin={{
+												vertical: 'bottom',
+												horizontal: 'right'
+											}}
+											transformOrigin={{
+												vertical: 'top',
+												horizontal: 'right'
+											}}
+											PaperProps={{
+												style: { boxShadow: 'none', border: '1px solid gray' }
 											}}
 										>
-											<img src={editIcon} alt="Edit" />
-											<p>Редактировать</p>
-										</MenuItem>
-										<MenuItem
-											style={{ display: 'flex', gap: '10px' }}
-											onClick={() => {
-												setDeleteModal(true);
-												setAnchorEl(null);
-											}}
-										>
-											<img src={deleteIcon} alt="Delete" />
-											<p>Удалить</p>
-										</MenuItem>
-									</Menu>
+											<MenuItem
+												style={{ display: 'flex', gap: '10px' }}
+												onClick={() => {
+													setOpenEditVideo(true);
+													handleClose();
+												}}
+											>
+												<img src={editIcon} alt="Edit" />
+												<p>Редактировать</p>
+											</MenuItem>
+											<MenuItem
+												style={{ display: 'flex', gap: '10px' }}
+												onClick={() => {
+													setDeleteModal(true);
+													setAnchorEl(null);
+												}}
+											>
+												<img src={deleteIcon} alt="Delete" />
+												<p>Удалить</p>
+											</MenuItem>
+										</Menu>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				))}
+					))
+				) : (
+					<h3>Пока что видео не загрузили</h3>
+				)}
 			</div>
 			<ModalAddVideoLesson open={openAdd} handleCloseVideo={handleCloseVideo} />
 			<ModalWatchVideo
@@ -181,14 +185,14 @@ const VideoLesson = () => {
 				handleClose={handleCloseWatch}
 			/>
 			<ModalEditVideo
-				saveIdElement={saveId}
+				saveIdElement={saveElementId}
 				openModalEdit={openEditVideo}
 				closeModalEdit={handleVideoEdit}
 			/>
 			<DeleteVideoLesson
 				openModalDelete={deleteModal}
 				handleCloseModal={() => setDeleteModal(false)}
-				saveIdElement={saveId}
+				saveIdElement={saveElementId}
 			/>
 		</div>
 	);

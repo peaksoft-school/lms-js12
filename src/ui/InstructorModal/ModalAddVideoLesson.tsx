@@ -38,11 +38,21 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	open,
 	handleCloseVideo
 }) => {
-	const { control, handleSubmit, reset } = useForm<VideoProps>();
+	const {
+		control,
+		handleSubmit,
+		reset,
+		formState: { dirtyFields }
+	} = useForm<VideoProps>();
 	const [postVideoLesson] = usePostVideoLessonMutation();
-
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
+
+	const isButtonDisabled = !(
+		dirtyFields.titleOfVideo &&
+		dirtyFields.description &&
+		dirtyFields.linkOfVideo
+	);
 
 	const extractVideoId = (url: string): string => {
 		if (url.includes('youtube.com/watch?v=')) {
@@ -159,7 +169,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 							<ButtonSave
 								type="submit"
 								width="117px"
-								disabled={false}
+								disabled={isButtonDisabled}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Добавить

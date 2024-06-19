@@ -17,10 +17,10 @@
 		background: #3772ff;
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
-		margin-bottom: 15px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		margin-bottom: 20px;
 		.com_text {
 			padding: 20px;
 			text-align: center;
@@ -38,7 +38,11 @@
 		padding-inline: 20px;
 		.input {
 			width: 100%;
-			max-width: 560px;
+			max-width: 540px;
+			flex-direction: column;
+			gap: 10px;
+			align-items: center;
+			justify-content: center;
 			.inputText {
 				width: 100%;
 				max-width: 540px;
@@ -46,16 +50,6 @@
 		}
 	}
 
-	.btn_form {
-		width: 100%;
-		display: flex;
-		justify-content: flex-end;
-		gap: 15px;
-		position: relative;
-		top: 10px;
-		left: 25px;
-		padding-right: 20px;
-	}
 	.select {
 		width: 100%;
 		position: relative;

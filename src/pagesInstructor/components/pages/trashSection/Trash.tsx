@@ -131,7 +131,8 @@ const Trash: FC = () => {
 															<button
 																style={{
 																	border: 'none',
-																	background: 'none'
+																	background: 'none',
+																	cursor: 'pointer'
 																}}
 																onClick={() => updatedTrashFunc(card.id)}
 															>
@@ -140,7 +141,8 @@ const Trash: FC = () => {
 															<button
 																style={{
 																	border: 'none',
-																	background: 'none'
+																	background: 'none',
+																	cursor: 'pointer'
 																}}
 																onClick={() => DeleteTrashFunc(card.id)}
 															>

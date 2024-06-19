@@ -85,13 +85,19 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 
 	const appointFunc = async () => {
 		try {
+			if (selectedTeachers.length === 0) {
+				console.log('Не выбран ни один учитель.');
+				return;
+			}
+
 			await appointAdminCourse({
 				courseId,
 				selectId: selectedIds
 			});
+
 			handleClose();
-		} catch (e) {
-			console.error('Failed to appoint teachers:', e);
+		} catch (error) {
+			console.error('Ошибка при назначении учителей:', error);
 		}
 	};
 
@@ -120,17 +126,21 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 							m: 1,
 							width: '100%',
 							maxWidth: '560px',
-							marginLeft: '20px'
+							marginLeft: '20px',
+							borderRadius: '10px'
 						}}
 					>
-						<InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+						<InputLabel id="demo-multiple-checkbox-label">
+							Выберите учителя/лей
+						</InputLabel>
 						<Select
+							style={{ borderRadius: '10px' }}
 							labelId="demo-multiple-checkbox-label"
 							id="demo-multiple-checkbox"
 							multiple
 							value={selectedTeachers}
 							onChange={handleChange}
-							input={<OutlinedInput label="Tag" />}
+							input={<OutlinedInput label="Выберите учителя/лей" />}
 							renderValue={(selected) => selected.join(', ')}
 							MenuProps={MenuProps}
 						>
@@ -158,7 +168,7 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 								<div key={index} className={scss.teacher}>
 									<h4 className={scss.selected}>{value}</h4>
 									<button onClick={() => handleRemove(index)}>
-										<IconX stroke={2} />
+										<IconX style={{ cursor: 'pointer' }} stroke={2} />
 									</button>
 								</div>
 							))}
@@ -168,16 +178,17 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 
 				<div className={scss.buttons}>
 					<Button
-						style={{ borderRadius: '8px' }}
+						style={{ borderRadius: '6px' }}
 						variant="outlined"
 						onClick={handleClose}
 					>
 						Отменить
 					</Button>
 					<Button
-						style={{ borderRadius: '8px' }}
+						style={{ borderRadius: '6px' }}
 						variant="contained"
 						onClick={appointFunc}
+						disabled={selectedTeachers.length === 0}
 					>
 						Сохранить
 					</Button>

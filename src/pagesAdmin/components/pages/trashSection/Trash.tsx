@@ -1,4 +1,6 @@
 import { FC, useState, KeyboardEvent } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import scss from './Trash.module.scss';
 import trash from '@/src/assets/svgs/trash (1).svg';
 import refrash from '@/src/assets/svgs/refresh.svg';
@@ -67,12 +69,19 @@ const Trash: FC = () => {
 	const updatedTrashFunc = async (id: number) => {
 		await UpdatedTrash(id);
 	};
+
 	const DeleteTrashFunc = async (id: number) => {
-		await DeleteTrash(id);
+		try {
+			await DeleteTrash(id).unwrap();
+		} catch (error) {
+			toast.error('У вас нету доступа!');
+		}
 	};
+
 	return (
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
+				<ToastContainer />
 				<h1>Корзина</h1>
 				<ScrollArea
 					type="always"
@@ -126,13 +135,21 @@ const Trash: FC = () => {
 															}}
 														>
 															<button
-																style={{ border: 'none', background: 'none' }}
+																style={{
+																	border: 'none',
+																	background: 'none',
+																	cursor: 'pointer'
+																}}
 																onClick={() => updatedTrashFunc(card.id)}
 															>
 																<img src={refrash} alt="#" />
 															</button>
 															<button
-																style={{ border: 'none', background: 'none' }}
+																style={{
+																	border: 'none',
+																	background: 'none',
+																	cursor: 'pointer'
+																}}
 																onClick={() => DeleteTrashFunc(card.id)}
 															>
 																<img src={trash} alt="#" />

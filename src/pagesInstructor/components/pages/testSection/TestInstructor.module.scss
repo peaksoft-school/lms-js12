@@ -1,5 +1,4 @@
 .test_container {
-	gap: 20px;
 	padding-inline: 20px;
 	width: 100%;
 	padding-top: 20px;
@@ -7,7 +6,6 @@
 	.container {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 20px;
 		@media (max-width: 800px) {
 			display: grid;
 			grid-template-columns: repeat(1, 1fr);
@@ -70,12 +68,12 @@
 
 .buttons {
 	display: flex;
-	gap: 10px;
 	justify-content: flex-end;
 	align-items: end;
 	border-radius: 8px;
 	text-transform: capitalize;
 	margin-bottom: 20px;
+	padding-inline: 20px;
 
 	.button {
 		display: flex;

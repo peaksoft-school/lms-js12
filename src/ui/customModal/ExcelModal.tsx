@@ -51,7 +51,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	};
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-		setExcelFile(event.target.value as number); // Assuming item.title is a number
+		setExcelFile(event.target.value as number); 
 	};
 
 	const handleButtonClick = () => {

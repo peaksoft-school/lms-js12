@@ -1,4 +1,5 @@
-import React, { FC, useRef, useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { FC, useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -7,9 +8,13 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useCreateAdminCourseMutation } from '@/src/redux/api/admin/courses';
+import {
+	useCreateAdminCourseMutation,
+	useCreateCourseFileImgMutation
+} from '@/src/redux/api/admin/courses';
 import scss from './CreateCurse.module.scss';
 import gallery from '@/src/assets/photo-bg.png';
+import { toast } from 'react-toastify';
 
 const style = {
 	position: 'absolute',
@@ -44,20 +49,10 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	const [image, setImage] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [createCourse] = useCreateAdminCourseMutation();
-	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+	const [createCourseFileImg] = useCreateCourseFileImgMutation();
+	const [isFormValid, setIsFormValid] = useState(false);
 
-	useEffect(() => {
-		if (
-			value.trim() === '' ||
-			data === '' ||
-			text.trim() === '' ||
-			image === ''
-		) {
-			setIsButtonDisabled(true);
-		} else {
-			setIsButtonDisabled(false);
-		}
-	}, [value, data, text, image]);
+	const [urlImg, setUrlImg] = useState('');
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -65,34 +60,67 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		}
 	};
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
-		if (file) {
-			const reader = new FileReader();
-			setHidePhoto(true);
-			reader.onload = (e) => {
-				if (e.target) {
-					setImage(e.target.result as string);
+	const handleFileSelect = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const files = event.target.files;
+		if (files && files.length > 0) {
+			const file = files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+			try {
+				const response: any = await createCourseFileImg(formData);
+				const fileName = response?.data?.fileName;
+				if (fileName) {
+					setHidePhoto(true);
+					setUrlImg(fileName);
+					const fileURL = URL.createObjectURL(file);
+					setImage(fileURL);
+				} else {
+					console.error('Unexpected response format:', response);
 				}
-			};
-			reader.readAsDataURL(file);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			}
 		}
 	};
 
+	const notifySuccess = () => toast.success('Группа успешно создана!');
+	const notifyError = () => toast.error('Произошла ошибка при создании группы');
+	const notifyIncomplete = () => toast.error('Заполните все поля');
+
 	const handleCreateCourse = async () => {
+		if (!value || !urlImg || !data || !text) {
+			notifyIncomplete();
+			setIsFormValid(false);
+			return;
+		}
+
 		const newCourse = {
-			image: image,
 			title: value,
+			image: urlImg,
 			description: text,
 			dateOfEnd: data
 		};
-		await createCourse(newCourse);
-		setData('');
-		setText('');
-		setImage('');
-		setValue('');
-		handleOpenCourse(false);
+
+		try {
+			await createCourse(newCourse);
+			notifySuccess();
+			setText('');
+			setImage('');
+			setValue('');
+			handleOpenCourse(false);
+			handleClose();
+			setHidePhoto(false);
+			setIsFormValid(false);
+		} catch (error) {
+			notifyError();
+		}
 	};
+
+	useEffect(() => {
+		setIsFormValid(!!value && !!urlImg && !!data && !!text);
+	}, [value, urlImg, data, text]);
 
 	return (
 		<div>
@@ -122,7 +150,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 								className={scss.fileInput}
 								type="file"
 								ref={fileInputRef}
-								onChange={handleFileChange}
+								onChange={handleFileSelect}
 							/>
 							<div
 								onClick={handleButtonClick}
@@ -183,7 +211,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 							<ButtonSave
 								type="submit"
 								onClick={handleCreateCourse}
-								disabled={isButtonDisabled}
+								disabled={!isFormValid}
 								width="117px"
 							>
 								Добавить

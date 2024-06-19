@@ -1,16 +1,16 @@
+import { FC, useEffect, useState } from 'react';
+import { Modal, Typography } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import Box from '@mui/material/Box';
+import { useParams } from 'react-router-dom';
 import {
 	useGetMaterialsQuery,
 	usePatchMaterialMutation
 } from '@/src/redux/api/instructor/materials';
-import { Modal, Typography } from '@mui/material';
-import { FC, useEffect } from 'react';
-import scss from './Style.module.scss';
-import { Controller, useForm } from 'react-hook-form';
 import ButtonCancel from '../customButton/ButtonCancel';
 import ButtonSave from '../customButton/ButtonSave';
 import Input from '../customInput/Input';
-import Box from '@mui/material/Box';
-import { useParams } from 'react-router-dom';
+import scss from './Style.module.scss';
 
 const style = {
 	position: 'absolute',
@@ -44,7 +44,15 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 	const [patchMaterial] = usePatchMaterialMutation();
 	const { courseId } = useParams<{ courseId: string }>();
 	const { data, refetch } = useGetMaterialsQuery(Number(courseId));
-	const { control, handleSubmit, reset } = useForm<EditProps>();
+	const { control, handleSubmit, reset, formState } = useForm<EditProps>({
+		mode: 'onChange'
+	});
+	const { isDirty } = formState;
+
+	const [initialValues, setInitialValues] = useState<EditProps>({
+		title: '',
+		createdAt: ''
+	});
 
 	const onSubmit = async (data: EditProps) => {
 		if (deleteById !== null) {
@@ -62,10 +70,16 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 	const find = data?.lessonResponses.find((lesson) => lesson.id === deleteById);
 
 	useEffect(() => {
-		reset({
-			title: find?.title || '',
-			createdAt: find?.createdAt || ''
-		});
+		if (find) {
+			setInitialValues({
+				title: find.title,
+				createdAt: find.createdAt
+			});
+			reset({
+				title: find.title,
+				createdAt: find.createdAt
+			});
+		}
 	}, [find, reset]);
 
 	return (
@@ -83,8 +97,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 						component="h2"
 					>
 						<div>
-							Редактировать урок {find?.title}
-							{find?.createdAt}
+							Редактировать урок {find?.title} {find?.createdAt}
 						</div>
 					</Typography>
 
@@ -93,6 +106,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 							<Controller
 								name="title"
 								control={control}
+								defaultValue={initialValues.title}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -106,6 +120,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 							<Controller
 								name="createdAt"
 								control={control}
+								defaultValue={initialValues.createdAt}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -140,7 +155,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 								onClick={handleSubmit(onSubmit)}
 								width="117px"
 								type="submit"
-								disabled={false}
+								disabled={!openModalEdit || !isDirty}
 							>
 								Отправить
 							</ButtonSave>

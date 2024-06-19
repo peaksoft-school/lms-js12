@@ -22,7 +22,9 @@ const DeleteStudentModal: FC<StudentModalProps> = ({
 	const [deleteStudentTable] = useDeleteStudentTableMutation();
 
 	const handleDelete = async () => {
-		await deleteStudentTable(saveIdElement);
+		if (saveIdElement !== null) {
+			await deleteStudentTable(saveIdElement);
+		}
 		handleCloseModal();
 	};
 

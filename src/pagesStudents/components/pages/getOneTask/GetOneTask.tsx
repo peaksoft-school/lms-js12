@@ -38,7 +38,10 @@ const GetOneTask = () => {
 							<h2>{item.title}</h2>
 							<h2>{item.deadline}</h2>
 						</div>
-						<div dangerouslySetInnerHTML={{ __html: item.description }} />
+						<div
+							className={scss.inner_html}
+							dangerouslySetInnerHTML={{ __html: item.description }}
+						/>
 					</div>
 				))}
 
@@ -74,7 +77,6 @@ const GetOneTask = () => {
 									) : (
 										<>
 											<div className={scss.admin_teacher}>
-												<div></div>
 												<div
 													style={{
 														display: 'flex',
@@ -114,7 +116,7 @@ const GetOneTask = () => {
 									onClick={() => {}}
 									disabled={false}
 									type="button"
-									style={{ textTransform: 'none' }}
+									style={{ textTransform: 'none', borderRadius: '8px' }}
 								>
 									Редактировать задание
 								</Button>

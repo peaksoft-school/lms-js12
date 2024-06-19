@@ -91,12 +91,12 @@ const SupHeaderCourses = () => {
 				<>
 					<div className={scss.courses_admin}>
 						<div onClick={handleOpenNotification}>
-							<img src={bell} alt="bell" />
+							<img style={{ paddingTop: '5px' }} src={bell} alt="bell" />
 						</div>
 						<img onClick={handleClick} src={profile} alt="Profile" />
 						<p onClick={handleClick}>Учитель</p>
 						<div onClick={handleClick}>
-							<IconChevronDown stroke={2} />
+							<IconChevronDown style={{ paddingTop: '5px' }} stroke={2} />
 						</div>
 					</div>
 					<Menu

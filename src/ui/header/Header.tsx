@@ -47,7 +47,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 						setIsOpen(!isOpen);
 					}}
 				>
-					<IconAlignLeft stroke={2} />
+					<IconAlignLeft style={{ cursor: 'pointer' }} stroke={2} />
 				</button>
 				<ul>
 					<div className={scss.peaksoft_img}>
@@ -141,7 +141,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 
 					{/* //! instructor */}
 					{pathname.startsWith('/instructor') && (
-						<>
+						<div>
 							{links.instructor.map((item, index) => (
 								<li key={index + 1}>
 									<Link
@@ -167,7 +167,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 									{!isOpen && <span className={scss.tooltip}>{item.name}</span>}
 								</li>
 							))}
-						</>
+						</div>
 					)}
 				</ul>
 			</div>
