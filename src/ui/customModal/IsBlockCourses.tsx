@@ -51,6 +51,7 @@ const IsBlockCourses: FC<VideoLessonProps> = ({
 					width: '100%',
 					display: 'flex',
 					justifyContent: 'flex-end',
+					paddingInline: '25px',
 					alignItems: 'center',
 					paddingBottom: '10px',
 					paddingTop: '13px',
@@ -68,7 +69,14 @@ const IsBlockCourses: FC<VideoLessonProps> = ({
 
 				<Button
 					variant="contained"
-					style={{ background: 'red', padding: '10px 24px' }}
+					style={{
+						background: 'red',
+						padding: '10px 24px',
+						fontSize: '16px',
+						fontWeight: '600',
+						textTransform: 'none',
+						borderRadius: '8px'
+					}}
 					size="small"
 					onClick={updateCompletedFunc}
 					type="submit"

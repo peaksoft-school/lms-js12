@@ -8,8 +8,8 @@ namespace ADMINCOURSES {
 		dateOfEnd: string;
 	};
 	type CoursesAdminResponse = {
-		page?: number;
-		size?: number;
+		page?: string;
+		size?: string;
 		courses: Courses[];
 	};
 	type CoursesAdminRequest = {
@@ -60,8 +60,8 @@ namespace ADMINCOURSES {
 	};
 
 	type GetInstructorCourseResponse = {
-		page: number;
-		size: number;
+		page: string;
+		size: string;
 		saveId: number | null;
 		getAllInstructorsOfCourses: Student[];
 		getAllStudentsOfCourses: Student[];
@@ -69,8 +69,8 @@ namespace ADMINCOURSES {
 	type GetInstructorCourseRequest = {
 		course: number;
 		pages: {
-			page: number;
-			size: number;
+			page: string;
+			size: string;
 			role: string;
 		};
 	};

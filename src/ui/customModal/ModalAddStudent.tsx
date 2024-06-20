@@ -17,8 +17,10 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
-import { usePostStudentTableMutation } from '@/src/redux/api/admin/student';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+import {
+	useGetGroupAllQuery,
+	usePostStudentTableMutation
+} from '@/src/redux/api/admin/student';
 
 interface PostStudentProps {
 	firstName: string;
@@ -76,10 +78,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 	} = useForm<PostStudentProps>();
 	const [postStudentTable] = usePostStudentTableMutation();
 	const [formatName, setFormatName] = useState<string>('');
-	const { data } = useGetGroupQuery({
-		page: '1',
-		size: '100'
-	});
+	const { data } = useGetGroupAllQuery();
 
 	const theme = useTheme();
 	const [personName, setPersonName] = useState<string>('');
@@ -238,13 +237,13 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 									input={<OutlinedInput label="groupName" />}
 									MenuProps={MenuProps}
 								>
-									{data?.groupResponses.map((name) => (
+									{data?.map((name) => (
 										<MenuItem
 											key={name.id}
-											value={name.title}
-											style={getStyles(name.title, personName, theme)}
+											value={name.groupName}
+											style={getStyles(name.groupName, personName, theme)}
 										>
-											{name.title}
+											{name.groupName}
 										</MenuItem>
 									))}
 								</Select>

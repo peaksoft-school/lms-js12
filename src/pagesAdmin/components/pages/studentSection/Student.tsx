@@ -19,6 +19,7 @@ import {
 import React, { KeyboardEvent, MouseEvent, useState } from 'react';
 import scss from './Student.module.scss';
 import { Box, ScrollArea } from '@mantine/core';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface Student {
 	id: number;
@@ -31,7 +32,6 @@ interface Student {
 }
 
 const Student: React.FC = () => {
-	const { data, isLoading } = useGetStudentTableQuery();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 	const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -41,8 +41,28 @@ const Student: React.FC = () => {
 	const [saveItem, setSaveItem] = useState<Student | undefined>(undefined);
 	const [open, setOpen] = useState<boolean>(false);
 	const [openStudent, setOpenStudent] = useState<boolean>(false);
-	const [openPart, setOpenPart] = useState<number | undefined>(data?.page);
-	const [openPage, setOpenPage] = useState<number | undefined>(data?.size);
+	const [openPart, setOpenPart] = useState<number>(8);
+	const [openPage, setOpenPage] = useState<number>(1);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+
+	const handleSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/student?${searchParams.toString()}`);
+	};
+	const handlePage = (value: number) => {
+		const valuePage = value.toString();
+		searchParams.set('page', valuePage);
+		setSearchParams(searchParams);
+		navigate(`/admin/student?${searchParams.toString()}`);
+	};
+
+	const { data, isLoading } = useGetStudentTableQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 
 	const handleStudentOpen = (e: MouseEvent<HTMLButtonElement>) => {
 		setOpenStudent(true);
@@ -54,7 +74,7 @@ const Student: React.FC = () => {
 	};
 
 	const handleCloseDeleteModal = () => {
-		setOpenDeleteModal(true);
+		setOpenDeleteModal(false);
 	};
 	const handleCloseStudent = () => {
 		setOpenStudent(false);
@@ -72,18 +92,6 @@ const Student: React.FC = () => {
 	): void => setCurrentPage(page);
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setSearchTerm(event.target.value);
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setCurrentPage(1);
-			} else {
-				setRowsPerPage(12);
-			}
-		}
-	};
 
 	const filteredData = data?.students.filter((student: Student) => {
 		const searchTermLower = searchTerm.toLowerCase();
@@ -263,10 +271,12 @@ const Student: React.FC = () => {
 						</div>
 						<input
 							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
+							value={openPage}
+							onChange={(e) => setOpenPage(+e.target.value)}
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handlePage(openPage);
+								}
 							}}
 						/>
 					</div>
@@ -288,10 +298,12 @@ const Student: React.FC = () => {
 						</div>
 						<input
 							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
+							value={openPart}
+							onChange={(e) => setOpenPart(+e.target.value)}
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleSize(openPart);
+								}
 							}}
 						/>
 					</div>

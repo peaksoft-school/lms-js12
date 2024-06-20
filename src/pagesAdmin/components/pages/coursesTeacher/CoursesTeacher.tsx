@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
 import scss from './CoursesTeacher.module.scss';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import DeleteTeacherModal from '@/src/ui/customModal/deleteModal/DeleteTeacherModal';
@@ -11,31 +11,38 @@ import AppointTeacher from '@/src/ui/customModal/appoint/AppointTeacher';
 import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
 import { useGetAllInstructorCourseQuery } from '@/src/redux/api/admin/courses';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
-// interface Teacher {
-// 	id: number;
-// 	fullName: string;
-// 	courseName: string;
-// 	specializationOrStudyFormat: string;
-// 	phoneNumber: string;
-// 	email: string;
-// 	isCompleted: boolean;
-// }
 const CoursesTeacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [openPage, setOpenPage] = useState<number | string>(12);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
+	const [openPage, setOpenPage] = useState<number>(8);
 	const { courseId } = useParams();
+	const [openPart, setOpenPart] = useState(1);
+	const [openAddTeacher, setOpenAddTeacher] = useState(false);
 	const course = Number(courseId);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString === '0' ? '1' : valueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/courses/${courseId}/teacher?${searchParams.toString()}`);
+	};
+
+	const handleOpenPart = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/courses/${courseId}/teacher?${searchParams.toString()}`);
+	};
 
 	const pages = {
-		page: currentPage,
-		size: rowsPerPage,
+		page: searchParams.toString(),
+		size: searchParams.toString(),
 		role: 'INSTRUCTOR'
 	};
 
@@ -43,9 +50,6 @@ const CoursesTeacher = () => {
 		course,
 		pages
 	});
-
-	const [openPart, setOpenPart] = useState(1);
-	const [openAddTeacher, setOpenAddTeacher] = useState(false);
 
 	const handleOpenAppoint = () => {
 		setOpenAddTeacher(true);
@@ -64,40 +68,6 @@ const CoursesTeacher = () => {
 	}
 
 	const open = Boolean(anchorEl);
-
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-	};
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(12);
-			}
-		}
-	};
 
 	return (
 		<div className={scss.teacher}>
@@ -145,13 +115,8 @@ const CoursesTeacher = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data?.getAllInstructorsOfCourses
-													// data
-													// 	.slice(
-													// 		(currentPage - 1) * rowsPerPage,
-													// 		currentPage * rowsPerPage
-													// 	)
-													.map((item, index: number) => (
+												{data?.getAllInstructorsOfCourses.map(
+													(item, index: number) => (
 														<tr
 															key={item.id}
 															className={
@@ -160,9 +125,7 @@ const CoursesTeacher = () => {
 																	: '' || scss.TableContainerSecond
 															}
 														>
-															<td>
-																{index + 1 + (currentPage - 1) * rowsPerPage}
-															</td>
+															<td>{index + 1 + (openPart - 1) * openPage}</td>
 															<td className={scss.TableCell}>
 																{item.fullName}
 															</td>
@@ -193,7 +156,8 @@ const CoursesTeacher = () => {
 																</button>
 															</td>
 														</tr>
-													))}
+													)
+												)}
 											</tbody>
 										</table>
 										<ModalEditTeacher
@@ -222,22 +186,26 @@ const CoursesTeacher = () => {
 							type="text"
 							value={openPart}
 							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleOpenPage(openPart);
+								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								// count={Math.ceil(
-								// 	data!.getAllInstructorsOfCourses.length / rowsPerPage
-								// )}
-								page={currentPage}
-								onChange={handlePageChangeC}
-								shape="rounded"
+								page={openPart}
+								count={
+									data?.getAllInstructorsOfCourses.length
+										? Math.ceil(
+												data?.getAllInstructorsOfCourses.length / openPage
+											)
+										: 1
+								}
 								variant="outlined"
+								shape="rounded"
 							/>
 						</Stack>
 					</div>
@@ -250,9 +218,10 @@ const CoursesTeacher = () => {
 							type="text"
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleOpenPart(openPage);
+								}
 							}}
 						/>
 					</div>

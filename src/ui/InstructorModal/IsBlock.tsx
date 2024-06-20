@@ -55,7 +55,8 @@ const IsBlock: FC<IsBlockProps> = ({
 					alignItems: 'center',
 					paddingBottom: '10px',
 					paddingTop: '13px',
-					gap: '10px'
+					gap: '10px',
+					paddingInline: '25px'
 				}}
 			>
 				<ButtonCancel
@@ -68,13 +69,20 @@ const IsBlock: FC<IsBlockProps> = ({
 				</ButtonCancel>
 				<Button
 					variant="contained"
-					style={{ background: 'red', padding: '10px 24px' }}
+					style={{
+						background: 'red',
+						padding: '10px 24px',
+						textTransform: 'none',
+						borderRadius: '8px'
+					}}
 					size="small"
 					onClick={updateCompletedFunc}
 					type="submit"
 					disabled={false}
 				>
-					{isBlock ? 'Разблокировать' : 'Заблокировать'}
+					<span style={{ fontSize: '16px', fontWeight: '600' }}>
+						{isBlock ? 'Разблокировать' : 'Заблокировать'}
+					</span>
 				</Button>
 			</DialogActions>
 		</Dialog>

@@ -41,7 +41,7 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<h3>Вы уверены, что хотите удалить этого учителя?</h3>
+								<h3>Вы уверены, что хотите удалить учителя из курса?</h3>
 							</DialogContentText>
 						</DialogContent>
 						<DialogActions
@@ -49,6 +49,7 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 								width: '100%',
 								display: 'flex',
 								justifyContent: 'flex-end',
+								paddingInline: '25px',
 								alignItems: 'center',
 								paddingBottom: '10px',
 								paddingTop: '13px',

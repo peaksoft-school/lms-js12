@@ -14,11 +14,17 @@ import {
 	OutlinedInput
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { IconX } from '@tabler/icons-react';
+import IconX from '@/src/assets/icons/x.png';
 
 import scss from './Appoint.module.scss';
-import { useAppointAllTeacherQuery } from '@/src/redux/api/admin/teacher';
-import { useAppointAdminCourseMutation } from '@/src/redux/api/admin/courses';
+import {
+	useAppointAllTeacherQuery,
+	useDeleteTeacherMutation
+} from '@/src/redux/api/admin/teacher';
+import {
+	useAppointAdminCourseMutation,
+	useGetAllInstructorCourseQuery
+} from '@/src/redux/api/admin/courses';
 
 const style = {
 	position: 'absolute',
@@ -55,8 +61,26 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 	const [selectedTeachers, setSelectedTeachers] = useState<string[]>([]);
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 	const { data, error, isLoading } = useAppointAllTeacherQuery();
+	const [saveId, setSaveId] = useState<null | number>(null);
 	const [appointAdminCourse] = useAppointAdminCourseMutation();
-	const { courseId } = useParams<{ courseId: string }>();
+	const { courseId } = useParams();
+	const [deleteTeacher] = useDeleteTeacherMutation();
+
+	const handleDelete = async () => {
+		if (saveId !== null) {
+			await deleteTeacher(saveId!);
+		}
+	};
+	const course = Number(courseId);
+	const pages = {
+		page: 'page=1',
+		size: 'sixe=8',
+		role: 'INSTRUCTOR'
+	};
+	const { data: teacherData } = useGetAllInstructorCourseQuery({
+		course,
+		pages
+	});
 
 	useEffect(() => {
 		if (error) {
@@ -154,7 +178,11 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 								>
 									<Checkbox
 										checked={
-											selectedTeachers.indexOf(teacher.instructorName) > -1
+											teacherData?.getAllInstructorsOfCourses.find(
+												(item) => item.fullName === teacher.instructorName
+											) ||
+											selectedTeachers.includes(teacher.instructorName) ||
+											selectedIds.includes(String(teacher.Id))
 										}
 									/>
 									<ListItemText primary={teacher.instructorName} />
@@ -164,11 +192,34 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 					</FormControl>
 					<Box mt={2}>
 						<div className={scss.teachers}>
+							{teacherData?.getAllInstructorsOfCourses.map((item) => (
+								<div key={item.id} className={scss.teacher}>
+									<h4 className={scss.selected}>{item.fullName}</h4>
+									<button
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+											cursor: 'pointer'
+										}}
+										onClick={() => setSaveId(item.id)}
+									>
+										<img src={IconX} alt="" />
+									</button>
+								</div>
+							))}
 							{selectedTeachers.map((value, index) => (
 								<div key={index} className={scss.teacher}>
 									<h4 className={scss.selected}>{value}</h4>
-									<button onClick={() => handleRemove(index)}>
-										<IconX style={{ cursor: 'pointer' }} stroke={2} />
+									<button
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center'
+										}}
+										onClick={() => handleRemove(index)}
+									>
+										<img src={IconX} alt="" />
 									</button>
 								</div>
 							))}
@@ -187,7 +238,10 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 					<Button
 						style={{ borderRadius: '6px' }}
 						variant="contained"
-						onClick={appointFunc}
+						onClick={() => {
+							appointFunc();
+							handleDelete();
+						}}
 						disabled={selectedTeachers.length === 0}
 					>
 						Сохранить

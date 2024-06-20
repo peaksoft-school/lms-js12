@@ -51,7 +51,8 @@ const DeleteStudentModal: FC<StudentModalProps> = ({
 					alignItems: 'center',
 					paddingBottom: '10px',
 					paddingTop: '13px',
-					gap: '10px'
+					gap: '10px',
+					paddingInline: '25px'
 				}}
 			>
 				<ButtonCancel

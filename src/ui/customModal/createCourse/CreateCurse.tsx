@@ -155,7 +155,12 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 							<div
 								onClick={handleButtonClick}
 								className={hidePhoto ? scss.background_none : scss.background}
-								style={{ backgroundImage: `url(${image || gallery})` }}
+								style={{
+									backgroundImage: `url(${image || gallery})`,
+									backgroundRepeat: 'no-repeat',
+									backgroundPosition: 'center',
+									objectFit: 'contain'
+								}}
 							></div>
 							<p className={hidePhoto ? scss.hide_text : scss.show}>
 								Нажмите на иконку чтобы загрузить

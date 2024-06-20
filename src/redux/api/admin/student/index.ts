@@ -7,8 +7,18 @@ export const api = index.injectEndpoints({
 			STUDENT.TablesStudentResponse,
 			STUDENT.TablesStudentRequest
 		>({
+			query: ({ page, size }) => ({
+				url: `/api/students?${page}&${size}`,
+				method: 'GET'
+			}),
+			providesTags: ['student']
+		}),
+		getGroupAll: builder.query<
+			STUDENT.TableGetAllGroupResponse,
+			STUDENT.TablesGetAllGroupRequest
+		>({
 			query: () => ({
-				url: '/api/students',
+				url: '/api/groups/getAll',
 				method: 'GET'
 			}),
 			providesTags: ['student']
@@ -53,15 +63,15 @@ export const api = index.injectEndpoints({
 		isBlockStudent: builder.mutation({
 			query: (saveIdElement) => ({
 				url: `/api/students/isBlock/${saveIdElement}`,
-				method: 'POST'
+				method: 'PATCH'
 			}),
 			invalidatesTags: ['student']
 		}),
 		postExcelStudent: builder.mutation({
-			query: ({ json, groupId }) => ({
-				url: `/api/students/importStudents/${groupId}`,
+			query: ({ excelFile, selectedFile, newLink }) => ({
+				url: `/api/students/importStudents/${excelFile}?link=${encodeURIComponent(newLink.link)}`,
 				method: 'POST',
-				body: json
+				body: selectedFile
 			}),
 			invalidatesTags: ['student']
 		})
@@ -74,5 +84,6 @@ export const {
 	useDeleteStudentTableMutation,
 	usePatchStudentTableMutation,
 	useIsBlockStudentMutation,
-	usePostExcelStudentMutation
+	usePostExcelStudentMutation,
+	useGetGroupAllQuery
 } = api;

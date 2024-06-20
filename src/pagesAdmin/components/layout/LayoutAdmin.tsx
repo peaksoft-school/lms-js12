@@ -3,12 +3,10 @@ import scss from './LayoutAdmin.module.scss';
 import Header from '@/src/ui/header/Header';
 import { useEffect, useState } from 'react';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
-// import MyCourses from '@/src/ui/myCourses/MyCourses';
 import Material from '@/src/ui/material/Material';
 import CalendarPage from '../pages/CalendarPage';
-import NotCreated from '@/src/ui/notCreated/NotCreated';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher';
-import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
+
 import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup.tsx';
 import ModalAddStudent from '@/src/ui/customModal/ModalAddStudent';
 import AnalyticsPage from '@/src/pagesAdmin/components/pages/AnalyticsPage.tsx';
@@ -29,7 +27,6 @@ import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses.tsx';
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
-	const { data } = useGetTeacherQuery();
 	const [openGroups, setOpen] = useState(false);
 	const [courseHandle, setCourseHandle] = useState(false);
 	const [openTeacher, setOpenTeacher] = useState(false);
@@ -44,9 +41,6 @@ const LayoutAdmin = () => {
 
 	const handleCloseStudentModal = () => {
 		setOpenModalStudent(false);
-	};
-	const handleOpenTeacherModal = () => {
-		setOpenTeacher(true);
 	};
 
 	const handleCloseTeacherModal = () => {
@@ -112,21 +106,7 @@ const LayoutAdmin = () => {
 					<Routes>
 						<Route path="/analytics" element={<AnalyticsPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
-						<Route
-							path="/teacher"
-							element={
-								!data || data.instructorResponses.length === 0 ? (
-									<NotCreated
-										text="Вы пока не добавили учителей!"
-										name="Учителя"
-										buttonClick={handleOpenTeacherModal}
-										buttontText="Добавить учителя"
-									/>
-								) : (
-									<TeacherPage />
-								)
-							}
-						/>
+						<Route path="/teacher" element={<TeacherPage />} />
 
 						<Route path="/trash" element={<TrashPage />} />
 						{/* <Route path="/courses/:coursesId" element={<MyCourses />} /> */}
