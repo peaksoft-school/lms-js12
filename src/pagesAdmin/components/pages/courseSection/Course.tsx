@@ -18,7 +18,6 @@ import NotCreated from '@/src/ui/notCreated/NotCreated';
 
 const Courses: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
-	// const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openEditModal, setOpenEditModal] = useState(false);
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -42,6 +41,7 @@ const Courses: FC = () => {
 		setSearchParams(searchParams);
 		navigate(`/admin/courses/?${searchParams.toString()}`);
 	};
+
 	const { data } = useGetAdminCourseQuery({
 		page: searchParams.toString(),
 		size: searchParams.toString()
@@ -55,13 +55,6 @@ const Courses: FC = () => {
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
-	};
-
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
 	};
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
@@ -227,7 +220,7 @@ const Courses: FC = () => {
 						<input
 							type="text"
 							value={currentPage}
-							onChange={(e) => handleOpenPage(+e.target.value)}
+							onChange={(e) => setCurrentPage(Number(e.target.value))}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
 									handleOpenPage(currentPage);
@@ -239,10 +232,20 @@ const Courses: FC = () => {
 						<Stack direction="row" spacing={2}>
 							<Pagination
 								page={currentPage}
-								onChange={handlePageChangeC}
+								count={
+									data?.courses?.length
+										? Math.ceil(data.courses.length / openPage)
+										: 1
+								}
+								variant="outlined"
+								shape="rounded"
+							/>
+							{/* <Pagination
+								page={currentPage}
+								onChange={handlePageChange}
 								shape="rounded"
 								variant="outlined"
-							/>
+							/> */}
 						</Stack>
 					</div>
 					<div className={scss.Inputs}>
@@ -251,15 +254,24 @@ const Courses: FC = () => {
 							<IconArticle stroke={2} />
 						</div>
 						<input
+							style={{
+								border:
+									data?.courses &&
+									Math.ceil(data.courses.length / openPage) < openPage
+										? '2px solid red'
+										: 'none'
+							}}
 							type="text"
 							value={openPage}
 							onChange={(e) => {
-								setOpenPage(+e.target.value);
-								handleInputValuePaginationSize(Number(e.target.value));
+								const value = Number(e.target.value);
+								setOpenPage(value);
 							}}
 							onKeyDown={(e) => {
 								if (e.key === 'Enter') {
-									handleInputValuePaginationSize(openPage);
+									if (data?.courses && data.courses.length >= openPage) {
+										handleInputValuePaginationSize(openPage);
+									}
 								}
 							}}
 						/>

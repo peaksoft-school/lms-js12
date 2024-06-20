@@ -11,8 +11,13 @@ namespace TABLE {
 
 	type GetTeachersResponse = {
 		instructorResponses: Teacher[];
+		page: string;
+		size: string;
 	};
-	type GetTeacherRequest = void;
+	type GetTeacherRequest = {
+		page: string;
+		size: string;
+	};
 
 	type CreateTeachersResponse = {
 		firstName: string;
@@ -20,6 +25,7 @@ namespace TABLE {
 		specialization: string;
 		email: string;
 		phoneNumber: string;
+		linkForPassword: string;
 	}[];
 	type CreateTeachersRequest = {
 		firstName: string;
@@ -27,6 +33,7 @@ namespace TABLE {
 		specialization: string;
 		email: string;
 		phoneNumber: string;
+		linkForPassword: string;
 	};
 	type ChangeTeachersResponse = {
 		updateTeacher: {

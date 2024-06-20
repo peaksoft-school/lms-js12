@@ -6,8 +6,8 @@ export const api = index.injectEndpoints({
 			TABLE.GetTeachersResponse,
 			TABLE.GetTeacherRequest
 		>({
-			query: () => ({
-				url: '/api/instructors',
+			query: ({ page, size }) => ({
+				url: `/api/instructors?${page}&${size}`,
 				method: 'GET'
 			}),
 			providesTags: ['teacher']
@@ -17,7 +17,7 @@ export const api = index.injectEndpoints({
 			TABLE.CreateTeachersRequest
 		>({
 			query: (newTeacher) => ({
-				url: '/api/instructors',
+				url: `/api/instructors?linkForPassword=${encodeURIComponent(newTeacher.linkForPassword)}`,
 				method: 'POST',
 				body: newTeacher
 			}),

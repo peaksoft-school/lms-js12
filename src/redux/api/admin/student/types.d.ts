@@ -12,11 +12,19 @@ namespace STUDENT {
 	};
 
 	type TablesStudentResponse = {
+		page: string;
+		size: string;
 		students: Table[];
-		page: number;
-		size: number;
 	};
-	type TablesStudentRequest = void;
+	type TablesStudentRequest = {
+		page: string;
+		size: string;
+	};
+	type TableGetAllGroupResponse = {
+		id: number;
+		groupName: string;
+	}[];
+	type TablesGetAllGroupRequest = void;
 
 	type PostStudentPropsResponse = {
 		newStudent: {

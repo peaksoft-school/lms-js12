@@ -18,11 +18,11 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
 import {
+	useGetGroupAllQuery,
 	useGetStudentTableQuery,
 	usePatchStudentTableMutation
 } from '@/src/redux/api/admin/student';
 import Input from '../customInput/Input';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 
 interface Student {
 	id: number;
@@ -93,7 +93,10 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		formState: { errors }
 	} = useForm<PatchStudentProps>();
 	const [patchStudentTable] = usePatchStudentTableMutation();
-	const { data: studentData } = useGetStudentTableQuery();
+	const { data: studentData } = useGetStudentTableQuery({
+		page: '1',
+		size: '12'
+	});
 	const students = studentData ?? { students: [], page: 1, size: 0 };
 	const [formatName, setFormatName] = useState<string>('');
 	const theme = useTheme();
@@ -103,10 +106,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		setPersonName(event.target.value);
 	};
 
-	const { data: groupData } = useGetGroupQuery({
-		page: '1',
-		size: '100'
-	});
+	const { data: groupData } = useGetGroupAllQuery();
 
 	const handleFormatChange = (event: SelectChangeEvent<string>) => {
 		setFormatName(event.target.value);
@@ -277,13 +277,17 @@ const ModalEditStudent: FC<EditModalProps> = ({
 												MenuProps={MenuProps}
 												onChange={handleChange}
 											>
-												{groupData?.groupResponses.map((name) => (
+												{groupData?.map((name) => (
 													<MenuItem
 														key={name.id}
-														value={name.title}
-														style={getStyles(name.title, field.value, theme)}
+														value={name.groupName}
+														style={getStyles(
+															name.groupName,
+															field.value,
+															theme
+														)}
 													>
-														{name.title}
+														{name.groupName}
 													</MenuItem>
 												))}
 											</Select>

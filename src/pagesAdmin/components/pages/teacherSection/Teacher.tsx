@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, KeyboardEvent } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import scss from './Teacher.module.scss';
 import { useGetTeacherQuery } from '@/src/redux/api/admin/teacher';
 import {
@@ -18,18 +18,37 @@ import { Preloader } from '@/src/ui/preloader/Preloader';
 import Button from '@mui/material/Button';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher.tsx';
 import { Box, ScrollArea } from '@mantine/core';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Teacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const [openPage, setOpenPage] = useState<number | string>(12);
-	const { data, isLoading } = useGetTeacherQuery();
+	const [openPage, setOpenPage] = useState<number>(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openTeacher, setTeacherOpen] = useState<boolean>(false);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+
+	const handleSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('page', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/teacher/?${searchParams.toString()}`);
+	};
+
+	const handlePage = (value: number) => {
+		const valuePage = value.toString();
+		searchParams.set('size', valuePage);
+		setSearchParams(searchParams);
+		navigate(`/admin/teacher/?${searchParams.toString()}`);
+	};
+
+	const { data, isLoading } = useGetTeacherQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 
 	const handleTeacherOpen = (e: MouseEvent<HTMLButtonElement>) => {
 		setTeacherOpen(true);
@@ -54,42 +73,8 @@ const Teacher = () => {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-	};
-
 	const handleClose = () => {
 		setAnchorEl(null);
-	};
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(12);
-			}
-		}
 	};
 
 	return (
@@ -137,95 +122,92 @@ const Teacher = () => {
 											</thead>
 											<tbody>
 												{data?.instructorResponses &&
-													data.instructorResponses
-														.slice(
-															(currentPage - 1) * rowsPerPage,
-															currentPage * rowsPerPage
-														)
-														.map((item, index) => (
-															<tr
-																key={item.id}
-																className={
-																	index % 2 === 1
-																		? scss.TableAlternateRow
-																		: '' || scss.TableContainerSecond
-																}
-															>
-																<td>
-																	{index + 1 + (currentPage - 1) * rowsPerPage}
-																</td>
-																<td className={scss.TableCell}>
-																	{item.fullName}
-																</td>
-																<td className={scss.TableCell}>
-																	{item.specialization}
-																</td>
-																<td className={scss.TableCell}>
-																	{item.phoneNumber}
-																</td>
-																<td className={scss.TableCell}>{item.email}</td>
-																<td className={scss.TableCellIcon}>
-																	<button
-																		className={scss.button}
-																		aria-controls={
-																			open ? 'basic-menu' : undefined
+													data.instructorResponses.map((item, index) => (
+														<tr
+															key={item.id}
+															className={
+																index % 2 === 1
+																	? scss.TableAlternateRow
+																	: '' || scss.TableContainerSecond
+															}
+														>
+															<td>
+																{openPage > 0
+																	? index + 1 + (openPart - 1) * openPage
+																	: null}
+															</td>
+															<td className={scss.TableCell}>
+																{item.fullName}
+															</td>
+															<td className={scss.TableCell}>
+																{item.specialization}
+															</td>
+															<td className={scss.TableCell}>
+																{item.phoneNumber}
+															</td>
+															<td className={scss.TableCell}>{item.email}</td>
+															<td className={scss.TableCellIcon}>
+																<button
+																	className={scss.button}
+																	aria-controls={
+																		open ? 'basic-menu' : undefined
+																	}
+																	aria-haspopup="true"
+																	onClick={(e) => {
+																		handleClick(e);
+																		setDeleteById(item.id!);
+																	}}
+																>
+																	<IconDotsVertical stroke={2} />
+																</button>
+																<Menu
+																	id="basic-menu"
+																	anchorEl={anchorEl}
+																	open={open}
+																	onClose={handleClose}
+																	MenuListProps={{
+																		'aria-labelledby': 'basic-button'
+																	}}
+																	elevation={0}
+																	anchorOrigin={{
+																		vertical: 'bottom',
+																		horizontal: 'right'
+																	}}
+																	transformOrigin={{
+																		vertical: 'top',
+																		horizontal: 'right'
+																	}}
+																	PaperProps={{
+																		style: {
+																			boxShadow: 'none',
+																			border: '1px solid gray'
 																		}
-																		aria-haspopup="true"
-																		onClick={(e) => {
-																			handleClick(e);
-																			setDeleteById(item.id!);
+																	}}
+																>
+																	<MenuItem
+																		style={{ display: 'flex', gap: '10px' }}
+																		onClick={() => {
+																			setOpenModalEdit(true);
+																			setAnchorEl(null);
 																		}}
 																	>
-																		<IconDotsVertical stroke={2} />
-																	</button>
-																	<Menu
-																		id="basic-menu"
-																		anchorEl={anchorEl}
-																		open={open}
-																		onClose={handleClose}
-																		MenuListProps={{
-																			'aria-labelledby': 'basic-button'
-																		}}
-																		elevation={0}
-																		anchorOrigin={{
-																			vertical: 'bottom',
-																			horizontal: 'right'
-																		}}
-																		transformOrigin={{
-																			vertical: 'top',
-																			horizontal: 'right'
-																		}}
-																		PaperProps={{
-																			style: {
-																				boxShadow: 'none',
-																				border: '1px solid gray'
-																			}
+																		<img src={editIcon} alt="Edit" />
+																		<p>Редактировать</p>
+																	</MenuItem>
+																	<MenuItem
+																		style={{ display: 'flex', gap: '10px' }}
+																		onClick={() => {
+																			setOpenModalDelete(true);
+																			setAnchorEl(null);
 																		}}
 																	>
-																		<MenuItem
-																			style={{ display: 'flex', gap: '10px' }}
-																			onClick={() => {
-																				setOpenModalEdit(true);
-																				setAnchorEl(null);
-																			}}
-																		>
-																			<img src={editIcon} alt="Edit" />
-																			<p>Редактировать</p>
-																		</MenuItem>
-																		<MenuItem
-																			style={{ display: 'flex', gap: '10px' }}
-																			onClick={() => {
-																				setOpenModalDelete(true);
-																				setAnchorEl(null);
-																			}}
-																		>
-																			<img src={deleteIcon} alt="Delete" />
-																			<p>Удалить</p>
-																		</MenuItem>
-																	</Menu>
-																</td>
-															</tr>
-														))}
+																		<img src={deleteIcon} alt="Delete" />
+																		<p>Удалить</p>
+																	</MenuItem>
+																</Menu>
+															</td>
+														</tr>
+													))}
 											</tbody>
 										</table>
 										<ModalEditTeacher
@@ -254,22 +236,24 @@ const Teacher = () => {
 							type="text"
 							value={openPart}
 							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleSize(openPart);
+								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(
-									data!.instructorResponses.length / rowsPerPage
-								)}
-								page={currentPage}
-								onChange={handlePageChangeC}
-								shape="rounded"
+								page={openPart}
+								count={
+									data?.instructorResponses.length
+										? Math.ceil(data?.instructorResponses.length / openPage)
+										: 1
+								}
 								variant="outlined"
+								shape="rounded"
 							/>
 						</Stack>
 					</div>
@@ -282,9 +266,10 @@ const Teacher = () => {
 							type="text"
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handlePage(openPage);
+								}
 							}}
 						/>
 					</div>

@@ -22,7 +22,7 @@ const Groups: FC = () => {
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
-	const [currentPage, setCurrentPage] = useState(0);
+	const [currentPage, setCurrentPage] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
 	const [openGroups, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
@@ -42,8 +42,9 @@ const Groups: FC = () => {
 		page: number
 	): void => {
 		setCurrentPage(page);
+		searchParams.set('page', page.toString()); // Установка новой страницы в параметры поиска
+		navigate(`/admin/group/page/?${searchParams.toString()}`); // Навигация с новыми параметрами
 	};
-
 	const handleInputValue = (value: number) => {
 		const valueString = value.toString();
 		searchParams.set('page', valueString === '0' ? '1' : valueString);
@@ -192,9 +193,7 @@ const Groups: FC = () => {
 						<input
 							type="text"
 							value={currentPage}
-							onChange={(e) => {
-								handleInputValue(Number(e.target.value));
-							}}
+							onChange={(e) => setCurrentPage(Number(e.target.value))}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
 									handleInputValue(currentPage);
@@ -204,12 +203,17 @@ const Groups: FC = () => {
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
-							<Pagination
-								page={currentPage}
-								onChange={handlePageChangeC}
-								shape="rounded"
-								variant="outlined"
-							/>
+							{openPage > 0 &&
+								data?.groupResponses &&
+								data.groupResponses.length > 0 && (
+									<Pagination
+										page={currentPage}
+										count={Math.ceil(data?.groupResponses.length / openPage)}
+										variant="outlined"
+										shape="rounded"
+										onChange={handlePageChangeC}
+									/>
+								)}
 						</Stack>
 					</div>
 
@@ -223,7 +227,6 @@ const Groups: FC = () => {
 							value={openPage}
 							onChange={(e) => {
 								setOpenPage(+e.target.value);
-								handleInputValuePaginationSize(Number(e.target.value));
 							}}
 							onKeyDown={(e) => {
 								if (e.key === 'Enter') {

@@ -6,15 +6,20 @@ import {
 	FormControl,
 	InputLabel,
 	Select,
-	MenuItem
+	MenuItem,
+	OutlinedInput,
+	useTheme,
+	Theme
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './Style.module.scss';
 import Input from '../customInput/Input';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
-import { usePostExcelStudentMutation } from '@/src/redux/api/admin/student';
+import {
+	useGetGroupAllQuery,
+	usePostExcelStudentMutation
+} from '@/src/redux/api/admin/student';
 
 const style = {
 	position: 'absolute',
@@ -33,16 +38,31 @@ interface SearchProps {
 	open: boolean;
 }
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+			width: 250
+		}
+	}
+};
+
+function getStyles(name: string, excelFile: number | null, theme: Theme) {
+	return {
+		fontWeight: theme.typography.fontWeightRegular
+	};
+}
+
 const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	const { handleSubmit } = useForm();
+	const theme = useTheme();
 	const [excelFile, setExcelFile] = useState<number | null>(null);
-	const [selectedFile, setSelectedFile] = useState<string>('');
+	const [selectedFile, setSelectedFile] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [postExcelStudent] = usePostExcelStudentMutation();
-	const { data } = useGetGroupQuery({
-		page: '1',
-		size: '100'
-	});
+	const { data } = useGetGroupAllQuery();
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files && event.target.files[0]) {
@@ -51,7 +71,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	};
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-		setExcelFile(event.target.value as number); 
+		setExcelFile(event.target.value as number);
 	};
 
 	const handleButtonClick = () => {
@@ -62,7 +82,10 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	console.log(excelFile);
 
 	const onSubmit = async () => {
-		await postExcelStudent({ excelFile, selectedFile });
+		const newLink = {
+			link: 'http://localhost:5173/auth/newPassword'
+		};
+		await postExcelStudent({ excelFile, selectedFile, newLink });
 	};
 
 	return (
@@ -86,29 +109,32 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 					<Box className={scss.input_button_card}>
 						<div className={scss.select_div}>
 							<FormControl>
-								<InputLabel
-									style={{ background: '#fff' }}
-									id="demo-multiple-checkbox-label"
-								>
+								<InputLabel style={{ background: '#fff' }} id="demo-name-label">
 									Группа
 								</InputLabel>
 								<Select
 									style={{ borderRadius: '12px' }}
-									labelId="study-format-label"
-									id="study-format-select"
+									labelId="demo-name-label"
+									id="demo-name"
 									value={excelFile}
 									onChange={handleChange}
+									input={<OutlinedInput label="groupName" />}
+									MenuProps={MenuProps}
 								>
-									{data?.groupResponses.map((item) => (
-										<MenuItem key={item.id} value={item.id}>
-											<h3>{item.title}</h3>
+									{data?.map((group) => (
+										<MenuItem
+											key={group.id}
+											value={group.id}
+											style={getStyles(group.groupName, excelFile, theme)}
+										>
+											{group.groupName}
 										</MenuItem>
 									))}
 								</Select>
 							</FormControl>
 							<div style={{ display: 'flex', gap: '10px' }}>
 								<Input
-									value={selectedFile}
+									value={selectedFile || ''}
 									size="medium"
 									width="100%"
 									placeholder="Выберите Excel файл для импорта"

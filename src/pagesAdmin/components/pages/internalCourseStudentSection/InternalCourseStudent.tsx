@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
@@ -7,54 +7,43 @@ import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetAllStudentsCourseQuery } from '@/src/redux/api/admin/courses';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import IsBlockCourses from '@/src/ui/customModal/IsBlockCourses';
 
-interface Pages {
-	page: number;
-	size: number;
-	role: string;
-}
-
 const InternalCourses = () => {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
-	const [openPart, setOpenPart] = useState(1);
+	const [rowsPerPage, setRowsPerPage] = useState(1);
+	const [openPart, setOpenPart] = useState(8);
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
 	const [openBlock, setOpenBlock] = useState(false);
 	const [saveBlock, setSaveBlock] = useState(false);
 	const { courseId } = useParams();
 	const course = Number(courseId);
-	const pages: Pages = {
-		page: currentPage,
-		size: rowsPerPage,
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/courses/${courseId}/student?${searchParams.toString()}`);
+	};
+	const handleOpenSize = (value: number) => {
+		const ValueString = value.toString();
+		searchParams.set('size', ValueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/courses/${courseId}/student?${searchParams.toString()}`);
+	};
+
+	const pages = {
+		page: searchParams.toString(),
+		size: searchParams.toString(),
 		role: 'STUDENT'
 	};
 
-	const { data, isLoading, error } = useGetAllStudentsCourseQuery({
+	const { data, isLoading } = useGetAllStudentsCourseQuery({
 		course,
 		pages
 	});
-
-	useEffect(() => {
-		if (!isLoading && !error && data) {
-			setOpenPart(1);
-			setCurrentPage(1);
-		}
-	}, [data, isLoading, error]);
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-			} else {
-				setRowsPerPage(12);
-			}
-		}
-	};
 
 	if (isLoading) {
 		return <Preloader />;
@@ -108,7 +97,7 @@ const InternalCourses = () => {
 																		!item.isBlock ? scss.changeClass : ''
 																	}
 																>
-																	{index + 1 + (currentPage - 1) * rowsPerPage}
+																	{index + 1 + (openPart - 1) * rowsPerPage}
 																</td>
 
 																<td
@@ -181,23 +170,26 @@ const InternalCourses = () => {
 						</div>
 						<input
 							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
+							value={rowsPerPage}
+							onChange={(e) => setRowsPerPage(+e.target.value)}
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleOpenPage(rowsPerPage);
+								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(
-									data!.getAllStudentsOfCourses.length / rowsPerPage
-								)}
-								page={currentPage}
-								// onChange={}
-								shape="rounded"
+								page={openPart}
+								count={
+									data?.getAllStudentsOfCourses.length
+										? Math.ceil(data?.getAllStudentsOfCourses.length / openPart)
+										: 1
+								}
 								variant="outlined"
+								shape="rounded"
 							/>
 						</Stack>
 					</div>
@@ -208,10 +200,12 @@ const InternalCourses = () => {
 						</div>
 						<input
 							type="text"
-							value={rowsPerPage}
-							onChange={(e) => setRowsPerPage(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
+							value={openPart}
+							onChange={(e) => setOpenPart(+e.target.value)}
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleOpenSize(openPart);
+								}
 							}}
 						/>
 					</div>

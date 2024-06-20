@@ -62,26 +62,27 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 10px;
-		padding-left: 10px;
+		justify-content: center;
+
 		.teacher {
+			padding: 4px 4px 4px 12px;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding-inline: 10px;
-			width: 250px;
-			border: 1px solid gray;
+			width: 100%;
+			max-width: 250px;
+			border: 1px solid #d4d4d4;
 			border-radius: 10px;
-			margin-inline: 10px;
 			align-items: center;
 			.selected {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				width: 130px;
-				height: 46px;
+				padding-top: 5px;
+				padding-bottom: 5px;
 				font-size: 14px;
 				font-weight: 400;
-				color: black;
+				color: rgb(2, 2, 2);
 			}
 		}
 

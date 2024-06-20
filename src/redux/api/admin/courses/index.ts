@@ -7,7 +7,7 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.CoursesAdminRequest
 		>({
 			query: ({ page, size }) => ({
-				url: `/api/course/findAllCourse?${page ? page : '1'}&${size ? size : '8'}`,
+				url: `/api/course/findAllCourse?${page}&${size}`,
 				method: 'GET',
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -49,12 +49,7 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.GetInstructorCourseRequest
 		>({
 			query: ({ course, pages }) => ({
-				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}`,
-				params: {
-					page: pages.page,
-					size: pages.size,
-					role: pages.role
-				},
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}?${pages.page}&${pages.size}&role=${pages.role}`,
 				method: 'GET'
 			}),
 			providesTags: ['courses']
@@ -64,12 +59,7 @@ export const api = index.injectEndpoints({
 			ADMINCOURSES.GetInstructorCourseRequest
 		>({
 			query: ({ course, pages }) => ({
-				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}`,
-				params: {
-					page: pages.page,
-					size: pages.size,
-					role: pages.role
-				},
+				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}?${pages.page}&${pages.size}&role=${pages.role}`,
 				method: 'GET'
 			}),
 			providesTags: ['courses']
@@ -85,7 +75,7 @@ export const api = index.injectEndpoints({
 		createStudentBlockCourses: builder.mutation({
 			query: (id) => ({
 				url: `/api/students/isBlock/${id}`,
-				method: 'POST'
+				method: 'PATCH'
 			}),
 			invalidatesTags: ['courses']
 		}),
