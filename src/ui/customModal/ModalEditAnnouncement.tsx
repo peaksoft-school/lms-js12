@@ -18,10 +18,10 @@ import {
 } from '@mui/material';
 import {
 	useEditAnnouncementMutation,
-	useGetAnnouncementTableQuery
+	useGetAnnouncementTableQuery,
+	useGetAnnouncementGroupsQuery
 } from '@/src/redux/api/admin/announcement';
 import scss from './EditAnnouncement.module.scss';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
 import Input from '../customInput/Input';
 
 interface PostAnnouncementProps {
@@ -66,13 +66,14 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 	saveIdElement
 }) => {
 	const [editAnnouncement] = useEditAnnouncementMutation();
-	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
 	const [selectedIds, setSelectedIds] = useState<number[]>([]);
 	const { control, handleSubmit, reset, watch } =
 		useForm<PostAnnouncementProps>();
 	const { data } = useGetAnnouncementTableQuery();
 	const find = data?.announcements?.find((item) => item.id === saveIdElement);
 	const [personName, setPersonName] = useState<string[]>([]);
+	const { data: groupData } = useGetAnnouncementGroupsQuery();
+
 
 	const announcementContent = watch('announcementContent');
 
@@ -139,7 +140,7 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 						variant="h6"
 						component="h2"
 					>
-						<div className={scss.comText}>
+						<div>
 							Редактировать объявление по группам {find?.groupNames.join(', ')}
 						</div>
 					</Typography>
@@ -181,17 +182,16 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 										top: '0'
 									}}
 								>
-									{groupData &&
-										groupData.groupResponses.map((name) => (
-											<MenuItem
-												key={name.id}
-												value={name.title}
-												onClick={() => handleSelect(name.id)}
-											>
-												<Checkbox checked={selectedIds.includes(name.id)} />
-												<ListItemText primary={name.title} />
-											</MenuItem>
-										))}
+									{groupData?.map((name) => (
+										<MenuItem
+											key={name.id}
+											value={name.groupName}
+											onClick={() => handleSelect(name.id)}
+										>
+											<Checkbox checked={selectedIds.includes(name.id)} />
+											<ListItemText primary={name.groupName} />
+										</MenuItem>
+									))}
 								</Select>
 								<div className={scss.inputText}>
 									<Controller

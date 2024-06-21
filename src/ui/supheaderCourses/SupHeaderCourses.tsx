@@ -263,6 +263,57 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
+			{pathname.startsWith('/announcements') && (
+				<>
+					<div className={scss.courses_admin}>
+						<img onClick={handleOpenNotification} src={bell} alt="bell" />
+						<img onClick={handleClick} src={profile} alt="Profile" />
+						<p onClick={handleClick}>Студент</p>
+						<IconChevronDown stroke={2} />
+					</div>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right'
+						}}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+						PaperProps={{
+							style: {
+								boxShadow: 'none',
+								border: '1px solid #336fff',
+								width: '200px',
+								background: '#dde9f9',
+								borderRadius: '10px'
+							}
+						}}
+					>
+						<MenuItem
+							onClick={handleClose}
+							style={{
+								display: 'flex',
+								gap: '10px',
+								color: '#1976d2',
+								fontSize: '18px',
+								fontWeight: '600',
+								alignItems: 'center'
+							}}
+						>
+							<img src={vector} alt="" />
+							<p> Выйти</p>
+						</MenuItem>
+					</Menu>
+				</>
+			)}
 			<NotificationHeader
 				open={openNotification}
 				handleClose={handleCloseNotification}

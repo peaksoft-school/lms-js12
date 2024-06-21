@@ -12,9 +12,12 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { usePostAnnouncementTableMutation } from '@/src/redux/api/admin/announcement';
+import {
+	useGetAnnouncementGroupsQuery,
+	usePostAnnouncementTableMutation
+} from '@/src/redux/api/admin/announcement';
 import InputAnnouncement from '../customInput/InputAnnouncement';
-import { useGetGroupQuery } from '@/src/redux/api/admin/groups';
+import { useGetAnnouncementTableQuery } from '@/src/redux/api/admin/announcement';
 import Input from '../customInput/Input';
 
 interface PostAnnouncementProps {
@@ -62,13 +65,17 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 	const [postAnnouncementTable] = usePostAnnouncementTableMutation();
 	const [personName, setPersonName] = useState<string[]>([]);
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
-	const { data: groupData } = useGetGroupQuery({ page: '1', size: '8' });
+	const { data: groupData } = useGetAnnouncementGroupsQuery();
+	const { data } = useGetAnnouncementTableQuery();
+	console.log(data);
 
-	const handleSelect = (groupId: number, title: string) => {
+	const handleSelect = (groupId: number, groupName: string) => {
 		setSelectedIds((prev) =>
 			prev.includes(String(groupId)) ? prev : [...prev, String(groupId)]
 		);
-		setPersonName((prev) => (prev.includes(title) ? prev : [...prev, title]));
+		setPersonName((prev) =>
+			prev.includes(groupName) ? prev : [...prev, groupName]
+		);
 	};
 
 	const handleChange = (event: SelectChangeEvent<string[]>) => {
@@ -96,14 +103,16 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 	};
 
 	useEffect(() => {
-		reset({
-			announcementContent: '',
-			expirationDate: '',
-			publishedDate: '',
-			targetGroupIds: []
-		});
-		setSelectedIds([]);
-		setPersonName([]);
+		if (open) {
+			reset({
+				announcementContent: '',
+				expirationDate: '',
+				publishedDate: '',
+				targetGroupIds: []
+			});
+			setSelectedIds([]);
+			setPersonName([]);
+		}
 	}, [open, reset]);
 
 	return (
@@ -121,7 +130,7 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 						component="h2"
 						className={scss.text}
 					>
-						<p className={scss.comText}>Добавить объявление</p>
+						<p>Добавить объявление</p>
 					</Typography>
 
 					<Box className={scss.input_form}>
@@ -179,16 +188,18 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 										}}
 									>
 										{groupData &&
-											groupData.groupResponses.map((name) => (
+											groupData.map((group) => (
 												<MenuItem
-													key={name.id}
-													value={name.title}
-													onClick={() => handleSelect(name.id, name.title)}
+													key={group.id}
+													value={group.groupName}
+													onClick={() =>
+														handleSelect(group.id, group.groupName)
+													}
 												>
 													<Checkbox
-														checked={personName.indexOf(name.title) > -1}
+														checked={personName.indexOf(group.groupName) > -1}
 													/>
-													<ListItemText primary={name.title} />
+													<ListItemText primary={group.groupName} />
 												</MenuItem>
 											))}
 									</Select>

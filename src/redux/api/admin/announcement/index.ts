@@ -12,6 +12,16 @@ export const api = index.injectEndpoints({
 			}),
 			providesTags: ['announcement']
 		}),
+		getAnnouncementGroups: builder.query<
+			ANNOUNCEMENT.GetAnnouncementGroupsResponse,
+			ANNOUNCEMENT.GetAnnouncementGroupsRequest
+		>({
+			query: () => ({
+				url: '/api/groups/getAll',
+				method: 'GET'
+			}),
+			providesTags: ['announcement']
+		}),
 		// ! post
 		postAnnouncementTable: builder.mutation<
 			ANNOUNCEMENT.PostAnnouncementPropsResponse,
@@ -51,10 +61,9 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.ShowAnnouncementResponse,
 			ANNOUNCEMENT.ShowAnnouncementRequest
 		>({
-			query: ({ deleteById, newAnnoun }) => ({
-				url: `/api/announcement/view/${deleteById}`,
-				method: 'PUT',
-				body: newAnnoun
+			query: ({ testId, isPublished }) => ({
+				url: `/api/announcement/${testId}?isPublished=${isPublished}`,
+				method: 'PUT'
 			}),
 			invalidatesTags: ['announcement']
 		})
@@ -62,6 +71,7 @@ export const api = index.injectEndpoints({
 });
 export const {
 	useGetAnnouncementTableQuery,
+	useGetAnnouncementGroupsQuery,
 	usePostAnnouncementTableMutation,
 	useDeleteAnnouncementTableMutation,
 	useEditAnnouncementMutation,
