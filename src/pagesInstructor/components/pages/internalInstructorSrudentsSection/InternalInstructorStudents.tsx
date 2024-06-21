@@ -1,18 +1,45 @@
 import scss from './InternalInstructorStudents.module.scss';
-import { KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
 import { Button, Pagination, Stack } from '@mui/material';
-import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
 import { Preloader } from '@/src/ui/preloader/Preloader';
-import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
+import { IconPlus, IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
+import { useGetStudentsTableQuery } from '@/src/redux/api/instructor/studentAddCourse';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import ModalAddStudentToGroups from '@/src/ui/customModal/ModalAddStudentToGroups';
 
 const InternalInstructorStudents = () => {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
+	const { courseId } = useParams();
+	const course = Number(courseId);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
-	const { data, isLoading } = useGetStudentTableQuery();
+	const [openModalEdit, setOpenModalEdit] = useState(false);
+	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
 
+	const handleInputValue = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString === '0' ? '1' : valueString);
+		setSearchParams(searchParams);
+		navigate(
+			`/instructor/course/${courseId}/student/page/?${searchParams.toString()}`
+		);
+	};
+
+	const handleInputValuePaginationSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(
+			`/instructor/course/${courseId}/student/page/?${searchParams.toString()}`
+		);
+	};
+
+	const { data, isLoading } = useGetStudentsTableQuery({
+		course,
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 	if (isLoading) {
 		return (
 			<div>
@@ -20,41 +47,6 @@ const InternalInstructorStudents = () => {
 			</div>
 		);
 	}
-
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
-
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-	};
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(12);
-			}
-		}
-	};
 
 	return (
 		<div className={scss.internal_student}>
@@ -65,12 +57,16 @@ const InternalInstructorStudents = () => {
 							size="large"
 							className={scss.button}
 							variant="contained"
-							color="error"
+							onClick={() => setOpenModalEdit(true)}
 						>
 							<div className={scss.icon}>
 								<IconPlus stroke={2} />
 							</div>
-							<span>Удалить группу с курса</span>
+							<ModalAddStudentToGroups
+								openModalEdit={openModalEdit}
+								handleClose={setOpenModalEdit}
+							/>
+							<span>Добавить группу на курса</span>
 						</Button>
 					</div>
 					<h1 className={scss.title}>Data Engineer</h1>
@@ -83,8 +79,7 @@ const InternalInstructorStudents = () => {
 											<thead>
 												<tr>
 													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя</th>
-													<th>Фамилия</th>
+													<th>Имя Фамилия</th>
 													<th>Группа</th>
 													<th>Формат обучения</th>
 													<th>Номер телефона</th>
@@ -92,27 +87,22 @@ const InternalInstructorStudents = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data?.students.map((item, index) => (
-													<tr
-														key={item.id}
-														className={
-															index % 2 === 1
-																? scss.table_alternate_row
-																: '' || scss.internal
-														}
-													>
-														<td>
-															{index + 1 + (currentPage - 1) * rowsPerPage}
-														</td>
-
-														<td>{item.firstName}</td>
-														<td>{item.lastName}</td>
-														<td>{item.group}</td>
-														<td>{item.TrainingFormat}</td>
-														<td>{item.phone_number}</td>
-														<td>{item.email}</td>
-													</tr>
-												))}
+												{data?.getAllStudentsOfCourses &&
+													data.getAllStudentsOfCourses.map((item, index) => (
+														<tr
+															key={item.id}
+															className={
+																index % 2 === 1 ? scss.table_alternate_row : ''
+															}
+														>
+															<td>{index + 1}</td>
+															<td>{item.fullName}</td>
+															<td>{item.courseName}</td>
+															<td>{item.specializationOrStudyFormat}</td>
+															<td>{item.phoneNumber}</td>
+															<td>{item.email}</td>
+														</tr>
+													))}
 											</tbody>
 										</table>
 									</div>
@@ -131,20 +121,16 @@ const InternalInstructorStudents = () => {
 							type="text"
 							value={openPart}
 							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleInputValue(openPart);
+								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
-							<Pagination
-								page={currentPage}
-								onChange={handlePageChangeC}
-								shape="rounded"
-								variant="outlined"
-							/>
+							<Pagination page={openPage} shape="rounded" variant="outlined" />
 						</Stack>
 					</div>
 					<div className={scss.inputs}>
@@ -156,9 +142,10 @@ const InternalInstructorStudents = () => {
 							type="text"
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleInputValuePaginationSize(openPage);
+								}
 							}}
 						/>
 					</div>
