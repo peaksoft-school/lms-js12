@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { Box, ScrollArea } from '@mantine/core';
@@ -122,19 +122,37 @@ const Courses: FC = () => {
 															</div>
 															<div className={scss.block_cont}>
 																<div className={scss.second_block}>
-																	<p className={scss.block_title}>
-																		{item.title}
-																	</p>
+																	<Tooltip title={item.title}>
+																		<p
+																			style={{
+																				width: '100%',
+																				maxWidth: '100px',
+																				textOverflow: 'ellipsis',
+																				overflow: 'hidden'
+																			}}
+																			className={scss.block_title}
+																		>
+																			{item.title}
+																		</p>
+																	</Tooltip>
 																	<p className={scss.block_date}>
 																		{item.dateOfEnd}
 																	</p>
 																</div>
 																<div className={scss.text_card}>
 																	<span className={scss.block_text}>
-																		{item.description &&
-																		item.description.length > 60
-																			? `${item.description.substring(0, 60)}...`
-																			: item.description}
+																		<Tooltip title={item.description}>
+																			<p
+																				style={{
+																					width: '100%',
+																					maxWidth: '300px',
+																					textOverflow: 'ellipsis',
+																					overflow: 'hidden'
+																				}}
+																			>
+																				{item.description}
+																			</p>
+																		</Tooltip>
 																	</span>
 																</div>
 															</div>

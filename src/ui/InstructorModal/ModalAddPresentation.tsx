@@ -14,6 +14,7 @@ import {
 } from '@/src/redux/api/instructor/presentation';
 import { useParams } from 'react-router-dom';
 
+
 const style = {
 	position: 'absolute',
 	top: '50%',

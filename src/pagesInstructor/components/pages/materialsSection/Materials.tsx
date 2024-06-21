@@ -2,7 +2,14 @@ import { FC, useState, useEffect } from 'react';
 import scss from './Materials.module.scss';
 import deleteIcon from '@/src/assets/svgs/delete-red.svg';
 import empty from '@/src/assets/notCreated0.png';
-import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
+import {
+	Button,
+	Menu,
+	MenuItem,
+	Pagination,
+	Stack,
+	Tooltip
+} from '@mui/material';
 import {
 	IconArticle,
 	IconBook,
@@ -183,7 +190,18 @@ const Materials: FC = () => {
 																					}}
 																				>
 																					<IconEqual stroke={2} />
-																					{todo.title}
+																					<Tooltip title={todo.title}>
+																						<p
+																							style={{
+																								width: '100%',
+																								maxWidth: '200px',
+																								textOverflow: 'ellipsis',
+																								overflow: 'hidden'
+																							}}
+																						>
+																							{todo.title}
+																						</p>
+																					</Tooltip>
 																				</td>
 																				<td
 																					onClick={() => {

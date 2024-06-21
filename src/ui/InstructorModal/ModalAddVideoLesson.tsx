@@ -47,7 +47,6 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	const [postVideoLesson] = usePostVideoLessonMutation();
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
-	
 
 	const [loading, setLoading] = useState(false);
 

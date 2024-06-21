@@ -1,5 +1,6 @@
-import scss from './DeleteGroupsModal.module.scss';
 import React from 'react';
+import { message } from 'antd';
+import scss from './DeleteGroupsModal.module.scss';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,19 +14,29 @@ interface DeleteProps {
 	closeModalDelete: (openModalDelete: boolean) => void;
 	deleteById: number | null;
 }
+
 const DeleteGroupModal: React.FC<DeleteProps> = ({
 	openModalDelete,
 	closeModalDelete,
 	deleteById
 }) => {
 	const [deleteGroup] = useDeleteGroupMutation();
+	const [messageApi, contextHolder] = message.useMessage();
+
 	const handleDelete = async () => {
-		await deleteGroup(deleteById!);
-		closeModalDelete(false);
+		try {
+			await deleteGroup(deleteById!).unwrap();
+			messageApi.success('Группа успешно добавлено в корзину!');
+			closeModalDelete(false);
+		} catch (error) {
+			messageApi.error('Failed to delete group');
+			console.error('Error deleting group:', error);
+		}
 	};
 
 	return (
 		<div>
+			{contextHolder}
 			<React.Fragment>
 				<div>
 					<Dialog
@@ -76,4 +87,5 @@ const DeleteGroupModal: React.FC<DeleteProps> = ({
 		</div>
 	);
 };
+
 export default DeleteGroupModal;

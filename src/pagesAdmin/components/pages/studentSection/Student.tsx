@@ -208,7 +208,7 @@ const Student: React.FC = () => {
 															<td
 																className={item.isBlock ? scss.changeClass : ''}
 															>
-																{item.fullName}
+																<p>{item.fullName}</p>
 															</td>
 															<td
 																className={item.isBlock ? scss.changeClass : ''}

@@ -12,6 +12,7 @@ import ModalPresentation from '@/src/ui/InstructorModal/ModalPresentation';
 import ModalAddPresentation from '@/src/ui/InstructorModal/ModalAddPresentation';
 import { useParams } from 'react-router-dom';
 import empty from '@/src/assets/notCreated0.png';
+import Tooltip from '@mui/material/Tooltip';
 
 const Presentation = () => {
 	const [open1, setOpen1] = useState<boolean>(false);
@@ -111,8 +112,12 @@ const Presentation = () => {
 								</div>
 								<div className={scss.title}>
 									<div className={scss.text}>
-										<h1>{item.title}</h1>
-										<p>{item.description}</p>
+										<Tooltip title={item.title}>
+											<h1>{item.title}</h1>
+										</Tooltip>
+										<Tooltip title={item.description}>
+											<p>{item.description}</p>
+										</Tooltip>
 									</div>
 									<div className={scss.dots}>
 										<div onClick={handleClick}>

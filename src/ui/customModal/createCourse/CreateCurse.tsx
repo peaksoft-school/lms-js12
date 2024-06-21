@@ -6,15 +6,13 @@ import Modal from '@mui/material/Modal';
 import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {
 	useCreateAdminCourseMutation,
 	useCreateCourseFileImgMutation
 } from '@/src/redux/api/admin/courses';
 import scss from './CreateCurse.module.scss';
 import gallery from '@/src/assets/photo-bg.png';
-import { toast } from 'react-toastify';
+import { message } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -52,7 +50,6 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	const [createCourseFileImg] = useCreateCourseFileImgMutation();
 	const [isFormValid, setIsFormValid] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
 	const [urlImg, setUrlImg] = useState('');
 
 	const handleButtonClick = () => {
@@ -86,13 +83,9 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		}
 	};
 
-	const notifySuccess = () => toast.success('Группа успешно создана!');
-	const notifyError = () => toast.error('Произошла ошибка при создании группы');
-	const notifyIncomplete = () => toast.error('Заполните все поля');
-
 	const handleCreateCourse = async () => {
 		if (!value || !urlImg || !data || !text) {
-			notifyIncomplete();
+			message.error('Заполните все поля');
 			setIsFormValid(false);
 			return;
 		}
@@ -107,8 +100,8 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 		};
 
 		try {
-			await createCourse(newCourse);
-			notifySuccess();
+			await createCourse(newCourse).unwrap();
+			message.success('Курс успешно создан!');
 			setText('');
 			setImage('');
 			setValue('');
@@ -117,7 +110,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 			setHidePhoto(false);
 			setIsFormValid(false);
 		} catch (error) {
-			notifyError();
+			message.error('Произошла ошибка при создании курса');
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -139,109 +132,105 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	};
 
 	return (
-		<div>
-			<ToastContainer />
-			<Modal
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<Box className={scss.main_modal} sx={style}>
-					<Typography
-						className={scss.curse}
-						id="modal-modal-title"
-						variant="h6"
-						component="h2"
-					>
-						<p> Создание курса</p>
-					</Typography>
-					<Typography
-						className={scss.text_part}
-						id="modal-modal-description"
-						sx={{ mt: 2 }}
-					>
-						<div className={scss.img_part}>
-							<input
-								className={scss.fileInput}
-								type="file"
-								ref={fileInputRef}
-								onChange={handleFileSelect}
-							/>
-							<div
-								onClick={handleButtonClick}
-								className={hidePhoto ? scss.background_none : scss.background}
-								style={{
-									backgroundImage: `url(${image || gallery})`,
-									backgroundRepeat: 'no-repeat',
-									backgroundPosition: 'center',
-									objectFit: 'contain'
-								}}
-							></div>
-							<p className={hidePhoto ? scss.hide_text : scss.show}>
-								Нажмите на иконку чтобы загрузить
-							</p>
-						</div>
-						<div className={scss.inputs}>
-							<div className={scss.first_input}>
-								<Input
-									size="medium"
-									width="100%"
-									placeholder="Название курса"
-									value={value}
-									onChange={(e) => setValue(e.target.value)}
-									type="text"
-								/>
-							</div>
-							<div className={scss.second_input}>
-								<Input
-									size="medium"
-									width="100%"
-									placeholder="Дата курса"
-									value={data}
-									onChange={(e) => handleDateChange(e.target.value)}
-									type="date"
-								/>
-							</div>
-						</div>
-						<textarea
-							value={text}
-							onChange={(e) => setText(e.target.value)}
-							placeholder="Описание курса"
-						></textarea>
+		<Modal
+			open={open}
+			onClose={handleClose}
+			aria-labelledby="modal-modal-title"
+			aria-describedby="modal-modal-description"
+		>
+			<Box className={scss.main_modal} sx={style}>
+				<Typography
+					className={scss.curse}
+					id="modal-modal-title"
+					variant="h6"
+					component="h2"
+				>
+					<p>Создание курса</p>
+				</Typography>
+				<Typography
+					className={scss.text_part}
+					id="modal-modal-description"
+					sx={{ mt: 2 }}
+				>
+					<div className={scss.img_part}>
+						<input
+							className={scss.fileInput}
+							type="file"
+							ref={fileInputRef}
+							onChange={handleFileSelect}
+						/>
 						<div
+							onClick={handleButtonClick}
+							className={hidePhoto ? scss.background_none : scss.background}
 							style={{
-								width: '100%',
-								display: 'flex',
-								justifyContent: 'flex-end',
-								alignItems: 'center',
-								paddingBottom: '10px',
-								paddingTop: '13px',
-								gap: '10px'
+								backgroundImage: `url(${image || gallery})`,
+								backgroundRepeat: 'no-repeat',
+								backgroundPosition: 'center',
+								objectFit: 'contain'
 							}}
-						>
-							<ButtonCancel
-								type="submit"
-								onClick={handleClose}
-								disabled={false}
-								width="103px"
-							>
-								Отмена
-							</ButtonCancel>
-
-							<ButtonSave
-								type="submit"
-								onClick={handleCreateCourse}
-								disabled={!isFormValid || isSubmitting}
-								width="117px"
-							>
-								Добавить
-							</ButtonSave>
+						></div>
+						<p className={hidePhoto ? scss.hide_text : scss.show}>
+							Нажмите на иконку чтобы загрузить
+						</p>
+					</div>
+					<div className={scss.inputs}>
+						<div className={scss.first_input}>
+							<Input
+								size="medium"
+								width="100%"
+								placeholder="Название курса"
+								value={value}
+								onChange={(e) => setValue(e.target.value)}
+								type="text"
+							/>
 						</div>
-					</Typography>
-				</Box>
-			</Modal>
-		</div>
+						<div className={scss.second_input}>
+							<Input
+								size="medium"
+								width="100%"
+								placeholder="Дата курса"
+								value={data}
+								onChange={(e) => handleDateChange(e.target.value)}
+								type="date"
+							/>
+						</div>
+					</div>
+					<textarea
+						value={text}
+						onChange={(e) => setText(e.target.value)}
+						placeholder="Описание курса"
+					></textarea>
+					<div
+						style={{
+							width: '100%',
+							display: 'flex',
+							justifyContent: 'flex-end',
+							alignItems: 'center',
+							paddingBottom: '10px',
+							paddingTop: '13px',
+							gap: '10px'
+						}}
+					>
+						<ButtonCancel
+							type="submit"
+							onClick={handleClose}
+							disabled={false}
+							width="103px"
+						>
+							Отмена
+						</ButtonCancel>
+						<ButtonSave
+							type="submit"
+							onClick={handleCreateCourse}
+							disabled={!isFormValid || isSubmitting}
+							width="117px"
+						>
+							Добавить
+						</ButtonSave>
+					</div>
+				</Typography>
+			</Box>
+		</Modal>
 	);
 };
 

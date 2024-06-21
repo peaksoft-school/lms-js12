@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 import scss from './Link.module.scss';
@@ -102,9 +102,17 @@ const Link = () => {
 						<div className={scss.cards} key={link.id}>
 							<div className={scss.title}>
 								<div className={scss.text}>
-									<a href={link.url} target="_blank" rel="noopener noreferrer">
-										{link.title}
-									</a>
+									<Tooltip title={link.title}>
+										<p>
+											<a
+												href={link.url}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												{link.title}
+											</a>
+										</p>
+									</Tooltip>
 								</div>
 								<div className={scss.dots}>
 									<button

@@ -34,10 +34,10 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 	const { control, handleSubmit, reset } = useForm<LinkProps>();
 	const [postLinkLesson] = usePostLinkMutation();
 	const { lessonId } = useParams();
-	const [loading, setLoading] = useState(false); // Add loading state
+	const [loading, setLoading] = useState(false); 
 
 	const onSubmit: SubmitHandler<LinkProps> = async (data) => {
-		setLoading(true); // Set loading to true when submission starts
+		setLoading(true); 
 		try {
 			const newLink = {
 				title: data.titleOfLink,
@@ -49,7 +49,7 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 		} catch (error) {
 			// Handle error if needed
 		} finally {
-			setLoading(false); // Set loading to false after submission completes
+			setLoading(false); 
 		}
 	};
 
