@@ -61,15 +61,16 @@ namespace ANNOUNCEMENT {
 	};
 
 	type ShowAnnouncementResponse = {
-		deleteById: number;
-		newAnnoun: {
-			isPublished: boolean;
-		};
+		httpStatus: string;
+		message: string;
 	};
 	type ShowAnnouncementRequest = {
-		deleteById: number;
-		newAnnoun: {
-			isPublished: boolean;
-		};
+		testId: number | null;
+		isPublished: boolean;
 	};
+	type GetAnnouncementGroupsResponse = {
+		id: number;
+		groupName: string;
+	}[];
+	type GetAnnouncementGroupsRequest = void;
 }

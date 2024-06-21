@@ -18,7 +18,6 @@ import {
 	IconEyeOff,
 	IconPlus
 } from '@tabler/icons-react';
-import NotCreated from '@/src/ui/notCreated/NotCreated';
 
 const Announcements = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -32,11 +31,12 @@ const Announcements = () => {
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(4);
 	const [showAnnouncement] = useShowAnnouncementMutation();
+	const [testId, setTestId] = useState<number | null>(null);
 
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
 	};
-	const handleCloseAnnoucement = () => {
+	const handleCloseAnnouncement = () => {
 		setOpenAnnouncement(false);
 	};
 
@@ -79,23 +79,24 @@ const Announcements = () => {
 			}
 		}
 	};
-	const handleShow = async (deleteById: number, isPublished: boolean) => {
-		const newAnnoun = {
-			isPublished: !isPublished
-		};
-		await showAnnouncement({ deleteById, newAnnoun });
-	};
-
-	if (data?.announcements.length === 0) {
-		return (
-			<NotCreated
-				text="Вы пока не добавили обьявление!"
-				buttontText="Добавить обьявление"
-				name="Обьявление"
-				buttonClick={handleOpenAnnouncement}
-			/>
+	const handleShow = async () => {
+		const test = data?.announcements.find((item) =>
+			item.id === testId ? item.isPublished : null
 		);
-	}
+		if (test) {
+			const isPublished = false;
+			const res = await showAnnouncement({ testId, isPublished });
+			if (res.data?.httpStatus === 'OK') {
+				setAnchorEl(null);
+			}
+		} else {
+			const isPublished = true;
+			const res = await showAnnouncement({ testId, isPublished });
+			if (res.data?.httpStatus === 'OK') {
+				setAnchorEl(null);
+			}
+		}
+	};
 	return (
 		<div className={scss.Section_announcement}>
 			<div className={scss.main_container}>
@@ -120,34 +121,30 @@ const Announcements = () => {
 					</div>
 					<div>
 						<div className={scss.announce_box}>
-							<ul className={scss.announce_card}>
+							<div className={scss.announce_card}>
 								{data?.announcements.map((item) => (
 									<li key={item.id} className={scss.announce_list}>
-										<div className={scss.show_text}>
-											{item?.isPublished === true ? (
-												<>
-													<p style={{ color: '#0ECE22 ', fontSize: '16px' }}>
-														Видно
-													</p>
-												</>
+										<div>
+											{item?.isPublished ? (
+												<p style={{ color: '#0ECE22 ', fontSize: '16px' }}>
+													Видно
+												</p>
 											) : (
-												<>
-													<p style={{ color: 'red' }}>Не видно</p>
-												</>
+												<p style={{ color: 'red' }}>Не видно</p>
 											)}
 										</div>
 										<div className={scss.announcement_owners}>
+											<p className={scss.announce_groupsss}>
+												<span className={scss.announce_groups}>Для кого:</span>
+												{item.groupNames}
+											</p>
 											<p className={scss.announcement_owner}>
-												<p className={scss.announc_user}>Кем создан:</p>
+												<span className={scss.announc_user}>Кем создан:</span>
 												{item.owner}
 											</p>
 										</div>
-										<p>
-											<p className={scss.announce_groups}>Для кого:</p>
-											{item.groupNames.join(', ')}
-										</p>
-										<p>
-											<p className={scss.announce_content}>Текст:</p>
+										<p className={scss.announce_contents}>
+											<span className={scss.announce_content}>Текст:</span>
 											{item.content}
 										</p>
 										<div
@@ -159,11 +156,8 @@ const Announcements = () => {
 										>
 											<div className={scss.cont_date}>
 												<p className={scss.announcement_publishDate}>
-													{item.publishDate}
+													{item.publishDate}/{item.endDate}
 												</p>
-												<p> {item.endDate}</p>
-											</div>
-											<div>
 												<button
 													className={scss.button}
 													aria-controls={open ? 'basic-menu' : undefined}
@@ -171,6 +165,7 @@ const Announcements = () => {
 													onClick={(e) => {
 														handleClick(e);
 														setDeleteById(item.id);
+														setTestId(item.id);
 													}}
 												>
 													<DotsHorizont />
@@ -178,7 +173,6 @@ const Announcements = () => {
 											</div>
 										</div>
 										<Menu
-											className={scss.deleteEdit}
 											id="basic-menu"
 											anchorEl={anchorEl}
 											open={open}
@@ -194,15 +188,14 @@ const Announcements = () => {
 												horizontal: 'right'
 											}}
 											PaperProps={{
-												style: { boxShadow: 'none', border: '1px solid gray' }
+												style: {
+													boxShadow: 'none',
+													border: '1px solid gray'
+												}
 											}}
 										>
 											<MenuItem
-												style={{
-													display: 'flex',
-													gap: '20px'
-												}}
-												className={scss.dropdown}
+												style={{ display: 'flex', gap: '20px' }}
 												onClick={() => {
 													setOpenModalEdit(true);
 													setAnchorEl(null);
@@ -213,9 +206,8 @@ const Announcements = () => {
 											</MenuItem>
 											<MenuItem
 												style={{ display: 'flex', gap: '20px' }}
-												className={scss.dropdown}
 												onClick={() => {
-													handleShow(item.id, item.isPublished);
+													handleShow();
 												}}
 											>
 												{find?.isPublished === true ? (
@@ -232,7 +224,6 @@ const Announcements = () => {
 											</MenuItem>
 											<MenuItem
 												style={{ display: 'flex', gap: '20px' }}
-												className={scss.dropdown}
 												onClick={() => {
 													setOpenModalDelete(true);
 													setAnchorEl(null);
@@ -244,7 +235,7 @@ const Announcements = () => {
 										</Menu>
 									</li>
 								))}
-							</ul>
+							</div>
 							<ModalEditAnnouncement
 								openModalEdit={openModalEdit}
 								closeModalEdit={() => setOpenModalEdit(false)}
@@ -252,12 +243,12 @@ const Announcements = () => {
 							/>
 							<DeleteAnnouncementModal
 								openModalDelete={openModalDelete}
-								closeModalDelete={setOpenModalDelete}
+								closeModalDelete={() => setOpenModalDelete(false)}
 								saveIdElement={deleteById}
 							/>
 							<AnnouncementForm
 								open={openAnnouncement}
-								handleClose={handleCloseAnnoucement}
+								handleClose={handleCloseAnnouncement}
 							/>
 						</div>
 					</div>
@@ -281,7 +272,9 @@ const Announcements = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								// count={Math.ceil(data!.length / rowsPerPage)}
+								count={Math.ceil(
+									(data?.announcements.length ?? 0) / rowsPerPage
+								)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"
@@ -309,4 +302,5 @@ const Announcements = () => {
 		</div>
 	);
 };
+
 export default Announcements;
