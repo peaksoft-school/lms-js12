@@ -179,7 +179,6 @@ const VideoLesson = () => {
 					))
 				) : (
 					<div className={scss.empty_page}>
-						<h3>Пока что видео не загрузили!</h3>
 						<img src={empty} alt="" />
 					</div>
 				)}
