@@ -32,7 +32,7 @@ interface ModalPasswordProps {
 
 const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 	const [inputvalue, setInputValue] = useState<string>('');
-	const { control, handleSubmit } = useForm();
+	const { control, handleSubmit, reset } = useForm();
 
 	const [forgotPasswordMutation] = useForgotPasswordMutation();
 
@@ -46,6 +46,7 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 			link: 'http://localhost:5173/auth/newPassword'
 		};
 		await forgotPasswordMutation(newData);
+		reset();
 		handleClose();
 	};
 
@@ -97,7 +98,7 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								type="submit"
 								width="100%"
-								disabled={false}
+								disabled={inputvalue == '' ? true : false}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Отправить

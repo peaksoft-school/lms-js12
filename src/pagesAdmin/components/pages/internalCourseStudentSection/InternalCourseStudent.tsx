@@ -94,7 +94,7 @@ const InternalCourses = () => {
 															>
 																<td
 																	className={
-																		!item.isBlock ? scss.changeClass : ''
+																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
 																	{index + 1 + (openPart - 1) * rowsPerPage}
@@ -102,35 +102,35 @@ const InternalCourses = () => {
 
 																<td
 																	className={
-																		!item.isBlock ? scss.changeClass : ''
+																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
 																	{item.fullName}
 																</td>
 																<td
 																	className={
-																		!item.isBlock ? scss.changeClass : ''
+																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
 																	{item.courseName}
 																</td>
 																<td
 																	className={
-																		!item.isBlock ? scss.changeClass : ''
+																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
 																	{item.specializationOrStudyFormat}
 																</td>
 																<td
 																	className={
-																		!item.isBlock ? scss.changeClass : ''
+																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
 																	{item.phoneNumber}
 																</td>
 																<td
 																	className={
-																		!item.isBlock ? scss.changeClass : ''
+																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
 																	{item.email}
@@ -144,7 +144,7 @@ const InternalCourses = () => {
 																			setSaveBlock(item.isBlock);
 																		}}
 																	>
-																		{item.isBlock ? (
+																		{!item.isBlock ? (
 																			<img src={LockOpenStudent} alt="#" />
 																		) : (
 																			<img src={LockBlockStudent} alt="#" />
