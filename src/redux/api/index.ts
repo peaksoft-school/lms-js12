@@ -48,7 +48,8 @@ export const api = createApi({
 		'test',
 		'ratingStudents',
 		'notification',
-		'send-task'
+		'send-task',
+		'announcementStudent'
 	],
 	endpoints: () => ({})
 });

@@ -16,6 +16,7 @@ import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import GetOneTask from '../pages/getOneTask/GetOneTask';
 import ResultTest from '../pages/resultTest/ResultTest';
 import SendOneTask from '../pages/sendOneTask/SendOneTask';
+import AnnouncementPage from '../pages/AnnouncementPage';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +79,7 @@ const LayoutStudents = () => {
 					<Routes>
 						<Route path="/courses" element={<CoursesPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
+						<Route path="/announcements" element={<AnnouncementPage />} />
 						<Route
 							path="/courses/:coursesId/materials"
 							element={<LessonListPage />}
