@@ -68,11 +68,18 @@ export const api = index.injectEndpoints({
 			invalidatesTags: ['student']
 		}),
 		postExcelStudent: builder.mutation({
-			query: ({ excelFile, selectedFile, newLink }) => ({
-				url: `/api/students/importStudents/${excelFile}?link=${encodeURIComponent(newLink.link)}`,
-				method: 'POST',
-				body: selectedFile
-			}),
+			query: ({ excelFile, selectedFile, newLink }) => {
+				{
+					const newData = new FormData();
+					newData.append('file', selectedFile);
+
+					return {
+						url: `/api/students/importStudents/${excelFile}?link=${encodeURIComponent(newLink.link)}`,
+						method: 'POST',
+						body: newData
+					};
+				}
+			},
 			invalidatesTags: ['student']
 		})
 	})

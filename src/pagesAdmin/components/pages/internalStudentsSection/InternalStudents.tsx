@@ -77,7 +77,6 @@ const InternalStudents = () => {
 												<tr>
 													<th style={{ textAlign: 'start' }}>№</th>
 													<th>Имя Фамилия</th>
-
 													<th>Группа</th>
 													<th>Формат обучения</th>
 													<th>Номер телефона</th>
