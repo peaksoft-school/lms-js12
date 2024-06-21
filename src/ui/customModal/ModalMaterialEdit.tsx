@@ -53,17 +53,34 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		title: '',
 		createdAt: ''
 	});
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [loading, setLoading] = useState(false);
 
 	const onSubmit = async (data: EditProps) => {
+		const currentDate = new Date();
+		const selectedDate = new Date(data.createdAt);
+
+		if (selectedDate < currentDate) {
+			setErrorMessage('Вы не можете выбрать прошедшую дату.');
+			return;
+		}
+
+		setLoading(true);
 		if (deleteById !== null) {
 			const updateMaterial = {
 				title: data.title,
 				createdAt: data.createdAt
 			};
-			await patchMaterial({ updateMaterial, deleteById }).then(() => {
-				refetch();
-				closeModalEdit(false);
-			});
+			try {
+				await patchMaterial({ updateMaterial, deleteById }).then(() => {
+					refetch();
+					closeModalEdit(false);
+				});
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
 		}
 	};
 
@@ -132,6 +149,11 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 								)}
 							/>
 						</div>
+						{errorMessage && (
+							<Typography color="error" variant="body2">
+								{errorMessage}
+							</Typography>
+						)}
 						<div
 							style={{
 								width: '100%',
@@ -145,7 +167,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 						>
 							<ButtonCancel
 								type="button"
-								disabled={false}
+								disabled={loading}
 								onClick={() => closeModalEdit(false)}
 								width="117px"
 							>
@@ -155,7 +177,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 								onClick={handleSubmit(onSubmit)}
 								width="117px"
 								type="submit"
-								disabled={!openModalEdit || !isDirty}
+								disabled={!openModalEdit || !isDirty || loading}
 							>
 								Отправить
 							</ButtonSave>

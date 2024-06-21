@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -19,9 +19,15 @@ const DeleteLink: React.FC<DeleteLinkProps> = ({
 	saveIdElement
 }) => {
 	const [deletePresentation] = useDeleteLinkMutation();
+	const [loading, setLoading] = useState(false);
+
 	const handleDelete = async () => {
-		await deletePresentation(saveIdElement!);
-		closeModalDelete(false);
+		if (!loading && typeof saveIdElement === 'number') {
+			setLoading(true);
+			await deletePresentation(saveIdElement);
+			setLoading(false);
+			closeModalDelete(false);
+		}
 	};
 
 	return (
@@ -36,14 +42,14 @@ const DeleteLink: React.FC<DeleteLinkProps> = ({
 					>
 						<DialogContent style={{ height: 'auto' }}>
 							<DialogContentText id="alert-dialog-description">
-								<h3>Вы уверены, что хотите удалить презентацию?</h3>
+								<h3>Вы уверены, что хотите удалить ссылку?</h3>
 							</DialogContentText>
 						</DialogContent>
 						<DialogActions>
 							<ButtonCancel
 								width="103px"
 								type="button"
-								disabled={false}
+								disabled={loading}
 								onClick={() => {
 									closeModalDelete(false);
 								}}
@@ -52,7 +58,7 @@ const DeleteLink: React.FC<DeleteLinkProps> = ({
 							</ButtonCancel>
 							<ButtonDelete
 								type="button"
-								disabled={false}
+								disabled={loading}
 								onClick={handleDelete}
 							>
 								Удалить

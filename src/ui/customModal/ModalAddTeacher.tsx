@@ -1,23 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { FC } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from '@mui/material/Modal';
+import { FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './Style.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 interface IFormInputs {
 	firstName: string;
 	lastName: string;
 	email: string;
 	phoneNumber: string;
-	login: string;
 	specialization: string;
-	group: string[];
 }
 
 interface TeacherAddProps {
@@ -46,38 +43,29 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 		formState: { dirtyFields }
 	} = useForm<IFormInputs>();
 	const [postTeacher] = usePostTeacherMutation();
-	const isButtonDisabled = !(
-		dirtyFields.firstName &&
-		dirtyFields.lastName &&
-		dirtyFields.email &&
-		dirtyFields.phoneNumber &&
-		dirtyFields.specialization
-	);
+	const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission
+
+	const isButtonDisabled =
+		!dirtyFields.firstName ||
+		!dirtyFields.lastName ||
+		!dirtyFields.email ||
+		!dirtyFields.phoneNumber ||
+		!dirtyFields.specialization;
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-		const { firstName, lastName, email, phoneNumber, specialization } = data;
-		if (
-			firstName !== '' &&
-			lastName !== '' &&
-			email !== '' &&
-			phoneNumber !== '' &&
-			specialization !== ''
-		) {
-			const postData = {
-				firstName: firstName,
-				lastName: lastName,
-				email: email,
-				phoneNumber: phoneNumber,
-				specialization: specialization,
+		setIsSubmitting(true); // Set submitting state to true
+
+		try {
+			await postTeacher({
+				...data,
 				linkForPassword: 'http://localhost:5173/auth/newPassword'
-			};
-			try {
-				await postTeacher(postData);
-				handleClose();
-				reset();
-			} catch (error) {
-				console.error('Error:', error);
-			}
+			});
+			handleClose();
+			reset();
+		} catch (error) {
+			console.error('Error:', error);
+		} finally {
+			setIsSubmitting(false); // Reset submitting state after request completes
 		}
 	};
 
@@ -104,9 +92,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="firstName"
 								control={control}
 								defaultValue=""
-								rules={{
-									required: 'Имя обязателен для заполнения'
-								}}
+								rules={{ required: 'Имя обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -121,9 +107,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="lastName"
 								control={control}
 								defaultValue=""
-								rules={{
-									required: 'Фамилия обязателен для заполнения'
-								}}
+								rules={{ required: 'Фамилия обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -138,9 +122,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="phoneNumber"
 								control={control}
 								defaultValue=""
-								rules={{
-									required: 'Номер обязателен для заполнения'
-								}}
+								rules={{ required: 'Номер обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -155,9 +137,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="email"
 								control={control}
 								defaultValue=""
-								rules={{
-									required: 'Email обязателен для заполнения'
-								}}
+								rules={{ required: 'Email обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -209,7 +189,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								width="117px"
 								type="submit"
-								disabled={isButtonDisabled}
+								disabled={isButtonDisabled || isSubmitting} // Disable button while submitting
 								onClick={handleSubmit(onSubmit)}
 							>
 								Отправить

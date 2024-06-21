@@ -4,7 +4,7 @@ import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import scss from './Styled.module.scss';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { usePostLinkMutation } from '@/src/redux/api/instructor/link';
 import { useParams } from 'react-router-dom';
 
@@ -34,15 +34,23 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 	const { control, handleSubmit, reset } = useForm<LinkProps>();
 	const [postLinkLesson] = usePostLinkMutation();
 	const { lessonId } = useParams();
+	const [loading, setLoading] = useState(false); // Add loading state
 
 	const onSubmit: SubmitHandler<LinkProps> = async (data) => {
-		const newLink = {
-			title: data.titleOfLink,
-			url: data.urlOfLink
-		};
-		await postLinkLesson({ lessonId, newLink });
-		reset();
-		handleCloseLink();
+		setLoading(true); // Set loading to true when submission starts
+		try {
+			const newLink = {
+				title: data.titleOfLink,
+				url: data.urlOfLink
+			};
+			await postLinkLesson({ lessonId, newLink });
+			reset();
+			handleCloseLink();
+		} catch (error) {
+			// Handle error if needed
+		} finally {
+			setLoading(false); // Set loading to false after submission completes
+		}
 	};
 
 	return (
@@ -69,15 +77,20 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 								name="titleOfLink"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'text error' }}
-								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="text"
-										width="100%"
-										placeholder="Отображаемый текст"
-									/>
+								rules={{ required: 'Отображаемый текст обязателен' }}
+								render={({ field, fieldState: { error } }) => (
+									<>
+										<Input
+											size="medium"
+											{...field}
+											type="text"
+											width="100%"
+											placeholder="Отображаемый текст"
+										/>
+										{error && (
+											<span style={{ color: 'red' }}>{error.message}</span>
+										)}
+									</>
 								)}
 							/>
 						</div>
@@ -87,15 +100,26 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 								name="urlOfLink"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'url error' }}
-								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="text"
-										width="100%"
-										placeholder="Вставьте ссылку"
-									/>
+								rules={{
+									required: 'Ссылка обязательна',
+									pattern: {
+										value: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
+										message: 'Введите правильный URL'
+									}
+								}}
+								render={({ field, fieldState: { error } }) => (
+									<>
+										<Input
+											size="medium"
+											{...field}
+											type="text"
+											width="100%"
+											placeholder="Вставьте ссылку"
+										/>
+										{error && (
+											<span style={{ color: 'red' }}>{error.message}</span>
+										)}
+									</>
 								)}
 							/>
 						</div>
@@ -114,7 +138,7 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 							<ButtonCancel
 								type="button"
 								onClick={handleCloseLink}
-								disabled={false}
+								disabled={loading} 
 								width="117px"
 							>
 								Отмена
@@ -122,10 +146,10 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 							<ButtonSave
 								type="submit"
 								width="117px"
-								disabled={false}
+								disabled={loading} 
 								onClick={handleSubmit(onSubmit)}
 							>
-								Добавить
+								{loading ? 'Загрузка...' : 'Добавить'} 
 							</ButtonSave>
 						</div>
 					</Box>

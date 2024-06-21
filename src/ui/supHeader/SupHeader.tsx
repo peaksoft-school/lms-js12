@@ -131,7 +131,10 @@ const SupHeader = () => {
 							<p> Aдминистратор</p>
 						</div>
 						<div>
-							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+							<IconChevronDown
+								style={{ cursor: 'pointer', marginTop: '8px' }}
+								stroke={2}
+							/>
 						</div>
 					</div>
 					<Menu
@@ -211,24 +214,18 @@ const SupHeader = () => {
 							</Tabs>
 						</Box>
 					</Box>
-					<div className={scss.header_elements}>
-						<img
-							onClick={handleOpenNotification}
-							style={{ cursor: 'pointer' }}
-							src={bell}
-							alt="bell"
-						/>
-						<img
-							style={{ cursor: 'pointer' }}
-							onClick={handleClick}
-							src={profile}
-							alt="Profile"
-						/>
-						<div onClick={handleClick}>
-							<div className={scss.instructor_profile}>Учитель</div>
+
+					<div className={scss.courses_admin}>
+						<div className={scss.bell} onClick={handleOpenNotification}>
+							<img src={bell} alt="bell" />
 						</div>
-						<IconChevronDown className={scss.photo_profile} stroke={2} />
+						<img onClick={handleClick} src={profile} alt="Profile" />
+						<p onClick={handleClick}>Учитель</p>
+						<div className={scss.icon} onClick={handleClick}>
+							<IconChevronDown stroke={2} />
+						</div>
 					</div>
+
 					<Menu
 						id="basic-menu"
 						anchorEl={anchorEl}

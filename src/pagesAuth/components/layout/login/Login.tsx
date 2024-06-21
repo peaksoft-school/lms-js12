@@ -42,6 +42,11 @@ const Login: FC = () => {
 	} = useForm<FormData>();
 	const [showPassword, setShowPassword] = useState(false);
 	const [open, setOpen] = useState<boolean>(false);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [loginValue, setLoginValue] = useState<string>('');
+	const [passwordValue, setPasswordValue] = useState<string>('');
+
+	console.log(loginValue, passwordValue);
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -84,9 +89,10 @@ const Login: FC = () => {
 					break;
 			}
 			reset();
-			console.log('is working', response);
+			setErrorMessage(null);
 		} catch (error) {
-			console.log('not working', error);
+			setErrorMessage('Логин или пароль не правильный');
+			console.log('Login error:', error);
 		}
 	};
 
@@ -94,6 +100,16 @@ const Login: FC = () => {
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
+
+	const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setLoginValue(e.target.value);
+		setErrorMessage(null);
+	};
+
+	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPasswordValue(e.target.value);
+		setErrorMessage(null);
+	};
 
 	return (
 		<div className={scss.Login}>
@@ -133,6 +149,10 @@ const Login: FC = () => {
 												placeholder="Введите логин"
 												type="text"
 												error={!!errors.login}
+												onChange={(e) => {
+													field.onChange(e);
+													handleLoginChange(e);
+												}}
 											/>
 										)}
 									/>
@@ -176,6 +196,10 @@ const Login: FC = () => {
 													</InputAdornment>
 												}
 												error={!!errors.password}
+												onChange={(e) => {
+													field.onChange(e);
+													handlePasswordChange(e);
+												}}
 											/>
 										)}
 									/>
@@ -186,6 +210,18 @@ const Login: FC = () => {
 									)}
 								</div>
 							</div>
+							{errorMessage && (
+								<div
+									style={{
+										color: 'red',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center'
+									}}
+								>
+									{errorMessage}
+								</div>
+							)}
 							<div className={scss.Link_Element}>
 								<p onClick={handleOpen}>Забыли пароль?</p>
 							</div>
@@ -207,4 +243,5 @@ const Login: FC = () => {
 		</div>
 	);
 };
+
 export default Login;

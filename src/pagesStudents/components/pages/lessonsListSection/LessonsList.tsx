@@ -1,10 +1,11 @@
-import scss from './LessonsList.module.scss';
-import { Pagination, Stack } from '@mui/material';
 import { useState, KeyboardEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook } from '@tabler/icons-react';
+import { Pagination, Stack } from '@mui/material';
 import { useGetStudentMaterialsQuery } from '@/src/redux/api/students/materials';
+import scss from './LessonsList.module.scss';
+import empty from '@/src/assets/notCreated0.png';
 
 const LessonsList = () => {
 	const { coursesId } = useParams();
@@ -13,16 +14,14 @@ const LessonsList = () => {
 	const [openPage, setOpenPage] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
+
 	const course = Number(coursesId);
 
 	const { data } = useGetStudentMaterialsQuery(course);
 
 	const navigate = useNavigate();
 
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
+	const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
 		setCurrentPage(page);
 	};
 
@@ -57,31 +56,38 @@ const LessonsList = () => {
 	return (
 		<div className={scss.list_lessons}>
 			<div className={scss.container}>
-				<div className={scss.lesson}></div>
 				<div className={scss.title_lesson}>
 					<h1>Материалы</h1>
 				</div>
 				<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
 					<Box>
 						<div style={{ minHeight: '70vh' }}>
-							<div className={scss.card}>
-								{data?.lessonResponses.map((item) => (
-									<div
-										className={scss.cards}
-										onClick={() => {
-											localStorage.setItem('taskName', String(item.title));
-											setTimeout(() => {
-												navigate(`/courses/${coursesId}/materials/${item.id}`);
-											}, 1000);
-										}}
-										key={item.id}
-									>
-										<a href="#" className={scss.link}>
-											<span className={scss.card_item}>№ {item.title}</span>
-										</a>
-									</div>
-								))}
-							</div>
+							{data?.lessonResponses.length === 0 ? (
+								<div className={scss.empty_page}>
+									<img src={empty} alt="Empty state" />
+								</div>
+							) : (
+								<div className={scss.card}>
+									{data?.lessonResponses.map((item) => (
+										<div
+											className={scss.cards}
+											onClick={() => {
+												localStorage.setItem('taskName', String(item.title));
+												setTimeout(() => {
+													navigate(
+														`/courses/${coursesId}/materials/${item.id}`
+													);
+												}, 1000);
+											}}
+											key={item.id}
+										>
+											<a href="#" className={scss.link}>
+												<span className={scss.card_item}>№ {item.title}</span>
+											</a>
+										</div>
+									))}
+								</div>
+							)}
 						</div>
 					</Box>
 				</ScrollArea>
@@ -105,9 +111,8 @@ const LessonsList = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								// count={Math.ceil(data!.length / rowsPerPage)}
 								page={currentPage}
-								onChange={handlePageChangeC}
+								onChange={handlePageChange}
 								shape="rounded"
 								variant="outlined"
 							/>

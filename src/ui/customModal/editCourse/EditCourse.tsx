@@ -115,6 +115,17 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 		setSelectedFile('');
 	};
 
+	const handleDateChange = (newDate: string) => {
+		const currentDate = new Date();
+		const selectedDate = new Date(newDate);
+
+		if (selectedDate < currentDate) {
+			console.log('Выбрана прошлая дата');
+		} else {
+			setDate(newDate);
+		}
+	};
+
 	return (
 		<Modal
 			open={open}
@@ -187,7 +198,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 								size="medium"
 								placeholder="Название курсы"
 								value={date}
-								onChange={(e) => setDate(e.target.value)}
+								onChange={(e) => handleDateChange(e.target.value)}
 								width="100%"
 								type="date"
 							/>

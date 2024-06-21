@@ -4,6 +4,7 @@ import { useState } from 'react';
 import ModalPresentation from '@/src/ui/InstructorModal/ModalPresentation';
 import { useGetPresentationForStudentQuery } from '@/src/redux/api/students/presentationStudent';
 import { useParams } from 'react-router-dom';
+import empty from '@/src/assets/notCreated0.png';
 
 const StudentPresentation = () => {
 	const { lessonId } = useParams();
@@ -26,43 +27,49 @@ const StudentPresentation = () => {
 	return (
 		<div className={scss.presentation}>
 			<div className={scss.card}>
-				{data?.map((item) => (
-					<div key={item.id} className={scss.content}>
-						<div className={scss.cards}>
-							<div className={scss.img}>
-								<iframe
-									style={{ height: '200px' }}
-									className={scss.iframe}
-									src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.file}`}
-									frameBorder="0"
-								></iframe>
-								<div className={scss.button_watch}>
-									<Button
-										sx={{
-											borderRadius: '8px',
-											textTransform: 'capitalize',
-											background: '#0000ff7f',
-											'&:hover': {
-												background: '#0000ffb2'
-											}
-										}}
-										size="medium"
-										variant="contained"
-										onClick={() => openPresentationFunc(item.id)}
-									>
-										Смотреть
-									</Button>
+				{data?.length === 0 ? (
+					<div className={scss.empty_page}>
+						<img src={empty} alt="No presentations available" />
+					</div>
+				) : (
+					data?.map((item) => (
+						<div key={item.id} className={scss.content}>
+							<div className={scss.cards}>
+								<div className={scss.img}>
+									<iframe
+										style={{ height: '200px' }}
+										className={scss.iframe}
+										src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.file}`}
+										frameBorder="0"
+									></iframe>
+									<div className={scss.button_watch}>
+										<Button
+											sx={{
+												borderRadius: '8px',
+												textTransform: 'capitalize',
+												background: '#0000ff7f',
+												'&:hover': {
+													background: '#0000ffb2'
+												}
+											}}
+											size="medium"
+											variant="contained"
+											onClick={() => openPresentationFunc(item.id)}
+										>
+											Смотреть
+										</Button>
+									</div>
 								</div>
-							</div>
-							<div className={scss.title}>
-								<div className={scss.text}>
-									<h1>{item.title}</h1>
-									<p>{item.description}</p>
+								<div className={scss.title}>
+									<div className={scss.text}>
+										<h1>{item.title}</h1>
+										<p>{item.description}</p>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				))}
+					))
+				)}
 			</div>
 			<ModalPresentation
 				saveId={presentationModal}

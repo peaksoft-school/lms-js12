@@ -7,6 +7,7 @@ import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
 import { useState } from 'react';
 import DeleteTask from '@/src/ui/customModal/deleteModal/DeleteTask';
+import empty from '@/src/assets/notCreated0.png';
 
 const CrateTask = () => {
 	const [openDelete, setOpenDelete] = useState(false);
@@ -21,9 +22,11 @@ const CrateTask = () => {
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
 	const openLessonAddTask = () => {
 		navigate(
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/addTask`
@@ -41,6 +44,7 @@ const CrateTask = () => {
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${id}/panding`
 		);
 	};
+
 	return (
 		<div className={scss.Task}>
 			<div className={scss.course_button_modal}>
@@ -56,24 +60,26 @@ const CrateTask = () => {
 					<span>Создать задание</span>
 				</Button>
 			</div>
-			<div className={scss.card_lesson}>
-				{data?.taskResponse.map((item: { id: number; title: string }) => (
-					<div
-						className={scss.card_container}
-						onClick={() => {
-							localStorage.setItem('hwTask', item.title);
-							setSaveId(item.id);
-						}}
-					>
-						<p onClick={() => GetTask(item.id)} className={scss.card_link}>
-							{item.title}
-						</p>
-						<div className={scss.button} onClick={() => setSaveId(item.id)}>
-							<button onClick={handleClick}>
-								<IconDotsVertical stroke={2} />
-							</button>
-						</div>
-						{
+
+			{data?.taskResponse && data.taskResponse.length > 0 ? (
+				<div className={scss.card_lesson}>
+					{data.taskResponse.map((item: { id: number; title: string }) => (
+						<div
+							key={item.id}
+							className={scss.card_container}
+							onClick={() => {
+								localStorage.setItem('hwTask', item.title);
+								setSaveId(item.id);
+							}}
+						>
+							<p onClick={() => GetTask(item.id)} className={scss.card_link}>
+								{item.title}
+							</p>
+							<div className={scss.button} onClick={() => setSaveId(item.id)}>
+								<button onClick={handleClick}>
+									<IconDotsVertical stroke={2} />
+								</button>
+							</div>
 							<Menu
 								id="positioned-menu"
 								anchorEl={anchorEl}
@@ -115,10 +121,14 @@ const CrateTask = () => {
 									Удалить
 								</MenuItem>
 							</Menu>
-						}
-					</div>
-				))}
-			</div>
+						</div>
+					))}
+				</div>
+			) : (
+				<div className={scss.empty_page}>
+					<img src={empty} alt="" />
+				</div>
+			)}
 
 			<DeleteTask
 				openModalDelete={openDelete}

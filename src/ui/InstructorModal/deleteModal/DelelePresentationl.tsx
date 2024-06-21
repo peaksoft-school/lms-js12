@@ -1,5 +1,5 @@
 import scss from './DeletePresentation.module.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,9 +20,20 @@ const DeletePresentation: React.FC<DeleteProps> = ({
 	saveIdElement
 }) => {
 	const [deletePresentation] = useDeletePresentationMutation();
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	const handleDelete = async () => {
-		await deletePresentation(saveIdElement!);
-		closeModalDelete(false);
+		if (isSubmitting) return;
+
+		setIsSubmitting(true);
+		try {
+			await deletePresentation(saveIdElement!).unwrap();
+			closeModalDelete(false);
+		} catch (error) {
+			console.error('Failed to delete presentation:', error);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
@@ -46,16 +57,16 @@ const DeletePresentation: React.FC<DeleteProps> = ({
 							<ButtonCancel
 								width="103px"
 								type="button"
-								disabled={false}
+								disabled={isSubmitting}
 								onClick={() => {
 									closeModalDelete(false);
 								}}
 							>
-								отмена
+								Отмена
 							</ButtonCancel>
 							<ButtonDelete
 								type="button"
-								disabled={false}
+								disabled={isSubmitting}
 								onClick={handleDelete}
 							>
 								Удалить

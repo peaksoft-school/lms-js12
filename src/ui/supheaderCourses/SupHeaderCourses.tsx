@@ -87,16 +87,17 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
+			{/* //! учитель */}
 			{pathname.startsWith('/instructor') && (
 				<>
 					<div className={scss.courses_admin}>
-						<div onClick={handleOpenNotification}>
-							<img style={{ paddingTop: '5px' }} src={bell} alt="bell" />
+						<div className={scss.bell} onClick={handleOpenNotification}>
+							<img src={bell} alt="bell" />
 						</div>
 						<img onClick={handleClick} src={profile} alt="Profile" />
 						<p onClick={handleClick}>Учитель</p>
-						<div onClick={handleClick}>
-							<IconChevronDown style={{ paddingTop: '5px' }} stroke={2} />
+						<div className={scss.icon} onClick={handleClick}>
+							<IconChevronDown stroke={2} />
 						</div>
 					</div>
 					<Menu
@@ -142,6 +143,7 @@ const SupHeaderCourses = () => {
 					</Menu>
 				</>
 			)}
+			{/* //! student */}
 			{pathname.startsWith('/courses') && (
 				<>
 					<div className={scss.courses_admin}>

@@ -11,6 +11,7 @@ import ModalEditVideo from '@/src/ui/InstructorModal/ModalEditVideo';
 import DeleteVideoLesson from '@/src/ui/customModal/deleteModal/DeleteVideoLesson';
 import { useParams } from 'react-router-dom';
 import { Preloader } from '@/src/ui/preloader/Preloader';
+import empty from '@/src/assets/notCreated0.png';
 
 const VideoLesson = () => {
 	const { lessonId } = useParams();
@@ -94,7 +95,9 @@ const VideoLesson = () => {
 										alt={item.titleOfVideo}
 									/>
 									<div
-										onClick={() => handleOpenWatch(item.id)}
+										onClick={() => {
+											handleOpenWatch(item.id);
+										}}
 										className={scss.button_watch}
 									>
 										<Button
@@ -175,7 +178,10 @@ const VideoLesson = () => {
 						</div>
 					))
 				) : (
-					<h3>Пока что видео не загрузили</h3>
+					<div className={scss.empty_page}>
+						<h3>Пока что видео не загрузили!</h3>
+						<img src={empty} alt="" />
+					</div>
 				)}
 			</div>
 			<ModalAddVideoLesson open={openAdd} handleCloseVideo={handleCloseVideo} />

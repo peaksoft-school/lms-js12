@@ -42,8 +42,8 @@ const Groups: FC = () => {
 		page: number
 	): void => {
 		setCurrentPage(page);
-		searchParams.set('page', page.toString()); // Установка новой страницы в параметры поиска
-		navigate(`/admin/group/page/?${searchParams.toString()}`); // Навигация с новыми параметрами
+		searchParams.set('page', page.toString()); 
+		navigate(`/admin/group/page/?${searchParams.toString()}`); 
 	};
 	const handleInputValue = (value: number) => {
 		const valueString = value.toString();

@@ -10,6 +10,7 @@ import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import { Button, Menu, MenuItem } from '@mui/material';
 import watch from '@/src/assets/watch.png';
 import DeleteTest from '@/src/ui/customModal/deleteModal/DeleteTest';
+import empty from '@/src/assets/notCreated0.png';
 
 const TestInstructor = () => {
 	const navigate = useNavigate();
@@ -70,92 +71,101 @@ const TestInstructor = () => {
 					<span>Добавить тест</span>
 				</Button>
 			</div>
-			<div className={scss.container}>
-				{data?.testResponseForGetAll.map((question) => (
-					<div className={scss.test_container_second} key={question.testId}>
-						<div className={scss.test_container_fifth}>
-							<div className={scss.test_cont}>
-								<div
-									className={scss.test_container_third}
-									onClick={() => {
-										setSaveId(question.testId);
-										setTimeout(() => {
-											navigate(
-												`/instructor/course/${courseId}/materials/${lessonId}/${question.testId}/resultTest`
-											);
-										}, 500);
-									}}
-								>
-									<div style={{ display: 'flex', gap: '10px' }}>
-										<h4>{question.testId}</h4>
-										<h4 className={scss.test_text}>
-											{truncateText(question.title, 40)}
-										</h4>
-									</div>
-									<div className={scss.test_container_forth}>
-										<p className={scss.text_time}>
-											Время: {question.hour}ч.{question.minute} минут
-										</p>
+
+			{data?.testResponseForGetAll && data.testResponseForGetAll.length > 0 ? (
+				<div className={scss.container}>
+					{data.testResponseForGetAll.map((question) => (
+						<div className={scss.test_container_second} key={question.testId}>
+							<div className={scss.test_container_fifth}>
+								<div className={scss.test_cont}>
+									<div
+										className={scss.test_container_third}
+										onClick={() => {
+											setSaveId(question.testId);
+											setTimeout(() => {
+												navigate(
+													`/instructor/course/${courseId}/materials/${lessonId}/${question.testId}/resultTest`
+												);
+											}, 500);
+										}}
+									>
+										<div style={{ display: 'flex', gap: '10px' }}>
+											<h4>{question.testId}</h4>
+											<h4 className={scss.test_text}>
+												{truncateText(question.title, 40)}
+											</h4>
+										</div>
+										<div className={scss.test_container_forth}>
+											<p className={scss.text_time}>
+												Время: {question.hour}ч.{question.minute} минут
+											</p>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div>
-								<button
-									onClick={(event) => {
-										handleClick(event);
-										setSaveId(question.testId);
-									}}
-									className={scss.button}
-									aria-controls="positioned-menu"
-									aria-haspopup="true"
-								>
-									<IconDotsVertical stroke={2} />
-								</button>
+								<div>
+									<button
+										onClick={(event) => {
+											handleClick(event);
+											setSaveId(question.testId);
+										}}
+										className={scss.button}
+										aria-controls="positioned-menu"
+										aria-haspopup="true"
+									>
+										<IconDotsVertical stroke={2} />
+									</button>
+									<Menu
+										anchorEl={anchorEl}
+										id="positioned-menu"
+										open={open}
+										onClose={handleClose}
+										anchorOrigin={{
+											vertical: 'bottom',
+											horizontal: 'right'
+										}}
+										transformOrigin={{
+											vertical: 'top',
+											horizontal: 'right'
+										}}
+										PaperProps={{
+											style: { boxShadow: 'none', border: '1px solid gray' }
+										}}
+									>
+										<MenuItem
+											style={{ display: 'flex', gap: '10px' }}
+											onClick={handleOpenWatch}
+										>
+											<img src={watch} alt="Delete" />
+											<p>Просмотреть тест</p>
+										</MenuItem>
+										<MenuItem
+											style={{ display: 'flex', gap: '10px' }}
+											onClick={handleEdit}
+										>
+											<img src={editIcon} alt="Edit" />
+											<p>Редактировать</p>
+										</MenuItem>
+										<MenuItem
+											style={{ display: 'flex', gap: '10px' }}
+											onClick={() => {
+												setOpenDeleteTest(true);
+												handleClose();
+											}}
+										>
+											<img src={deleteIcon} alt="Delete" />
+											<p>Удалить</p>
+										</MenuItem>
+									</Menu>
+								</div>
 							</div>
 						</div>
-					</div>
-				))}
-				<div className={scss.test_buttons_container}></div>
-			</div>
-			<Menu
-				anchorEl={anchorEl}
-				id="positioned-menu"
-				open={open}
-				onClose={handleClose}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'right'
-				}}
-				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'right'
-				}}
-				PaperProps={{
-					style: { boxShadow: 'none', border: '1px solid gray' }
-				}}
-			>
-				<MenuItem
-					style={{ display: 'flex', gap: '10px' }}
-					onClick={handleOpenWatch}
-				>
-					<img src={watch} alt="Delete" />
-					<p>Просмотреть тест</p>
-				</MenuItem>
-				<MenuItem style={{ display: 'flex', gap: '10px' }} onClick={handleEdit}>
-					<img src={editIcon} alt="Edit" />
-					<p>Редактировать</p>
-				</MenuItem>
-				<MenuItem
-					style={{ display: 'flex', gap: '10px' }}
-					onClick={() => {
-						setOpenDeleteTest(true);
-						handleClose();
-					}}
-				>
-					<img src={deleteIcon} alt="Delete" />
-					<p>Удалить</p>
-				</MenuItem>
-			</Menu>
+					))}
+				</div>
+			) : (
+				<div className={scss.empty_page}>
+					<img src={empty} alt="" />
+				</div>
+			)}
 
 			<DeleteTest
 				openModalDelete={deleteTest}
