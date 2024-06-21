@@ -26,8 +26,6 @@ const Announcements = () => {
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const { data } = useGetAnnouncementTableQuery();
-
-	console.log(data, 'card');
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(4);

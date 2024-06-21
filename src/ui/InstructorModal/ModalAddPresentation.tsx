@@ -54,6 +54,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
 	const [postPresentation] = usePostPresentationMutation();
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const isButtonDisabled = !(
 		dirtyFields.title &&
@@ -62,6 +63,9 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 	);
 
 	const onSubmit: SubmitHandler<PostModalAddPresentation> = async (data) => {
+		if (isSubmitting) return;
+
+		setIsSubmitting(true);
 		const { title, description } = data;
 
 		if (title !== '' && description !== '' && selectedFile !== null) {
@@ -77,6 +81,8 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 				handleClose();
 			} catch (error) {
 				console.error('Failed to upload presentation:', error);
+			} finally {
+				setIsSubmitting(false);
 			}
 		}
 	};
@@ -204,7 +210,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 						>
 							<ButtonCancel
 								type="button"
-								disabled={false}
+								disabled={isSubmitting}
 								onClick={handleClose}
 								width="117px"
 							>
@@ -214,7 +220,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="117px"
-								disabled={isButtonDisabled}
+								disabled={isButtonDisabled || isSubmitting}
 							>
 								Добавить
 							</ButtonSave>

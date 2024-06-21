@@ -51,6 +51,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 	const [createCourse] = useCreateAdminCourseMutation();
 	const [createCourseFileImg] = useCreateCourseFileImgMutation();
 	const [isFormValid, setIsFormValid] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const [urlImg, setUrlImg] = useState('');
 
@@ -96,6 +97,8 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 			return;
 		}
 
+		setIsSubmitting(true);
+
 		const newCourse = {
 			title: value,
 			image: urlImg,
@@ -115,12 +118,25 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 			setIsFormValid(false);
 		} catch (error) {
 			notifyError();
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
 	useEffect(() => {
 		setIsFormValid(!!value && !!urlImg && !!data && !!text);
 	}, [value, urlImg, data, text]);
+
+	const handleDateChange = (newDate: string) => {
+		const currentDate = new Date();
+		const selectedDate = new Date(newDate);
+
+		if (selectedDate < currentDate) {
+			setData('');
+		} else {
+			setData(newDate);
+		}
+	};
 
 	return (
 		<div>
@@ -183,7 +199,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 									width="100%"
 									placeholder="Дата курса"
 									value={data}
-									onChange={(e) => setData(e.target.value)}
+									onChange={(e) => handleDateChange(e.target.value)}
 									type="date"
 								/>
 							</div>
@@ -216,7 +232,7 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 							<ButtonSave
 								type="submit"
 								onClick={handleCreateCourse}
-								disabled={!isFormValid}
+								disabled={!isFormValid || isSubmitting}
 								width="117px"
 							>
 								Добавить

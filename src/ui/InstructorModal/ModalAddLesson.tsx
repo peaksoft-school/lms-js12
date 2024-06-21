@@ -1,5 +1,4 @@
-import scss from './Styled.module.scss';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -9,6 +8,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { usePostMaterialsMutation } from '@/src/redux/api/instructor/materials';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import scss from './Styled.module.scss';
 
 interface FormData {
 	title: string;
@@ -33,34 +33,38 @@ const style = {
 	borderRadius: '12px'
 };
 
-const ModalAddLesson: FC<AddLessonProps> = ({
-	handleOpen,
-	open,
-	handleClose
-}) => {
+const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 	const {
 		handleSubmit,
 		reset,
 		control,
-		formState: { dirtyFields }
+		formState: { dirtyFields, errors }
 	} = useForm<FormData>();
 	const [postMaterials] = usePostMaterialsMutation();
 	const { courseId } = useParams();
 	const course = Number(courseId);
-	console.log(handleOpen);
 
-	const isButtonDisabled = !(dirtyFields.title && dirtyFields.date);
+	const [loading, setLoading] = useState(false);
+
+	const isButtonDisabled = !(dirtyFields.title && dirtyFields.date) || loading;
 
 	const onSubmit: SubmitHandler<FormData> = async (data) => {
+		setLoading(true);
 		const { title, date } = data;
 		if (title !== '' && date !== '') {
 			const postData = {
 				title: title,
 				createdAt: date
 			};
-			await postMaterials({ postData, course });
-			reset();
-			handleClose();
+			try {
+				await postMaterials({ postData, course });
+				reset();
+				handleClose();
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
 		}
 	};
 
@@ -88,27 +92,52 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 								name="title"
 								control={control}
 								defaultValue=""
+								rules={{ required: 'Название урока обязательно' }}
 								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="text"
-										width="100%"
-										placeholder="Название урока"
-									/>
+									<>
+										<Input
+											size="medium"
+											{...field}
+											type="text"
+											width="100%"
+											placeholder="Название урока"
+										/>
+										{errors.title && (
+											<span style={{ color: 'red' }}>
+												{errors.title.message}
+											</span>
+										)}
+									</>
 								)}
 							/>
 							<Controller
 								name="date"
 								control={control}
+								defaultValue=""
+								rules={{
+									validate: (value) => {
+										const selectedDate = new Date(value);
+										const currentDate = new Date();
+										currentDate.setHours(0, 0, 0, 0);
+										return (
+											selectedDate >= currentDate ||
+											'Вы не можете выбрать прошедшую дату'
+										);
+									}
+								}}
 								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="date"
-										width="100%"
-										placeholder="Дата"
-									/>
+									<>
+										<Input
+											size="medium"
+											{...field}
+											type="date"
+											width="100%"
+											placeholder="Дата"
+										/>
+										<p style={{ color: 'red' }}>
+											{errors.date && <span>{errors.date.message}</span>}
+										</p>
+									</>
 								)}
 							/>
 						</div>
@@ -126,7 +155,7 @@ const ModalAddLesson: FC<AddLessonProps> = ({
 							<ButtonCancel
 								type="button"
 								onClick={handleClose}
-								disabled={false}
+								disabled={loading}
 								width="117px"
 							>
 								Отмена

@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import scss from './Materials.module.scss';
 import deleteIcon from '@/src/assets/svgs/delete-red.svg';
+import empty from '@/src/assets/notCreated0.png';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
 import {
 	IconArticle,
@@ -46,12 +47,6 @@ const Materials: FC = () => {
 	const navigate = useNavigate();
 	const handleOpen = () => setOpenModal(true);
 
-	// useEffect(() => {
-	// 	if (data) {
-	// 		setTodos(data);
-	// 	}
-	// }, [data]);
-
 	useEffect(() => {
 		if (todos.length > 0) {
 			localStorage.setItem('todos', JSON.stringify(todos));
@@ -93,22 +88,10 @@ const Materials: FC = () => {
 		setCurrentPage(page);
 	};
 
-	// const handleAppend = (event: React.KeyboardEvent<HTMLInputElement>) => {
-	// 	if (event.key === 'Enter') {
-	// 		const newOpenPage = parseInt(event.currentTarget.value);
-	// 		if (!isNaN(newOpenPage) && newOpenPage > 12) {
-	// 			setRowsPerPage(newOpenPage);
-	// 			setOpenPart(1);
-	// 			setCurrentPage(1);
-	// 		} else {
-	// 			setRowsPerPage(12);
-	// 		}
-	// 	}
-	// };
-
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const item = localStorage.getItem('item');
 
 	return (
@@ -137,171 +120,177 @@ const Materials: FC = () => {
 							classNames={scss}
 						>
 							<Box>
-								<div className={scss.table_container}>
-									<div className={scss.material_content}>
-										<table className={scss.table}>
-											<thead>
-												<tr>
-													<th>Название урока</th>
-													<th className={scss.date}>Дата публикации</th>
-													<th className={scss.last_th}>Действие</th>
-												</tr>
-											</thead>
-											<Droppable droppableId="todos">
-												{(droppableProvider) => (
-													<tbody
-														ref={droppableProvider.innerRef}
-														{...droppableProvider.droppableProps}
-													>
-														{data?.lessonResponses &&
-															data?.lessonResponses.map((todo, index) => (
-																<Draggable
-																	index={index}
-																	key={todo.id}
-																	draggableId={`${todo.id}`}
-																>
-																	{(draggableProvider) => (
-																		<tr
-																			onClick={() =>
-																				localStorage.setItem(
-																					'taskName',
-																					todo.title
-																				)
-																			}
-																			className={
-																				index % 2 === 1
-																					? scss.table_alternate_row
-																					: '' || scss.table_container_second
-																			}
-																			ref={draggableProvider.innerRef}
-																			{...draggableProvider.draggableProps}
-																			{...draggableProvider.dragHandleProps}
-																		>
-																			<td
-																				onClick={() => {
-																					setTimeout(() => {
-																						navigate(
-																							`/instructor/course/${courseId}/materials/${todo.id}`
-																						);
-																					}, 1000);
-																				}}
-																				style={{
-																					paddingLeft: '20px',
-																					paddingTop: '12px',
-																					display: 'flex',
-																					gap: '10px',
-																					alignItems: 'center',
-																					cursor: 'pointer'
-																				}}
-																			>
-																				<IconEqual stroke={2} />
-																				{todo.title}
-																			</td>
-																			<td
-																				onClick={() => {
-																					setTimeout(() => {
-																						navigate(
-																							`/instructor/course/${courseId}/materials/${todo.id}`
-																						);
-																					}, 500);
-																				}}
-																				style={{
-																					textAlign: 'end',
-																					paddingRight: '70px',
-																					cursor: 'pointer'
-																				}}
-																			>
-																				{todo.createdAt}
-																			</td>
-																			<td className={scss.TableCellIcon}>
-																				<button
-																					className={scss.button}
-																					aria-controls={
-																						open ? 'basic-menu' : undefined
-																					}
-																					aria-haspopup="true"
-																					onClick={(e) => {
-																						handleClick(e);
-																						setDeleteById(todo.id);
-																					}}
-																				>
-																					<IconDotsVertical stroke={2} />
-																				</button>
-																				<Menu
-																					id="basic-menu"
-																					anchorEl={anchorEl}
-																					open={open}
-																					onClose={handleClose}
-																					MenuListProps={{
-																						'aria-labelledby': 'basic-button'
-																					}}
-																					elevation={0}
-																					anchorOrigin={{
-																						vertical: 'bottom',
-																						horizontal: 'right'
-																					}}
-																					transformOrigin={{
-																						vertical: 'top',
-																						horizontal: 'right'
-																					}}
-																					PaperProps={{
-																						style: {
-																							boxShadow: 'none',
-																							border: '1px solid gray'
-																						}
-																					}}
-																				>
-																					<MenuItem
-																						style={{
-																							display: 'flex',
-																							gap: '10px'
-																						}}
-																						onClick={() => {
-																							setOpenModalEdit(true);
-																							setAnchorEl(null);
-																						}}
-																					>
-																						<img src={editIcon} alt="Edit" />
-																						<p>Редактировать</p>
-																					</MenuItem>
-																					<MenuItem
-																						style={{
-																							display: 'flex',
-																							gap: '10px'
-																						}}
-																						onClick={() => {
-																							setOpenModalDelete(true);
-																							setAnchorEl(null);
-																						}}
-																					>
-																						<img
-																							src={deleteIcon}
-																							alt="Delete"
-																						/>
-																						<p>Удалить</p>
-																					</MenuItem>
-																				</Menu>
-																			</td>
-																		</tr>
-																	)}
-																</Draggable>
-															))}
-													</tbody>
-												)}
-											</Droppable>
-										</table>
-										<ModalMaterialEdit
-											openModalEdit={openModalEdit}
-											closeModalEdit={() => setOpenModalEdit(false)}
-											deleteById={deleteById}
-										/>
-										<DeleteMaterial
-											open={openModalDelete}
-											handleCloseModal={() => setOpenModalDelete(false)}
-											deleteById={deleteById}
-										/>
+								{data?.lessonResponses?.length === 0 ? (
+									<div className={scss.empty_page}>
+										<img src={empty} alt="" />
 									</div>
-								</div>
+								) : (
+									<div className={scss.table_container}>
+										<div className={scss.material_content}>
+											<table className={scss.table}>
+												<thead>
+													<tr>
+														<th>Название урока</th>
+														<th className={scss.date}>Дата публикации</th>
+														<th className={scss.last_th}>Действие</th>
+													</tr>
+												</thead>
+												<Droppable droppableId="todos">
+													{(droppableProvider) => (
+														<tbody
+															ref={droppableProvider.innerRef}
+															{...droppableProvider.droppableProps}
+														>
+															{data?.lessonResponses &&
+																data?.lessonResponses.map((todo, index) => (
+																	<Draggable
+																		index={index}
+																		key={todo.id}
+																		draggableId={`${todo.id}`}
+																	>
+																		{(draggableProvider) => (
+																			<tr
+																				onClick={() =>
+																					localStorage.setItem(
+																						'taskName',
+																						todo.title
+																					)
+																				}
+																				className={
+																					index % 2 === 1
+																						? scss.table_alternate_row
+																						: '' || scss.table_container_second
+																				}
+																				ref={draggableProvider.innerRef}
+																				{...draggableProvider.draggableProps}
+																				{...draggableProvider.dragHandleProps}
+																			>
+																				<td
+																					onClick={() => {
+																						setTimeout(() => {
+																							navigate(
+																								`/instructor/course/${courseId}/materials/${todo.id}`
+																							);
+																						}, 1000);
+																					}}
+																					style={{
+																						paddingLeft: '20px',
+																						paddingTop: '12px',
+																						display: 'flex',
+																						gap: '10px',
+																						alignItems: 'center',
+																						cursor: 'pointer'
+																					}}
+																				>
+																					<IconEqual stroke={2} />
+																					{todo.title}
+																				</td>
+																				<td
+																					onClick={() => {
+																						setTimeout(() => {
+																							navigate(
+																								`/instructor/course/${courseId}/materials/${todo.id}`
+																							);
+																						}, 500);
+																					}}
+																					style={{
+																						textAlign: 'end',
+																						paddingRight: '70px',
+																						cursor: 'pointer'
+																					}}
+																				>
+																					{todo.createdAt}
+																				</td>
+																				<td className={scss.TableCellIcon}>
+																					<button
+																						className={scss.button}
+																						aria-controls={
+																							open ? 'basic-menu' : undefined
+																						}
+																						aria-haspopup="true"
+																						onClick={(e) => {
+																							handleClick(e);
+																							setDeleteById(todo.id);
+																						}}
+																					>
+																						<IconDotsVertical stroke={2} />
+																					</button>
+																					<Menu
+																						id="basic-menu"
+																						anchorEl={anchorEl}
+																						open={open}
+																						onClose={handleClose}
+																						MenuListProps={{
+																							'aria-labelledby': 'basic-button'
+																						}}
+																						elevation={0}
+																						anchorOrigin={{
+																							vertical: 'bottom',
+																							horizontal: 'right'
+																						}}
+																						transformOrigin={{
+																							vertical: 'top',
+																							horizontal: 'right'
+																						}}
+																						PaperProps={{
+																							style: {
+																								boxShadow: 'none',
+																								border: '1px solid gray'
+																							}
+																						}}
+																					>
+																						<MenuItem
+																							style={{
+																								display: 'flex',
+																								gap: '10px'
+																							}}
+																							onClick={() => {
+																								setOpenModalEdit(true);
+																								setAnchorEl(null);
+																							}}
+																						>
+																							<img src={editIcon} alt="Edit" />
+																							<p>Редактировать</p>
+																						</MenuItem>
+																						<MenuItem
+																							style={{
+																								display: 'flex',
+																								gap: '10px'
+																							}}
+																							onClick={() => {
+																								setOpenModalDelete(true);
+																								setAnchorEl(null);
+																							}}
+																						>
+																							<img
+																								src={deleteIcon}
+																								alt="Delete"
+																							/>
+																							<p>Удалить</p>
+																						</MenuItem>
+																					</Menu>
+																				</td>
+																			</tr>
+																		)}
+																	</Draggable>
+																))}
+														</tbody>
+													)}
+												</Droppable>
+											</table>
+											<ModalMaterialEdit
+												openModalEdit={openModalEdit}
+												closeModalEdit={() => setOpenModalEdit(false)}
+												deleteById={deleteById}
+											/>
+											<DeleteMaterial
+												open={openModalDelete}
+												handleCloseModal={() => setOpenModalDelete(false)}
+												deleteById={deleteById}
+											/>
+										</div>
+									</div>
+								)}
 							</Box>
 						</ScrollArea>
 					</div>
@@ -315,7 +304,6 @@ const Materials: FC = () => {
 								type="text"
 								value={openPart}
 								onChange={(e) => setOpenPart(+e.target.value)}
-								// onKeyDown={(e) => handleAppend(e)}
 							/>
 						</div>
 						<div className={scss.stack}>
@@ -337,7 +325,6 @@ const Materials: FC = () => {
 								type="text"
 								value={openPage}
 								onChange={(e) => setOpenPage(+e.target.value)}
-								// onKeyDown={(e) => handleAppend(e)}
 							/>
 						</div>
 					</div>

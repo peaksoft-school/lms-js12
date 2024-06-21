@@ -11,6 +11,7 @@ import DeletePresentation from '@/src/ui/InstructorModal/deleteModal/DelelePrese
 import ModalPresentation from '@/src/ui/InstructorModal/ModalPresentation';
 import ModalAddPresentation from '@/src/ui/InstructorModal/ModalAddPresentation';
 import { useParams } from 'react-router-dom';
+import empty from '@/src/assets/notCreated0.png';
 
 const Presentation = () => {
 	const [open1, setOpen1] = useState<boolean>(false);
@@ -25,7 +26,6 @@ const Presentation = () => {
 	const [presentationModal, setPresentationModal] = useState<null | number>(
 		null
 	);
-
 	const openPresentationFunc = (id: number) => {
 		setPresentationModal(id);
 		setOpenPresentation(true);
@@ -33,7 +33,6 @@ const Presentation = () => {
 	const closePresentation = () => {
 		setOpenPresentation(false);
 	};
-
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -41,11 +40,9 @@ const Presentation = () => {
 	const handleCloseDrop = () => {
 		setAnchorEl(null);
 	};
-
 	const handleClose = () => {
 		setOpen1(false);
 	};
-
 	const handleOpen = () => {
 		setOpen1(true);
 	};
@@ -61,7 +58,6 @@ const Presentation = () => {
 	const closeDeleteFunc = () => {
 		setOpenDelete(false);
 	};
-
 	return (
 		<div className={scss.presentation}>
 			<div
@@ -175,7 +171,9 @@ const Presentation = () => {
 						</div>
 					))
 				) : (
-					<h3>Пока что презентацию не загрузили</h3>
+					<div className={scss.empty_page}>
+						<img src={empty} alt="" />
+					</div>
 				)}
 			</div>
 			<ModalAddPresentation handleClose={handleClose} open={open1} />
@@ -197,5 +195,4 @@ const Presentation = () => {
 		</div>
 	);
 };
-
 export default Presentation;

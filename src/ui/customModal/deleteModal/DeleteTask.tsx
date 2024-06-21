@@ -1,12 +1,12 @@
 import scss from './DeleteTeacher.module.scss';
-import React from 'react';
-import Button from '@mui/material/Button';
+import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteTaskInstructorMutation } from '@/src/redux/api/instructor/addTask';
+import ButtonDelete from '../../customButton/ButtonDelete';
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -20,12 +20,13 @@ const DeleteTask: React.FC<DeleteProps> = ({
 	deleteById
 }) => {
 	const [deleteTaskInstructor] = useDeleteTaskInstructorMutation();
-
-	console.log(deleteById);
+	const [loading, setLoading] = useState(false);
 
 	const handleDelete = async () => {
 		if (deleteById !== null) {
+			setLoading(true);
 			await deleteTaskInstructor(deleteById);
+			setLoading(false);
 			closeModalDelete(false);
 		}
 	};
@@ -44,32 +45,27 @@ const DeleteTask: React.FC<DeleteProps> = ({
 					>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-description">
-								<h3>Вы уверены, что хотите удалить этого студента?</h3>
+								<h3>Вы уверены, что хотите удалить этого задание?</h3>
 							</DialogContentText>
 						</DialogContent>
 						<DialogActions className={scss.buttons}>
 							<ButtonCancel
 								width="103px"
 								type="button"
-								disabled={false}
+								disabled={loading}
 								onClick={() => {
 									closeModalDelete(false);
 								}}
 							>
 								отмена
 							</ButtonCancel>
-							<Button
+							<ButtonDelete
+								type="button"
+								disabled={loading}
 								onClick={handleDelete}
-								autoFocus
-								style={{
-									backgroundColor: '#F70D1A',
-									color: '#fff',
-									width: '108px',
-									height: '40px'
-								}}
 							>
 								Удалить
-							</Button>
+							</ButtonDelete>
 						</DialogActions>
 					</Dialog>
 				</div>
@@ -79,66 +75,3 @@ const DeleteTask: React.FC<DeleteProps> = ({
 };
 
 export default DeleteTask;
-
-// const DeleteTask: React.FC<DeleteProps> = ({
-// 	openModalDelete,
-// 	closeModalDelete,
-// 	deleteById
-// }) => {
-// 	const [deleteTaskInstructor] = useDeleteTaskInstructorMutation();
-
-// 	const handleDelete = async () => {
-// 		await deleteTaskInstructor(deleteById!);
-// 		closeModalDelete(false);
-// 	};
-// 	console.log(deleteById);
-
-// 	return (
-// 		<div>
-// 			<React.Fragment>
-// 				<div>
-// 					<Dialog
-// 						open={openModalDelete}
-// 						aria-labelledby="alert-dialog-title"
-// 						aria-describedby="alert-dialog-description"
-// 						PaperProps={{
-// 							className: scss.dialog_paper
-// 						}}
-// 					>
-// 						<DialogContent>
-// 							<DialogContentText id="alert-dialog-description">
-// 								<h3>Вы уверены, что хотите удалить этого студента?</h3>
-// 							</DialogContentText>
-// 						</DialogContent>
-// 						<DialogActions className={scss.buttons}>
-// 							<ButtonCancel
-// 								width="103px"
-// 								type="button"
-// 								disabled={false}
-// 								onClick={() => {
-// 									closeModalDelete(false);
-// 								}}
-// 							>
-// 								отмена
-// 							</ButtonCancel>
-// 							<Button
-// 								onClick={handleDelete}
-// 								autoFocus
-// 								style={{
-// 									backgroundColor: '#F70D1A',
-// 									color: '#fff',
-// 									width: '108px',
-// 									height: '40px'
-// 								}}
-// 							>
-// 								Удалить
-// 							</Button>
-// 						</DialogActions>
-// 					</Dialog>
-// 				</div>
-// 			</React.Fragment>
-// 		</div>
-// 	);
-// };
-
-// export default DeleteTask;

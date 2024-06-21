@@ -1,18 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import scss from './Styled.module.scss';
-import { FC, useEffect } from 'react';
-import {
-	useForm,
-	Controller,
-	SubmitHandler,
-	FieldValues
-} from 'react-hook-form';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Modal, Box, Typography } from '@mui/material';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import scss from './Styled.module.scss';
+import { FC, useEffect } from 'react';
 import {
 	useEditLinkMutation,
 	useGetLinkQuery
@@ -25,36 +17,40 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
-	height: 285,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '10px'
 };
 
-interface PresentationProps1 {
+interface LinkProps {
+	title: string;
+	url: string;
+}
+
+interface EditLinkProps {
 	open: boolean;
 	handleClose: () => void;
 	resultId: number | boolean;
 }
 
-const EditLink: FC<PresentationProps1> = ({ open, handleClose, resultId }) => {
-	const { control, handleSubmit, reset } = useForm();
+const EditLink: FC<EditLinkProps> = ({ open, handleClose, resultId }) => {
+	const { control, handleSubmit, reset, formState } = useForm<LinkProps>();
+	const { dirtyFields } = formState; // Access dirtyFields to track changes
 	const { lessonId } = useParams();
-	const lesson = Number(lessonId);
-	const { data, isFetching } = useGetLinkQuery(lesson);
-
+	const { data: linkData, isFetching } = useGetLinkQuery(Number(lessonId));
 	const [editLink] = useEditLinkMutation();
 
-	const finder = data?.linkResponses.find((item) => item.id === resultId);
+	const finder = linkData?.linkResponses.find((item) => item.id === resultId);
 
 	useEffect(() => {
 		reset({
-			title: finder?.title,
-			url: finder?.url
+			title: finder?.title || '',
+			url: finder?.url || ''
 		});
-	}, [finder]);
-	const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
+	}, [finder, reset]);
+
+	const onSubmit: SubmitHandler<LinkProps> = async (formData) => {
 		if (resultId === undefined) {
 			console.error('resultId is undefined');
 			return;
@@ -93,7 +89,7 @@ const EditLink: FC<PresentationProps1> = ({ open, handleClose, resultId }) => {
 							<Controller
 								name="title"
 								control={control}
-								defaultValue={finder ? finder.title : ''}
+								defaultValue={finder?.title || ''}
 								rules={{ required: 'Введите название' }}
 								render={({ field }) => (
 									<Input
@@ -111,16 +107,27 @@ const EditLink: FC<PresentationProps1> = ({ open, handleClose, resultId }) => {
 							<Controller
 								name="url"
 								control={control}
-								defaultValue={finder ? finder.url : ''}
-								rules={{ required: 'Введите ссылку' }}
-								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="text"
-										width="100%"
-										placeholder="Введите ссылку"
-									/>
+								defaultValue={finder?.url || ''}
+								rules={{
+									required: 'Введите ссылку',
+									pattern: {
+										value: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
+										message: 'Введите правильный URL'
+									}
+								}}
+								render={({ field, fieldState: { error } }) => (
+									<>
+										<Input
+											size="medium"
+											{...field}
+											type="text"
+											width="100%"
+											placeholder="Введите ссылку"
+										/>
+										{error && (
+											<span style={{ color: 'red' }}>{error.message}</span>
+										)}
+									</>
 								)}
 							/>
 						</div>
@@ -147,7 +154,7 @@ const EditLink: FC<PresentationProps1> = ({ open, handleClose, resultId }) => {
 							<ButtonSave
 								type="submit"
 								width="117px"
-								disabled={false}
+								disabled={!Object.keys(dirtyFields).length}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Сохранить

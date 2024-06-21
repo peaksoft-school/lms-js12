@@ -6,11 +6,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { Button } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {
-	useCreateTaskInstructorMutation
-	// useDeleteFileTaskInstructorMutation
-} from '@/src/redux/api/instructor/addTask';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { useCreateTaskInstructorMutation } from '@/src/redux/api/instructor/addTask';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -18,9 +14,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { IconDownload } from '@tabler/icons-react';
 import { Dayjs } from 'dayjs';
 import { Box, ScrollArea } from '@mantine/core';
-import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 import Sources from 'quill';
 import ButtonDelete from '@/src/ui/customButton/ButtonDelete';
+import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 
 const AddTask: React.FC = () => {
 	const [title, setTitle] = useState('');
@@ -30,12 +26,10 @@ const AddTask: React.FC = () => {
 	const { courseId, lessonId } = useParams();
 	const navigate = useNavigate();
 	const [createTaskInstructor] = useCreateTaskInstructorMutation();
-	// const [deleteFileTaskInstructor] = useDeleteFileTaskInstructorMutation();
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [saveSelect, setSelectedFile] = useState<string | null>(null);
 	const [secondSave, setSecondSave] = useState<string | null>(null);
-	// const [fileName, setFileName] = useState<string | null>(null);
 	const [description, setDescription] = useState('');
 
 	const handleFileSelect = async (
@@ -44,7 +38,6 @@ const AddTask: React.FC = () => {
 		const files = event.target.files;
 		if (files && files[0]) {
 			const file = files[0];
-			console.log(file);
 			const formData = new FormData();
 			formData.append('file', file);
 			formData.append('description', description);
@@ -135,13 +128,12 @@ const AddTask: React.FC = () => {
 				lessonId
 			}).unwrap();
 
-			if (!response) {
-				throw new Error('Invalid response from server');
+			if (response) {
+				navigate(`/instructor/course/${courseId}/materials/${lessonId}/lesson`);
+				setTitle('');
+				setValue('');
+				setSelectedDate(null);
 			}
-
-			setTitle('');
-			setValue('');
-			setSelectedDate(null);
 		} catch (error) {
 			console.error('Error creating task:', error);
 		}
@@ -150,7 +142,6 @@ const AddTask: React.FC = () => {
 	const handleDeleteFile = async () => {
 		try {
 			setSecondSave(null);
-
 			console.log('File deleted successfully');
 		} catch (error) {
 			console.error('Error deleting file:', error);
@@ -266,13 +257,11 @@ const AddTask: React.FC = () => {
 						<div className={scss.dataInput}>
 							<p>Срок сдачи:</p>
 							<LocalizationProvider dateAdapter={AdapterDayjs}>
-								<DemoContainer components={['DateTimePicker']}>
-									<DateTimePicker
-										label="Выберите дату и время"
-										value={selectedDate}
-										onChange={(newDate) => setSelectedDate(newDate)}
-									/>
-								</DemoContainer>
+								<DateTimePicker
+									label="Выберите дату и время"
+									value={selectedDate}
+									onChange={(newDate) => setSelectedDate(newDate)}
+								/>
 							</LocalizationProvider>
 						</div>
 

@@ -16,7 +16,7 @@ import {
 	IconPlus,
 	IconUpload
 } from '@tabler/icons-react';
-import React, { KeyboardEvent, MouseEvent, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import scss from './Student.module.scss';
 import { Box, ScrollArea } from '@mantine/core';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -41,10 +41,12 @@ const Student: React.FC = () => {
 	const [saveItem, setSaveItem] = useState<Student | undefined>(undefined);
 	const [open, setOpen] = useState<boolean>(false);
 	const [openStudent, setOpenStudent] = useState<boolean>(false);
-	const [openPart, setOpenPart] = useState<number>(8);
+	const [openPart, setOpenPart] = useState<number>(12);
 	const [openPage, setOpenPage] = useState<number>(1);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const navigate = useNavigate();
+
+	console.log(setRowsPerPage);
 
 	const handleSize = (value: number) => {
 		const valueSize = value.toString();

@@ -1,3 +1,4 @@
+import { FC, useState } from 'react';
 import scss from './Styled.module.scss';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
@@ -6,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import { FC } from 'react';
 import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
 import { useParams } from 'react-router-dom';
 
@@ -47,6 +47,9 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	const [postVideoLesson] = usePostVideoLessonMutation();
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
+	
+
+	const [loading, setLoading] = useState(false);
 
 	const isButtonDisabled = !(
 		dirtyFields.titleOfVideo &&
@@ -75,9 +78,16 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 					description: description,
 					linkOfVideo: videoId
 				};
-				await postVideoLesson({ postData, lesson });
-				reset();
-				handleCloseVideo();
+				setLoading(true);
+				try {
+					await postVideoLesson({ postData, lesson });
+					reset();
+					handleCloseVideo();
+				} catch (error) {
+					console.error(error);
+				} finally {
+					setLoading(false);
+				}
 			}
 		}
 	};
@@ -159,18 +169,18 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 							}}
 						>
 							<ButtonCancel
-								type="submit"
-								disabled={false}
+								type="button"
+								disabled={loading}
 								onClick={handleCloseVideo}
 								width="117px"
 							>
 								Отмена
 							</ButtonCancel>
 							<ButtonSave
+								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="117px"
-								disabled={isButtonDisabled}
-								onClick={handleSubmit(onSubmit)}
+								disabled={isButtonDisabled || loading}
 							>
 								Добавить
 							</ButtonSave>

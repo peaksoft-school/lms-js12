@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { FC, useEffect, useRef, useState } from 'react';
 import scss from './CreateGroup.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,7 +8,6 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { FC, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -47,6 +47,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 	const [createGroupFile] = useCreateGroupFileMutation();
 	const [urlImg, setUrlImg] = useState('');
 	const [isFormValid, setIsFormValid] = useState(false);
+	const [creatingGroup, setCreatingGroup] = useState(false);
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -82,13 +83,29 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 	const notifySuccess = () => toast.success('Группа успешно создана!');
 	const notifyError = () => toast.error('Произошла ошибка при создании группы');
 	const notifyIncomplete = () => toast.error('Заполните все поля');
+	const notifyInvalidDate = () =>
+		toast.error('Выберите будущую дату для "Дата окончания"');
 
 	const handleCreateGroup = async () => {
+		if (creatingGroup) {
+			return;
+		}
+
 		if (!value || !urlImg || !data || !text) {
 			notifyIncomplete();
 			setIsFormValid(false);
 			return;
 		}
+
+		const endDate = new Date(data);
+		const currentDate = new Date();
+
+		if (endDate <= currentDate) {
+			notifyInvalidDate();
+			return;
+		}
+
+		setCreatingGroup(true);
 
 		const newGroup = {
 			title: value,
@@ -110,12 +127,25 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 			setIsFormValid(false);
 		} catch (error) {
 			notifyError();
+		} finally {
+			setCreatingGroup(false);
 		}
 	};
 
 	useEffect(() => {
 		setIsFormValid(!!value && !!urlImg && !!data && !!text);
 	}, [value, urlImg, data, text]);
+
+	const handleDateChange = (newDate: string) => {
+		const currentDate = new Date();
+		const selectedDate = new Date(newDate);
+
+		if (selectedDate < currentDate) {
+			setData('');
+		} else {
+			setData(newDate);
+		}
+	};
 
 	return (
 		<div>
@@ -171,7 +201,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 									size="medium"
 									placeholder="Дата окончания"
 									value={data}
-									onChange={(e) => setData(e.target.value)}
+									onChange={(e) => handleDateChange(e.target.value)}
 									width="100%"
 									type="date"
 								/>
@@ -194,7 +224,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								type="button"
 								onClick={handleCreateGroup}
-								disabled={!isFormValid}
+								disabled={!isFormValid || creatingGroup}
 								width="117px"
 							>
 								Добавить

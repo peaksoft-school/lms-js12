@@ -14,13 +14,13 @@ import {
 } from '@mui/material';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import Input from '@/src/ui/customInput/Input.tsx';
-import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import scss from './StudentStyle.module.scss';
 import {
 	useGetGroupAllQuery,
 	usePostStudentTableMutation
 } from '@/src/redux/api/admin/student';
+import ButtonSave from '../customButton/ButtonSave';
+import ButtonCancel from '../customButton/ButtonCancel';
 
 interface PostStudentProps {
 	firstName: string;
@@ -82,6 +82,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 
 	const theme = useTheme();
 	const [personName, setPersonName] = useState<string>('');
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		setPersonName(event.target.value);
@@ -94,8 +95,8 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 		dirtyFields.phoneNumber
 	);
 
-	const onSubmit: SubmitHandler<PostStudentProps> = async (data) => {
-		const { firstName, lastName, groupName, phoneNumber, email } = data;
+	const onSubmit: SubmitHandler<PostStudentProps> = async (formData) => {
+		const { firstName, lastName, groupName, phoneNumber, email } = formData;
 		if (
 			firstName !== '' &&
 			lastName !== '' &&
@@ -104,6 +105,8 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 			phoneNumber !== '' &&
 			email !== ''
 		) {
+			setIsSubmitting(true);
+
 			const newStudent = {
 				firstName,
 				lastName,
@@ -113,9 +116,11 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 				email,
 				isBlock: false
 			};
+
 			const newData = {
 				link: 'http://localhost:5173/auth/newPassword'
 			};
+
 			try {
 				const response = await postStudentTable({ newStudent, newData });
 				console.log('Response:', response);
@@ -125,6 +130,8 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 				setPersonName('');
 			} catch (error) {
 				console.error('Error:', error);
+			} finally {
+				setIsSubmitting(false); // Reset submission status
 			}
 		}
 	};
@@ -200,19 +207,19 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 									<Input
 										size="medium"
 										{...field}
-										type="string"
+										type="text"
 										width="100%"
 										placeholder="Номер телефона"
 									/>
 								)}
 							/>
 							<Controller
-								rules={{
-									required: 'Email обязателен для заполнения'
-								}}
 								name="email"
 								control={control}
 								defaultValue=""
+								rules={{
+									required: 'Email обязателен для заполнения'
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -223,7 +230,6 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 									/>
 								)}
 							/>
-
 							<FormControl>
 								<InputLabel style={{ background: '#fff' }} id="demo-name-label">
 									Группа
@@ -280,8 +286,8 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 						>
 							<ButtonCancel
 								type="button"
-								disabled={false}
 								onClick={handleClose}
+								disabled={isSubmitting}
 								width="117px"
 							>
 								Отмена
@@ -289,8 +295,8 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								onClick={handleSubmit(onSubmit)}
 								type="submit"
+								disabled={isSubmitting || isButtonDisabled}
 								width="117px"
-								disabled={isButtonDisabled}
 							>
 								Отправить
 							</ButtonSave>

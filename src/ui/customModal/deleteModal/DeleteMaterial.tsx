@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,10 +20,20 @@ const DeleteMaterial: FC<MaterialProps> = ({
 	deleteById
 }) => {
 	const [deleteMaterial] = useDeleteMaterialMutation();
+	const [isDeleting, setIsDeleting] = useState(false);
 
 	const handleDelete = async () => {
-		await deleteMaterial(deleteById);
-		handleCloseModal();
+		if (isDeleting) return;
+
+		setIsDeleting(true);
+		try {
+			await deleteMaterial(deleteById);
+			handleCloseModal();
+		} catch (error) {
+			console.error('Failed to delete material:', error);
+		} finally {
+			setIsDeleting(false);
+		}
 	};
 
 	return (
@@ -46,12 +56,16 @@ const DeleteMaterial: FC<MaterialProps> = ({
 					<ButtonCancel
 						width="103px"
 						onClick={handleCloseModal}
-						disabled={false}
+						disabled={isDeleting}
 						type="submit"
 					>
 						Отмена
 					</ButtonCancel>
-					<ButtonDelete onClick={handleDelete} type="submit" disabled={false}>
+					<ButtonDelete
+						onClick={handleDelete}
+						type="submit"
+						disabled={isDeleting}
+					>
 						Удалить
 					</ButtonDelete>
 				</DialogActions>

@@ -57,9 +57,15 @@ const EditPresentation: FC<EditPresentationProps> = ({
 	const [editPresentation] = useEditPresentationMutation();
 	const [createPresentationFile] = useCreatePresentationFileMutation();
 	const [isFormChanged, setIsFormChanged] = useState(false);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const onSubmit: SubmitHandler<EditPresentationForm> = async (formData) => {
 		if (presentationId !== null) {
+			if (isTitleDuplicate(formData.title)) {
+				setErrorMessage('Название уже существует');
+				return;
+			}
+
 			const presentationData = {
 				title: formData.title,
 				description: formData.description,
@@ -97,9 +103,18 @@ const EditPresentation: FC<EditPresentationProps> = ({
 			}
 		}
 	};
+
 	const openFilePicker = () => {
 		fileInputRef.current?.click();
 	};
+
+	const isTitleDuplicate = (title: string) => {
+		return data?.some(
+			(presentation) =>
+				presentation.title === title && presentation.id !== presentationId
+		);
+	};
+
 	useEffect(() => {
 		if (data && presentationId !== null) {
 			const finder = data.find((item) => item.id === presentationId);
@@ -205,6 +220,15 @@ const EditPresentation: FC<EditPresentationProps> = ({
 								)}
 							/>
 						</div>
+						{errorMessage && (
+							<Typography
+								color="error"
+								style={{ color: 'red', marginBottom: '10px' }}
+								variant="body2"
+							>
+								{errorMessage}
+							</Typography>
+						)}
 						<div
 							style={{
 								width: '100%',

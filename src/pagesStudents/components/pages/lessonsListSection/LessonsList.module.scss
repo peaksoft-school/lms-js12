@@ -28,7 +28,6 @@
 			padding-inline: 20px;
 			padding-block: 20px;
 
-			padding-top: 60px;
 
 			@media (max-width: 750px) {
 				grid-template-columns: repeat(1, 1fr);
@@ -112,6 +111,21 @@
 				@media (max-width: 650px) {
 					flex-direction: column;
 				}
+			}
+		}
+
+		.empty_page {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 20px;
+			margin-top: 150px;
+
+			img {
+				width: 100%;
+				max-width: 500px;
+				border-radius: 5px;
 			}
 		}
 	}
