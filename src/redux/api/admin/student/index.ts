@@ -51,8 +51,8 @@ export const api = index.injectEndpoints({
 			STUDENT.PatchStudentPropsResponse,
 			STUDENT.PatchStudentPropsRequest
 		>({
-			query: ({ editStudent, saveIdElement }) => ({
-				url: `/api/students/${saveIdElement}`,
+			query: ({ editStudent, saveIdElement, link }) => ({
+				url: `/api/students/${saveIdElement}?linkForPassword=${encodeURIComponent(link.linkForPassword)}`,
 				method: 'PATCH',
 				body: editStudent
 			}),

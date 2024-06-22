@@ -91,9 +91,15 @@ const LayoutInstructor = () => {
 							</Routes>
 						</>
 					)}
-					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>
-						<BasicBreadcrumbs />
-					</p>
+					<div style={{ paddingInline: '20px', paddingTop: '24px' }}>
+						<Routes>
+							<Route
+								path="/course/:courseId/materials/:lessonId/*"
+								element={<BasicBreadcrumbs />}
+							/>
+						</Routes>
+					</div>
+
 					<Routes>
 						<Route path={'/course'} element={<MyCoursePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />

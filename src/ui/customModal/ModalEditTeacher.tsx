@@ -68,7 +68,10 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 			...data,
 			courseIds: personName
 		};
-		await patchTeacher({ updateTeacher, deleteById });
+		const link = {
+			linkForPassword: 'http://localhost:5173/auth/newPassword'
+		};
+		await patchTeacher({ updateTeacher, deleteById, link });
 		setPersonName('');
 		closeModalEdit(false);
 	};

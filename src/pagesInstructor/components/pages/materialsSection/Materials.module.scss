@@ -3,6 +3,11 @@
 
 	.container {
 		padding-inline: 20px;
+		.title {
+			font-size: 22px;
+			font-weight: 600;
+			padding-top: 24px;
+		}
 		.button_title_elements {
 			margin-bottom: 20px;
 			display: flex;

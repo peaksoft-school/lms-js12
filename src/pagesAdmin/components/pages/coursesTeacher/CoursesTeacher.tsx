@@ -12,6 +12,8 @@ import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook, IconPlus } from '@tabler/icons-react';
 import { useGetAllInstructorCourseQuery } from '@/src/redux/api/admin/courses';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import NotCreated from '@/src/ui/notCreated/NotCreated';
+import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 
 const CoursesTeacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -73,20 +75,25 @@ const CoursesTeacher = () => {
 		<div className={scss.teacher}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					<div className={scss.buttons}>
-						<Button
-							size="large"
-							className={scss.button}
-							variant="contained"
-							onClick={handleOpenAppoint}
-						>
-							<div className={scss.icon}>
-								<IconPlus stroke={2} />
+					{data?.getAllInstructorsOfCourses.length !== 0 ? (
+						<>
+							<BasicBreadcrumbs />
+							<div className={scss.buttons}>
+								<Button
+									size="large"
+									className={scss.button}
+									variant="contained"
+									onClick={handleOpenAppoint}
+								>
+									<div className={scss.icon}>
+										<IconPlus stroke={2} />
+									</div>
+									<span>Назначить учителя/лей</span>
+								</Button>
 							</div>
-							<span>Назначить учителя/лей</span>
-						</Button>
-					</div>
-					<h1 className={scss.title}>Учителя</h1>
+							<h1 className={scss.title}>Учителя</h1>
+						</>
+					) : null}
 					<ScrollArea
 						type="always"
 						scrollbars="xy"
@@ -95,78 +102,98 @@ const CoursesTeacher = () => {
 					>
 						<Box>
 							<div>
-								<div style={{ display: 'flex', justifyContent: 'center' }}>
-									<div className={scss.TeacherContainer}>
-										<table className={scss.Table}>
-											<thead>
-												<tr>
-													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя Фамилия</th>
-
-													<th>Специализация</th>
-													<th>Номер телефона</th>
-													<th>E-mail</th>
-													<th>Группа</th>
-													<th
-														style={{ textAlign: 'end', paddingRight: '10px' }}
-													>
-														Действия
-													</th>
-												</tr>
-											</thead>
-											<tbody>
-												{data?.getAllInstructorsOfCourses.map(
-													(item, index: number) => (
-														<tr
-															key={item.id}
-															className={
-																index % 2 === 1
-																	? scss.TableAlternateRow
-																	: '' || scss.TableContainerSecond
-															}
-														>
-															<td>{index + 1 + (openPart - 1) * openPage}</td>
-															<td className={scss.TableCell}>
-																{item.fullName}
-															</td>
-															<td className={scss.TableCell}>
-																{item.specializationOrStudyFormat}
-															</td>
-															<td className={scss.TableCell}>
-																{item.phoneNumber}
-															</td>
-															<td className={scss.TableCell}>{item.email}</td>
-															<td className={scss.TableCell}>
-																{item.courseName}
-															</td>
-															<td className={scss.TableCellIcon}>
-																<button
-																	className={scss.button}
-																	aria-controls={
-																		open ? 'basic-menu' : undefined
-																	}
-																	aria-haspopup="true"
-																	onClick={() => {
-																		setOpenModalDelete(true);
-																		setAnchorEl(null);
-																		setDeleteById(item.id!);
-																	}}
-																>
-																	<img src={deleteIcon} alt="Delete" />
-																</button>
-															</td>
-														</tr>
-													)
-												)}
-											</tbody>
-										</table>
-										<ModalEditTeacher
-											openModalEdit={openModalEdit}
-											closeModalEdit={() => setOpenModalEdit(false)}
-											deleteById={deleteById}
+								{data?.getAllInstructorsOfCourses.length == 0 ? (
+									<>
+										<NotCreated
+											name="Учителя"
+											text="Вы еще не назначили учителя/лей"
+											buttonClick={handleOpenAppoint}
+											buttontText="Назначить учителя/лей"
 										/>
-									</div>
-								</div>
+									</>
+								) : (
+									<>
+										<div style={{ display: 'flex', justifyContent: 'center' }}>
+											<div className={scss.TeacherContainer}>
+												<table className={scss.Table}>
+													<thead>
+														<tr>
+															<th style={{ textAlign: 'start' }}>№</th>
+															<th>Имя Фамилия</th>
+
+															<th>Специализация</th>
+															<th>Номер телефона</th>
+															<th>E-mail</th>
+															<th>Группа</th>
+															<th
+																style={{
+																	textAlign: 'end',
+																	paddingRight: '10px'
+																}}
+															>
+																Действия
+															</th>
+														</tr>
+													</thead>
+													<tbody>
+														{data?.getAllInstructorsOfCourses.map(
+															(item, index: number) => (
+																<tr
+																	key={item.id}
+																	className={
+																		index % 2 === 1
+																			? scss.TableAlternateRow
+																			: '' || scss.TableContainerSecond
+																	}
+																>
+																	<td>
+																		{index + 1 + (openPart - 1) * openPage}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.fullName}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.specializationOrStudyFormat}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.phoneNumber}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.email}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.courseName}
+																	</td>
+																	<td className={scss.TableCellIcon}>
+																		<button
+																			className={scss.button}
+																			aria-controls={
+																				open ? 'basic-menu' : undefined
+																			}
+																			aria-haspopup="true"
+																			onClick={() => {
+																				setOpenModalDelete(true);
+																				setAnchorEl(null);
+																				setDeleteById(item.id!);
+																			}}
+																		>
+																			<img src={deleteIcon} alt="Delete" />
+																		</button>
+																	</td>
+																</tr>
+															)
+														)}
+													</tbody>
+												</table>
+												<ModalEditTeacher
+													openModalEdit={openModalEdit}
+													closeModalEdit={() => setOpenModalEdit(false)}
+													deleteById={deleteById}
+												/>
+											</div>
+										</div>
+									</>
+								)}
 							</div>
 						</Box>
 					</ScrollArea>
@@ -176,56 +203,60 @@ const CoursesTeacher = () => {
 						deleteById={deleteById}
 					/>
 				</div>
-				<div className={scss.pagination}>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
+				{data?.getAllInstructorsOfCourses.length !== 0 ? (
+					<>
+						<div className={scss.pagination}>
+							<div className={scss.inputs}>
+								<p className={scss.text}>Перейти на страницу</p>
+								<div className={scss.pagination_element}>
+									<IconBook stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPart}
+									onChange={(e) => setOpenPart(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPage(openPart);
+										}
+									}}
+								/>
+							</div>
+							<div className={scss.stack}>
+								<Stack direction="row" spacing={2}>
+									<Pagination
+										page={openPart}
+										count={
+											data?.getAllInstructorsOfCourses.length
+												? Math.ceil(
+														data?.getAllInstructorsOfCourses.length / openPage
+													)
+												: 1
+										}
+										variant="outlined"
+										shape="rounded"
+									/>
+								</Stack>
+							</div>
+							<div className={scss.inputs}>
+								<p className={scss.text}>Показать</p>
+								<div className={scss.pagination_element}>
+									<IconArticle stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPage}
+									onChange={(e) => setOpenPage(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPart(openPage);
+										}
+									}}
+								/>
+							</div>
 						</div>
-						<input
-							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleOpenPage(openPart);
-								}
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								page={openPart}
-								count={
-									data?.getAllInstructorsOfCourses.length
-										? Math.ceil(
-												data?.getAllInstructorsOfCourses.length / openPage
-											)
-										: 1
-								}
-								variant="outlined"
-								shape="rounded"
-							/>
-						</Stack>
-					</div>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleOpenPart(openPage);
-								}
-							}}
-						/>
-					</div>
-				</div>
+					</>
+				) : null}
 			</div>
 			<AppointTeacher open={openAddTeacher} handleClose={handleCloseAppoint} />
 		</div>

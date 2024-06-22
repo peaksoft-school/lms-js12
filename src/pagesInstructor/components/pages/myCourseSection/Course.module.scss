@@ -21,14 +21,13 @@
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				justify-content: start;
+				justify-content: center;
 				margin-top: 24px;
-				cursor: pointer;
-
-				overflow-y: scroll;
 
 				.card {
 					position: relative;
+					height: auto;
+					overflow: hidden;
 					display: grid;
 					flex-wrap: wrap;
 					justify-content: start;
@@ -71,18 +70,16 @@
 					}
 
 					.zero_block_container {
-						cursor: pointer;
 						padding: 12px;
 						max-width: 280px;
 						width: 100%;
-						height: auto;
 						background: #fff;
-						height: 280.5px;
 						border: 1px solid #d4d4d4;
 						border-radius: 10px;
 						flex-direction: column;
 						gap: 10px;
 						display: flex;
+						cursor: pointer;
 						@media (max-width: 1670px) {
 							max-width: 300px;
 							width: 100%;

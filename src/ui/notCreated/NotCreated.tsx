@@ -21,15 +21,20 @@ const NotCreated: FC<NotCreatedProps> = ({
 		<div className={scss.mainNot}>
 			<h2>{name}</h2>
 			<div className={scss.not_created}>
-				<div>
+				{/* <div>
+				</div> */}
 					<img className={scss.img} src={notCreated} alt="" />
-				</div>
 				<div>
 					<h3>{text}</h3>
 				</div>
 				<div>
 					<Button
-						style={{ display: 'flex', gap: '10px' }}
+						style={{
+							display: 'flex',
+							gap: '10px',
+							textTransform: 'none',
+							borderRadius: '10px'
+						}}
 						size="large"
 						onClick={buttonClick}
 						variant="contained"

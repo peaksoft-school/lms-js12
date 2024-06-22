@@ -27,8 +27,8 @@ export const api = index.injectEndpoints({
 			TABLE.ChangeTeachersResponse,
 			TABLE.ChangeTeachersRequest
 		>({
-			query: ({ updateTeacher, deleteById }) => ({
-				url: `/api/instructors/${deleteById}`,
+			query: ({ updateTeacher, deleteById, link }) => ({
+				url: `/api/instructors/${deleteById}&linkForPassword=${encodeURIComponent(link.linkForPassword)}`,
 				method: 'PATCH',
 				body: updateTeacher
 			}),

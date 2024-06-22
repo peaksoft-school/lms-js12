@@ -14,7 +14,7 @@ const api = index.injectEndpoints({
 			TEST.getTestInsideRequest
 		>({
 			query: (taskId) => ({
-				url: `/api/test/findByIdForEdit/${taskId}`,
+				url: `/api/test/${taskId}`,
 				method: 'GET'
 			}),
 			providesTags: ['test']

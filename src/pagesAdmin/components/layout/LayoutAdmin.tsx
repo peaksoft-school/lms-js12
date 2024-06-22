@@ -23,6 +23,7 @@ import CoursesTeacher from '../pages/coursesTeacher/CoursesTeacher.tsx';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile.tsx';
 import Groups from '../pages/groupSection/Group.tsx';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses.tsx';
+import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs.tsx';
 
 const LayoutAdmin = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -103,6 +104,14 @@ const LayoutAdmin = () => {
 							</Routes>
 						</>
 					)}
+					{/* <div style={{ paddingInline: '20px', paddingTop: '20px' }}>
+						<Routes>
+							<Route
+								path="/courses/:courseId/*"
+								element={<BasicBreadcrumbs />}
+							/>
+						</Routes>
+					</div> */}
 					<Routes>
 						<Route path="/analytics" element={<AnalyticsPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />

@@ -9,6 +9,7 @@ import { Box, ScrollArea } from '@mantine/core';
 import { useGetAllStudentsCourseQuery } from '@/src/redux/api/admin/courses';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import IsBlockCourses from '@/src/ui/customModal/IsBlockCourses';
+import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 
 const InternalCourses = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(1);
@@ -53,7 +54,11 @@ const InternalCourses = () => {
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					<h1 className={scss.title}>Data Engineer</h1>
+					{data?.getAllStudentsOfCourses.length !== 0 ? (
+						<>
+							<h1 className={scss.title}>Студенты</h1>
+						</>
+					) : null}
 					<ScrollArea
 						type="always"
 						scrollbars="xy"
@@ -62,154 +67,174 @@ const InternalCourses = () => {
 					>
 						<Box>
 							<div>
-								<div style={{ display: 'flex', justifyContent: 'center' }}>
-									<div className={scss.internal_container}>
-										<table className={scss.table}>
-											<thead>
-												<tr>
-													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя Фамилия</th>
-													<th>Группа</th>
-													<th>Формат обучения</th>
-													<th>Номер телефона</th>
-													<th>E-mail</th>
-													<th
-														style={{ textAlign: 'end', paddingRight: '10px' }}
-													>
-														Действия
-													</th>
-												</tr>
-											</thead>
-											<tbody>
-												{data!.getAllStudentsOfCourses &&
-													data!.getAllStudentsOfCourses.map(
-														(item, index: number) => (
-															<tr
-																key={item.id}
-																className={
-																	index % 2 === 1
-																		? scss.table_alternate_row
-																		: '' || scss.internal
-																}
+								{data?.getAllStudentsOfCourses.length === 0 ? (
+									<>
+										<NotCreatedWithoutButton
+											name="Студенты"
+											text="Вы пока не добавили студентов на курс"
+										/>
+									</>
+								) : (
+									<>
+										<div style={{ display: 'flex', justifyContent: 'center' }}>
+											<div className={scss.internal_container}>
+												<table className={scss.table}>
+													<thead>
+														<tr>
+															<th style={{ textAlign: 'start' }}>№</th>
+															<th>Имя Фамилия</th>
+															<th>Группа</th>
+															<th>Формат обучения</th>
+															<th>Номер телефона</th>
+															<th>E-mail</th>
+															<th
+																style={{
+																	textAlign: 'end',
+																	paddingRight: '10px'
+																}}
 															>
-																<td
-																	className={
-																		item.isBlock ? scss.changeClass : ''
-																	}
-																>
-																	{index + 1 + (openPart - 1) * rowsPerPage}
-																</td>
-
-																<td
-																	className={
-																		item.isBlock ? scss.changeClass : ''
-																	}
-																>
-																	{item.fullName}
-																</td>
-																<td
-																	className={
-																		item.isBlock ? scss.changeClass : ''
-																	}
-																>
-																	{item.courseName}
-																</td>
-																<td
-																	className={
-																		item.isBlock ? scss.changeClass : ''
-																	}
-																>
-																	{item.specializationOrStudyFormat}
-																</td>
-																<td
-																	className={
-																		item.isBlock ? scss.changeClass : ''
-																	}
-																>
-																	{item.phoneNumber}
-																</td>
-																<td
-																	className={
-																		item.isBlock ? scss.changeClass : ''
-																	}
-																>
-																	{item.email}
-																</td>
-																<td>
-																	<button
-																		className={scss.button}
-																		onClick={() => {
-																			setOpenBlock(true);
-																			setSaveIdElement(item.id);
-																			setSaveBlock(item.isBlock);
-																		}}
+																Действия
+															</th>
+														</tr>
+													</thead>
+													<tbody>
+														{data!.getAllStudentsOfCourses &&
+															data!.getAllStudentsOfCourses.map(
+																(item, index: number) => (
+																	<tr
+																		key={item.id}
+																		className={
+																			index % 2 === 1
+																				? scss.table_alternate_row
+																				: '' || scss.internal
+																		}
 																	>
-																		{!item.isBlock ? (
-																			<img src={LockOpenStudent} alt="#" />
-																		) : (
-																			<img src={LockBlockStudent} alt="#" />
-																		)}
-																	</button>
-																</td>
-															</tr>
-														)
-													)}
-											</tbody>
-										</table>
-									</div>
-								</div>
+																		<td
+																			className={
+																				item.isBlock ? scss.changeClass : ''
+																			}
+																		>
+																			{index + 1 + (openPart - 1) * rowsPerPage}
+																		</td>
+
+																		<td
+																			className={
+																				item.isBlock ? scss.changeClass : ''
+																			}
+																		>
+																			{item.fullName}
+																		</td>
+																		<td
+																			className={
+																				item.isBlock ? scss.changeClass : ''
+																			}
+																		>
+																			{item.courseName}
+																		</td>
+																		<td
+																			className={
+																				item.isBlock ? scss.changeClass : ''
+																			}
+																		>
+																			{item.specializationOrStudyFormat}
+																		</td>
+																		<td
+																			className={
+																				item.isBlock ? scss.changeClass : ''
+																			}
+																		>
+																			{item.phoneNumber}
+																		</td>
+																		<td
+																			className={
+																				item.isBlock ? scss.changeClass : ''
+																			}
+																		>
+																			{item.email}
+																		</td>
+																		<td>
+																			<button
+																				className={scss.button}
+																				onClick={() => {
+																					setOpenBlock(true);
+																					setSaveIdElement(item.id);
+																					setSaveBlock(item.isBlock);
+																				}}
+																			>
+																				{!item.isBlock ? (
+																					<img src={LockOpenStudent} alt="#" />
+																				) : (
+																					<img src={LockBlockStudent} alt="#" />
+																				)}
+																			</button>
+																		</td>
+																	</tr>
+																)
+															)}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</>
+								)}
 							</div>
 						</Box>
 					</ScrollArea>
 				</div>
-				<div className={scss.pagination}>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
+				{data?.getAllStudentsOfCourses.length !== 0 ? (
+					<>
+						<div className={scss.pagination}>
+							<div className={scss.inputs}>
+								<p className={scss.text}>Перейти на страницу</p>
+								<div className={scss.pagination_element}>
+									<IconBook stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={rowsPerPage}
+									onChange={(e) => setRowsPerPage(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPage(rowsPerPage);
+										}
+									}}
+								/>
+							</div>
+							<div className={scss.stack}>
+								<Stack direction="row" spacing={2}>
+									<Pagination
+										page={openPart}
+										count={
+											data?.getAllStudentsOfCourses.length
+												? Math.ceil(
+														data?.getAllStudentsOfCourses.length / openPart
+													)
+												: 1
+										}
+										variant="outlined"
+										shape="rounded"
+									/>
+								</Stack>
+							</div>
+							<div className={scss.inputs}>
+								<p className={scss.text}>Показать</p>
+								<div className={scss.pagination_element}>
+									<IconArticle stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPart}
+									onChange={(e) => setOpenPart(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenSize(openPart);
+										}
+									}}
+								/>
+							</div>
 						</div>
-						<input
-							type="text"
-							value={rowsPerPage}
-							onChange={(e) => setRowsPerPage(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleOpenPage(rowsPerPage);
-								}
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								page={openPart}
-								count={
-									data?.getAllStudentsOfCourses.length
-										? Math.ceil(data?.getAllStudentsOfCourses.length / openPart)
-										: 1
-								}
-								variant="outlined"
-								shape="rounded"
-							/>
-						</Stack>
-					</div>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleOpenSize(openPart);
-								}
-							}}
-						/>
-					</div>
-				</div>
+					</>
+				) : null}
 			</div>
 			<IsBlockCourses
 				openModalBlock={openBlock}

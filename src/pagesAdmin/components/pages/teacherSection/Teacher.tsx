@@ -19,6 +19,7 @@ import Button from '@mui/material/Button';
 import ModalAddTeacher from '@/src/ui/customModal/ModalAddTeacher.tsx';
 import { Box, ScrollArea } from '@mantine/core';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import NotCreated from '@/src/ui/notCreated/NotCreated';
 
 const Teacher = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -81,199 +82,225 @@ const Teacher = () => {
 		<div className={scss.teacher}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					<div className={scss.button_title_elements}>
-						<Button
-							size="large"
-							className={scss.button}
-							onClick={handleTeacherOpen}
-							variant="contained"
-						>
-							<div className={scss.icon}>
-								<IconPlus stroke={2} />
-							</div>
-							<span>Добавить учителя</span>
-						</Button>
-					</div>
-					<h1 className={scss.title}>Учителя</h1>
-					<ScrollArea
-						scrollbars="xy"
-						type="always"
-						offsetScrollbars
-						classNames={scss}
-					>
-						<Box>
-							<div>
-								<div style={{ display: 'flex', justifyContent: 'center' }}>
-									<div className={scss.TeacherContainer}>
-										<table className={scss.Table}>
-											<thead>
-												<tr>
-													<th style={{ textAlign: 'start' }}>№</th>
-													<th>Имя Фамилия</th>
-													<th>Специализация</th>
-													<th>Номер телефона</th>
-													<th>E-mail</th>
-													<th
-														style={{ textAlign: 'end', paddingRight: '10px' }}
-													>
-														Действия
-													</th>
-												</tr>
-											</thead>
-											<tbody>
-												{data?.instructorResponses &&
-													data.instructorResponses.map((item, index) => (
-														<tr
-															key={item.id}
-															className={
-																index % 2 === 1
-																	? scss.TableAlternateRow
-																	: '' || scss.TableContainerSecond
-															}
-														>
-															<td>
-																{openPage > 0
-																	? index + 1 + (openPart - 1) * openPage
-																	: null}
-															</td>
-															<td className={scss.TableCell}>
-																{item.fullName}
-															</td>
-															<td className={scss.TableCell}>
-																{item.specialization}
-															</td>
-															<td className={scss.TableCell}>
-																{item.phoneNumber}
-															</td>
-															<td className={scss.TableCell}>{item.email}</td>
-															<td className={scss.TableCellIcon}>
-																<button
-																	className={scss.button}
-																	aria-controls={
-																		open ? 'basic-menu' : undefined
-																	}
-																	aria-haspopup="true"
-																	onClick={(e) => {
-																		handleClick(e);
-																		setDeleteById(item.id!);
-																	}}
-																>
-																	<IconDotsVertical stroke={2} />
-																</button>
-																<Menu
-																	id="basic-menu"
-																	anchorEl={anchorEl}
-																	open={open}
-																	onClose={handleClose}
-																	MenuListProps={{
-																		'aria-labelledby': 'basic-button'
-																	}}
-																	elevation={0}
-																	anchorOrigin={{
-																		vertical: 'bottom',
-																		horizontal: 'right'
-																	}}
-																	transformOrigin={{
-																		vertical: 'top',
-																		horizontal: 'right'
-																	}}
-																	PaperProps={{
-																		style: {
-																			boxShadow: 'none',
-																			border: '1px solid gray'
-																		}
-																	}}
-																>
-																	<MenuItem
-																		style={{ display: 'flex', gap: '10px' }}
-																		onClick={() => {
-																			setOpenModalEdit(true);
-																			setAnchorEl(null);
-																		}}
-																	>
-																		<img src={editIcon} alt="Edit" />
-																		<p>Редактировать</p>
-																	</MenuItem>
-																	<MenuItem
-																		style={{ display: 'flex', gap: '10px' }}
-																		onClick={() => {
-																			setOpenModalDelete(true);
-																			setAnchorEl(null);
-																		}}
-																	>
-																		<img src={deleteIcon} alt="Delete" />
-																		<p>Удалить</p>
-																	</MenuItem>
-																</Menu>
-															</td>
-														</tr>
-													))}
-											</tbody>
-										</table>
-										<ModalEditTeacher
-											openModalEdit={openModalEdit}
-											closeModalEdit={() => setOpenModalEdit(false)}
-											deleteById={deleteById}
-										/>
+					{data?.instructorResponses.length !== 0 ? (
+						<>
+							<div className={scss.button_title_elements}>
+								<Button
+									size="large"
+									className={scss.button}
+									onClick={handleTeacherOpen}
+									variant="contained"
+								>
+									<div className={scss.icon}>
+										<IconPlus stroke={2} />
 									</div>
-								</div>
+									<span>Добавить учителя</span>
+								</Button>
 							</div>
-						</Box>
-					</ScrollArea>
+							<h1 className={scss.title}>Учителя</h1>
+						</>
+					) : null}
+					{data?.instructorResponses.length === 0 ? (
+						<>
+							<NotCreated
+								text="Вы пока не добавили учителей!"
+								name="Учителя"
+								buttonClick={handleTeacherOpen}
+								buttontText="Добавить учителя"
+							/>
+						</>
+					) : (
+						<>
+							<ScrollArea
+								scrollbars="xy"
+								type="always"
+								offsetScrollbars
+								classNames={scss}
+							>
+								<Box>
+									<div>
+										<div style={{ display: 'flex', justifyContent: 'center' }}>
+											<div className={scss.TeacherContainer}>
+												<table className={scss.Table}>
+													<thead>
+														<tr>
+															<th style={{ textAlign: 'start' }}>№</th>
+															<th>Имя Фамилия</th>
+															<th>Специализация</th>
+															<th>Номер телефона</th>
+															<th>E-mail</th>
+															<th
+																style={{
+																	textAlign: 'end',
+																	paddingRight: '10px'
+																}}
+															>
+																Действия
+															</th>
+														</tr>
+													</thead>
+													<tbody>
+														{data?.instructorResponses &&
+															data.instructorResponses.map((item, index) => (
+																<tr
+																	key={item.id}
+																	className={
+																		index % 2 === 1
+																			? scss.TableAlternateRow
+																			: '' || scss.TableContainerSecond
+																	}
+																>
+																	<td>
+																		{openPage > 0
+																			? index + 1 + (openPart - 1) * openPage
+																			: null}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.fullName}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.specialization}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.phoneNumber}
+																	</td>
+																	<td className={scss.TableCell}>
+																		{item.email}
+																	</td>
+																	<td className={scss.TableCellIcon}>
+																		<button
+																			className={scss.button}
+																			aria-controls={
+																				open ? 'basic-menu' : undefined
+																			}
+																			aria-haspopup="true"
+																			onClick={(e) => {
+																				handleClick(e);
+																				setDeleteById(item.id!);
+																			}}
+																		>
+																			<IconDotsVertical stroke={2} />
+																		</button>
+																		<Menu
+																			id="basic-menu"
+																			anchorEl={anchorEl}
+																			open={open}
+																			onClose={handleClose}
+																			MenuListProps={{
+																				'aria-labelledby': 'basic-button'
+																			}}
+																			elevation={0}
+																			anchorOrigin={{
+																				vertical: 'bottom',
+																				horizontal: 'right'
+																			}}
+																			transformOrigin={{
+																				vertical: 'top',
+																				horizontal: 'right'
+																			}}
+																			PaperProps={{
+																				style: {
+																					boxShadow: 'none',
+																					border: '1px solid gray'
+																				}
+																			}}
+																		>
+																			<MenuItem
+																				style={{ display: 'flex', gap: '10px' }}
+																				onClick={() => {
+																					setOpenModalEdit(true);
+																					setAnchorEl(null);
+																				}}
+																			>
+																				<img src={editIcon} alt="Edit" />
+																				<p>Редактировать</p>
+																			</MenuItem>
+																			<MenuItem
+																				style={{ display: 'flex', gap: '10px' }}
+																				onClick={() => {
+																					setOpenModalDelete(true);
+																					setAnchorEl(null);
+																				}}
+																			>
+																				<img src={deleteIcon} alt="Delete" />
+																				<p>Удалить</p>
+																			</MenuItem>
+																		</Menu>
+																	</td>
+																</tr>
+															))}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</Box>
+							</ScrollArea>
+						</>
+					)}
+					<ModalEditTeacher
+						openModalEdit={openModalEdit}
+						closeModalEdit={() => setOpenModalEdit(false)}
+						deleteById={deleteById}
+					/>
 					<DeleteTeacherModal
 						openModalDelete={openModalDelete}
 						closeModalDelete={setOpenModalDelete}
 						deleteById={deleteById}
 					/>
 				</div>
-				<div className={scss.pagination}>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
+				{data?.instructorResponses.length !== 0 ? (
+					<>
+						<div className={scss.pagination}>
+							<div className={scss.inputs}>
+								<p className={scss.text}>Перейти на страницу</p>
+								<div className={scss.pagination_element}>
+									<IconBook stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPart}
+									onChange={(e) => setOpenPart(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleSize(openPart);
+										}
+									}}
+								/>
+							</div>
+							<div className={scss.stack}>
+								<Stack direction="row" spacing={2}>
+									<Pagination
+										page={openPart}
+										count={
+											data?.instructorResponses.length
+												? Math.ceil(data?.instructorResponses.length / openPage)
+												: 1
+										}
+										variant="outlined"
+										shape="rounded"
+									/>
+								</Stack>
+							</div>
+							<div className={scss.inputs}>
+								<p className={scss.text}>Показать</p>
+								<div className={scss.pagination_element}>
+									<IconArticle stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPage}
+									onChange={(e) => setOpenPage(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handlePage(openPage);
+										}
+									}}
+								/>
+							</div>
 						</div>
-						<input
-							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleSize(openPart);
-								}
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								page={openPart}
-								count={
-									data?.instructorResponses.length
-										? Math.ceil(data?.instructorResponses.length / openPage)
-										: 1
-								}
-								variant="outlined"
-								shape="rounded"
-							/>
-						</Stack>
-					</div>
-					<div className={scss.inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handlePage(openPage);
-								}
-							}}
-						/>
-					</div>
-				</div>
+					</>
+				) : null}
 			</div>
 			<ModalAddTeacher open={openTeacher} handleClose={handleTeacherClose} />
 		</div>
