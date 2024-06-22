@@ -47,11 +47,11 @@
 				flex-direction: column;
 				gap: 20px;
 				.admin_teacher {
-					width: 100%;
+					// width: 100%;
 					display: flex;
 					gap: 30px;
-					justify-content: space-around;
-					display: flex;
+					justify-content: flex-end;
+					margin-right: 60px;
 
 					.teacher {
 						display: flex;
@@ -61,11 +61,11 @@
 					.correct_hw {
 						width: 100%;
 						border-radius: 10px;
-						padding-top: 20px;
+						padding-top: 5px;
 						padding-bottom: 20px;
 						background: #e8eff9;
 						padding-inline: 10px;
-						margin-left: 100px;
+						margin-left: 40px;
 						span {
 							padding-inline: 10px;
 						}
@@ -83,7 +83,7 @@
 						padding-bottom: 20px;
 						background: #e8eff9;
 						padding-inline: 10px;
-						margin-left: 100px;
+						margin-left: 40px;
 						width: 100%;
 						max-width: 500px;
 						.data {
@@ -142,6 +142,11 @@
 		}
 		.card {
 			padding-inline: 20px;
+
+			.task_teacher{
+				margin-left: 10px;
+				margin-top: 10px;
+			}
 			img {
 				width: 100%;
 				max-width: 600px;
@@ -153,9 +158,6 @@
 			.text {
 				margin-top: 30px;
 				padding: 10px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
 				@media (max-width: 490px) {
 					flex-wrap: wrap;
 				}
@@ -173,4 +175,10 @@
 			}
 		}
 	}
+}
+
+
+
+.your_task{
+	margin-bottom:  40px;
 }
