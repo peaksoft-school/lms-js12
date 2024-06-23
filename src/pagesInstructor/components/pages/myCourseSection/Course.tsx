@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { Menu, MenuItem } from '@mui/material';
 import RatingModal from '@/src/ui/customModal/ratingModal/RatingModal';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
-
+import ModalDeleteGroupOfCourse from '@/src/ui/customModal/ModalDeleteGroupOfCourse';
 const Course: FC = () => {
 	const { data } = useGetCourseInstructorQuery();
 	const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +31,7 @@ const Course: FC = () => {
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [openRating, setOpenRating] = useState(false);
 	const open = Boolean(anchorEl);
+	const [deleteGroup, setDeleteGroup] = useState<boolean>(false);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -176,11 +177,12 @@ const Course: FC = () => {
 
 																				gap: '10px'
 																			}}
-																			onClick={() => {}}
+																			onClick={() => setDeleteGroup(true)}
 																		>
 																			<IconUsers />
-																			Удалить группу JS_5поток с курса
+																			Удалить группу с курса
 																		</MenuItem>
+
 																		<MenuItem
 																			style={{ display: 'flex', gap: '10px' }}
 																			onClick={() => {
@@ -263,7 +265,16 @@ const Course: FC = () => {
 				open={openCurse}
 				handleClose={handleCloseCourses}
 			/>
-			<RatingModal open={openRating} handleClose={() => setOpenRating(false)} />
+			<RatingModal
+				open={openRating}
+				handleClose={() => setOpenRating(false)}
+				saveId={saveId}
+			/>
+			<ModalDeleteGroupOfCourse
+				openModalEdit={deleteGroup}
+				handleClose={() => setDeleteGroup(false)}
+				saveId={saveId}
+			/>
 		</div>
 	);
 };
