@@ -5,15 +5,16 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		min-height: 83vh;
+		min-height: 80vh;
 		.content_table {
 			.title {
 				margin-bottom: 20px;
 				width: 100%;
-
 				position: sticky;
 				z-index: 50;
-				top: 80px;
+				font-size: 22px;
+				font-weight: 600;
+				top: 60px;
 				background: #eff0f4;
 			}
 

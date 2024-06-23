@@ -6,12 +6,9 @@ const api = index.injectEndpoints({
 			NOTIFICATION.NotificationGetResponse,
 			NOTIFICATION.NotificationGetRequest
 		>({
-			query: (notification) => ({
-				url: `/api/notifications/findAll`,
-				method: 'GET',
-				params: {
-					isView: notification.isView
-				}
+			query: (isView) => ({
+				url: `/api/notifications/findAll?isView=${encodeURIComponent(isView)}`,
+				method: 'GET'
 			}),
 			providesTags: ['notification']
 		})

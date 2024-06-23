@@ -10,7 +10,6 @@ import { Button } from '@mui/material';
 
 const GetOneTask = () => {
 	const { coursesId, lessonId, getTaskId } = useParams();
-	const lesson = Number(lessonId);
 	const getTask = Number(getTaskId);
 
 	const { data: taskData } = useGetTaskInstructorQuery(getTask);

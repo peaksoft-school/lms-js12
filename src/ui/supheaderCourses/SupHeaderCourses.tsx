@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import profile from '@/src/assets/svgs/Profile.png';
 import scss from './SupHeaderCourses.module.scss';
 import { IconChevronDown } from '@tabler/icons-react';
@@ -7,14 +7,15 @@ import { useState } from 'react';
 import vector from '@/src/assets/svgs/Vector.svg';
 import bell from '@/src/assets/svgs/Header icons.png';
 import NotificationHeader from '../customModal/notificationHeader/NotificationHeader';
+import ExitModal from '../customModal/exitModal/ExitModal';
 
 const SupHeaderCourses = () => {
 	const { pathname } = useLocation();
-	const navigate = useNavigate();
 	const [openNotification, setOpenNotification] = useState(false);
 	const handleOpenNotification = () => {
 		setOpenNotification(true);
 	};
+	const [openExit, setOpenExit] = useState(false);
 
 	const handleCloseNotification = () => {
 		setOpenNotification(false);
@@ -28,10 +29,6 @@ const SupHeaderCourses = () => {
 	};
 
 	const handleClose = () => {
-		setAnchorEl(null);
-	};
-	const handleNavigate = () => {
-		navigate(`/auth/login`);
 		setAnchorEl(null);
 	};
 
@@ -71,7 +68,10 @@ const SupHeaderCourses = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleNavigate}
+							onClick={() => {
+								setOpenExit(true);
+								handleClose();
+							}}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -127,7 +127,10 @@ const SupHeaderCourses = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleNavigate}
+							onClick={() => {
+								setOpenExit(true);
+								handleClose();
+							}}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -196,7 +199,7 @@ const SupHeaderCourses = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleNavigate}
+							onClick={() => setOpenExit(true)}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -247,7 +250,10 @@ const SupHeaderCourses = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleClose}
+							onClick={() => {
+								setOpenExit(true);
+								handleClose();
+							}}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -318,6 +324,7 @@ const SupHeaderCourses = () => {
 				open={openNotification}
 				handleClose={handleCloseNotification}
 			/>
+			<ExitModal openExit={openExit} handleClose={() => setOpenExit(false)} />
 		</div>
 	);
 };

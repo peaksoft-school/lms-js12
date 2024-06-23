@@ -43,8 +43,8 @@ const CrateTask = () => {
 		navigate(
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${id}/panding`
 		);
-	};
-
+	};console.log(saveId);
+	
 	return (
 		<div className={scss.Task}>
 			<div className={scss.course_button_modal}>

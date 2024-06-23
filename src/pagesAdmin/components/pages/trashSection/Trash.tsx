@@ -13,6 +13,7 @@ import { Preloader } from '../../../../ui/preloader/Preloader';
 import { Pagination, Stack } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
+import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 
 const Trash: FC = () => {
 	const { data, isLoading } = useGetTrashQuery();
@@ -82,132 +83,149 @@ const Trash: FC = () => {
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
 				<ToastContainer />
-				<h1>Корзина</h1>
-				<ScrollArea
-					type="always"
-					scrollbars="xy"
-					offsetScrollbars
-					classNames={scss}
-				>
-					<Box>
-						<div style={{ minHeight: '64vh' }}>
-							<div className={scss.table_container}>
-								<div className={scss.text}>
-									<p>
-										Элементы в корзине автоматически удаляются через 7 дней с
-										момента добавления!
-									</p>
-								</div>
+				{data?.trashResponses.length !== 0 ? (
+					<>
+						<h1>Корзина</h1>
+					</>
+				) : null}
+				{data?.trashResponses.length === 0 ? (
+					<>
+						<NotCreatedWithoutButton name="Корзина" text="Корзина пусто !" />
+					</>
+				) : (
+					<>
+						<ScrollArea
+							type="always"
+							scrollbars="xy"
+							offsetScrollbars
+							classNames={scss}
+						>
+							<Box>
+								<div style={{ minHeight: '64vh' }}>
+									<div className={scss.table_container}>
+										<div className={scss.text}>
+											<p>
+												Элементы в корзине автоматически удаляются через 7 дней
+												с момента добавления!
+											</p>
+										</div>
 
-								<div className={scss.trash}>
-									<table className={scss.table}>
-										<thead>
-											<tr>
-												<th>Название</th>
-												<th className={scss.date}>Дата удаления</th>
-												<th className={scss.last_th}>Действие</th>
-											</tr>
-										</thead>
-										<tbody>
-											{data?.trashResponses.map((card, index) => (
-												<tr
-													className={
-														index % 2 === 1
-															? scss.table_alternate_row
-															: '' || scss.table_container_second
-													}
-												>
-													<td style={{ paddingLeft: '20px' }}>{card.name}</td>
-													<td
-														style={{ textAlign: 'end', paddingRight: '70px' }}
-													>
-														{card.date}
-													</td>
-													<td>
-														<div
-															style={{
-																display: 'flex',
-																alignItems: 'end',
-																justifyContent: 'end',
-																gap: '20px',
-																paddingRight: '50px',
-																cursor: 'pointer'
-															}}
+										<div className={scss.trash}>
+											<table className={scss.table}>
+												<thead>
+													<tr>
+														<th>Название</th>
+														<th className={scss.date}>Дата удаления</th>
+														<th className={scss.last_th}>Действие</th>
+													</tr>
+												</thead>
+												<tbody>
+													{data?.trashResponses.map((card, index) => (
+														<tr
+															className={
+																index % 2 === 1
+																	? scss.table_alternate_row
+																	: '' || scss.table_container_second
+															}
 														>
-															<button
+															<td style={{ paddingLeft: '20px' }}>
+																{card.name}
+															</td>
+															<td
 																style={{
-																	border: 'none',
-																	background: 'none',
-																	cursor: 'pointer'
+																	textAlign: 'end',
+																	paddingRight: '70px'
 																}}
-																onClick={() => updatedTrashFunc(card.id)}
 															>
-																<img src={refrash} alt="#" />
-															</button>
-															<button
-																style={{
-																	border: 'none',
-																	background: 'none',
-																	cursor: 'pointer'
-																}}
-																onClick={() => DeleteTrashFunc(card.id)}
-															>
-																<img src={trash} alt="#" />
-															</button>
-														</div>
-													</td>
-												</tr>
-											))}
-										</tbody>
-									</table>
+																{card.date}
+															</td>
+															<td>
+																<div
+																	style={{
+																		display: 'flex',
+																		alignItems: 'end',
+																		justifyContent: 'end',
+																		gap: '20px',
+																		paddingRight: '50px',
+																		cursor: 'pointer'
+																	}}
+																>
+																	<button
+																		style={{
+																			border: 'none',
+																			background: 'none',
+																			cursor: 'pointer'
+																		}}
+																		onClick={() => updatedTrashFunc(card.id)}
+																	>
+																		<img src={refrash} alt="#" />
+																	</button>
+																	<button
+																		style={{
+																			border: 'none',
+																			background: 'none',
+																			cursor: 'pointer'
+																		}}
+																		onClick={() => DeleteTrashFunc(card.id)}
+																	>
+																		<img src={trash} alt="#" />
+																	</button>
+																</div>
+															</td>
+														</tr>
+													))}
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
+							</Box>
+						</ScrollArea>
+						<div className={scss.pagination}>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Перейти на страницу</p>
+								<div className={scss.pagination_element}>
+									<IconBook stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPart}
+									onChange={(e) => setOpenPart(+e.target.value)}
+									onKeyDown={(e) => {
+										handleAppend(e);
+										openPartFunc();
+									}}
+								/>
+							</div>
+							<div className={scss.stack}>
+								<Stack direction="row" spacing={2}>
+									<Pagination
+										count={Math.ceil(data!.trashResponses.length / rowsPerPage)}
+										page={currentPage}
+										onChange={handlePageChangeC}
+										shape="rounded"
+										variant="outlined"
+									/>
+								</Stack>
+							</div>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Показать</p>
+								<div className={scss.pagination_element}>
+									<IconArticle stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPage}
+									onChange={(e) => setOpenPage(+e.target.value)}
+									onKeyDown={(e) => {
+										handleAppend(e);
+										openPartPage();
+									}}
+								/>
 							</div>
 						</div>
-					</Box>
-				</ScrollArea>
-				<div className={scss.pagination}>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								count={Math.ceil(data!.trashResponses.length / rowsPerPage)}
-								page={currentPage}
-								onChange={handlePageChangeC}
-								shape="rounded"
-								variant="outlined"
-							/>
-						</Stack>
-					</div>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
-							}}
-						/>
-					</div>
-				</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

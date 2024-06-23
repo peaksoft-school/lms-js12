@@ -22,6 +22,8 @@ const DeleteTask: React.FC<DeleteProps> = ({
 	const [deleteTaskInstructor] = useDeleteTaskInstructorMutation();
 	const [loading, setLoading] = useState(false);
 
+	console.log('1111111');
+	
 	const handleDelete = async () => {
 		if (deleteById !== null) {
 			setLoading(true);

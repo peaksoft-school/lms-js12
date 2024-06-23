@@ -51,8 +51,8 @@ export const api = index.injectEndpoints({
 			STUDENT.PatchStudentPropsResponse,
 			STUDENT.PatchStudentPropsRequest
 		>({
-			query: ({ editStudent, saveIdElement }) => ({
-				url: `/api/students/${saveIdElement}`,
+			query: ({ editStudent, saveIdElement, link }) => ({
+				url: `/api/students/${saveIdElement}?linkForPassword=${encodeURIComponent(link.linkForPassword)}`,
 				method: 'PATCH',
 				body: editStudent
 			}),
@@ -68,11 +68,18 @@ export const api = index.injectEndpoints({
 			invalidatesTags: ['student']
 		}),
 		postExcelStudent: builder.mutation({
-			query: ({ excelFile, selectedFile, newLink }) => ({
-				url: `/api/students/importStudents/${excelFile}?link=${encodeURIComponent(newLink.link)}`,
-				method: 'POST',
-				body: selectedFile
-			}),
+			query: ({ excelFile, selectedFile, newLink }) => {
+				{
+					const newData = new FormData();
+					newData.append('file', selectedFile);
+
+					return {
+						url: `/api/students/importStudents/${excelFile}?link=${encodeURIComponent(newLink.link)}`,
+						method: 'POST',
+						body: newData
+					};
+				}
+			},
 			invalidatesTags: ['student']
 		})
 	})

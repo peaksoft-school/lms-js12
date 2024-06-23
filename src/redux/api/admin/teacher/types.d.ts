@@ -47,6 +47,9 @@ namespace TABLE {
 	}[];
 
 	type ChangeTeachersRequest = {
+		link: {
+			linkForPassword: string;
+		};
 		deleteById: number | null;
 		updateTeacher: {
 			firstName: string;

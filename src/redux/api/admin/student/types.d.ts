@@ -71,6 +71,9 @@ namespace STUDENT {
 	};
 
 	type PatchStudentPropsRequest = {
+		link: {
+			linkForPassword: string;
+		};
 		saveIdElement: number | null;
 		editStudent: {
 			firstName: string;

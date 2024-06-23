@@ -10,6 +10,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 import { usePostStudentTaskMutation } from '@/src/redux/api/students/sendTask';
 import { IconDownload } from '@tabler/icons-react';
+import Sources from 'quill';
 
 const SendOneTask = () => {
 	const [postStudentTask] = usePostStudentTaskMutation();
@@ -21,6 +22,7 @@ const SendOneTask = () => {
 	const [value, setValue] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [saveSelect, setSelectedFile] = useState<string | null>(null);
+	const [secondSave, setSecondSave] = useState<string | null>(null);
 	const [description, setDescription] = useState('');
 	const [createGroupFile] = useCreateGroupFileMutation();
 	const modules = {
@@ -59,9 +61,9 @@ const SendOneTask = () => {
 			formData.append('file', file);
 			formData.append('description', description);
 			try {
-				const response: any = await createGroupFile(formData);
-				const parsedData = JSON.parse(response.data);
-				const fileName = parsedData.fileName;
+				const response: any = await createGroupFile(formData).unwrap();
+				const fileName = response.fileName; // Directly access fileName
+				console.log('File uploaded:', fileName);
 				setSelectedFile(fileName);
 				setDescription(description);
 			} catch (error) {
@@ -71,10 +73,63 @@ const SendOneTask = () => {
 	};
 	const getTask = Number(getTaskId);
 
+	function dataURItoBlob(dataURI: string) {
+		const [mime, data] = dataURI.split(';base64,');
+		const binary = atob(data);
+		const arrayBuffer = new ArrayBuffer(binary.length);
+		const uint8Array = new Uint8Array(arrayBuffer);
+
+		for (let i = 0; i < binary.length; i++) {
+			uint8Array[i] = binary.charCodeAt(i);
+		}
+		return new Blob([uint8Array], { type: mime });
+	}
+	const handleImageUpload = async (imageData: string, description: string) => {
+		try {
+			const blob = dataURItoBlob(imageData);
+			const file = new File([blob], 'filename.jpg', { type: 'image/jpeg' });
+			const formData = new FormData();
+			formData.append('file', file);
+			const cleanedDescription = description.replace(/\\/g, '');
+			formData.append('description', cleanedDescription);
+
+			const response: any = await createGroupFile(formData).unwrap();
+
+			if (response && response.urlFile) {
+				console.log('Image uploaded:', response.urlFile);
+				setSecondSave(response.urlFile);
+			} else {
+				console.error('Invalid response structure:', response);
+			}
+		} catch (error) {
+			console.error('Error uploading image:', error);
+		}
+	};
+	const handleEditorChange = (
+		content: string,
+		delta: any,
+		source: Sources | string
+	): void => {
+		setValue(content);
+		if (source === 'user' && delta.ops.length > 0) {
+			for (let i = 0; i < delta.ops.length; i++) {
+				const operation = delta.ops[i];
+				if (operation.insert && operation.insert.image) {
+					handleImageUpload(operation.insert.image, description);
+				}
+			}
+		}
+	};
+
 	const addTask = async () => {
 		try {
+			const newDescription = value.replace(
+				/<img[^>]*>/,
+				secondSave ? `<img src="${secondSave}"/>` : ''
+			);
+
 			const newTask = {
-				text: value,
+				text: newDescription,
 				file: saveSelect,
 				comment: homeWork
 			};
@@ -126,7 +181,7 @@ const SendOneTask = () => {
 						<ReactQuill
 							theme="snow"
 							value={value}
-							onChange={(newValue) => setValue(newValue)}
+							onChange={handleEditorChange}
 							modules={modules}
 							placeholder="Текст домашнего задания"
 						/>

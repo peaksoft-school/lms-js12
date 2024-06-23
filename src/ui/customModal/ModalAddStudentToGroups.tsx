@@ -75,7 +75,7 @@ const ModalAddStudentToGroups: FC<ModalProps> = ({
 	};
 
 	const onSubmit = async () => {
-		await postGroupTable({ selectedIds: selectedId, course }); //
+		await postGroupTable({ selectedIds: selectedId, course }); 
 	};
 
 	return (

@@ -12,6 +12,10 @@
 			display: flex;
 			flex-direction: column;
 			padding-top: 20px;
+			h1 {
+				font-size: 22px;
+				font-weight: 600;
+			}
 
 			.course_button_modal {
 				margin-bottom: 20px;

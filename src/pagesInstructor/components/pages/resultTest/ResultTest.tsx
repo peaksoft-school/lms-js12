@@ -53,7 +53,7 @@ const ResultTest = () => {
 					<thead>
 						<tr>
 							<th style={{ textAlign: 'start' }}>№</th>
-							<th onClick={handleOpen}>Имя Фамилия</th>
+							<th>Имя Фамилия</th>
 							<th>Дата прохождения</th>
 							<th>Статус</th>
 							<th>Баллы</th>
@@ -71,9 +71,14 @@ const ResultTest = () => {
 									<td onClick={() => setSaveId(item.resultTestId)}>
 										{index + 1}
 									</td>
-									<td onClick={() => setSaveId(item.resultTestId)}>
-										{item.fullName}
-									</td>
+									<button style={{ background: 'none ', border: 'none ' }}>
+										<td
+											onClick={() => setSaveId(item.resultTestId)}
+											onClick={handleOpen}
+										>
+											{item.fullName}
+										</td>
+									</button>
 									<td onClick={() => setSaveId(item.resultTestId)}>
 										{item.resultTestId}
 									</td>

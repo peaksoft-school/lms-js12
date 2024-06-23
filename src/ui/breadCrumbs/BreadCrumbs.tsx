@@ -1,85 +1,84 @@
-import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { useGetCardQuery, useGetLessonQuery } from '@/src/redux/api/lesson';
-import { useEffect, useState } from 'react';
 import { IconChevronRight } from '@tabler/icons-react';
 
-interface LessonType {
-	_id: number;
-	title: string;
-}
 export default function BasicBreadcrumbs() {
 	const { pathname } = useLocation();
-	const { coursesId, lessonId, matelials } = useParams();
-	const { data } = useGetCardQuery(coursesId);
-	const { data: lessonOne = [] } = useGetLessonQuery();
-	const [course, setCourse] = useState<LessonType>();
-	const [lesson, setLesson] = useState<LessonType>();
+	const { courseId, lessonId, coursesId } = useParams();
+	// const { data } = useGetCardQuery(coursesId);
+	// const { data: lessonOne = [] } = useGetLessonQuery();
 
-	useEffect(() => {
-		const filterData = data?.find((item) => item._id === +coursesId!);
-		setCourse(filterData!);
-	}, [data]);
-	useEffect(() => {
-		const filterData = lessonOne?.find((item) => item._id === +matelials!);
-		setLesson(filterData!);
-	}, [lessonOne]);
+	// useEffect(() => {
+	// 	const filterData = data?.find((item) => item._id === +coursesId!);
+	// 	setCourse(filterData!);
+	// }, [data]);
+	// useEffect(() => {
+	// 	const filterData = lessonOne?.find((item) => item._id === +getTask!);
+	// 	setLesson(filterData!);
+	// }, [lessonOne]);
 
 	const item = localStorage.getItem('item');
 	const taskName = localStorage.getItem('taskName');
 	const task = localStorage.getItem('task');
 	const hwTask = localStorage.getItem('hwTask');
+
+	console.log(courseId, lessonId);
+
 	return (
 		<div role="presentation">
 			{pathname.startsWith('/admin') && (
 				<>
 					<Breadcrumbs
 						aria-label="breadcrumb"
-						separator={<IconChevronRight stroke={2} />}
+						separator={<IconChevronRight width={20} stroke={2} />}
 					>
-						<Link to="">Курсы</Link>
-						<Link to={`/courses/:${coursesId}`}>{course?.title}</Link>
-						<Link to={`/courses/:${coursesId}`}>{lesson?.title}</Link>
-						<Typography color="text.primary">Breadcrumbs</Typography>
+						<Link style={{ color: '#1976d2' }} to="/admin/courses">
+							Курсы
+						</Link>
+						<Link style={{ color: 'black' }} to={`#`}>
+							{item}
+						</Link>
 					</Breadcrumbs>
 				</>
 			)}
 
 			{/* //! instructor breadCrumbs*/}
-			{pathname.startsWith(`/instructor/course/${coursesId}/materials`) && (
+			{pathname.startsWith(`/instructor/course/${courseId}/materials`) && (
 				<>
 					<Breadcrumbs
 						aria-label="breadcrumb"
-						separator={<IconChevronRight stroke={2} />}
+						separator={<IconChevronRight stroke={2} width={20} />}
 					>
-						<Link style={{ fontSize: '14px' }} to="/instructor/course">
+						<Link
+							style={{ fontSize: '14px', color: '#1976d2' }}
+							to="/instructor/course"
+						>
 							Мои курсы
 						</Link>
 						<Link
-							style={{ fontSize: '14px' }}
-							to={`/instructor/course/${coursesId}/materials`}
+							style={{ fontSize: '14px', color: '#1976d2' }}
+							to={`/instructor/course/${courseId}/materials`}
 						>
 							{item}
 						</Link>
 						<Link
 							style={
-								pathname === `/instructor/course/${coursesId}/materials`
+								pathname === `/instructor/course/${courseId}/materials`
 									? { fontSize: '14px', color: 'black' }
-									: { fontSize: '14px' }
+									: { fontSize: '14px', color: '#1976d2' }
 							}
-							to={`/instructor/course/${coursesId}/materials`}
+							to={`/instructor/course/${courseId}/materials`}
 						>
 							Материалы
 						</Link>
 						{pathname ===
-							`/instructor/course/${coursesId}/materials/${lessonId}/video` && (
+							`/instructor/course/${courseId}/materials/${lessonId}/video` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
-								separator={<IconChevronRight stroke={2} />}
+								separator={<IconChevronRight stroke={2} width={20} />}
 							>
-								<Link style={{ fontSize: '14px' }} to={'#'}>
+								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
 									{taskName}
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
@@ -88,12 +87,12 @@ export default function BasicBreadcrumbs() {
 							</Breadcrumbs>
 						)}
 						{pathname ===
-							`/instructor/course/${coursesId}/materials/${lessonId}/presentation` && (
+							`/instructor/course/${courseId}/materials/${lessonId}/presentation` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
-								separator={<IconChevronRight stroke={2} />}
+								separator={<IconChevronRight width={20} stroke={2} />}
 							>
-								<Link style={{ fontSize: '14px' }} to={'#'}>
+								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
 									{taskName}
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
@@ -102,12 +101,12 @@ export default function BasicBreadcrumbs() {
 							</Breadcrumbs>
 						)}
 						{pathname ===
-							`/instructor/course/${coursesId}/materials/${lessonId}/lesson` && (
+							`/instructor/course/${courseId}/materials/${lessonId}/lesson` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
-								separator={<IconChevronRight stroke={2} />}
+								separator={<IconChevronRight width={20} stroke={2} />}
 							>
-								<Link style={{ fontSize: '14px' }} to={'#'}>
+								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
 									{taskName}
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
@@ -116,43 +115,77 @@ export default function BasicBreadcrumbs() {
 							</Breadcrumbs>
 						)}
 						{pathname ===
-							`/instructor/course/${coursesId}/materials/${lessonId}/lesson/${task}/panding` && (
+							`/instructor/course/${courseId}/materials/${lessonId}/link` && (
 							<Breadcrumbs
 								aria-label="breadcrumb"
-								separator={<IconChevronRight stroke={2} />}
+								separator={<IconChevronRight width={20} stroke={2} />}
 							>
-								<Link style={{ fontSize: '14px' }} to={'#'}>
+								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
 									{taskName}
 								</Link>
-								<Link style={{ fontSize: '14px' }} to={'#'}>
-									Задание
-								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
-									{hwTask}
+									Ссылка
 								</Link>
 							</Breadcrumbs>
 						)}
+						{pathname ===
+							`/instructor/course/${courseId}/materials/${lessonId}/test` && (
+							<Breadcrumbs
+								aria-label="breadcrumb"
+								separator={<IconChevronRight width={20} stroke={2} />}
+							>
+								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
+									{taskName}
+								</Link>
+								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
+									Тест
+								</Link>
+							</Breadcrumbs>
+						)}
+						{pathname.startsWith(
+							`/instructor/course/${courseId}/materials/${lessonId}/lesson`
+						) &&
+							pathname !==
+								`/instructor/course/${courseId}/materials/${lessonId}/lesson` && (
+								<Breadcrumbs
+									aria-label="breadcrumb"
+									separator={<IconChevronRight width={20} stroke={2} />}
+								>
+									<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
+										{taskName}
+									</Link>
+									<Link
+										style={{ fontSize: '14px', color: '#1976d2' }}
+										to={`/instructor/course/${courseId}/materials/${lessonId}/lesson`}
+									>
+										Задание
+									</Link>
+									<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
+										{hwTask}
+									</Link>
+								</Breadcrumbs>
+							)}
 					</Breadcrumbs>
 				</>
 			)}
-			{pathname === `/instructor/course/${coursesId}/rating` && (
+			{pathname === `/instructor/course/${courseId}/rating` && (
 				<>
 					<Breadcrumbs
 						aria-label="breadcrumb"
-						separator={<IconChevronRight stroke={2} />}
+						separator={<IconChevronRight width={20} stroke={2} />}
 					>
 						<Link style={{ fontSize: '14px' }} to="/instructor/course">
 							Мои курсы
 						</Link>
 						<Link
 							style={{ fontSize: '14px' }}
-							to={`/instructor/course/${coursesId}/materials`}
+							to={`/instructor/course/${courseId}/materials`}
 						>
 							Курсы
 						</Link>
 						<Link
 							style={{ fontSize: '14px', color: 'black' }}
-							to={`/instructor/course/${coursesId}/materials`}
+							to={`/instructor/course/${courseId}/materials`}
 						>
 							Рейтинг
 						</Link>
@@ -205,7 +238,7 @@ export default function BasicBreadcrumbs() {
 				</>
 			)}
 			{pathname.startsWith(
-				`/courses/${coursesId}/materials/${localStorage.getItem('lessonId')}`
+				`/instructor/course/${courseId}/materials/${lessonId}}`
 			) && (
 				<>
 					<Breadcrumbs
@@ -217,24 +250,24 @@ export default function BasicBreadcrumbs() {
 						</Link>
 						<Link
 							style={{ fontSize: '14px' }}
-							to={`/courses/${coursesId}/materials`}
+							to={`instructor/course/${courseId}/materials`}
 						>
 							{item}
 						</Link>
 						<Link
 							style={{ fontSize: '14px' }}
-							to={`/courses/${coursesId}/materials`}
+							to={`/instructor/course/${courseId}/materials`}
 						>
 							{taskName}
 						</Link>
 						{pathname ===
-							`/courses/${coursesId}/materials/${localStorage.getItem('lessonId')}/presentation` && (
+							`/instructor/course/${courseId}/materials/${lessonId}}/presentation` && (
 							<Link style={{ fontSize: '14px', color: 'black' }} to={`#`}>
 								Презентация
 							</Link>
 						)}
 						{pathname ===
-							`/courses/${coursesId}/materials/${localStorage.getItem('lessonId')}/video` && (
+							`/instructor/course/${courseId}/materials/${lessonId}/video` && (
 							<Link style={{ fontSize: '14px', color: 'black' }} to={`#`}>
 								Видеоурок
 							</Link>

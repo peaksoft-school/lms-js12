@@ -161,16 +161,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 									backgroundImage: `url(${gallery})`
 								}}
 							>
-								<img
-									style={{
-										borderRadius: '8px',
-										width: '100%',
-										maxWidth: '300px',
-										height: '160px'
-									}}
-									src={gallery}
-									alt=""
-								/>
+								<img style={{ borderRadius: '8px' }} src={gallery} alt="" />
 							</div>
 						) : (
 							<div className={scss.img} onClick={handleButtonClick}>
@@ -178,9 +169,9 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 									style={{
 										borderRadius: '8px',
 										width: '100%',
-										maxWidth: '300px',
-										minWidth: '300px',
-										height: '160px'
+										maxWidth: '173px',
+										minWidth: '173px',
+										height: '145px'
 									}}
 									src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${saveSelect} `}
 								/>
