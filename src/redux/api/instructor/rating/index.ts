@@ -12,6 +12,36 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['rating']
 		}),
+		getRatingGroups: builder.query<
+			RATING.GetRatingGroupsResponse,
+			RATING.GetRatingGroupsRequest
+		>({
+			query: (courseId) => ({
+				url: `/api/course/getAllGroupOfCourse/${courseId}`,
+				method: 'GET'
+			}),
+			providesTags: ['rating']
+		}),
+		deleteGroups: builder.mutation({
+			query: ({ saveId, selectedId }) => ({
+				url: `/api/course/deleteGroupOfCourse/${saveId}/${selectedId}`,
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['rating']
+		}),
+		postProcents: builder.mutation<
+			RATING.CreateProcentsResponse,
+			RATING.CreateProcentsRequest
+		>({
+			query: ({ newData, saveId }) => ({
+				url: `/api/ratingApi/${saveId}`,
+				method: 'POST',
+				params: {
+					...newData
+				}
+			}),
+			invalidatesTags: ['rating']
+		}),
 
 		getResultRating: builder.query({
 			query: (answerId) => ({
@@ -23,4 +53,10 @@ const api = index.injectEndpoints({
 	})
 });
 
-export const { useGetRatingStudentsQuery, useGetResultRatingQuery } = api;
+export const {
+	useGetRatingStudentsQuery,
+	useGetRatingGroupsQuery,
+	usePostProcentsMutation,
+	useGetResultRatingQuery,
+	useDeleteGroupsMutation
+} = api;
