@@ -68,7 +68,7 @@ const Lesson = () => {
 		) {
 			setValue(4);
 		}
-	});
+	}, [pathname]);
 
 	return (
 		<div className={scss.lesson}>

@@ -10,10 +10,9 @@ import { Button } from '@mui/material';
 
 const GetOneTask = () => {
 	const { coursesId, lessonId, getTaskId } = useParams();
-	const lesson = Number(lessonId);
 	const getTask = Number(getTaskId);
 
-	const { data: taskData } = useGetTaskInstructorQuery(lesson);
+	const { data: taskData } = useGetTaskInstructorQuery(getTask);
 	const { data: response, status } = useAnswerTaskStudentQuery(getTask);
 
 	const navigate = useNavigate();
@@ -34,9 +33,10 @@ const GetOneTask = () => {
 			<div className={scss.Task}>
 				{taskData?.taskResponse.map((item, index) => (
 					<div key={index} className={scss.card}>
+						<h2 className={scss.task_teacher}>Задание учителя:</h2>
 						<div className={scss.text}>
-							<h2>{item.title}</h2>
-							<h2>{item.deadline}</h2>
+							<p>Срок сдачи : {item.deadline}</p>
+							<p>{item.title}</p>
 						</div>
 						<div
 							className={scss.inner_html}
@@ -48,8 +48,10 @@ const GetOneTask = () => {
 				{response && (
 					<div className={scss.comment}>
 						<div className={scss.student_comment}>
+							<div className={scss.your_task}>
+								<h2>Your Task:</h2>
+							</div>
 							<div dangerouslySetInnerHTML={{ __html: response.text }}></div>
-							<p className={scss.data}>132023</p>
 						</div>
 
 						<div className={scss.comments_container}>
@@ -60,19 +62,18 @@ const GetOneTask = () => {
 											<div className={scss.user}>
 												<img src={profile} alt="profile" />
 												<p>
-													{response.comment.map((item, index) => (
-														<span key={index}>{item.author}</span>
-													))}
+													{/* {response.comment.map((item, index) => (
+													))} */}
+													<h4>{item.author}</h4>
 												</p>
 											</div>
-											<div className={scss.correct_hw}>
-												<p>
-													{response.comment.map((item, index) => (
-														<span key={index}>{item.content}</span>
-													))}
-												</p>
-												<p className={scss.data}>{item.dateTime}</p>
-											</div>
+
+											{item.content && (
+												<div className={scss.correct_hw}>
+													<p>{item.content}</p>
+													<p className={scss.data}>{item.dateTime}</p>
+												</div>
+											)}
 										</div>
 									) : (
 										<>
@@ -87,16 +88,12 @@ const GetOneTask = () => {
 													<div className={scss.teacher}>
 														<img src={profile} alt="profile" />
 														<p>
-															{response.comment.map((item, index) => (
-																<span key={index}>{item.author}</span>
-															))}
+															<h4>{item.author}</h4>
 														</p>
 													</div>
 													<div className={scss.correct_hw}>
 														<p>
-															{response.comment.map((item, index) => (
-																<span key={index}>{item.content}</span>
-															))}
+															<span>{item.content}</span>
 														</p>
 														<p className={scss.data}>{item.dateTime}</p>
 													</div>

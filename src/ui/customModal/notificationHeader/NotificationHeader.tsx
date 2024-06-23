@@ -18,17 +18,6 @@ const style = {
 		padding: '0px'
 	}
 };
-interface isViewProps {
-	notificationId: number;
-	courseId: number;
-	lessonId: number;
-	taskId: number;
-	notificationTitle: string;
-	notificationDescription: string;
-	notificationSendDate: string;
-	answerTaskId: number;
-	isView: boolean;
-}
 
 interface NotificationHeaderProps {
 	open: boolean;
@@ -41,18 +30,8 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 }) => {
 	const [isView, setIsView] = useState<boolean>(true);
 	const navigate = useNavigate();
-	const notification: isViewProps = {
-		isView: isView,
-		notificationId: 0,
-		courseId: 0,
-		lessonId: 0,
-		taskId: 0,
-		notificationTitle: '',
-		notificationDescription: '',
-		notificationSendDate: '',
-		answerTaskId: 0
-	};
-	const { data } = useGetNotificationQuery(notification);
+
+	const { data } = useGetNotificationQuery(isView);
 
 	return (
 		<div>

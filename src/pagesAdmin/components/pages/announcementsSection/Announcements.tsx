@@ -130,10 +130,10 @@ const Announcements = () => {
 								{data?.announcements.length === 0 ? (
 									<>
 										<NotCreated
-											text=""
+											text="Вы пока не добавили объявление!"
 											name="Объявление"
 											buttonClick={handleOpenAnnouncement}
-											buttontText="Вы пока не добавили объявление!"
+											buttontText="onn"
 										/>
 									</>
 								) : (

@@ -101,6 +101,23 @@ const SupHeader = () => {
 		navigate(`/auth/login`);
 		setAnchorEl(null);
 	};
+	useEffect(() => {
+		if (pathname === `/admin/courses/${courseId}/teacher`) {
+			setValue(0);
+		} else if (pathname === `/admin/courses/${courseId}/student`) {
+			setValue(1);
+		} else if (pathname === `/instructor/course/${courseId}/materials`) {
+			setValue(0);
+		} else if (pathname === `/instructor/course/${courseId}/student`) {
+			setValue(1);
+		} else if (pathname === `/instructor/course/${courseId}/rating`) {
+			setValue(2);
+		} else if (pathname == `/courses/${courseId}/materials`) {
+			setValue(0);
+		} else if (pathname === `/courses/${courseId}/rating`) {
+			setValue(1);
+		}
+	});
 
 	return (
 		<div className={scss.header}>
