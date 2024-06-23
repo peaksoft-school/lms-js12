@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect, useState } from 'react';
 import {
 	Modal,
@@ -23,6 +22,7 @@ import {
 	usePatchStudentTableMutation
 } from '@/src/redux/api/admin/student';
 import Input from '../customInput/Input';
+import { message } from 'antd';
 
 interface Student {
 	id: number;
@@ -92,7 +92,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		reset,
 		formState: { errors }
 	} = useForm<PatchStudentProps>();
-	const [patchStudentTable] = usePatchStudentTableMutation();
+	const [patchStudentTable, { isSuccess }] = usePatchStudentTableMutation();
 	const { data: studentData } = useGetStudentTableQuery({
 		page: '1',
 		size: '12'
@@ -165,6 +165,12 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		});
 		handleClose();
 	};
+
+	useEffect(() => {
+		if (isSuccess) {
+			message.success('Данные студента успешно обновлены');
+		}
+	}, [isSuccess]);
 
 	return (
 		<form>

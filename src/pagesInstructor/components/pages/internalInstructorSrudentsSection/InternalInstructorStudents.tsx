@@ -35,6 +35,10 @@ const InternalInstructorStudents = () => {
 		);
 	};
 
+	const handleCloseModal = (value: boolean) => {
+		setOpenModalEdit(value);
+	};
+
 	const { data, isLoading } = useGetStudentsTableQuery({
 		course,
 		page: searchParams.toString(),
@@ -64,7 +68,7 @@ const InternalInstructorStudents = () => {
 							</div>
 							<ModalAddStudentToGroups
 								openModalEdit={openModalEdit}
-								handleClose={setOpenModalEdit}
+								handleClose={handleCloseModal}
 							/>
 							<span>Добавить группу на курса</span>
 						</Button>

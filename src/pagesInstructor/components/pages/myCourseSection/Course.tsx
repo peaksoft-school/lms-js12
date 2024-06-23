@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 const Course: FC = () => {
 	const { data } = useGetCourseInstructorQuery();
@@ -93,17 +94,37 @@ const Course: FC = () => {
 														</div>
 														<div className={scss.block_cont}>
 															<div className={scss.second_block}>
-																<p className={scss.block_title}>{item.title}</p>
+																<Tooltip title={item.title}>
+																	<p
+																		style={{
+																			width: '100%',
+																			maxWidth: '120px',
+																			textOverflow: 'ellipsis',
+																			overflow: 'hidden'
+																		}}
+																		className={scss.block_title}
+																	>
+																		{item.title}
+																	</p>
+																</Tooltip>
 																<p className={scss.block_date}>
 																	{item.dateOfEnd}
 																</p>
 															</div>
 															<div className={scss.text_card}>
 																<span className={scss.block_text}>
-																	{item.description &&
-																	item.description.length > 60
-																		? `${item.description.substring(0, 60)}...`
-																		: item.description}
+																	<Tooltip title={item.description}>
+																		<p
+																			style={{
+																				width: '100%',
+																				maxWidth: '300px',
+																				textOverflow: 'ellipsis',
+																				overflow: 'hidden'
+																			}}
+																		>
+																			{item.description}
+																		</p>
+																	</Tooltip>
 																</span>
 															</div>
 														</div>

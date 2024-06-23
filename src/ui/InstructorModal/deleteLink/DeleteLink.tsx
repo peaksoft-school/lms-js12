@@ -6,6 +6,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteLinkMutation } from '@/src/redux/api/instructor/link';
 import ButtonDelete from '../../customButton/ButtonDelete';
+import { message } from 'antd';
 
 interface DeleteLinkProps {
 	openModalDelete: boolean;
@@ -18,15 +19,22 @@ const DeleteLink: React.FC<DeleteLinkProps> = ({
 	closeModalDelete,
 	saveIdElement
 }) => {
-	const [deletePresentation] = useDeleteLinkMutation();
+	const [deleteLink] = useDeleteLinkMutation();
 	const [loading, setLoading] = useState(false);
 
 	const handleDelete = async () => {
 		if (!loading && typeof saveIdElement === 'number') {
 			setLoading(true);
-			await deletePresentation(saveIdElement);
-			setLoading(false);
-			closeModalDelete(false);
+			try {
+				await deleteLink(saveIdElement);
+				message.success('Ссылка успешно добавлено в корзину!');
+				closeModalDelete(false);
+			} catch (error) {
+				message.error('Ошибка при удалении ссылки');
+				console.error('Failed to delete link:', error);
+			} finally {
+				setLoading(false);
+			}
 		}
 	};
 

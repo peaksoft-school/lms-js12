@@ -7,6 +7,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import ButtonDelete from '@/src/ui/customButton/ButtonDelete';
 import scss from './DeleteMaterial.module.scss';
 import { useDeleteMaterialMutation } from '@/src/redux/api/instructor/materials';
+import { message } from 'antd';
 
 type MaterialProps = {
 	open: boolean;
@@ -29,6 +30,7 @@ const DeleteMaterial: FC<MaterialProps> = ({
 		try {
 			await deleteMaterial(deleteById);
 			handleCloseModal();
+			message.success('Урок успешно добавлено в корзину!');
 		} catch (error) {
 			console.error('Failed to delete material:', error);
 		} finally {

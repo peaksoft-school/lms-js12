@@ -21,6 +21,12 @@ import {
 } from '@/src/redux/api/admin/student';
 import ButtonSave from '../customButton/ButtonSave';
 import ButtonCancel from '../customButton/ButtonCancel';
+import { message } from 'antd';
+
+function isValidEmail(email: string): boolean {
+	const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return re.test(email);
+}
 
 interface PostStudentProps {
 	firstName: string;
@@ -74,7 +80,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 		handleSubmit,
 		control,
 		reset,
-		formState: { dirtyFields }
+		formState: { dirtyFields, errors }
 	} = useForm<PostStudentProps>();
 	const [postStudentTable] = usePostStudentTableMutation();
 	const [formatName, setFormatName] = useState<string>('');
@@ -88,51 +94,54 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 		setPersonName(event.target.value);
 	};
 
-	const isButtonDisabled = !(
-		dirtyFields.firstName &&
-		dirtyFields.lastName &&
-		dirtyFields.email &&
-		dirtyFields.phoneNumber
-	);
+	const isButtonDisabled =
+		!dirtyFields.firstName ||
+		!dirtyFields.lastName ||
+		!dirtyFields.email ||
+		!dirtyFields.phoneNumber;
 
 	const onSubmit: SubmitHandler<PostStudentProps> = async (formData) => {
-		const { firstName, lastName, groupName, phoneNumber, email } = formData;
-		if (
-			firstName !== '' &&
-			lastName !== '' &&
-			groupName !== '' &&
-			formatName !== '' &&
-			phoneNumber !== '' &&
-			email !== ''
-		) {
-			setIsSubmitting(true);
+		const { firstName, lastName, phoneNumber, email } = formData;
 
-			const newStudent = {
-				firstName,
-				lastName,
-				groupName: personName,
-				studyFormat: formatName,
-				phoneNumber,
-				email,
-				isBlock: false
-			};
+		if (!phoneNumber.includes('+')) {
+			message.error('Номер телефона должен содержать символ "+"');
+			return;
+		}
 
-			const newData = {
-				link: 'http://localhost:5173/auth/newPassword'
-			};
+		if (!isValidEmail(email)) {
+			message.error('Некорректный формат Email');
+			return;
+		}
 
-			try {
-				const response = await postStudentTable({ newStudent, newData });
-				console.log('Response:', response);
-				handleClose();
-				reset();
-				setFormatName('');
-				setPersonName('');
-			} catch (error) {
-				console.error('Error:', error);
-			} finally {
-				setIsSubmitting(false); // Reset submission status
-			}
+		setIsSubmitting(true);
+
+		const newStudent = {
+			firstName,
+			lastName,
+			groupName: personName,
+			studyFormat: formatName,
+			phoneNumber,
+			email,
+			isBlock: false
+		};
+
+		const newData = {
+			link: 'http://localhost:5173/auth/newPassword'
+		};
+
+		try {
+			const response = await postStudentTable({ newStudent, newData });
+			console.log('Response:', response);
+			message.success('Студент успешно добавлен');
+			handleClose();
+			reset();
+			setFormatName('');
+			setPersonName('');
+		} catch (error) {
+			message.error('Ошибка при добавлении студента');
+			console.error('Error:', error);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
@@ -218,7 +227,11 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 								control={control}
 								defaultValue=""
 								rules={{
-									required: 'Email обязателен для заполнения'
+									required: 'Email обязателен для заполнения',
+									pattern: {
+										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+										message: 'Введите корректный email'
+									}
 								}}
 								render={({ field }) => (
 									<Input
@@ -230,6 +243,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 									/>
 								)}
 							/>
+							{errors.email && message.error(errors.email.message)}
 							<FormControl>
 								<InputLabel style={{ background: '#fff' }} id="demo-name-label">
 									Группа

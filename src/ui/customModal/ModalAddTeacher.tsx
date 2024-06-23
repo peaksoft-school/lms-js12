@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -40,10 +41,10 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 		control,
 		handleSubmit,
 		reset,
-		formState: { dirtyFields }
+		formState: { dirtyFields, errors }
 	} = useForm<IFormInputs>();
 	const [postTeacher] = usePostTeacherMutation();
-	const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const isButtonDisabled =
 		!dirtyFields.firstName ||
@@ -53,19 +54,26 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 		!dirtyFields.specialization;
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-		setIsSubmitting(true); // Set submitting state to true
+		setIsSubmitting(true);
 
 		try {
-			await postTeacher({
+			const response = await postTeacher({
 				...data,
 				linkForPassword: 'http://localhost:5173/auth/newPassword'
-			});
-			handleClose();
-			reset();
+			}).unwrap();
+
+			if (response) {
+				message.success('Учитель успешно добавлен!');
+				handleClose();
+				reset();
+			} else {
+				throw new Error('Unexpected response');
+			}
 		} catch (error) {
+			message.error('Ошибка при добавлении учителя');
 			console.error('Error:', error);
 		} finally {
-			setIsSubmitting(false); // Reset submitting state after request completes
+			setIsSubmitting(false);
 		}
 	};
 
@@ -92,14 +100,14 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="firstName"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'Имя обязателен для заполнения' }}
+								rules={{ required: 'Имя обязательно для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="text"
 										width="100%"
-										placeholder=" Имя"
+										placeholder="Имя"
 									/>
 								)}
 							/>
@@ -107,7 +115,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="lastName"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'Фамилия обязателен для заполнения' }}
+								rules={{ required: 'Фамилия обязательна для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -122,7 +130,13 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="phoneNumber"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'Номер обязателен для заполнения' }}
+								rules={{
+									required: 'Номер обязателен для заполнения',
+									pattern: {
+										value: /^\+[0-9]+$/,
+										message: 'Номер телефона должен содержать символ "+"'
+									}
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -133,11 +147,18 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 									/>
 								)}
 							/>
+							{errors.phoneNumber && message.error(errors.phoneNumber.message)}
 							<Controller
 								name="email"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'Email обязателен для заполнения' }}
+								rules={{
+									required: 'Email обязателен для заполнения',
+									pattern: {
+										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+										message: 'Введите корректный email'
+									}
+								}}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -148,13 +169,12 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 									/>
 								)}
 							/>
+							{errors.email && message.error(errors.email.message)}
 							<Controller
 								name="specialization"
 								control={control}
 								defaultValue=""
-								rules={{
-									required: 'Специализация обязателен для заполнения'
-								}}
+								rules={{ required: 'Специализация обязательна для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
@@ -189,7 +209,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								width="117px"
 								type="submit"
-								disabled={isButtonDisabled || isSubmitting} // Disable button while submitting
+								disabled={isButtonDisabled || isSubmitting}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Отправить

@@ -8,6 +8,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { usePostMaterialsMutation } from '@/src/redux/api/instructor/materials';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd';
 import scss from './Styled.module.scss';
 
 interface FormData {
@@ -60,8 +61,10 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 				await postMaterials({ postData, course });
 				reset();
 				handleClose();
+				message.success('Урок успешно добавлен');
 			} catch (error) {
 				console.error(error);
+				message.error('Ошибка при добавлении урока');
 			} finally {
 				setLoading(false);
 			}
@@ -119,10 +122,11 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 										const selectedDate = new Date(value);
 										const currentDate = new Date();
 										currentDate.setHours(0, 0, 0, 0);
-										return (
-											selectedDate >= currentDate ||
-											'Вы не можете выбрать прошедшую дату'
-										);
+										if (selectedDate < currentDate) {
+											message.error('Нужно выбрать будущую дату');
+											return 'Вы не можете выбрать прошедшую дату';
+										}
+										return true;
 									}
 								}}
 								render={({ field }) => (
@@ -134,9 +138,6 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 											width="100%"
 											placeholder="Дата"
 										/>
-										<p style={{ color: 'red' }}>
-											{errors.date && <span>{errors.date.message}</span>}
-										</p>
 									</>
 								)}
 							/>

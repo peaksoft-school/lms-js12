@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteAnnouncementTableMutation } from '@/src/redux/api/admin/announcement';
 import ButtonDelete from '../../customButton/ButtonDelete';
+import { message } from 'antd'; 
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -22,8 +23,14 @@ const DeleteAnnouncementModal: React.FC<DeleteProps> = ({
 	const [deleteAnnouncementTable] = useDeleteAnnouncementTableMutation();
 
 	const handleDelete = async () => {
-		await deleteAnnouncementTable(saveIdElement!);
-		closeModalDelete(false);
+		try {
+			await deleteAnnouncementTable(saveIdElement!);
+			message.success('Объявление успешно добавлено в корзину!');
+			closeModalDelete(false);
+		} catch (error) {
+			console.error('Ошибка при удалении объявления:', error);
+			message.error('Ошибка при выполнении операции');
+		}
 	};
 
 	return (

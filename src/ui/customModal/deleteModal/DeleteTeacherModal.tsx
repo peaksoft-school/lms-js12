@@ -1,9 +1,10 @@
-import scss from './DeleteTeacher.module.scss';
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import { message } from 'antd';
+import scss from './DeleteTeacher.module.scss';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteTeacherMutation } from '@/src/redux/api/admin/teacher';
 import ButtonDelete from '../../customButton/ButtonDelete';
@@ -22,10 +23,15 @@ const DeleteTeacherModal: React.FC<DeleteProps> = ({
 	const [deleteTeacher] = useDeleteTeacherMutation();
 
 	const handleDelete = async () => {
-		await deleteTeacher(deleteById!);
-		closeModalDelete(false);
+		try {
+			await deleteTeacher(deleteById!);
+			message.success('Учитель успешно добавлено в корзину!');
+			closeModalDelete(false);
+		} catch (error) {
+			message.error('Ошибка при удалении учителя');
+			console.error('Error:', error);
+		}
 	};
-	console.log(deleteById);
 
 	return (
 		<div>

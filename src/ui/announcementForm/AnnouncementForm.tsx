@@ -17,8 +17,9 @@ import {
 	usePostAnnouncementTableMutation
 } from '@/src/redux/api/admin/announcement';
 import InputAnnouncement from '../customInput/InputAnnouncement';
-import { useGetAnnouncementTableQuery } from '@/src/redux/api/admin/announcement';
+// import { useGetAnnouncementTableQuery } from '@/src/redux/api/admin/announcement';
 import Input from '../customInput/Input';
+import { message } from 'antd';
 
 interface PostAnnouncementProps {
 	announcementContent: string;
@@ -62,12 +63,16 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 		reset,
 		formState: { dirtyFields }
 	} = useForm<PostAnnouncementProps>();
-	const [postAnnouncementTable] = usePostAnnouncementTableMutation();
+	const [postAnnouncementTable, { isSuccess }] =
+		usePostAnnouncementTableMutation();
 	const [personName, setPersonName] = useState<string[]>([]);
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 	const { data: groupData } = useGetAnnouncementGroupsQuery();
-	const { data } = useGetAnnouncementTableQuery();
-	console.log(data);
+	// const { data } = useGetAnnouncementTableQuery();
+	const [publishedDateErrorVisible, setPublishedDateErrorVisible] =
+		useState<boolean>(false);
+	const [expirationDateErrorVisible, setExpirationDateErrorVisible] =
+		useState<boolean>(false);
 
 	const handleSelect = (groupId: number, groupName: string) => {
 		setSelectedIds((prev) =>
@@ -85,22 +90,55 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 
 	const isButtonDisabled = !dirtyFields.announcementContent;
 
+	const validatePublishedDate = (value: string) => {
+		const currentDate = new Date();
+		const selectedDate = new Date(value);
+
+		if (selectedDate > currentDate) {
+			setPublishedDateErrorVisible(false);
+		} else {
+			setPublishedDateErrorVisible(true);
+			message.error('Выберите сегодняшнюю или будущую дату');
+		}
+	};
+
+	const validateExpirationDate = (value: string) => {
+		const currentDate = new Date();
+		const selectedDate = new Date(value);
+
+		if (selectedDate >= currentDate) {
+			setExpirationDateErrorVisible(false);
+		} else {
+			setExpirationDateErrorVisible(true);
+			message.error('Выберите будущую дату');
+		}
+	};
+
 	const onSubmit: SubmitHandler<PostAnnouncementProps> = async (data) => {
-		if (data.announcementContent.length > 0 && personName.length > 0) {
+		if (
+			data.announcementContent.length > 0 &&
+			personName.length > 0 &&
+			!publishedDateErrorVisible &&
+			!expirationDateErrorVisible
+		) {
 			const newAnnouncement = {
 				announcementContent: data.announcementContent,
 				expirationDate: data.expirationDate,
 				publishedDate: data.publishedDate,
 				targetGroupIds: selectedIds
 			};
-			console.log(newAnnouncement);
-
 			await postAnnouncementTable(newAnnouncement);
 			handleClose();
 			reset();
 			setPersonName([]);
 		}
 	};
+
+	useEffect(() => {
+		if (isSuccess) {
+			message.success('Объявление успешно добавлено');
+		}
+	}, [isSuccess]);
 
 	useEffect(() => {
 		if (open) {
@@ -112,6 +150,8 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 			});
 			setSelectedIds([]);
 			setPersonName([]);
+			setPublishedDateErrorVisible(false);
+			setExpirationDateErrorVisible(false);
 		}
 	}, [open, reset]);
 
@@ -218,6 +258,11 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 													size="medium"
 													type="date"
 													{...field}
+													onChange={(e) => {
+														field.onChange(e);
+														validatePublishedDate(e.target.value);
+													}}
+													error={publishedDateErrorVisible}
 												/>
 											)}
 										/>
@@ -234,6 +279,11 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 													size="medium"
 													type="date"
 													{...field}
+													onChange={(e) => {
+														field.onChange(e);
+														validateExpirationDate(e.target.value);
+													}}
+													error={expirationDateErrorVisible}
 												/>
 											)}
 										/>
@@ -261,7 +311,11 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									Отмена
 								</ButtonCancel>
 								<ButtonSave
-									disabled={isButtonDisabled}
+									disabled={
+										isButtonDisabled ||
+										publishedDateErrorVisible ||
+										expirationDateErrorVisible
+									}
 									width="100px"
 									type="submit"
 									onClick={handleSubmit(onSubmit)}

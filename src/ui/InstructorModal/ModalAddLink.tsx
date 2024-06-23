@@ -7,6 +7,7 @@ import scss from './Styled.module.scss';
 import { FC, useState } from 'react';
 import { usePostLinkMutation } from '@/src/redux/api/instructor/link';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -31,13 +32,13 @@ interface LessonLinkProps {
 }
 
 const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
-	const { control, handleSubmit, reset } = useForm<LinkProps>();
+	const { control, handleSubmit, reset, formState } = useForm<LinkProps>();
 	const [postLinkLesson] = usePostLinkMutation();
 	const { lessonId } = useParams();
-	const [loading, setLoading] = useState(false); 
+	const [loading, setLoading] = useState(false);
 
 	const onSubmit: SubmitHandler<LinkProps> = async (data) => {
-		setLoading(true); 
+		setLoading(true);
 		try {
 			const newLink = {
 				title: data.titleOfLink,
@@ -46,12 +47,17 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 			await postLinkLesson({ lessonId, newLink });
 			reset();
 			handleCloseLink();
+			message.success('Ссылка успешно добавлена');
 		} catch (error) {
-			// Handle error if needed
+			message.error('Ошибка при добавлении ссылки');
+			console.error('Failed to add link:', error);
 		} finally {
-			setLoading(false); 
+			setLoading(false);
 		}
 	};
+
+	const isFormEmpty =
+		!formState.dirtyFields.titleOfLink && !formState.dirtyFields.urlOfLink;
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -138,7 +144,7 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 							<ButtonCancel
 								type="button"
 								onClick={handleCloseLink}
-								disabled={loading} 
+								disabled={loading}
 								width="117px"
 							>
 								Отмена
@@ -146,10 +152,10 @@ const ModalAddLink: FC<LessonLinkProps> = ({ open, handleCloseLink }) => {
 							<ButtonSave
 								type="submit"
 								width="117px"
-								disabled={loading} 
+								disabled={loading || isFormEmpty || formState.errors.urlOfLink}
 								onClick={handleSubmit(onSubmit)}
 							>
-								{loading ? 'Загрузка...' : 'Добавить'} 
+								{loading ? 'Загрузка...' : 'Добавить'}
 							</ButtonSave>
 						</div>
 					</Box>

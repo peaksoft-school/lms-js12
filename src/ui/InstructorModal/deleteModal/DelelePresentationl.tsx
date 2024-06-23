@@ -4,6 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import { message } from 'antd';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeletePresentationMutation } from '@/src/redux/api/instructor/presentation';
 import ButtonDelete from '../../customButton/ButtonDelete';
@@ -29,6 +30,7 @@ const DeletePresentation: React.FC<DeleteProps> = ({
 		try {
 			await deletePresentation(saveIdElement!).unwrap();
 			closeModalDelete(false);
+			message.success('Презентация успешно добавлено в корзину!');
 		} catch (error) {
 			console.error('Failed to delete presentation:', error);
 		} finally {

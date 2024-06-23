@@ -11,6 +11,7 @@ import ButtonCancel from '../customButton/ButtonCancel';
 import ButtonSave from '../customButton/ButtonSave';
 import Input from '../customInput/Input';
 import scss from './Style.module.scss';
+import { message } from 'antd'; // Импорт message из Ant Design
 
 const style = {
 	position: 'absolute',
@@ -53,7 +54,6 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		title: '',
 		createdAt: ''
 	});
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
 	const onSubmit = async (data: EditProps) => {
@@ -61,7 +61,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		const selectedDate = new Date(data.createdAt);
 
 		if (selectedDate < currentDate) {
-			setErrorMessage('Вы не можете выбрать прошедшую дату.');
+			message.error('Вы не можете выбрать прошедшую дату.'); // Использование message.error для отображения ошибки
 			return;
 		}
 
@@ -75,6 +75,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 				await patchMaterial({ updateMaterial, deleteById }).then(() => {
 					refetch();
 					closeModalEdit(false);
+					message.success('Данные успешно изменены'); // Сообщение об успешном изменении данных
 				});
 			} catch (error) {
 				console.error(error);
@@ -149,11 +150,6 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 								)}
 							/>
 						</div>
-						{errorMessage && (
-							<Typography color="error" variant="body2">
-								{errorMessage}
-							</Typography>
-						)}
 						<div
 							style={{
 								width: '100%',
