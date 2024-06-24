@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { Menu, MenuItem } from '@mui/material';
 import RatingModal from '@/src/ui/customModal/ratingModal/RatingModal';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
+import ModalDeleteGroupOfCourse from '@/src/ui/customModal/ModalDeleteGroupOfCourse';
 import { Tooltip } from '@mui/material';
 
 const Course: FC = () => {
@@ -32,6 +33,7 @@ const Course: FC = () => {
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [openRating, setOpenRating] = useState(false);
 	const open = Boolean(anchorEl);
+	const [deleteGroup, setDeleteGroup] = useState<boolean>(false);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -122,37 +124,37 @@ const Course: FC = () => {
 																		</div>
 																		<div className={scss.block_cont}>
 																			<div className={scss.second_block}>
-																			<Tooltip title={item.title}>
-																	<p
-																		style={{
-																			width: '100%',
-																			maxWidth: '120px',
-																			textOverflow: 'ellipsis',
-																			overflow: 'hidden'
-																		}}
-																		className={scss.block_title}
-																	>
-																		{item.title}
-																	</p>
-																</Tooltip>
+																				<Tooltip title={item.title}>
+																					<p
+																						style={{
+																							width: '100%',
+																							maxWidth: '120px',
+																							textOverflow: 'ellipsis',
+																							overflow: 'hidden'
+																						}}
+																						className={scss.block_title}
+																					>
+																						{item.title}
+																					</p>
+																				</Tooltip>
 																				<p className={scss.block_date}>
 																					{item.dateOfEnd}
 																				</p>
 																			</div>
 																			<div className={scss.text_card}>
 																				<span className={scss.block_text}>
-																				<Tooltip title={item.description}>
-																		<p
-																			style={{
-																				width: '100%',
-																				maxWidth: '300px',
-																				textOverflow: 'ellipsis',
-																				overflow: 'hidden'
-																			}}
-																		>
-																			{item.description}
-																		</p>
-																	</Tooltip>
+																					<Tooltip title={item.description}>
+																						<p
+																							style={{
+																								width: '100%',
+																								maxWidth: '300px',
+																								textOverflow: 'ellipsis',
+																								overflow: 'hidden'
+																							}}
+																						>
+																							{item.description}
+																						</p>
+																					</Tooltip>
 																				</span>
 																			</div>
 																		</div>
@@ -195,11 +197,12 @@ const Course: FC = () => {
 
 																				gap: '10px'
 																			}}
-																			onClick={() => {}}
+																			onClick={() => setDeleteGroup(true)}
 																		>
 																			<IconUsers />
-																			Удалить группу JS_5поток с курса
+																			Удалить группу с курса
 																		</MenuItem>
+
 																		<MenuItem
 																			style={{ display: 'flex', gap: '10px' }}
 																			onClick={() => {
@@ -282,7 +285,16 @@ const Course: FC = () => {
 				open={openCurse}
 				handleClose={handleCloseCourses}
 			/>
-			<RatingModal open={openRating} handleClose={() => setOpenRating(false)} />
+			<RatingModal
+				open={openRating}
+				handleClose={() => setOpenRating(false)}
+				saveId={saveId}
+			/>
+			<ModalDeleteGroupOfCourse
+				openModalEdit={deleteGroup}
+				handleClose={() => setDeleteGroup(false)}
+				saveId={saveId}
+			/>
 		</div>
 	);
 };

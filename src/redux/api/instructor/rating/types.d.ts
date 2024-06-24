@@ -21,4 +21,28 @@ namespace RATING {
 		}[];
 	};
 	type GetRatingStudentsRequest = number;
+
+	type CreateProcentsResponse = {
+		saveId: number;
+		newData: {
+			taskPercentage: number;
+			testPercentage: number;
+			examPercentage: number;
+		};
+	};
+
+	type CreateProcentsRequest = {
+		saveId: number | boolean;
+		newData: {
+			taskPercentage: number;
+			testPercentage: number;
+			examPercentage: number;
+		};
+	};
+
+	type GetRatingGroupsResponse = {
+		id: number;
+		groupName: string;
+	}[];
+	type GetRatingGroupsRequest = number;
 }

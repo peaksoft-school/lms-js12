@@ -66,10 +66,7 @@ const InternalInstructorStudents = () => {
 							<div className={scss.icon}>
 								<IconPlus stroke={2} />
 							</div>
-							<ModalAddStudentToGroups
-								openModalEdit={openModalEdit}
-								handleClose={handleCloseModal}
-							/>
+
 							<span>Добавить группу на курса</span>
 						</Button>
 					</div>
@@ -151,6 +148,10 @@ const InternalInstructorStudents = () => {
 									handleInputValuePaginationSize(openPage);
 								}
 							}}
+						/>
+						<ModalAddStudentToGroups
+							openModalEdit={openModalEdit}
+							handleClose={setOpenModalEdit}
 						/>
 					</div>
 				</div>

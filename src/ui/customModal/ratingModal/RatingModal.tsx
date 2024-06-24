@@ -1,25 +1,24 @@
-import { FC, useState } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import scss from './RatingModal.module.scss';
-import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
-import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { FC, useState, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import Modal from '@mui/material/Modal';
+import ButtonSave from '@/src/ui/customButton/ButtonSave';
+import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import { Box, Typography } from '@mui/material';
+import { usePostProcentsMutation } from '@/src/redux/api/instructor/rating';
 import Input from '../../customInput/Input';
+import scss from './RatingModal.module.scss';
 
 interface IFormInputs {
-	firstName: string;
-	lastName: string;
-	email: string;
-	phoneNumber: string;
-	specialization: string;
+	taskPercentage: number;
+	testPercentage: number;
+	examPercentage: number;
 }
 
 interface TeacherAddProps {
 	open: boolean;
 	handleClose: () => void;
+	saveId: number | boolean;
 }
 
 const style = {
@@ -29,45 +28,72 @@ const style = {
 	transform: 'translate(-50%, -50%)',
 	width: 541,
 	backgroundColor: '#fff',
-	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '12px'
 };
 
-const RatingModal: FC<TeacherAddProps> = ({ open, handleClose }) => {
+const RatingModal: FC<TeacherAddProps> = ({ open, handleClose, saveId }) => {
 	const {
 		control,
 		handleSubmit,
 		reset,
 		formState: { dirtyFields }
-	} = useForm<IFormInputs>();
-	const [postTeacher] = usePostTeacherMutation();
-	const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission
+	} = useForm<IFormInputs>({
+		defaultValues: {
+			taskPercentage: 0,
+			testPercentage: 0,
+			examPercentage: 0
+		}
+	});
+	const [postTeacher] = usePostProcentsMutation();
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [inputValues, setInputValues] = useState<IFormInputs>({
+		taskPercentage: 0,
+		testPercentage: 0,
+		examPercentage: 0
+	});
 
-	const isButtonDisabled =
-		!dirtyFields.firstName ||
-		!dirtyFields.lastName ||
-		!dirtyFields.email ||
-		!dirtyFields.phoneNumber ||
-		!dirtyFields.specialization;
+	const handleInputChange = (name: keyof IFormInputs, value: number) => {
+		setInputValues((prevValues) => ({
+			...prevValues,
+			[name]: value
+		}));
+	};
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-		setIsSubmitting(true); // Set submitting state to true
+		setIsSubmitting(true);
+		const newData = {
+			taskPercentage: data.taskPercentage,
+			testPercentage: data.testPercentage,
+			examPercentage: data.examPercentage
+		};
 
 		try {
-			await postTeacher({
-				...data,
-				linkForPassword: 'http://localhost:5173/auth/newPassword'
-			});
+			await postTeacher({ newData, saveId });
 			handleClose();
 			reset();
 		} catch (error) {
 			console.error('Error:', error);
 		} finally {
-			setIsSubmitting(false); // Reset submitting state after request completes
+			setIsSubmitting(false);
 		}
 	};
+
+	useEffect(() => {
+		if (open) {
+			reset({
+				taskPercentage: 0,
+				testPercentage: 0,
+				examPercentage: 0
+			});
+			setInputValues({
+				taskPercentage: 0,
+				testPercentage: 0,
+				examPercentage: 0
+			});
+		}
+	}, [open, reset]);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -89,47 +115,101 @@ const RatingModal: FC<TeacherAddProps> = ({ open, handleClose }) => {
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
 							<Controller
-								name="firstName"
+								name="taskPercentage"
 								control={control}
-								defaultValue=""
-								rules={{ required: 'Имя обязателен для заполнения' }}
+								rules={{ required: 'Задания % обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
-										type="text"
+										type="number"
 										width="100%"
 										placeholder="Задания %"
+										value={
+											inputValues.taskPercentage === 0
+												? ''
+												: inputValues.taskPercentage
+										}
+										onChange={(e) => {
+											field.onChange(e);
+											handleInputChange(
+												'taskPercentage',
+												Number(e.target.value)
+											);
+										}}
+										onFocus={() => handleInputChange('taskPercentage', 0)}
+										onBlur={(e) => {
+											if (e.target.value === '') {
+												handleInputChange('taskPercentage', 0);
+											}
+											field.onBlur();
+										}}
 									/>
 								)}
 							/>
 							<Controller
-								name="lastName"
+								name="testPercentage"
 								control={control}
-								defaultValue=""
-								rules={{ required: 'Фамилия обязателен для заполнения' }}
+								rules={{ required: 'Тесты % обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
-										type="text"
+										type="number"
 										width="100%"
 										placeholder="Тесты %"
+										value={
+											inputValues.testPercentage === 0
+												? ''
+												: inputValues.testPercentage
+										}
+										onChange={(e) => {
+											field.onChange(e);
+											handleInputChange(
+												'testPercentage',
+												Number(e.target.value)
+											);
+										}}
+										onFocus={() => handleInputChange('testPercentage', 0)}
+										onBlur={(e) => {
+											if (e.target.value === '') {
+												handleInputChange('testPercentage', 0);
+											}
+											field.onBlur();
+										}}
 									/>
 								)}
 							/>
 							<Controller
-								name="phoneNumber"
+								name="examPercentage"
 								control={control}
-								defaultValue=""
-								rules={{ required: 'Номер обязателен для заполнения' }}
+								rules={{ required: 'Экзамены % обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
-										type="string"
+										type="number"
 										width="100%"
 										placeholder="Экзамены %"
+										value={
+											inputValues.examPercentage === 0
+												? ''
+												: inputValues.examPercentage
+										}
+										onChange={(e) => {
+											field.onChange(e);
+											handleInputChange(
+												'examPercentage',
+												Number(e.target.value)
+											);
+										}}
+										onFocus={() => handleInputChange('examPercentage', 0)}
+										onBlur={(e) => {
+											if (e.target.value === '') {
+												handleInputChange('examPercentage', 0);
+											}
+											field.onBlur();
+										}}
 									/>
 								)}
 							/>
@@ -148,7 +228,7 @@ const RatingModal: FC<TeacherAddProps> = ({ open, handleClose }) => {
 						>
 							<ButtonCancel
 								type="button"
-								disabled={false}
+								disabled={isSubmitting}
 								onClick={handleClose}
 								width="117px"
 							>
@@ -157,7 +237,12 @@ const RatingModal: FC<TeacherAddProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								width="117px"
 								type="submit"
-								disabled={isButtonDisabled || isSubmitting} // Disable button while submitting
+								disabled={
+									isSubmitting ||
+									inputValues.taskPercentage === 0 ||
+									inputValues.testPercentage === 0 ||
+									inputValues.examPercentage === 0
+								}
 								onClick={handleSubmit(onSubmit)}
 							>
 								Отправить
