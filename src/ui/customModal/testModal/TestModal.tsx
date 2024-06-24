@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import scss from './TestModal.module.scss';
 import { FormControlLabel, Radio } from '@mui/material';
-import { green } from '@mui/material/colors';
+import { blue, green, red } from '@mui/material/colors';
 import { useGetResultTestOfStudentQuery } from '@/src/redux/api/instructor/resultTest';
 
 const style = {
@@ -29,7 +29,13 @@ const TestModal: React.FC<modalProps> = ({
 	handleClose,
 	saveId
 }) => {
+	console.log(saveId);
+
 	const { data } = useGetResultTestOfStudentQuery(saveId);
+
+	// const red = '#FF0000';
+	// const green = '#00FF00';
+	// const blue = '#0000FF';
 
 	return (
 		<form onSubmit={close} className={scss.form}>
@@ -37,6 +43,7 @@ const TestModal: React.FC<modalProps> = ({
 				open={openModal}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
+				onClose={handleClose}
 			>
 				<Box sx={style} className={scss.main_modal}>
 					<Typography
@@ -45,7 +52,7 @@ const TestModal: React.FC<modalProps> = ({
 						variant="h6"
 						component="h2"
 					>
-						<div className={scss.comText} onClick={handleClose}>
+						<div className={scss.comText}>
 							Резултаты тестирования Назира Рахматова
 						</div>
 					</Typography>
@@ -53,29 +60,50 @@ const TestModal: React.FC<modalProps> = ({
 					<Box className={scss.input_button_card}>
 						<div className={scss.Main_div}>
 							<div className={scss.testing_container}>
-								{data?.questionResponseList?.map((question) => (
+								{data?.answerQuestionResponses.map((question) => (
 									<div key={question.questionId} className={scss.question}>
 										<div className={scss.get_test_testing_second_container}>
-											<h4>{question.title}</h4>
+											<h4>{question.questionTitle}</h4>
 										</div>
-										{question.optionResponses.map((option) => (
+										{question.answerOptionResponses.map((option) => (
 											<div key={option.optionId} className={scss.option}>
-												{question.optionResponses.filter((opt) => opt.isTrue)
-													.length === 1 ? (
+												{question.answerOptionResponses.filter(
+													(opt) => opt.true
+												).length === 1 ? (
 													<>
 														<FormControlLabel
 															value={option.option}
 															control={
+																// <Radio
+																// 	checked={option.true || option.yourChoice}
+																// 	className={
+																// 		option.true ? scss.correct_checkbox : ''
+																// 	}
+																// 	style={{
+																// 		color:
+																// 			option.yourChoice && option.true
+																// 				? blue
+																// 				: option.yourChoice && !option.true
+																// 					? red
+																// 					: !option.yourChoice && option.true
+																// 						? green
+																// 						: ''
+																// 	}}
+																// />
 																<Radio
-																	checked={option.isTrue}
+																	checked={option.true || option.yourChoice}
 																	className={
-																		option.isTrue ? scss.correct_checkbox : ''
+																		option.true ? scss.correct_checkbox : ''
 																	}
-																	sx={{
-																		color: green[800],
-																		'&.Mui-checked': {
-																			color: green[600]
-																		}
+																	style={{
+																		color:
+																			option.yourChoice && option.true
+																				? blue[500]
+																				: option.yourChoice && !option.true
+																					? red[500]
+																					: !option.yourChoice && option.true
+																						? green[500]
+																						: 'inherit'
 																	}}
 																/>
 															}
@@ -84,10 +112,35 @@ const TestModal: React.FC<modalProps> = ({
 													</>
 												) : (
 													<>
+														{/* <input
+															type="checkbox"
+															checked={
+																option.yourChoice == true ||
+																option.true === true
+															}
+															className={
+																option.yourChoice == false &&
+																option.true == true
+																	? scss.correct_checkbox
+																	: null 
+
+															}
+														/> */}
 														<input
 															type="checkbox"
-															checked={option.isTrue == true}
-															className={scss.correct_checkbox}
+															checked={
+																option.yourChoice === true ||
+																option.true === true
+															}
+															className={
+																option.true === true &&
+																option.yourChoice === false
+																	? scss.incorrect_checkbox
+																	: option.true === true &&
+																		option.yourChoice === true
+																		? scss.correct_checkbox
+																		: ''
+															}
 														/>
 														a<label>{option.option}</label>
 													</>
