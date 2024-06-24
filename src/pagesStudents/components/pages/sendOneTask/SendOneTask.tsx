@@ -5,7 +5,7 @@ import Input from '@/src/ui/customInput/Input';
 import ReactQuill from 'react-quill';
 import { useRef, useState } from 'react';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 import { usePostStudentTaskMutation } from '@/src/redux/api/students/sendTask';
@@ -14,7 +14,8 @@ import Sources from 'quill';
 
 const SendOneTask = () => {
 	const [postStudentTask] = usePostStudentTaskMutation();
-	const { lessonId, getTaskId } = useParams();
+	const { coursesId, lessonId, testId, getTaskId } = useParams();
+	const navigate = useNavigate();
 	const lesson = Number(lessonId);
 	const { data } = useGetTaskInstructorQuery(lesson);
 	const [text, setText] = useState('');
@@ -121,6 +122,7 @@ const SendOneTask = () => {
 			}
 		}
 	};
+	const getTask = Number(getTaskId);
 
 	const addTask = async () => {
 		try {
@@ -136,7 +138,7 @@ const SendOneTask = () => {
 			};
 
 			const response = await postStudentTask({ newTask, getTask });
-
+			navigate(`/courses/${coursesId}/materials/${lessonId}/lesson/${getTaskId}`);
 			if (!response) {
 				throw new Error('Invalid response from server');
 			}
