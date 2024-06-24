@@ -17,17 +17,17 @@ const api = index.injectEndpoints({
 				url: `/api/test/enableToStart/${testId}`,
 				method: 'PATCH'
 			}),
-			invalidatesTags: ['rating']
+			invalidatesTags: ['test']
 		}),
 		GetResultTestOfStudent: builder.query<
 			TEST.getTestResultResponse,
 			TEST.getTestResultRequest
 		>({
-			query: (resultTestId) => ({
-				url: `/api/answerTest/resultTestOfStudent/${resultTestId}`,
+			query: (resultTest) => ({
+				url: `/api/answerTest/resultTestOfStudent/2`,
 				method: 'GET'
 			}),
-			providesTags: ['rating']
+			providesTags: ['test']
 		})
 	})
 });

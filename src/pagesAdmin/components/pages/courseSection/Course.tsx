@@ -58,6 +58,8 @@ const Courses: FC = () => {
 		setAnchorEl(null);
 	};
 
+	console.log(saveId,'4444');
+
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
 	return (

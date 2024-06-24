@@ -23,16 +23,6 @@ interface IFormInputs {
 	group: string;
 }
 
-interface initialData {
-	firstName: string;
-	lastName: string;
-	email: string;
-	phoneNumber: string;
-	login: string;
-	specialization: string;
-	group: string;
-}
-
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -45,13 +35,14 @@ const style = {
 	p: 4,
 	borderRadius: '12px'
 };
-interface modalProps {
+
+interface ModalProps {
 	openModalEdit: boolean;
 	closeModalEdit: (openModalEdit: boolean) => void;
 	deleteById: number | null;
 }
 
-const ModalEditTeacher: React.FC<modalProps> = ({
+const ModalEditTeacher: React.FC<ModalProps> = ({
 	openModalEdit,
 	closeModalEdit,
 	deleteById
@@ -60,7 +51,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 	const [patchTeacher] = usePatchTeacherMutation();
 	const { data } = useGetTeacherQuery({ page: '1', size: '12' });
 	const find = data?.instructorResponses.find((el) => el.id === deleteById);
-	const [personName, setPersonName] = useState<string>('');
+	const [personName, setPersonName] = useState<number[]>([]);
 	const [originalData, setOriginalData] = useState<IFormInputs | null>(null);
 
 	const onSubmit = async (data: IFormInputs) => {
@@ -72,7 +63,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 			linkForPassword: 'http://localhost:5173/auth/newPassword'
 		};
 		await patchTeacher({ updateTeacher, deleteById, link });
-		setPersonName('');
+		setPersonName([]);
 		closeModalEdit(false);
 	};
 
@@ -83,7 +74,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 	const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
 
 	useEffect(() => {
-		const initialData: initialData = {
+		const initialData: IFormInputs = {
 			firstName: firstName,
 			lastName: lastName,
 			email: find?.email || '',
