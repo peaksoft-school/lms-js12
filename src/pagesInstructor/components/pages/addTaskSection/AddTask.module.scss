@@ -48,7 +48,7 @@
 				.button {
 					position: absolute;
 					top: 50%;
-					left: 45%;
+					right: 50%;
 				}
 
 				.editor {
@@ -58,6 +58,15 @@
 						display: flex;
 						flex-direction: column;
 						border-top: none;
+					}
+
+					p {
+						width: 100% !important;
+						max-width: 1200px !important;
+
+						img {
+							
+						}
 					}
 				}
 				.second_icon {
@@ -110,6 +119,8 @@
 		}
 	}
 }
+
+
 
 // :global {
 // 	.quill {

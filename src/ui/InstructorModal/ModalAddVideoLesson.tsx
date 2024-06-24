@@ -1,14 +1,15 @@
 import { FC, useState } from 'react';
-import scss from './Styled.module.scss';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
+import { message } from 'antd'; // Импорт message из Ant Design
+import scss from './Styled.module.scss';
 
 const style = {
 	position: 'absolute',
@@ -47,7 +48,6 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	const [postVideoLesson] = usePostVideoLessonMutation();
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
-	
 
 	const [loading, setLoading] = useState(false);
 
@@ -69,7 +69,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 	const onSubmit: SubmitHandler<VideoProps> = async (data) => {
 		const { titleOfVideo, description, linkOfVideo } = data;
 
-		if (titleOfVideo !== '' && description !== '' && linkOfVideo !== '') {
+		if (linkOfVideo && linkOfVideo !== '') {
 			const videoId = extractVideoId(linkOfVideo);
 
 			if (videoId) {
@@ -83,12 +83,17 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 					await postVideoLesson({ postData, lesson });
 					reset();
 					handleCloseVideo();
+					message.success('Видеоурок успешно добавлен');
 				} catch (error) {
 					console.error(error);
 				} finally {
 					setLoading(false);
 				}
+			} else {
+				message.error('Неправильный формат ссылки на видеоурок');
 			}
+		} else {
+			message.error('Введите ссылку на видеоурок');
 		}
 	};
 

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetStudentsCourseQuery } from '@/src/redux/api/students/courses';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
+import { Tooltip } from '@mui/material';
 
 const Courses: FC = () => {
 	const { data } = useGetStudentsCourseQuery();
@@ -103,19 +104,37 @@ const Courses: FC = () => {
 																</div>
 																<div className={scss.block_cont}>
 																	<div className={scss.second_block}>
-																		<p className={scss.block_title}>
-																			{item.title}
-																		</p>
+																		<Tooltip title={item.title}>
+																			<p
+																				style={{
+																					width: '100%',
+																					maxWidth: '300px',
+																					textOverflow: 'ellipsis',
+																					overflow: 'hidden'
+																				}}
+																				className={scss.block_title}
+																			>
+																				{item.title}
+																			</p>
+																		</Tooltip>
 																		<p className={scss.block_date}>
 																			{item.dateOfEnd}
 																		</p>
 																	</div>
 																	<div className={scss.text_card}>
 																		<span className={scss.block_text}>
-																			{item.description &&
-																			item.description.length > 60
-																				? `${item.description.substring(0, 60)}...`
-																				: item.description}
+																			<Tooltip title={item.description}>
+																				<p
+																					style={{
+																						width: '100%',
+																						maxWidth: '300px',
+																						textOverflow: 'ellipsis',
+																						overflow: 'hidden'
+																					}}
+																				>
+																					{item.description}
+																				</p>
+																			</Tooltip>
 																		</span>
 																	</div>
 																</div>

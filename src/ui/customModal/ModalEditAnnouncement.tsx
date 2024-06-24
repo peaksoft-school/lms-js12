@@ -23,6 +23,7 @@ import {
 } from '@/src/redux/api/admin/announcement';
 import scss from './EditAnnouncement.module.scss';
 import Input from '../customInput/Input';
+import { message } from 'antd'; // Импортируем message из Ant Design
 
 interface PostAnnouncementProps {
 	announcementContent: string;
@@ -74,7 +75,6 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 	const [personName, setPersonName] = useState<string[]>([]);
 	const { data: groupData } = useGetAnnouncementGroupsQuery();
 
-
 	const announcementContent = watch('announcementContent');
 
 	const isSubmitDisabled =
@@ -109,10 +109,17 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 			publishedDate: data.publishedDate
 		};
 
-		console.log(editAnnouncementData);
-
-		await editAnnouncement({ editAnnouncementData, saveIdElement });
-		closeModalEdit(false);
+		try {
+			await editAnnouncement({
+				editAnnouncementData,
+				saveIdElement
+			});
+			message.success('Объявление успешно изменено');
+			closeModalEdit(false);
+		} catch (error) {
+			console.error('Ошибка при редактировании объявления:', error);
+			message.error('Ошибка при выполнении операции');
+		}
 	};
 
 	useEffect(() => {

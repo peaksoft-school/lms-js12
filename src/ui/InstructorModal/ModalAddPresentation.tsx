@@ -13,6 +13,7 @@ import {
 	usePostPresentationMutation
 } from '@/src/redux/api/instructor/presentation';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd'; // Import message component from Ant Design
 
 const style = {
 	position: 'absolute',
@@ -77,6 +78,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 
 			try {
 				await postPresentation({ lesson, presentationData }).unwrap();
+				message.success('Презентация успешно добавлена'); // Display success message
 				reset();
 				handleClose();
 			} catch (error) {
@@ -105,6 +107,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 			}
 		}
 	};
+
 	const openFilePicker = () => {
 		fileInputRef.current?.click();
 	};

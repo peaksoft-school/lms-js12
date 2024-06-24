@@ -19,7 +19,7 @@ import {
 	IconPlus
 } from '@tabler/icons-react';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
-
+import { message } from 'antd';
 const Announcements = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
@@ -81,23 +81,23 @@ const Announcements = () => {
 		}
 	};
 	const handleShow = async () => {
-		const test = data?.announcements.find((item) =>
-			item.id === testId ? item.isPublished : null
-		);
-		if (test) {
-			const isPublished = false;
+		try {
+			const isPublished = find?.isPublished ? false : true;
 			const res = await showAnnouncement({ testId, isPublished });
 			if (res.data?.httpStatus === 'OK') {
+				message.success(
+					isPublished ? 'Объявление опубликовано' : 'Объявление скрыто'
+				);
 				setAnchorEl(null);
+			} else {
+				message.error('Ошибка при выполнении операции');
 			}
-		} else {
-			const isPublished = true;
-			const res = await showAnnouncement({ testId, isPublished });
-			if (res.data?.httpStatus === 'OK') {
-				setAnchorEl(null);
-			}
+		} catch (error) {
+			console.error('Ошибка при выполнении операции:', error);
+			message.error('Ошибка при выполнении операции');
 		}
 	};
+
 	return (
 		<div className={scss.Section_announcement}>
 			<div className={scss.main_container}>

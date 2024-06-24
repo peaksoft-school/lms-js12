@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import scss from './CreateTask.module.scss';
@@ -72,9 +72,11 @@ const CrateTask = () => {
 								setSaveId(item.id);
 							}}
 						>
-							<p onClick={() => GetTask(item.id)} className={scss.card_link}>
-								{item.title}
-							</p>
+							<Tooltip title={item.title}>
+								<p onClick={() => GetTask(item.id)} className={scss.card_link}>
+									{item.title}
+								</p>
+							</Tooltip>
 							<div className={scss.button} onClick={() => setSaveId(item.id)}>
 								<button onClick={handleClick}>
 									<IconDotsVertical stroke={2} />

@@ -53,14 +53,20 @@
 						font-weight: 600;
 						font-size: 20px;
 						color: #1d293f;
-						z-index: 0;
+						width: 100%;
+						max-width: 200px;
+						text-overflow: ellipsis;
+						overflow: hidden;
 					}
 
 					p {
 						font-weight: 400;
 						font-size: 16px;
 						color: #1d293f;
-						margin-left: 10px;
+						width: 100%;
+						max-width: 500px;
+						text-overflow: ellipsis;
+						overflow: hidden;
 					}
 				}
 
@@ -118,5 +124,15 @@
 				display: none;
 			}
 		}
+	}
+}
+
+:global {
+	.css-ja5taz-MuiTooltip-tooltip {
+		background-color: #fff !important;
+		color: #000000 !important;
+		width: 100% !important;
+		max-width: 250px !important;
+		box-shadow: 0 0 10px #000000 !important;
 	}
 }

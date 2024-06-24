@@ -1,5 +1,5 @@
-import scss from './DeleteCourse.module.scss';
 import React from 'react';
+import scss from './DeleteCourse.module.scss';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteCourseMutation } from '@/src/redux/api/admin/courses';
 import ButtonDelete from '../../customButton/ButtonDelete';
+import { message } from 'antd';
 
 interface DeleteProps {
 	openModalDelete: boolean;
@@ -20,9 +21,15 @@ const DeleteCourses: React.FC<DeleteProps> = ({
 	deleteById
 }) => {
 	const [deleteCourse] = useDeleteCourseMutation();
+
 	const handleDelete = async () => {
-		await deleteCourse(deleteById!);
-		closeModalDelete(false);
+		try {
+			await deleteCourse(deleteById!).unwrap();
+			message.success('Группа успешно добавлено в корзину!');
+			closeModalDelete(false);
+		} catch (error) {
+			message.error('Ошибка при удалении курса');
+		}
 	};
 
 	return (
@@ -77,4 +84,5 @@ const DeleteCourses: React.FC<DeleteProps> = ({
 		</div>
 	);
 };
+
 export default DeleteCourses;

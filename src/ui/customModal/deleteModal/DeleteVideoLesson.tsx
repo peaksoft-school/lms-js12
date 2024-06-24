@@ -7,6 +7,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import ButtonDelete from '@/src/ui/customButton/ButtonDelete';
 import scss from './DeleteVideoLesson.module.scss';
 import { useDeleteVideoLessonMutation } from '@/src/redux/api/instructor/video';
+import { message } from 'antd';
 
 type VideoLessonProps = {
 	openModalDelete: boolean;
@@ -27,12 +28,13 @@ const DeleteVideoLesson: FC<VideoLessonProps> = ({
 		try {
 			await deleteVideoLesson(saveIdElement!);
 			handleCloseModal(false);
+			message.success('Видеоурок успешно добавлено в корзину!');
+		} catch (error) {
+			console.error('Ошибка при удалении видеоурока:', error);
 		} finally {
 			setIsDeleting(false);
 		}
 	};
-
-	console.log(saveIdElement, 'id');
 
 	return (
 		<Dialog
@@ -45,7 +47,7 @@ const DeleteVideoLesson: FC<VideoLessonProps> = ({
 		>
 			<DialogContent>
 				<DialogContentText id="alert-dialog-description">
-					<h3>Вы уверены, что хотите удалить этого видеоурока?</h3>
+					<h3>Вы уверены, что хотите удалить этот видеоурок?</h3>
 				</DialogContentText>
 			</DialogContent>
 

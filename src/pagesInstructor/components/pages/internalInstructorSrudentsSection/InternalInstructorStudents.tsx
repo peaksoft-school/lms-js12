@@ -35,6 +35,10 @@ const InternalInstructorStudents = () => {
 		);
 	};
 
+	const handleCloseModal = (value: boolean) => {
+		setOpenModalEdit(value);
+	};
+
 	const { data, isLoading } = useGetStudentsTableQuery({
 		course,
 		page: searchParams.toString(),

@@ -15,6 +15,7 @@ import { Pagination, Stack } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
+import { message } from 'antd';
 
 const Trash: FC = () => {
 	const { data, isLoading, isError } = useGetTrashQuery();
@@ -75,30 +76,20 @@ const Trash: FC = () => {
 	const updatedTrashFunc = async (id: number) => {
 		try {
 			await UpdatedTrash(id);
-			toast.success('Успешно обновлено');
+			message.success('Успешно обновлено');
 		} catch (error) {
 			console.error('Ошибка при обновлении', error);
+			message.error('Ошибка при обновлении');
 		}
 	};
 
 	const DeleteTrashFunc = async (id: number) => {
 		try {
 			await DeleteTrash(id);
-			toast.success('Успешно удалено');
-		} catch (error: unknown) {
+			message.success('Успешно удалено');
+		} catch (error) {
 			console.error('Ошибка при удалении', error);
-			if (typeof error === 'object' && error !== null) {
-				const responseStatus = (error as any)?.response?.status;
-				if (responseStatus === 403) {
-					toast.error('Ошибка при удалении: нет доступа');
-				} else if (responseStatus === 404) {
-					toast.error('Ошибка при удалении: данные не найдены');
-				} else {
-					toast.error('Ошибка при удалении');
-				}
-			} else {
-				toast.error('Ошибка при удалении');
-			}
+			message.error('Ошибка при удалении');
 		}
 	};
 

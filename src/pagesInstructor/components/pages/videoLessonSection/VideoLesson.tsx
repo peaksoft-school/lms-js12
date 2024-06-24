@@ -12,6 +12,7 @@ import DeleteVideoLesson from '@/src/ui/customModal/deleteModal/DeleteVideoLesso
 import { useParams } from 'react-router-dom';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import empty from '@/src/assets/notCreated0.png';
+import Tooltip from '@mui/material/Tooltip';
 
 const VideoLesson = () => {
 	const { lessonId } = useParams();
@@ -118,8 +119,13 @@ const VideoLesson = () => {
 								</div>
 								<div className={scss.title}>
 									<div className={scss.text}>
-										<h1>{item.titleOfVideo}</h1>
-										<p>{item.description}</p>
+										<Tooltip title={item.titleOfVideo}>
+											<h1>{item.titleOfVideo}</h1>
+										</Tooltip>
+
+										<Tooltip title={item.description}>
+											<p>{item.description}</p>
+										</Tooltip>
 									</div>
 									<div className={scss.dots}>
 										<div onClick={handleClick}>

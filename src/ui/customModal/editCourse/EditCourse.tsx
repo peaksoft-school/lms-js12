@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { FC, useEffect, useRef, useState } from 'react';
 import scss from './EditCourse.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,13 +8,12 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { FC, useEffect, useRef, useState } from 'react';
-
 import {
 	useCreateCourseFileImgMutation,
 	useGetAdminCourseQuery,
 	useUpdateAdminCourseMutation
 } from '@/src/redux/api/admin/courses';
+import { message } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -99,6 +99,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 				setSelectedFile(fileName);
 			} catch (error) {
 				console.error('Error uploading file:', error);
+				message.error('Ошибка загрузки файла');
 			}
 		}
 	};
@@ -110,9 +111,14 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 			dateOfEnd: date,
 			description: text
 		};
-		await updateCourse({ newCourses, saveId });
-		handleClose();
-		setSelectedFile('');
+		try {
+			await updateCourse({ newCourses, saveId }).unwrap();
+			message.success('Курс успешно изменен');
+			handleClose();
+			setSelectedFile('');
+		} catch (error) {
+			message.error('Ошибка изменения курса');
+		}
 	};
 
 	const handleDateChange = (newDate: string) => {
@@ -196,7 +202,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 						<div className={scss.second_input}>
 							<Input
 								size="medium"
-								placeholder="Название курсы"
+								placeholder="Дата окончания"
 								value={date}
 								onChange={(e) => handleDateChange(e.target.value)}
 								width="100%"

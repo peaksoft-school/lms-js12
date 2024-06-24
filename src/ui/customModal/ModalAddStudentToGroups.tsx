@@ -12,7 +12,7 @@ import {
 	Select,
 	SelectChangeEvent
 } from '@mui/material';
-import scss from './EditAnnouncement.module.scss';
+import { message } from 'antd';
 import { useParams } from 'react-router-dom';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
@@ -20,6 +20,7 @@ import {
 	useGetGroupTableQuery,
 	usePostGroupTableMutation
 } from '@/src/redux/api/instructor/studentAddCourse';
+import scss from './EditAnnouncement.module.scss';
 
 interface ModalProps {
 	openModalEdit: boolean;
@@ -43,7 +44,7 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	minHeight: 230,
-	backgroundColor: '#ffffff',
+	backgroundColor: '#fff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -64,6 +65,7 @@ const ModalAddStudentToGroups: FC<ModalProps> = ({
 	const [selectedId, setSelectedId] = useState<number | null>(null);
 	const { handleSubmit } = useForm();
 	const [postGroupTable] = usePostGroupTableMutation();
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleSelect = (groupId: number) => {
 		setSelectedId(groupId);
@@ -75,100 +77,118 @@ const ModalAddStudentToGroups: FC<ModalProps> = ({
 	};
 
 	const onSubmit = async () => {
-		await postGroupTable({ selectedIds: selectedId, course }); 
+		if (isSubmitting) return;
+
+		setIsSubmitting(true);
+
+		try {
+			await postGroupTable({ selectedIds: selectedId, course });
+			message.success('Студент успешно добавлен в группу.', 3);
+			handleClose(false);
+		} catch (error) {
+			message.error('Произошла ошибка при добавлении студента в группу.', 3);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<Modal
-				open={openModalEdit}
-				onClose={() => handleClose(false)}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<Box sx={style} className={scss.Announcement_form}>
-					<Typography
-						className={scss.text}
-						id="modal-modal-title"
-						variant="h6"
-						component="h2"
-					>
-						<div className={scss.comText}>Добавить студента в группу курса</div>
-					</Typography>
+		<Modal
+			open={openModalEdit}
+			onClose={() => handleClose(false)}
+			aria-labelledby="modal-modal-title"
+			aria-describedby="modal-modal-description"
+		>
+			<Box sx={style} className={scss.Announcement_form}>
+				<Typography
+					className={scss.text}
+					id="modal-modal-title"
+					variant="h6"
+					component="h2"
+				>
+					<div className={scss.comText}>Добавить студента в группу курса</div>
+				</Typography>
 
-					<Box className={scss.input_form}>
-						<div className={scss.input}>
-							{isLoading ? (
-								<Typography>Loading...</Typography>
-							) : (
-								<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
-									<InputLabel
-										id="demo-multiple-checkbox-label"
-										style={{
-											paddingLeft: '20px',
-											textAlign: 'center'
-										}}
-									>
-										Группы
-									</InputLabel>
-									<Select
-										labelId="demo-multiple-checkbox-label"
-										id="demo-multiple-checkbox"
-										value={selectedId || ''}
-										onChange={handleChange}
-										input={<OutlinedInput label="Группы" />}
-										renderValue={(selected) => {
-											const groupName = groupData?.find(
-												(g) => g.id === selected
-											)?.groupName;
-											return groupName || '';
-										}}
-										MenuProps={MenuProps}
-										style={{
-											maxWidth: '540px',
-											width: '100%',
-											height: '55px',
-											borderRadius: '12px',
-											position: 'relative',
-											top: '0'
-										}}
-									>
-										{groupData?.map((name) => (
-											<MenuItem
-												key={name.id}
-												value={name.id}
-												onClick={() => handleSelect(name.id)}
-											>
-												<ListItemText primary={name.groupName} />
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							)}
-
-							<Box mt={2} display="flex" justifyContent="flex-end" gap={1}>
-								<ButtonCancel
-									type="button"
-									onClick={() => handleClose(false)}
-									width="117px"
-									disabled={false}
+				<Box className={scss.input_form}>
+					<div className={scss.input}>
+						{isLoading ? (
+							<Typography>Loading...</Typography>
+						) : (
+							<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
+								<InputLabel
+									id="demo-multiple-checkbox-label"
+									style={{
+										paddingLeft: '20px',
+										textAlign: 'center',
+										backgroundColor: '#fff'
+									}}
 								>
-									Отмена
-								</ButtonCancel>
-								<ButtonSave
-									type="submit"
-									onClick={handleSubmit(onSubmit)}
-									width="117px"
-									disabled={false}
+									Группы
+								</InputLabel>
+								<Select
+									labelId="demo-multiple-checkbox-label"
+									id="demo-multiple-checkbox"
+									value={selectedId || ''}
+									onChange={handleChange}
+									input={<OutlinedInput label="Группы" />}
+									renderValue={(selected) => {
+										const groupName = groupData?.find(
+											(g) => g.id === selected
+										)?.groupName;
+										return groupName || '';
+									}}
+									MenuProps={MenuProps}
+									style={{
+										maxWidth: '540px',
+										width: '100%',
+										height: '55px',
+										borderRadius: '12px',
+										position: 'relative',
+										top: '0'
+									}}
 								>
-									Отправить
-								</ButtonSave>
-							</Box>
+									{groupData?.map((name) => (
+										<MenuItem
+											key={name.id}
+											value={name.id}
+											onClick={() => handleSelect(name.id)}
+										>
+											<ListItemText primary={name.groupName} />
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						)}
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'flex-end',
+								alignItems: 'end',
+								gap: '10px',
+								marginTop: '10px'
+							}}
+						>
+							<ButtonCancel
+								type="button"
+								onClick={() => handleClose(false)}
+								width="117px"
+								disabled={false}
+							>
+								Отмена
+							</ButtonCancel>
+							<ButtonSave
+								type="submit"
+								onClick={handleSubmit(onSubmit)}
+								width="117px"
+								disabled={!selectedId || isSubmitting}
+							>
+								Отправить
+							</ButtonSave>
 						</div>
-					</Box>
+					</div>
 				</Box>
-			</Modal>
-		</form>
+			</Box>
+		</Modal>
 	);
 };
 

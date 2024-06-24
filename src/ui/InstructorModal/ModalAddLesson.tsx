@@ -8,6 +8,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { usePostMaterialsMutation } from '@/src/redux/api/instructor/materials';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd';
 import scss from './Styled.module.scss';
 
 interface FormData {
@@ -38,13 +39,15 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 		handleSubmit,
 		reset,
 		control,
-		formState: { dirtyFields, errors }
+		formState: { dirtyFields, errors },
+		clearErrors
 	} = useForm<FormData>();
 	const [postMaterials] = usePostMaterialsMutation();
 	const { courseId } = useParams();
 	const course = Number(courseId);
 
 	const [loading, setLoading] = useState(false);
+	const [dateError, setDateError] = useState<string | null | boolean>(null);
 
 	const isButtonDisabled = !(dirtyFields.title && dirtyFields.date) || loading;
 
@@ -60,11 +63,28 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 				await postMaterials({ postData, course });
 				reset();
 				handleClose();
+				message.success('Урок успешно добавлен');
 			} catch (error) {
 				console.error(error);
+				message.error('Ошибка при добавлении урока');
 			} finally {
 				setLoading(false);
 			}
+		}
+	};
+
+	const validateDate = (value: string) => {
+		const selectedDate = new Date(value);
+		const currentDate = new Date();
+		currentDate.setHours(0, 0, 0, 0);
+		if (selectedDate < currentDate) {
+			setDateError(true);
+			message.error('Нужно выбрать будущую дату');
+			return 'Вы не можете выбрать прошедшую дату';
+		} else {
+			setDateError(null);
+			clearErrors('date');
+			return true;
 		}
 	};
 
@@ -114,17 +134,7 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 								name="date"
 								control={control}
 								defaultValue=""
-								rules={{
-									validate: (value) => {
-										const selectedDate = new Date(value);
-										const currentDate = new Date();
-										currentDate.setHours(0, 0, 0, 0);
-										return (
-											selectedDate >= currentDate ||
-											'Вы не можете выбрать прошедшую дату'
-										);
-									}
-								}}
+								rules={{ validate: validateDate }}
 								render={({ field }) => (
 									<>
 										<Input
@@ -133,10 +143,11 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 											type="date"
 											width="100%"
 											placeholder="Дата"
+											error={!!dateError}
 										/>
-										<p style={{ color: 'red' }}>
-											{errors.date && <span>{errors.date.message}</span>}
-										</p>
+										{dateError && (
+											<span style={{ color: 'red' }}>{dateError}</span>
+										)}
 									</>
 								)}
 							/>

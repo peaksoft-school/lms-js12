@@ -72,6 +72,14 @@
 				}
 			}
 
+			p {
+				color: #1d293f;
+				width: 100%;
+				max-width: 200px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+
 			.button {
 				button {
 					background: none;

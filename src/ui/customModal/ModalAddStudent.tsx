@@ -21,6 +21,12 @@ import {
 } from '@/src/redux/api/admin/student';
 import ButtonSave from '../customButton/ButtonSave';
 import ButtonCancel from '../customButton/ButtonCancel';
+import { message } from 'antd';
+
+function isValidEmail(email: string): boolean {
+	const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return re.test(email);
+}
 
 interface PostStudentProps {
 	firstName: string;
@@ -74,7 +80,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 		handleSubmit,
 		control,
 		reset,
-		formState: { dirtyFields }
+		formState: { dirtyFields, errors }
 	} = useForm<PostStudentProps>();
 	const [postStudentTable] = usePostStudentTableMutation();
 	const [formatName, setFormatName] = useState<string>('');
@@ -88,51 +94,60 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 		setPersonName(event.target.value);
 	};
 
-	const isButtonDisabled = !(
-		dirtyFields.firstName &&
-		dirtyFields.lastName &&
-		dirtyFields.email &&
-		dirtyFields.phoneNumber
-	);
+	const isButtonDisabled =
+		!dirtyFields.firstName ||
+		!dirtyFields.lastName ||
+		!dirtyFields.email ||
+		!dirtyFields.phoneNumber;
 
 	const onSubmit: SubmitHandler<PostStudentProps> = async (formData) => {
-		const { firstName, lastName, groupName, phoneNumber, email } = formData;
-		if (
-			firstName !== '' &&
-			lastName !== '' &&
-			groupName !== '' &&
-			formatName !== '' &&
-			phoneNumber !== '' &&
-			email !== ''
-		) {
-			setIsSubmitting(true);
+		const { firstName, lastName, phoneNumber, email } = formData;
 
-			const newStudent = {
-				firstName,
-				lastName,
-				groupName: personName,
-				studyFormat: formatName,
-				phoneNumber,
-				email,
-				isBlock: false
-			};
+		if (!phoneNumber.startsWith('+')) {
+			message.error('Номер телефона должен начинаться с символа "+"');
+			return;
+		}
 
-			const newData = {
-				link: 'http://localhost:5173/auth/newPassword'
-			};
+		if (!isValidEmail(email)) {
+			message.error('Некорректный формат Email');
+			return;
+		}
 
-			try {
-				const response = await postStudentTable({ newStudent, newData });
-				console.log('Response:', response);
-				handleClose();
-				reset();
-				setFormatName('');
-				setPersonName('');
-			} catch (error) {
+		setIsSubmitting(true);
+
+		const newStudent = {
+			firstName,
+			lastName,
+			groupName: personName,
+			studyFormat: formatName,
+			phoneNumber,
+			email,
+			isBlock: false
+		};
+
+		const newData = {
+			link: 'http://localhost:5173/auth/newPassword'
+		};
+
+		try {
+			const response = await postStudentTable({ newStudent, newData });
+
+			console.log('Response:', response);
+
+			message.success('Студент успешно добавлен');
+			handleClose();
+			reset();
+			setFormatName('');
+			setPersonName('');
+		} catch (error) {
+			if (error.status === 409) {
+				message.error('Студент с таким email уже существует');
+			} else {
+				message.error('Ошибка при добавлении студента');
 				console.error('Error:', error);
-			} finally {
-				setIsSubmitting(false); // Reset submission status
 			}
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
@@ -201,7 +216,10 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 								control={control}
 								defaultValue=""
 								rules={{
-									required: 'Номер обязателен для заполнения'
+									required: 'Номер обязателен для заполнения',
+									validate: (value) =>
+										value.startsWith('+') ||
+										'Номер телефона должен начинаться с символа "+"'
 								}}
 								render={({ field }) => (
 									<Input
@@ -210,15 +228,30 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Номер телефона"
+										error={!!errors.phoneNumber}
+										inputProps={{
+											style: {
+												borderColor: errors.phoneNumber ? 'red' : undefined
+											}
+										}}
 									/>
 								)}
 							/>
+							{errors.phoneNumber && (
+								<span style={{ color: 'red' }}>
+									{errors.phoneNumber.message}
+								</span>
+							)}
 							<Controller
 								name="email"
 								control={control}
 								defaultValue=""
 								rules={{
-									required: 'Email обязателен для заполнения'
+									required: 'Email обязателен для заполнения',
+									pattern: {
+										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+										message: 'Некорректный формат Email'
+									}
 								}}
 								render={({ field }) => (
 									<Input
@@ -227,9 +260,13 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="email"
 										width="100%"
 										placeholder="Email"
+										error={!!errors.email}
 									/>
 								)}
 							/>
+							{errors.email && (
+								<span style={{ color: 'red' }}>{errors.email.message}</span>
+							)}
 							<FormControl>
 								<InputLabel style={{ background: '#fff' }} id="demo-name-label">
 									Группа

@@ -10,6 +10,7 @@ import {
 	useGetLinkQuery
 } from '@/src/redux/api/instructor/link';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -36,7 +37,7 @@ interface EditLinkProps {
 
 const EditLink: FC<EditLinkProps> = ({ open, handleClose, resultId }) => {
 	const { control, handleSubmit, reset, formState } = useForm<LinkProps>();
-	const { dirtyFields } = formState; // Access dirtyFields to track changes
+	const { dirtyFields } = formState;
 	const { lessonId } = useParams();
 	const { data: linkData, isFetching } = useGetLinkQuery(Number(lessonId));
 	const [editLink] = useEditLinkMutation();
@@ -56,12 +57,18 @@ const EditLink: FC<EditLinkProps> = ({ open, handleClose, resultId }) => {
 			return;
 		}
 		const { title, url } = formData;
-		await editLink({
-			linkId: resultId,
-			newData: { title, url }
-		});
-		reset();
-		handleClose();
+		try {
+			await editLink({
+				linkId: resultId,
+				newData: { title, url }
+			});
+			reset();
+			handleClose();
+			message.success('Данные успешно обновлены');
+		} catch (error) {
+			message.error('Ошибка при обновлении данных');
+			console.error('Failed to edit link:', error);
+		}
 	};
 
 	if (isFetching) return null;

@@ -12,6 +12,7 @@ import {
 	usePatchVideoLessonMutation
 } from '@/src/redux/api/instructor/video';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd'; // Импорт message из Ant Design
 
 interface IFormInputs {
 	titleOfVideo: string;
@@ -64,12 +65,19 @@ const ModalEditVideo: React.FC<modalProps> = ({
 
 	const onSubmit = async (data: IFormInputs) => {
 		const videoId = getVideoId(data.linkOfVideo);
+
+		if (!videoId) {
+			message.error('Неправильный формат ссылки на видеоурок');
+			return;
+		}
+
 		const newVideoLesson = {
 			...data,
 			linkOfVideo: videoId
 		};
 		await patchVideo({ newVideoLesson, saveIdElement });
 		closeModalEdit(false);
+		message.success('Видеоурок успешно обновлен');
 	};
 
 	useEffect(() => {

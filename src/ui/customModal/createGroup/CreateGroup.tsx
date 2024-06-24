@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import scss from './CreateGroup.module.scss';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,15 +8,15 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { message } from 'antd';
+
 import {
 	useCreateGroupFileMutation,
 	useCreateGroupMutation
 } from '@/src/redux/api/admin/groups';
 
 const style = {
-	position: 'absolute',
+	position: 'absolute' as const,
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
@@ -48,6 +48,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 	const [urlImg, setUrlImg] = useState('');
 	const [isFormValid, setIsFormValid] = useState(false);
 	const [creatingGroup, setCreatingGroup] = useState(false);
+	const [messageApi, contextHolder] = message.useMessage();
 
 	const handleButtonClick = () => {
 		if (fileInputRef.current) {
@@ -80,11 +81,12 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 		}
 	};
 
-	const notifySuccess = () => toast.success('Группа успешно создана!');
-	const notifyError = () => toast.error('Произошла ошибка при создании группы');
-	const notifyIncomplete = () => toast.error('Заполните все поля');
+	const notifySuccess = () => messageApi.success('Группа успешно создана!');
+	const notifyError = () =>
+		messageApi.error('Произошла ошибка при создании группы');
+	const notifyIncomplete = () => messageApi.error('Заполните все поля');
 	const notifyInvalidDate = () =>
-		toast.error('Выберите будущую дату для "Дата окончания"');
+		messageApi.error('Выберите будущую дату для "Дата окончания"');
 
 	const handleCreateGroup = async () => {
 		if (creatingGroup) {
@@ -125,8 +127,23 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 			setUrlImg('');
 			setHidePhoto(false);
 			setIsFormValid(false);
-		} catch (error) {
-			notifyError();
+		} catch (error: any) {
+			if (
+				error.response &&
+				[400, 403, 404, 417].includes(error.response.status)
+			) {
+				if (error.response.status === 400) {
+					messageApi.error('Ошибка: Неправильный запрос');
+				} else if (error.response.status === 403) {
+					messageApi.error('Ошибка: Доступ запрещён');
+				} else if (error.response.status === 404) {
+					messageApi.error('Ошибка: Ресурс не найден');
+				} else if (error.response.status === 417) {
+					messageApi.error('Ошибка: Ожидаемое неполное');
+				}
+			} else {
+				notifyError();
+			}
 		} finally {
 			setCreatingGroup(false);
 		}
@@ -149,6 +166,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 
 	return (
 		<div>
+			{contextHolder}
 			<Modal
 				open={open}
 				onClose={handleClose}

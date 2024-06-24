@@ -62,7 +62,7 @@ const SendOneTask = () => {
 			formData.append('description', description);
 			try {
 				const response: any = await createGroupFile(formData).unwrap();
-				const fileName = response.fileName; // Directly access fileName
+				const fileName = response.fileName;
 				console.log('File uploaded:', fileName);
 				setSelectedFile(fileName);
 				setDescription(description);
@@ -71,9 +71,8 @@ const SendOneTask = () => {
 			}
 		}
 	};
-	const getTask = Number(getTaskId);
 
-	function dataURItoBlob(dataURI: string) {
+	const dataURItoBlob = (dataURI: string): Blob => {
 		const [mime, data] = dataURI.split(';base64,');
 		const binary = atob(data);
 		const arrayBuffer = new ArrayBuffer(binary.length);
@@ -83,7 +82,8 @@ const SendOneTask = () => {
 			uint8Array[i] = binary.charCodeAt(i);
 		}
 		return new Blob([uint8Array], { type: mime });
-	}
+	};
+
 	const handleImageUpload = async (imageData: string, description: string) => {
 		try {
 			const blob = dataURItoBlob(imageData);
@@ -105,6 +105,7 @@ const SendOneTask = () => {
 			console.error('Error uploading image:', error);
 		}
 	};
+
 	const handleEditorChange = (
 		content: string,
 		delta: any,
@@ -148,10 +149,10 @@ const SendOneTask = () => {
 		<div className={scss.get_task}>
 			<div className={scss.work}>
 				{data?.taskResponse.map((item) => (
-					<div className={scss.card}>
+					<div className={scss.card} key={item.id}>
 						<div className={scss.text}>
-							<h2>{item.title}</h2>
-							<h2>{item.deadline}</h2>
+							<h2>{item.deadline.split('T')[0]}</h2>
+							<h2>{item.deadline.split('T')[1]}</h2>
 						</div>
 						<div
 							className={scss.inner_html}

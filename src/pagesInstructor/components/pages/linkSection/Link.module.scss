@@ -94,16 +94,21 @@
 			justify-content: space-between;
 
 			.text {
-				a {
-					font-weight: 600;
-					font-size: 17px;
-					color: blue;
-				}
+				width: 100%;
+				max-width: 200px;
+				text-overflow: ellipsis;
+				overflow: hidden;
 
 				p {
-					font-weight: 400;
-					font-size: 14px;
-					color: #1d293f;
+					a {
+						font-weight: 600;
+						font-size: 17px;
+						color: blue;
+						width: 100%;
+						max-width: 200px;
+						text-overflow: ellipsis;
+						overflow: hidden;
+					}
 				}
 			}
 

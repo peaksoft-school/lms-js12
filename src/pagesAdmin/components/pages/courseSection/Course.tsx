@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import DeleteCourses from '@/src/ui/customModal/deleteModal/DeleteCourse';
 import EditCourse from '@/src/ui/customModal/editCourse/EditCourse';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { Box, ScrollArea } from '@mantine/core';
@@ -99,94 +99,127 @@ const Courses: FC = () => {
 							<Box>
 								<div className={scss.cards}>
 									<div className={scss.card}>
-										{data?.courses.map((item) => (
-											<div key={item.id} className={scss.zero_block_container}>
+										{data?.courses &&
+											data.courses.map((item) => (
 												<div
-													onClick={() => {
-														localStorage.setItem('item', item.title);
-														setTimeout(() => {
-															navigate(`/admin/courses/${item.id}/teacher`);
-														}, 1000);
-													}}
+													key={item.id}
+													className={scss.zero_block_container}
 												>
-													<div className={scss.block_photo_cards}>
-														<img
-															src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
-															alt="images"
-														/>
-													</div>
-													<div className={scss.block_cont}>
-														<div className={scss.second_block}>
-															<p className={scss.block_title}>{item.title}</p>
-															<p className={scss.block_date}>
-																{item.dateOfEnd}
-															</p>
-														</div>
-														<div className={scss.text_card}>
-															<span className={scss.block_text}>
-																{item.description.length > 60
-																	? `${item.description.substring(0, 60)}...`
-																	: item.description}
-															</span>
-														</div>
-													</div>
-												</div>
-												<div className={scss.block_button_div}>
-													<div onClick={(e) => handleClick(e, item.id)}>
-														<button className={scss.button_dots}>
-															<IconDots stroke={2} />
-														</button>
-													</div>
-													<Menu
-														anchorEl={anchorEl}
-														id="basic-menu"
-														open={open}
-														onClose={handleClose}
-														anchorOrigin={{
-															vertical: 'bottom',
-															horizontal: 'right'
-														}}
-														transformOrigin={{
-															vertical: 'top',
-															horizontal: 'right'
-														}}
-														PaperProps={{
-															style: {
-																boxShadow: 'none',
-																border: '1px solid gray'
-															}
-														}}
-													>
-														<MenuItem
-															style={{ display: 'flex', gap: '10px' }}
+													<div>
+														<div
 															onClick={() => {
-																setOpenEditModal(true);
-																handleClose();
+																setTimeout(() => {
+																	navigate(`/admin/courses/${item.id}/teacher`);
+																}, 1000);
 															}}
 														>
-															<img src={editImg} alt="#" />
-															Редактировать
-														</MenuItem>
-														<MenuItem
-															style={{ display: 'flex', gap: '10px' }}
-															onClick={() => {
-																setDeleteModal(true);
-																handleClose();
+															<div className={scss.block_photo_cards}>
+																<img
+																	src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
+																	alt="images"
+																/>
+															</div>
+															<div className={scss.block_cont}>
+																<div className={scss.second_block}>
+																	<span>
+																		<Tooltip title={item.title}>
+																			<p
+																				style={{
+																					width: '100%',
+																					maxWidth: '100px',
+																					textOverflow: 'ellipsis',
+																					overflow: 'hidden'
+																				}}
+																				className={scss.block_title}
+																			>
+																				{item.title}
+																			</p>
+																		</Tooltip>
+																	</span>
+																	<p className={scss.block_date}>
+																		{item.dateOfEnd}
+																	</p>
+																</div>
+																<div className={scss.text_card}>
+																	<span className={scss.block_text}>
+																		<Tooltip title={item.description}>
+																			<p
+																				style={{
+																					width: '100%',
+																					maxWidth: '300px',
+																					textOverflow: 'ellipsis',
+																					overflow: 'hidden'
+																				}}
+																			>
+																				{item.description}
+																			</p>
+																		</Tooltip>
+																	</span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div className={scss.block_button_div}>
+														<div onClick={handleClick}>
+															<button
+																className={scss.button_dots}
+																onClick={() => {
+																	setSaveId(item.id);
+																}}
+															>
+																<IconDots stroke={2} />
+															</button>
+														</div>
+														<Menu
+															anchorEl={anchorEl}
+															id="basic-menu"
+															open={open}
+															onClose={handleClose}
+															anchorOrigin={{
+																vertical: 'bottom',
+																horizontal: 'right'
+															}}
+															transformOrigin={{
+																vertical: 'top',
+																horizontal: 'right'
+															}}
+															PaperProps={{
+																style: {
+																	boxShadow: 'none',
+																	border: '1px solid gray'
+																}
 															}}
 														>
-															<img src={deleteImg} alt="#" />
-															Удалить
-														</MenuItem>
-													</Menu>
+															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
+																onClick={() => {
+																	setOpenEditModal(true);
+																	handleClose();
+																}}
+															>
+																<img src={editImg} alt="#" />
+																Редактировать
+															</MenuItem>
+															<MenuItem
+																style={{ display: 'flex', gap: '10px' }}
+																onClick={() => {
+																	setDeleteModal(true);
+																	handleClose();
+																}}
+															>
+																<img src={deleteImg} alt="#" />
+																Удалить
+															</MenuItem>
+														</Menu>
+													</div>
 												</div>
-											</div>
-										))}
+											))}
+										<EditCourse
+											open={openEditModal}
+											handleClose={handleCloseEditModal}
+											saveId={saveId}
+										/>
 									</div>
-									<EditCourse
-										open={openEditModal}
-										handleClose={handleCloseEditModal}
-										saveId={saveId}
-									/>
 									<DeleteCourses
 										openModalDelete={deleteModal}
 										closeModalDelete={() => setDeleteModal(false)}

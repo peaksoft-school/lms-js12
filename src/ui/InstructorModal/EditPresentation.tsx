@@ -14,6 +14,7 @@ import {
 	useGetPresentationQuery
 } from '@/src/redux/api/instructor/presentation';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd'; // Import message component from Ant Design
 
 const style = {
 	position: 'absolute',
@@ -76,8 +77,9 @@ const EditPresentation: FC<EditPresentationProps> = ({
 					newPresentation: presentationData,
 					presentationId
 				}).unwrap();
+				console.log(response);
 
-				console.log('Response from server:', response);
+				message.success('Данные успешно изменены');
 				reset();
 				handleClose();
 			} catch (error) {

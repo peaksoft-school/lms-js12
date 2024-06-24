@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './AddTask.module.scss';
@@ -43,9 +42,9 @@ const AddTask: React.FC = () => {
 			formData.append('description', description);
 			try {
 				const response: any = await createGroupFile(formData).unwrap();
-				const fileName = response.fileName; // Directly access fileName
+				const fileName = response.fileName;
 				console.log('File uploaded:', fileName);
-				setSelectedFile(fileName); // Extract fileName from response
+				setSelectedFile(fileName);
 				setDescription(description);
 			} catch (error) {
 				console.error('Error uploading file:', error);
@@ -102,7 +101,6 @@ const AddTask: React.FC = () => {
 			}
 		}
 	};
-	// console.log(saveSelect);
 
 	const addTask = async () => {
 		try {
@@ -277,6 +275,7 @@ const AddTask: React.FC = () => {
 								variant="contained"
 								style={{ padding: '10px 24px', borderRadius: '8px' }}
 								onClick={addTask}
+								disabled={!title || !selectedDate} 
 							>
 								Добавить
 							</Button>

@@ -1,58 +1,44 @@
-import scss from './GetTask.module.scss';
-import { Tab, Tabs } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-
+import React, { FC, useEffect, useState } from 'react';
+import { Tabs, Tab } from '@mui/material';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { Box, ScrollArea } from '@mantine/core';
+import { useGetTaskInstructorAQuery } from '@/src/redux/api/instructor/getTask';
 import Late from '../lateSection/Late';
 import Panding from '../pandingSection/Panding';
 import Accepted from '../acceptedSection/Accepted';
 import NotAccepted from '../notAcceptedSection/NotAccepted';
 import NotSubmitted from '../notSubmittedSection/NotSubmitted';
-import { Box, ScrollArea } from '@mantine/core';
-import { useGetTaskInstructorAQuery } from '@/src/redux/api/instructor/getTask';
+import scss from './GetTask.module.scss';
 
-const GetTask = () => {
+const GetTask: FC = () => {
 	const { courseId, lessonId, getTaskId } = useParams();
 	const navigate = useNavigate();
-	const getTask = Number(getTaskId);
-	const { data } = useGetTaskInstructorAQuery(getTask);
-
+	const { data } = useGetTaskInstructorAQuery(Number(getTaskId));
 	const [value, setValue] = useState(0);
 	const { pathname } = useLocation();
-	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-		setValue(newValue);
-	};
-
-	console.log(data?.description);
 
 	useEffect(() => {
-		if (
-			pathname ===
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
-		) {
-			setValue(0);
-		} else if (
-			pathname ==
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/accepted`
-		) {
-			setValue(1);
-		} else if (
-			pathname ==
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/late`
-		) {
-			setValue(3);
-		} else if (
-			pathname ===
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notAccepted`
-		) {
-			setValue(2);
-		} else if (
-			pathname ===
-			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted`
-		) {
-			setValue(4);
+		switch (pathname) {
+			case `/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`:
+				setValue(0);
+				break;
+			case `/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/accepted`:
+				setValue(1);
+				break;
+			case `/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/late`:
+				setValue(3);
+				break;
+			case `/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notAccepted`:
+				setValue(2);
+				break;
+			case `/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted`:
+				setValue(4);
+				break;
+			default:
+				break;
 		}
-	}, [pathname]);
+	}, [pathname, courseId, lessonId, getTaskId]);
+
 	const handleOpenPanding = () => {
 		navigate(
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
@@ -78,6 +64,15 @@ const GetTask = () => {
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted`
 		);
 	};
+
+	let datePart = '';
+	let timePart = '';
+	if (data?.deadline) {
+		const datetime = new Date(data.deadline);
+		datePart = datetime.toLocaleDateString();
+		timePart = datetime.toLocaleTimeString();
+	}
+
 	return (
 		<div className={scss.get_task}>
 			<div className={scss.Task}>
@@ -85,7 +80,10 @@ const GetTask = () => {
 					<div className={scss.card}>
 						<div className={scss.text}>
 							<h2>{data?.title}</h2>
-							<h3>{data?.deadline} </h3>
+							<div className={scss.datetimeContainer}>
+								<div className={scss.date}>{datePart}</div>
+								<div className={scss.time}>{timePart}</div>
+							</div>
 						</div>
 						<div className={scss.result_task}>
 							<a
@@ -94,7 +92,6 @@ const GetTask = () => {
 							>
 								{data?.file}
 							</a>
-
 							<div
 								className={scss.inner_html}
 								dangerouslySetInnerHTML={{ __html: data?.description }}
@@ -110,9 +107,9 @@ const GetTask = () => {
 				>
 					<Box className={scss.box}>
 						<Tabs
-							style={{ borderBottom: '1px solid #dde9f9' }}
+							style={{ borderBottom: '1px solid #dde9f9', display: 'flex' }}
 							value={value}
-							onChange={handleChange}
+							onChange={(_, newValue) => setValue(newValue)}
 							aria-label="basic tabs example"
 						>
 							<Tab
@@ -155,33 +152,23 @@ const GetTask = () => {
 				</ScrollArea>
 				{pathname ===
 					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding` && (
-					<>
-						<Panding />
-					</>
+					<Panding />
 				)}
 				{pathname ===
 					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/accepted` && (
-					<>
-						<Accepted />
-					</>
+					<Accepted />
 				)}
 				{pathname ===
 					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notAccepted` && (
-					<>
-						<NotAccepted />
-					</>
+					<NotAccepted />
 				)}
 				{pathname ===
 					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/notSubmitted` && (
-					<>
-						<NotSubmitted />
-					</>
+					<NotSubmitted />
 				)}
 				{pathname ===
 					`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/late` && (
-					<>
-						<Late />
-					</>
+					<Late />
 				)}
 			</div>
 		</div>

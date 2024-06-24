@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { useGetVideoLessonForStudentQuery } from '@/src/redux/api/students/videoStudent';
 import { useParams } from 'react-router-dom';
 import { Preloader } from '@/src/ui/preloader/Preloader';
@@ -72,8 +72,31 @@ const StudentVideoLesson = () => {
 								</div>
 								<div className={scss.title}>
 									<div className={scss.text}>
-										<h1>{item.titleOfVideo}</h1>
-										<p>{item.description}</p>
+										<Tooltip title={item.titleOfVideo}>
+											<h1
+												style={{
+													width: '100%',
+													maxWidth: '200px',
+													textOverflow: 'ellipsis',
+													overflow: 'hidden'
+												}}
+											>
+												{item.titleOfVideo}
+											</h1>
+										</Tooltip>
+
+										<Tooltip title={item.description}>
+											<p
+												style={{
+													width: '100%',
+													maxWidth: '500px',
+													textOverflow: 'ellipsis',
+													overflow: 'hidden'
+												}}
+											>
+												{item.description}
+											</p>
+										</Tooltip>
 									</div>
 								</div>
 							</div>

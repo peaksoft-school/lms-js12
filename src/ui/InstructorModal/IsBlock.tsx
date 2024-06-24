@@ -7,6 +7,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import scss from './Styled.module.scss';
 import { useIsBlockStudentMutation } from '@/src/redux/api/admin/student';
 import { Button } from '@mui/material';
+import { message } from 'antd'; // Импортируем message из Ant Design
 
 type IsBlockProps = {
 	openIsBlock: boolean;
@@ -20,13 +21,22 @@ const IsBlock: FC<IsBlockProps> = ({
 	openIsBlock,
 	handleCloseIsBlock,
 	isBlock,
-	saveIdElement
+	saveIdElement,
+	handleBlockUnblock
 }) => {
 	const [isBlockStudent] = useIsBlockStudentMutation();
 
 	const updateCompletedFunc = async () => {
-		await isBlockStudent(saveIdElement);
-		handleCloseIsBlock();
+		try {
+			await isBlockStudent(saveIdElement);
+			handleCloseIsBlock();
+			const action = isBlock ? 'Разблокирован' : 'Заблокирован';
+			message.success(`Студент успешно ${action}`);
+			handleBlockUnblock(); // Если нужно обновить состояние после изменения
+		} catch (error) {
+			console.error('Ошибка при блокировке/разблокировке студента:', error);
+			message.error('Ошибка при выполнении операции');
+		}
 	};
 
 	return (

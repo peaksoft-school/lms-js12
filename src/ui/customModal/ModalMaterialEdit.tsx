@@ -11,6 +11,7 @@ import ButtonCancel from '../customButton/ButtonCancel';
 import ButtonSave from '../customButton/ButtonSave';
 import Input from '../customInput/Input';
 import scss from './Style.module.scss';
+import { message } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -48,12 +49,12 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		mode: 'onChange'
 	});
 	const { isDirty } = formState;
+	const [dateError, setDateError] = useState<boolean>(false);
 
 	const [initialValues, setInitialValues] = useState<EditProps>({
 		title: '',
 		createdAt: ''
 	});
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
 	const onSubmit = async (data: EditProps) => {
@@ -61,7 +62,8 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		const selectedDate = new Date(data.createdAt);
 
 		if (selectedDate < currentDate) {
-			setErrorMessage('Вы не можете выбрать прошедшую дату.');
+			setDateError(true);
+			message.error('Вы не можете выбрать прошедшую дату.');
 			return;
 		}
 
@@ -75,6 +77,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 				await patchMaterial({ updateMaterial, deleteById }).then(() => {
 					refetch();
 					closeModalEdit(false);
+					message.success('Данные успешно изменены');
 				});
 			} catch (error) {
 				console.error(error);
@@ -145,15 +148,27 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 										type="date"
 										width="100%"
 										placeholder="дд.мм.гг"
+										error={dateError}
+										onChange={(e) => {
+											field.onChange(e);
+											const selectedDate = new Date(e.target.value);
+											const currentDate = new Date();
+											currentDate.setHours(0, 0, 0, 0);
+											if (selectedDate < currentDate) {
+												setDateError(true);
+												message.error('Вы не можете выбрать прошедшую дату.');
+											} else {
+												setDateError(false);
+											}
+										}}
+										style={{
+											borderColor: dateError ? 'red' : undefined,
+											backgroundColor: dateError ? '#ffe6e6' : undefined
+										}}
 									/>
 								)}
 							/>
 						</div>
-						{errorMessage && (
-							<Typography color="error" variant="body2">
-								{errorMessage}
-							</Typography>
-						)}
 						<div
 							style={{
 								width: '100%',

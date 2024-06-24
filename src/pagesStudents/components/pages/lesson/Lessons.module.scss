@@ -23,9 +23,7 @@
 			border-radius: 8px;
 			gap: 20px;
 			padding-inline: 20px;
-			padding-block: 20px;
-
-			padding-top: 60px;
+			padding-block: 10px;
 
 			@media (max-width: 750px) {
 				grid-template-columns: repeat(1, 1fr);
@@ -46,11 +44,8 @@
 
 				.link {
 					text-decoration: none;
-
-					.card_item {
-						color: #141414;
-						margin-left: 15px;
-					}
+					color: #141414;
+					margin-left: 15px;
 				}
 			}
 		}

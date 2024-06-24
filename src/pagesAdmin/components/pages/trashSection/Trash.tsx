@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import scss from './Trash.module.scss';
 import trash from '@/src/assets/svgs/trash (1).svg';
+import { message } from 'antd';
 import refrash from '@/src/assets/svgs/refresh.svg';
 import {
 	useDeleteTrashMutation,
@@ -68,14 +69,20 @@ const Trash: FC = () => {
 	};
 
 	const updatedTrashFunc = async (id: number) => {
-		await UpdatedTrash(id);
+		try {
+			await UpdatedTrash(id).unwrap();
+			message.success('Успешно обновлено');
+		} catch (error) {
+			message.error('Ошибка при обновлении');
+		}
 	};
 
 	const DeleteTrashFunc = async (id: number) => {
 		try {
 			await DeleteTrash(id).unwrap();
+			message.success('Успешно удалено');
 		} catch (error) {
-			toast.error('У вас нету доступа!');
+			message.error('Ошибка при удалении');
 		}
 	};
 
