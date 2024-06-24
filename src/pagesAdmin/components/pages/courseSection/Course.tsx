@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
@@ -50,8 +50,9 @@ const Courses: FC = () => {
 	const navigate = useNavigate();
 
 	const open = Boolean(anchorEl);
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+	const handleClick = (event: React.MouseEvent<HTMLElement>, id: number) => {
 		setAnchorEl(event.currentTarget);
+		setSaveId(id);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
@@ -59,45 +60,43 @@ const Courses: FC = () => {
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
-	useEffect(() => {
-		if (!data || data.courses.length === 0) {
-			<>
-				<NotCreated
-					text="Вы пока не создали курсы!"
-					buttonClick={handleOpenCourse}
-					name="Курсы"
-					buttontText="Создать курс"
-				/>
-			</>;
-		}
-	}, [data]);
-
 	return (
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					<div className={scss.course_button_modal}>
-						<Button
-							size="large"
-							className={scss.button}
-							onClick={handleOpenCourse}
-							variant="contained"
-						>
-							<div className={scss.icon}>
-								<IconPlus stroke={2} />
+					{data?.courses.length !== 0 ? (
+						<>
+							<div className={scss.course_button_modal}>
+								<Button
+									size="large"
+									className={scss.button}
+									onClick={handleOpenCourse}
+									variant="contained"
+								>
+									<div className={scss.icon}>
+										<IconPlus stroke={2} />
+									</div>
+									<span>Создать курс</span>
+								</Button>
 							</div>
-							<span>Создать курс</span>
-						</Button>
-					</div>
-					<h1 className={scss.title}>Курсы</h1>
-					<ScrollArea
-						type="always"
-						scrollbars="xy"
-						offsetScrollbars
-						classNames={scss}
-					>
-						<Box>
-							<div>
+							<h1 className={scss.title}>Курсы</h1>
+						</>
+					) : null}
+					{data?.courses.length === 0 ? (
+						<NotCreated
+							text="Вы пока не создали курсы!"
+							name="Курсы"
+							buttontText="Создать курс"
+							buttonClick={handleOpenCourse}
+						/>
+					) : (
+						<ScrollArea
+							type="always"
+							scrollbars="xy"
+							offsetScrollbars
+							classNames={scss}
+						>
+							<Box>
 								<div className={scss.cards}>
 									<div className={scss.card}>
 										{data?.courses &&
@@ -122,19 +121,21 @@ const Courses: FC = () => {
 															</div>
 															<div className={scss.block_cont}>
 																<div className={scss.second_block}>
-																	<Tooltip title={item.title}>
-																		<p
-																			style={{
-																				width: '100%',
-																				maxWidth: '100px',
-																				textOverflow: 'ellipsis',
-																				overflow: 'hidden'
-																			}}
-																			className={scss.block_title}
-																		>
-																			{item.title}
-																		</p>
-																	</Tooltip>
+																	<span>
+																		<Tooltip title={item.title}>
+																			<p
+																				style={{
+																					width: '100%',
+																					maxWidth: '100px',
+																					textOverflow: 'ellipsis',
+																					overflow: 'hidden'
+																				}}
+																				className={scss.block_title}
+																			>
+																				{item.title}
+																			</p>
+																		</Tooltip>
+																	</span>
 																	<p className={scss.block_date}>
 																		{item.dateOfEnd}
 																	</p>
@@ -225,76 +226,74 @@ const Courses: FC = () => {
 										deleteById={saveId}
 									/>
 								</div>
+							</Box>
+						</ScrollArea>
+					)}
+				</div>
+				{data?.courses.length !== 0 ? (
+					<>
+						<div className={scss.pagination}>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Перейти на страницу</p>
+								<div className={scss.pagination_element}>
+									<IconBook stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={currentPage}
+									onChange={(e) => setCurrentPage(Number(e.target.value))}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPage(currentPage);
+										}
+									}}
+								/>
 							</div>
-						</Box>
-					</ScrollArea>
-				</div>
-				<div className={scss.pagination}>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
+							<div className={scss.stack}>
+								<Stack direction="row" spacing={2}>
+									<Pagination
+										page={currentPage}
+										count={
+											data?.courses?.length
+												? Math.ceil(data.courses.length / openPage)
+												: 1
+										}
+										variant="outlined"
+										shape="rounded"
+									/>
+								</Stack>
+							</div>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Показать</p>
+								<div className={scss.pagination_element}>
+									<IconArticle stroke={2} />
+								</div>
+								<input
+									style={{
+										border:
+											data?.courses &&
+											Math.ceil(data.courses.length / openPage) < openPage
+												? '2px solid red'
+												: 'none'
+									}}
+									type="text"
+									value={openPage}
+									onChange={(e) => {
+										const value = Number(e.target.value);
+										setOpenPage(value);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') {
+											if (data?.courses && data.courses.length >= openPage) {
+												handleInputValuePaginationSize(openPage);
+											}
+										}
+									}}
+								/>
+							</div>
 						</div>
-						<input
-							type="text"
-							value={currentPage}
-							onChange={(e) => setCurrentPage(Number(e.target.value))}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleOpenPage(currentPage);
-								}
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								page={currentPage}
-								count={
-									data?.courses?.length
-										? Math.ceil(data.courses.length / openPage)
-										: 1
-								}
-								variant="outlined"
-								shape="rounded"
-							/>
-							{/* <Pagination
-								page={currentPage}
-								onChange={handlePageChange}
-								shape="rounded"
-								variant="outlined"
-							/> */}
-						</Stack>
-					</div>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							style={{
-								border:
-									data?.courses &&
-									Math.ceil(data.courses.length / openPage) < openPage
-										? '2px solid red'
-										: 'none'
-							}}
-							type="text"
-							value={openPage}
-							onChange={(e) => {
-								const value = Number(e.target.value);
-								setOpenPage(value);
-							}}
-							onKeyDown={(e) => {
-								if (e.key === 'Enter') {
-									if (data?.courses && data.courses.length >= openPage) {
-										handleInputValuePaginationSize(openPage);
-									}
-								}
-							}}
-						/>
-					</div>
-				</div>
+					</>
+				) : null}
 			</div>
 			<CreateCourse
 				handleOpenCourse={handleOpenCourse}

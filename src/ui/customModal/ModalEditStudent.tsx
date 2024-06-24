@@ -153,6 +153,9 @@ const ModalEditStudent: FC<EditModalProps> = ({
 				originalData[key as keyof PatchStudentProps]
 		);
 	};
+	const link = {
+		linkForPassword: 'http://localhost:5173/auth/newPassword'
+	};
 
 	const onSubmit = async (data: PatchStudentProps) => {
 		const editStudent = {
@@ -161,7 +164,8 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		};
 		await patchStudentTable({
 			editStudent,
-			saveIdElement
+			saveIdElement,
+			link
 		});
 		handleClose();
 	};

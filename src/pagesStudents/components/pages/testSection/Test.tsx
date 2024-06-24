@@ -1,37 +1,13 @@
 import scss from './Test.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetStudentTestQuery } from '@/src/redux/api/students/test';
-import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Button, Tooltip } from '@mui/material';
 
 const Test = () => {
 	const navigate = useNavigate();
 	const { coursesId, lessonId } = useParams();
 	const lesson = Number(lessonId);
-	const [isMobile, setIsMobile] = useState(true);
-	useEffect(() => {
-		const changeIsMobile = () => {
-			if (window.innerWidth < 1200) {
-				setIsMobile(true);
-			} else {
-				setIsMobile(false);
-			}
-		};
-
-		changeIsMobile();
-		window.addEventListener('resize', changeIsMobile);
-
-		return () => {
-			window.removeEventListener('resize', changeIsMobile);
-		};
-	}, []);
 	const { data } = useGetStudentTestQuery(lesson);
-	const truncateText = (text: string, maxLength: number) => {
-		if (text.length <= maxLength) {
-			return text;
-		}
-		return `${text.substring(0, maxLength)}...`;
-	};
 
 	return (
 		<div className={scss.test_container}>
@@ -42,11 +18,18 @@ const Test = () => {
 							<div className={scss.test_container_third}>
 								<h4>{index + 1}</h4>
 								<h4 className={scss.test_text}>
-									{isMobile ? (
-										<>{truncateText(question.title, 20)}</>
-									) : (
-										<>{truncateText(question.title, 40)}</>
-									)}
+									<Tooltip title={question.title}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '500px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{question.title}
+										</p>
+									</Tooltip>
 								</h4>
 							</div>
 							<div className={scss.test_container_forth}>
@@ -64,7 +47,6 @@ const Test = () => {
 									)
 								}
 							>
-								{' '}
 								Начать тест
 							</Button>
 						</div>

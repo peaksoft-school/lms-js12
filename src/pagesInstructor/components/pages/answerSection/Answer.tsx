@@ -20,7 +20,7 @@ const Answer = () => {
 	const { data } = useGetInstructorTaskQuery(test);
 
 	useEffect(() => {
-		if (comments.trim() && score.trim()) {
+		if (score.trim()) {
 			setIsButtonDisabled(false);
 		} else {
 			setIsButtonDisabled(true);
@@ -57,8 +57,7 @@ const Answer = () => {
 					<h2>Задание студента :</h2>
 					{data && (
 						<div className={scss.text_task}>
-							<div className={scss.task_sms}>{data.text}</div>
-							<div dangerouslySetInnerHTML={{ __html: data.description }} />
+							<div dangerouslySetInnerHTML={{ __html: data.text }} />
 						</div>
 					)}
 				</div>
@@ -66,16 +65,31 @@ const Answer = () => {
 					style={{ borderBottom: '1px solid #cfcfcf', paddingTop: '20px' }}
 				></div>
 				<div>
-					<div>
+					<div
+						style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+					>
 						{data?.comment.map((item, index) => (
 							<div key={index} className={scss.mainProfile}>
-								<div className={scss.profile}>
-									<img src={person} alt="" className={scss.image} />
-									<p>{item.author}</p>
-								</div>
-								<div className={scss.grade_comment}>
-									<p className={scss.content}>{item.content}</p>
-								</div>
+								{item.content !== '' ? (
+									<>
+										<div className={scss.profile}>
+											<div
+												style={{
+													display: 'flex',
+													alignItems: 'center',
+													gap: '10px',
+													width: '50%'
+												}}
+											>
+												<img src={person} alt="" className={scss.image} />
+												<p>{item.author}</p>
+											</div>
+										</div>
+										<div className={scss.grade_comment}>
+											<p className={scss.content}>{item.content}</p>
+										</div>
+									</>
+								) : null}
 							</div>
 						))}
 						{data && (
@@ -107,7 +121,6 @@ const Answer = () => {
 							<input
 								value={score}
 								onChange={(e) => setScore(e.target.value)}
-								width="100%"
 								type="text"
 								placeholder="Введите баллы"
 							/>

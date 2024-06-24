@@ -159,16 +159,30 @@ const CreateCourse: FC<CreateCoursesProps> = ({
 							ref={fileInputRef}
 							onChange={handleFileSelect}
 						/>
-						<div
-							onClick={handleButtonClick}
-							className={hidePhoto ? scss.background_none : scss.background}
-							style={{
-								backgroundImage: `url(${image || gallery})`,
-								backgroundRepeat: 'no-repeat',
-								backgroundPosition: 'center',
-								objectFit: 'contain'
-							}}
-						></div>
+						{image === '' ? (
+								<div
+									onClick={handleButtonClick}
+									className={hidePhoto ? scss.background_none : scss.background}
+									style={{
+										backgroundImage: `url(${gallery})`
+									}}
+								>
+									<img style={{ borderRadius: '8px' }} src={gallery} alt="" />
+								</div>
+							) : (
+								<div className={scss.img} onClick={handleButtonClick}>
+									<img
+										style={{
+											borderRadius: '8px',
+											width: '100%',
+											maxWidth: '173px',
+											minWidth: '173px',
+											height: '145px'
+										}}
+										src={image}
+									/>
+								</div>
+							)}
 						<p className={hidePhoto ? scss.hide_text : scss.show}>
 							Нажмите на иконку чтобы загрузить
 						</p>

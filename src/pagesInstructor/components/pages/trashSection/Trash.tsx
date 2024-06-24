@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useState, KeyboardEvent } from 'react';
+import { toast } from 'react-toastify';
 import scss from './Trash.module.scss';
 import trash from '@/src/assets/svgs/trash (1).svg';
-import refresh from '@/src/assets/svgs/refresh.svg';
+import refrash from '@/src/assets/svgs/refresh.svg';
 import empty from '@/src/assets/notCreated0.png';
 import {
 	useDeleteTrashMutation,
@@ -13,6 +14,7 @@ import { Preloader } from '../../../../ui/preloader/Preloader';
 import { Pagination, Stack } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
+import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 import { message } from 'antd';
 
 const Trash: FC = () => {
@@ -94,7 +96,11 @@ const Trash: FC = () => {
 	return (
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
-				<h1>Корзина</h1>
+				{data?.trashResponses.length !== 0 ? (
+					<>
+						<h1>Корзина</h1>
+					</>
+				) : null}
 				<ScrollArea
 					type="always"
 					scrollbars="xy"
@@ -103,84 +109,93 @@ const Trash: FC = () => {
 				>
 					<Box>
 						<div style={{ minHeight: '64vh' }}>
-							<div className={scss.table_container}>
-								<div className={scss.text}>
-									<p>
-										Элементы в корзине автоматически удаляются через 7 дней с
-										момента добавления!
-									</p>
-								</div>
-
-								{data?.trashResponses.length === 0 ? (
-									<div className={scss.empty_page}>
-										<img src={empty} alt="" />
-									</div>
-								) : (
-									<div className={scss.trash}>
-										<table className={scss.table}>
-											<thead>
-												<tr>
-													<th>Название</th>
-													<th className={scss.date}>Дата удаления</th>
-													<th className={scss.last_th}>Действие</th>
-												</tr>
-											</thead>
-											<tbody>
-												{data?.trashResponses.map((card, index) => (
-													<tr
-														className={
-															index % 2 === 1
-																? scss.table_alternate_row
-																: '' || scss.table_container_second
-														}
-														key={card.id}
-													>
-														<td style={{ paddingLeft: '20px' }}>{card.name}</td>
-														<td
-															style={{ textAlign: 'end', paddingRight: '70px' }}
+							{data?.trashResponses.length === 0 ? (
+								<>
+									<NotCreatedWithoutButton
+										name="Корзина"
+										text="Корзина пусто !"
+									/>
+								</>
+							) : (
+								<>
+									<div className={scss.table_container}>
+										<div className={scss.text}>
+											<p>
+												Элементы в корзине автоматически удаляются через 7 дней
+												с момента добавления!
+											</p>
+										</div>
+										<div className={scss.trash}>
+											<table className={scss.table}>
+												<thead>
+													<tr>
+														<th>Название</th>
+														<th className={scss.date}>Дата удаления</th>
+														<th className={scss.last_th}>Действие</th>
+													</tr>
+												</thead>
+												<tbody>
+													{data?.trashResponses.map((card, index) => (
+														<tr
+															className={
+																index % 2 === 1
+																	? scss.table_alternate_row
+																	: '' || scss.table_container_second
+															}
+															key={card.id}
 														>
-															{card.date}
-														</td>
-														<td>
-															<div
+															<td style={{ paddingLeft: '20px' }}>
+																{card.name}
+															</td>
+															<td
 																style={{
-																	display: 'flex',
-																	alignItems: 'end',
-																	justifyContent: 'end',
-																	gap: '20px',
-																	paddingRight: '50px',
-																	cursor: 'pointer'
+																	textAlign: 'end',
+																	paddingRight: '70px'
 																}}
 															>
-																<button
+																{card.date}
+															</td>
+															<td>
+																<div
 																	style={{
-																		border: 'none',
-																		background: 'none',
+																		display: 'flex',
+																		alignItems: 'end',
+																		justifyContent: 'end',
+																		gap: '20px',
+																		paddingRight: '50px',
 																		cursor: 'pointer'
 																	}}
-																	onClick={() => updatedTrashFunc(card.id)}
 																>
-																	<img src={refresh} alt="#" />
-																</button>
-																<button
-																	style={{
-																		border: 'none',
-																		background: 'none',
-																		cursor: 'pointer'
-																	}}
-																	onClick={() => DeleteTrashFunc(card.id)}
-																>
-																	<img src={trash} alt="#" />
-																</button>
-															</div>
-														</td>
-													</tr>
-												))}
-											</tbody>
-										</table>
+																	<button
+																		style={{
+																			border: 'none',
+																			background: 'none',
+																			cursor: 'pointer'
+																		}}
+																		onClick={() => updatedTrashFunc(card.id)}
+																	>
+																		<img src={refrash} alt="#" />
+																	</button>
+																	<button
+																		style={{
+																			border: 'none',
+																			background: 'none',
+																			cursor: 'pointer'
+																		}}
+																		onClick={() => DeleteTrashFunc(card.id)}
+																	>
+																		<img src={trash} alt="#" />
+																	</button>
+																</div>
+															</td>
+														</tr>
+													))}
+												</tbody>
+											</table>
+										</div>
 									</div>
-								)}
-							</div>
+								</>
+							)}
 						</div>
 					</Box>
 				</ScrollArea>

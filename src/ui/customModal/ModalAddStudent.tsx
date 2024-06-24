@@ -103,8 +103,8 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 	const onSubmit: SubmitHandler<PostStudentProps> = async (formData) => {
 		const { firstName, lastName, phoneNumber, email } = formData;
 
-		if (!phoneNumber.includes('+')) {
-			message.error('Номер телефона должен содержать символ "+"');
+		if (!phoneNumber.startsWith('+')) {
+			message.error('Номер телефона должен начинаться с символа "+"');
 			return;
 		}
 
@@ -131,15 +131,21 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 
 		try {
 			const response = await postStudentTable({ newStudent, newData });
+
 			console.log('Response:', response);
+
 			message.success('Студент успешно добавлен');
 			handleClose();
 			reset();
 			setFormatName('');
 			setPersonName('');
 		} catch (error) {
-			message.error('Ошибка при добавлении студента');
-			console.error('Error:', error);
+			if (error.status === 409) {
+				message.error('Студент с таким email уже существует');
+			} else {
+				message.error('Ошибка при добавлении студента');
+				console.error('Error:', error);
+			}
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -210,7 +216,10 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 								control={control}
 								defaultValue=""
 								rules={{
-									required: 'Номер обязателен для заполнения'
+									required: 'Номер обязателен для заполнения',
+									validate: (value) =>
+										value.startsWith('+') ||
+										'Номер телефона должен начинаться с символа "+"'
 								}}
 								render={({ field }) => (
 									<Input
@@ -219,9 +228,20 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="text"
 										width="100%"
 										placeholder="Номер телефона"
+										error={!!errors.phoneNumber}
+										inputProps={{
+											style: {
+												borderColor: errors.phoneNumber ? 'red' : undefined
+											}
+										}}
 									/>
 								)}
 							/>
+							{errors.phoneNumber && (
+								<span style={{ color: 'red' }}>
+									{errors.phoneNumber.message}
+								</span>
+							)}
 							<Controller
 								name="email"
 								control={control}
@@ -230,7 +250,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 									required: 'Email обязателен для заполнения',
 									pattern: {
 										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-										message: 'Введите корректный email'
+										message: 'Некорректный формат Email'
 									}
 								}}
 								render={({ field }) => (
@@ -240,10 +260,13 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 										type="email"
 										width="100%"
 										placeholder="Email"
+										error={!!errors.email}
 									/>
 								)}
 							/>
-							{errors.email && message.error(errors.email.message)}
+							{errors.email && (
+								<span style={{ color: 'red' }}>{errors.email.message}</span>
+							)}
 							<FormControl>
 								<InputLabel style={{ background: '#fff' }} id="demo-name-label">
 									Группа

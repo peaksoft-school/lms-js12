@@ -2,7 +2,7 @@ import { useState, KeyboardEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { IconArticle, IconBook } from '@tabler/icons-react';
-import { Pagination, Stack } from '@mui/material';
+import { Pagination, Stack, Tooltip } from '@mui/material';
 import { useGetStudentMaterialsQuery } from '@/src/redux/api/students/materials';
 import scss from './LessonsList.module.scss';
 import empty from '@/src/assets/notCreated0.png';
@@ -82,7 +82,20 @@ const LessonsList = () => {
 											key={item.id}
 										>
 											<a href="#" className={scss.link}>
-												<span className={scss.card_item}>№ {item.title}</span>
+												<span className={scss.card_item}>
+													<Tooltip title={item.title}>
+														<p
+															style={{
+																width: '100%',
+																maxWidth: '400px',
+																textOverflow: 'ellipsis',
+																overflow: 'hidden',
+															}}
+														>
+															№ {item.title}
+														</p>
+													</Tooltip>
+												</span>
 											</a>
 										</div>
 									))}

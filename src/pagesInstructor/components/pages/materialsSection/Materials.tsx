@@ -29,7 +29,7 @@ import {
 	Draggable,
 	DropResult
 } from '@hello-pangea/dnd';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 
 interface TodoProps {
@@ -39,7 +39,7 @@ interface TodoProps {
 }
 
 const Materials: FC = () => {
-	const { courseId } = useParams();
+	const { courseId, lessonId } = useParams();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
@@ -69,6 +69,7 @@ const Materials: FC = () => {
 		copyTodos.splice(endIndex, 0, reorderTodo);
 		setTodos(copyTodos);
 	};
+	const { pathname } = useLocation();
 
 	if (!courseId) {
 		return <div>Error: Course ID is missing!</div>;
@@ -119,7 +120,7 @@ const Materials: FC = () => {
 								<span>Создать урок</span>
 							</Button>
 						</div>
-						<h1>{item}</h1>
+						<h1 className={scss.title}>{item}</h1>
 						<ScrollArea
 							type="always"
 							scrollbars="xy"
@@ -176,7 +177,7 @@ const Materials: FC = () => {
 																					onClick={() => {
 																						setTimeout(() => {
 																							navigate(
-																								`/instructor/course/${courseId}/materials/${todo.id}`
+																								`/instructor/course/${courseId}/materials/${todo.id}/video`
 																							);
 																						}, 1000);
 																					}}

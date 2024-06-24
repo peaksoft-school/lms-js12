@@ -39,13 +39,15 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 		handleSubmit,
 		reset,
 		control,
-		formState: { dirtyFields, errors }
+		formState: { dirtyFields, errors },
+		clearErrors
 	} = useForm<FormData>();
 	const [postMaterials] = usePostMaterialsMutation();
 	const { courseId } = useParams();
 	const course = Number(courseId);
 
 	const [loading, setLoading] = useState(false);
+	const [dateError, setDateError] = useState<string | null | boolean>(null);
 
 	const isButtonDisabled = !(dirtyFields.title && dirtyFields.date) || loading;
 
@@ -68,6 +70,21 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 			} finally {
 				setLoading(false);
 			}
+		}
+	};
+
+	const validateDate = (value: string) => {
+		const selectedDate = new Date(value);
+		const currentDate = new Date();
+		currentDate.setHours(0, 0, 0, 0);
+		if (selectedDate < currentDate) {
+			setDateError(true);
+			message.error('Нужно выбрать будущую дату');
+			return 'Вы не можете выбрать прошедшую дату';
+		} else {
+			setDateError(null);
+			clearErrors('date');
+			return true;
 		}
 	};
 
@@ -117,18 +134,7 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 								name="date"
 								control={control}
 								defaultValue=""
-								rules={{
-									validate: (value) => {
-										const selectedDate = new Date(value);
-										const currentDate = new Date();
-										currentDate.setHours(0, 0, 0, 0);
-										if (selectedDate < currentDate) {
-											message.error('Нужно выбрать будущую дату');
-											return 'Вы не можете выбрать прошедшую дату';
-										}
-										return true;
-									}
-								}}
+								rules={{ validate: validateDate }}
 								render={({ field }) => (
 									<>
 										<Input
@@ -137,7 +143,11 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 											type="date"
 											width="100%"
 											placeholder="Дата"
+											error={!!dateError}
 										/>
+										{dateError && (
+											<span style={{ color: 'red' }}>{dateError}</span>
+										)}
 									</>
 								)}
 							/>

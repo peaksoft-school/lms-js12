@@ -1,5 +1,11 @@
 import { FC, useState } from 'react';
-import { IconArticle, IconBook } from '@tabler/icons-react';
+import {
+	IconArticle,
+	IconBook,
+	IconChartDonut,
+	IconDots,
+	IconUsers
+} from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import scss from './Course.module.scss';
 import Pagination from '@mui/material/Pagination';
@@ -7,6 +13,9 @@ import Stack from '@mui/material/Stack';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import { useNavigate } from 'react-router-dom';
+import { Menu, MenuItem } from '@mui/material';
+import RatingModal from '@/src/ui/customModal/ratingModal/RatingModal';
+import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 import { Tooltip } from '@mui/material';
 
 const Course: FC = () => {
@@ -19,7 +28,16 @@ const Course: FC = () => {
 	const handleOpenCourse = () => setOpen(true);
 	const handleCloseCourses = () => setOpen(false);
 	const navigate = useNavigate();
-
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [saveId, setSaveId] = useState<null | number>(null);
+	const [openRating, setOpenRating] = useState(false);
+	const open = Boolean(anchorEl);
+	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
 		page: number
@@ -58,43 +76,53 @@ const Course: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					<h1 className={scss.title}>Курсы</h1>
-					<ScrollArea
-						type="always"
-						scrollbars="xy"
-						offsetScrollbars
-						classNames={scss}
-					>
-						<Box>
-							<div>
-								<div className={scss.cards}>
-									{
-										// data && Array.isArray(data) && data.length > 0 ? (
-										<div className={scss.card}>
-											{data?.courses.map((item) => (
-												<div
-													className={scss.zero_block_container}
-													key={item.id}
-												>
-													<div
-														onClick={() => {
-															localStorage.setItem('item', item.title);
-															setTimeout(() => {
-																navigate(
-																	`/instructor/course/${item.id}/materials`
-																);
-															}, 500);
-														}}
-													>
-														<div className={scss.block_photo_cards}>
-															<img
-																src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
-																alt="images"
-															/>
-														</div>
-														<div className={scss.block_cont}>
-															<div className={scss.second_block}>
-																<Tooltip title={item.title}>
+					{data?.courses.length === 0 ? (
+						<>
+							<NotCreatedWithoutButton
+								name="Мои курсы"
+								text="У вас еще нет курсы !"
+							/>
+						</>
+					) : (
+						<>
+							<h1 className={scss.title}>Курсы</h1>
+							<ScrollArea
+								type="always"
+								scrollbars="xy"
+								offsetScrollbars
+								classNames={scss}
+							>
+								<Box>
+									<div>
+										<div className={scss.cards}>
+											{
+												<div className={scss.card}>
+													{data?.courses &&
+														data.courses.map((item) => (
+															<div
+																key={item.id}
+																className={scss.zero_block_container}
+															>
+																<div>
+																	<div
+																		onClick={() => {
+																			localStorage.setItem('item', item.title);
+																			setTimeout(() => {
+																				navigate(
+																					`/instructor/course/${item.id}/materials`
+																				);
+																			}, 500);
+																		}}
+																	>
+																		<div className={scss.block_photo_cards}>
+																			<img
+																				src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
+																				alt="images"
+																			/>
+																		</div>
+																		<div className={scss.block_cont}>
+																			<div className={scss.second_block}>
+																			<Tooltip title={item.title}>
 																	<p
 																		style={{
 																			width: '100%',
@@ -107,13 +135,13 @@ const Course: FC = () => {
 																		{item.title}
 																	</p>
 																</Tooltip>
-																<p className={scss.block_date}>
-																	{item.dateOfEnd}
-																</p>
-															</div>
-															<div className={scss.text_card}>
-																<span className={scss.block_text}>
-																	<Tooltip title={item.description}>
+																				<p className={scss.block_date}>
+																					{item.dateOfEnd}
+																				</p>
+																			</div>
+																			<div className={scss.text_card}>
+																				<span className={scss.block_text}>
+																				<Tooltip title={item.description}>
 																		<p
 																			style={{
 																				width: '100%',
@@ -125,18 +153,75 @@ const Course: FC = () => {
 																			{item.description}
 																		</p>
 																	</Tooltip>
-																</span>
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div className={scss.block_button_div}>
+																	<div onClick={handleClick}>
+																		<button
+																			className={scss.button_dots}
+																			onClick={() => {
+																				setSaveId(item.id);
+																			}}
+																		>
+																			<IconDots stroke={2} />
+																		</button>
+																	</div>
+																	<Menu
+																		anchorEl={anchorEl}
+																		id="basic-menu"
+																		open={open}
+																		onClose={handleClose}
+																		anchorOrigin={{
+																			vertical: 'bottom',
+																			horizontal: 'right'
+																		}}
+																		transformOrigin={{
+																			vertical: 'top',
+																			horizontal: 'left'
+																		}}
+																		PaperProps={{
+																			style: {
+																				boxShadow: 'none',
+																				border: '1px solid gray'
+																			}
+																		}}
+																	>
+																		<MenuItem
+																			style={{
+																				display: 'flex',
+
+																				gap: '10px'
+																			}}
+																			onClick={() => {}}
+																		>
+																			<IconUsers />
+																			Удалить группу JS_5поток с курса
+																		</MenuItem>
+																		<MenuItem
+																			style={{ display: 'flex', gap: '10px' }}
+																			onClick={() => {
+																				setOpenRating(true);
+																				handleClose();
+																			}}
+																		>
+																			<IconChartDonut stroke={2} />
+																			Распределение рейтинга
+																		</MenuItem>
+																	</Menu>
+																</div>
 															</div>
-														</div>
-													</div>
+														))}
 												</div>
-											))}
+											}
 										</div>
-									}
-								</div>
-							</div>
-						</Box>
-					</ScrollArea>
+									</div>
+								</Box>
+							</ScrollArea>
+						</>
+					)}
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.Inputs}>
@@ -197,6 +282,7 @@ const Course: FC = () => {
 				open={openCurse}
 				handleClose={handleCloseCourses}
 			/>
+			<RatingModal open={openRating} handleClose={() => setOpenRating(false)} />
 		</div>
 	);
 };

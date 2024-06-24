@@ -6,6 +6,7 @@ import scss from './ResultTest.module.scss';
 import { Box, ScrollArea } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 import { useGetTestResultStudentsQuery } from '@/src/redux/api/students/test';
+import { Tooltip } from '@mui/material';
 
 function ResultTest() {
 	const { testId } = useParams();
@@ -19,7 +20,25 @@ function ResultTest() {
 				<div className={scss.Main_div}>
 					<>
 						<div className={scss.get_test_name_test} key={data?.testId}>
-							<h2>{data?.testTitle}</h2>
+							<h2 className={scss.block_text}>
+								<Tooltip title={data?.testTitle}>
+									<p
+										style={{
+											width: '100%',
+											maxWidth: '620px',
+											textOverflow: 'ellipsis',
+											overflow: 'hidden'
+										}}
+									>
+										{data?.testTitle.length > 20 ? (
+											<>{data?.testTitle.slice(0, 50) + '...'}</>
+										) : (
+											<>{data?.testTitle}</>
+										)}
+									</p>
+								</Tooltip>
+							</h2>
+
 							<p className={scss.get_test_time}>
 								{`Время для прохождения теста: ${data?.testId}`}
 							</p>

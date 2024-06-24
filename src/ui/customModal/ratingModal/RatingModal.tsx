@@ -1,14 +1,13 @@
-import { message } from 'antd';
 import { FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
-import scss from './Style.module.scss';
+import scss from './RatingModal.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import { usePostTeacherMutation } from '@/src/redux/api/admin/teacher';
-import Input from '../customInput/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import Input from '../../customInput/Input';
 
 interface IFormInputs {
 	firstName: string;
@@ -36,15 +35,15 @@ const style = {
 	borderRadius: '12px'
 };
 
-const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
+const RatingModal: FC<TeacherAddProps> = ({ open, handleClose }) => {
 	const {
 		control,
 		handleSubmit,
 		reset,
-		formState: { dirtyFields, errors }
+		formState: { dirtyFields }
 	} = useForm<IFormInputs>();
 	const [postTeacher] = usePostTeacherMutation();
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission
 
 	const isButtonDisabled =
 		!dirtyFields.firstName ||
@@ -54,26 +53,19 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 		!dirtyFields.specialization;
 
 	const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-		setIsSubmitting(true);
+		setIsSubmitting(true); // Set submitting state to true
 
 		try {
-			const response = await postTeacher({
+			await postTeacher({
 				...data,
 				linkForPassword: 'http://localhost:5173/auth/newPassword'
-			}).unwrap();
-
-			if (response) {
-				message.success('Учитель успешно добавлен!');
-				handleClose();
-				reset();
-			} else {
-				throw new Error('Unexpected response');
-			}
+			});
+			handleClose();
+			reset();
 		} catch (error) {
-			message.error('Ошибка при добавлении учителя');
 			console.error('Error:', error);
 		} finally {
-			setIsSubmitting(false);
+			setIsSubmitting(false); // Reset submitting state after request completes
 		}
 	};
 
@@ -92,7 +84,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 						variant="h6"
 						component="h2"
 					>
-						<p className={scss.comText}>Добавить учителя</p>
+						<p className={scss.comText}>Распределение рейтинга</p>
 					</Typography>
 					<Box className={scss.input_button_card}>
 						<div className={scss.input}>
@@ -100,14 +92,14 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="firstName"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'Имя обязательно для заполнения' }}
+								rules={{ required: 'Имя обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Имя"
+										placeholder="Задания %"
 									/>
 								)}
 							/>
@@ -115,14 +107,14 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="lastName"
 								control={control}
 								defaultValue=""
-								rules={{ required: 'Фамилия обязательна для заполнения' }}
+								rules={{ required: 'Фамилия обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="text"
 										width="100%"
-										placeholder="Фамилия"
+										placeholder="Тесты %"
 									/>
 								)}
 							/>
@@ -130,60 +122,14 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 								name="phoneNumber"
 								control={control}
 								defaultValue=""
-								rules={{
-									required: 'Номер обязателен для заполнения',
-									pattern: {
-										value: /^\+[0-9]+$/,
-										message: 'Номер телефона должен содержать символ "+"'
-									}
-								}}
+								rules={{ required: 'Номер обязателен для заполнения' }}
 								render={({ field }) => (
 									<Input
 										size="medium"
 										{...field}
 										type="string"
 										width="100%"
-										placeholder="Номер телефона"
-										error={!!errors.phoneNumber}
-									/>
-								)}
-							/>
-							{errors.phoneNumber && message.error(errors.phoneNumber.message)}
-							<Controller
-								name="email"
-								control={control}
-								defaultValue=""
-								rules={{
-									required: 'Email обязателен для заполнения',
-									pattern: {
-										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-										message: 'Введите корректный email'
-									}
-								}}
-								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="email"
-										width="100%"
-										placeholder="Email"
-										error={!!errors.email}
-									/>
-								)}
-							/>
-							{errors.email && message.error(errors.email.message)}
-							<Controller
-								name="specialization"
-								control={control}
-								defaultValue=""
-								rules={{ required: 'Специализация обязательна для заполнения' }}
-								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="string"
-										width="100%"
-										placeholder="Специализация"
+										placeholder="Экзамены %"
 									/>
 								)}
 							/>
@@ -211,7 +157,7 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 							<ButtonSave
 								width="117px"
 								type="submit"
-								disabled={isButtonDisabled || isSubmitting}
+								disabled={isButtonDisabled || isSubmitting} // Disable button while submitting
 								onClick={handleSubmit(onSubmit)}
 							>
 								Отправить
@@ -224,4 +170,4 @@ const ModalAddTeacher: FC<TeacherAddProps> = ({ open, handleClose }) => {
 	);
 };
 
-export default ModalAddTeacher;
+export default RatingModal;

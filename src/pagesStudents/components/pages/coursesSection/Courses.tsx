@@ -6,6 +6,8 @@ import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetStudentsCourseQuery } from '@/src/redux/api/students/courses';
+import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
+import { Tooltip } from '@mui/material';
 
 const Courses: FC = () => {
 	const { data } = useGetStudentsCourseQuery();
@@ -57,63 +59,97 @@ const Courses: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					<h1 className={scss.title}>Мои курсы</h1>
-					<ScrollArea
-						type="always"
-						scrollbars="xy"
-						offsetScrollbars
-						classNames={scss}
-					>
-						<Box>
-							<div>
-								<div className={scss.cards}>
-									<div className={scss.card}>
-										{data?.courses.map((item) => (
-											<div key={item.id} className={scss.zero_block_container}>
-												<div
-													onClick={() => {
-														setSaveItem(item.title);
-													}}
-												>
+					{data?.courses.length === 0 ? (
+						<>
+							<NotCreatedWithoutButton
+								text="У вас еще нет курсы !"
+								name="Мои курсы"
+							/>
+						</>
+					) : (
+						<>
+							<h1 className={scss.title}>Мои курсы</h1>
+							<ScrollArea
+								type="always"
+								scrollbars="xy"
+								offsetScrollbars
+								classNames={scss}
+							>
+								<Box>
+									<div>
+										<div className={scss.cards}>
+											<div className={scss.card}>
+												{data?.courses.map((item) => (
 													<div
-														onClick={() => {
-															setTimeout(() => {
-																navigate(`/courses/${item.id}/materials`);
-															}, 1000);
-														}}
+														key={item.id}
+														className={scss.zero_block_container}
 													>
-														<div className={scss.block_photo_cards}>
-															<img
-																src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
-																alt="images"
-															/>
-														</div>
-														<div className={scss.block_cont}>
-															<div className={scss.second_block}>
-																<p className={scss.block_title}>{item.title}</p>
-																<p className={scss.block_date}>
-																	{item.dateOfEnd}
-																</p>
-															</div>
-															<div className={scss.text_card}>
-																<span className={scss.block_text}>
-																	{item.description &&
-																	item.description.length > 60
-																		? `${item.description.substring(0, 60)}...`
-																		: item.description}
-																</span>
+														<div
+															onClick={() => {
+																setSaveItem(item.title);
+															}}
+														>
+															<div
+																onClick={() => {
+																	setTimeout(() => {
+																		navigate(`/courses/${item.id}/materials`);
+																	}, 1000);
+																}}
+															>
+																<div className={scss.block_photo_cards}>
+																	<img
+																		src={`https://lms-b12.s3.eu-central-1.amazonaws.com/${item.image}`}
+																		alt="images"
+																	/>
+																</div>
+																<div className={scss.block_cont}>
+																	<div className={scss.second_block}>
+																		<Tooltip title={item.title}>
+																			<p
+																				style={{
+																					width: '100%',
+																					maxWidth: '300px',
+																					textOverflow: 'ellipsis',
+																					overflow: 'hidden'
+																				}}
+																				className={scss.block_title}
+																			>
+																				{item.title}
+																			</p>
+																		</Tooltip>
+																		<p className={scss.block_date}>
+																			{item.dateOfEnd}
+																		</p>
+																	</div>
+																	<div className={scss.text_card}>
+																		<span className={scss.block_text}>
+																			<Tooltip title={item.description}>
+																				<p
+																					style={{
+																						width: '100%',
+																						maxWidth: '300px',
+																						textOverflow: 'ellipsis',
+																						overflow: 'hidden'
+																					}}
+																				>
+																					{item.description}
+																				</p>
+																			</Tooltip>
+																		</span>
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
+												))}
 											</div>
-										))}
+											{/* ) : null} */}
+										</div>
 									</div>
-									{/* ) : null} */}
-								</div>
-							</div>
-						</Box>
-					</ScrollArea>
+								</Box>
+							</ScrollArea>
+						</>
+					)}
 				</div>
 				<div className={scss.pagination}>
 					<div className={scss.Inputs}>

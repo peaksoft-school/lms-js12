@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './AddTask.module.scss';
@@ -42,9 +41,9 @@ const AddTask: React.FC = () => {
 			formData.append('file', file);
 			formData.append('description', description);
 			try {
-				const response: any = await createGroupFile(formData);
-				const parsedData = JSON.parse(response.data);
-				const fileName = parsedData.fileName;
+				const response: any = await createGroupFile(formData).unwrap();
+				const fileName = response.fileName;
+				console.log('File uploaded:', fileName);
 				setSelectedFile(fileName);
 				setDescription(description);
 			} catch (error) {
@@ -74,19 +73,13 @@ const AddTask: React.FC = () => {
 			const cleanedDescription = description.replace(/\\/g, '');
 			formData.append('description', cleanedDescription);
 
-			const response = await createGroupFile(formData);
+			const response: any = await createGroupFile(formData).unwrap();
 
-			if (response && response.data) {
-				const parsedData = JSON.parse(response.data);
-
-				if (parsedData && parsedData.object && parsedData.object.urlFile) {
-					setSecondSave(parsedData.object.urlFile);
-					console.log(secondSave);
-				} else {
-					console.error('Invalid response structure:', response);
-				}
+			if (response && response.urlFile) {
+				console.log('Image uploaded:', response.urlFile);
+				setSecondSave(response.urlFile);
 			} else {
-				console.error('Invalid response from server:', response);
+				console.error('Invalid response structure:', response);
 			}
 		} catch (error) {
 			console.error('Error uploading image:', error);
@@ -282,6 +275,7 @@ const AddTask: React.FC = () => {
 								variant="contained"
 								style={{ padding: '10px 24px', borderRadius: '8px' }}
 								onClick={addTask}
+								disabled={!title || !selectedDate} 
 							>
 								Добавить
 							</Button>

@@ -28,7 +28,6 @@
 			padding-inline: 20px;
 			padding-block: 20px;
 
-
 			@media (max-width: 750px) {
 				grid-template-columns: repeat(1, 1fr);
 			}
@@ -50,8 +49,10 @@
 					text-decoration: none;
 
 					.card_item {
-						color: #141414;
-						margin-left: 15px;
+						p {
+							color: #141414;
+							margin-left: 15px;
+						}
 					}
 				}
 			}

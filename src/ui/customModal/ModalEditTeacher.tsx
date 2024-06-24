@@ -58,7 +58,7 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 }) => {
 	const { control, handleSubmit, reset, watch } = useForm<IFormInputs>();
 	const [patchTeacher] = usePatchTeacherMutation();
-	const { data } = useGetTeacherQuery();
+	const { data } = useGetTeacherQuery({ page: '1', size: '12' });
 	const find = data?.instructorResponses.find((el) => el.id === deleteById);
 	const [personName, setPersonName] = useState<string>('');
 	const [originalData, setOriginalData] = useState<IFormInputs | null>(null);
@@ -68,7 +68,10 @@ const ModalEditTeacher: React.FC<modalProps> = ({
 			...data,
 			courseIds: personName
 		};
-		await patchTeacher({ updateTeacher, deleteById });
+		const link = {
+			linkForPassword: 'http://localhost:5173/auth/newPassword'
+		};
+		await patchTeacher({ updateTeacher, deleteById, link });
 		setPersonName('');
 		closeModalEdit(false);
 	};

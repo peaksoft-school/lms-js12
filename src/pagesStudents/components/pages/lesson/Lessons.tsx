@@ -3,6 +3,7 @@ import scss from './Lessons.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetStudentMaterialsQuery } from '@/src/redux/api/students/materials';
+import { Tooltip } from '@mui/material';
 
 const Lesson = () => {
 	const { coursesId, lessonId } = useParams();
@@ -31,9 +32,20 @@ const Lesson = () => {
 										}}
 										key={item._id}
 									>
-										<a href="#" className={scss.link}>
-											<span className={scss.card_item}>№ {item.title}</span>
-										</a>
+										<Tooltip title={item.title}>
+											<p
+												style={{
+													width: '100%',
+													maxWidth: '200px',
+													textOverflow: 'ellipsis',
+													overflow: 'hidden'
+												}}
+											>
+												<a href="#" className={scss.link}>
+													№ {item.title}
+												</a>
+											</p>
+										</Tooltip>
 									</div>
 								))}
 							</div>

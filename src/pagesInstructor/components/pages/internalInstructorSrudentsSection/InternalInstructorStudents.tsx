@@ -73,7 +73,7 @@ const InternalInstructorStudents = () => {
 							<span>Добавить группу на курса</span>
 						</Button>
 					</div>
-					<h1 className={scss.title}>Data Engineer</h1>
+					<h1 className={scss.title}>Студенты</h1>
 					<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
 						<Box>
 							<div>

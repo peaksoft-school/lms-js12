@@ -15,11 +15,9 @@ import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import AddTaskPage from '../pages/AddTaskPage';
 import EditTask from '../pages/editTaskSection/EditTask';
 import GetTask from '../pages/getTaskSection/GetTask';
-// import Answer from '../pages/addTaskSection/answerSection/Answer';
 import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
 import Answer from '../pages/answerSection/Answer';
 import RatingStudentsPage from '../pages/RatingStudentsPage';
-// import { Breadcrumbs } from '@mui/material';
 import BasicBreadcrumbs from '@/src/ui/breadCrumbs/BreadCrumbs';
 import SupHeaderCourses from '@/src/ui/supheaderCourses/SupHeaderCourses';
 import EditTest from '../pages/editTest/EditTest';
@@ -30,14 +28,6 @@ import TrashPage from '../pages/TrashPage';
 const LayoutInstructor = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(true);
-	const [courseHandle, setCourseHandle] = useState(false);
-
-	const handleOpenCourse = () => {
-		setCourseHandle(true);
-	};
-	const handleCloseCourse = () => {
-		setCourseHandle(false);
-	};
 
 	useEffect(() => {
 		const changeIsMobile = () => {
@@ -91,9 +81,15 @@ const LayoutInstructor = () => {
 							</Routes>
 						</>
 					)}
-					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>
-						<BasicBreadcrumbs />
-					</p>
+					<div style={{ paddingInline: '20px', paddingTop: '24px' }}>
+						<Routes>
+							<Route
+								path="/course/:courseId/materials/:lessonId/*"
+								element={<BasicBreadcrumbs />}
+							/>
+						</Routes>
+					</div>
+
 					<Routes>
 						<Route path={'/course'} element={<MyCoursePage />} />
 						<Route path="/calendar" element={<CalendarPage />} />
@@ -231,12 +227,6 @@ const LayoutInstructor = () => {
 					</Routes>
 				</main>
 				{isMobile && <HeaderMobile />}
-
-				<CreateCourse
-					handleOpenCourse={handleOpenCourse}
-					open={courseHandle}
-					handleClose={handleCloseCourse}
-				/>
 			</div>
 		</>
 	);

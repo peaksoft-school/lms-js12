@@ -11,7 +11,7 @@ import ButtonCancel from '../customButton/ButtonCancel';
 import ButtonSave from '../customButton/ButtonSave';
 import Input from '../customInput/Input';
 import scss from './Style.module.scss';
-import { message } from 'antd'; // Импорт message из Ant Design
+import { message } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -49,6 +49,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		mode: 'onChange'
 	});
 	const { isDirty } = formState;
+	const [dateError, setDateError] = useState<boolean>(false);
 
 	const [initialValues, setInitialValues] = useState<EditProps>({
 		title: '',
@@ -61,7 +62,8 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		const selectedDate = new Date(data.createdAt);
 
 		if (selectedDate < currentDate) {
-			message.error('Вы не можете выбрать прошедшую дату.'); // Использование message.error для отображения ошибки
+			setDateError(true);
+			message.error('Вы не можете выбрать прошедшую дату.');
 			return;
 		}
 
@@ -75,7 +77,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 				await patchMaterial({ updateMaterial, deleteById }).then(() => {
 					refetch();
 					closeModalEdit(false);
-					message.success('Данные успешно изменены'); // Сообщение об успешном изменении данных
+					message.success('Данные успешно изменены');
 				});
 			} catch (error) {
 				console.error(error);
@@ -146,6 +148,23 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 										type="date"
 										width="100%"
 										placeholder="дд.мм.гг"
+										error={dateError}
+										onChange={(e) => {
+											field.onChange(e);
+											const selectedDate = new Date(e.target.value);
+											const currentDate = new Date();
+											currentDate.setHours(0, 0, 0, 0);
+											if (selectedDate < currentDate) {
+												setDateError(true);
+												message.error('Вы не можете выбрать прошедшую дату.');
+											} else {
+												setDateError(false);
+											}
+										}}
+										style={{
+											borderColor: dateError ? 'red' : undefined,
+											backgroundColor: dateError ? '#ffe6e6' : undefined
+										}}
 									/>
 								)}
 							/>

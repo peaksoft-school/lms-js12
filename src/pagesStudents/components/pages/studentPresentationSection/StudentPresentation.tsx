@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import scss from './StudentPresentation.module.scss';
 import { useState } from 'react';
 import ModalPresentation from '@/src/ui/InstructorModal/ModalPresentation';
@@ -62,8 +62,31 @@ const StudentPresentation = () => {
 								</div>
 								<div className={scss.title}>
 									<div className={scss.text}>
-										<h1>{item.title}</h1>
-										<p>{item.description}</p>
+										<Tooltip title={item.title}>
+											<h1
+												style={{
+													width: '100%',
+													maxWidth: '200px',
+													textOverflow: 'ellipsis',
+													overflow: 'hidden'
+												}}
+											>
+												{item.title}
+											</h1>
+										</Tooltip>
+
+										<Tooltip title={item.description}>
+											<p
+												style={{
+													width: '100%',
+													maxWidth: '500px',
+													textOverflow: 'ellipsis',
+													overflow: 'hidden'
+												}}
+											>
+												{item.description}
+											</p>
+										</Tooltip>
 									</div>
 								</div>
 							</div>

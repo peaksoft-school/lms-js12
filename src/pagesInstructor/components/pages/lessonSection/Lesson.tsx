@@ -1,6 +1,6 @@
 import { Tab, Tabs } from '@mui/material';
 import scss from './Lesson.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	IconAB2,
 	IconBrandYoutubeKids,
@@ -48,6 +48,27 @@ const Lesson = () => {
 	const handleOpenTest = () => {
 		navigate(`/instructor/course/${courseId}/materials/${lessonId}/test`);
 	};
+
+	useEffect(() => {
+		if (
+			pathname ===
+			`/instructor/course/${courseId}/materials/${lessonId}/presentation`
+		) {
+			setValue(1);
+		} else if (
+			pathname === `/instructor/course/${courseId}/materials/${lessonId}/lesson`
+		) {
+			setValue(2);
+		} else if (
+			pathname === `/instructor/course/${courseId}/materials/${lessonId}/link`
+		) {
+			setValue(3);
+		} else if (
+			pathname === `/instructor/course/${courseId}/materials/${lessonId}/test`
+		) {
+			setValue(4);
+		}
+	}, [pathname]);
 
 	return (
 		<div className={scss.lesson}>
