@@ -13,8 +13,8 @@ const api = index.injectEndpoints({
 			providesTags: ['rating']
 		}),
 		SendAccessResultTest: builder.mutation({
-			query: (testId) => ({
-				url: `/api/test/enableToStart/${testId}`,
+			query: ({ testId, isTrue }) => ({
+				url: `/api/test/enableToStart/${testId}?accessToStart=${encodeURIComponent(isTrue)}`,
 				method: 'PATCH'
 			}),
 			invalidatesTags: ['test']
@@ -24,7 +24,7 @@ const api = index.injectEndpoints({
 			TEST.getTestResultRequest
 		>({
 			query: (resultTest) => ({
-				url: `/api/answerTest/resultTestOfStudent/2`,
+				url: `/api/answerTest/resultTestOfStudent/${resultTest}`,
 				method: 'GET'
 			}),
 			providesTags: ['test']
