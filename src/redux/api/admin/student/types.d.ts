@@ -19,6 +19,9 @@ namespace STUDENT {
 	type TablesStudentRequest = {
 		page: string;
 		size: string;
+		search?: string;
+		studyFormat?: string;
+		groupId: string;
 	};
 	type TableGetAllGroupResponse = {
 		id: number;

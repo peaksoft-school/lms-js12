@@ -97,7 +97,6 @@ const Announcements = () => {
 			message.error('Ошибка при выполнении операции');
 		}
 	};
-
 	return (
 		<div className={scss.Section_announcement}>
 			<div className={scss.main_container}>
@@ -125,19 +124,19 @@ const Announcements = () => {
 						) : null}
 					</div>
 					<div>
-						<div className={scss.announce_box}>
-							<div className={scss.announce_card}>
-								{data?.announcements.length === 0 ? (
-									<>
-										<NotCreated
-											text="Вы пока не добавили объявление!"
-											name="Объявление"
-											buttonClick={handleOpenAnnouncement}
-											buttontText="onn"
-										/>
-									</>
-								) : (
-									<>
+						{data?.announcements.length === 0 ? (
+							<>
+								<NotCreated
+									text="Вы пока не добавили объявление!"
+									name="Объявление"
+									buttonClick={handleOpenAnnouncement}
+									buttontText="Добавить обьявление"
+								/>
+							</>
+						) : (
+							<>
+								<div className={scss.announce_box}>
+									<div className={scss.announce_card}>
 										{data?.announcements.map((item) => (
 											<li key={item.id} className={scss.announce_list}>
 												<div>
@@ -255,24 +254,24 @@ const Announcements = () => {
 												</Menu>
 											</li>
 										))}
-									</>
-								)}
-							</div>
-							<ModalEditAnnouncement
-								openModalEdit={openModalEdit}
-								closeModalEdit={() => setOpenModalEdit(false)}
-								saveIdElement={deleteById}
-							/>
-							<DeleteAnnouncementModal
-								openModalDelete={openModalDelete}
-								closeModalDelete={() => setOpenModalDelete(false)}
-								saveIdElement={deleteById}
-							/>
-							<AnnouncementForm
-								open={openAnnouncement}
-								handleClose={handleCloseAnnouncement}
-							/>
-						</div>
+									</div>
+									<ModalEditAnnouncement
+										openModalEdit={openModalEdit}
+										closeModalEdit={() => setOpenModalEdit(false)}
+										saveIdElement={deleteById}
+									/>
+									<DeleteAnnouncementModal
+										openModalDelete={openModalDelete}
+										closeModalDelete={() => setOpenModalDelete(false)}
+										saveIdElement={deleteById}
+									/>
+									<AnnouncementForm
+										open={openAnnouncement}
+										handleClose={handleCloseAnnouncement}
+									/>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 				{data?.announcements.length !== 0 ? (

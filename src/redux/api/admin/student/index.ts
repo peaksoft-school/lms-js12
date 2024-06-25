@@ -7,8 +7,8 @@ export const api = index.injectEndpoints({
 			STUDENT.TablesStudentResponse,
 			STUDENT.TablesStudentRequest
 		>({
-			query: ({ page, size }) => ({
-				url: `/api/students?${page}&${size}`,
+			query: ({ page, size, search, studyFormat, groupId }) => ({
+				url: `/api/students?${page}&${size}&${search}&studyFormat=${studyFormat}&groupId=${groupId}`,
 				method: 'GET'
 			}),
 			providesTags: ['student']
@@ -68,17 +68,15 @@ export const api = index.injectEndpoints({
 			invalidatesTags: ['student']
 		}),
 		postExcelStudent: builder.mutation({
-			query: ({ excelFile, selectedFile, newLink }) => {
-				{
-					const newData = new FormData();
-					newData.append('file', selectedFile);
-
-					return {
-						url: `/api/students/importStudents/${excelFile}?link=${encodeURIComponent(newLink.link)}`,
-						method: 'POST',
-						body: newData
-					};
-				}
+			query: ({ excelFileId, selectedFile, newLink }) => {
+				return {
+					url: `api/students/importStudents/${excelFileId}?link=${encodeURIComponent(newLink.link)}`,
+					method: 'POST',
+					body: selectedFile,
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				};
 			},
 			invalidatesTags: ['student']
 		})

@@ -73,9 +73,18 @@ const LayoutStudents = () => {
 							</Routes>
 						</>
 					)}
-					<p style={{ paddingInline: '20px', paddingTop: '24px' }}>
-						<BasicBreadcrumbs />
-					</p>
+					<div style={{ paddingInline: '20px', paddingTop: '20px' }}>
+						<Routes>
+							<Route
+								path="/courses/:coursesId/*"
+								element={<BasicBreadcrumbs />}
+							/>
+							<Route
+								path="/courses/:coursesId/materials/:lessonId/*"
+								element={<BasicBreadcrumbs />}
+							/>
+						</Routes>
+					</div>
 					<Routes>
 						<Route path="/courses" element={<CoursesPage />} />
 						<Route path="/calendar" element={<CalendarPage />} />

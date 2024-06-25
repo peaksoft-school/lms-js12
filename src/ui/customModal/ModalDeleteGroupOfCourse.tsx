@@ -14,10 +14,9 @@ import {
 	SelectChangeEvent
 } from '@mui/material';
 import scss from './EditAnnouncement.module.scss';
-import { useParams } from 'react-router-dom';
+
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import ButtonDelete from '../customButton/ButtonDelete';
-import { usePostGroupTableMutation } from '@/src/redux/api/instructor/studentAddCourse';
 import {
 	useGetRatingGroupsQuery,
 	useDeleteGroupsMutation
@@ -77,7 +76,7 @@ const ModalDeleteGroupOfCourse: FC<ModalProps> = ({
 			await deleteGroups({
 				saveId,
 				selectedId
-			})
+			});
 			handleClose(false);
 		} catch (error) {
 			console.error('Failed to delete group:', error);

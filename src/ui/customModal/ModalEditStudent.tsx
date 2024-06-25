@@ -95,7 +95,10 @@ const ModalEditStudent: FC<EditModalProps> = ({
 	const [patchStudentTable, { isSuccess }] = usePatchStudentTableMutation();
 	const { data: studentData } = useGetStudentTableQuery({
 		page: '1',
-		size: '12'
+		size: '12',
+		search: '',
+		studyFormat: '',
+		groupId: ''
 	});
 	const students = studentData ?? { students: [], page: 1, size: 0 };
 	const [formatName, setFormatName] = useState<string>('');
@@ -283,6 +286,8 @@ const ModalEditStudent: FC<EditModalProps> = ({
 												}}
 												labelId="demo-multiple-name-label"
 												id="demo-multiple-name"
+												value={personName}
+												onChange={handleChange}
 												input={<OutlinedInput label="groupName" />}
 												MenuProps={MenuProps}
 												onChange={handleChange}

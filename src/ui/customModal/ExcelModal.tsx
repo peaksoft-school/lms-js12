@@ -58,7 +58,7 @@ function getStyles(name: string, excelFile: number | null, theme: Theme) {
 const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	const { handleSubmit } = useForm();
 	const theme = useTheme();
-	const [excelFile, setExcelFile] = useState<number | null>(null);
+	const [excelFileId, setExcelFileId] = useState<number | null>(null);
 	const [selectedFile, setSelectedFile] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [postExcelStudent] = usePostExcelStudentMutation();
@@ -71,7 +71,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 	};
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-		setExcelFile(event.target.value as number);
+		setExcelFileId(event.target.value as number);
 	};
 
 	const handleButtonClick = () => {
@@ -79,13 +79,13 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 			fileInputRef.current.click();
 		}
 	};
-	console.log(excelFile);
+	console.log(excelFileId);
 
 	const onSubmit = async () => {
 		const newLink = {
 			link: 'http://localhost:5173/auth/newPassword'
 		};
-		await postExcelStudent({ excelFile, selectedFile, newLink });
+		await postExcelStudent({ excelFileId, selectedFile, newLink });
 	};
 
 	return (
@@ -116,7 +116,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 									style={{ borderRadius: '12px' }}
 									labelId="demo-name-label"
 									id="demo-name"
-									value={excelFile}
+									value={excelFileId}
 									onChange={handleChange}
 									input={<OutlinedInput label="groupName" />}
 									MenuProps={MenuProps}
@@ -125,7 +125,7 @@ const ExcelModal: FC<SearchProps> = ({ handleClose, open }) => {
 										<MenuItem
 											key={group.id}
 											value={group.id}
-											style={getStyles(group.groupName, excelFile, theme)}
+											style={getStyles(group.groupName, excelFileId, theme)}
 										>
 											{group.groupName}
 										</MenuItem>
