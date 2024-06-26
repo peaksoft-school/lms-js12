@@ -8,6 +8,7 @@ import Input from '@/src/ui/customInput/Input.tsx';
 import gallery from '@/src/assets/photo-bg.png';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
+import CircularProgress from '@mui/material/CircularProgress';
 import { message } from 'antd';
 
 import {
@@ -264,7 +265,7 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 								disabled={!isFormValid || creatingGroup}
 								width="117px"
 							>
-								Добавить
+								{creatingGroup ? <CircularProgress size={24} /> : 'Добавить'}
 							</ButtonSave>
 						</div>
 					</Typography>
