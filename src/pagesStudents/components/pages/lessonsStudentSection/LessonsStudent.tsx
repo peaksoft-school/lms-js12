@@ -51,6 +51,30 @@ const LessonsStudent = () => {
 			navigate(`/courses/${coursesId}/materials/${lessonId}/video`);
 		}
 	}, [pathname]);
+
+	useEffect(() => {
+		if (
+			pathname === `/courses/${coursesId}/materials/${lessonId}/presentation`
+		) {
+			setValue(1);
+		} else if (
+			pathname === `/courses/${coursesId}/materials/${lessonId}/lesson`
+		) {
+			setValue(2);
+		} else if (
+			pathname === `/courses/${coursesId}/materials/${lessonId}/link`
+		) {
+			setValue(3);
+		} else if (
+			pathname === `/courses/${coursesId}/materials/${lessonId}/test`
+		) {
+			setValue(4);
+		} else if (
+			pathname === `/courses/${coursesId}/materials/${lessonId}/video`
+		) {
+			setValue(0);
+		}
+	});
 	return (
 		<div className={scss.lesson}>
 			<h1>Материалы</h1>
