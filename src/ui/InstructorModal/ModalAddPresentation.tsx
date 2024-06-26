@@ -8,12 +8,13 @@ import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
 	useCreatePresentationFileMutation,
 	usePostPresentationMutation
 } from '@/src/redux/api/instructor/presentation';
 import { useParams } from 'react-router-dom';
-import { message } from 'antd'; // Import message component from Ant Design
+import { message } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -225,7 +226,7 @@ const ModalAddPresentation: FC<ModalAddPresentationProps> = ({
 								width="117px"
 								disabled={isButtonDisabled || isSubmitting}
 							>
-								Добавить
+								{isSubmitting ? <CircularProgress size={24} /> : 'Добавить'}
 							</ButtonSave>
 						</div>
 					</Box>

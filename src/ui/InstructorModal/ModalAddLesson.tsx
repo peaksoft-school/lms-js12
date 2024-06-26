@@ -146,7 +146,9 @@ const ModalAddLesson: FC<AddLessonProps> = ({ open, handleClose }) => {
 											error={!!dateError}
 										/>
 										{dateError && (
-											<span style={{ color: 'red' }}>{dateError}</span>
+											<span style={{ color: 'red'}}>
+												{dateError}
+											</span>
 										)}
 									</>
 								)}

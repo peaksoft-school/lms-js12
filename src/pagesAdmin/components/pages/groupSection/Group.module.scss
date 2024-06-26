@@ -72,6 +72,7 @@
 					width: 100%;
 					column-gap: 40px;
 					row-gap: 40px;
+					cursor: pointer;
 
 					@media (min-width: 1700px) {
 						display: grid;
@@ -117,6 +118,7 @@
 						flex-direction: column;
 						gap: 10px;
 						display: flex;
+
 						@media (max-width: 1670px) {
 							max-width: 300px;
 							width: 100%;

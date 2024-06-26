@@ -1,6 +1,13 @@
 import React, { useState, KeyboardEvent } from 'react';
 import scss from './Announcements.module.scss';
-import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
+import {
+	Button,
+	Menu,
+	MenuItem,
+	Pagination,
+	Stack,
+	Tooltip
+} from '@mui/material';
 import {
 	useGetAnnouncementTableQuery,
 	useShowAnnouncementMutation
@@ -164,7 +171,18 @@ const Announcements = () => {
 												</div>
 												<p className={scss.announce_contents}>
 													<span className={scss.announce_content}>Текст:</span>
-													{item.content}
+													<Tooltip title={item.content}>
+														<p
+															style={{
+																width: '100%',
+																maxWidth: '1000px',
+																textOverflow: 'ellipsis',
+																overflow: 'hidden'
+															}}
+														>
+															{item.content}
+														</p>
+													</Tooltip>
 												</p>
 												<div
 													style={{

@@ -139,9 +139,7 @@ const SendOneTask = () => {
 			};
 
 			const response = await postStudentTask({ newTask, getTask });
-			navigate(
-				`/courses/${coursesId}/materials/${lessonId}/lesson`
-			);
+			navigate(`/courses/${coursesId}/materials/${lessonId}/lesson`);
 
 			if (!response) {
 				throw new Error('Invalid response from server');

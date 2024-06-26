@@ -88,7 +88,7 @@ const CoursesTeacher = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span>Назначить учителя/лей</span>
+									<span>Назначить учителя/ <span>лей</span></span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Учителя</h1>
