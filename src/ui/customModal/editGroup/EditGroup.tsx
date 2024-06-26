@@ -198,9 +198,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 									/>
 								</div>
 							)}
-							<p className={hidePhoto ? scss.hide_text : scss.show}>
-								Нажмите на иконку чтобы загрузить
-							</p>
+							<p>Нажмите на иконку чтобы загрузить</p>
 						</div>
 						<div className={scss.inputs}>
 							<div className={scss.first_input}>

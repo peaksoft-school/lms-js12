@@ -12,7 +12,8 @@ const ResultTest = () => {
 	const { data } = useGetResultTestQuery(test);
 	const [isTrue, setIsTrue] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
-	const [saveId, setSaveId] = useState<number | boolean>(false);
+	const [saveId, setSaved] = useState<boolean | number>(false);
+
 	const handleClose = () => {
 		setOpenModal(false);
 	};
@@ -23,19 +24,6 @@ const ResultTest = () => {
 	return (
 		<div className={scss.Result_test}>
 			<div className={scss.top_container}>
-				<div className={scss.result}>
-					<p>
-						<a className={scss.title_result_1} href="#">
-							Мои курсы
-						</a>
-					</p>
-					<img src={arrow} alt="" />
-					<p>
-						<a className={scss.title_result_2} href="#">
-							Название курса
-						</a>
-					</p>
-				</div>
 				<div>
 					<h2 className={scss.title_result}>Материалы</h2>
 				</div>
@@ -52,45 +40,41 @@ const ResultTest = () => {
 				<table className={scss.table}>
 					<thead>
 						<tr>
-							<th style={{ textAlign: 'start' }}>№</th>
-							<th>Имя Фамилия</th>
-							<th>Дата прохождения</th>
+							<th style={{ textAlign: 'start', paddingLeft: '20px' }}>№</th>
+							<th onClick={handleOpen}>Имя Фамилия</th>
 							<th>Статус</th>
-							<th>Баллы</th>
+							<th
+								style={{ textAlign: 'end', paddingRight: '30px' }}
+								className={scss.Points}
+							>
+								Баллы
+							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr
-							className={scss.table_gray}
-							onClick={() => {
-								handleOpen();
-							}}
-						>
-							{data?.studentTestResponses.map((item, index) => (
-								<>
-									<td onClick={() => setSaveId(item.resultTestId)}>
-										{index + 1}
+						{data?.studentTestResponses.map((item, index) => (
+							<>
+								<tr
+									className={
+										(index + 1) % 2 == 0 ? scss.table_gray : scss.tadle_white
+									}
+									onClick={() => {
+										setSaved(item.resultTestId);
+										handleOpen();
+									}}
+								>
+									<td style={{ paddingLeft: '23px' }}>{index + 1}</td>
+									<td>{item.fullName}</td>
+									<td>
+										{item.isPassed === true ? <>Пройден</> : <>Не пройден</>}
 									</td>
-									<button style={{ background: 'none ', border: 'none ' }}>
-										<td
-											onClick={() => setSaveId(item.resultTestId)}
-											onClick={handleOpen}
-										>
-											{item.fullName}
-										</td>
-									</button>
-									<td onClick={() => setSaveId(item.resultTestId)}>
-										{item.resultTestId}
-									</td>
-									<td onClick={() => setSaveId(item.resultTestId)}>
-										{item.isPassed}
-									</td>
-									<td onClick={() => setSaveId(item.resultTestId)}>
+
+									<td style={{ textAlign: 'end', paddingRight: '50px' }}>
 										{item.point}
 									</td>
-								</>
-							))}
-						</tr>
+								</tr>
+							</>
+						))}
 					</tbody>
 				</table>
 			</div>

@@ -27,6 +27,8 @@ const Rating = () => {
 	const [resultTaskStudent, setResultTaskStudent] = useState<number | boolean>(
 		false
 	);
+	console.log(resultTaskStudent);
+
 	const open = Boolean(anchorEl);
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const open2 = Boolean(anchorEl2);
@@ -37,14 +39,17 @@ const Rating = () => {
 	const navigate = useNavigate();
 	const [updateExamPoint] = useUpdateExamPointMutation();
 
-	const [examPoints, setExamPoints] = useState<number>(0);
+	// Состояние для хранения баллов студентов по экзаменам
+	const [studentExamPoints, setStudentExamPoints] = useState<{
+		[studentId: number]: { [examId: number]: number };
+	}>({});
 
-	const handleSavePoints = async (examId: number) => {
+	const handleSavePoints = async (examId: number, studentId: number) => {
 		const newPoint = {
-			point: examPoints
+			point: studentExamPoints[studentId]?.[examId] || 0
 		};
 
-		await updateExamPoint({ examId, newPoint });
+		await updateExamPoint({ examId, studentId, newPoint });
 	};
 
 	if (isLoading) {
@@ -60,6 +65,7 @@ const Rating = () => {
 		handleClose();
 		handleClose2();
 	};
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (anchorEl) {
 			handleClose();
@@ -75,6 +81,7 @@ const Rating = () => {
 	const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl2(event.currentTarget);
 	};
+
 	const handleClose2 = () => {
 		setAnchorEl2(null);
 	};
@@ -106,16 +113,17 @@ const Rating = () => {
 									<th className={scss.number} rowSpan={2}>
 										№
 									</th>
-									<th className={scss.name} rowSpan={2}>
+									<th
+										className={scss.name}
+										rowSpan={2}
+										style={{ width: '200px', overflowWrap: 'normal' }}
+									>
 										Имя Фамилия
 									</th>
 									{rating?.studentResponses[0]?.lessonRatingResponses.map(
 										(lesson) => (
 											<th
-												style={{
-													minWidth: '170px',
-													maxWidth: '170px'
-												}}
+												style={{ minWidth: '170px', maxWidth: '170px' }}
 												colSpan={lesson.taskRatingResponses.length}
 												key={lesson.id}
 											>
@@ -135,10 +143,7 @@ const Rating = () => {
 										)
 									)}
 									<th
-										style={{
-											minWidth: '180px',
-											maxWidth: '180px'
-										}}
+										style={{ minWidth: '180px', maxWidth: '180px' }}
 										rowSpan={2}
 									>
 										<div
@@ -163,19 +168,9 @@ const Rating = () => {
 											anchorEl={anchorEl}
 											open={open}
 											onClose={handleClose}
-											anchorOrigin={{
-												vertical: 'bottom',
-												horizontal: 'right'
-											}}
-											transformOrigin={{
-												vertical: -4,
-												horizontal: 150
-											}}
-											PaperProps={{
-												style: {
-													border: 'none'
-												}
-											}}
+											anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+											transformOrigin={{ vertical: -4, horizontal: 150 }}
+											PaperProps={{ style: { border: 'none' } }}
 										>
 											<MenuItem
 												style={{ display: 'flex', gap: '10px' }}
@@ -186,7 +181,7 @@ const Rating = () => {
 											</MenuItem>
 										</Menu>
 									</th>
-									{exam[0].exams.map((item) => (
+									{exam[0]?.exams.map((item) => (
 										<th
 											style={{ minWidth: '170px', maxWidth: '170px' }}
 											rowSpan={2}
@@ -217,18 +212,10 @@ const Rating = () => {
 												anchorEl={anchorEl2}
 												open={open2}
 												onClose={handleClose2}
-												MenuListProps={{
-													'aria-labelledby': 'basic-button'
-												}}
+												MenuListProps={{ 'aria-labelledby': 'basic-button' }}
 												elevation={0}
-												anchorOrigin={{
-													vertical: 42,
-													horizontal: 20
-												}}
-												transformOrigin={{
-													vertical: 10,
-													horizontal: 20
-												}}
+												anchorOrigin={{ vertical: 42, horizontal: 20 }}
+												transformOrigin={{ vertical: 10, horizontal: 20 }}
 												PaperProps={{
 													style: {
 														boxShadow: 'none',
@@ -265,16 +252,11 @@ const Rating = () => {
 										(lesson) => (
 											<>
 												{lesson.taskRatingResponses.length === 0 ? (
-													<>
-														<th>---</th>
-													</>
+													<th key={lesson.id}>---</th>
 												) : (
 													lesson.taskRatingResponses.map((task) => (
 														<th
-															style={{
-																minWidth: '170px',
-																maxWidth: '170px'
-															}}
+															style={{ minWidth: '170px', maxWidth: '170px' }}
 															key={task.id}
 														>
 															{truncateString(task.taskTitle, 7)}
@@ -295,10 +277,11 @@ const Rating = () => {
 										</td>
 										{student.lessonRatingResponses.map((lesson) => (
 											<>
-												{lesson.taskRatingResponses.length === 0 ? (
-													<>
-														<td>0</td>
-													</>
+												{lesson.taskRatingResponses.length === 0 &&
+												lesson.taskRatingResponses.find(
+													(el) => el.answerTaskRatingResponses.id === null
+												) ? (
+													<td key={lesson.id}>0</td>
 												) : (
 													lesson.taskRatingResponses.map((task) => (
 														<td
@@ -324,6 +307,12 @@ const Rating = () => {
 												)}
 											</>
 										))}
+										<td>
+											<input
+												style={{ border: 'none', outline: 'none' }}
+												type="number"
+											/>
+										</td>
 
 										{exam &&
 											exam[0]?.exams.map((item) => (
@@ -331,9 +320,21 @@ const Rating = () => {
 													<input
 														style={{ border: 'none', outline: 'none' }}
 														type="number"
-														value={examPoints}
-														onChange={(e) => setExamPoints(+e.target.value)}
-														onClick={() => handleSavePoints(item.examId)}
+														value={
+															studentExamPoints[student.id]?.[item.examId] || 0
+														}
+														onChange={(e) =>
+															setStudentExamPoints({
+																...studentExamPoints,
+																[student.id]: {
+																	...studentExamPoints[student.id],
+																	[item.examId]: +e.target.value
+																}
+															})
+														}
+														onBlur={() =>
+															handleSavePoints(item.examId, student.id)
+														}
 													/>
 												</td>
 											))}
@@ -345,7 +346,6 @@ const Rating = () => {
 						</table>
 					</div>
 				</div>
-
 				<AddExam open={openModal} handleClose={() => setOpenModal(false)} />
 			</div>
 		</div>

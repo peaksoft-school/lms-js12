@@ -17,7 +17,8 @@
 		}
 	}
 	.title_result {
-		margin-left: 10px;
+		padding-top: 20px;
+		padding-bottom: 20px;
 	}
 	.card_container {
 		display: flex;
@@ -56,6 +57,7 @@
 		.table {
 			border-collapse: collapse;
 			width: 100%;
+
 			thead {
 				border-bottom: 1px solid #837a7a14;
 				height: 50px;

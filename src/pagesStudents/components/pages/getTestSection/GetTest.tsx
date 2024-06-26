@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetInsideTestQuery } from '@/src/redux/api/instructor/test';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { usePostTestResultStudentsMutation } from '@/src/redux/api/students/test';
+import { Checkbox, Radio } from '@mui/material';
 
 function GetTest() {
 	const { coursesId, lessonId, testId } = useParams();
@@ -90,11 +91,9 @@ function GetTest() {
 								</div>
 								{question.optionResponses.map((option) => (
 									<div key={option.optionId} className={scss.option}>
-										{question.optionResponses.filter((opt) => opt.isTrue)
-											.length === 1 ? (
+										{question.questionType === 'SINGLE' ? (
 											<>
-												<input
-													type="radio"
+												<Radio
 													checked={testIdSave.includes(option.optionId)}
 													onChange={() => handleOptionChange(option.optionId)}
 													className={scss.correct_checkbox}
@@ -103,8 +102,7 @@ function GetTest() {
 											</>
 										) : (
 											<>
-												<input
-													type="checkbox"
+												<Checkbox
 													checked={testIdSave.includes(option.optionId)}
 													onChange={() => handleOptionChange(option.optionId)}
 													className={scss.correct_checkbox}

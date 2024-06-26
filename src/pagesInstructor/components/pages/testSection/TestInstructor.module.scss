@@ -6,10 +6,7 @@
 	.container {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		flex-wrap: wrap;
-		background: #fff;
-		border-radius: 8px;
-		gap: 10px;
+		gap: 20px;
 		@media (max-width: 800px) {
 			display: grid;
 			grid-template-columns: repeat(1, 1fr);

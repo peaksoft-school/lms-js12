@@ -89,7 +89,9 @@ const InternalInstructorStudents = () => {
 														<tr
 															key={item.id}
 															className={
-																index % 2 === 1 ? scss.table_alternate_row : ''
+																index % 2 === 1
+																	? scss.table_alternate_row
+																	: scss.table_alternate_row2
 															}
 														>
 															<td>{index + 1}</td>

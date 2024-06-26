@@ -66,6 +66,7 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 			setSelectedFile(find.image || '');
 		}
 	}, [find]);
+	console.log(find, saveId);
 
 	useEffect(() => {
 		const isDisabled =
