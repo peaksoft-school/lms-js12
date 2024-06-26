@@ -1,5 +1,4 @@
 import GreenSwitch from './GreenSwitch';
-// import scss from './ResultTest.module.scss';
 import scss from './ResultTest.module.scss';
 import arrow from '@/src/assets/svgs/arrow-right.svg';
 import { useParams } from 'react-router-dom';
@@ -14,8 +13,7 @@ const ResultTest = () => {
 	const [isTrue, setIsTrue] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
 	const [saveId, setSaved] = useState<boolean | number>(false);
-	// const [saveId, setSaveId] = useState<number  | undefined>();
-	// setSaveId(test);
+
 	const handleClose = () => {
 		setOpenModal(false);
 	};
