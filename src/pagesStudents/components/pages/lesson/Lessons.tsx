@@ -36,7 +36,7 @@ const Lesson = () => {
 											<p
 												style={{
 													width: '100%',
-													maxWidth: '200px',
+													maxWidth: '150px',
 													textOverflow: 'ellipsis',
 													overflow: 'hidden'
 												}}

@@ -1,5 +1,5 @@
 import { FC, useState, KeyboardEvent } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import scss from './Trash.module.scss';
 import trash from '@/src/assets/svgs/trash (1).svg';
@@ -11,7 +11,7 @@ import {
 	useUpdatedTrashMutation
 } from '@/src/redux/api/admin/trash';
 import { Preloader } from '../../../../ui/preloader/Preloader';
-import { Pagination, Stack } from '@mui/material';
+import { Pagination, Stack, Tooltip } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
@@ -136,7 +136,19 @@ const Trash: FC = () => {
 															}
 														>
 															<td style={{ paddingLeft: '20px' }}>
-																{card.name}
+																<Tooltip title={card.name}>
+																	<p
+																		style={{
+																			width: '100%',
+																			maxWidth: '400px',
+																			textOverflow: 'ellipsis',
+																			overflow: 'hidden',
+																			cursor: 'pointer'
+																		}}
+																	>
+																		{card.name}
+																	</p>
+																</Tooltip>
 															</td>
 															<td
 																style={{

@@ -153,7 +153,6 @@ const InternalStudents = () => {
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
 									<Pagination
-										// count={Math.ceil(data!.length / rowsPerPage)}
 										page={currentPage}
 										onChange={handlePageChangeC}
 										shape="rounded"

@@ -1,6 +1,13 @@
 import React, { useState, KeyboardEvent } from 'react';
 import scss from './Announcements.module.scss';
-import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
+import {
+	Button,
+	Menu,
+	MenuItem,
+	Pagination,
+	Stack,
+	Tooltip
+} from '@mui/material';
 import {
 	useGetAnnouncementTableQuery,
 	useShowAnnouncementMutation
@@ -125,19 +132,19 @@ const Announcements = () => {
 						) : null}
 					</div>
 					<div>
-						<div className={scss.announce_box}>
-							<div className={scss.announce_card}>
-								{data?.announcements.length === 0 ? (
-									<>
-										<NotCreated
-											text="Вы пока не добавили объявление!"
-											name="Объявление"
-											buttonClick={handleOpenAnnouncement}
-											buttontText="onn"
-										/>
-									</>
-								) : (
-									<>
+						{data?.announcements.length === 0 ? (
+							<>
+								<NotCreated
+									text="Вы пока не добавили объявление!"
+									name="Объявление"
+									buttonClick={handleOpenAnnouncement}
+									buttontText="Добавить обьявление"
+								/>
+							</>
+						) : (
+							<>
+								<div className={scss.announce_box}>
+									<div className={scss.announce_card}>
 										{data?.announcements.map((item) => (
 											<li key={item.id} className={scss.announce_list}>
 												<div>
@@ -165,7 +172,18 @@ const Announcements = () => {
 												</div>
 												<p className={scss.announce_contents}>
 													<span className={scss.announce_content}>Текст:</span>
-													{item.content}
+													<Tooltip title={item.content}>
+														<p
+															style={{
+																width: '100%',
+																maxWidth: '1000px',
+																textOverflow: 'ellipsis',
+																overflow: 'hidden'
+															}}
+														>
+															{item.content}
+														</p>
+													</Tooltip>
 												</p>
 												<div
 													style={{
@@ -255,24 +273,24 @@ const Announcements = () => {
 												</Menu>
 											</li>
 										))}
-									</>
-								)}
-							</div>
-							<ModalEditAnnouncement
-								openModalEdit={openModalEdit}
-								closeModalEdit={() => setOpenModalEdit(false)}
-								saveIdElement={deleteById}
-							/>
-							<DeleteAnnouncementModal
-								openModalDelete={openModalDelete}
-								closeModalDelete={() => setOpenModalDelete(false)}
-								saveIdElement={deleteById}
-							/>
-							<AnnouncementForm
-								open={openAnnouncement}
-								handleClose={handleCloseAnnouncement}
-							/>
-						</div>
+									</div>
+									<ModalEditAnnouncement
+										openModalEdit={openModalEdit}
+										closeModalEdit={() => setOpenModalEdit(false)}
+										saveIdElement={deleteById}
+									/>
+									<DeleteAnnouncementModal
+										openModalDelete={openModalDelete}
+										closeModalDelete={() => setOpenModalDelete(false)}
+										saveIdElement={deleteById}
+									/>
+									<AnnouncementForm
+										open={openAnnouncement}
+										handleClose={handleCloseAnnouncement}
+									/>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 				{data?.announcements.length !== 0 ? (

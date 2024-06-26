@@ -14,7 +14,7 @@ import CreateGroup from '@/src/ui/customModal/createGroup/CreateGroup';
 import EditGroup from '@/src/ui/customModal/editGroup/EditGroup';
 import DeleteGroupModal from '@/src/ui/customModal/deleteModal/DeleteGroups';
 import { Button, Tooltip } from '@mui/material';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 
 const Groups: FC = () => {
