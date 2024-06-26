@@ -34,8 +34,8 @@ const api = index.injectEndpoints({
 			EXAM.PatchExamResultPointResponse,
 			EXAM.PatchExamResultPointRequest
 		>({
-			query: ({ examId, newPoint }) => ({
-				url: `/api/exam/editExamPoint/${examId}`,
+			query: ({ examId, studentId, newPoint }) => ({
+				url: `/api/exam/editExamPoint/${studentId}/${examId}`,
 				method: 'PATCH',
 				body: newPoint
 			}),

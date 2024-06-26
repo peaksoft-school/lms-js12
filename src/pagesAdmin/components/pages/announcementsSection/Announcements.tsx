@@ -104,7 +104,6 @@ const Announcements = () => {
 			message.error('Ошибка при выполнении операции');
 		}
 	};
-
 	return (
 		<div className={scss.Section_announcement}>
 			<div className={scss.main_container}>

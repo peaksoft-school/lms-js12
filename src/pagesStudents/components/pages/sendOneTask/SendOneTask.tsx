@@ -5,7 +5,7 @@ import Input from '@/src/ui/customInput/Input';
 import ReactQuill from 'react-quill';
 import { useRef, useState } from 'react';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 import { usePostStudentTaskMutation } from '@/src/redux/api/students/sendTask';
@@ -14,7 +14,7 @@ import Sources from 'quill';
 
 const SendOneTask = () => {
 	const [postStudentTask] = usePostStudentTaskMutation();
-	const { lessonId, getTaskId } = useParams();
+	const { coursesId, lessonId, getTaskId } = useParams();
 	const lesson = Number(lessonId);
 	const { data } = useGetTaskInstructorQuery(lesson);
 	const [text, setText] = useState('');
@@ -25,6 +25,8 @@ const SendOneTask = () => {
 	const [secondSave, setSecondSave] = useState<string | null>(null);
 	const [description, setDescription] = useState('');
 	const [createGroupFile] = useCreateGroupFileMutation();
+	const navigate = useNavigate();
+
 	const modules = {
 		toolbar: [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -106,6 +108,7 @@ const SendOneTask = () => {
 		}
 	};
 
+	const getTask = Number(getTaskId);
 	const handleEditorChange = (
 		content: string,
 		delta: any,
@@ -136,6 +139,7 @@ const SendOneTask = () => {
 			};
 
 			const response = await postStudentTask({ newTask, getTask });
+			navigate(`/courses/${coursesId}/materials/${lessonId}/lesson`);
 
 			if (!response) {
 				throw new Error('Invalid response from server');
@@ -213,7 +217,7 @@ const SendOneTask = () => {
 						}}
 					>
 						<ButtonSave
-							disabled={false}
+							// disabled={false}
 							onClick={addTask}
 							width="117px"
 							type="button"

@@ -19,8 +19,8 @@ import {
 import React, { MouseEvent, useState } from 'react';
 import scss from './Student.module.scss';
 import { Box, ScrollArea } from '@mantine/core';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import NotCreated from '@/src/ui/notCreated/NotCreated';
+import { useSearchParams } from 'react-router-dom';
+import SearchModal from '@/src/ui/customModal/searchModal/SearchModal';
 
 interface Student {
 	id: number;
@@ -45,26 +45,32 @@ const Student: React.FC = () => {
 	const [openPart, setOpenPart] = useState<number>(12);
 	const [openPage, setOpenPage] = useState<number>(1);
 	const [searchParams, setSearchParams] = useSearchParams();
-	const navigate = useNavigate();
+	const [modalSearch, setModalOpenSearchModal] = useState(false);
 
+	const handleOpenSeartchModal = () => {
+		setModalOpenSearchModal(true);
+	};
 	console.log(setRowsPerPage);
 
 	const handleSize = (value: number) => {
 		const valueSize = value.toString();
 		searchParams.set('size', valueSize);
 		setSearchParams(searchParams);
-		navigate(`/admin/student?${searchParams.toString()}`);
+		// navigate(`/admin/student?${searchParams.toString()}`);
 	};
 	const handlePage = (value: number) => {
 		const valuePage = value.toString();
 		searchParams.set('page', valuePage);
 		setSearchParams(searchParams);
-		navigate(`/admin/student?${searchParams.toString()}`);
+		// navigate(`/admin/student?${searchParams.toString()}`);
 	};
 
 	const { data, isLoading } = useGetStudentTableQuery({
-		page: searchParams.toString(),
-		size: searchParams.toString()
+		page: `page=${searchParams.get('page') || ''}`,
+		size: `size=${searchParams.get('size') || ''}`,
+		search: `search=${searchParams.get('search') || ''}`,
+		studyFormat: searchParams.get('studyFormat') || '',
+		groupId: searchParams.get('groupId') || ''
 	});
 
 	const handleStudentOpen = (e: MouseEvent<HTMLButtonElement>) => {
@@ -93,8 +99,15 @@ const Student: React.FC = () => {
 		_e: React.ChangeEvent<unknown>,
 		page: number
 	): void => setCurrentPage(page);
-	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
+		searchParams.set('search', event.target.value);
+		setSearchParams(searchParams);
+		if (event.target.value === '') {
+			searchParams.delete('search');
+			setSearchParams(searchParams);
+		}
+	};
 
 	const filteredData = data?.students.filter((student: Student) => {
 		const searchTermLower = searchTerm.toLowerCase();
@@ -115,78 +128,58 @@ const Student: React.FC = () => {
 		<div className={scss.student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.students.length !== 0 ? (
-						<>
-							<div className={scss.search_input_buttons}>
-								<div className={scss.search_input}>
-									<Input
-										size="small"
-										width="100%"
-										placeholder="Поиск"
-										type="text"
-										value={searchTerm}
-										onChange={handleSearchChange}
-									/>
-									<div className={scss.input_buttons}>
-										<button className={scss.button} onClick={handleOpenSearch}>
-											<img src={FilterPhoto} alt="Filter" />
-										</button>
-										<button className={scss.button}>
-											<img src={SearchPhoto} alt="Search" />
-										</button>
-									</div>
-								</div>
-								<div className={scss.buttons}>
-									<Button
-										size="large"
-										onClick={handleOpenSearch}
+					<>
+						<div className={scss.search_input_buttons}>
+							<div className={scss.search_input}>
+								<Input
+									size="small"
+									width="100%"
+									placeholder="Поиск"
+									type="text"
+									value={searchTerm}
+									onChange={handleSearchChange}
+								/>
+								<div className={scss.input_buttons}>
+									<button
 										className={scss.button}
-										variant="outlined"
-										style={{ textTransform: 'none' }}
+										onClick={handleOpenSeartchModal}
 									>
-										<div className={scss.icon}>
-											<IconUpload stroke={2} />
-										</div>
-										<span>Импорт Excel</span>
-									</Button>
-									<Button
-										size="large"
-										className={scss.button}
-										variant="contained"
-										onClick={handleStudentOpen}
-									>
-										<div className={scss.icon}>
-											<IconPlus stroke={2} />
-										</div>
-										<span>Добавить студента</span>
-									</Button>
+										<img src={FilterPhoto} alt="Filter" />
+									</button>
+									<button className={scss.button}>
+										<img src={SearchPhoto} alt="Search" />
+									</button>
 								</div>
 							</div>
-							<h1 className={scss.title}>Студенты</h1>
-						</>
-					) : (
-						<div
-							style={{
-								width: '100%',
-								display: 'flex',
-								justifyContent: 'end',
-								paddingInline: '10px'
-							}}
-						>
-							<Button
-								size="large"
-								onClick={handleOpenSearch}
-								className={scss.button}
-								variant="outlined"
-								style={{ textTransform: 'none' }}
-							>
-								<div className={scss.icon}>
-									<IconUpload stroke={2} />
-								</div>
-								<span>Импорт Excel</span>
-							</Button>
+							<div className={scss.buttons}>
+								<Button
+									size="large"
+									onClick={handleOpenSearch}
+									className={scss.button}
+									variant="outlined"
+									style={{ textTransform: 'none' }}
+								>
+									<div className={scss.icon}>
+										<IconUpload stroke={2} />
+									</div>
+									<span>Импорт Excel</span>
+								</Button>
+								<Button
+									size="large"
+									className={scss.button}
+									variant="contained"
+									onClick={handleStudentOpen}
+								>
+									<div className={scss.icon}>
+										<IconPlus stroke={2} />
+									</div>
+									<span>Добавить студента</span>
+								</Button>
+							</div>
 						</div>
-					)}
+						<h1 className={scss.title}>Студенты</h1>
+					</>
+
 					<ScrollArea
 						type="always"
 						scrollbars="xy"
@@ -195,130 +188,117 @@ const Student: React.FC = () => {
 					>
 						<Box>
 							<div>
-								{data?.students.length === 0 ? (
-									<>
-										<NotCreated
-											text="Вы пока не добавили студентов!!"
-											name="Студенты"
-											buttonClick={handleStudentOpen}
-											buttontText="Добавить студента"
-										/>
-									</>
-								) : (
-									<>
-										<div style={{ display: 'flex', justifyContent: 'center' }}>
-											<div className={scss.StudentContainer}>
-												<table className={scss.table}>
-													<thead>
-														<tr>
-															<th style={{ textAlign: 'start' }}>№</th>
-															<th>Имя Фамилия</th>
-															<th>Группа</th>
-															<th>Формат обучения</th>
-															<th>Номер телефона</th>
-															<th>E-mail</th>
-															<th
-																style={{
-																	textAlign: 'end',
-																	paddingRight: '10px'
-																}}
+								<>
+									<div style={{ display: 'flex', justifyContent: 'center' }}>
+										<div className={scss.StudentContainer}>
+											<table className={scss.table}>
+												<thead>
+													<tr>
+														<th style={{ textAlign: 'start' }}>№</th>
+														<th>Имя Фамилия</th>
+														<th>Группа</th>
+														<th>Формат обучения</th>
+														<th>Номер телефона</th>
+														<th>E-mail</th>
+														<th
+															style={{
+																textAlign: 'end',
+																paddingRight: '10px'
+															}}
+														>
+															Действия
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													{filteredData
+														?.slice(
+															(currentPage - 1) * rowsPerPage,
+															currentPage * rowsPerPage
+														)
+														.map((item: Student, index) => (
+															<tr
+																key={item.id}
+																className={
+																	index % 2 === 1
+																		? scss.TableAlternateRow
+																		: '' || scss.StudentContainerSecond
+																}
 															>
-																Действия
-															</th>
-														</tr>
-													</thead>
-													<tbody>
-														{filteredData
-															?.slice(
-																(currentPage - 1) * rowsPerPage,
-																currentPage * rowsPerPage
-															)
-															.map((item: Student, index) => (
-																<tr
-																	key={item.id}
+																<td
 																	className={
-																		index % 2 === 1
-																			? scss.TableAlternateRow
-																			: '' || scss.StudentContainerSecond
+																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
-																	<td
-																		className={
-																			item.isBlock ? scss.changeClass : ''
-																		}
+																	{index + 1 + (currentPage - 1) * rowsPerPage}
+																</td>
+																<td
+																	className={
+																		item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.fullName}
+																</td>
+																<td
+																	className={
+																		item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.groupName}
+																</td>
+																<td
+																	className={
+																		item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.studyFormat}
+																</td>
+																<td
+																	className={
+																		item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.phoneNumber}
+																</td>
+																<td
+																	className={
+																		item.isBlock ? scss.changeClass : ''
+																	}
+																>
+																	{item.email}
+																</td>
+																<td className={scss.TableCellIcon}>
+																	<button
+																		onClick={(event) => {
+																			setAnchorEl(event.currentTarget);
+																			setSaveIdElement(item.id);
+																			setSaveItem(item);
+																		}}
 																	>
-																		{index +
-																			1 +
-																			(currentPage - 1) * rowsPerPage}
-																	</td>
-																	<td
-																		className={
-																			item.isBlock ? scss.changeClass : ''
-																		}
-																	>
-																		{item.fullName}
-																	</td>
-																	<td
-																		className={
-																			item.isBlock ? scss.changeClass : ''
-																		}
-																	>
-																		{item.groupName}
-																	</td>
-																	<td
-																		className={
-																			item.isBlock ? scss.changeClass : ''
-																		}
-																	>
-																		{item.studyFormat}
-																	</td>
-																	<td
-																		className={
-																			item.isBlock ? scss.changeClass : ''
-																		}
-																	>
-																		{item.phoneNumber}
-																	</td>
-																	<td
-																		className={
-																			item.isBlock ? scss.changeClass : ''
-																		}
-																	>
-																		{item.email}
-																	</td>
-																	<td className={scss.TableCellIcon}>
-																		<button
-																			onClick={(event) => {
-																				setAnchorEl(event.currentTarget);
-																				setSaveIdElement(item.id);
-																				setSaveItem(item);
-																			}}
-																		>
-																			<IconDotsVertical
-																				style={{ cursor: 'pointer' }}
-																				onClick={() => setAnchorEl(null)}
-																			/>
-																		</button>
-																	</td>
-																</tr>
-															))}
-														<StudentMenu
-															anchorEl={anchorEl!}
-															open={Boolean(anchorEl)}
-															onClose={() => setAnchorEl(null)}
-															handleOpenDeleteModal={handleOpenDeleteModal}
-															item={saveItem!}
-															saveIdElement={saveIdElement!}
-															openDeleteModal={openDeleteModal}
-															setFilteredData={() => {}}
-															handleCloseDeleteModal={handleCloseDeleteModal}
-														/>
-													</tbody>
-												</table>
-											</div>
+																		<IconDotsVertical
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => setAnchorEl(null)}
+																		/>
+																	</button>
+																</td>
+															</tr>
+														))}
+													<StudentMenu
+														anchorEl={anchorEl!}
+														open={Boolean(anchorEl)}
+														onClose={() => setAnchorEl(null)}
+														handleOpenDeleteModal={handleOpenDeleteModal}
+														item={saveItem!}
+														saveIdElement={saveIdElement!}
+														openDeleteModal={openDeleteModal}
+														setFilteredData={() => {}}
+														handleCloseDeleteModal={handleCloseDeleteModal}
+													/>
+												</tbody>
+											</table>
 										</div>
-									</>
-								)}
+									</div>
+								</>
 							</div>
 						</Box>
 					</ScrollArea>
@@ -375,6 +355,10 @@ const Student: React.FC = () => {
 			</div>
 			<ExcelModal handleClose={handleCloseSearch} open={open} />
 			<ModalAddStudent open={openStudent} handleClose={handleCloseStudent} />
+			<SearchModal
+				openModalEdit={modalSearch}
+				handleClose={() => setModalOpenSearchModal(false)}
+			/>
 		</div>
 	);
 };

@@ -8,6 +8,7 @@ import NotificationHeader from '../customModal/notificationHeader/NotificationHe
 import vector from '@/src/assets/svgs/Vector.svg';
 import profile from '@/src/assets/svgs/Profile.png';
 import bell from '@/src/assets/svgs/Header icons.png';
+import ExitModal from '../customModal/exitModal/ExitModal';
 
 const SupHeader = () => {
 	const { pathname } = useLocation();
@@ -16,6 +17,7 @@ const SupHeader = () => {
 	const { courseId, lessonId } = useParams();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	const [openExit, setOpenExit] = useState(false);
 
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -34,7 +36,7 @@ const SupHeader = () => {
 	};
 	const [value, setValue] = useState(0);
 
-	const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+	const handleChange = () => {
 		setValue(newValue);
 	};
 
@@ -94,13 +96,10 @@ const SupHeader = () => {
 	const openRatingStudent = () => {
 		navigate(`/courses/${courseId}/rating`);
 	};
-
-	const handleNavigate = () => {
-		localStorage.removeItem('token');
-		// localStorage.removeItem('isAuth');
-		navigate(`/auth/login`);
-		setAnchorEl(null);
+	const handleOpenMaterial = () => {
+		navigate(`/courses/${courseId}/materials`);
 	};
+
 	useEffect(() => {
 		if (pathname === `/admin/courses/${courseId}/teacher`) {
 			setValue(0);
@@ -181,7 +180,7 @@ const SupHeader = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleNavigate}
+							onClick={() => setOpenExit(true)}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -270,7 +269,7 @@ const SupHeader = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleNavigate}
+							onClick={() => setOpenExit(true)}
 							style={{
 								display: 'flex',
 								gap: '10px',
@@ -299,7 +298,7 @@ const SupHeader = () => {
 							<Tabs
 								className={scss.tabs}
 								value={value}
-								onChange={handleChange}
+								onChange={handleOpenMaterial}
 								aria-label="basic tabs example"
 							>
 								<Tab label="Материалы" {...a11yProps(0)} />
@@ -325,18 +324,65 @@ const SupHeader = () => {
 							src={bell}
 							alt="bell"
 						/>
-						<img style={{ cursor: 'pointer' }} src={profile} alt="Profile" />
-						<div style={{ cursor: 'pointer' }}>
+						<img
+							onClick={handleClick}
+							style={{ cursor: 'pointer' }}
+							src={profile}
+							alt="Profile"
+						/>
+						<div onClick={handleClick} style={{ cursor: 'pointer' }}>
 							<p>Студент</p>
 						</div>
 						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
 					</div>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right'
+						}}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+						PaperProps={{
+							style: {
+								boxShadow: 'none',
+								border: '1px solid #336fff',
+								width: '200px',
+								background: '#dde9f9',
+								borderRadius: '10px'
+							}
+						}}
+					>
+						<MenuItem
+							onClick={() => setOpenExit(true)}
+							style={{
+								display: 'flex',
+								gap: '10px',
+								color: '#1976d2',
+								fontSize: '18px',
+								fontWeight: '600',
+								alignItems: 'center'
+							}}
+						>
+							<img src={vector} alt="" />
+							<p> Выйти</p>
+						</MenuItem>
+					</Menu>
 				</div>
 			)}
 			<NotificationHeader
 				open={openNotification}
 				handleClose={handleCloseNotification}
 			/>
+			<ExitModal openExit={openExit} handleClose={() => setOpenExit(false)} />
 		</div>
 	);
 };

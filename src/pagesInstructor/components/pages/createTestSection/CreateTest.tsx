@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import { useState } from 'react';
@@ -40,7 +41,7 @@ interface CopyData {
 	inputValue3: string;
 	inputValue4: string;
 	option: string;
-	inputs: { value: string; visible: boolean }[];
+	inputs: { value: string; visible: boolean; isTrue: boolean }[];
 }
 interface Question {
 	id: number;
@@ -58,14 +59,13 @@ const CreateTest = () => {
 	const [option, setOption] = useState('SINGLE');
 	const [time, setTime] = useState('00:00');
 	const [inputs, setInputs] = useState<
-		{ id: number; value: string; visible: boolean }[]
-	>([{ id: 1, value: '', visible: true }]);
+		{ id: number; value: string; visible: boolean; isTrue: boolean }[]
+	>([{ id: 1, value: '', visible: false, isTrue: false }]);
 	const [copiesData, setCopiesData] = useState<CopyData[]>([]);
 	const [titleValue, setTitleValue] = useState('');
 	const [pointValue, setPointValue] = useState('');
 	const [postTest] = usePostTestMutation();
 	const { lessonId } = useParams();
-	const [checked, setChecked] = useState(false);
 
 	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setTime(event.target.value);
@@ -75,7 +75,10 @@ const CreateTest = () => {
 		setPointValue(e.target.value);
 
 	const handleAddInput = () =>
-		setInputs([...inputs, { id: inputs.length + 1, value: '', visible: true }]);
+		setInputs([
+			...inputs,
+			{ id: inputs.length + 1, value: '', visible: true, isTrue: false }
+		]);
 	const handleOptionClick = (selectedOption: string) =>
 		setOption(selectedOption);
 
@@ -96,7 +99,7 @@ const CreateTest = () => {
 		const newCopyData = {
 			inputValue3: '',
 			inputValue4: '',
-			inputs: [{ value: '', visible: true }],
+			inputs: [{ value: '', visible: true, isTrue: false }],
 			option: 'SINGLE'
 		};
 		setCopiesData([...copiesData, newCopyData]);
@@ -104,31 +107,33 @@ const CreateTest = () => {
 
 	const handleAddInputOption = (copyDataIndex: number) => {
 		const updatedCopiesData = [...copiesData];
-		updatedCopiesData[copyDataIndex].inputs.push({ value: '', visible: true });
+		updatedCopiesData[copyDataIndex].inputs.push({
+			value: '',
+			visible: true,
+			isTrue: false
+		});
 		setCopiesData(updatedCopiesData);
 	};
 
 	const onSubmit = async (data) => {
-		const initialAnswers = inputs.map((input) => input.value);
 		const initialQuestion: QuestionRequest = {
 			title: titleValue,
 			point: pointValue,
 			questionType: option,
-			optionRequests: initialAnswers.map((ans) => ({
-				option: ans,
-				isTrue: checked
+			optionRequests: inputs.map((input) => ({
+				option: input.value,
+				isTrue: input.isTrue
 			}))
 		};
 
 		const copiedQuestions = copiesData.map((copyData) => {
-			const answers = copyData.inputs.map((input) => input.value);
 			return {
 				title: copyData.inputValue3,
 				point: copyData.inputValue4,
 				questionType: copyData.option === 'SINGLE' ? 'SINGLE' : 'MULTIPLE',
-				optionRequests: answers.map((ans) => ({
-					option: ans,
-					isTrue: false
+				optionRequests: copyData.inputs.map((input) => ({
+					option: input.value,
+					isTrue: input.isTrue
 				}))
 			};
 		});
@@ -162,75 +167,68 @@ const CreateTest = () => {
 						{option === 'SINGLE' ? (
 							<>
 								<div className={scss.radio_checkbox}>
-									<Controller
-										name={`option_1_isTrue_${index}`}
-										control={control}
-										render={({ field }) => (
-											<label>
-												<input
-													{...field}
-													style={{ cursor: 'pointer' }}
-													type="radio"
-													name="option_1"
-													value={index}
-												/>
-											</label>
-										)}
-									/>
+									
+									<label>
+										<input
+											style={{ cursor: 'pointer' }}
+											type="radio"
+											name={`option_${index}`}
+											checked={inputs[index].isTrue}
+											onChange={(e) => {
+												const newInputs = inputs.map((input, idx) => ({
+													...input,
+													isTrue: idx === index
+												}));
+												newInputs[index].isTrue = e.target.checked;
+												setInputs(newInputs);
+											}}
+										/>
+									</label>
 								</div>
 							</>
 						) : (
 							<>
 								<div className={scss.radio_checkbox}>
-									<Controller
-										name={`option_1_isTrue_${index}`}
-										control={control}
-										render={({ field }) => (
-											<label>
-												<input
-													{...field}
-													style={{ cursor: 'pointer' }}
-													type="checkbox"
-													value={index}
-												/>
-											</label>
-										)}
-									/>
+									<label>
+										<input
+											style={{ cursor: 'pointer' }}
+											type="checkbox"
+											name={`option_${index}`}
+											checked={inputs[index].isTrue}
+											onChange={(e) => {
+												const newInputs = [...inputs];
+												newInputs[index].isTrue = e.target.checked;
+												setInputs(newInputs);
+											}}
+										/>
+									</label>
 								</div>
 							</>
 						)}
 						<div className={scss.variant_inputs}>
-							<Controller
-								name={`optionValue_${index}`}
-								control={control}
-								render={({ field }) => (
-									<Input
-										{...field}
-										size="small"
-										placeholder={`Вариант ${index + 1}`}
-										type="text"
-										value={input.value}
-										onChange={(e) => {
-											const newInputs = [...inputs];
-											newInputs[index].value = e.target.value;
-											setInputs(newInputs);
-										}}
-										width="100%"
-									/>
-								)}
+							<Input
+								size="small"
+								placeholder={`Вариант ${index + 1}`}
+								type="text"
+								value={input.value}
+								onChange={(e) => {
+									const newInputs = [...inputs];
+									newInputs[index].value = e.target.value;
+									setInputs(newInputs);
+								}}
+								width="100%"
 							/>
 							<div className={scss.notice}>
-								<button className={scss.button_cancel} type="button">
-									<span
-										className={scss.delete_icon}
-										onClick={() => {
-											const newInputs = [...inputs];
-											newInputs.splice(index, 1);
-											setInputs(newInputs);
-										}}
-									>
-										&times;
-									</span>
+								<button
+									className={scss.button_cancel}
+									type="button"
+									onClick={() => {
+										const newInputs = [...inputs];
+										newInputs.splice(index, 1);
+										setInputs(newInputs);
+									}}
+								>
+									<span className={scss.delete_icon}>&times;</span>
 								</button>
 							</div>
 						</div>
