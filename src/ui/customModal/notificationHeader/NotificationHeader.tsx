@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import scss from './NotificationHeader.module.scss';
 import { useGetNotificationQuery } from '@/src/redux/api/instructor/notification';
 import { useNavigate } from 'react-router-dom';
+import notifications from '@/src/assets/icons/Group 1772.png';
 
 const style = {
 	position: 'absolute',
@@ -46,51 +47,59 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 						<h1>ВАШИ УВЕДОМЛЕНИЯ</h1>
 					</div>
 
-					<div className={scss.notifications}>
-						<h2>НОВЫЕ</h2>
-
-						<div className={scss.messages_content}>
-							{data?.map((item) => (
-								<div
-									className={scss.results}
-									onClick={() => {
-										navigate(
-											`/instructor/course/${item.courseId}/materials/${item.lessonId}/lesson/${item.taskId}/answer/${item.answerTaskId}`
-										);
-
-										setTimeout(() => {
-											setIsView(false);
-										}, 100);
-									}}
-								>
-									{item.isView === true && (
-										<>
-											<h1>{item.notificationTitle}</h1>
-											<p>{item.notificationDescription}</p>
-											<p>{item.notificationSendDate}</p>
-										</>
-									)}
-								</div>
-							))}
+					{data?.length === 0 ? (
+						<div className={scss.notifications_div}>
+							<img className={scss.img_notifications} src={notifications} alt="" />
 						</div>
-					</div>
-					<div className={scss.notifications}>
-						<h2>Просмотренные</h2>
+					) : (
+						<>
+							<div className={scss.notifications}>
+								<h2>НОВЫЕ</h2>
 
-						<div className={scss.messages_content}>
-							{data?.map((item) => (
-								<div className={scss.results2}>
-									{item.isView === false && (
-										<>
-											<h1>{item.notificationTitle}</h1>
-											<p>{item.notificationDescription}</p>
-											<p>{item.notificationSendDate}</p>
-										</>
-									)}
+								<div className={scss.messages_content}>
+									{data?.map((item) => (
+										<div
+											className={scss.results}
+											onClick={() => {
+												navigate(
+													`/instructor/course/${item.courseId}/materials/${item.lessonId}/lesson/${item.taskId}/answer/${item.answerTaskId}`
+												);
+
+												setTimeout(() => {
+													setIsView(false);
+												}, 100);
+											}}
+										>
+											{item.isView === true && (
+												<>
+													<h1>{item.notificationTitle}</h1>
+													<p>{item.notificationDescription}</p>
+													<p>{item.notificationSendDate}</p>
+												</>
+											)}
+										</div>
+									))}
 								</div>
-							))}
-						</div>
-					</div>
+							</div>
+							<div className={scss.notifications}>
+								<h2>Просмотренные</h2>
+
+								<div className={scss.messages_content}>
+									{data?.map((item) => (
+										<div className={scss.results2}>
+											{item.isView === false && (
+												<>
+													<h1>{item.notificationTitle}</h1>
+													<p>{item.notificationDescription}</p>
+													<p>{item.notificationSendDate}</p>
+												</>
+											)}
+										</div>
+									))}
+								</div>
+							</div>
+						</>
+					)}
 				</Box>
 			</Modal>
 		</div>

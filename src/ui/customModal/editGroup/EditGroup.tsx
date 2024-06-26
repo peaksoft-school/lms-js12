@@ -115,7 +115,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 		};
 		try {
 			await updateGroup({ newGroup, saveId });
-			messageApi.success('Успешно обнавлено!');
+			messageApi.success('Успешно обновлено!');
 			handleClose();
 			setSelectedFile('');
 		} catch (error) {
@@ -129,7 +129,7 @@ const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 		const selectedDate = new Date(newDate);
 
 		if (selectedDate < currentDate) {
-			console.log('Выбрана прошлая дата');
+			messageApi.error('Выбрана прошлая дата');
 		} else {
 			setDate(newDate);
 		}

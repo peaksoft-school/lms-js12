@@ -2,6 +2,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { IconChevronRight } from '@tabler/icons-react';
+import { Tooltip } from '@mui/material';
 
 export default function BasicBreadcrumbs() {
 	const { pathname } = useLocation();
@@ -20,7 +21,6 @@ export default function BasicBreadcrumbs() {
 
 	const item = localStorage.getItem('item');
 	const taskName = localStorage.getItem('taskName');
-	const task = localStorage.getItem('task');
 	const hwTask = localStorage.getItem('hwTask');
 
 	console.log(courseId, lessonId);
@@ -79,7 +79,18 @@ export default function BasicBreadcrumbs() {
 								separator={<IconChevronRight stroke={2} width={20} />}
 							>
 								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
-									{taskName}
+									<Tooltip title={taskName}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{taskName}
+										</p>
+									</Tooltip>
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
 									Видеоурок
@@ -93,7 +104,18 @@ export default function BasicBreadcrumbs() {
 								separator={<IconChevronRight width={20} stroke={2} />}
 							>
 								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
-									{taskName}
+									<Tooltip title={taskName}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{taskName}
+										</p>
+									</Tooltip>
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
 									Презентация
@@ -107,7 +129,18 @@ export default function BasicBreadcrumbs() {
 								separator={<IconChevronRight width={20} stroke={2} />}
 							>
 								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
-									{taskName}
+									<Tooltip title={taskName}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{taskName}
+										</p>
+									</Tooltip>
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
 									Задание
@@ -121,7 +154,18 @@ export default function BasicBreadcrumbs() {
 								separator={<IconChevronRight width={20} stroke={2} />}
 							>
 								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
-									{taskName}
+									<Tooltip title={taskName}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{taskName}
+										</p>
+									</Tooltip>
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
 									Ссылка
@@ -135,7 +179,18 @@ export default function BasicBreadcrumbs() {
 								separator={<IconChevronRight width={20} stroke={2} />}
 							>
 								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
-									{taskName}
+									<Tooltip title={taskName}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{taskName}
+										</p>
+									</Tooltip>
 								</Link>
 								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
 									Тест
@@ -152,7 +207,18 @@ export default function BasicBreadcrumbs() {
 									separator={<IconChevronRight width={20} stroke={2} />}
 								>
 									<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
-										{taskName}
+										<Tooltip title={taskName}>
+											<p
+												style={{
+													width: '100%',
+													maxWidth: '200px',
+													textOverflow: 'ellipsis',
+													overflow: 'hidden'
+												}}
+											>
+												{taskName}
+											</p>
+										</Tooltip>
 									</Link>
 									<Link
 										style={{ fontSize: '14px', color: '#1976d2' }}
@@ -258,7 +324,18 @@ export default function BasicBreadcrumbs() {
 							style={{ fontSize: '14px' }}
 							to={`/instructor/course/${courseId}/materials`}
 						>
-							{taskName}
+							<Tooltip title={taskName}>
+								<p
+									style={{
+										width: '100%',
+										maxWidth: '200px',
+										textOverflow: 'ellipsis',
+										overflow: 'hidden'
+									}}
+								>
+									{taskName}
+								</p>
+							</Tooltip>
 						</Link>
 						{pathname ===
 							`/instructor/course/${courseId}/materials/${lessonId}}/presentation` && (

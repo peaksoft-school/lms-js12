@@ -41,7 +41,7 @@ function Analytics() {
 				label: 'Users Gained',
 				data: [],
 				backgroundColor: [
-					'rgba(75,192,192,1)',
+					'#4bc0c0',
 					'#ecf0f1',
 					'#50AF95',
 					'#f3ba2f',
@@ -123,7 +123,7 @@ function Analytics() {
 						label: 'Graduated',
 						data: userGraduated,
 						backgroundColor: [
-							'rgba(255,99,132,1)',
+							'#ff6384',
 							'#ecf0f1',
 							'#50AF95',
 							'#f3ba2f',

@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef } from 'react';
 import Input from '@/src/ui/customInput/Input';
 import scss from './AddTask.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useCreateTaskInstructorMutation } from '@/src/redux/api/instructor/addTask';
@@ -25,11 +26,11 @@ const AddTask: React.FC = () => {
 	const { courseId, lessonId } = useParams();
 	const navigate = useNavigate();
 	const [createTaskInstructor] = useCreateTaskInstructorMutation();
-
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [saveSelect, setSelectedFile] = useState<string | null>(null);
 	const [secondSave, setSecondSave] = useState<string | null>(null);
 	const [description, setDescription] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFileSelect = async (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -57,7 +58,6 @@ const AddTask: React.FC = () => {
 		const binary = atob(data);
 		const arrayBuffer = new ArrayBuffer(binary.length);
 		const uint8Array = new Uint8Array(arrayBuffer);
-
 		for (let i = 0; i < binary.length; i++) {
 			uint8Array[i] = binary.charCodeAt(i);
 		}
@@ -72,9 +72,7 @@ const AddTask: React.FC = () => {
 			formData.append('file', file);
 			const cleanedDescription = description.replace(/\\/g, '');
 			formData.append('description', cleanedDescription);
-
 			const response: any = await createGroupFile(formData).unwrap();
-
 			if (response && response.urlFile) {
 				console.log('Image uploaded:', response.urlFile);
 				setSecondSave(response.urlFile);
@@ -103,24 +101,22 @@ const AddTask: React.FC = () => {
 	};
 
 	const addTask = async () => {
+		setIsLoading(true);
 		try {
 			const newDescription = value.replace(
 				/<img[^>]*>/,
 				secondSave ? `<img src="${secondSave}"/>` : ''
 			);
-
 			const newTask = {
 				title,
 				file: saveSelect,
 				description: newDescription,
 				deadline: selectedDate
 			};
-
 			const response = await createTaskInstructor({
 				newTask,
 				lessonId
 			}).unwrap();
-
 			if (response) {
 				navigate(`/instructor/course/${courseId}/materials/${lessonId}/lesson`);
 				setTitle('');
@@ -129,6 +125,8 @@ const AddTask: React.FC = () => {
 			}
 		} catch (error) {
 			console.error('Error creating task:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -185,7 +183,7 @@ const AddTask: React.FC = () => {
 									alignItems: 'center'
 								}}
 							>
-								<p style={{ color: '#1f6ed4' }}>Создать задание</p>
+								<p style={{ color: '#1F6ED4' }}>Создать задание</p>
 								<div className={scss.save_file}>
 									<input
 										type="file"
@@ -213,7 +211,7 @@ const AddTask: React.FC = () => {
 									placeholder="Название задания"
 								/>
 							</div>
-							<div className={scss.secon_part}>
+							<div className={scss.second_part}>
 								<div className={scss.second}>
 									<div className={scss.editor}>
 										<ReactQuill
@@ -257,7 +255,6 @@ const AddTask: React.FC = () => {
 								/>
 							</LocalizationProvider>
 						</div>
-
 						<div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
 							<ButtonCancel
 								type="button"
@@ -275,9 +272,9 @@ const AddTask: React.FC = () => {
 								variant="contained"
 								style={{ padding: '10px 24px', borderRadius: '8px' }}
 								onClick={addTask}
-								disabled={!title || !selectedDate} 
+								disabled={!title || !selectedDate || isLoading}
 							>
-								Добавить
+								{isLoading ? <CircularProgress size={24} /> : 'Добавить'}
 							</Button>
 						</div>
 					</div>

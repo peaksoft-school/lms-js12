@@ -69,9 +69,11 @@ interface IsTrueProps {
 const GreenSwitch: FC<IsTrueProps> = ({ isTrue, setIsTrue }) => {
 	const { testId } = useParams();
 	const test = Number(testId);
+	console.log(test);
+
 	const [sendAccessResultTest] = useSendAccessResultTestMutation();
 	const handleAccess = async () => {
-		await sendAccessResultTest(test);
+		await sendAccessResultTest({ test, isTrue });
 	};
 	return (
 		<FormGroup>

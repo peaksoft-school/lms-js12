@@ -1,17 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useState, KeyboardEvent } from 'react';
-import { toast } from 'react-toastify';
 import scss from './Trash.module.scss';
 import trash from '@/src/assets/svgs/trash (1).svg';
 import refrash from '@/src/assets/svgs/refresh.svg';
-import empty from '@/src/assets/notCreated0.png';
 import {
 	useDeleteTrashMutation,
 	useGetTrashQuery,
 	useUpdatedTrashMutation
 } from '@/src/redux/api/instructor/trash';
 import { Preloader } from '../../../../ui/preloader/Preloader';
-import { Pagination, Stack } from '@mui/material';
+import { Pagination, Stack, Tooltip } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
@@ -145,7 +143,19 @@ const Trash: FC = () => {
 															key={card.id}
 														>
 															<td style={{ paddingLeft: '20px' }}>
-																{card.name}
+																<Tooltip title={card.name}>
+																	<p
+																		style={{
+																			width: '100%',
+																			maxWidth: '400px',
+																			textOverflow: 'ellipsis',
+																			overflow: 'hidden',
+																			cursor: 'pointer'
+																		}}
+																	>
+																		{card.name}
+																	</p>
+																</Tooltip>
 															</td>
 															<td
 																style={{

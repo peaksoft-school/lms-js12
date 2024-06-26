@@ -6,7 +6,6 @@ import CalendarPage from '../pages/CalendarPage';
 import HeaderMobile from '@/src/ui/headerMobile/HeaderMobile.tsx';
 import SupHeader from '@/src/ui/supHeader/SupHeader';
 import MyCoursePage from '../pages/MyCoursePage';
-import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
 import AnnouncementPage from '@/src/pagesAdmin/components/pages/AnnouncementPage';
 import InternalInstructorStudentsPage from '../pages/InternalInstructorStudentsPage';
 import MaterialsPage from '../pages/MaterialsPage';

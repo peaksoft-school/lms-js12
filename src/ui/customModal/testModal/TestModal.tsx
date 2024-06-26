@@ -5,6 +5,8 @@ import scss from './TestModal.module.scss';
 import { FormControlLabel, Radio } from '@mui/material';
 import { blue, green, red } from '@mui/material/colors';
 import { useGetResultTestOfStudentQuery } from '@/src/redux/api/instructor/resultTest';
+import Checkbox from '@mui/material/Checkbox';
+import notCreated from '@/src/assets/notCreated0.png';
 
 const style = {
 	position: 'absolute',
@@ -33,10 +35,6 @@ const TestModal: React.FC<modalProps> = ({
 
 	const { data } = useGetResultTestOfStudentQuery(saveId);
 
-	// const red = '#FF0000';
-	// const green = '#00FF00';
-	// const blue = '#0000FF';
-
 	return (
 		<form onSubmit={close} className={scss.form}>
 			<Modal
@@ -58,100 +56,88 @@ const TestModal: React.FC<modalProps> = ({
 					</Typography>
 
 					<Box className={scss.input_button_card}>
-						<div className={scss.Main_div}>
-							<div className={scss.testing_container}>
+						{saveId === 0 ? (
+							<>
+								<img src={notCreated} alt="" />
+								<h1 style={{ fontSize: '22px', fontWeight: '600' }}>
+									Тест ещё не пройден!
+								</h1>
+							</>
+						) : (
+							<>
 								{data?.answerQuestionResponses.map((question) => (
-									<div key={question.questionId} className={scss.question}>
-										<div className={scss.get_test_testing_second_container}>
-											<h4>{question.questionTitle}</h4>
-										</div>
-										{question.answerOptionResponses.map((option) => (
-											<div key={option.optionId} className={scss.option}>
-												{question.answerOptionResponses.filter(
-													(opt) => opt.true
-												).length === 1 ? (
-													<>
-														<FormControlLabel
-															value={option.option}
-															control={
-																// <Radio
-																// 	checked={option.true || option.yourChoice}
-																// 	className={
-																// 		option.true ? scss.correct_checkbox : ''
-																// 	}
-																// 	style={{
-																// 		color:
-																// 			option.yourChoice && option.true
-																// 				? blue
-																// 				: option.yourChoice && !option.true
-																// 					? red
-																// 					: !option.yourChoice && option.true
-																// 						? green
-																// 						: ''
-																// 	}}
-																// />
-																<Radio
-																	checked={option.true || option.yourChoice}
-																	className={
-																		option.true ? scss.correct_checkbox : ''
-																	}
-																	style={{
-																		color:
-																			option.yourChoice && option.true
-																				? blue[500]
-																				: option.yourChoice && !option.true
-																					? red[500]
-																					: !option.yourChoice && option.true
-																						? green[500]
-																						: 'inherit'
-																	}}
-																/>
-															}
-															label={option.option}
-														/>
-													</>
-												) : (
-													<>
-														{/* <input
-															type="checkbox"
-															checked={
-																option.yourChoice == true ||
-																option.true === true
-															}
-															className={
-																option.yourChoice == false &&
-																option.true == true
-																	? scss.correct_checkbox
-																	: null 
-
-															}
-														/> */}
-														<input
-															type="checkbox"
-															checked={
-																option.yourChoice === true ||
-																option.true === true
-															}
-															className={
-																option.true === true &&
-																option.yourChoice === false
-																	? scss.incorrect_checkbox
-																	: option.true === true &&
-																		option.yourChoice === true
-																		? scss.correct_checkbox
-																		: ''
-															}
-														/>
-														a<label>{option.option}</label>
-													</>
-												)}
+									<div className={scss.Main_div}>
+										<div className={scss.testing_container}></div>
+										<div key={question.questionId} className={scss.question}>
+											<div className={scss.get_test_testing_second_container}>
+												<h4>{question.questionTitle}</h4>
 											</div>
-										))}
-										<hr className={scss.getTest_hr} />
+											{question.answerOptionResponses.map((option) => (
+												<div key={option.optionId} className={scss.option}>
+													{question.answerOptionResponses.filter(
+														(opt) => opt.true
+													).length == 1 ? (
+														<>
+															<FormControlLabel
+																value={option.option}
+																control={
+																	<Radio
+																		checked={
+																			option.true || option.yourChoice !== 3
+																		}
+																		className={
+																			option.true ? scss.correct_checkbox : ''
+																		}
+																		style={{
+																			color:
+																				option.yourChoice === 1 &&
+																				option.true === true
+																					? blue[500]
+																					: option.yourChoice === 3 &&
+																						  option.true === true
+																						? green[500]
+																						: option.yourChoice === 2 &&
+																							  !option.true
+																							? red[500]
+																							: ''
+																		}}
+																	/>
+																}
+																label={option.option}
+															/>
+														</>
+													) : (
+														<div className={scss.div_checkbox}>
+															<Checkbox
+																checked={option.true || option.yourChoice !== 3}
+																className={
+																	option.true ? scss.correct_checkbox : ''
+																}
+																style={{
+																	color:
+																		option.yourChoice === 1 &&
+																		option.true === true
+																			? blue[500]
+																			: option.yourChoice === 3 &&
+																				  option.true === true
+																				? green[500]
+																				: option.yourChoice === 2 &&
+																					  !option.true
+																					? red[500]
+																					: ''
+																}}
+															/>
+															a<label>{option.option}</label>
+														</div>
+													)}
+												</div>
+											))}
+											<hr className={scss.getTest_hr} />
+										</div>
 									</div>
 								))}
-							</div>
-						</div>
+							</>
+						)}
 					</Box>
 				</Box>
 			</Modal>

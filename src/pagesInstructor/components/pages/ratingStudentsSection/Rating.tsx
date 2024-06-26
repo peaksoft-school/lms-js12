@@ -6,7 +6,7 @@ import {
 	useGetRatingStudentsQuery,
 	useGetResultRatingQuery
 } from '@/src/redux/api/instructor/rating';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
 import { IconCaretDown, IconPlus, IconTrash } from '@tabler/icons-react';
 import AddExam from '@/src/ui/InstructorModal/AddExam';
 import {
@@ -127,7 +127,18 @@ const Rating = () => {
 												colSpan={lesson.taskRatingResponses.length}
 												key={lesson.id}
 											>
-												<p>{lesson.title}</p>
+												<Tooltip title={lesson.title}>
+													<p
+														style={{
+															width: '100%',
+															maxWidth: '500px',
+															textOverflow: 'ellipsis',
+															overflow: 'hidden'
+														}}
+													>
+														{lesson.title}
+													</p>
+												</Tooltip>
 											</th>
 										)
 									)}

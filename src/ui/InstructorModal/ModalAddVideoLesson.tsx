@@ -8,7 +8,8 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { usePostVideoLessonMutation } from '@/src/redux/api/instructor/video';
-import { message } from 'antd'; // Импорт message из Ant Design
+import { message } from 'antd';
+import CircularProgress from '@mui/material/CircularProgress';
 import scss from './Styled.module.scss';
 
 const style = {
@@ -17,7 +18,7 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 541,
-	height: 357,
+	height: 367,
 	bgcolor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -187,7 +188,7 @@ const ModalAddVideoLesson: FC<LessonVideoProps> = ({
 								width="117px"
 								disabled={isButtonDisabled || loading}
 							>
-								Добавить
+								{loading ? <CircularProgress size={24} /> : 'Добавить'}
 							</ButtonSave>
 						</div>
 					</Box>

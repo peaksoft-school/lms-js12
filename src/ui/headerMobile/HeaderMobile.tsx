@@ -7,14 +7,7 @@ import { Box, ScrollArea } from '@mantine/core';
 
 const HeaderMobile = () => {
 	const { pathname } = useLocation();
-	const [sliderRef] = useKeenSlider({
-		// mode: 'free',
-		// slides: {
-		// 	origin: 'center',
-		// 	perView: 6,
-		// 	spacing: 4
-		// }
-	});
+	const [sliderRef] = useKeenSlider({});
 
 	return (
 		<header className={scss.HeaderMobile}>
