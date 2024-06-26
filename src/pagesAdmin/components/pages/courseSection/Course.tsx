@@ -128,7 +128,7 @@ const Courses: FC = () => {
 																			<p
 																				style={{
 																					width: '100%',
-																					maxWidth: '100px',
+																					maxWidth: '150px',
 																					textOverflow: 'ellipsis',
 																					overflow: 'hidden'
 																				}}
