@@ -58,7 +58,7 @@ const Courses: FC = () => {
 		setAnchorEl(null);
 	};
 
-	console.log(saveId,'4444');
+	console.log(saveId, '4444');
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
@@ -162,12 +162,14 @@ const Courses: FC = () => {
 														</div>
 													</div>
 													<div className={scss.block_button_div}>
-														<div onClick={handleClick}>
+														<div
+															onClick={() => {
+																setSaveId(item.id);
+															}}
+														>
 															<button
+																onClick={handleClick}
 																className={scss.button_dots}
-																onClick={() => {
-																	setSaveId(item.id);
-																}}
 															>
 																<IconDots stroke={2} />
 															</button>
