@@ -1,7 +1,10 @@
-import { useGetStudentTableQuery } from '@/src/redux/api/admin/student';
+import { useParams } from 'react-router-dom';
 import scss from './NotSubmitted.module.scss';
+import { useGetNotSubmitedStudentQuery } from '@/src/redux/api/instructor/getTask';
 const NotSubmitted = () => {
-	const { data } = useGetStudentTableQuery();
+	const { getTaskId } = useParams();
+	const getTask = Number(getTaskId);
+	const { data } = useGetNotSubmitedStudentQuery(getTask);
 	return (
 		<div className={scss.main_part}>
 			<div className={scss.not_submited}>

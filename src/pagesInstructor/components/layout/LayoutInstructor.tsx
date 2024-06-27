@@ -84,7 +84,7 @@ const LayoutInstructor = () => {
 					<div style={{ paddingInline: '20px', paddingTop: '24px' }}>
 						<Routes>
 							<Route
-								path="/course/:courseId/materials/:lessonId/*"
+								path="/course/:courseId/materials/:lessonId/:getTaskId/*"
 								element={<BasicBreadcrumbs />}
 							/>
 						</Routes>

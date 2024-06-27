@@ -26,19 +26,13 @@ interface Question {
 	point: string;
 }
 
-// interface newTest {
-// 	value?: string;
-// 	optionId: number;
-// 	option: string;
-// 	isTrue: boolean;
-// }
-
 interface Test {
 	title: string;
 	hour: string;
 	minute: string;
 	questionRequests: Question[];
 }
+
 interface FormData {
 	[key: string]: string | undefined;
 }
@@ -86,8 +80,9 @@ const EditTest: React.FC = () => {
 			options: input.options.map((option, optionIndex) => ({
 				option: formData[`optionValue_${index}_${optionIndex}`],
 				isTrue:
-					formData[`option_${index}_isTrue_${optionIndex}`] ===
-					optionIndex.toString()
+					formData[`option_${index}_isTrue_${optionIndex}`] === 'on'
+						? true
+						: false
 			}))
 		}));
 
@@ -97,8 +92,9 @@ const EditTest: React.FC = () => {
 			options: copyData.options.map((option, optionIndex) => ({
 				option: formData[`copyData_${index}_optionValue_${optionIndex}`],
 				isTrue:
-					formData[`copyData_${index}_option_${optionIndex}_isTrue`] ===
-					optionIndex.toString()
+					formData[`copyData_${index}_option_${optionIndex}_isTrue`] === 'on'
+						? true
+						: false
 			}))
 		}));
 
@@ -108,7 +104,7 @@ const EditTest: React.FC = () => {
 			title: formData.title!,
 			hour: time.split(':')[0],
 			minute: time.split(':')[1],
-			questionRequests: allQuestions!
+			questionRequests: allQuestions
 		};
 
 		try {
@@ -133,8 +129,9 @@ const EditTest: React.FC = () => {
 		inputs.map((input, index) => (
 			<div key={index} className={scss.input_div}>
 				<div className={scss.variant_inputs}>
-					{data?.questionResponseList[questionIndex].questionType ===
-					'MULTIPLE' ? (
+					{data?.questionResponseList &&
+					data?.questionResponseList[questionIndex]?.questionType ===
+						'MULTIPLE' ? (
 						<div className={scss.radio_checkbox}>
 							<Controller
 								name={`option_${questionIndex}_${index}_isTrue`}
@@ -303,7 +300,7 @@ const EditTest: React.FC = () => {
 											</label>
 										</div>
 									</div>
-									<div>{renderInputFields(item.options!, index)}</div>
+									<div>{renderInputFields(item.options, index)}</div>
 									<div className={scss.div_text2}>
 										<div className={scss.components}>
 											<p className={scss.p_text2}>

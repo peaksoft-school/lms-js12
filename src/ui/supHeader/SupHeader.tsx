@@ -37,7 +37,7 @@ const SupHeader = () => {
 	const [value, setValue] = useState(0);
 
 	const handleChange = () => {
-		setValue(newValue);
+		setValue(0);
 	};
 
 	useEffect(() => {

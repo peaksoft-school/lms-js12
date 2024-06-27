@@ -12,8 +12,16 @@ const api = index.injectEndpoints({
 				body: newTask
 			}),
 			invalidatesTags: ['send-task']
+		}),
+		editSendTask: builder.mutation({
+			query: ({ newTask, getTask }) => ({
+				url: `/api/answer/${getTask}`,
+				method: 'PATCH',
+				body: newTask
+			}),
+			invalidatesTags: ['send-task']
 		})
 	})
 });
 
-export const { usePostStudentTaskMutation } = api;
+export const { usePostStudentTaskMutation, useEditSendTaskMutation } = api;

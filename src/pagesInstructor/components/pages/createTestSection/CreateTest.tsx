@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconCopy } from '@tabler/icons-react';
 import { IconDelete } from '@/src/assets/icons';
 import { Select } from '@mantine/core';
@@ -60,12 +60,20 @@ const CreateTest = () => {
 	const [time, setTime] = useState('00:00');
 	const [inputs, setInputs] = useState<
 		{ id: number; value: string; visible: boolean; isTrue: boolean }[]
-	>([{ id: 1, value: '', visible: false, isTrue: false }]);
-	const [copiesData, setCopiesData] = useState<CopyData[]>([]);
+	>([{ id: 1, value: '', visible: true, isTrue: false }]);
+	// const [copiesData, setCopiesData] = useState<CopyData[]>([]);
 	const [titleValue, setTitleValue] = useState('');
 	const [pointValue, setPointValue] = useState('');
 	const [postTest] = usePostTestMutation();
 	const { lessonId } = useParams();
+	const [copiesData, setCopiesData] = useState([
+		{
+			inputValue3: '',
+			inputValue4: '',
+			inputs: [{ value: '', visible: true, isTrue: false }],
+			option: 'SINGLE'
+		}
+	]);
 
 	const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setTime(event.target.value);
@@ -79,16 +87,22 @@ const CreateTest = () => {
 			...inputs,
 			{ id: inputs.length + 1, value: '', visible: true, isTrue: false }
 		]);
-	const handleOptionClick = (selectedOption: string) =>
+	const handleOptionClick = (selectedOption: string) => {
 		setOption(selectedOption);
+		if (selectedOption === 'SINGLE') {
+			const newInputs = inputs.map((input, index) => ({
+				...input,
+				isTrue: index === 0 ? input.isTrue : false
+			}));
+			setInputs(newInputs);
+		}
+	};
 
 	const handleCopy = (copyDataIndex: number) => {
+		console.log('Copying index:', copyDataIndex); // Debugging log
 		const newCopyData = JSON.parse(JSON.stringify(copiesData[copyDataIndex]));
-		setCopiesData([
-			...copiesData.slice(0, copyDataIndex + 1),
-			newCopyData,
-			...copiesData.slice(copyDataIndex + 1)
-		]);
+		setCopiesData([...copiesData, newCopyData]);
+		console.log('New copiesData:', copiesData); // Debugging log
 	};
 
 	const handleDelete = (copyDataIndex: number) => {
@@ -165,58 +179,60 @@ const CreateTest = () => {
 				input.visible && (
 					<div key={index} className={scss.input_div}>
 						{option === 'SINGLE' ? (
-							<>
-								<div className={scss.radio_checkbox}>
-									
-									<label>
-										<input
-											style={{ cursor: 'pointer' }}
-											type="radio"
-											name={`option_${index}`}
-											checked={inputs[index].isTrue}
-											onChange={(e) => {
-												const newInputs = inputs.map((input, idx) => ({
-													...input,
-													isTrue: idx === index
-												}));
-												newInputs[index].isTrue = e.target.checked;
-												setInputs(newInputs);
-											}}
-										/>
-									</label>
-								</div>
-							</>
+							<div className={scss.radio_checkbox}>
+								<label>
+									<input
+										style={{ cursor: 'pointer' }}
+										type="radio"
+										name={`option_${index}`}
+										checked={inputs[index].isTrue}
+										onChange={(e) => {
+											const newInputs = inputs.map((input, idx) => ({
+												...input,
+												isTrue: idx === index
+											}));
+											newInputs[index].isTrue = e.target.checked;
+											setInputs(newInputs);
+										}}
+									/>
+								</label>
+							</div>
 						) : (
-							<>
-								<div className={scss.radio_checkbox}>
-									<label>
-										<input
-											style={{ cursor: 'pointer' }}
-											type="checkbox"
-											name={`option_${index}`}
-											checked={inputs[index].isTrue}
-											onChange={(e) => {
-												const newInputs = [...inputs];
-												newInputs[index].isTrue = e.target.checked;
-												setInputs(newInputs);
-											}}
-										/>
-									</label>
-								</div>
-							</>
+							<div className={scss.radio_checkbox}>
+								<label>
+									<input
+										style={{ cursor: 'pointer' }}
+										type="checkbox"
+										name={`option_${index}`}
+										checked={inputs[index].isTrue}
+										onChange={(e) => {
+											const newInputs = [...inputs];
+											newInputs[index].isTrue = e.target.checked;
+											setInputs(newInputs);
+										}}
+									/>
+								</label>
+							</div>
 						)}
 						<div className={scss.variant_inputs}>
-							<Input
-								size="small"
-								placeholder={`Вариант ${index + 1}`}
-								type="text"
-								value={input.value}
-								onChange={(e) => {
-									const newInputs = [...inputs];
-									newInputs[index].value = e.target.value;
-									setInputs(newInputs);
-								}}
-								width="100%"
+							<Controller
+								name={`Вариант ${index + 1}`}
+								control={control}
+								render={({ field }) => (
+									<Input
+										{...field}
+										size="small"
+										placeholder={`Вариант ${index + 1}`}
+										type="text"
+										value={input.value}
+										onChange={(e) => {
+											const newInputs = [...inputs];
+											newInputs[index].value = e.target.value;
+											setInputs(newInputs);
+										}}
+										width="100%"
+									/>
+								)}
 							/>
 							<div className={scss.notice}>
 								<button
@@ -268,7 +284,7 @@ const CreateTest = () => {
 								onChange={handleTimeChange}
 							/>
 							<p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-								<span>Тип тест</span>
+								<span>Тип теста</span>
 								<Select
 									placeholder="  Тип теста:"
 									data={['Soft', 'Medium', 'Hard']}
@@ -416,7 +432,6 @@ const CreateTest = () => {
 												style={{ cursor: 'pointer' }}
 												type="checkbox"
 												name="options"
-												onClick={() => setChecked(!checked)}
 												checked={copyData.option === 'SINGLE'}
 												onChange={() => {
 													const updatedCopiesData = [...copiesData];
@@ -430,7 +445,7 @@ const CreateTest = () => {
 											<input
 												style={{ cursor: 'pointer' }}
 												type="checkbox"
-												onClick={() => setChecked(!checked)}
+												name="options"
 												checked={copyData.option === 'MULTIPLE'}
 												onChange={() => {
 													const updatedCopiesData = [...copiesData];

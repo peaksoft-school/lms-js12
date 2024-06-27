@@ -122,7 +122,7 @@ const Materials: FC = () => {
 						</div>
 
 						<h1 className={scss.title}>{item}</h1>
-						
+
 						<ScrollArea
 							type="always"
 							scrollbars="xy"

@@ -6,7 +6,7 @@ import { Tooltip } from '@mui/material';
 
 export default function BasicBreadcrumbs() {
 	const { pathname } = useLocation();
-	const { courseId, lessonId, coursesId } = useParams();
+	const { courseId, lessonId, coursesId, getTaskId } = useParams();
 	// const { data } = useGetCardQuery(coursesId);
 	// const { data: lessonOne = [] } = useGetLessonQuery();
 
@@ -23,7 +23,7 @@ export default function BasicBreadcrumbs() {
 	const taskName = localStorage.getItem('taskName');
 	const hwTask = localStorage.getItem('hwTask');
 
-	console.log(courseId, lessonId);
+	console.log(getTaskId);
 
 	return (
 		<div role="presentation">
@@ -197,6 +197,68 @@ export default function BasicBreadcrumbs() {
 								</Link>
 							</Breadcrumbs>
 						)}
+						{pathname ===
+							`/instructor/course/${courseId}/materials/${lessonId}/createTest` && (
+							<Breadcrumbs
+								aria-label="breadcrumb"
+								separator={<IconChevronRight width={20} stroke={2} />}
+							>
+								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
+									<Tooltip title={taskName}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{taskName}
+										</p>
+									</Tooltip>
+								</Link>
+								<Link
+									style={{ fontSize: '14px', color: '#1976d2' }}
+									to={`/instructor/course/${courseId}/materials/${lessonId}/test`}
+								>
+									Тест
+								</Link>
+								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
+									Создать тест
+								</Link>
+							</Breadcrumbs>
+						)}
+						{pathname ===
+							`/instructor/course/${courseId}/materials/${lessonId}/${getTaskId}/editTest` && (
+							<Breadcrumbs
+								aria-label="breadcrumb"
+								separator={<IconChevronRight width={20} stroke={2} />}
+							>
+								<Link style={{ fontSize: '14px', color: '#1976d2' }} to={'#'}>
+									<Tooltip title={taskName}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											{taskName}
+										</p>
+									</Tooltip>
+								</Link>
+								<Link
+									style={{ fontSize: '14px', color: '#1976d2' }}
+									to={`/instructor/course/${courseId}/materials/${lessonId}/test`}
+								>
+									Тест
+								</Link>
+								<Link style={{ fontSize: '14px', color: 'black' }} to={'#'}>
+									Редактировать тест
+								</Link>
+							</Breadcrumbs>
+						)}
 						{pathname.startsWith(
 							`/instructor/course/${courseId}/materials/${lessonId}/lesson`
 						) &&
@@ -306,6 +368,80 @@ export default function BasicBreadcrumbs() {
 									</Link>
 									<Link style={{ fontSize: '14px', color: 'black' }} to={`#`}>
 										Видеоурок
+									</Link>
+								</Breadcrumbs>
+							</>
+						)}
+						{pathname ===
+							`/courses/${coursesId}/materials/${lessonId}/lesson/${getTaskId}/send-task` && (
+							<>
+								<Breadcrumbs
+									aria-label="breadcrumb"
+									separator={<IconChevronRight width={20} stroke={2} />}
+								>
+									<Link
+										style={{ fontSize: '14px', color: '#1976d2' }}
+										to={`/courses/${coursesId}/materials`}
+									>
+										{item}
+									</Link>
+									<Link
+										style={{ fontSize: '14px', color: '#1976d2' }}
+										to={`/courses/${coursesId}/materials`}
+									>
+										Материалы
+									</Link>
+									<Link
+										style={{ fontSize: '14px', color: '#1976d2' }}
+										to={`/courses/${coursesId}/materials/${lessonId}/video`}
+									>
+										{taskName}
+									</Link>
+									<Link
+										style={{ fontSize: '14px', color: 'black' }}
+										to={`/courses/${coursesId}/materials/${lessonId}/lesson`}
+									>
+										Задание
+									</Link>
+									<Link style={{ fontSize: '14px', color: 'black' }} to={`#`}>
+										{taskName}
+									</Link>
+								</Breadcrumbs>
+							</>
+						)}
+						{pathname ===
+							`/courses/${coursesId}/materials/${lessonId}/lesson/${getTaskId}` && (
+							<>
+								<Breadcrumbs
+									aria-label="breadcrumb"
+									separator={<IconChevronRight width={20} stroke={2} />}
+								>
+									<Link
+										style={{ fontSize: '14px', color: '#1976d2' }}
+										to={`/courses/${coursesId}/materials`}
+									>
+										{item}
+									</Link>
+									<Link
+										style={{ fontSize: '14px', color: '#1976d2' }}
+										to={`/courses/${coursesId}/materials`}
+									>
+										Материалы
+									</Link>
+									<Link
+										style={{ fontSize: '14px', color: '#1976d2' }}
+										to={`/courses/${coursesId}/materials/${lessonId}/video`}
+									>
+										{taskName}
+									</Link>
+									<Link
+										style={{ fontSize: '14px', color: 'black' }}
+										to={`/courses/${coursesId}/materials/${lessonId}/lesson`}
+									>
+										Задание
+									</Link>
+									<Link style={{ fontSize: '14px', color: 'black' }} to={`#`}>
+										{taskName}
 									</Link>
 								</Breadcrumbs>
 							</>
@@ -437,6 +573,7 @@ export default function BasicBreadcrumbs() {
 					</Breadcrumbs>
 				</>
 			)}
+
 			{pathname === `/courses/${coursesId}/rating` && (
 				<>
 					<Breadcrumbs

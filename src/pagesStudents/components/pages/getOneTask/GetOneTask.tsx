@@ -110,7 +110,11 @@ const GetOneTask = () => {
 								<h3>Ваше ДЗ рассматривается</h3>
 								<Button
 									variant="contained"
-									onClick={() => {}}
+									onClick={() => {
+										navigate(
+											`/courses/${coursesId}/materials/${lessonId}/lesson/${getTaskId}/edit-task`
+										);
+									}}
 									disabled={false}
 									type="button"
 									style={{ textTransform: 'none', borderRadius: '8px' }}
