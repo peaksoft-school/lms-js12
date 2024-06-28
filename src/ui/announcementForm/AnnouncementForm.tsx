@@ -68,7 +68,6 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 	const [personName, setPersonName] = useState<string[]>([]);
 	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 	const { data: groupData } = useGetAnnouncementGroupsQuery();
-	// const { data } = useGetAnnouncementTableQuery();
 	const [publishedDateErrorVisible, setPublishedDateErrorVisible] =
 		useState<boolean>(false);
 	const [expirationDateErrorVisible, setExpirationDateErrorVisible] =

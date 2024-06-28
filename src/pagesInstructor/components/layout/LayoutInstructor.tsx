@@ -134,7 +134,7 @@ const LayoutInstructor = () => {
 						/>
 						<Route
 							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/notSubmitted"
-							element={<GetTask />}
+							element={<LessonPage />}
 						/>
 						<Route
 							path="/course/:courseId/materials/:lessonId/lesson/:getTaskId/answer/:answerId"

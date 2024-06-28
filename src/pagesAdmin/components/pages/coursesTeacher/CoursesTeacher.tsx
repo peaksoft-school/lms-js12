@@ -88,7 +88,9 @@ const CoursesTeacher = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span>Назначить учителя/ <span>лей</span></span>
+									<span style={{ textTransform: ' none ' }}>
+										Назначить учителя
+									</span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Учителя</h1>
@@ -106,9 +108,9 @@ const CoursesTeacher = () => {
 									<>
 										<NotCreated
 											name="Учителя"
-											text="Вы еще не назначили учителя/лей"
+											text="Вы еще не назначили учителя !"
 											buttonClick={handleOpenAppoint}
-											buttontText="Назначить учителя/лей"
+											buttontText="Назначить учителя"
 										/>
 									</>
 								) : (

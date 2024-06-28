@@ -43,6 +43,7 @@ const Announcements = () => {
 
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
+		console.log('working');
 	};
 	const handleCloseAnnouncement = () => {
 		setOpenAnnouncement(false);
@@ -121,7 +122,9 @@ const Announcements = () => {
 										<div className={scss.icon}>
 											<IconPlus stroke={2} />
 										</div>
-										<span>Добавить обьявление</span>
+										<span style={{ textTransform: ' none ' }}>
+											Добавить обьявление
+										</span>
 									</Button>
 								</div>
 								<div>
@@ -160,7 +163,7 @@ const Announcements = () => {
 														<span className={scss.announce_groups}>
 															Для кого:
 														</span>
-														{item.groupNames}
+														{item.groupNames.join('  ')}
 													</p>
 													<p className={scss.announcement_owner}>
 														<span className={scss.announc_user}>

@@ -7,11 +7,19 @@ import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import scss from './Style.module.scss';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel.tsx';
 import {
-	useGetTeacherQuery,
+	useGetAllAllCoursesWithoutPaginationQuery,
+	useGetInsructorsForEditQuery,
 	usePatchTeacherMutation
 } from '@/src/redux/api/admin/teacher';
 import Input from '../customInput/Input';
 import { useEffect, useState } from 'react';
+import {
+	Checkbox,
+	ListItemText,
+	MenuItem,
+	OutlinedInput,
+	Select
+} from '@mui/material';
 
 interface IFormInputs {
 	firstName: string;
@@ -21,6 +29,7 @@ interface IFormInputs {
 	login: string;
 	specialization: string;
 	group: string;
+	courseIds: string[];
 }
 
 const style = {
@@ -41,6 +50,16 @@ interface ModalProps {
 	closeModalEdit: (openModalEdit: boolean) => void;
 	deleteById: number | null;
 }
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+			width: 250
+		}
+	}
+};
 
 const ModalEditTeacher: React.FC<ModalProps> = ({
 	openModalEdit,
@@ -49,25 +68,38 @@ const ModalEditTeacher: React.FC<ModalProps> = ({
 }) => {
 	const { control, handleSubmit, reset, watch } = useForm<IFormInputs>();
 	const [patchTeacher] = usePatchTeacherMutation();
-	const { data } = useGetTeacherQuery({ page: '1', size: '12' });
-	const find = data?.instructorResponses.find((el) => el.id === deleteById);
-	const [personName, setPersonName] = useState<number[]>([]);
+	const { data } = useGetInsructorsForEditQuery(deleteById);
+	const [selectedTeachers, setSelectedTeachers] = useState<string[]>([]);
+	const [selectedIds, setSelectedIds] = useState<string[]>([]);
+	const { data: courses } = useGetAllAllCoursesWithoutPaginationQuery();
 	const [originalData, setOriginalData] = useState<IFormInputs | null>(null);
+	const handleChange = (event: any) => {
+		const { value } = event.target;
+		setSelectedTeachers(typeof value === 'string' ? value.split(', ') : value);
+	};
+	const handleSelect = (teacherId: number | null, instructorName: string) => {
+		setSelectedTeachers((prev) =>
+			prev.includes(instructorName) ? prev : [...prev, instructorName]
+		);
+		setSelectedIds((prev) =>
+			prev.includes(String(teacherId)) ? prev : [...prev, String(teacherId)]
+		);
+	};
 
 	const onSubmit = async (data: IFormInputs) => {
 		const updateTeacher = {
 			...data,
-			courseIds: personName
+			courseIds: selectedIds
 		};
 		const link = {
 			linkForPassword: 'http://localhost:5173/auth/newPassword'
 		};
 		await patchTeacher({ updateTeacher, deleteById, link });
-		setPersonName([]);
+		setSelectedIds([]);
 		closeModalEdit(false);
 	};
 
-	const fullName = find?.fullName || '';
+	const fullName = data?.fullName || '';
 	const nameParts = fullName.trim().split(' ');
 
 	const firstName = nameParts[0] || '';
@@ -77,15 +109,16 @@ const ModalEditTeacher: React.FC<ModalProps> = ({
 		const initialData: IFormInputs = {
 			firstName: firstName,
 			lastName: lastName,
-			email: find?.email || '',
-			phoneNumber: find?.phoneNumber || '',
-			specialization: find?.specialization || '',
+			email: data?.email || '',
+			phoneNumber: data?.phoneNumber || '',
+			specialization: data?.specialization || '',
+			courseIds: data?.courseNames || [],
 			login: '',
 			group: ''
 		};
 		reset(initialData);
 		setOriginalData(initialData);
-	}, [find]);
+	}, [data]);
 
 	const watchedValues = watch();
 
@@ -113,7 +146,7 @@ const ModalEditTeacher: React.FC<ModalProps> = ({
 						component="h2"
 					>
 						<div className={scss.comText}>
-							Редактировать учителя по имени {find?.fullName}
+							Редактировать учителя по имени {data?.fullName}
 						</div>
 					</Typography>
 
@@ -184,6 +217,36 @@ const ModalEditTeacher: React.FC<ModalProps> = ({
 									/>
 								)}
 							/>
+							<Select
+								style={{ borderRadius: '10px' }}
+								labelId="demo-multiple-checkbox-label"
+								id="demo-multiple-checkbox"
+								multiple
+								value={selectedTeachers}
+								onChange={handleChange}
+								input={<OutlinedInput label="Курсы" />}
+								renderValue={(selected) => selected.join(', ')}
+								MenuProps={MenuProps}
+							>
+								{courses?.map((teacher) => (
+									<MenuItem
+										key={teacher.id}
+										value={`${teacher.courseName}`}
+										onClick={() => handleSelect(teacher.id, teacher.courseName)}
+									>
+										<Checkbox
+											checked={
+												data?.courseNames.find(
+													(item) => item === teacher.courseName
+												) ||
+												selectedTeachers.includes(`${teacher.courseName}`) ||
+												selectedIds.includes(String(teacher.id))
+											}
+										/>
+										<ListItemText primary={teacher.courseName} />
+									</MenuItem>
+								))}
+							</Select>
 							<div
 								style={{
 									width: '100%',

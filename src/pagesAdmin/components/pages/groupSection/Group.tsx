@@ -84,7 +84,9 @@ const Groups: FC = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span>Создать группу</span>
+									<span style={{ textTransform: ' none ' }}>
+										Создать группу
+									</span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Группы</h1>

@@ -68,7 +68,7 @@ const TestInstructor = () => {
 					<div className={scss.icon}>
 						<IconPlus stroke={2} />
 					</div>
-					<span>Добавить тест</span>
+					<span style={{ textTransform: 'none' }}>Добавить тест</span>
 				</Button>
 			</div>
 

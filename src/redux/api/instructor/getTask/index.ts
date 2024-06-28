@@ -26,15 +26,10 @@ export const api = index.injectEndpoints({
 			}),
 			providesTags: ['addTask']
 		}),
-		getNotSubmitedStudent: builder.query<
-			INSTRUCTOR.GetStudentResultResponse,
-			INSTRUCTOR.GetStudentResultRequest
-		>({
-			query: ({ getTask, page }) => ({
+		getNotSubmitedStudent: builder.query({
+			query: (getTask) => ({
 				url: `/api/resultTask/notAnswered/${getTask}`,
-				params: {
-					answerStatus: page.answerStatus
-				},
+
 				method: 'GET'
 			}),
 			providesTags: ['addTask']

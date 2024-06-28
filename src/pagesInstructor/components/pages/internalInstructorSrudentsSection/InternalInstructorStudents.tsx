@@ -63,7 +63,9 @@ const InternalInstructorStudents = () => {
 								<IconPlus stroke={2} />
 							</div>
 
-							<span>Добавить группу на курса</span>
+							<span style={{ textTransform: 'none ' }}>
+								Добавить группу на курс
+							</span>
 						</Button>
 					</div>
 					<h1 className={scss.title}>Студенты</h1>

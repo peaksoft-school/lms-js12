@@ -71,7 +71,7 @@ const InternalCourses = () => {
 									<>
 										<NotCreatedWithoutButton
 											name="Студенты"
-											text="Вы пока не добавили студентов на курс"
+											text="Вы пока не добавили студентов на курс !"
 										/>
 									</>
 								) : (
