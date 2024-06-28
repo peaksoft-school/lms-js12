@@ -1,7 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import scss from './Materials.module.scss';
 import deleteIcon from '@/src/assets/svgs/delete-red.svg';
-import empty from '@/src/assets/notCreated0.png';
 import {
 	Button,
 	Menu,
@@ -108,21 +107,25 @@ const Materials: FC = () => {
 			<div className={scss.container}>
 				<DragDropContext onDragEnd={handleDragEnd}>
 					<div style={{ minHeight: '76vh' }}>
-						<div className={scss.button_title_elements}>
-							<Button
-								size="large"
-								className={scss.button}
-								onClick={() => setOpenModal(true)}
-								variant="contained"
-							>
-								<div className={scss.icon}>
-									<IconPlus stroke={2} />
+						{data?.lessonResponses.length !== 0 && (
+							<>
+								<div className={scss.button_title_elements}>
+									<Button
+										size="large"
+										className={scss.button}
+										onClick={() => setOpenModal(true)}
+										variant="contained"
+									>
+										<div className={scss.icon}>
+											<IconPlus stroke={2} />
+										</div>
+										<span style={{ textTransform: 'none' }}>Создать урок</span>
+									</Button>
 								</div>
-								<span style={{ textTransform: 'none' }}>Создать урок</span>
-							</Button>
-						</div>
 
-						<h1 className={scss.title}>{item}</h1>
+								<h1 className={scss.title}>{item}</h1>
+							</>
+						)}
 
 						{data?.lessonResponses.length === 0 ? (
 							<>
