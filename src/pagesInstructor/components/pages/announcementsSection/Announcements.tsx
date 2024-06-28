@@ -122,7 +122,7 @@ const Announcements = () => {
 					<div>
 						<div className={scss.announce_box}>
 							<div className={scss.announce_card}>
-								{data?.announcements.map((item) => (
+								{data?.objects.map((item) => (
 									<li key={item.id} className={scss.announce_list}>
 										<div>
 											{item?.isPublished ? (
@@ -272,9 +272,7 @@ const Announcements = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil(
-									(data?.announcements.length ?? 0) / rowsPerPage
-								)}
+								count={Math.ceil((data?.objects.length ?? 0) / rowsPerPage)}
 								page={currentPage}
 								onChange={handlePageChangeC}
 								shape="rounded"

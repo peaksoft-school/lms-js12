@@ -2,13 +2,13 @@ import scss from './Lessons.module.scss';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
-import { useGetStudentMaterialsQuery } from '@/src/redux/api/students/materials';
+import { useGetOneTaskNameQuery } from '@/src/redux/api/students/materials';
 import { Tooltip } from '@mui/material';
 
 const Lesson = () => {
 	const { coursesId, lessonId } = useParams();
-	const course = Number(coursesId);
-	const { data } = useGetStudentMaterialsQuery(course);
+	const lesson = Number(lessonId);
+	const { data } = useGetOneTaskNameQuery(lesson);
 	const navigate = useNavigate();
 
 	return (
@@ -19,7 +19,7 @@ const Lesson = () => {
 					<Box>
 						<div style={{ minHeight: '70vh' }}>
 							<div className={scss.card}>
-								{data?.lessonResponses.map((item) => (
+								{data?.taskResponse.map((item) => (
 									<div
 										className={scss.cards}
 										onClick={() => {
@@ -30,7 +30,7 @@ const Lesson = () => {
 												);
 											}, 1000);
 										}}
-										key={item._id}
+										key={item.id}
 									>
 										<Tooltip title={item.title}>
 											<p

@@ -63,7 +63,7 @@ const InternalStudents = () => {
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.students.length !== 0 ? (
+					{data?.objects.length !== 0 ? (
 						<>
 							<h1 className={scss.title}>{item}</h1>
 						</>
@@ -76,7 +76,7 @@ const InternalStudents = () => {
 					>
 						<Box>
 							<div>
-								{data?.students.length === 0 ? (
+								{data?.objects.length === 0 ? (
 									<>
 										<NotCreatedWithoutButton
 											name={itemText}
@@ -99,8 +99,8 @@ const InternalStudents = () => {
 														</tr>
 													</thead>
 													<tbody>
-														{data?.students &&
-															data?.students.map((item, index) => (
+														{data?.objects &&
+															data?.objects.map((item, index) => (
 																<tr
 																	key={item.id}
 																	className={
@@ -132,7 +132,7 @@ const InternalStudents = () => {
 						</Box>
 					</ScrollArea>
 				</div>
-				{data?.students.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>

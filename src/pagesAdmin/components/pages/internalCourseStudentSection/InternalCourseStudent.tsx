@@ -6,7 +6,7 @@ import scss from './InternalCourseStudent.module.scss';
 import LockOpenStudent from '@/src/assets/svgs/lock-open.svg';
 import LockBlockStudent from '@/src/assets/svgs/lock.svg';
 import { Box, ScrollArea } from '@mantine/core';
-import { useGetAllStudentsCourseQuery } from '@/src/redux/api/admin/courses';
+import { useGetAllInstructorCourseQuery } from '@/src/redux/api/admin/courses';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import IsBlockCourses from '@/src/ui/customModal/IsBlockCourses';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
@@ -41,7 +41,7 @@ const InternalCourses = () => {
 		role: 'STUDENT'
 	};
 
-	const { data, isLoading } = useGetAllStudentsCourseQuery({
+	const { data, isLoading } = useGetAllInstructorCourseQuery({
 		course,
 		pages
 	});
@@ -54,7 +54,7 @@ const InternalCourses = () => {
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.getAllStudentsOfCourses.length !== 0 ? (
+					{data?.objects?.length !== 0 ? (
 						<>
 							<h1 className={scss.title}>Студенты</h1>
 						</>
@@ -67,7 +67,7 @@ const InternalCourses = () => {
 					>
 						<Box>
 							<div>
-								{data?.getAllStudentsOfCourses.length === 0 ? (
+								{data?.objects.length === 0 ? (
 									<>
 										<NotCreatedWithoutButton
 											name="Студенты"
@@ -98,79 +98,77 @@ const InternalCourses = () => {
 														</tr>
 													</thead>
 													<tbody>
-														{data!.getAllStudentsOfCourses &&
-															data!.getAllStudentsOfCourses.map(
-																(item, index: number) => (
-																	<tr
-																		key={item.id}
+														{data?.objects &&
+															data?.objects?.map((item, index: number) => (
+																<tr
+																	key={item.id}
+																	className={
+																		index % 2 === 1
+																			? scss.table_alternate_row
+																			: '' || scss.internal
+																	}
+																>
+																	<td
 																		className={
-																			index % 2 === 1
-																				? scss.table_alternate_row
-																				: '' || scss.internal
+																			item.isBlock ? scss.changeClass : ''
 																		}
 																	>
-																		<td
-																			className={
-																				item.isBlock ? scss.changeClass : ''
-																			}
-																		>
-																			{index + 1 + (openPart - 1) * rowsPerPage}
-																		</td>
+																		{index + 1 + (openPart - 1) * rowsPerPage}
+																	</td>
 
-																		<td
-																			className={
-																				item.isBlock ? scss.changeClass : ''
-																			}
+																	<td
+																		className={
+																			item.isBlock ? scss.changeClass : ''
+																		}
+																	>
+																		{item.fullName}
+																	</td>
+																	<td
+																		className={
+																			item.isBlock ? scss.changeClass : ''
+																		}
+																	>
+																		{item.courseName}
+																	</td>
+																	<td
+																		className={
+																			item.isBlock ? scss.changeClass : ''
+																		}
+																	>
+																		{item.specializationOrStudyFormat}
+																	</td>
+																	<td
+																		className={
+																			item.isBlock ? scss.changeClass : ''
+																		}
+																	>
+																		{item.phoneNumber}
+																	</td>
+																	<td
+																		className={
+																			item.isBlock ? scss.changeClass : ''
+																		}
+																	>
+																		{item.email}
+																	</td>
+																	<td>
+																		<button
+																			className={scss.button}
+																			onClick={() => {
+																				setOpenBlock(true);
+																				setSaveIdElement(item.id);
+																				setSaveBlock(item.isBlock);
+																			}}
 																		>
-																			{item.fullName}
-																		</td>
-																		<td
-																			className={
-																				item.isBlock ? scss.changeClass : ''
-																			}
-																		>
-																			{item.courseName}
-																		</td>
-																		<td
-																			className={
-																				item.isBlock ? scss.changeClass : ''
-																			}
-																		>
-																			{item.specializationOrStudyFormat}
-																		</td>
-																		<td
-																			className={
-																				item.isBlock ? scss.changeClass : ''
-																			}
-																		>
-																			{item.phoneNumber}
-																		</td>
-																		<td
-																			className={
-																				item.isBlock ? scss.changeClass : ''
-																			}
-																		>
-																			{item.email}
-																		</td>
-																		<td>
-																			<button
-																				className={scss.button}
-																				onClick={() => {
-																					setOpenBlock(true);
-																					setSaveIdElement(item.id);
-																					setSaveBlock(item.isBlock);
-																				}}
-																			>
-																				{!item.isBlock ? (
-																					<img src={LockOpenStudent} alt="#" />
-																				) : (
-																					<img src={LockBlockStudent} alt="#" />
-																				)}
-																			</button>
-																		</td>
-																	</tr>
-																)
-															)}
+																			{!item.isBlock ? (
+																				<img src={LockOpenStudent} alt="#" />
+																			) : (
+																				<img src={LockBlockStudent} alt="#" />
+																			)}
+																		</button>
+																	</td>
+																</tr>
+															))}
 													</tbody>
 												</table>
 											</div>
@@ -181,7 +179,7 @@ const InternalCourses = () => {
 						</Box>
 					</ScrollArea>
 				</div>
-				{data?.getAllStudentsOfCourses.length !== 0 ? (
+				{data?.objects?.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>
@@ -205,10 +203,8 @@ const InternalCourses = () => {
 									<Pagination
 										page={openPart}
 										count={
-											data?.getAllStudentsOfCourses.length
-												? Math.ceil(
-														data?.getAllStudentsOfCourses.length / openPart
-													)
+											data?.objects.length
+												? Math.ceil(data?.objects?.length / openPart)
 												: 1
 										}
 										variant="outlined"

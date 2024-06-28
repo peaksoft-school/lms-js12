@@ -7,7 +7,7 @@ namespace STUDENT_LESSON {
 		createdAt: string;
 	};
 	type MaterialsGetResponse = {
-		lessonResponses: Lesson[];
+		objects: Lesson[];
 	};
 	type MaterialsGetRequest = number;
 

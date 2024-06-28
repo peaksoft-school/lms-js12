@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace NOTIFICATION {
-	type NotificationGetRequest = {
-		isView: boolean;
-	};
+	type NotificationGetRequest = void;
 	type NotificationGetResponse = {
 		notificationId: number;
 		courseId: number;

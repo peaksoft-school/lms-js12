@@ -87,7 +87,7 @@ const ModalMaterialEdit: FC<ModalProps> = ({
 		}
 	};
 
-	const find = data?.lessonResponses.find((lesson) => lesson.id === deleteById);
+	const find = data?.objects.find((lesson) => lesson.id === deleteById);
 
 	useEffect(() => {
 		if (find) {

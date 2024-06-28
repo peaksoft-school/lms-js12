@@ -51,17 +51,6 @@ export const api = index.injectEndpoints({
 			}),
 			providesTags: ['courses']
 		}),
-		getAllStudentsCourse: builder.query<
-			ADMINCOURSES.GetInstructorCourseResponse,
-			ADMINCOURSES.GetInstructorCourseRequest
-		>({
-			query: ({ course, pages }) => ({
-				url: `/api/course/findAllInstructorsAndStudentsOfCourse/${course}?${pages.page}&${pages.size}&role=${pages.role}`,
-				method: 'GET'
-			}),
-			providesTags: ['courses']
-		}),
-
 		appointAdminCourse: builder.mutation({
 			query: ({ courseId, selectId }) => ({
 				url: `/api/course/assignInInstructorToCourse/${courseId}/{instructorId}?instructorIds=${selectId}`,
@@ -107,7 +96,6 @@ export const {
 	useUpdateAdminCourseMutation,
 	useDeleteCourseMutation,
 	useGetAllInstructorCourseQuery,
-	useGetAllStudentsCourseQuery,
 	useAppointAdminCourseMutation,
 	useCreateStudentBlockCoursesMutation,
 	useGetInstructorCourseQuery,

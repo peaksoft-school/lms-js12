@@ -38,18 +38,28 @@ const Groups: FC = () => {
 		setAnchorEl(null);
 	};
 
+	const handlePageChangeC = (
+		_e: React.ChangeEvent<unknown>,
+		page: number
+	): void => {
+		setCurrentPage(page);
+		searchParams.set('page', page.toString());
+		navigate(`/admin/group/page/?${searchParams.toString()}`);
+	};
 	const handleInputValue = (value: number) => {
 		const valueString = value.toString();
 		searchParams.set('page', valueString === '0' ? '1' : valueString);
 		setSearchParams(searchParams);
 		navigate(`/admin/group/page/?${searchParams.toString()}`);
 	};
+
 	const handleInputValuePaginationSize = (value: number) => {
 		const valueSize = value.toString();
 		searchParams.set('size', valueSize);
 		setSearchParams(searchParams);
 		navigate(`/admin/group/page/?${searchParams.toString()}`);
 	};
+
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
 	const { data } = useGetGroupQuery({
@@ -61,7 +71,7 @@ const Groups: FC = () => {
 		<div className={scss.group}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.groupResponses.length !== 0 ? (
+					{data?.objects.length !== 0 ? (
 						<>
 							<div className={scss.course_button_modal}>
 								<Button
@@ -83,7 +93,7 @@ const Groups: FC = () => {
 						</>
 					) : null}
 					<div>
-						{data?.groupResponses.length === 0 ? (
+						{data?.objects.length === 0 ? (
 							<>
 								<NotCreated
 									text="Вы пока не создали группы!"
@@ -97,7 +107,7 @@ const Groups: FC = () => {
 								<div className={scss.cards}>
 									{
 										<div className={scss.card}>
-											{data?.groupResponses.map((item) => (
+											{data?.objects.map((item) => (
 												<div
 													key={item.id}
 													className={scss.zero_block_container}
@@ -229,7 +239,7 @@ const Groups: FC = () => {
 						)}
 					</div>
 				</div>
-				{data?.groupResponses.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>
@@ -250,19 +260,15 @@ const Groups: FC = () => {
 							</div>
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
-									{openPage > 0 &&
-										data?.groupResponses &&
-										data.groupResponses.length > 0 && (
-											<Pagination
-												page={currentPage}
-												count={Math.ceil(
-													data?.groupResponses.length / openPage
-												)}
-												variant="outlined"
-												shape="rounded"
-												// onChange={() => handleInputValue(currentPage)}
-											/>
-										)}
+									{openPage > 0 && data?.objects && data.objects.length > 0 && (
+										<Pagination
+											page={currentPage}
+											count={Math.ceil(data?.objects.length / openPage)}
+											variant="outlined"
+											shape="rounded"
+											onChange={handlePageChangeC}
+										/>
+									)}
 								</Stack>
 							</div>
 

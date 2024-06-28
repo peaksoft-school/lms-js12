@@ -127,7 +127,7 @@ const Materials: FC = () => {
 							</>
 						)}
 
-						{data?.lessonResponses.length === 0 ? (
+						{data?.objects?.length === 0 ? (
 							<>
 								<NotCreated
 									text="Вы еще не создали урок"
@@ -161,8 +161,8 @@ const Materials: FC = () => {
 																ref={droppableProvider.innerRef}
 																{...droppableProvider.droppableProps}
 															>
-																{data?.lessonResponses &&
-																	data?.lessonResponses.map((todo, index) => (
+																{data?.objects &&
+																	data?.objects.map((todo, index) => (
 																		<Draggable
 																			index={index}
 																			key={todo.id}

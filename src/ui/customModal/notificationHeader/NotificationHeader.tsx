@@ -2,7 +2,11 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { FC, useState } from 'react';
 import scss from './NotificationHeader.module.scss';
-import { useGetNotificationQuery } from '@/src/redux/api/instructor/notification';
+import {
+	useGetNotificationQuery,
+	useGetNotificationTrueQuery,
+	useGetViewNotificationQuery
+} from '@/src/redux/api/instructor/notification';
 import { useNavigate } from 'react-router-dom';
 import notifications from '@/src/assets/icons/Group 1772.png';
 
@@ -29,10 +33,13 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 	open,
 	handleClose
 }) => {
-	const [isView, setIsView] = useState<boolean>(true);
 	const navigate = useNavigate();
 
-	const { data } = useGetNotificationQuery(isView);
+	const [isVewe, setIsVewe] = useState<boolean | number>(false);
+	const { data } = useGetNotificationQuery();
+	const { data: trueData } = useGetNotificationTrueQuery();
+
+	const { data: notification } = useGetViewNotificationQuery(isVewe);
 
 	return (
 		<div>
@@ -49,7 +56,11 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 
 					{data?.length === 0 ? (
 						<div className={scss.notifications_div}>
-							<img className={scss.img_notifications} src={notifications} alt="" />
+							<img
+								className={scss.img_notifications}
+								src={notifications}
+								alt=""
+							/>
 						</div>
 					) : (
 						<>
@@ -58,24 +69,23 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 
 								<div className={scss.messages_content}>
 									{data?.map((item) => (
-										<div
-											className={scss.results}
-											onClick={() => {
-												navigate(
-													`/instructor/course/${item.courseId}/materials/${item.lessonId}/lesson/${item.taskId}/answer/${item.answerTaskId}`
-												);
+										<div className={scss.results}>
+											{item.isView === false && (
+												<div
+													onClick={() => {
+														setIsVewe(item?.notificationId);
 
-												setTimeout(() => {
-													setIsView(false);
-												}, 100);
-											}}
-										>
-											{item.isView === true && (
-												<>
+														setTimeout(() => {
+															navigate(
+																`/instructor/course/${item.courseId}/materials/${item.lessonId}/lesson/${item.taskId}/answer/${item.answerTaskId}`
+															);
+														}, 100);
+													}}
+												>
 													<h1>{item.notificationTitle}</h1>
 													<p>{item.notificationDescription}</p>
 													<p>{item.notificationSendDate}</p>
-												</>
+												</div>
 											)}
 										</div>
 									))}
@@ -85,14 +95,14 @@ const NotificationHeader: FC<NotificationHeaderProps> = ({
 								<h2>Просмотренные</h2>
 
 								<div className={scss.messages_content}>
-									{data?.map((item) => (
+									{trueData?.map((item) => (
 										<div className={scss.results2}>
-											{item.isView === false && (
-												<>
+											{item.isView === true && (
+												<div>
 													<h1>{item.notificationTitle}</h1>
 													<p>{item.notificationDescription}</p>
 													<p>{item.notificationSendDate}</p>
-												</>
+												</div>
 											)}
 										</div>
 									))}

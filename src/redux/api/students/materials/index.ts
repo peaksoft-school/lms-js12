@@ -21,8 +21,22 @@ const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['link']
+		}),
+		getOneTaskName: builder.query<
+			MATERIALS.GetOneTaskResponse,
+			MATERIALS.GetOneTaskRequest
+		>({
+			query: (lesson) => ({
+				url: `/api/tasks/taskOfLesson/${lesson}`,
+				method: 'GET'
+			}),
+			providesTags: ['lesson']
 		})
 	})
 });
 
-export const { useGetStudentMaterialsQuery, useGetLinkStudentsQuery } = api;
+export const {
+	useGetStudentMaterialsQuery,
+	useGetLinkStudentsQuery,
+	useGetOneTaskNameQuery
+} = api;

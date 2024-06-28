@@ -62,13 +62,13 @@ const LessonsList = () => {
 				<ScrollArea type="always" scrollbars="xy" offsetScrollbars>
 					<Box>
 						<div style={{ minHeight: '70vh' }}>
-							{data?.lessonResponses.length === 0 ? (
+							{data?.objects.length === 0 ? (
 								<div className={scss.empty_page}>
 									<img src={empty} alt="Empty state" />
 								</div>
 							) : (
 								<div className={scss.card}>
-									{data?.lessonResponses.map((item) => (
+									{data?.objects.map((item) => (
 										<div
 											className={scss.cards}
 											onClick={() => {

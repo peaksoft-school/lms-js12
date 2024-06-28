@@ -7,6 +7,6 @@ namespace TRASH {
 		date: number;
 	}
 
-	type GetCardsResponse = { trashResponses: TrashType[] };
+	type GetCardsResponse = { objects: TrashType[] };
 	type GetCardsRequest = string | void;
 }

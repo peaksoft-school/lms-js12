@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace InstructorCourses {
 	type CoursesResponse = {
-		courses: {
+		objects: {
 			id: number;
 			title: string;
 			dateOfEnd: string;

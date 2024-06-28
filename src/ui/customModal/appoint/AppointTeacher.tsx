@@ -178,7 +178,7 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 								>
 									<Checkbox
 										checked={
-											teacherData?.getAllInstructorsOfCourses.find(
+											teacherData?.objects.find(
 												(item) => item.fullName === teacher.instructorName
 											) ||
 											selectedTeachers.includes(teacher.instructorName) ||
@@ -192,7 +192,7 @@ const AppointTeacher: FC<AppointProps> = ({ open, handleClose }) => {
 					</FormControl>
 					<Box mt={2}>
 						<div className={scss.teachers}>
-							{teacherData?.getAllInstructorsOfCourses.map((item) => (
+							{teacherData?.objects.map((item) => (
 								<div key={item.id} className={scss.teacher}>
 									<h4 className={scss.selected}>{item.fullName}</h4>
 									<button

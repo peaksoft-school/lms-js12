@@ -14,7 +14,7 @@ namespace GROUPS {
 		size?: string;
 	};
 	type GroupsResponse = {
-		groupResponses: GroupResponses[];
+		objects: GroupResponses[];
 		page: string;
 		size: string;
 	};
@@ -69,7 +69,7 @@ namespace GROUPS {
 	};
 
 	type GetStudentsGroupResponse = {
-		students: Students[];
+		objects: Students[];
 	};
 	type GetStudentsGroupRequest = number;
 }

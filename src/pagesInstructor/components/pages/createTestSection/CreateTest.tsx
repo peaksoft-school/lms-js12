@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconCopy } from '@tabler/icons-react';
 import { IconDelete } from '@/src/assets/icons';
 import { Select } from '@mantine/core';
 import { Controller, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePostTestMutation } from '@/src/redux/api/instructor/test';
 import scss from './CreateTest.module.scss';
 import Input from '@/src/ui/customInput/Input';
@@ -58,6 +58,7 @@ const CreateTest = () => {
 	const { control, handleSubmit, reset } = useForm();
 	const [option, setOption] = useState('SINGLE');
 	const [time, setTime] = useState('00:00');
+	const navigate = useNavigate();
 	const [inputs, setInputs] = useState<
 		{ id: number; value: string; visible: boolean; isTrue: boolean }[]
 	>([{ id: 1, value: '', visible: true, isTrue: false }]);
@@ -65,7 +66,7 @@ const CreateTest = () => {
 	const [titleValue, setTitleValue] = useState('');
 	const [pointValue, setPointValue] = useState('');
 	const [postTest] = usePostTestMutation();
-	const { lessonId } = useParams();
+	const { courseId, lessonId } = useParams();
 	const [copiesData, setCopiesData] = useState([
 		{
 			inputValue3: '',
@@ -164,13 +165,9 @@ const CreateTest = () => {
 			questionRequests: questionRequests
 		};
 
-		try {
-			const response = await postTest({ newTest, lessonId });
-			console.log(response, 'response');
-			reset();
-		} catch (error) {
-			console.error(error);
-		}
+		const response = await postTest({ newTest, lessonId });
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/test`);
+		reset();
 	};
 
 	const renderInputFields = (inputs: Question[], setInputs, option: string) =>

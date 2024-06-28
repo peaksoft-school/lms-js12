@@ -49,7 +49,7 @@ const Announcements = () => {
 		setOpenAnnouncement(false);
 	};
 
-	const find = data?.announcements?.find((item) => item.id === deleteById);
+	const find = data?.objects?.find((item) => item.id === deleteById);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -110,7 +110,7 @@ const Announcements = () => {
 			<div className={scss.main_container}>
 				<div>
 					<div className={scss.add_button_name}>
-						{data?.announcements.length !== 0 ? (
+						{data?.objects.length !== 0 ? (
 							<>
 								<div className={scss.course_button_modal}>
 									<Button
@@ -134,7 +134,7 @@ const Announcements = () => {
 						) : null}
 					</div>
 					<div>
-						{data?.announcements.length === 0 ? (
+						{data?.objects.length === 0 ? (
 							<>
 								<NotCreated
 									text="Вы пока не добавили объявление!"
@@ -147,7 +147,7 @@ const Announcements = () => {
 							<>
 								<div className={scss.announce_box}>
 									<div className={scss.announce_card}>
-										{data?.announcements.map((item) => (
+										{data?.objects.map((item) => (
 											<li key={item.id} className={scss.announce_list}>
 												<div>
 													{item?.isPublished ? (
@@ -295,7 +295,7 @@ const Announcements = () => {
 						)}
 					</div>
 				</div>
-				{data?.announcements.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>
@@ -316,9 +316,7 @@ const Announcements = () => {
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
 									<Pagination
-										count={Math.ceil(
-											(data?.announcements.length ?? 0) / rowsPerPage
-										)}
+										count={Math.ceil((data?.objects.length ?? 0) / rowsPerPage)}
 										page={currentPage}
 										onChange={handlePageChangeC}
 										shape="rounded"

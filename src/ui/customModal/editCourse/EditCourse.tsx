@@ -38,7 +38,7 @@ interface EditModalProps {
 
 const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetAdminCourseQuery({ page: '1', size: '8' });
-	const find = data?.courses.find((el) => el.id === saveId);
+	const find = data?.objects.find((el) => el.id === saveId);
 
 	const [value, setValue] = useState<string>('');
 	const [initialValue, setInitialValue] = useState<string>('');
