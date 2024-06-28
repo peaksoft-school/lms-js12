@@ -3,6 +3,8 @@
 	top: 0;
 	left: 0;
 	height: 100vh !important;
+	min-height: 100vh !important;
+	max-width: 100vh !important;
 	width: 80px;
 	background: #fff;
 	padding: 0.4rem 0.8rem;
@@ -48,6 +50,7 @@
 	ul {
 		.peaksoft_img {
 			height: 80px;
+			cursor: pointer;
 
 			.peaksoft1_url {
 				padding-inline: 12px;

@@ -43,7 +43,7 @@ const style = {
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	minHeight: 230,
-	backgroundColor: '#ffffff',
+	backgroundColor: '#fff',
 	bgColor: 'background.paper',
 	boxShadow: 24,
 	p: 4,
@@ -102,89 +102,96 @@ const SearchModal: FC<ModalProps> = ({ openModalEdit, handleClose }) => {
 						variant="h6"
 						component="h2"
 					>
-						<div className={scss.comText}>Параметры сортировки</div>
+						<h1 className={scss.com_text}>Параметры сортировки</h1>
 					</Typography>
 
 					<Box className={scss.input_form}>
 						<div className={scss.input}>
-							<FormControl sx={{ m: 1, width: 300 }} className={scss.input}>
-								<InputLabel
-									id="demo-multiple-checkbox-label"
-									style={{
-										paddingLeft: '20px',
-										textAlign: 'center'
-									}}
-								>
-									Группы
-								</InputLabel>
-								<Select
-									labelId="demo-multiple-checkbox-label"
-									id="demo-multiple-checkbox"
-									value={selectedId || ''}
-									onChange={handleChange}
-									input={<OutlinedInput label="Группы" />}
-									renderValue={(selected) => {
-										const groupName = data?.find(
-											(g) => g.id === selected
-										)?.groupName;
-										return groupName;
-									}}
-									MenuProps={MenuProps}
-									style={{
-										maxWidth: '540px',
-										width: '100%',
-										height: '55px',
-										borderRadius: '12px',
-										position: 'relative',
-										top: '0'
-									}}
-								>
-									{data?.map((group) => (
-										<MenuItem
-											key={group.id}
-											value={group.id}
-											onClick={() => setSelectedId(group.id.toString())}
-										>
-											<ListItemText primary={group.groupName} />
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
 							<div
 								style={{
-									paddingLeft: '10px',
-									width: '100%',
-									maxWidth: '560px'
+									display: 'flex',
+									flexDirection: 'column',
+									gap: '10px'
 								}}
 							>
-								<FormControl fullWidth>
-									<InputLabel id="study-format-label">
-										Формат обучения
+								<FormControl style={{ width: '100%' }}>
+									<InputLabel
+										style={{ background: '#fff' }}
+										id="demo-multiple-checkbox-label"
+									>
+										Группы
 									</InputLabel>
-									<Controller
-										name="studyFormat"
-										control={control}
-										defaultValue=""
-										rules={{
-											required: 'Формат обучения обязателен для заполнения'
+									<Select
+										labelId="demo-multiple-checkbox-label"
+										id="demo-multiple-checkbox"
+										value={selectedId || ''}
+										onChange={handleChange}
+										input={<OutlinedInput label="Группы" />}
+										renderValue={(selected) => {
+											const groupName = data?.find(
+												(g) => g.id === selected
+											)?.groupName;
+											return groupName;
 										}}
-										render={({ field }) => (
-											<Select
-												{...field}
-												style={{ borderRadius: '12px' }}
-												labelId="study-format-label"
-												id="study-format-select"
-												input={<OutlinedInput label="studyFormat" />}
-												MenuProps={MenuProps}
-												value={formatName}
-												onChange={handleFormatChange}
+										MenuProps={MenuProps}
+										style={{
+											maxWidth: '540px',
+											width: '100%',
+											height: '55px',
+											borderRadius: '12px',
+											position: 'relative',
+											top: '0'
+										}}
+									>
+										{data?.map((group) => (
+											<MenuItem
+												key={group.id}
+												value={group.id}
+												onClick={() => setSelectedId(group.id.toString())}
 											>
-												<MenuItem value="ONLINE">ONLINE</MenuItem>
-												<MenuItem value="OFFLINE">OFFLINE</MenuItem>
-											</Select>
-										)}
-									/>
+												<ListItemText primary={group.groupName} />
+											</MenuItem>
+										))}
+									</Select>
 								</FormControl>
+								<div
+									style={{
+										width: '100%',
+										maxWidth: '540px'
+									}}
+								>
+									<FormControl style={{ width: '100%' }}>
+										<InputLabel
+											style={{ background: '#fff' }}
+											id="study-format-label"
+										>
+											Формат обучения
+										</InputLabel>
+										<Controller
+											name="studyFormat"
+											control={control}
+											defaultValue=""
+											rules={{
+												required: 'Формат обучения обязателен для заполнения'
+											}}
+											render={({ field }) => (
+												<Select
+													{...field}
+													style={{ borderRadius: '12px' }}
+													labelId="study-format-label"
+													id="study-format-select"
+													input={<OutlinedInput label="studyFormat" />}
+													MenuProps={MenuProps}
+													value={formatName}
+													onChange={handleFormatChange}
+												>
+													<MenuItem value="ONLINE">ONLINE</MenuItem>
+													<MenuItem value="OFFLINE">OFFLINE</MenuItem>
+												</Select>
+											)}
+										/>
+									</FormControl>
+								</div>
 							</div>
 
 							<Box mt={2} display="flex" justifyContent="flex-end" gap={1}>
@@ -193,13 +200,13 @@ const SearchModal: FC<ModalProps> = ({ openModalEdit, handleClose }) => {
 									onClick={handleDeleteSearch}
 									disabled={false}
 									variant="outlined"
-									style={{ padding: '10px', borderRadius: '10px' }}
+									style={{ padding: '10px', borderRadius: '8px' }}
 								>
 									Сбросить фильтры
 								</Button>
 								<Button
 									variant="contained"
-									style={{ padding: '10px', borderRadius: '10px' }}
+									style={{ padding: '10px', borderRadius: '8px' }}
 									type="button"
 									onClick={handleSubmitFormButton}
 									disabled={false}

@@ -22,7 +22,10 @@ const api = index.injectEndpoints({
 		DeleteTrash: builder.mutation({
 			query: (id) => ({
 				url: `/api/trash/${id}`,
-				method: 'DELETE'
+				method: 'DELETE',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
 			}),
 			invalidatesTags: ['trash']
 		})

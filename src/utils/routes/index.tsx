@@ -17,14 +17,14 @@ export const links = {
 			link: 'analytics'
 		},
 		{
-			name: 'Группы',
-			icon: <IconUsersGroup stroke={2} />,
-			link: 'group/page'
-		},
-		{
 			name: 'Курсы ',
 			icon: <IconDeviceDesktop stroke={2} />,
 			link: 'courses'
+		},
+		{
+			name: 'Группы',
+			icon: <IconUsersGroup stroke={2} />,
+			link: 'group/page'
 		},
 		{
 			name: 'Учителя',

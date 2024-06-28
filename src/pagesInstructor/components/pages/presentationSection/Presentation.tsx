@@ -2,7 +2,7 @@ import { Button, MenuItem } from '@mui/material';
 import scss from './Presentation.module.scss';
 import Menu from '@mui/material/Menu';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import deleteImg from '@/src/assets/svgs/delete-red.svg';
 import editImg from '@/src/assets/svgs/edit.svg';
 import { useGetPresentationQuery } from '@/src/redux/api/instructor/presentation';
@@ -27,38 +27,85 @@ const Presentation = () => {
 	const [presentationModal, setPresentationModal] = useState<null | number>(
 		null
 	);
+
+	useEffect(() => {
+		const open1State = localStorage.getItem('open1') === 'true';
+		const openEditState = localStorage.getItem('openEdit') === 'true';
+		const openDeleteState = localStorage.getItem('openDelete') === 'true';
+		const openPresentationState =
+			localStorage.getItem('openPresentation') === 'true';
+		const presentationModalState = localStorage.getItem('presentationModal');
+
+		setOpen1(open1State);
+		setOpenEdit(openEditState);
+		setOpenDelete(openDeleteState);
+		setOpenPresentation(openPresentationState); 
+		if (presentationModalState) {
+			setPresentationModal(Number(presentationModalState));
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem('open1', open1.toString());
+		localStorage.setItem('openEdit', openEdit.toString());
+		localStorage.setItem('openDelete', openDelete.toString());
+		localStorage.setItem('openPresentation', openPresentation.toString()); 
+		if (presentationModal !== null) {
+			localStorage.setItem('presentationModal', presentationModal.toString());
+		} else {
+			localStorage.removeItem('presentationModal');
+		}
+	}, [open1, openEdit, openDelete, openPresentation, presentationModal]);
+
 	const openPresentationFunc = (id: number) => {
 		setPresentationModal(id);
 		setOpenPresentation(true);
 	};
+
 	const closePresentation = () => {
 		setOpenPresentation(false);
+		setPresentationModal(null);
 	};
+
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const handleCloseDrop = () => {
 		setAnchorEl(null);
 	};
+
 	const handleClose = () => {
 		setOpen1(false);
 	};
+
 	const handleOpen = () => {
 		setOpen1(true);
 	};
+
 	const handleCloseEdit = () => {
 		setOpenEdit(false);
 	};
+
 	const handleOpenEdit = () => {
 		setOpenEdit(true);
 	};
+
 	const openDeleteFunc = () => {
 		setOpenDelete(true);
 	};
+
 	const closeDeleteFunc = () => {
 		setOpenDelete(false);
 	};
+
+	useEffect(() => {
+		if (openPresentation) {
+			// Вы можете добавить логику обработки открытия модального окна здесь при необходимости
+		}
+	}, [openPresentation]);
+
 	return (
 		<div className={scss.presentation}>
 			<div
@@ -200,4 +247,5 @@ const Presentation = () => {
 		</div>
 	);
 };
+
 export default Presentation;
