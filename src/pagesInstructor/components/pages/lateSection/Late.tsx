@@ -16,10 +16,7 @@ const Late = () => {
 						to={`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/answer/${item.answerTasId}`}
 					>
 						<div className={scss.card_container}>
-							<p className={scss.card_link}>
-								{item.studentName}
-								{/* {item.lastName} */}
-							</p>
+							<p className={scss.card_link}>{item.studentName}</p>
 							<div
 								onClick={() => {
 									localStorage.setItem('task', String(item.answerTasId));

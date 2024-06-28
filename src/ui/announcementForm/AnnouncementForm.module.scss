@@ -1,6 +1,6 @@
 .Announcement_form {
 	width: 100%;
-	max-width: 581px;
+	max-width: 561px;
 	padding: 0 0 !important;
 
 	@media (max-width: 700px) {
@@ -26,7 +26,7 @@
 	.input_form {
 		width: 100%;
 		max-width: 560px;
-		padding-inline: 20px;
+		padding-inline: 25px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -44,6 +44,7 @@
 			.inputText {
 				width: 100%;
 				max-width: 540px;
+				padding-top: 10px;
 			}
 		}
 	}

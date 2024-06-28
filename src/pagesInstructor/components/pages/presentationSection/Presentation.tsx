@@ -124,7 +124,7 @@ const Presentation = () => {
 					<div className={scss.icon}>
 						<IconPlus stroke={2} />
 					</div>
-					<span>Добавить презентацию</span>
+					<span style={{ textTransform: 'none' }}>Добавить презентацию</span>
 				</Button>
 			</div>
 			<div className={scss.card}>

@@ -43,8 +43,9 @@ const CrateTask = () => {
 		navigate(
 			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${id}/panding`
 		);
-	};console.log(saveId);
-	
+	};
+	console.log(saveId);
+
 	return (
 		<div className={scss.Task}>
 			<div className={scss.course_button_modal}>
@@ -57,7 +58,7 @@ const CrateTask = () => {
 					<div className={scss.icon}>
 						<IconPlus stroke={2} />
 					</div>
-					<span>Создать задание</span>
+					<span style={{ textTransform: 'none' }}>Создать задание</span>
 				</Button>
 			</div>
 

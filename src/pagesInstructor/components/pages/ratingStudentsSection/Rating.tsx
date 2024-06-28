@@ -277,19 +277,19 @@ const Rating = () => {
 										</td>
 										{student.lessonRatingResponses.map((lesson) => (
 											<>
-												{lesson.taskRatingResponses.length === 0 &&
+												{lesson.taskRatingResponses.length === 0 ||
 												lesson.taskRatingResponses.find(
 													(el) => el.answerTaskRatingResponses.id === null
 												) ? (
-													<td key={lesson.id}>0</td>
+													<td key={lesson.id} style={{ color: 'black' }}>
+														0
+													</td>
 												) : (
 													lesson.taskRatingResponses.map((task) => (
 														<td
 															style={{
 																cursor: 'pointer',
-																color: task.answerTaskRatingResponses
-																	? 'blue'
-																	: 'black'
+																color: task.answerTaskRatingResponses && 'blue'
 															}}
 															onClick={() => {
 																setResultTaskStudent(

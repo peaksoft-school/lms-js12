@@ -145,9 +145,11 @@ const EditTask = () => {
 		};
 
 		await editTaskInstructor({ newTask, getTask });
+
 		setTitle('');
 		setValue('');
 		setSelectedDate(null);
+		navigate(`/instructor/course/${courseId}/materials/${lessonId}/lesson`);
 	};
 
 	const modules = {

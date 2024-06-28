@@ -31,6 +31,7 @@ import {
 } from '@hello-pangea/dnd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
+import NotCreated from '@/src/ui/notCreated/NotCreated';
 
 interface TodoProps {
 	id: number;
@@ -117,203 +118,215 @@ const Materials: FC = () => {
 								<div className={scss.icon}>
 									<IconPlus stroke={2} />
 								</div>
-								<span>Создать урок</span>
+								<span style={{ textTransform: 'none' }}>Создать урок</span>
 							</Button>
 						</div>
 
 						<h1 className={scss.title}>{item}</h1>
-						
-						<ScrollArea
-							type="always"
-							scrollbars="xy"
-							offsetScrollbars
-							classNames={scss}
-						>
-							<Box>
-								{data?.lessonResponses?.length === 0 ? (
-									<div className={scss.empty_page}>
-										<img src={empty} alt="" />
-									</div>
-								) : (
-									<div className={scss.table_container}>
-										<div className={scss.material_content}>
-											<table className={scss.table}>
-												<thead>
-													<tr>
-														<th>Название урока</th>
-														<th className={scss.date}>Дата публикации</th>
-														<th className={scss.last_th}>Действие</th>
-													</tr>
-												</thead>
-												<Droppable droppableId="todos">
-													{(droppableProvider) => (
-														<tbody
-															ref={droppableProvider.innerRef}
-															{...droppableProvider.droppableProps}
-														>
-															{data?.lessonResponses &&
-																data?.lessonResponses.map((todo, index) => (
-																	<Draggable
-																		index={index}
-																		key={todo.id}
-																		draggableId={`${todo.id}`}
-																	>
-																		{(draggableProvider) => (
-																			<tr
-																				onClick={() =>
-																					localStorage.setItem(
-																						'taskName',
-																						todo.title
-																					)
-																				}
-																				className={
-																					index % 2 === 1
-																						? scss.table_alternate_row
-																						: '' || scss.table_container_second
-																				}
-																				ref={draggableProvider.innerRef}
-																				{...draggableProvider.draggableProps}
-																				{...draggableProvider.dragHandleProps}
-																			>
-																				<td
-																					onClick={() => {
-																						setTimeout(() => {
-																							navigate(
-																								`/instructor/course/${courseId}/materials/${todo.id}/video`
-																							);
-																						}, 1000);
-																					}}
-																					style={{
-																						paddingLeft: '20px',
-																						paddingTop: '12px',
-																						display: 'flex',
-																						gap: '10px',
-																						alignItems: 'center',
-																						cursor: 'pointer'
-																					}}
+
+						{data?.lessonResponses.length === 0 ? (
+							<>
+								<NotCreated
+									text="Вы еще не создали урок"
+									name={item}
+									buttonClick={() => setOpenModal(true)}
+									buttontText="Создать урок"
+								/>
+							</>
+						) : (
+							<>
+								<ScrollArea
+									type="always"
+									scrollbars="xy"
+									offsetScrollbars
+									classNames={scss}
+								>
+									<Box>
+										<div className={scss.table_container}>
+											<div className={scss.material_content}>
+												<table className={scss.table}>
+													<thead>
+														<tr>
+															<th>Название урока</th>
+															<th className={scss.date}>Дата публикации</th>
+															<th className={scss.last_th}>Действие</th>
+														</tr>
+													</thead>
+													<Droppable droppableId="todos">
+														{(droppableProvider) => (
+															<tbody
+																ref={droppableProvider.innerRef}
+																{...droppableProvider.droppableProps}
+															>
+																{data?.lessonResponses &&
+																	data?.lessonResponses.map((todo, index) => (
+																		<Draggable
+																			index={index}
+																			key={todo.id}
+																			draggableId={`${todo.id}`}
+																		>
+																			{(draggableProvider) => (
+																				<tr
+																					onClick={() =>
+																						localStorage.setItem(
+																							'taskName',
+																							todo.title
+																						)
+																					}
+																					className={
+																						index % 2 === 1
+																							? scss.table_alternate_row
+																							: '' ||
+																								scss.table_container_second
+																					}
+																					ref={draggableProvider.innerRef}
+																					{...draggableProvider.draggableProps}
+																					{...draggableProvider.dragHandleProps}
 																				>
-																					<IconEqual stroke={2} />
-																					<Tooltip title={todo.title}>
-																						<p
-																							style={{
-																								width: '100%',
-																								maxWidth: '200px',
-																								textOverflow: 'ellipsis',
-																								overflow: 'hidden'
-																							}}
-																						>
-																							{todo.title}
-																						</p>
-																					</Tooltip>
-																				</td>
-																				<td
-																					onClick={() => {
-																						setTimeout(() => {
-																							navigate(
-																								`/instructor/course/${courseId}/materials/${todo.id}`
-																							);
-																						}, 500);
-																					}}
-																					style={{
-																						textAlign: 'end',
-																						paddingRight: '70px',
-																						cursor: 'pointer'
-																					}}
-																				>
-																					{todo.createdAt}
-																				</td>
-																				<td className={scss.TableCellIcon}>
-																					<button
-																						className={scss.button}
-																						aria-controls={
-																							open ? 'basic-menu' : undefined
-																						}
-																						aria-haspopup="true"
-																						onClick={(e) => {
-																							handleClick(e);
-																							setDeleteById(todo.id);
+																					<td
+																						onClick={() => {
+																							setTimeout(() => {
+																								navigate(
+																									`/instructor/course/${courseId}/materials/${todo.id}/video`
+																								);
+																							}, 1000);
+																						}}
+																						style={{
+																							paddingLeft: '20px',
+																							paddingTop: '12px',
+																							display: 'flex',
+																							gap: '10px',
+																							alignItems: 'center',
+																							cursor: 'pointer'
 																						}}
 																					>
-																						<IconDotsVertical stroke={2} />
-																					</button>
-																					<Menu
-																						id="basic-menu"
-																						anchorEl={anchorEl}
-																						open={open}
-																						onClose={handleClose}
-																						MenuListProps={{
-																							'aria-labelledby': 'basic-button'
+																						<IconEqual stroke={2} />
+																						<Tooltip title={todo.title}>
+																							<p
+																								style={{
+																									width: '100%',
+																									maxWidth: '200px',
+																									textOverflow: 'ellipsis',
+																									overflow: 'hidden'
+																								}}
+																							>
+																								{todo.title}
+																							</p>
+																						</Tooltip>
+																					</td>
+																					<td
+																						onClick={() => {
+																							setTimeout(() => {
+																								navigate(
+																									`/instructor/course/${courseId}/materials/${todo.id}`
+																								);
+																							}, 500);
 																						}}
-																						elevation={0}
-																						anchorOrigin={{
-																							vertical: 'bottom',
-																							horizontal: 'right'
+																						style={{
+																							textAlign: 'end',
+																							paddingRight: '70px',
+																							cursor: 'pointer'
 																						}}
-																						transformOrigin={{
-																							vertical: 'top',
-																							horizontal: 'right'
-																						}}
-																						PaperProps={{
-																							style: {
-																								boxShadow: 'none',
-																								border: '1px solid gray'
+																					>
+																						{todo.createdAt}
+																					</td>
+																					<td className={scss.TableCellIcon}>
+																						<button
+																							className={scss.button}
+																							aria-controls={
+																								open ? 'basic-menu' : undefined
 																							}
-																						}}
-																					>
-																						<MenuItem
-																							style={{
-																								display: 'flex',
-																								gap: '10px'
-																							}}
-																							onClick={() => {
-																								setOpenModalEdit(true);
-																								setAnchorEl(null);
+																							aria-haspopup="true"
+																							onClick={(e) => {
+																								handleClick(e);
+																								setDeleteById(todo.id);
 																							}}
 																						>
-																							<img src={editIcon} alt="Edit" />
-																							<p>Редактировать</p>
-																						</MenuItem>
-																						<MenuItem
-																							style={{
-																								display: 'flex',
-																								gap: '10px'
+																							<IconDotsVertical stroke={2} />
+																						</button>
+																						<Menu
+																							id="basic-menu"
+																							anchorEl={anchorEl}
+																							open={open}
+																							onClose={handleClose}
+																							MenuListProps={{
+																								'aria-labelledby':
+																									'basic-button'
 																							}}
-																							onClick={() => {
-																								setOpenModalDelete(true);
-																								setAnchorEl(null);
+																							elevation={0}
+																							anchorOrigin={{
+																								vertical: 'bottom',
+																								horizontal: 'right'
+																							}}
+																							transformOrigin={{
+																								vertical: 'top',
+																								horizontal: 'right'
+																							}}
+																							PaperProps={{
+																								style: {
+																									boxShadow: 'none',
+																									border: '1px solid gray'
+																								}
 																							}}
 																						>
-																							<img
-																								src={deleteIcon}
-																								alt="Delete"
-																							/>
-																							<p>Удалить</p>
-																						</MenuItem>
-																					</Menu>
-																				</td>
-																			</tr>
-																		)}
-																	</Draggable>
-																))}
-														</tbody>
-													)}
-												</Droppable>
-											</table>
-											<ModalMaterialEdit
-												openModalEdit={openModalEdit}
-												closeModalEdit={() => setOpenModalEdit(false)}
-												deleteById={deleteById}
-											/>
-											<DeleteMaterial
-												open={openModalDelete}
-												handleCloseModal={() => setOpenModalDelete(false)}
-												deleteById={deleteById}
-											/>
+																							<MenuItem
+																								style={{
+																									display: 'flex',
+																									gap: '10px'
+																								}}
+																								onClick={() => {
+																									setOpenModalEdit(true);
+																									setAnchorEl(null);
+																								}}
+																							>
+																								<img
+																									src={editIcon}
+																									alt="Edit"
+																								/>
+																								<p>Редактировать</p>
+																							</MenuItem>
+																							<MenuItem
+																								style={{
+																									display: 'flex',
+																									gap: '10px'
+																								}}
+																								onClick={() => {
+																									setOpenModalDelete(true);
+																									setAnchorEl(null);
+																								}}
+																							>
+																								<img
+																									src={deleteIcon}
+																									alt="Delete"
+																								/>
+																								<p>Удалить</p>
+																							</MenuItem>
+																						</Menu>
+																					</td>
+																				</tr>
+																			)}
+																		</Draggable>
+																	))}
+															</tbody>
+														)}
+													</Droppable>
+												</table>
+												<ModalMaterialEdit
+													openModalEdit={openModalEdit}
+													closeModalEdit={() => setOpenModalEdit(false)}
+													deleteById={deleteById}
+												/>
+												<DeleteMaterial
+													open={openModalDelete}
+													handleCloseModal={() => setOpenModalDelete(false)}
+													deleteById={deleteById}
+												/>
+											</div>
 										</div>
-									</div>
-								)}
-							</Box>
-						</ScrollArea>
+									</Box>
+								</ScrollArea>
+							</>
+						)}
 					</div>
 					<div className={scss.pagination}>
 						<div className={scss.Inputs}>

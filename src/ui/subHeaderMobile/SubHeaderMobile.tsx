@@ -5,6 +5,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useEffect, useState } from 'react';
 import bell from '@/src/assets/svgs/Header icons.png';
+import vector from '@/src/assets/svgs/Vector.svg';
+import ExitModal from '../customModal/exitModal/ExitModal';
 
 const SupHeaderMobile = () => {
 	const { pathname } = useLocation();
@@ -13,6 +15,16 @@ const SupHeaderMobile = () => {
 	const [anchorElOpen, setAnchorElOpen] = useState<null | HTMLElement>(null);
 	const [value, setValue] = useState<number>(0);
 	console.log(value);
+	const [openExit, setOpenExit] = useState(false);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const open = Boolean(anchorEl);
+
+	const handleCloseDrop = () => {
+		setAnchorEl(null);
+	};
 
 	useEffect(() => {
 		if (
@@ -101,11 +113,57 @@ const SupHeaderMobile = () => {
 
 					<div className={scss.header_elements}>
 						<img src={profile} alt="Profile" />
-						<div>
+						<div onClick={handleClick}>
 							<p> Aдминистратор</p>
 						</div>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						<div onClick={handleClick}>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						</div>
 					</div>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right'
+						}}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+						PaperProps={{
+							style: {
+								boxShadow: 'none',
+								border: '1px solid #336fff',
+								width: '200px',
+								background: '#dde9f9',
+								borderRadius: '10px'
+							}
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								setOpenExit(true);
+								handleCloseDrop();
+							}}
+							style={{
+								display: 'flex',
+								gap: '10px',
+								color: '#1976d2',
+								fontSize: '18px',
+								fontWeight: '600',
+								alignItems: 'center'
+							}}
+						>
+							<img src={vector} alt="" />
+							<p>Выйти</p>
+						</MenuItem>
+					</Menu>
 				</div>
 			)}
 
@@ -158,11 +216,57 @@ const SupHeaderMobile = () => {
 					<div className={scss.header_elements}>
 						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
-						<div>
+						<div onClick={handleClick}>
 							<p>Учитель</p>
 						</div>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						<div onClick={handleClick}>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						</div>
 					</div>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right'
+						}}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+						PaperProps={{
+							style: {
+								boxShadow: 'none',
+								border: '1px solid #336fff',
+								width: '200px',
+								background: '#dde9f9',
+								borderRadius: '10px'
+							}
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								setOpenExit(true);
+								handleCloseDrop();
+							}}
+							style={{
+								display: 'flex',
+								gap: '10px',
+								color: '#1976d2',
+								fontSize: '18px',
+								fontWeight: '600',
+								alignItems: 'center'
+							}}
+						>
+							<img src={vector} alt="" />
+							<p>Выйти</p>
+						</MenuItem>
+					</Menu>
 				</div>
 			)}
 			{pathname.startsWith(`/courses/${courseId}`) && (
@@ -205,13 +309,60 @@ const SupHeaderMobile = () => {
 					<div className={scss.header_elements}>
 						<img src={bell} alt="bell" />
 						<img src={profile} alt="Profile" />
-						<div>
+						<div onClick={handleClick}>
 							<p>Студент</p>
 						</div>
-						<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						<div onClick={handleClick}>
+							<IconChevronDown style={{ cursor: 'pointer' }} stroke={2} />
+						</div>
 					</div>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right'
+						}}
+						MenuListProps={{
+							'aria-labelledby': 'basic-button'
+						}}
+						PaperProps={{
+							style: {
+								boxShadow: 'none',
+								border: '1px solid #336fff',
+								width: '200px',
+								background: '#dde9f9',
+								borderRadius: '10px'
+							}
+						}}
+					>
+						<MenuItem
+							onClick={() => {
+								setOpenExit(true);
+								handleCloseDrop();
+							}}
+							style={{
+								display: 'flex',
+								gap: '10px',
+								color: '#1976d2',
+								fontSize: '18px',
+								fontWeight: '600',
+								alignItems: 'center'
+							}}
+						>
+							<img src={vector} alt="" />
+							<p>Выйти</p>
+						</MenuItem>
+					</Menu>
 				</div>
 			)}
+			<ExitModal openExit={openExit} handleClose={() => setOpenExit(false)} />
 		</div>
 	);
 };

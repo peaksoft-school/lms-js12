@@ -6,7 +6,7 @@ import {
 	useGetInstructorTaskQuery,
 	usePatchTaskInstructorMutation
 } from '@/src/redux/api/instructor/addTask';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import person from '@/src/assets/svgs/Profile.png';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 
@@ -18,6 +18,9 @@ const Answer = () => {
 	const [patchTaskInstructor] = usePatchTaskInstructorMutation();
 	const test = Number(answerId);
 	const { data } = useGetInstructorTaskQuery(test);
+	const [edit, setEdit] = useState(false);
+	const navigate = useNavigate();
+	const { courseId, lessonId, getTaskId } = useParams();
 
 	useEffect(() => {
 		if (score.trim()) {
@@ -47,6 +50,9 @@ const Answer = () => {
 		await patchTaskInstructor({ newComment, answerId });
 		setComments('');
 		setScore('');
+		navigate(
+			`/instructor/course/${courseId}/materials/${lessonId}/lesson/${getTaskId}/panding`
+		);
 	};
 
 	return (
@@ -99,43 +105,54 @@ const Answer = () => {
 						)}
 					</div>
 				</div>
-				<div className={scss.comments}>
-					<Input
-						size="small"
-						value={comments}
-						onChange={(e) => setComments(e.target.value)}
-						width="100%"
-						type="text"
-						placeholder="Комментарий к заданию"
-					/>
-					<div className={scss.comment_part}>
-						<ButtonCancel
-							type="button"
-							width="145px"
-							disabled={false}
-							onClick={handleOnClose}
-						>
-							Не принято
-						</ButtonCancel>
-						<div className={scss.comment_div}>
-							<input
-								value={score}
-								onChange={(e) => setScore(e.target.value)}
+				{edit === true ? (
+					<>
+						<div className={scss.comments}>
+							<Input
+								size="small"
+								value={comments}
+								onChange={(e) => setComments(e.target.value)}
+								width="100%"
 								type="text"
-								placeholder="Введите баллы"
+								placeholder="Комментарий к заданию"
 							/>
+							<div className={scss.comment_part}>
+								<ButtonCancel
+									type="button"
+									width="145px"
+									disabled={false}
+									onClick={handleOnClose}
+								>
+									Не принято
+								</ButtonCancel>
+								<div className={scss.comment_div}>
+									<input
+										value={score}
+										onChange={(e) => setScore(e.target.value)}
+										type="text"
+										placeholder="Введите баллы"
+									/>
 
-							<ButtonSave
-								type="button"
-								width="117px"
-								onClick={handleScore}
-								disabled={isButtonDisabled}
-							>
-								Принято
-							</ButtonSave>
+									<ButtonSave
+										type="button"
+										width="117px"
+										onClick={handleScore}
+										disabled={isButtonDisabled}
+									>
+										Принято
+									</ButtonSave>
+								</div>
+							</div>
 						</div>
+					</>
+				) : null}
+				{edit === false ? (
+					<div className={scss.editButton}>
+						<ButtonSave width="160px" onClick={() => setEdit(true)}>
+							редактировать
+						</ButtonSave>
 					</div>
-				</div>
+				) : null}
 			</div>
 		</div>
 	);

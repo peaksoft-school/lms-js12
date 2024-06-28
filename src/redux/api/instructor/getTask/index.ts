@@ -25,8 +25,20 @@ export const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['addTask']
+		}),
+		getNotSubmitedStudent: builder.query({
+			query: (getTask) => ({
+				url: `/api/resultTask/notAnswered/${getTask}`,
+
+				method: 'GET'
+			}),
+			providesTags: ['addTask']
 		})
 	})
 });
 
-export const { useGetTaskInstructorAQuery, useGetTaskResultQuery } = api;
+export const {
+	useGetTaskInstructorAQuery,
+	useGetTaskResultQuery,
+	useGetNotSubmitedStudentQuery
+} = api;

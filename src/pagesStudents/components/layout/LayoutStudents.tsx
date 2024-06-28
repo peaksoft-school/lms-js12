@@ -17,6 +17,7 @@ import GetOneTask from '../pages/getOneTask/GetOneTask';
 import ResultTest from '../pages/resultTest/ResultTest';
 import SendOneTask from '../pages/sendOneTask/SendOneTask';
 import AnnouncementPage from '../pages/AnnouncementPage';
+import EditSendTask from '../pages/editSendtask/EditSendTask';
 
 const LayoutStudents = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -83,6 +84,10 @@ const LayoutStudents = () => {
 								path="/courses/:coursesId/materials/:lessonId/*"
 								element={<BasicBreadcrumbs />}
 							/>
+							<Route
+								path="/courses/:coursesId/materials/:lessonId/lesson/:getTaskId/*"
+								element={<BasicBreadcrumbs />}
+							/>
 						</Routes>
 					</div>
 					<Routes>
@@ -108,6 +113,10 @@ const LayoutStudents = () => {
 						<Route
 							path="/courses/:coursesId/materials/:lessonId/lesson/:getTaskId/send-task"
 							element={<SendOneTask />}
+						/>
+						<Route
+							path="/courses/:coursesId/materials/:lessonId/lesson/:getTaskId/edit-task"
+							element={<EditSendTask />}
 						/>
 						<Route
 							path="/courses/:coursesId/materials/:lessonId/lesson"

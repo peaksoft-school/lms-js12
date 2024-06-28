@@ -93,7 +93,7 @@ const VideoLesson = () => {
 					<div className={scss.icon}>
 						<IconPlus stroke={2} />
 					</div>
-					<span>Добавить видеоурок</span>
+					<span style={{ textTransform: 'none' }}>Добавить видеоурок</span>
 				</Button>
 			</div>
 			<div className={scss.video}>

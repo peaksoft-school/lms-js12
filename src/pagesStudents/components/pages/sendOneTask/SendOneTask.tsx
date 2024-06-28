@@ -17,7 +17,6 @@ const SendOneTask = () => {
 	const { coursesId, lessonId, getTaskId } = useParams();
 	const lesson = Number(lessonId);
 	const { data } = useGetTaskInstructorQuery(lesson);
-	const [text, setText] = useState('');
 	const [homeWork, setHomeWork] = useState('');
 	const [value, setValue] = useState<string>('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -192,14 +191,6 @@ const SendOneTask = () => {
 						/>
 					</div>
 					<div className={scss.saveInput_button}>
-						<Input
-							type="text"
-							value={text}
-							onChange={(e) => setText(e.target.value)}
-							size="small"
-							placeholder="Текст домашнего задания"
-							width="100%"
-						/>
 						<Input
 							type="text"
 							value={homeWork}

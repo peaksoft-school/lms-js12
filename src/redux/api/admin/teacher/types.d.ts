@@ -68,4 +68,26 @@ namespace TABLE {
 		instructorName: string;
 	}[];
 	type appointAllTeacherRequest = void;
+	type appointAllCoursesResponse = {
+		id: number;
+		courseName: string;
+	}[];
+	type appointAllCousesRequest = void;
+
+	type getInstructorForEditResponse = {
+		id: number;
+		fullName: strin;
+		specialization: string;
+		phoneNumber: string;
+		email: string;
+		courseNames: string[];
+	};
+	type getInstructorForEditRequests = {
+		id: number;
+		fullName: strin;
+		specialization: string;
+		phoneNumber: string;
+		email: string;
+		courseNames: string[];
+	};
 }

@@ -78,7 +78,7 @@ const Courses: FC = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span>Создать курс</span>
+									<span style={{ textTransform: ' none ' }}>Создать курс</span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Курсы</h1>

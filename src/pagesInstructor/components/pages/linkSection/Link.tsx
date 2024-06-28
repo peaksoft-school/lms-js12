@@ -91,7 +91,7 @@ const Link = () => {
 						<div className={scss.icon}>
 							<IconPlus stroke={2} />
 						</div>
-						<span>Добавить ссылку</span>
+						<span style={{ textTransform: 'none' }}>Добавить ссылку</span>
 					</Button>
 				</div>
 			</div>

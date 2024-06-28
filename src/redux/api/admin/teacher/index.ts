@@ -63,6 +63,25 @@ export const api = index.injectEndpoints({
 				method: 'GET'
 			}),
 			providesTags: ['teacher']
+		}),
+		getAllAllCoursesWithoutPagination: builder.query<
+			TABLE.appointAllCoursesResponse,
+			TABLE.appointAllCousesRequest
+		>({
+			query: () => ({
+				url: `/api/course/getAllCourseWithOutPagination`,
+				method: 'GET'
+			}),
+			providesTags: ['teacher']
+		}),
+		getInsructorsForEdit: builder.query<
+			TABLE.getInstructorForEditResponse,
+			TABLE.getInstructorForEditRequests
+		>({
+			query: (instructorId) => ({
+				url: `/api/instructors/${instructorId}`,
+				method: 'GET'
+			})
 		})
 	})
 });
@@ -72,5 +91,7 @@ export const {
 	usePostTeacherMutation,
 	usePatchTeacherMutation,
 	useDeleteTeacherMutation,
-	useAppointAllTeacherQuery
+	useAppointAllTeacherQuery,
+	useGetAllAllCoursesWithoutPaginationQuery,
+	useGetInsructorsForEditQuery
 } = api;

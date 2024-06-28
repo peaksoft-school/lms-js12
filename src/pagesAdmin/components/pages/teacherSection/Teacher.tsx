@@ -94,7 +94,9 @@ const Teacher = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span>Добавить учителя</span>
+									<spann style={{ textTransform: ' none ' }}>
+										Добавить учителя
+									</spann>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Учителя</h1>
