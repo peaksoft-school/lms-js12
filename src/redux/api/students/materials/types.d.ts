@@ -8,7 +8,7 @@ namespace MATERIALS {
 	};
 	type MaterialsGetResponse = {
 		course: number;
-		lessonResponses: Lesson[];
+		objects: Lesson[];
 	};
 	type MaterialsGetRequest = number;
 
@@ -41,11 +41,17 @@ namespace MATERIALS {
 	type MaterialsDeleteRequest = number | null;
 
 	type getResponseLinkStudents = {
-		linkResponses: {
-			id: number;
-			title: string;
-			url: string;
-		}[];
+		id: number;
+		title: string;
+		url: string;
 	};
 	type getRequestLinkStudents = number;
+	type GetOneTaskResponse = {
+		taskResponse: {
+			id: number;
+			title: string;
+			description: string;
+		}[];
+	};
+	type GetOneTaskRequest = void;
 }

@@ -75,7 +75,7 @@ const CoursesTeacher = () => {
 		<div className={scss.teacher}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.getAllInstructorsOfCourses.length !== 0 ? (
+					{data?.objects.length !== 0 ? (
 						<>
 							<BasicBreadcrumbs />
 							<div className={scss.buttons}>
@@ -104,7 +104,7 @@ const CoursesTeacher = () => {
 					>
 						<Box>
 							<div>
-								{data?.getAllInstructorsOfCourses.length == 0 ? (
+								{data?.objects.length == 0 ? (
 									<>
 										<NotCreated
 											name="Учителя"
@@ -138,53 +138,47 @@ const CoursesTeacher = () => {
 														</tr>
 													</thead>
 													<tbody>
-														{data?.getAllInstructorsOfCourses.map(
-															(item, index: number) => (
-																<tr
-																	key={item.id}
-																	className={
-																		index % 2 === 1
-																			? scss.TableAlternateRow
-																			: '' || scss.TableContainerSecond
-																	}
-																>
-																	<td>
-																		{index + 1 + (openPart - 1) * openPage}
-																	</td>
-																	<td className={scss.TableCell}>
-																		{item.fullName}
-																	</td>
-																	<td className={scss.TableCell}>
-																		{item.specializationOrStudyFormat}
-																	</td>
-																	<td className={scss.TableCell}>
-																		{item.phoneNumber}
-																	</td>
-																	<td className={scss.TableCell}>
-																		{item.email}
-																	</td>
-																	<td className={scss.TableCell}>
-																		{item.courseName}
-																	</td>
-																	<td className={scss.TableCellIcon}>
-																		<button
-																			className={scss.button}
-																			aria-controls={
-																				open ? 'basic-menu' : undefined
-																			}
-																			aria-haspopup="true"
-																			onClick={() => {
-																				setOpenModalDelete(true);
-																				setAnchorEl(null);
-																				setDeleteById(item.id!);
-																			}}
-																		>
-																			<img src={deleteIcon} alt="Delete" />
-																		</button>
-																	</td>
-																</tr>
-															)
-														)}
+														{data?.objects.map((item, index: number) => (
+															<tr
+																key={item.id}
+																className={
+																	index % 2 === 1
+																		? scss.TableAlternateRow
+																		: '' || scss.TableContainerSecond
+																}
+															>
+																<td>{index + 1 + (openPart - 1) * openPage}</td>
+																<td className={scss.TableCell}>
+																	{item.fullName}
+																</td>
+																<td className={scss.TableCell}>
+																	{item.specializationOrStudyFormat}
+																</td>
+																<td className={scss.TableCell}>
+																	{item.phoneNumber}
+																</td>
+																<td className={scss.TableCell}>{item.email}</td>
+																<td className={scss.TableCell}>
+																	{item.courseName}
+																</td>
+																<td className={scss.TableCellIcon}>
+																	<button
+																		className={scss.button}
+																		aria-controls={
+																			open ? 'basic-menu' : undefined
+																		}
+																		aria-haspopup="true"
+																		onClick={() => {
+																			setOpenModalDelete(true);
+																			setAnchorEl(null);
+																			setDeleteById(item.id!);
+																		}}
+																	>
+																		<img src={deleteIcon} alt="Delete" />
+																	</button>
+																</td>
+															</tr>
+														))}
 													</tbody>
 												</table>
 												<ModalEditTeacher
@@ -205,7 +199,7 @@ const CoursesTeacher = () => {
 						deleteById={deleteById}
 					/>
 				</div>
-				{data?.getAllInstructorsOfCourses.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>
@@ -229,10 +223,8 @@ const CoursesTeacher = () => {
 									<Pagination
 										page={openPart}
 										count={
-											data?.getAllInstructorsOfCourses.length
-												? Math.ceil(
-														data?.getAllInstructorsOfCourses.length / openPage
-													)
+											data?.objects.length
+												? Math.ceil(data?.objects.length / openPage)
 												: 1
 										}
 										variant="outlined"

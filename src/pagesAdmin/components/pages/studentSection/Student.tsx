@@ -109,7 +109,7 @@ const Student: React.FC = () => {
 		}
 	};
 
-	const filteredData = data?.students.filter((student: Student) => {
+	const filteredData = data?.objects.filter((student: Student) => {
 		const searchTermLower = searchTerm.toLowerCase();
 		return (
 			(student.fullName &&
@@ -305,7 +305,7 @@ const Student: React.FC = () => {
 						</Box>
 					</ScrollArea>
 				</div>
-				{data?.students.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>

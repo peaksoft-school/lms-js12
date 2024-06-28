@@ -71,7 +71,7 @@ const Groups: FC = () => {
 		<div className={scss.group}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.groupResponses.length !== 0 ? (
+					{data?.objects.length !== 0 ? (
 						<>
 							<div className={scss.course_button_modal}>
 								<Button
@@ -93,7 +93,7 @@ const Groups: FC = () => {
 						</>
 					) : null}
 					<div>
-						{data?.groupResponses.length === 0 ? (
+						{data?.objects.length === 0 ? (
 							<>
 								<NotCreated
 									text="Вы пока не создали группы!"
@@ -107,7 +107,7 @@ const Groups: FC = () => {
 								<div className={scss.cards}>
 									{
 										<div className={scss.card}>
-											{data?.groupResponses.map((item) => (
+											{data?.objects.map((item) => (
 												<div
 													key={item.id}
 													className={scss.zero_block_container}
@@ -239,7 +239,7 @@ const Groups: FC = () => {
 						)}
 					</div>
 				</div>
-				{data?.groupResponses.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>
@@ -260,19 +260,15 @@ const Groups: FC = () => {
 							</div>
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
-									{openPage > 0 &&
-										data?.groupResponses &&
-										data.groupResponses.length > 0 && (
-											<Pagination
-												page={currentPage}
-												count={Math.ceil(
-													data?.groupResponses.length / openPage
-												)}
-												variant="outlined"
-												shape="rounded"
-												onChange={handlePageChangeC}
-											/>
-										)}
+									{openPage > 0 && data?.objects && data.objects.length > 0 && (
+										<Pagination
+											page={currentPage}
+											count={Math.ceil(data?.objects.length / openPage)}
+											variant="outlined"
+											shape="rounded"
+											onChange={handlePageChangeC}
+										/>
+									)}
 								</Stack>
 							</div>
 

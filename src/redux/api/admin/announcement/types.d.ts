@@ -10,7 +10,8 @@ namespace ANNOUNCEMENT {
 		isPublished: true;
 	};
 	type GetAnnouncementResponse = {
-		announcements: Table[];
+		message?: string;
+		objects: Table[];
 	};
 	type GetAnnouncementRequest = void;
 	type PostAnnouncementPropsResponse = {

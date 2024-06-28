@@ -82,7 +82,7 @@ const Teacher = () => {
 		<div className={scss.teacher}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.instructorResponses.length !== 0 ? (
+					{data?.objects.length !== 0 ? (
 						<>
 							<div className={scss.button_title_elements}>
 								<Button
@@ -94,15 +94,15 @@ const Teacher = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<spann style={{ textTransform: ' none ' }}>
+									<span style={{ textTransform: ' none ' }}>
 										Добавить учителя
-									</spann>
+									</span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Учителя</h1>
 						</>
 					) : null}
-					{data?.instructorResponses.length === 0 ? (
+					{data?.objects.length === 0 ? (
 						<>
 							<NotCreated
 								text="Вы пока не добавили учителей!"
@@ -142,8 +142,8 @@ const Teacher = () => {
 														</tr>
 													</thead>
 													<tbody>
-														{data?.instructorResponses &&
-															data.instructorResponses.map((item, index) => (
+														{data?.objects &&
+															data.objects.map((item, index) => (
 																<tr
 																	key={item.id}
 																	className={
@@ -251,7 +251,7 @@ const Teacher = () => {
 						deleteById={deleteById}
 					/>
 				</div>
-				{data?.instructorResponses.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>
@@ -275,8 +275,8 @@ const Teacher = () => {
 									<Pagination
 										page={openPart}
 										count={
-											data?.instructorResponses.length
-												? Math.ceil(data?.instructorResponses.length / openPage)
+											data?.objects.length
+												? Math.ceil(data?.objects.length / openPage)
 												: 1
 										}
 										variant="outlined"

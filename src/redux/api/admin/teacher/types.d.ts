@@ -10,7 +10,7 @@ namespace TABLE {
 	};
 
 	type GetTeachersResponse = {
-		instructorResponses: Teacher[];
+		objects: Teacher[];
 		page: string;
 		size: string;
 	};

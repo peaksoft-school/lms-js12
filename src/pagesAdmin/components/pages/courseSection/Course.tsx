@@ -66,7 +66,7 @@ const Courses: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.courses.length !== 0 ? (
+					{data?.objects.length !== 0 ? (
 						<>
 							<div className={scss.course_button_modal}>
 								<Button
@@ -84,7 +84,7 @@ const Courses: FC = () => {
 							<h1 className={scss.title}>Курсы</h1>
 						</>
 					) : null}
-					{data?.courses.length === 0 ? (
+					{data?.objects.length === 0 ? (
 						<NotCreated
 							text="Вы пока не создали курсы!"
 							name="Курсы"
@@ -101,8 +101,8 @@ const Courses: FC = () => {
 							<Box>
 								<div className={scss.cards}>
 									<div className={scss.card}>
-										{data?.courses &&
-											data.courses.map((item) => (
+										{data?.objects &&
+											data.objects.map((item) => (
 												<div
 													key={item.id}
 													className={scss.zero_block_container}
@@ -234,7 +234,7 @@ const Courses: FC = () => {
 						</ScrollArea>
 					)}
 				</div>
-				{data?.courses.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.Inputs}>
@@ -258,8 +258,8 @@ const Courses: FC = () => {
 									<Pagination
 										page={currentPage}
 										count={
-											data?.courses?.length
-												? Math.ceil(data.courses.length / openPage)
+											data?.objects?.length
+												? Math.ceil(data.objects.length / openPage)
 												: 1
 										}
 										variant="outlined"
@@ -275,8 +275,8 @@ const Courses: FC = () => {
 								<input
 									style={{
 										border:
-											data?.courses &&
-											Math.ceil(data.courses.length / openPage) < openPage
+											data?.objects &&
+											Math.ceil(data.objects.length / openPage) < openPage
 												? '2px solid red'
 												: 'none'
 									}}
@@ -288,7 +288,7 @@ const Courses: FC = () => {
 									}}
 									onKeyDown={(e) => {
 										if (e.key === 'Enter') {
-											if (data?.courses && data.courses.length >= openPage) {
+											if (data?.objects && data.objects.length >= openPage) {
 												handleInputValuePaginationSize(openPage);
 											}
 										}

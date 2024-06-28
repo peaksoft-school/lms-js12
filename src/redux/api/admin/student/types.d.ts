@@ -14,7 +14,7 @@ namespace STUDENT {
 	type TablesStudentResponse = {
 		page: string;
 		size: string;
-		students: Table[];
+		objects: Table[];
 	};
 	type TablesStudentRequest = {
 		page: string;

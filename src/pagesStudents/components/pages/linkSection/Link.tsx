@@ -14,11 +14,11 @@ const Link = () => {
 
 	return (
 		<div className={scss.card}>
-			{data?.linkResponses.map((link) => (
+			{data && (
 				<div className={scss.cards}>
 					<div className={scss.title}>
 						<div className={scss.text}>
-							<Tooltip title={link.title}>
+							<Tooltip title={data.title}>
 								<p
 									style={{
 										width: '100%',
@@ -27,15 +27,15 @@ const Link = () => {
 										overflow: 'hidden'
 									}}
 								>
-									<a href={link.url} target="_blank" rel="noopener noreferrer">
-										{link.title}
+									<a href={data.url} target="_blank" rel="noopener noreferrer">
+										{data.title}
 									</a>
 								</p>
 							</Tooltip>
 						</div>
 					</div>
 				</div>
-			))}
+			)}
 		</div>
 	);
 };

@@ -90,12 +90,12 @@ const Trash: FC = () => {
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
 				<ToastContainer />
-				{data?.trashResponses.length !== 0 ? (
+				{data?.objects?.length !== 0 ? (
 					<>
 						<h1>Корзина</h1>
 					</>
 				) : null}
-				{data?.trashResponses.length === 0 ? (
+				{data?.objects?.length === 0 ? (
 					<>
 						<NotCreatedWithoutButton name="Корзина" text="Корзина пусто !" />
 					</>
@@ -127,7 +127,7 @@ const Trash: FC = () => {
 													</tr>
 												</thead>
 												<tbody>
-													{data?.trashResponses.map((card, index) => (
+													{data?.objects?.map((card, index) => (
 														<tr
 															className={
 																index % 2 === 1
@@ -219,7 +219,7 @@ const Trash: FC = () => {
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
 									<Pagination
-										count={Math.ceil(data!.trashResponses.length / rowsPerPage)}
+										count={Math.ceil(data!.objects?.length / rowsPerPage)}
 										page={currentPage}
 										onChange={handlePageChangeC}
 										shape="rounded"

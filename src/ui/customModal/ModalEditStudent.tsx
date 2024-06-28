@@ -115,7 +115,7 @@ const ModalEditStudent: FC<EditModalProps> = ({
 		setFormatName(event.target.value);
 	};
 
-	const finder = students.students.find(
+	const finder = students?.objects?.find(
 		(student: Student) => student.id === saveIdElement
 	);
 

@@ -13,6 +13,8 @@ import {
 	useEditTestMutation,
 	useGetInsideTestQuery
 } from '@/src/redux/api/instructor/test';
+import { IconCopy } from '@tabler/icons-react';
+import { IconDelete } from '@/src/assets/icons';
 
 interface Option {
 	value: string;
@@ -116,6 +118,17 @@ const EditTest: React.FC = () => {
 		}
 	};
 
+	const handleCopy = (index: number) => {
+		const copiedQuestion = JSON.parse(JSON.stringify(inputs[index]));
+		setInputs([...inputs, copiedQuestion]);
+	};
+
+	const handleDelete = (index: number) => {
+		const newInputs = [...inputs];
+		newInputs.splice(index, 1);
+		setInputs(newInputs);
+	};
+
 	const handleCopies = () => {
 		const newCopyData: Question = {
 			options: [{ value: '', isTrue: false }],
@@ -125,8 +138,18 @@ const EditTest: React.FC = () => {
 		setInputs([...inputs, newCopyData]);
 	};
 
-	const renderInputFields = (inputs: Question[], questionIndex: number) =>
-		inputs.map((input, index) => (
+	const handleAddOption = (index: number) => {
+		const newOptions = [...inputs[index].options, { value: '', isTrue: false }];
+		const newInputs = [...inputs];
+		newInputs[index].options = newOptions;
+		setInputs(newInputs);
+	};
+
+	const renderInputFields = (
+		questionOptions: Option[],
+		questionIndex: number
+	) =>
+		questionOptions.map((option, index) => (
 			<div key={index} className={scss.input_div}>
 				<div className={scss.variant_inputs}>
 					{data?.questionResponseList &&
@@ -140,6 +163,9 @@ const EditTest: React.FC = () => {
 									<label>
 										<input
 											{...field}
+											checked={data.questionResponseList.map((item) =>
+												item.optionResponses.map((el) => el.isTrue === true)
+											)}
 											style={{ cursor: 'pointer' }}
 											type="checkbox"
 										/>
@@ -169,7 +195,7 @@ const EditTest: React.FC = () => {
 						<Controller
 							name={`optionValue_${questionIndex}_${index}`}
 							control={control}
-							defaultValue={input.value}
+							defaultValue={option.value}
 							render={({ field }) => (
 								<Input
 									{...field}
@@ -186,7 +212,7 @@ const EditTest: React.FC = () => {
 								type="button"
 								onClick={() => {
 									const newInputs = [...inputs];
-									newInputs.splice(index, 1);
+									newInputs[questionIndex].options.splice(index, 1);
 									setInputs(newInputs);
 								}}
 							>
@@ -231,7 +257,7 @@ const EditTest: React.FC = () => {
 								onChange={handleTimeChange}
 							/>
 							<p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-								<span>Тип тест</span>
+								<span>Тип теста</span>
 								<Select
 									placeholder="Тип теста:"
 									data={['Soft', 'Medium', 'Hard']}
@@ -284,6 +310,7 @@ const EditTest: React.FC = () => {
 													type="checkbox"
 													name="option"
 													checked={option === 'SINGLE'}
+													checked={option === 'SINGLE'}
 													onChange={() => handleOptionClick('SINGLE')}
 												/>
 												Один <span>из списка</span>
@@ -300,54 +327,35 @@ const EditTest: React.FC = () => {
 											</label>
 										</div>
 									</div>
-									<div>{renderInputFields(item.options, index)}</div>
-									<div className={scss.div_text2}>
-										<div className={scss.components}>
-											<p className={scss.p_text2}>
-												<a
-													style={{ color: '#258aff' }}
-													href="#"
-													onClick={() => {
-														const newInputs = [...inputs];
-														newInputs[index].options.push({
-															value: '',
-															isTrue: false
-														});
-														setInputs(newInputs);
-													}}
-												>
-													Добавить вариант
-												</a>
-											</p>
-										</div>
+									{renderInputFields(item.options, index)}
+									<div className={scss.buttons_copy_delete}>
+										<button
+											onClick={() => handleCopy(index)}
+											style={{ background: 'none', border: 'none' }}
+										>
+											{<IconCopy />}
+										</button>
+										<button
+											style={{ background: 'none', border: 'none' }}
+											onClick={() => handleDelete(index)}
+										>
+											{<IconDelete />}
+										</button>
 									</div>
+									<button type="button" onClick={() => handleAddOption(index)}>
+										+ Добавить вариант
+									</button>
 								</div>
 							))}
 						</div>
+						<div className={scss.buttonCercle}>
+							<ButtonCircle icon={<IconCopy />} onClick={handleCopies} />
+						</div>
 					</div>
 				</div>
-				<div className={scss.button_contain}>
-					<ButtonCancel
-						onClick={() => {}}
-						width="100px"
-						type={'button'}
-						disabled={false}
-					>
-						Отмена
-					</ButtonCancel>
-					<ButtonSave
-						onClick={() => {}}
-						width="30px"
-						type="submit"
-						disabled={false}
-					>
-						Сохранить
-					</ButtonSave>
-				</div>
-				<div className={scss.button_circle}>
-					<ButtonCircle onClick={handleCopies} type="button" disabled={false}>
-						{' '}
-					</ButtonCircle>
+				<div className={scss.btn_div}>
+					<ButtonCancel onClick={() => reset()}> Отмена</ButtonCancel>
+					<ButtonSave type="submit"> Сохранить</ButtonSave>
 				</div>
 			</div>
 		</form>

@@ -10,7 +10,7 @@ namespace ADMINCOURSES {
 	type CoursesAdminResponse = {
 		page?: string;
 		size?: string;
-		courses: Courses[];
+		objects: Courses[];
 	};
 	type CoursesAdminRequest = {
 		page: string;
@@ -63,8 +63,7 @@ namespace ADMINCOURSES {
 		page: string;
 		size: string;
 		saveId: number | null;
-		getAllInstructorsOfCourses: Student[];
-		getAllStudentsOfCourses: Student[];
+		objects: Student[];
 	};
 	type GetInstructorCourseRequest = {
 		course: number;

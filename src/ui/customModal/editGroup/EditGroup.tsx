@@ -38,7 +38,7 @@ interface EditModalProps {
 
 const EditGroup: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 	const { data } = useGetGroupQuery({ page: '1', size: '8' });
-	const findData = data?.groupResponses.find((el) => el.id === saveId);
+	const findData = data?.objects.find((el) => el.id === saveId);
 
 	const [value, setValue] = useState<string>('');
 	const [initialValue, setInitialValue] = useState<string>('');

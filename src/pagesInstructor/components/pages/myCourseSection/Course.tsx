@@ -78,7 +78,7 @@ const Course: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.courses.length === 0 ? (
+					{data?.courses?.length === 0 ? (
 						<>
 							<NotCreatedWithoutButton
 								name="Мои курсы"
@@ -99,8 +99,8 @@ const Course: FC = () => {
 										<div className={scss.cards}>
 											{
 												<div className={scss.card}>
-													{data?.courses &&
-														data.courses.map((item) => (
+													{data?.objects &&
+														data.objects.map((item) => (
 															<div
 																key={item.id}
 																className={scss.zero_block_container}

@@ -16,7 +16,7 @@ import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton
 import { message } from 'antd';
 
 const Trash: FC = () => {
-	const { data, isLoading, isError } = useGetTrashQuery();
+	const { data, isLoading} = useGetTrashQuery();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
@@ -32,9 +32,6 @@ const Trash: FC = () => {
 		);
 	}
 
-	if (isError) {
-		return <div>Ошибка загрузки данных...</div>;
-	}
 
 	const handlePageChangeC = (
 		_e: React.ChangeEvent<unknown>,
@@ -94,7 +91,7 @@ const Trash: FC = () => {
 	return (
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
-				{data?.trashResponses.length !== 0 ? (
+				{data?.objects.length !== 0 ? (
 					<>
 						<h1>Корзина</h1>
 					</>
@@ -107,7 +104,7 @@ const Trash: FC = () => {
 				>
 					<Box>
 						<div style={{ minHeight: '64vh' }}>
-							{data?.trashResponses.length === 0 ? (
+							{data?.objects.length === 0 ? (
 								<>
 									<NotCreatedWithoutButton
 										name="Корзина"
@@ -133,7 +130,7 @@ const Trash: FC = () => {
 													</tr>
 												</thead>
 												<tbody>
-													{data?.trashResponses.map((card, index) => (
+													{data?.objects.map((card, index) => (
 														<tr
 															className={
 																index % 2 === 1
@@ -209,7 +206,7 @@ const Trash: FC = () => {
 						</div>
 					</Box>
 				</ScrollArea>
-				{data?.trashResponses?.length > 0 && (
+				{data?.objects?.length > 0 && (
 					<div className={scss.pagination}>
 						<div className={scss.Inputs}>
 							<p className={scss.text}>Перейти на страницу</p>
@@ -229,7 +226,7 @@ const Trash: FC = () => {
 						<div className={scss.stack}>
 							<Stack direction="row" spacing={2}>
 								<Pagination
-									count={Math.ceil(data!.trashResponses.length / rowsPerPage)}
+									count={Math.ceil(data!.objects.length / rowsPerPage)}
 									page={currentPage}
 									onChange={handlePageChangeC}
 									shape="rounded"
