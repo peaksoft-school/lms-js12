@@ -14,6 +14,12 @@ interface DeleteProps {
 
 const ExitModal: React.FC<DeleteProps> = ({ handleClose, openExit }) => {
 	const navigate = useNavigate();
+
+	const handleExit = () => {
+		navigate(`/auth/login`);
+		localStorage.clear();
+	};
+
 	return (
 		<div>
 			<React.Fragment>
@@ -70,8 +76,8 @@ const ExitModal: React.FC<DeleteProps> = ({ handleClose, openExit }) => {
 								}}
 								variant="text"
 								onClick={() => {
-									navigate(`/auth/login`);
 									handleClose();
+									handleExit();
 								}}
 							>
 								Да

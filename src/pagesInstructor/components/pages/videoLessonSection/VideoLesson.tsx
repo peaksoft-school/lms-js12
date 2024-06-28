@@ -2,19 +2,20 @@ import { useGetVideoLessonQuery } from '@/src/redux/api/instructor/video';
 import scss from './VideoLesson.module.scss';
 import { Button, Menu, MenuItem } from '@mui/material';
 import ModalAddVideoLesson from '@/src/ui/InstructorModal/ModalAddVideoLesson';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
 import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import ModalEditVideo from '@/src/ui/InstructorModal/ModalEditVideo';
 import DeleteVideoLesson from '@/src/ui/customModal/deleteModal/DeleteVideoLesson';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import empty from '@/src/assets/notCreated0.png';
 import Tooltip from '@mui/material/Tooltip';
 
 const VideoLesson = () => {
+	const [searchParams, setSearchParams] = useSearchParams();
 	const { lessonId } = useParams();
 	const test = Number(lessonId);
 	const { data, isLoading } = useGetVideoLessonQuery(test);
@@ -25,6 +26,7 @@ const VideoLesson = () => {
 	const [deleteModal, setDeleteModal] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openVideoId, setOpenVideoId] = useState<null | number>(null);
+	console.log(openVideoId);
 
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -47,14 +49,23 @@ const VideoLesson = () => {
 	};
 
 	const handleOpenWatch = (id: number) => {
+		searchParams.set('modal', 'isTrueModal');
+		searchParams.set('videoId', id.toString());
+		setSearchParams(searchParams);
+		// setOpenVideoId(id);
 		setWatchOpen(true);
-		setOpenVideoId(id);
 	};
 
 	const handleCloseWatch = () => {
+		searchParams.delete('modal');
+		setSearchParams(searchParams);
 		setWatchOpen(false);
 		setOpenVideoId(null);
 	};
+
+	useEffect(() => {
+		setWatchOpen(searchParams.get('modal')?.includes('isTrueModal') || false);
+	}, [searchParams]);
 
 	if (isLoading) {
 		return (
@@ -96,9 +107,7 @@ const VideoLesson = () => {
 										alt={item.titleOfVideo}
 									/>
 									<div
-										onClick={() => {
-											handleOpenWatch(item.id);
-										}}
+										onClick={() => handleOpenWatch(item.id)}
 										className={scss.button_watch}
 									>
 										<Button
@@ -191,7 +200,7 @@ const VideoLesson = () => {
 			</div>
 			<ModalAddVideoLesson open={openAdd} handleCloseVideo={handleCloseVideo} />
 			<ModalWatchVideo
-				saveId={openVideoId!}
+				// saveId={openVideoId!}
 				open={openWatch}
 				handleClose={handleCloseWatch}
 			/>

@@ -38,7 +38,7 @@ const ModalPresentation: FC<TeacherAddProps> = ({
 				aria-labelledby="child-modal-title"
 				aria-describedby="child-modal-description"
 				sx={{
-					backgroundColor: 'rgba(22, 21, 21, 0.74)',
+					backgroundColor: '#161515bc',
 					backdropFilter: 'none',
 					display: 'flex',
 					alignItems: 'center',

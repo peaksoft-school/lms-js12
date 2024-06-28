@@ -34,7 +34,6 @@ const Login: FC = () => {
 	const [postLogin] = usePostLoginMutation();
 	const navigate = useNavigate();
 	const {
-		register,
 		handleSubmit,
 		reset,
 		control,
@@ -43,10 +42,7 @@ const Login: FC = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [open, setOpen] = useState<boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [loginValue, setLoginValue] = useState<string>('');
-	const [passwordValue, setPasswordValue] = useState<string>('');
-
-	console.log(loginValue, passwordValue);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -56,8 +52,8 @@ const Login: FC = () => {
 		setOpen(false);
 	};
 
-	const onSubmit: SubmitHandler<FormData> = async (data, event) => {
-		event?.preventDefault();
+	const onSubmit: SubmitHandler<FormData> = async (data) => {
+		setIsLoading(true);
 		try {
 			const response = (await postLogin(data).unwrap()) as ResponseData;
 			const { role, token } = response;
@@ -93,6 +89,8 @@ const Login: FC = () => {
 		} catch (error) {
 			setErrorMessage('Логин или пароль не правильный');
 			console.log('Login error:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -100,16 +98,6 @@ const Login: FC = () => {
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
-
-	const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setLoginValue(e.target.value);
-		setErrorMessage(null);
-	};
-
-	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPasswordValue(e.target.value);
-		setErrorMessage(null);
-	};
 
 	return (
 		<div className={scss.Login}>
@@ -134,7 +122,6 @@ const Login: FC = () => {
 								<div className={scss.Element_inputs_login}>
 									<p>Логин :</p>
 									<Controller
-										{...register('login')}
 										control={control}
 										name="login"
 										defaultValue=""
@@ -149,14 +136,9 @@ const Login: FC = () => {
 												placeholder="Введите логин"
 												type="text"
 												error={!!errors.login}
-												onChange={(e) => {
-													field.onChange(e);
-													handleLoginChange(e);
-												}}
 											/>
 										)}
 									/>
-
 									{errors.login && (
 										<span style={{ color: 'red' }}>{errors.login.message}</span>
 									)}
@@ -166,7 +148,6 @@ const Login: FC = () => {
 										<p>Пароль : </p>
 									</InputLabel>
 									<Controller
-										{...register('password')}
 										control={control}
 										defaultValue=""
 										name="password"
@@ -197,10 +178,6 @@ const Login: FC = () => {
 													</InputAdornment>
 												}
 												error={!!errors.password}
-												onChange={(e) => {
-													field.onChange(e);
-													handlePasswordChange(e);
-												}}
 											/>
 										)}
 									/>
@@ -230,10 +207,10 @@ const Login: FC = () => {
 								<ButtonSave
 									type="submit"
 									width="214px"
-									disabled={false}
+									disabled={isLoading}
 									onClick={() => {}}
 								>
-									Войти
+									{isLoading ? 'Загрузка...' : 'Войти'}
 								</ButtonSave>
 								<ModalPassword open={open} handleClose={handleClose} />
 							</div>

@@ -1,20 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { FC, useEffect } from 'react';
 import scss from './Styled.module.scss';
 import { useGetIdVideoLessonQuery } from '@/src/redux/api/instructor/video';
+import { useSearchParams } from 'react-router-dom';
 
 interface ModalWatchVideoProps {
 	open: boolean;
 	handleClose: () => void;
-	saveId?: number;
+	// saveId?: number;
 }
 
 const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 	open,
-	handleClose,
-	saveId = 0
+	handleClose
+	// saveId = 0
 }) => {
+	const [searchParams, _] = useSearchParams();
 	const style = {
 		position: 'absolute',
 		top: '50%',
@@ -27,15 +30,17 @@ const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 		}
 	};
 
-	const { data, isLoading, isError } = useGetIdVideoLessonQuery(saveId ?? 0);
+	const { data, isLoading, isError } = useGetIdVideoLessonQuery(
+		Number(searchParams.get('vidoeId')) ?? 0
+	);
 
 	useEffect(() => {
-		if (saveId) {
-			console.log(`Fetching video with ID: ${saveId}`);
+		if (searchParams.get('vidoeId')) {
+			console.log(`Fetching video with ID: ${searchParams.get('vidoeId')}`);
 		} else {
 			console.log('No saveId provided');
 		}
-	}, [saveId]);
+	}, [searchParams.get('vidoeId')]);
 
 	return (
 		<Modal
@@ -44,7 +49,7 @@ const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 			aria-labelledby="child-modal-title"
 			aria-describedby="child-modal-description"
 			sx={{
-				backgroundColor: 'rgba(22, 21, 21, 0.74)',
+				backgroundColor: '#161515bc',
 				backdropFilter: 'none',
 				display: 'flex',
 				alignItems: 'center',
@@ -61,12 +66,14 @@ const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 				sx={{
 					...style,
 					backgroundColor: 'transparent',
-					boxShadow: 'none'
+					boxShadow: 'none',
+					border: 'none'
 				}}
 			>
 				{isError && <p>Error fetching video.</p>}
-				{isLoading && <p>Loading video...</p>}
-				{data && data.linkOfVideo ? (
+				{isLoading ? (
+					<p>Loading video...</p>
+				) : data && data.linkOfVideo ? (
 					<div className={scss.iframe}>
 						<iframe
 							style={{ borderRadius: '10px' }}
