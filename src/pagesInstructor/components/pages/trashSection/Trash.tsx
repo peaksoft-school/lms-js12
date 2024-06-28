@@ -85,9 +85,13 @@ const Trash: FC = () => {
 		try {
 			await DeleteTrash(id);
 			message.success('Успешно удалено');
-		} catch (error) {
+		} catch (error: any) {
 			console.error('Ошибка при удалении', error);
-			message.error('Ошибка при удалении');
+			if (error.status === 403) {
+				message.error('Ошибка: доступ запрещен');
+			} else {
+				message.error('Ошибка при удалении');
+			}
 		}
 	};
 

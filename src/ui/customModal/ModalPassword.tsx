@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Input from '@/src/ui/customInput/Input.tsx';
 import ButtonSave from '@/src/ui/customButton/ButtonSave.tsx';
 import { useForgotPasswordMutation } from '@/src/redux/api/auth';
+import { notification } from 'antd';
 
 const style = {
 	position: 'absolute',
@@ -25,6 +26,7 @@ const style = {
 	p: 4,
 	borderRadius: '12px'
 };
+
 interface ModalPasswordProps {
 	open: boolean;
 	handleClose: () => void;
@@ -32,26 +34,48 @@ interface ModalPasswordProps {
 
 const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 	const [inputvalue, setInputValue] = useState<string>('');
-	const { control, handleSubmit, reset } = useForm();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const {
+		control,
+		handleSubmit,
+		reset,
+		formState: { errors }
+	} = useForm();
 
 	const [forgotPasswordMutation] = useForgotPasswordMutation();
 
 	const handleInputChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
 	};
+
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		const { email } = data;
+		setIsLoading(true);
+		const { link } = data;
 		const newData = {
-			email: email,
-			link: 'http://localhost:5173/auth/newPassword'
+			link: link
+			// Здесь возможно нужно будет изменить структуру данных
 		};
-		await forgotPasswordMutation(newData);
-		reset();
-		handleClose();
+		try {
+			await forgotPasswordMutation(newData).unwrap();
+			reset();
+			handleClose();
+			notification.success({
+				message: 'Успех',
+				description: 'Ссылка была успешно отправлена.'
+			});
+		} catch (error) {
+			notification.error({
+				message: 'Ошибка',
+				description:
+					'Произошла ошибка при отправке ссылки. Пожалуйста, попробуйте еще раз.'
+			});
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
-		<form>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -75,33 +99,47 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 
 						<div className={scss.input}>
 							<Controller
-								name="email"
+								name="link"
 								control={control}
 								defaultValue=""
+								rules={{
+									required: 'Ссылка обязательна для заполнения',
+									pattern: {
+										value: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/,
+										message: 'Введите действительную ссылку'
+									}
+								}}
 								render={({ field }) => (
-									<Input
-										size="medium"
-										{...field}
-										type="text"
-										value={inputvalue}
-										width="100%"
-										placeholder="Введите ваш Email"
-										onChange={(e) => {
-											field.onChange(e);
-											handleInputChange1(e);
-										}}
-									/>
+									<>
+										<Input
+											size="medium"
+											{...field}
+											type="text"
+											value={inputvalue}
+											width="100%"
+											placeholder="Введите вашу ссылку"
+											onChange={(e) => {
+												field.onChange(e);
+												handleInputChange1(e);
+											}}
+										/>
+										{errors.link && (
+											<span style={{ color: 'red' }}>
+												{errors.link.message}
+											</span>
+										)}
+									</>
 								)}
 							/>
 						</div>
 						<div className={scss.buttonAdd}>
 							<ButtonSave
+								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="100%"
-								disabled={inputvalue == '' ? true : false}
-								onClick={handleSubmit(onSubmit)}
+								disabled={isLoading || !inputvalue}
 							>
-								Отправить
+								{isLoading ? 'Загрузка...' : 'Отправить'}
 							</ButtonSave>
 						</div>
 					</Box>

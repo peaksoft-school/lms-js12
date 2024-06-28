@@ -51,6 +51,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 				</button>
 				<ul>
 					<div className={scss.peaksoft_img}>
+						
 						<img
 							className={
 								isOpen

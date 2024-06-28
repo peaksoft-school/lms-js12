@@ -217,9 +217,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 								defaultValue=""
 								rules={{
 									required: 'Номер обязателен для заполнения',
-									validate: (value) =>
-										value.startsWith('+') ||
-										'Номер телефона должен начинаться с символа "+"'
+									validate: (value) => value.startsWith('+') || ''
 								}}
 								render={({ field }) => (
 									<Input
@@ -250,7 +248,7 @@ const ModalAddStudent: FC<StudentAddProps> = ({ open, handleClose }) => {
 									required: 'Email обязателен для заполнения',
 									pattern: {
 										value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-										message: 'Некорректный формат Email'
+										message: ''
 									}
 								}}
 								render={({ field }) => (

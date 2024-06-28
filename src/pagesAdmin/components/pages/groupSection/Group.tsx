@@ -38,28 +38,18 @@ const Groups: FC = () => {
 		setAnchorEl(null);
 	};
 
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-		searchParams.set('page', page.toString());
-		navigate(`/admin/group/page/?${searchParams.toString()}`);
-	};
 	const handleInputValue = (value: number) => {
 		const valueString = value.toString();
 		searchParams.set('page', valueString === '0' ? '1' : valueString);
 		setSearchParams(searchParams);
 		navigate(`/admin/group/page/?${searchParams.toString()}`);
 	};
-
 	const handleInputValuePaginationSize = (value: number) => {
 		const valueSize = value.toString();
 		searchParams.set('size', valueSize);
 		setSearchParams(searchParams);
 		navigate(`/admin/group/page/?${searchParams.toString()}`);
 	};
-
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
 	const { data } = useGetGroupQuery({
@@ -268,7 +258,7 @@ const Groups: FC = () => {
 												)}
 												variant="outlined"
 												shape="rounded"
-												onChange={handlePageChangeC}
+												// onChange={() => handleInputValue(currentPage)}
 											/>
 										)}
 								</Stack>
