@@ -103,6 +103,14 @@
 			.second_input {
 				max-width: 149px;
 				width: 100%;
+
+				input {
+					border: none;
+					padding: 15px 15px;
+					background: #eff0f4;
+					opacity: none;
+					outline: none;
+				}
 			}
 		}
 

@@ -10,6 +10,7 @@ import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 import { usePostStudentTaskMutation } from '@/src/redux/api/students/sendTask';
 import { IconDownload } from '@tabler/icons-react';
+import { message } from 'antd';
 import Sources from 'quill';
 
 const SendOneTask = () => {
@@ -24,6 +25,7 @@ const SendOneTask = () => {
 	const [secondSave, setSecondSave] = useState<string | null>(null);
 	const [description, setDescription] = useState('');
 	const [createGroupFile] = useCreateGroupFileMutation();
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const modules = {
@@ -125,6 +127,8 @@ const SendOneTask = () => {
 	};
 
 	const addTask = async () => {
+		if (loading) return;
+		setLoading(true);
 		try {
 			const newDescription = value.replace(
 				/<img[^>]*>/,
@@ -140,11 +144,16 @@ const SendOneTask = () => {
 			const response = await postStudentTask({ newTask, getTask });
 			navigate(`/courses/${coursesId}/materials/${lessonId}/lesson`);
 
-			if (!response) {
+			if (response) {
+				message.success('Задание успешно отправлено');
+			} else {
 				throw new Error('Invalid response from server');
 			}
 		} catch (error) {
 			console.error('Error creating task:', error);
+			message.error('Ошибка при отправке задания');
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -154,8 +163,8 @@ const SendOneTask = () => {
 				{data?.taskResponse.map((item) => (
 					<div className={scss.card} key={item.id}>
 						<div className={scss.text}>
-							<h2>{item.deadline.split('T')[0]}</h2>
-							<h2>{item.deadline.split('T')[1]}</h2>
+							<h3>{item.deadline.split('T')[0]}</h3>
+							<h3>{item.deadline.split('T')[1]}</h3>
 						</div>
 						<div
 							className={scss.inner_html}
@@ -171,17 +180,25 @@ const SendOneTask = () => {
 							style={{ display: 'none' }}
 							onChange={handleFileSelect}
 						/>
-						<ButtonCancel
-							disabled={false}
-							width="207px"
-							onClick={() => fileInputRef.current?.click()}
-							type="button"
-						>
-							<span style={{ paddingLeft: '10px' }}> Загрузить файл</span>
-							<IconDownload stroke={2} />
-						</ButtonCancel>
+						<div className={scss.buttons}>
+							<div className={scss.button}>
+								<ButtonCancel
+									disabled={false}
+									width="100%"
+									onClick={() => fileInputRef.current?.click()}
+									type="button"
+								>
+									<div className={scss.button_elements}>
+										<div className={scss.icon}>
+											<IconDownload stroke={2} />
+										</div>
+										<span> Загрузить файл</span>
+									</div>
+								</ButtonCancel>
+							</div>
+						</div>
 					</div>
-					<div>
+					<div className={scss.react_quill}>
 						<ReactQuill
 							theme="snow"
 							value={value}
@@ -208,12 +225,12 @@ const SendOneTask = () => {
 						}}
 					>
 						<ButtonSave
-							// disabled={false}
+							disabled={loading}
 							onClick={addTask}
 							width="117px"
 							type="button"
 						>
-							Отправить
+							{loading ? 'Отправка...' : 'Отправить'}
 						</ButtonSave>
 					</div>
 				</div>

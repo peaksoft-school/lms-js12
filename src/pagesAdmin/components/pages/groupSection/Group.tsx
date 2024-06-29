@@ -84,9 +84,7 @@ const Groups: FC = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span style={{ textTransform: ' none ' }}>
-										Создать группу
-									</span>
+									<span style={{ textTransform: 'none' }}>Создать группу</span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Группы</h1>
@@ -133,9 +131,10 @@ const Groups: FC = () => {
 																		<p
 																			style={{
 																				width: '100%',
-																				maxWidth: '100px',
+																				maxWidth: '150px',
 																				textOverflow: 'ellipsis',
-																				overflow: 'hidden'
+																				overflow: 'hidden',
+																				whiteSpace: 'nowrap'
 																			}}
 																			className={scss.block_title}
 																		>
@@ -155,7 +154,8 @@ const Groups: FC = () => {
 																				width: '100%',
 																				maxWidth: '300px',
 																				textOverflow: 'ellipsis',
-																				overflow: 'hidden'
+																				overflow: 'hidden',
+																				whiteSpace: 'nowrap'
 																			}}
 																		>
 																			{item.description}

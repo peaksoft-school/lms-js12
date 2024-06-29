@@ -54,7 +54,7 @@ const LayoutStudents = () => {
 						<Header isOpen={isOpen} setIsOpen={setIsOpen} />
 					</>
 				)}
-				<main style={{ width: '100%' }}>
+				<main style={{ width: '100%', overflowY: 'auto' }}>
 					{!isMobile && (
 						<>
 							<Routes>

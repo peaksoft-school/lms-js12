@@ -235,13 +235,19 @@ const CreateGroup: FC<CreateGroupsProps> = ({ open, handleClose }) => {
 								/>
 							</div>
 							<div className={scss.second_input}>
-								<Input
+								{/* <Input
 									size="medium"
 									placeholder="Дата окончания"
 									value={data}
 									onChange={(e) => handleDateChange(e.target.value)}
 									width="100%"
 									type="date"
+								/> */}
+								<input
+									type="date"
+									min={new Date().toISOString().split('T')[0]}
+									value={data}
+									onChange={(e) => handleDateChange(e.target.value)}
 								/>
 							</div>
 						</div>

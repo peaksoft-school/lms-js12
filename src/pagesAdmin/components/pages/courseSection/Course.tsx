@@ -15,6 +15,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
+import { MouseEventHandler } from 'react';
 
 const Courses: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -50,15 +51,14 @@ const Courses: FC = () => {
 	const navigate = useNavigate();
 
 	const open = Boolean(anchorEl);
-	const handleClick = (event: React.MouseEvent<HTMLElement>, id: number) => {
+
+	const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
 		setAnchorEl(event.currentTarget);
-		setSaveId(id);
 	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
-	console.log(saveId, '4444');
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
 
@@ -78,7 +78,7 @@ const Courses: FC = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span style={{ textTransform: ' none ' }}>Создать курс</span>
+									<span style={{ textTransform: 'none' }}>Создать курс</span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Курсы</h1>
@@ -130,7 +130,8 @@ const Courses: FC = () => {
 																					width: '100%',
 																					maxWidth: '150px',
 																					textOverflow: 'ellipsis',
-																					overflow: 'hidden'
+																					overflow: 'hidden',
+																					whiteSpace: 'nowrap'
 																				}}
 																				className={scss.block_title}
 																			>
@@ -150,7 +151,8 @@ const Courses: FC = () => {
 																					width: '100%',
 																					maxWidth: '300px',
 																					textOverflow: 'ellipsis',
-																					overflow: 'hidden'
+																					overflow: 'hidden',
+																					whiteSpace: 'nowrap'
 																				}}
 																			>
 																				{item.description}

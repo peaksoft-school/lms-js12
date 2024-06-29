@@ -122,7 +122,7 @@ const Announcements = () => {
 										<div className={scss.icon}>
 											<IconPlus stroke={2} />
 										</div>
-										<span style={{ textTransform: ' none ' }}>
+										<span style={{ textTransform: 'none' }}>
 											Добавить обьявление
 										</span>
 									</Button>
@@ -163,7 +163,7 @@ const Announcements = () => {
 														<span className={scss.announce_groups}>
 															Для кого:
 														</span>
-														{item.groupNames.join('  ')}
+														{item.groupNames.join(' / ')}
 													</p>
 													<p className={scss.announcement_owner}>
 														<span className={scss.announc_user}>
@@ -178,9 +178,10 @@ const Announcements = () => {
 														<p
 															style={{
 																width: '100%',
-																maxWidth: '1000px',
+																maxWidth: '640px',
 																textOverflow: 'ellipsis',
-																overflow: 'hidden'
+																overflow: 'hidden',
+																whiteSpace: 'nowrap'
 															}}
 														>
 															{item.content}
@@ -196,7 +197,7 @@ const Announcements = () => {
 												>
 													<div className={scss.cont_date}>
 														<p className={scss.announcement_publishDate}>
-															{item.publishDate}/{item.endDate}
+															{item.publishDate} / {item.endDate}
 														</p>
 														<button
 															className={scss.button}

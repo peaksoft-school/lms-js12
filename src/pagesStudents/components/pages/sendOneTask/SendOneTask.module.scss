@@ -16,7 +16,7 @@
 		max-height: 100vh;
 		background: #fff;
 		border-radius: 10px;
-		overflow-y: scroll !important;
+		width: 100% !important;
 		.content {
 			padding-inline: 20px;
 			display: flex;
@@ -33,6 +33,57 @@
 			.save_file {
 				display: flex;
 				justify-content: flex-end;
+
+				.buttons {
+					display: flex;
+					gap: 10px;
+					justify-content: center;
+					align-items: center;
+					@media (max-width: 700px) {
+						gap: 0;
+					}
+					.button {
+						.button_elements {
+							display: flex;
+							gap: 10px;
+							justify-content: center;
+							align-items: center;
+							border-radius: 8px;
+							text-transform: capitalize;
+							.icon {
+								width: 25px;
+								height: 25px;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+							}
+							span {
+								white-space: nowrap;
+							}
+							@media (max-width: 700px) {
+								span {
+									display: none;
+								}
+							}
+						}
+					}
+					:global {
+						.MuiButtonBase-root {
+							max-width: 360px !important;
+							width: 100% !important ;
+							@media (max-width: 700px) {
+								width: 0 !important;
+							}
+						}
+						.MuiButton-outlinedPrimary {
+							max-width: 360px !important;
+							width: 100% !important ;
+							@media (max-width: 700px) {
+								width: 0 !important;
+							}
+						}
+					}
+				}
 			}
 
 			:global {
@@ -42,6 +93,27 @@
 
 				.ql-toolbar {
 					border-radius: 10px !important;
+				}
+			}
+
+			.react_quill {
+				.editorInput {
+					width: 100%;
+					border: none !important;
+					display: flex;
+					flex-direction: column;
+					border-top: none;
+				}
+
+				p {
+					width: 100% !important;
+					max-width: 900px !important;
+				}
+
+				img {
+					width: 100% !important;
+					max-width: 900px !important;
+					height: auto !important;
 				}
 			}
 		}
@@ -69,6 +141,7 @@
 				font-size: 16px;
 				border-bottom: 1px solid #d0d0d0;
 				padding-bottom: 25px;
+
 				p {
 					font-size: 16px;
 				}
