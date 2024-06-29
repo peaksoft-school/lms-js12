@@ -328,9 +328,6 @@ export default function BasicBreadcrumbs() {
 						aria-label="breadcrumb"
 						separator={<IconChevronRight width={20} stroke={2} />}
 					>
-						<Link style={{ fontSize: '14px', color: '#1976d2' }} to="/courses">
-							Мои курсы
-						</Link>
 						{pathname === `/courses/${coursesId}/materials` && (
 							<>
 								<Link

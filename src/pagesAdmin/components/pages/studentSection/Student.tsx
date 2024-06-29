@@ -173,7 +173,7 @@ const Student: React.FC = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span style={{ textTransform: ' none ' }}>
+									<span style={{ textTransform: 'none' }}>
 										Добавить студента
 									</span>
 								</Button>

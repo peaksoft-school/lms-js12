@@ -9,13 +9,11 @@ import { useSearchParams } from 'react-router-dom';
 interface ModalWatchVideoProps {
 	open: boolean;
 	handleClose: () => void;
-	// saveId?: number;
 }
 
 const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 	open,
 	handleClose
-	// saveId = 0
 }) => {
 	const [searchParams, _] = useSearchParams();
 	const style = {
@@ -31,16 +29,16 @@ const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
 	};
 
 	const { data, isLoading, isError } = useGetIdVideoLessonQuery(
-		Number(searchParams.get('vidoeId')) ?? 0
+		Number(searchParams.get('videoId')) ?? 0
 	);
 
 	useEffect(() => {
-		if (searchParams.get('vidoeId')) {
-			console.log(`Fetching video with ID: ${searchParams.get('vidoeId')}`);
+		if (searchParams.get('videoId')) {
+			console.log(`Fetching video with ID: ${searchParams.get('videoId')}`);
 		} else {
 			console.log('No saveId provided');
 		}
-	}, [searchParams.get('vidoeId')]);
+	}, [searchParams.get('videoId')]);
 
 	return (
 		<Modal

@@ -107,7 +107,7 @@ const Materials: FC = () => {
 			<div className={scss.container}>
 				<DragDropContext onDragEnd={handleDragEnd}>
 					<div style={{ minHeight: '76vh' }}>
-						{data?.lessonResponses.length !== 0 && (
+						{data?.objects?.length !== 0 && (
 							<>
 								<div className={scss.button_title_elements}>
 									<Button
@@ -162,7 +162,7 @@ const Materials: FC = () => {
 																{...droppableProvider.droppableProps}
 															>
 																{data?.objects &&
-																	data?.objects.map((todo, index) => (
+																	data?.objects?.map((todo, index) => (
 																		<Draggable
 																			index={index}
 																			key={todo.id}

@@ -53,5 +53,5 @@ namespace MATERIALS {
 			description: string;
 		}[];
 	};
-	type GetOneTaskRequest = void;
+	type GetOneTaskRequest = number;
 }

@@ -46,9 +46,6 @@
 					position: relative;
 				}
 				.button {
-					position: absolute;
-					top: 50%;
-					right: 58%;
 				}
 
 				.editor {
@@ -63,9 +60,12 @@
 					p {
 						width: 100% !important;
 						max-width: 1200px !important;
+					}
 
-						img {
-						}
+					img {
+						width: 100% !important;
+						max-width: 900px !important;
+						height: auto !important;
 					}
 				}
 				.second_icon {

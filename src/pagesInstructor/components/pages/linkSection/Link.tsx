@@ -96,9 +96,9 @@ const Link = () => {
 				</div>
 			</div>
 
-			{data?.linkResponses && data.linkResponses.length > 0 ? (
+			{data?.objects && data.objects.length > 0 ? (
 				<div className={scss.card}>
-					{data.linkResponses.map((link: LinkData) => (
+					{data?.objects?.map((link: LinkData) => (
 						<div className={scss.cards} key={link.id}>
 							<div className={scss.title}>
 								<div className={scss.text}>

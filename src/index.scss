@@ -8,7 +8,7 @@
 	background: #fff !important;
 }
 ::-webkit-scrollbar-thumb {
-	background: #928f8f !important;
+	background: #fff !important;
 }
 * {
 	box-sizing: border-box;
@@ -29,9 +29,10 @@ a {
 body {
 	font-family: 'Inter', sans-serif !important;
 	background: #eff0f4 !important;
+	// overflow-y: auto !important;
 }
 .container {
-	width: 100%;
-	min-height: 100vh;
-	padding: 30px 20px;
+	width: 100% !important;
+	min-height: 100vh !important;
+	padding: 30px 20px !important;
 }

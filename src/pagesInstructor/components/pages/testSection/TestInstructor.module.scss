@@ -16,7 +16,7 @@
 		.test_container_second {
 			display: flex;
 			flex-direction: column;
-			height: 79px;
+			height: 80px;
 			border-radius: 6px;
 			border: 1px solid #d4d4d4;
 			background: #dde9f9;
@@ -32,6 +32,7 @@
 				.test_cont {
 					display: flex;
 					justify-content: space-between;
+					align-items: center;
 				}
 
 				.button {
@@ -55,7 +56,7 @@
 
 				.text_time {
 					color: #898989;
-					padding-left: 38px;
+					padding-left: 20px;
 				}
 			}
 			.test_buttons_container {

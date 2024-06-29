@@ -42,7 +42,7 @@ const EditLink: FC<EditLinkProps> = ({ open, handleClose, resultId }) => {
 	const { data: linkData, isFetching } = useGetLinkQuery(Number(lessonId));
 	const [editLink] = useEditLinkMutation();
 
-	const finder = linkData?.linkResponses.find((item) => item.id === resultId);
+	const finder = linkData?.objects.find((item) => item.id === resultId);
 
 	useEffect(() => {
 		reset({

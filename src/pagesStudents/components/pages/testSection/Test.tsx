@@ -41,6 +41,7 @@ const Test = () => {
 						<div className={scss.test_buttons_container}>
 							<Button
 								variant="contained"
+								size="small"
 								onClick={() =>
 									navigate(
 										`/courses/${coursesId}/materials/${lessonId}/${question.testId}/showTest`

@@ -14,7 +14,6 @@ import LessonPage from '../pages/LessonPage';
 import SupHeaderMobile from '@/src/ui/subHeaderMobile/SubHeaderMobile';
 import AddTaskPage from '../pages/AddTaskPage';
 import EditTask from '../pages/editTaskSection/EditTask';
-import GetTask from '../pages/getTaskSection/GetTask';
 import GetTestInstructor from '../pages/getTestSection/GetTestInstructor';
 import Answer from '../pages/answerSection/Answer';
 import RatingStudentsPage from '../pages/RatingStudentsPage';
@@ -61,7 +60,7 @@ const LayoutInstructor = () => {
 						<Header isOpen={isOpen} setIsOpen={setIsOpen} />
 					</>
 				)}
-				<main style={{ width: '100%' }}>
+				<main style={{ width: '100%', overflowY: 'auto' }}>
 					{!isMobile && (
 						<>
 							<Routes>

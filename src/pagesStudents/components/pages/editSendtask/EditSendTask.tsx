@@ -14,6 +14,7 @@ import { useCreateGroupFileMutation } from '@/src/redux/api/admin/groups';
 import { useEditSendTaskMutation } from '@/src/redux/api/students/sendTask';
 import { IconDownload } from '@tabler/icons-react';
 import Sources from 'quill';
+import { message } from 'antd'; // Import Ant Design message component
 
 const EditSendTask = () => {
 	const { coursesId, lessonId, getTaskId } = useParams();
@@ -30,6 +31,7 @@ const EditSendTask = () => {
 	const { data: responseTask } = useAnswerTaskStudentQuery(getTaskId);
 	const navigate = useNavigate();
 	const [editSendTask] = useEditSendTaskMutation();
+	const [loading, setLoading] = useState(false); // Add loading state
 
 	useEffect(() => {
 		if (responseTask) {
@@ -137,6 +139,7 @@ const EditSendTask = () => {
 	};
 
 	const addTask = async () => {
+		setLoading(true); // Set loading to true
 		try {
 			const newDescription = value.replace(
 				/<img[^>]*>/,
@@ -155,8 +158,13 @@ const EditSendTask = () => {
 			if (!response) {
 				throw new Error('Invalid response from server');
 			}
+
+			message.success('Задание успешно отправлено'); // Show success message
 		} catch (error) {
 			console.error('Error creating task:', error);
+			message.error('Ошибка при отправке задания'); // Show error message
+		} finally {
+			setLoading(false); // Set loading to false
 		}
 	};
 
@@ -220,12 +228,12 @@ const EditSendTask = () => {
 						}}
 					>
 						<ButtonSave
-							disabled={false}
+							disabled={loading} 
 							onClick={addTask}
 							width="117px"
 							type="button"
 						>
-							Отправить
+							{loading ? 'Отправка...' : 'Отправить'}
 						</ButtonSave>
 					</div>
 				</div>

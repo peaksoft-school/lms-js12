@@ -81,7 +81,7 @@ const Lesson = () => {
 					height: '100vh !important',
 					maxHeight: '100vh',
 					minHeight: '100vh',
-					overflowY: 'auto'
+					// overflowY: 'auto'
 				}}
 			>
 				<div

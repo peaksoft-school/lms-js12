@@ -44,7 +44,6 @@ const AddTask: React.FC = () => {
 			try {
 				const response: any = await createGroupFile(formData).unwrap();
 				const fileName = response.fileName;
-				console.log('File uploaded:', fileName);
 				setSelectedFile(fileName);
 				setDescription(description);
 			} catch (error) {
@@ -74,7 +73,6 @@ const AddTask: React.FC = () => {
 			formData.append('description', cleanedDescription);
 			const response: any = await createGroupFile(formData).unwrap();
 			if (response && response.urlFile) {
-				console.log('Image uploaded:', response.urlFile);
 				setSecondSave(response.urlFile);
 			} else {
 				console.error('Invalid response structure:', response);
@@ -132,8 +130,22 @@ const AddTask: React.FC = () => {
 
 	const handleDeleteFile = async () => {
 		try {
-			setSecondSave(null);
-			console.log('File deleted successfully');
+			const selector = document.querySelector('.ql-editor');
+			if (selector) {
+				const paragraph = selector.querySelector('p');
+				if (paragraph) {
+					const imgTags = paragraph.querySelectorAll('img');
+					console.log(`Number of <img> tags inside <p>: ${imgTags.length}`);
+
+					if (imgTags.length > 0) {
+						const lastImg = imgTags[imgTags.length - 1];
+						paragraph.removeChild(lastImg);
+					}
+
+					setSelectedFile(null);
+					setSecondSave(null);
+				}
+			}
 		} catch (error) {
 			console.error('Error deleting file:', error);
 		}
@@ -222,6 +234,7 @@ const AddTask: React.FC = () => {
 											modules={modules}
 										/>
 									</div>
+
 									<div className={scss.button}>
 										{value.includes('<img') && (
 											<>
@@ -235,6 +248,7 @@ const AddTask: React.FC = () => {
 											</>
 										)}
 									</div>
+
 									<div>
 										{saveSelect !== null ? (
 											<a href={saveSelect}>{saveSelect}</a>

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Tooltip } from '@mui/material';
 import { useGetVideoLessonForStudentQuery } from '@/src/redux/api/students/videoStudent';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import ModalWatchVideo from '@/src/ui/InstructorModal/ModalWatchVideo';
 import scss from './StudentVideoLesson.module.scss';
@@ -10,21 +10,32 @@ import empty from '@/src/assets/notCreated0.png';
 const StudentVideoLesson = () => {
 	const { lessonId } = useParams();
 	const lesson = Number(lessonId);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [openVideoId, setOpenVideoId] = useState<null | number>(null);
+	console.log(openVideoId);
 
 	const { data: video = [], isLoading } =
 		useGetVideoLessonForStudentQuery(lesson);
 
 	const [openWatch, setWatchOpen] = useState(false);
-	const [openVideoId, setOpenVideoId] = useState<undefined | number>(undefined);
 
 	const handleOpenWatch = (id: number) => {
+		searchParams.set('modal', 'isTrueModal');
+		searchParams.set('videoId', id.toString());
+		setSearchParams(searchParams);
 		setWatchOpen(true);
-		setOpenVideoId(id);
 	};
 
 	const handleCloseWatch = () => {
+		searchParams.delete('modal');
+		setSearchParams(searchParams);
+		setOpenVideoId(null);
 		setWatchOpen(false);
 	};
+
+	useEffect(() => {
+		setWatchOpen(searchParams.get('modal')?.includes('isTrueModal') || false);
+	}, [searchParams]);
 
 	if (isLoading) {
 		return (
@@ -104,11 +115,7 @@ const StudentVideoLesson = () => {
 					))
 				)}
 			</div>
-			<ModalWatchVideo
-				saveId={openVideoId}
-				open={openWatch}
-				handleClose={handleCloseWatch}
-			/>
+			<ModalWatchVideo open={openWatch} handleClose={handleCloseWatch} />
 		</div>
 	);
 };

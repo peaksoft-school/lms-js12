@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace MATERIALS {
 	type getResponseLink = {
-		linkResponses: {
+		objects: {
 			id: number;
 			title: string;
 			url: string;

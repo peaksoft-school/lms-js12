@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -28,22 +29,30 @@ const GetOneTask = () => {
 		}
 	}, [response, status, navigate, coursesId, lessonId, getTaskId]);
 
+	const formatDeadline = (deadline: any) => {
+		const [date, time] = deadline.split('T');
+		return `${date} / ${time}`;
+	};
+
 	return (
 		<div className={scss.get_task}>
 			<div className={scss.Task}>
-				{taskData?.taskResponse.map((item, index) => (
-					<div key={index} className={scss.card}>
-						<h2 className={scss.task_teacher}>Задание учителя:</h2>
-						<div className={scss.text}>
-							<p>Срок сдачи : {item.deadline}</p>
-							<p>{item.title}</p>
+				{taskData?.taskResponse.map((item, index) => {
+					const formattedDeadline = formatDeadline(item.deadline);
+					return (
+						<div key={index} className={scss.card}>
+							<h2 className={scss.task_teacher}>Задание учителя:</h2>
+							<div className={scss.text}>
+								<p>Срок сдачи: {formattedDeadline}</p>
+								<p>{item.title}</p>
+							</div>
+							<div
+								className={scss.inner_html}
+								dangerouslySetInnerHTML={{ __html: item.description }}
+							/>
 						</div>
-						<div
-							className={scss.inner_html}
-							dangerouslySetInnerHTML={{ __html: item.description }}
-						/>
-					</div>
-				))}
+					);
+				})}
 
 				{response && (
 					<div className={scss.comment}>
@@ -62,8 +71,6 @@ const GetOneTask = () => {
 											<div className={scss.user}>
 												<img src={profile} alt="profile" />
 												<p>
-													{/* {response.comment.map((item, index) => (
-													))} */}
 													<h4>{item.author}</h4>
 												</p>
 											</div>
@@ -76,30 +83,28 @@ const GetOneTask = () => {
 											)}
 										</div>
 									) : (
-										<>
-											<div className={scss.admin_teacher}>
-												<div
-													style={{
-														display: 'flex',
-														flexDirection: 'column',
-														gap: '10px'
-													}}
-												>
-													<div className={scss.teacher}>
-														<img src={profile} alt="profile" />
-														<p>
-															<h4>{item.author}</h4>
-														</p>
-													</div>
-													<div className={scss.correct_hw}>
-														<p>
-															<span>{item.content}</span>
-														</p>
-														<p className={scss.data}>{item.dateTime}</p>
-													</div>
+										<div className={scss.admin_teacher}>
+											<div
+												style={{
+													display: 'flex',
+													flexDirection: 'column',
+													gap: '10px'
+												}}
+											>
+												<div className={scss.teacher}>
+													<img src={profile} alt="profile" />
+													<p>
+														<h4>{item.author}</h4>
+													</p>
+												</div>
+												<div className={scss.correct_hw}>
+													<p>
+														<span>{item.content}</span>
+													</p>
+													<p className={scss.data}>{item.dateTime}</p>
 												</div>
 											</div>
-										</>
+										</div>
 									)}
 								</>
 							))}

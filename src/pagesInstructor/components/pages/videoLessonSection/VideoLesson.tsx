@@ -52,15 +52,14 @@ const VideoLesson = () => {
 		searchParams.set('modal', 'isTrueModal');
 		searchParams.set('videoId', id.toString());
 		setSearchParams(searchParams);
-		// setOpenVideoId(id);
 		setWatchOpen(true);
 	};
 
 	const handleCloseWatch = () => {
 		searchParams.delete('modal');
 		setSearchParams(searchParams);
-		setWatchOpen(false);
 		setOpenVideoId(null);
+		setWatchOpen(false);
 	};
 
 	useEffect(() => {
@@ -199,11 +198,7 @@ const VideoLesson = () => {
 				)}
 			</div>
 			<ModalAddVideoLesson open={openAdd} handleCloseVideo={handleCloseVideo} />
-			<ModalWatchVideo
-				// saveId={openVideoId!}
-				open={openWatch}
-				handleClose={handleCloseWatch}
-			/>
+			<ModalWatchVideo open={openWatch} handleClose={handleCloseWatch} />
 			<ModalEditVideo
 				saveIdElement={saveElementId}
 				openModalEdit={openEditVideo}
