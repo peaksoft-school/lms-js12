@@ -87,10 +87,10 @@ const LessonsList = () => {
 														<p
 															style={{
 																width: '100%',
-																maxWidth: '150px',
+																maxWidth: '200px',
 																textOverflow: 'ellipsis',
 																overflow: 'hidden',
-																display: 'flex'
+																whiteSpace: 'nowrap'
 															}}
 														>
 															№ {item.title}

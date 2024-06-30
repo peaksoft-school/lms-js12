@@ -102,15 +102,14 @@
 				overflow: hidden;
 
 				p {
-					a {
-						font-weight: 600;
-						font-size: 17px;
-						color: blue;
-						width: 100%;
-						max-width: 200px;
-						text-overflow: ellipsis;
-						overflow: hidden;
-					}
+					font-weight: 600;
+					font-size: 17px;
+					color: blue;
+					width: 100%;
+					max-width: 250px;
+					text-overflow: ellipsis;
+					overflow: hidden;
+					white-space: nowrap;
 				}
 			}
 

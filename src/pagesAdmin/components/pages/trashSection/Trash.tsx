@@ -1,4 +1,4 @@
-import { FC, useState, KeyboardEvent } from 'react';
+import { FC, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import scss from './Trash.module.scss';
@@ -31,6 +31,7 @@ const Trash: FC = () => {
 		setSearchParams(searchParams);
 		navigate(`/admin/trash/?${searchParams.toString()}`);
 	};
+	console.log(currentPage);
 
 	const handleInputValuePaginationSize = (value: number) => {
 		const valueSize = value.toString();
@@ -99,7 +100,7 @@ const Trash: FC = () => {
 							classNames={scss}
 						>
 							<Box>
-								<div style={{ minHeight: '64vh' }}>
+								<div style={{ minHeight: '67vh' }}>
 									<div className={scss.table_container}>
 										<div className={scss.text}>
 											<p>
@@ -131,10 +132,11 @@ const Trash: FC = () => {
 																	<p
 																		style={{
 																			width: '100%',
-																			maxWidth: '400px',
+																			maxWidth: '500px',
 																			textOverflow: 'ellipsis',
 																			overflow: 'hidden',
-																			cursor: 'pointer'
+																			cursor: 'pointer',
+																			whiteSpace: 'nowrap'
 																		}}
 																	>
 																		{card.name}

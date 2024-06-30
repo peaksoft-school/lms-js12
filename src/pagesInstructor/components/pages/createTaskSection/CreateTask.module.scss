@@ -75,9 +75,10 @@
 			p {
 				color: #1d293f;
 				width: 100%;
-				max-width: 200px;
+				max-width: 250px;
 				text-overflow: ellipsis;
 				overflow: hidden;
+				white-space: nowrap;
 			}
 
 			.button {
