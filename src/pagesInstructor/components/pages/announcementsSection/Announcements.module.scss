@@ -1,6 +1,5 @@
 .Section_announcement {
 	overflow-y: scroll;
-	padding-inline: 20px;
 	width: 100%;
 	.main_container {
 		min-height: 89vh !important;
@@ -9,6 +8,7 @@
 		justify-content: space-between;
 
 		.add_button_name {
+			padding-inline: 20px;
 			display: flex;
 			flex-direction: column;
 			padding-top: 20px;
@@ -37,6 +37,15 @@
 					}
 				}
 			}
+
+			.title {
+				h1 {
+					width: 100%;
+					padding-inline: 20px;
+					font-size: 22px;
+					font-weight: 600;
+				}
+			}
 		}
 
 		.announce_box {
@@ -44,18 +53,18 @@
 
 			.announce_card {
 				width: 100%;
-				// display: flex;
-				// flex-wrap: wrap;
-				// place-items: center;
-				// column-gap: 20px;
+				display: flex;
+				flex-wrap: wrap;
+				place-items: center;
+				column-gap: 20px;
 				display: grid;
 				grid-template-columns: repeat(2, 1fr);
 
-				// @media (max-width: 1350px) {
-				// 	display: grid;
-				// 	grid-template-columns: repeat(1, 1fr);
-				// 	place-items: center;
-				// }
+				@media (max-width: 1350px) {
+					display: grid;
+					grid-template-columns: repeat(1, 1fr);
+					place-items: center;
+				}
 				.announce_list {
 					width: 100%;
 					max-width: 800px;
@@ -81,47 +90,6 @@
 						right: 20px;
 						cursor: pointer;
 					}
-
-					// @media (max-width: 600px) {
-					// 	width: 100%;
-					// 	max-width: 540px;
-					// 	transition: 0.4s !important;
-					// }
-					// @media (max-width: 580px) {
-					// 	width: 100%;
-					// 	max-width: 500px;
-					// 	transition: 0.4s !important;
-					// }
-					// @media (max-width: 540px) {
-					// 	width: 100%;
-					// 	max-width: 460px;
-					// 	transition: 0.4s !important;
-					// }
-					// @media (max-width: 510px) {
-					// 	width: 100%;
-					// 	max-width: 420px;
-					// 	transition: 0.4s !important;
-					// }
-					// @media (max-width: 460px) {
-					// 	width: 100%;
-					// 	max-width: 390px;
-					// 	transition: 0.4s !important;
-					// }
-					// @media (max-width: 440px) {
-					// 	width: 100%;
-					// 	max-width: 340px;
-					// 	transition: 0.4s !important;
-					// }
-					// @media (max-width: 390px) {
-					// 	width: 100%;
-					// 	max-width: 300px;
-					// 	transition: 0.4s !important;
-					// }
-					// @media (max-width: 340px) {
-					// 	width: 100%;
-					// 	max-width: 270px;
-					// 	transition: 0.4s !important;
-					// }
 				}
 			}
 		}
@@ -212,7 +180,7 @@
 	color: #8b8b8b;
 }
 .announce_groupsss {
-	color: blue;
+	color: #0000ff;
 }
 
 .cont_date {

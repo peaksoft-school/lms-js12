@@ -98,7 +98,8 @@ const Courses: FC = () => {
 																					width: '100%',
 																					maxWidth: '150px',
 																					textOverflow: 'ellipsis',
-																					overflow: 'hidden'
+																					overflow: 'hidden',
+																					whiteSpace: 'nowrap'
 																				}}
 																				className={scss.block_title}
 																			>
@@ -115,9 +116,10 @@ const Courses: FC = () => {
 																				<p
 																					style={{
 																						width: '100%',
-																						maxWidth: '500px',
+																						maxWidth: '300px',
 																						textOverflow: 'ellipsis',
-																						overflow: 'hidden'
+																						overflow: 'hidden',
+																						whiteSpace: 'nowrap'
 																					}}
 																				>
 																					{item.description}

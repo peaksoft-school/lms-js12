@@ -171,7 +171,7 @@ const Announcements = () => {
 														<p
 															style={{
 																width: '100%',
-																maxWidth: '640px',
+																maxWidth: '650px',
 																textOverflow: 'ellipsis',
 																overflow: 'hidden',
 																whiteSpace: 'nowrap'

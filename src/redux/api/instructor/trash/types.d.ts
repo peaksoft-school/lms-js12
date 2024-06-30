@@ -4,7 +4,8 @@ namespace INSTRUCTOR {
 		id: Key | null | undefined;
 		id: number;
 		name: string;
-		date: number;
+		dateOfDelete: string;
+
 	}
 
 	type GetCardsResponse = {

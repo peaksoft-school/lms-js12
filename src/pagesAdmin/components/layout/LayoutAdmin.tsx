@@ -56,7 +56,7 @@ const LayoutAdmin = () => {
 					</>
 				)}
 
-				<main style={{ width: '100%' }}>
+				<main style={{ width: '100%', overflowY: 'auto' }}>
 					{!isMobile && (
 						<>
 							<Routes>

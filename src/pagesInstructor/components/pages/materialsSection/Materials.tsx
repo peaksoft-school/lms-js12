@@ -229,9 +229,10 @@ const Materials: FC = () => {
 																							<p
 																								style={{
 																									width: '100%',
-																									maxWidth: '200px',
+																									maxWidth: '500px',
 																									textOverflow: 'ellipsis',
-																									overflow: 'hidden'
+																									overflow: 'hidden',
+																									whiteSpace: 'nowrap'
 																								}}
 																							>
 																								{todo.title}

@@ -30,14 +30,14 @@ const Lesson = () => {
 								<p
 									style={{
 										width: '100%',
-										maxWidth: '400px',
+										maxWidth: '250px',
 										textOverflow: 'ellipsis',
 										overflow: 'hidden',
 										whiteSpace: 'nowrap'
 									}}
 								>
 									<a href="#" className={scss.name_home_work}>
-										№ {item.title}
+										{item.title}
 									</a>
 								</p>
 							</Tooltip>

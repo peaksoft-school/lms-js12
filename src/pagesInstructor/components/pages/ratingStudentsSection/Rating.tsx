@@ -122,7 +122,11 @@ const Rating = () => {
 									{rating?.studentResponses[0]?.lessonRatingResponses.map(
 										(lesson) => (
 											<th
-												style={{ minWidth: '170px', maxWidth: '170px' }}
+												style={{
+													minWidth: '170px',
+													maxWidth: '170px',
+													paddingLeft: '30px'
+												}}
 												colSpan={lesson.taskRatingResponses.length}
 												key={lesson.id}
 											>
@@ -130,9 +134,10 @@ const Rating = () => {
 													<p
 														style={{
 															width: '100%',
-															maxWidth: '500px',
+															maxWidth: '100px',
 															textOverflow: 'ellipsis',
-															overflow: 'hidden'
+															overflow: 'hidden',
+															whiteSpace: 'nowrap'
 														}}
 													>
 														{lesson.title}
@@ -255,10 +260,26 @@ const Rating = () => {
 												) : (
 													lesson.taskRatingResponses.map((task) => (
 														<th
-															style={{ minWidth: '170px', maxWidth: '170px' }}
+															style={{
+																minWidth: '170px',
+																maxWidth: '170px',
+																paddingLeft: '30px'
+															}}
 															key={task.id}
 														>
-															{truncateString(task.taskTitle, 7)}
+															<Tooltip title={task.taskTitle}>
+																<p
+																	style={{
+																		width: '100%',
+																		maxWidth: '100px',
+																		textOverflow: 'ellipsis',
+																		overflow: 'hidden',
+																		whiteSpace: 'nowrap'
+																	}}
+																>
+																	{task.taskTitle}
+																</p>
+															</Tooltip>
 														</th>
 													))
 												)}

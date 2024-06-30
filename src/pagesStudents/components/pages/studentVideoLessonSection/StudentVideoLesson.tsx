@@ -87,9 +87,10 @@ const StudentVideoLesson = () => {
 											<h1
 												style={{
 													width: '100%',
-													maxWidth: '200px',
+													maxWidth: '250px',
 													textOverflow: 'ellipsis',
-													overflow: 'hidden'
+													overflow: 'hidden',
+													whiteSpace: 'nowrap'
 												}}
 											>
 												{item.titleOfVideo}
@@ -100,9 +101,10 @@ const StudentVideoLesson = () => {
 											<p
 												style={{
 													width: '100%',
-													maxWidth: '500px',
+													maxWidth: '250px',
 													textOverflow: 'ellipsis',
-													overflow: 'hidden'
+													overflow: 'hidden',
+													whiteSpace: 'nowrap'
 												}}
 											>
 												{item.description}

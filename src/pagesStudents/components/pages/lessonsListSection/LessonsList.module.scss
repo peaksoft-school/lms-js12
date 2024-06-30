@@ -12,11 +12,15 @@
 		}
 		.title_lesson {
 			margin-bottom: 24px;
-
 			position: sticky;
 			z-index: 50;
 			top: 80px;
 			background: #eff0f4;
+
+			h1 {
+				font-size: 22px;
+				font-weight: 600;
+			}
 		}
 		.card {
 			display: grid;

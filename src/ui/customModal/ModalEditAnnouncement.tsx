@@ -23,7 +23,7 @@ import {
 } from '@/src/redux/api/admin/announcement';
 import scss from './EditAnnouncement.module.scss';
 import Input from '../customInput/Input';
-import { message } from 'antd'; // Импортируем message из Ant Design
+import { message } from 'antd';
 
 interface PostAnnouncementProps {
 	announcementContent: string;
@@ -70,8 +70,8 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 	const [selectedIds, setSelectedIds] = useState<number[]>([]);
 	const { control, handleSubmit, reset, watch } =
 		useForm<PostAnnouncementProps>();
-	const { data } = useGetAnnouncementTableQuery();
-	const find = data?.announcements?.find((item) => item.id === saveIdElement);
+	const { data } = useGetAnnouncementTableQuery({ page: '1', size: '4' });
+	const find = data?.objects?.find((item) => item.id === saveIdElement);
 	const [personName, setPersonName] = useState<string[]>([]);
 	const { data: groupData } = useGetAnnouncementGroupsQuery();
 
@@ -154,7 +154,7 @@ const ModalEditAnnouncement: FC<ModalProps> = ({
 
 					<Box className={scss.input_form}>
 						<div className={scss.input}>
-							<div className={scss.inputText}>
+							<div className={scss.inputText} style={{ marginBottom: '15px' }}>
 								<Controller
 									name="announcementContent"
 									control={control}

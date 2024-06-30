@@ -48,12 +48,6 @@ namespace MATERIALS {
 	type MaterialsDeleteResponse = void;
 	type MaterialsDeleteRequest = number | null;
 
-	type getResponseLinkStudents = {
-		id: number;
-		title: string;
-		url: string;
-	};
-	type getRequestLinkStudents = number;
 	type GetOneTaskResponse = {
 		taskResponse: {
 			id: number;

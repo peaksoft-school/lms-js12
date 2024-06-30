@@ -17,7 +17,6 @@ import {
 	usePostAnnouncementTableMutation
 } from '@/src/redux/api/admin/announcement';
 import InputAnnouncement from '../customInput/InputAnnouncement';
-// import { useGetAnnouncementTableQuery } from '@/src/redux/api/admin/announcement';
 import Input from '../customInput/Input';
 import { message } from 'antd';
 
@@ -182,7 +181,10 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									alignItems: 'center'
 								}}
 							>
-								<div className={scss.inputText}>
+								<div
+									className={scss.inputText}
+									style={{ marginBottom: '15px' }}
+								>
 									<Controller
 										name="announcementContent"
 										control={control}
@@ -201,7 +203,6 @@ const AnnouncementForm: FC<AnnouncementProps> = ({ open, handleClose }) => {
 									<InputLabel
 										id="demo-multiple-checkbox-label"
 										style={{
-											paddingLeft: '20px',
 											textAlign: 'center',
 											background: '#fff'
 										}}

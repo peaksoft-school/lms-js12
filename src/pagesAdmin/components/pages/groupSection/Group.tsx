@@ -242,7 +242,7 @@ const Groups: FC = () => {
 				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
-							<div className={scss.inputs}>
+							<div className={scss.Inputs}>
 								<p className={scss.text}>Перейти на страницу</p>
 								<div className={scss.pagination_element}>
 									<IconBook stroke={2} />
@@ -272,7 +272,7 @@ const Groups: FC = () => {
 								</Stack>
 							</div>
 
-							<div className={scss.inputs}>
+							<div className={scss.Inputs}>
 								<p className={scss.text}>Показать</p>
 								<div className={scss.pagination_element}>
 									<IconArticle stroke={2} />
@@ -291,15 +291,15 @@ const Groups: FC = () => {
 								/>
 								<p>из {data?.totalObjects}</p>
 							</div>
-							<CreateGroup
-								handleOpen={handleOpen}
-								open={openGroups}
-								handleClose={handleCloseCourses}
-							/>
 						</div>
 					</>
 				) : null}
 			</div>
+			<CreateGroup
+				handleOpen={handleOpen}
+				open={openGroups}
+				handleClose={handleCloseCourses}
+			/>
 		</div>
 	);
 };

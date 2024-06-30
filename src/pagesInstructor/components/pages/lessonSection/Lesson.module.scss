@@ -28,3 +28,25 @@
 		}
 	}
 }
+
+.scrollbar {
+	&,
+	&:hover {
+		background: #fff;
+		width: 1px;
+		height: 1px;
+	}
+
+	&[data-orientation='vertical'] .thumb {
+		background: var(--mantine-color-red-6);
+	}
+
+	&[data-orientation='horizontal'] .thumb {
+		background: var(--mantine-color-blue-6);
+	}
+}
+
+.corner {
+	background: #fff;
+	opacity: 1;
+}

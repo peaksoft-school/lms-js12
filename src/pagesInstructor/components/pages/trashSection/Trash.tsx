@@ -73,6 +73,11 @@ const Trash: FC = () => {
 		}
 	};
 
+	const formatDate = (dateString: string): string => {
+		const date = new Date(dateString);
+		return date.toLocaleDateString();
+	};
+
 	return (
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
@@ -132,7 +137,8 @@ const Trash: FC = () => {
 																			maxWidth: '400px',
 																			textOverflow: 'ellipsis',
 																			overflow: 'hidden',
-																			cursor: 'pointer'
+																			cursor: 'pointer',
+																			whiteSpace: 'nowrap'
 																		}}
 																	>
 																		{card.name}
@@ -145,7 +151,7 @@ const Trash: FC = () => {
 																	paddingRight: '70px'
 																}}
 															>
-																{card.date}
+																{formatDate(card.dateOfDelete)}
 															</td>
 															<td>
 																<div

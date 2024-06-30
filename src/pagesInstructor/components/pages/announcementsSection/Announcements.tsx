@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import scss from './Announcements.module.scss';
-import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
 import {
-	useGetAnnouncementInstructorTableQuery,
+	Button,
+	Menu,
+	MenuItem,
+	Pagination,
+	Stack,
+	Tooltip
+} from '@mui/material';
+import {
+	useGetAnnouncementTableQuery,
 	useShowAnnouncementMutation
 } from '@/src/redux/api/admin/announcement';
 import AnnouncementForm from '@/src/ui/announcementForm/AnnouncementForm';
@@ -45,7 +52,7 @@ const Announcements = () => {
 		setSearchParams(searchParams);
 		navigate(`/instructor/announcement?${searchParams.toString()}`);
 	};
-	const { data } = useGetAnnouncementInstructorTableQuery({
+	const { data } = useGetAnnouncementTableQuery({
 		page: searchParams.toString(),
 		size: searchParams.toString()
 	});
@@ -107,7 +114,7 @@ const Announcements = () => {
 								<span>Добавить обьявление</span>
 							</Button>
 						</div>
-						<div>
+						<div className={scss.title}>
 							<h1>Объявление</h1>
 						</div>
 					</div>
@@ -128,7 +135,7 @@ const Announcements = () => {
 										<div className={scss.announcement_owners}>
 											<p className={scss.announce_groupsss}>
 												<span className={scss.announce_groups}>Для кого:</span>
-												{item.groupNames}
+												{item.groupNames.join(' / ')}
 											</p>
 											<p className={scss.announcement_owner}>
 												<span className={scss.announc_user}>Кем создан:</span>
@@ -137,7 +144,20 @@ const Announcements = () => {
 										</div>
 										<p className={scss.announce_contents}>
 											<span className={scss.announce_content}>Текст:</span>
-											{item.content}
+											<Tooltip title={item.content}>
+												<p
+													style={{
+														width: '100%',
+														maxWidth: '250px',
+														textOverflow: 'ellipsis',
+														overflow: 'hidden',
+														whiteSpace: 'nowrap',
+														cursor: 'pointer'
+													}}
+												>
+													{item.content}
+												</p>
+											</Tooltip>
 										</p>
 										<div
 											style={{
@@ -148,7 +168,7 @@ const Announcements = () => {
 										>
 											<div className={scss.cont_date}>
 												<p className={scss.announcement_publishDate}>
-													{item.publishDate}/{item.endDate}
+													{item.publishDate} / {item.endDate}
 												</p>
 												<button
 													className={scss.button}

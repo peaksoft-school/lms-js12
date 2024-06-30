@@ -18,6 +18,7 @@ import CrateTask from '../createTaskSection/CrateTask';
 import GetTask from '../getTaskSection/GetTask';
 import Test from '../testSection/TestInstructor';
 import Link from '../linkSection/Link';
+import classes from './Lesson.module.scss';
 
 const Lesson = () => {
 	const [value, setValue] = useState(0);
@@ -80,8 +81,7 @@ const Lesson = () => {
 					width: '100%',
 					height: '100vh !important',
 					maxHeight: '100vh',
-					minHeight: '100vh',
-					// overflowY: 'auto'
+					minHeight: '100vh'
 				}}
 			>
 				<div
@@ -92,7 +92,7 @@ const Lesson = () => {
 				>
 					<div className={scss.container}>
 						<div className={scss.content}>
-							<ScrollArea type="always" scrollbars="xy">
+							<ScrollArea type="always" scrollbars="xy" classNames={classes}>
 								<Box>
 									<Tabs
 										value={value}
@@ -108,6 +108,7 @@ const Lesson = () => {
 											aria-controls="simple-tabpanel-0"
 											onClick={handleOpenVideo}
 										/>
+
 										<Tab
 											icon={<IconDeviceDesktop stroke={2} />}
 											label="Презентация"
@@ -116,6 +117,7 @@ const Lesson = () => {
 											aria-controls="simple-tabpanel-1"
 											onClick={openInstructorPresentation}
 										/>
+
 										<Tab
 											icon={<IconFile stroke={2} />}
 											label="Задание"
@@ -124,6 +126,7 @@ const Lesson = () => {
 											aria-controls="simple-tabpanel-2"
 											onClick={openLesson}
 										/>
+
 										<Tab
 											icon={<IconLink stroke={2} />}
 											label="Ссылка"
@@ -132,6 +135,7 @@ const Lesson = () => {
 											id="simple-tab-3"
 											aria-controls="simple-tabpanel-3"
 										/>
+
 										<Tab
 											icon={<IconAB2 stroke={2} />}
 											label="Тест"

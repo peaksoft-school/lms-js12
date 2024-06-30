@@ -24,7 +24,8 @@ const Test = () => {
 												width: '100%',
 												maxWidth: '500px',
 												textOverflow: 'ellipsis',
-												overflow: 'hidden'
+												overflow: 'hidden',
+												whiteSpace: 'nowrap'
 											}}
 										>
 											{question.title}
