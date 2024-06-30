@@ -1,8 +1,8 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
 import scss from './Announcements.module.scss';
 import { Button, Menu, MenuItem, Pagination, Stack } from '@mui/material';
 import {
-	useGetAnnouncementTableQuery,
+	useGetAnnouncementInstructorTableQuery,
 	useShowAnnouncementMutation
 } from '@/src/redux/api/admin/announcement';
 import AnnouncementForm from '@/src/ui/announcementForm/AnnouncementForm';
@@ -18,21 +18,37 @@ import {
 	IconEyeOff,
 	IconPlus
 } from '@tabler/icons-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Announcements = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const { data } = useGetAnnouncementTableQuery();
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(4);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(4);
 	const [showAnnouncement] = useShowAnnouncementMutation();
 	const [testId, setTestId] = useState<number | null>(null);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('pageInstructor', valueString);
+		setSearchParams(searchParams);
+		navigate(`/instructor/announcement?${searchParams.toString()}`);
+	};
+	const handleOpenSize = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('sizeInstructor', valueString);
+		setSearchParams(searchParams);
+		navigate(`/instructor/announcement?${searchParams.toString()}`);
+	};
+	const { data } = useGetAnnouncementInstructorTableQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
 	};
@@ -40,7 +56,7 @@ const Announcements = () => {
 		setOpenAnnouncement(false);
 	};
 
-	const find = data?.announcements?.find((item) => item.id === deleteById);
+	const find = data?.objects?.find((item) => item.id === deleteById);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -48,39 +64,15 @@ const Announcements = () => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-	};
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(4);
-			setOpenPage(4);
-			setCurrentPage(openPart);
-		}
-	};
-	const openPartPage = () => {
-		if (rowsPerPage > 4) {
-			setCurrentPage(1);
-		}
-	};
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 4) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(4);
-			}
-		}
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handleOpenPage(value);
 	};
 	const handleShow = async () => {
-		const test = data?.announcements.find((item) =>
+		const test = data?.objects.find((item) =>
 			item.id === testId ? item.isPublished : null
 		);
 		if (test) {
@@ -263,18 +255,19 @@ const Announcements = () => {
 							type="text"
 							value={openPart}
 							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleOpenPage(openPart);
+								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								count={Math.ceil((data?.objects.length ?? 0) / rowsPerPage)}
-								page={currentPage}
-								onChange={handlePageChangeC}
+								count={data?.totalPages}
+								page={openPart}
+								onChange={handleChangePage}
 								shape="rounded"
 								variant="outlined"
 							/>
@@ -290,8 +283,9 @@ const Announcements = () => {
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
 							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
+								if (e.key === 'Enter') {
+									handleOpenSize(openPage);
+								}
 							}}
 						/>
 					</div>

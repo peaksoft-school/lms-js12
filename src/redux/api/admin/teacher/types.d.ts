@@ -11,6 +11,8 @@ namespace TABLE {
 
 	type GetTeachersResponse = {
 		objects: Teacher[];
+		totalPages: number;
+		totalObjects: number;
 		page: string;
 		size: string;
 	};

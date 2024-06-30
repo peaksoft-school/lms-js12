@@ -17,22 +17,29 @@ const InternalInstructorStudents = () => {
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const handleInputValue = (value: number) => {
+	const handleOpenSize = (value: number) => {
 		const valueString = value.toString();
-		searchParams.set('page', valueString === '0' ? '1' : valueString);
+		searchParams.set('size', valueString);
+		setSearchParams(searchParams);
+		navigate(
+			`instructor/course/${courseId}/student/page/?${searchParams.toString()}`
+		);
+	};
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
 		setSearchParams(searchParams);
 		navigate(
 			`/instructor/course/${courseId}/student/page/?${searchParams.toString()}`
 		);
 	};
 
-	const handleInputValuePaginationSize = (value: number) => {
-		const valueSize = value.toString();
-		searchParams.set('size', valueSize);
-		setSearchParams(searchParams);
-		navigate(
-			`/instructor/course/${courseId}/student/page/?${searchParams.toString()}`
-		);
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handleOpenPage(value);
 	};
 
 	const { data, isLoading } = useGetStudentsTableQuery({
@@ -86,8 +93,8 @@ const InternalInstructorStudents = () => {
 												</tr>
 											</thead>
 											<tbody>
-												{data?.getAllStudentsOfCourses &&
-													data.getAllStudentsOfCourses.map((item, index) => (
+												{data?.objects &&
+													data.objects.map((item, index) => (
 														<tr
 															key={item.id}
 															className={
@@ -124,14 +131,20 @@ const InternalInstructorStudents = () => {
 							onChange={(e) => setOpenPart(+e.target.value)}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
-									handleInputValue(openPart);
+									handleOpenPage(openPart);
 								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
-							<Pagination page={openPage} shape="rounded" variant="outlined" />
+							<Pagination
+								count={data?.totalPages}
+								page={openPart}
+								onChange={handleChangePage}
+								shape="rounded"
+								variant="outlined"
+							/>
 						</Stack>
 					</div>
 					<div className={scss.inputs}>
@@ -143,9 +156,9 @@ const InternalInstructorStudents = () => {
 							type="text"
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+							onKeyDown={(e) => {
 								if (e.key === 'Enter') {
-									handleInputValuePaginationSize(openPage);
+									handleOpenSize(openPage);
 								}
 							}}
 						/>

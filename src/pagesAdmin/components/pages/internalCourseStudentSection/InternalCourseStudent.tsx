@@ -49,6 +49,13 @@ const InternalCourses = () => {
 	if (isLoading) {
 		return <Preloader />;
 	}
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPart(value);
+		handleOpenPage(value);
+	};
 
 	return (
 		<div className={scss.internal_student}>
@@ -113,7 +120,7 @@ const InternalCourses = () => {
 																			item.isBlock ? scss.changeClass : ''
 																		}
 																	>
-																		{index + 1 + (openPart - 1) * rowsPerPage}
+																		{index + 1 + (rowsPerPage - 1) * openPart}
 																	</td>
 
 																	<td
@@ -202,13 +209,10 @@ const InternalCourses = () => {
 								<Stack direction="row" spacing={2}>
 									<Pagination
 										page={openPart}
-										count={
-											data?.objects.length
-												? Math.ceil(data?.objects?.length / openPart)
-												: 1
-										}
+										count={data?.totalPages}
 										variant="outlined"
 										shape="rounded"
+										onChange={handleChangePage}
 									/>
 								</Stack>
 							</div>

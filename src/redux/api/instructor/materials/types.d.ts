@@ -7,9 +7,17 @@ namespace STUDENT_LESSON {
 		createdAt: string;
 	};
 	type MaterialsGetResponse = {
+		page: number;
+		size: number;
+		totalPages: number;
+		totalObjects: number;
 		objects: Lesson[];
 	};
-	type MaterialsGetRequest = number;
+	type MaterialsGetRequest = {
+		course: number;
+		page: string;
+		size: string;
+	};
 
 	type MaterialsPostResponse = {
 		course: number;

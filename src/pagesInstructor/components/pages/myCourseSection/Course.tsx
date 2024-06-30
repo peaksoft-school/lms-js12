@@ -12,7 +12,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useGetCourseInstructorQuery } from '@/src/redux/api/instructor/course';
 import CreateCourse from '@/src/ui/customModal/createCourse/CreateCurse';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Menu, MenuItem } from '@mui/material';
 import RatingModal from '@/src/ui/customModal/ratingModal/RatingModal';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
@@ -20,9 +20,6 @@ import ModalDeleteGroupOfCourse from '@/src/ui/customModal/ModalDeleteGroupOfCou
 import { Tooltip } from '@mui/material';
 
 const Course: FC = () => {
-	const { data } = useGetCourseInstructorQuery();
-	const [currentPage, setCurrentPage] = useState(1);
-	// const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
 	const [openCurse, setOpen] = useState(false);
@@ -33,6 +30,7 @@ const Course: FC = () => {
 	const [saveId, setSaveId] = useState<null | number>(null);
 	const [openRating, setOpenRating] = useState(false);
 	const open = Boolean(anchorEl);
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [deleteGroup, setDeleteGroup] = useState<boolean>(false);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -40,45 +38,35 @@ const Course: FC = () => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handleOpenPage(value);
+	};
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
+		setSearchParams(searchParams);
+		navigate(`/instructor/course?${searchParams.toString()}`);
+	};
+	const handleOpenSize = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('size', valueString);
+		setSearchParams(searchParams);
+		navigate(`/instructor/course?${searchParams.toString()}`);
 	};
 
-	// const openPartFunc = () => {
-	// 	if (openPart >= 1) {
-	// 		setRowsPerPage(8);
-	// 		setOpenPage();
-	// 		setCurrentPage(openPart);
-	// 	}
-	// };
-	// const openPartPage = () => {
-	// 	if (rowsPerPage > 8) {
-	// 		setCurrentPage(1);
-	// 	}
-	// };
-
-	// const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-	// 	if (event.key === 'Enter') {
-	// 		const newOpenPage = parseInt(event.currentTarget.value);
-	// 		if (newOpenPage > 8) {
-	// 			setRowsPerPage(newOpenPage);
-	// 			setOpenPart(1);
-	// 			setCurrentPage(1);
-	// 			openPartFunc();
-	// 		} else {
-	// 			setRowsPerPage(8);
-	// 		}
-	// 	}
-	// };
-
+	const { data } = useGetCourseInstructorQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 	return (
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.courses?.length === 0 ? (
+					{data?.objects?.length === 0 ? (
 						<>
 							<NotCreatedWithoutButton
 								name="Мои курсы"
@@ -236,13 +224,9 @@ const Course: FC = () => {
 							type="text"
 							value={openPart}
 							onChange={(e) => setOpenPart(+e.target.value)}
-							// onKeyDown={(e) => {
-							// 	handleAppend(e);
-							// 	openPartFunc();
-							// }}
 							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
 								if (e.key === 'Enter') {
-									// handlePoginationForFunk(openPart);
+									handleOpenPage(openPart);
 								}
 							}}
 						/>
@@ -250,9 +234,9 @@ const Course: FC = () => {
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								// count={Math.ceil(data!.length / rowsPerPage)}
-								page={currentPage}
-								onChange={handlePageChangeC}
+								count={data?.totalPages}
+								page={openPart}
+								onChange={handleChangePage}
 								shape="rounded"
 								variant="outlined"
 							/>
@@ -267,13 +251,9 @@ const Course: FC = () => {
 							type="text"
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
-							// onKeyDown={(e) => {
-							// 	handleAppend(e);
-							// 	openPartPage();
-							// }}
 							onKeyDown={(e) => {
 								if (e.key === 'Enter') {
-									// handlePageShowChange(openPage);
+									handleOpenSize(openPage);
 								}
 							}}
 						/>

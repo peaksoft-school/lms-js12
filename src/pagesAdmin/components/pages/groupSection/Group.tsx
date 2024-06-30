@@ -263,7 +263,7 @@ const Groups: FC = () => {
 									{openPage > 0 && data?.objects && data.objects.length > 0 && (
 										<Pagination
 											page={currentPage}
-											count={Math.ceil(data?.objects.length / openPage)}
+											count={data.totalPages}
 											variant="outlined"
 											shape="rounded"
 											onChange={handlePageChangeC}
@@ -289,6 +289,7 @@ const Groups: FC = () => {
 										}
 									}}
 								/>
+								<p>из {data?.totalObjects}</p>
 							</div>
 							<CreateGroup
 								handleOpen={handleOpen}

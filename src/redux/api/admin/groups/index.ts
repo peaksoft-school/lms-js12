@@ -45,8 +45,8 @@ export const api = index.injectEndpoints({
 			GROUPS.GetStudentsGroupResponse,
 			GROUPS.GetStudentsGroupRequest
 		>({
-			query: (group) => ({
-				url: `/api/students/studentsOfGroup/${group}`,
+			query: ({ pages, group }) => ({
+				url: `/api/students/studentsOfGroup/${group}?${pages.page}&${pages.size}`,
 				method: 'GET'
 			}),
 			providesTags: ['groups']

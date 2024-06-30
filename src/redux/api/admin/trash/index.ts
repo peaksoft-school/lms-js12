@@ -3,8 +3,8 @@ import { api as index } from '../..';
 const api = index.injectEndpoints({
 	endpoints: (builder) => ({
 		getTrash: builder.query<TRASH.GetCardsResponse, TRASH.GetCardsRequest>({
-			query: () => ({
-				url: '/api/trash/findAll',
+			query: ({ page, size }) => ({
+				url: `/api/trash/findAll?${page}&${size}`,
 				method: 'GET'
 			}),
 			providesTags: ['trash']

@@ -15,16 +15,34 @@ import { Pagination, Stack, Tooltip } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Trash: FC = () => {
-	const { data, isLoading } = useGetTrashQuery();
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [UpdatedTrash] = useUpdatedTrashMutation();
 	const [DeleteTrash] = useDeleteTrashMutation();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString === '0' ? '1' : valueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/trash/?${searchParams.toString()}`);
+	};
 
+	const handleInputValuePaginationSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/trash/?${searchParams.toString()}`);
+	};
+
+	const { data, isLoading } = useGetTrashQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 	if (isLoading) {
 		return (
 			<div>
@@ -33,39 +51,12 @@ const Trash: FC = () => {
 		);
 	}
 
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-	};
-
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(12);
-			}
-		}
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setCurrentPage(value);
+		handleOpenPage(value);
 	};
 
 	const updatedTrashFunc = async (id: number) => {
@@ -210,18 +201,19 @@ const Trash: FC = () => {
 									type="text"
 									value={openPart}
 									onChange={(e) => setOpenPart(+e.target.value)}
-									onKeyDown={(e) => {
-										handleAppend(e);
-										openPartFunc();
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPage(openPart);
+										}
 									}}
 								/>
 							</div>
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
 									<Pagination
-										count={Math.ceil(data!.objects?.length / rowsPerPage)}
-										page={currentPage}
-										onChange={handlePageChangeC}
+										count={data?.totalPages}
+										page={openPart}
+										onChange={handleChangePage}
 										shape="rounded"
 										variant="outlined"
 									/>
@@ -237,8 +229,11 @@ const Trash: FC = () => {
 									value={openPage}
 									onChange={(e) => setOpenPage(+e.target.value)}
 									onKeyDown={(e) => {
-										handleAppend(e);
-										openPartPage();
+										if (e.key === 'Enter') {
+											if (data?.totalObjects && data.totalObjects >= openPage) {
+												handleInputValuePaginationSize(openPage);
+											}
+										}
 									}}
 								/>
 							</div>

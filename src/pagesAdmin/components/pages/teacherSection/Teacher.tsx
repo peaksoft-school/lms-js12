@@ -26,7 +26,7 @@ const Teacher = () => {
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const [openPage, setOpenPage] = useState<number>(12);
+	const [openPage, setOpenPage] = useState<number>(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openTeacher, setTeacherOpen] = useState<boolean>(false);
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -78,6 +78,13 @@ const Teacher = () => {
 		setAnchorEl(null);
 	};
 
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPart(value);
+		handleSize(value);
+	};
 	return (
 		<div className={scss.teacher}>
 			<div className={scss.container}>
@@ -94,7 +101,7 @@ const Teacher = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span style={{ textTransform: ' none ' }}>
+									<span style={{ textTransform: 'none' }}>
 										Добавить учителя
 									</span>
 								</Button>
@@ -274,11 +281,8 @@ const Teacher = () => {
 								<Stack direction="row" spacing={2}>
 									<Pagination
 										page={openPart}
-										count={
-											data?.objects.length
-												? Math.ceil(data?.objects.length / openPage)
-												: 1
-										}
+										count={data?.totalPages}
+										onChange={handleChangePage}
 										variant="outlined"
 										shape="rounded"
 									/>
@@ -299,6 +303,7 @@ const Teacher = () => {
 										}
 									}}
 								/>
+								<p>из {data?.totalObjects}</p>
 							</div>
 						</div>
 					</>

@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace ANNOUNCEMENT {
 	type GetAnnouncementStudentResponse = {
-		size: string;
-		page: string;
-		announcements: {
+		page: number;
+		size: number;
+		totalPages: number;
+		totalObjects: number;
+		objects: {
 			announcementId: number;
 			content: string;
 			author: string;

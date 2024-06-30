@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useState, KeyboardEvent } from 'react';
+import { FC, useState } from 'react';
 import scss from './Trash.module.scss';
 import trash from '@/src/assets/svgs/trash (1).svg';
 import refrash from '@/src/assets/svgs/refresh.svg';
@@ -8,64 +8,45 @@ import {
 	useGetTrashQuery,
 	useUpdatedTrashMutation
 } from '@/src/redux/api/instructor/trash';
-import { Preloader } from '../../../../ui/preloader/Preloader';
 import { Pagination, Stack, Tooltip } from '@mui/material';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 import { message } from 'antd';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Trash: FC = () => {
-	const { data, isLoading} = useGetTrashQuery();
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [UpdatedTrash] = useUpdatedTrashMutation();
 	const [DeleteTrash] = useDeleteTrashMutation();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 
-	if (isLoading) {
-		return (
-			<div>
-				<Preloader />
-			</div>
-		);
-	}
-
-
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString === '0' ? '1' : valueString);
+		setSearchParams(searchParams);
+		navigate(`/instructor/trash/?${searchParams.toString()}`);
 	};
 
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
+	const handleInputValuePaginationSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/instructor/trash/?${searchParams.toString()}`);
 	};
+	const { data } = useGetTrashQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(12);
-			}
-		}
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handleOpenPage(value);
 	};
 
 	const updatedTrashFunc = async (id: number) => {
@@ -210,51 +191,54 @@ const Trash: FC = () => {
 						</div>
 					</Box>
 				</ScrollArea>
-				{data?.objects?.length > 0 && (
-					<div className={scss.pagination}>
-						<div className={scss.Inputs}>
-							<p className={scss.text}>Перейти на страницу</p>
-							<div className={scss.pagination_element}>
-								<IconBook stroke={2} />
-							</div>
-							<input
-								type="text"
-								value={openPart}
-								onChange={(e) => setOpenPart(+e.target.value)}
-								onKeyDown={(e) => {
-									handleAppend(e);
-									openPartFunc();
-								}}
-							/>
+
+				<div className={scss.pagination}>
+					<div className={scss.Inputs}>
+						<p className={scss.text}>Перейти на страницу</p>
+						<div className={scss.pagination_element}>
+							<IconBook stroke={2} />
 						</div>
-						<div className={scss.stack}>
-							<Stack direction="row" spacing={2}>
-								<Pagination
-									count={Math.ceil(data!.objects.length / rowsPerPage)}
-									page={currentPage}
-									onChange={handlePageChangeC}
-									shape="rounded"
-									variant="outlined"
-								/>
-							</Stack>
-						</div>
-						<div className={scss.Inputs}>
-							<p className={scss.text}>Показать</p>
-							<div className={scss.pagination_element}>
-								<IconArticle stroke={2} />
-							</div>
-							<input
-								type="text"
-								value={openPage}
-								onChange={(e) => setOpenPage(+e.target.value)}
-								onKeyDown={(e) => {
-									handleAppend(e);
-									openPartPage();
-								}}
-							/>
-						</div>
+						<input
+							type="text"
+							value={openPart}
+							onChange={(e) => setOpenPart(+e.target.value)}
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleOpenPage(openPart);
+								}
+							}}
+						/>
 					</div>
-				)}
+					<div className={scss.stack}>
+						<Stack direction="row" spacing={2}>
+							<Pagination
+								count={data?.totalPages}
+								page={openPart}
+								onChange={handleChangePage}
+								shape="rounded"
+								variant="outlined"
+							/>
+						</Stack>
+					</div>
+					<div className={scss.Inputs}>
+						<p className={scss.text}>Показать</p>
+						<div className={scss.pagination_element}>
+							<IconArticle stroke={2} />
+						</div>
+						<input
+							type="text"
+							value={openPage}
+							onChange={(e) => setOpenPage(+e.target.value)}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									if (data?.totalObjects && data.totalObjects >= openPage) {
+										handleInputValuePaginationSize(openPage);
+									}
+								}
+							}}
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

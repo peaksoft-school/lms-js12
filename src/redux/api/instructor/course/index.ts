@@ -6,8 +6,8 @@ export const api = index.injectEndpoints({
 			InstructorCourses.CoursesResponse,
 			InstructorCourses.CoursesRequest
 		>({
-			query: () => ({
-				url: '/api/course/myCourse?page=1&size=8',
+			query: ({ page, size }) => ({
+				url: `/api/course/myCourse?${page}&${size}`,
 				method: 'GET'
 				// ${page !== null ? page : '1'${size !== null ? size : '12'}
 				// headers: {

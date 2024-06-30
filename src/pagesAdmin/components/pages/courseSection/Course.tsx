@@ -61,6 +61,13 @@ const Courses: FC = () => {
 	};
 
 	const handleCloseEditModal = () => setOpenEditModal(false);
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setCurrentPage(value);
+		handleOpenPage(value);
+	};
 
 	return (
 		<div className={scss.course}>
@@ -259,13 +266,10 @@ const Courses: FC = () => {
 								<Stack direction="row" spacing={2}>
 									<Pagination
 										page={currentPage}
-										count={
-											data?.objects?.length
-												? Math.ceil(data.objects.length / openPage)
-												: 1
-										}
+										count={data?.totalPages}
 										variant="outlined"
 										shape="rounded"
+										onChange={handleChangePage}
 									/>
 								</Stack>
 							</div>
@@ -275,13 +279,11 @@ const Courses: FC = () => {
 									<IconArticle stroke={2} />
 								</div>
 								<input
-									style={{
-										border:
-											data?.objects &&
-											Math.ceil(data.objects.length / openPage) < openPage
-												? '2px solid red'
-												: 'none'
-									}}
+									style={
+										data?.totalObjects && data.totalObjects <= openPage
+											? { border: '2px solid red' }
+											: undefined
+									}
 									type="text"
 									value={openPage}
 									onChange={(e) => {
@@ -290,12 +292,13 @@ const Courses: FC = () => {
 									}}
 									onKeyDown={(e) => {
 										if (e.key === 'Enter') {
-											if (data?.objects && data.objects.length >= openPage) {
+											if (data?.totalObjects && data.totalObjects >= openPage) {
 												handleInputValuePaginationSize(openPage);
 											}
 										}
 									}}
 								/>
+								<p>из {data?.totalObjects}</p>
 							</div>
 						</div>
 					</>

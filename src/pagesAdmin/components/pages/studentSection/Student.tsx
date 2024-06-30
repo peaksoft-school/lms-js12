@@ -37,8 +37,6 @@ const Student: React.FC = () => {
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 	const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 	const [saveIdElement, setSaveIdElement] = useState<number | null>(null);
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [rowsPerPage, setRowsPerPage] = useState<number>(12);
 	const [saveItem, setSaveItem] = useState<Student | undefined>(undefined);
 	const [open, setOpen] = useState<boolean>(false);
 	const [openStudent, setOpenStudent] = useState<boolean>(false);
@@ -50,7 +48,6 @@ const Student: React.FC = () => {
 	const handleOpenSeartchModal = () => {
 		setModalOpenSearchModal(true);
 	};
-	console.log(setRowsPerPage);
 
 	const handleSize = (value: number) => {
 		const valueSize = value.toString();
@@ -95,10 +92,13 @@ const Student: React.FC = () => {
 
 	const handleOpenSearch = () => setOpen(true);
 	const handleCloseSearch = () => setOpen(false);
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => setCurrentPage(page);
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handlePage(value);
+	};
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
 		searchParams.set('search', event.target.value);
@@ -215,8 +215,8 @@ const Student: React.FC = () => {
 												<tbody>
 													{filteredData
 														?.slice(
-															(currentPage - 1) * rowsPerPage,
-															currentPage * rowsPerPage
+															(openPage - 1) * openPart,
+															openPage * openPart
 														)
 														.map((item: Student, index) => (
 															<tr
@@ -232,7 +232,7 @@ const Student: React.FC = () => {
 																		item.isBlock ? scss.changeClass : ''
 																	}
 																>
-																	{index + 1 + (currentPage - 1) * rowsPerPage}
+																	{index + 1 + (openPage - 1) * openPart}
 																</td>
 																<td
 																	className={
@@ -327,9 +327,9 @@ const Student: React.FC = () => {
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
 									<Pagination
-										count={Math.ceil((filteredData?.length || 0) / rowsPerPage)}
-										page={currentPage}
-										onChange={handlePageChangeC}
+										count={data?.totalPages}
+										page={openPage}
+										onChange={handleChangePage}
 										shape="rounded"
 										variant="outlined"
 									/>
@@ -350,6 +350,7 @@ const Student: React.FC = () => {
 										}
 									}}
 								/>
+								<p>из {data?.totalObjects}</p>
 							</div>
 						</div>
 					</>

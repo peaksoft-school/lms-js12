@@ -12,6 +12,8 @@ namespace STUDENT {
 	};
 
 	type TablesStudentResponse = {
+		totalPages: number;
+		totalObjects: number;
 		page: string;
 		size: string;
 		objects: Table[];

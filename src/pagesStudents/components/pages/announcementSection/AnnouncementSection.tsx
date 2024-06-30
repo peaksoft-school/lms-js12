@@ -3,46 +3,43 @@ import scss from './AnnouncementSection.module.scss';
 import { Pagination, Stack } from '@mui/material';
 import { useGetAnnouncementStudentQuery } from '@/src/redux/api/students/announcement';
 import { IconArticle, IconBook } from '@tabler/icons-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const AnnouncementSection = () => {
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(4);
-	const [rowsPerPage, setRowsPerPage] = useState(4);
-	const [currentPage, setCurrentPage] = useState(1);
-
-	const { data } = useGetAnnouncementStudentQuery();
-
-	const handlePageChange = (_e, newPage) => {
-		setCurrentPage(newPage);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
+		setSearchParams(searchParams);
+		navigate(`/announcements?${searchParams.toString()}`);
 	};
-
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(4);
-			setOpenPage(4);
-			setCurrentPage(openPart);
-		}
+	const handleOpenSize = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('size', valueString);
+		setSearchParams(searchParams);
+		navigate(`/announcements?${searchParams.toString()}`);
 	};
+	const { data } = useGetAnnouncementStudentQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 
-	const handleAppend = (event) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 4) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(4);
-			}
-		}
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handleOpenPage(value);
 	};
 
 	return (
 		<div className={scss.Section_announcement}>
 			<h1>Объявление</h1>
 			<div className={scss.announce_card}>
-				{data?.announcements.map((item) => (
+				{data?.objects.map((item) => (
 					<li key={item.announcementId} className={scss.announce_list}>
 						<div className={scss.announcement_owners}>
 							<p className={scss.announcement_owner}>
@@ -67,15 +64,19 @@ const AnnouncementSection = () => {
 						type="text"
 						value={openPart}
 						onChange={(e) => setOpenPart(+e.target.value)}
-						onKeyDown={handleAppend}
+						onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+							if (e.key === 'Enter') {
+								handleOpenPage(openPart);
+							}
+						}}
 					/>
 				</div>
 				<div className={scss.stack}>
 					<Stack direction="row" spacing={2}>
 						<Pagination
-							count={Math.ceil((data?.announcements.length ?? 0) / rowsPerPage)}
-							page={currentPage}
-							onChange={handlePageChange}
+							count={data?.totalPages}
+							page={openPart}
+							onChange={handleChangePage}
 							shape="rounded"
 							variant="outlined"
 						/>
@@ -90,7 +91,11 @@ const AnnouncementSection = () => {
 						type="text"
 						value={openPage}
 						onChange={(e) => setOpenPage(+e.target.value)}
-						onKeyDown={handleAppend}
+						onKeyDown={(e) => {
+							if (e.key === 'Enter') {
+								handleOpenSize(openPage);
+							}
+						}}
 					/>
 				</div>
 			</div>
