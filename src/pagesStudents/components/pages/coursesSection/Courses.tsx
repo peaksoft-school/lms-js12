@@ -1,4 +1,4 @@
-import { FC, useState, KeyboardEvent } from 'react';
+import { FC, useState } from 'react';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './Courses.module.scss';
 import Pagination from '@mui/material/Pagination';
@@ -95,7 +95,8 @@ const Courses: FC = () => {
 																					width: '100%',
 																					maxWidth: '150px',
 																					textOverflow: 'ellipsis',
-																					overflow: 'hidden'
+																					overflow: 'hidden',
+																					whiteSpace: 'nowrap'
 																				}}
 																				className={scss.block_title}
 																			>
@@ -112,9 +113,10 @@ const Courses: FC = () => {
 																				<p
 																					style={{
 																						width: '100%',
-																						maxWidth: '500px',
+																						maxWidth: '300px',
 																						textOverflow: 'ellipsis',
-																						overflow: 'hidden'
+																						overflow: 'hidden',
+																						whiteSpace: 'nowrap'
 																					}}
 																				>
 																					{item.description}

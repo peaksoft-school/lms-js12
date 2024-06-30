@@ -29,8 +29,7 @@ const InputAnnouncement = forwardRef<Ref, InputProps>(
 					InputProps={{
 						style: {
 							borderRadius: '12px',
-							marginBottom: '20px',
-							minHeight: '40px'
+							minHeight: '10px'
 						}
 					}}
 				/>

@@ -16,9 +16,9 @@
 		.test_container_second {
 			display: flex;
 			flex-direction: column;
-			height: 170px;
-			min-height: 170px;
-			max-height: 170px;
+			height: 140px;
+			min-height: 140px;
+			max-height: 140px;
 			border-radius: 6px;
 			border: 1px solid #d4d4d4;
 			background: #dde9f9;
@@ -43,23 +43,21 @@
 
 				.text_time {
 					color: #898989;
-					padding-left: 38px;
+					padding-left: 27px;
 				}
 			}
 			.test_buttons_container {
-				padding-bottom: 16px;
 				display: flex;
 				width: 100%;
 				justify-content: flex-end;
-				padding-top: 10px;
 
 				button {
 					font-size: 16px;
 					font-weight: 600;
-					width: 148px;
-					height: 42px;
+					padding: 8px;
 					text-align: center;
-					border-radius: 8px;
+					border-radius: 6px;
+					text-transform: capitalize;
 					@media (max-width: '1200px') {
 						width: 100%;
 					}

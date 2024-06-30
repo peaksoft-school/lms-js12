@@ -12,16 +12,6 @@ const api = index.injectEndpoints({
 			}),
 			providesTags: ['material']
 		}),
-		getLinkStudents: builder.query<
-			MATERIALS.getResponseLinkStudents,
-			MATERIALS.getRequestLinkStudents
-		>({
-			query: (lesson) => ({
-				url: `/api/links/findAll/${lesson}`,
-				method: 'GET'
-			}),
-			providesTags: ['link']
-		}),
 		getOneTaskName: builder.query<
 			MATERIALS.GetOneTaskResponse,
 			MATERIALS.GetOneTaskRequest
@@ -37,6 +27,5 @@ const api = index.injectEndpoints({
 
 export const {
 	useGetStudentMaterialsQuery,
-	useGetLinkStudentsQuery,
 	useGetOneTaskNameQuery
 } = api;

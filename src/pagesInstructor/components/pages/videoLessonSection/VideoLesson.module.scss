@@ -39,6 +39,7 @@
 						left: 50%;
 						top: 50%;
 						transform: translate(-50%, -50%);
+						z-index: 1;
 					}
 				}
 			}
@@ -54,9 +55,10 @@
 						font-size: 20px;
 						color: #1d293f;
 						width: 100%;
-						max-width: 200px;
+						max-width: 250px;
 						text-overflow: ellipsis;
 						overflow: hidden;
+						white-space: nowrap;
 					}
 
 					p {
@@ -64,9 +66,10 @@
 						font-size: 16px;
 						color: #1d293f;
 						width: 100%;
-						max-width: 500px;
+						max-width: 250px;
 						text-overflow: ellipsis;
 						overflow: hidden;
+						white-space: nowrap;
 					}
 				}
 

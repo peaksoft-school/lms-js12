@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import scss from './AnnouncementSection.module.scss';
-import { Pagination, Stack } from '@mui/material';
+import { Pagination, Stack, Tooltip } from '@mui/material';
 import { useGetAnnouncementStudentQuery } from '@/src/redux/api/students/announcement';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -36,23 +36,38 @@ const AnnouncementSection = () => {
 	};
 
 	return (
-		<div className={scss.Section_announcement}>
+		<div className={scss.section_announcement}>
 			<h1>Объявление</h1>
-			<div className={scss.announce_card}>
-				{data?.objects.map((item) => (
-					<li key={item.announcementId} className={scss.announce_list}>
-						<div className={scss.announcement_owners}>
-							<p className={scss.announcement_owner}>
-								<span className={scss.announc_user}>Кем создан:</span>
-								{item.author}
+			<div style={{ minHeight: '75vh' }}>
+				<div className={scss.announce_card}>
+					{data?.objects.map((item) => (
+						<li key={item.announcementId} className={scss.announce_list}>
+							<div className={scss.announcement_owners}>
+								<p className={scss.announcement_owner}>
+									<span className={scss.announc_user}>Кем создан:</span>
+									{item.author}
+								</p>
+							</div>
+							<p className={scss.announce_contents}>
+								<span className={scss.announce_content}>Текст:</span>
+								<Tooltip title={item.content}>
+									<p
+										style={{
+											width: '100%',
+											maxWidth: '250px',
+											textOverflow: 'ellipsis',
+											overflow: 'hidden',
+											whiteSpace: 'nowrap',
+											cursor: 'pointer'
+										}}
+									>
+										{item.content}
+									</p>
+								</Tooltip>
 							</p>
-						</div>
-						<p className={scss.announce_contents}>
-							<span className={scss.announce_content}>Текст:</span>
-							{item.content}
-						</p>
-					</li>
-				))}
+						</li>
+					))}
+				</div>
 			</div>
 			<div className={scss.pagination}>
 				<div className={scss.inputs}>

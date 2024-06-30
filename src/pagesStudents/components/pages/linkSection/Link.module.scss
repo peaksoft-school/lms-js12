@@ -1,6 +1,6 @@
 .link_section {
+	padding-inline: 20px;
 	.container {
-		padding-inline: 20px;
 		.card {
 			width: 100%;
 			display: grid;
@@ -27,12 +27,6 @@
 				font-weight: bold;
 				font-size: 16px;
 				cursor: pointer;
-
-				.link {
-					text-decoration: none;
-					color: #141414;
-					margin-left: 15px;
-				}
 			}
 		}
 
@@ -43,11 +37,32 @@
 			justify-content: space-between;
 
 			.text {
-				a {
+				width: 100%;
+				max-width: 200px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+
+				p {
 					font-weight: 600;
 					font-size: 17px;
 					color: blue;
-					background-color: none;
+					width: 100%;
+					max-width: 250px;
+					text-overflow: ellipsis;
+					overflow: hidden;
+					white-space: nowrap;
+					padding-left: 15px;
+
+					a {
+						font-weight: 600;
+						font-size: 17px;
+						color: blue;
+						width: 100%;
+						max-width: 250px;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+					}
 				}
 			}
 		}

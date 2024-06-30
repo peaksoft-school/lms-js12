@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import editIcon from '@/src/assets/svgs/edit.svg';
 import deleteIcon from '../../../../assets/svgs/delete-red.svg';
 import { IconDotsVertical, IconPlus } from '@tabler/icons-react';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
 import watch from '@/src/assets/watch.png';
 import DeleteTest from '@/src/ui/customModal/deleteModal/DeleteTest';
 import empty from '@/src/assets/notCreated0.png';
@@ -91,13 +91,15 @@ const TestInstructor = () => {
 									>
 										<div style={{ display: 'flex', gap: '10px' }}>
 											<h4>{question.testId}</h4>
-											<h4 className={scss.test_text}>
-												{truncateText(question.title, 40)}
-											</h4>
+											<Tooltip title={question.title}>
+												<h4 className={scss.test_text}>
+													<p>{question.title}</p>
+												</h4>
+											</Tooltip>
 										</div>
 										<div className={scss.test_container_forth}>
 											<p className={scss.text_time}>
-												Время: {question.hour}ч.{question.minute} минут
+												Время: {question.hour} ч. / {question.minute} минут
 											</p>
 										</div>
 									</div>
