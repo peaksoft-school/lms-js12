@@ -34,6 +34,10 @@ const NewPassword: FC = () => {
 			confirm: data.confirmPassword,
 			uuid
 		};
+
+		if (data.password !== data.confirmPassword) {
+			alert('password is not correct');
+		}
 		await createPassword(newData as any);
 		reset();
 	};

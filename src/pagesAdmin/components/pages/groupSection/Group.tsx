@@ -71,7 +71,7 @@ const Groups: FC = () => {
 		<div className={scss.group}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.objects.length !== 0 ? (
+					{data !== undefined ? (
 						<>
 							<div className={scss.course_button_modal}>
 								<Button
@@ -91,7 +91,7 @@ const Groups: FC = () => {
 						</>
 					) : null}
 					<div>
-						{data?.objects.length === 0 ? (
+						{data === undefined ? (
 							<>
 								<NotCreated
 									text="Вы пока не создали группы!"
@@ -239,7 +239,7 @@ const Groups: FC = () => {
 						)}
 					</div>
 				</div>
-				{data?.objects.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.Inputs}>

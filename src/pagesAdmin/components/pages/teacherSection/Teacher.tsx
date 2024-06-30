@@ -89,7 +89,7 @@ const Teacher = () => {
 		<div className={scss.teacher}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.objects.length !== 0 ? (
+					{data !== undefined ? (
 						<>
 							<div className={scss.button_title_elements}>
 								<Button
@@ -109,7 +109,7 @@ const Teacher = () => {
 							<h1 className={scss.title}>Учителя</h1>
 						</>
 					) : null}
-					{data?.objects.length === 0 ? (
+					{data === undefined ? (
 						<>
 							<NotCreated
 								text="Вы пока не добавили учителей!"
@@ -258,7 +258,7 @@ const Teacher = () => {
 						deleteById={deleteById}
 					/>
 				</div>
-				{data?.objects.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>

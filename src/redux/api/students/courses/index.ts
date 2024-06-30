@@ -6,8 +6,8 @@ export const api = index.injectEndpoints({
 			STUDENTSCOURSES.GetStudentsResponse,
 			STUDENTSCOURSES.GetStudentsRequest
 		>({
-			query: () => ({
-				url: '/api/course/myCourse',
+			query: ({ page, size }) => ({
+				url: `/api/course/myCourse?${page}&${size}`,
 				method: 'GET'
 				// headers: {
 				// 	Authorization: `Bearer ${localStorage.getItem('token')}`
