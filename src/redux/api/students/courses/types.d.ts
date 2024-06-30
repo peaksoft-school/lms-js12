@@ -10,6 +10,8 @@ namespace STUDENTSCOURSES {
 	type GetStudentsResponse = {
 		page: number;
 		size: number;
+		totalPages: number;
+		totalObjects: number;
 		objects: Course[];
 	};
 	type GetStudentsRequest = void;

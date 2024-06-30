@@ -201,13 +201,19 @@ const EditCourse: FC<EditModalProps> = ({ open, handleClose, saveId }) => {
 							/>
 						</div>
 						<div className={scss.second_input}>
-							<Input
+							{/* <Input
 								size="medium"
 								placeholder="Дата окончания"
 								value={date}
 								onChange={(e) => handleDateChange(e.target.value)}
 								width="100%"
 								type="date"
+							/> */}
+							<input
+								type="date"
+								value={date}
+								onChange={(e) => handleDateChange(e.target.value)}
+								min={new Date().toISOString().split('T')[0]}
 							/>
 						</div>
 					</div>

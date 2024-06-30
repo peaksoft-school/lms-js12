@@ -1,21 +1,39 @@
 import scss from './InternalStudents.module.scss';
-import { KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
 import { Pagination, Stack } from '@mui/material';
 import { Preloader } from '@/src/ui/preloader/Preloader';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetGroupStudentQuery } from '@/src/redux/api/admin/groups';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 
 const InternalStudents = () => {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(12);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const { groupId } = useParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const group = Number(groupId);
-	const { data, isLoading } = useGetGroupStudentQuery(group);
+	const navigate = useNavigate();
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/group/${groupId}?${searchParams.toString()}`);
+	};
+
+	const handleOpenPart = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/group/${groupId}?${searchParams.toString()}`);
+	};
+	const pages = {
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	};
+
+	const { data, isLoading } = useGetGroupStudentQuery({ pages, group });
 
 	if (isLoading) {
 		return (
@@ -24,36 +42,13 @@ const InternalStudents = () => {
 			</div>
 		);
 	}
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(12);
-			setOpenPage(12);
-			setCurrentPage(openPart);
-		}
-	};
-	const openPartPage = () => {
-		if (rowsPerPage > 12) {
-			setCurrentPage(1);
-		}
-	};
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
-	};
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 12) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(12);
-			}
-		}
+
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPart(value);
+		handleOpenPage(value);
 	};
 
 	const item = localStorage.getItem('item');
@@ -110,12 +105,9 @@ const InternalStudents = () => {
 																	}
 																>
 																	<td>
-																		{index +
-																			1 +
-																			(currentPage - 1) * rowsPerPage}
+																		{index + 1 + (openPart - 1) * openPart}
 																	</td>
 																	<td>{item.fullName}</td>
-
 																	<td>{item.groupName}</td>
 																	<td>{item.studyFormat}</td>
 																	<td>{item.phoneNumber}</td>
@@ -144,17 +136,19 @@ const InternalStudents = () => {
 									type="text"
 									value={openPart}
 									onChange={(e) => setOpenPart(+e.target.value)}
-									onKeyDown={(e) => {
-										handleAppend(e);
-										openPartFunc();
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPage(openPart);
+										}
 									}}
 								/>
 							</div>
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
 									<Pagination
-										page={currentPage}
-										onChange={handlePageChangeC}
+										page={openPart}
+										count={data?.totalPages}
+										onChange={handleChangePage}
 										shape="rounded"
 										variant="outlined"
 									/>
@@ -169,9 +163,10 @@ const InternalStudents = () => {
 									type="text"
 									value={openPage}
 									onChange={(e) => setOpenPage(+e.target.value)}
-									onKeyDown={(e) => {
-										handleAppend(e);
-										openPartPage();
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPart(openPage);
+										}
 									}}
 								/>
 							</div>

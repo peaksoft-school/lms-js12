@@ -28,7 +28,7 @@ import {
 	Draggable,
 	DropResult
 } from '@hello-pangea/dnd';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 
@@ -40,7 +40,6 @@ interface TodoProps {
 
 const Materials: FC = () => {
 	const { courseId } = useParams();
-	const [currentPage, setCurrentPage] = useState(1);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(12);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -49,11 +48,40 @@ const Materials: FC = () => {
 	const [deleteById, setDeleteById] = useState<number | null>(null);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const course = Number(courseId);
-	const { data, isLoading } = useGetMaterialsQuery(course);
 	const [todos, setTodos] = useState<TodoProps[]>([]);
 	const navigate = useNavigate();
 	const handleOpen = () => setOpenModal(true);
+	const [searchParams, setSearchParams] = useSearchParams();
 
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
+		setSearchParams(searchParams);
+		navigate(
+			`/instructor/course/${courseId}/materials/?${searchParams.toString()}`
+		);
+	};
+	const handleOpenSize = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('size', valueString);
+		setSearchParams(searchParams);
+		navigate(
+			`/instructor/course/${courseId}/materials/?${searchParams.toString()}`
+		);
+	};
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handleOpenPage(value);
+	};
+
+	const { data, isLoading } = useGetMaterialsQuery({
+		course,
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 	useEffect(() => {
 		if (todos.length > 0) {
 			localStorage.setItem('todos', JSON.stringify(todos));
@@ -87,13 +115,6 @@ const Materials: FC = () => {
 
 	const handleClose = () => {
 		setAnchorEl(null);
-	};
-
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
 	};
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -341,13 +362,19 @@ const Materials: FC = () => {
 								type="text"
 								value={openPart}
 								onChange={(e) => setOpenPart(+e.target.value)}
+								onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+									if (e.key === 'Enter') {
+										handleOpenPage(openPart);
+									}
+								}}
 							/>
 						</div>
 						<div className={scss.stack}>
 							<Stack direction="row" spacing={2}>
 								<Pagination
-									page={currentPage}
-									onChange={handlePageChangeC}
+									count={data?.totalPages}
+									page={openPart}
+									onChange={handleChangePage}
 									shape="rounded"
 									variant="outlined"
 								/>
@@ -362,6 +389,11 @@ const Materials: FC = () => {
 								type="text"
 								value={openPage}
 								onChange={(e) => setOpenPage(+e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === 'Enter') {
+										handleOpenSize(openPage);
+									}
+								}}
 							/>
 						</div>
 					</div>

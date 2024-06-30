@@ -14,9 +14,16 @@ namespace STUDENTS {
 	};
 
 	type TablesStudentResponse = {
-		getAllStudentsOfCourses: Table[];
+		page: number;
+		size: number;
+		totalPages: number;
+		totalObjects: number;
+		objects: Table[];
 	};
-	type TablesStudentRequest = void;
+	type TablesStudentRequest = {
+		page: number;
+		size: number;
+	};
 
 	type PostStudentToGroupPropsResponse = {
 		course: number;

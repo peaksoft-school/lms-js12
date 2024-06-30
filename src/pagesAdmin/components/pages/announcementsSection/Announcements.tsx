@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
 import scss from './Announcements.module.scss';
 import {
 	Button,
@@ -27,20 +27,36 @@ import {
 } from '@tabler/icons-react';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
 import { message } from 'antd';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 const Announcements = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 	const [deleteById, setDeleteById] = useState<number | null>(null);
-	const { data } = useGetAnnouncementTableQuery();
 	const [openAnnouncement, setOpenAnnouncement] = useState<boolean>(false);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(4);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(4);
 	const [showAnnouncement] = useShowAnnouncementMutation();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 	const [testId, setTestId] = useState<number | null>(null);
+	const handleOpenPart = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
+		setSearchParams(searchParams);
+		navigate(`/admin/announcement?${searchParams.toString()}`);
+	};
+	const handleOpenSize = (value: number) => {
+		const valueSize = value.toString();
+		searchParams.set('size', valueSize);
+		setSearchParams(searchParams);
+		navigate(`/admin/announcement?${searchParams.toString()}`);
+	};
 
+	const { data } = useGetAnnouncementTableQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 	const handleOpenAnnouncement = () => {
 		setOpenAnnouncement(true);
 		console.log('working');
@@ -58,36 +74,13 @@ const Announcements = () => {
 		setAnchorEl(null);
 	};
 	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
+		event: React.ChangeEvent<unknown>,
+		value: number
 	): void => {
-		setCurrentPage(page);
+		setOpenPage(value);
+		handleOpenPart(value);
 	};
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(4);
-			setOpenPage(4);
-			setCurrentPage(openPart);
-		}
-	};
-	const openPartPage = () => {
-		if (rowsPerPage > 4) {
-			setCurrentPage(1);
-		}
-	};
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 4) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(4);
-			}
-		}
-	};
+
 	const handleShow = async () => {
 		try {
 			const isPublished = find?.isPublished ? false : true;
@@ -122,7 +115,7 @@ const Announcements = () => {
 										<div className={scss.icon}>
 											<IconPlus stroke={2} />
 										</div>
-										<span style={{ textTransform: ' none ' }}>
+										<span style={{ textTransform: 'none' }}>
 											Добавить обьявление
 										</span>
 									</Button>
@@ -163,7 +156,7 @@ const Announcements = () => {
 														<span className={scss.announce_groups}>
 															Для кого:
 														</span>
-														{item.groupNames.join('  ')}
+														{item.groupNames.join(' / ')}
 													</p>
 													<p className={scss.announcement_owner}>
 														<span className={scss.announc_user}>
@@ -178,9 +171,10 @@ const Announcements = () => {
 														<p
 															style={{
 																width: '100%',
-																maxWidth: '1000px',
+																maxWidth: '640px',
 																textOverflow: 'ellipsis',
-																overflow: 'hidden'
+																overflow: 'hidden',
+																whiteSpace: 'nowrap'
 															}}
 														>
 															{item.content}
@@ -196,7 +190,7 @@ const Announcements = () => {
 												>
 													<div className={scss.cont_date}>
 														<p className={scss.announcement_publishDate}>
-															{item.publishDate}/{item.endDate}
+															{item.publishDate} / {item.endDate}
 														</p>
 														<button
 															className={scss.button}
@@ -307,17 +301,18 @@ const Announcements = () => {
 									type="text"
 									value={openPart}
 									onChange={(e) => setOpenPart(+e.target.value)}
-									onKeyDown={(e) => {
-										handleAppend(e);
-										openPartFunc();
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPart(openPart);
+										}
 									}}
 								/>
 							</div>
 							<div className={scss.stack}>
 								<Stack direction="row" spacing={2}>
 									<Pagination
-										count={Math.ceil((data?.objects.length ?? 0) / rowsPerPage)}
-										page={currentPage}
+										count={data?.totalPages}
+										page={openPart}
 										onChange={handlePageChangeC}
 										shape="rounded"
 										variant="outlined"
@@ -333,11 +328,13 @@ const Announcements = () => {
 									type="text"
 									value={openPage}
 									onChange={(e) => setOpenPage(+e.target.value)}
-									onKeyDown={(e) => {
-										handleAppend(e);
-										openPartPage();
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenSize(openPage);
+										}
 									}}
 								/>
+								<p>из {data?.totalObjects}</p>
 							</div>
 						</div>
 					</>

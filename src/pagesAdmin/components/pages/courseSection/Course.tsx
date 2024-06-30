@@ -15,6 +15,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetAdminCourseQuery } from '@/src/redux/api/admin/courses';
 import { Box, ScrollArea } from '@mantine/core';
 import NotCreated from '@/src/ui/notCreated/NotCreated';
+import { MouseEventHandler } from 'react';
 
 const Courses: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -50,17 +51,23 @@ const Courses: FC = () => {
 	const navigate = useNavigate();
 
 	const open = Boolean(anchorEl);
-	const handleClick = (event: React.MouseEvent<HTMLElement>, id: number) => {
+
+	const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
 		setAnchorEl(event.currentTarget);
-		setSaveId(id);
 	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 
-	console.log(saveId, '4444');
-
 	const handleCloseEditModal = () => setOpenEditModal(false);
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setCurrentPage(value);
+		handleOpenPage(value);
+	};
 
 	return (
 		<div className={scss.course}>
@@ -78,7 +85,7 @@ const Courses: FC = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span style={{ textTransform: ' none ' }}>Создать курс</span>
+									<span style={{ textTransform: 'none' }}>Создать курс</span>
 								</Button>
 							</div>
 							<h1 className={scss.title}>Курсы</h1>
@@ -130,7 +137,8 @@ const Courses: FC = () => {
 																					width: '100%',
 																					maxWidth: '150px',
 																					textOverflow: 'ellipsis',
-																					overflow: 'hidden'
+																					overflow: 'hidden',
+																					whiteSpace: 'nowrap'
 																				}}
 																				className={scss.block_title}
 																			>
@@ -150,7 +158,8 @@ const Courses: FC = () => {
 																					width: '100%',
 																					maxWidth: '300px',
 																					textOverflow: 'ellipsis',
-																					overflow: 'hidden'
+																					overflow: 'hidden',
+																					whiteSpace: 'nowrap'
 																				}}
 																			>
 																				{item.description}
@@ -257,13 +266,10 @@ const Courses: FC = () => {
 								<Stack direction="row" spacing={2}>
 									<Pagination
 										page={currentPage}
-										count={
-											data?.objects?.length
-												? Math.ceil(data.objects.length / openPage)
-												: 1
-										}
+										count={data?.totalPages}
 										variant="outlined"
 										shape="rounded"
+										onChange={handleChangePage}
 									/>
 								</Stack>
 							</div>
@@ -273,13 +279,11 @@ const Courses: FC = () => {
 									<IconArticle stroke={2} />
 								</div>
 								<input
-									style={{
-										border:
-											data?.objects &&
-											Math.ceil(data.objects.length / openPage) < openPage
-												? '2px solid red'
-												: 'none'
-									}}
+									style={
+										data?.totalObjects && data.totalObjects <= openPage
+											? { border: '2px solid red' }
+											: undefined
+									}
 									type="text"
 									value={openPage}
 									onChange={(e) => {
@@ -288,12 +292,13 @@ const Courses: FC = () => {
 									}}
 									onKeyDown={(e) => {
 										if (e.key === 'Enter') {
-											if (data?.objects && data.objects.length >= openPage) {
+											if (data?.totalObjects && data.totalObjects >= openPage) {
 												handleInputValuePaginationSize(openPage);
 											}
 										}
 									}}
 								/>
+								<p>из {data?.totalObjects}</p>
 							</div>
 						</div>
 					</>

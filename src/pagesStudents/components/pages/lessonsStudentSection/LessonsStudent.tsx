@@ -86,7 +86,6 @@ const LessonsStudent = () => {
 					height: '100vh',
 					minHeight: '100vh',
 					maxHeight: '100vh',
-					overflowY: 'auto'
 				}}
 			>
 				<div

@@ -3,54 +3,39 @@ import { IconArticle, IconBook } from '@tabler/icons-react';
 import scss from './Courses.module.scss';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Box, ScrollArea } from '@mantine/core';
 import { useGetStudentsCourseQuery } from '@/src/redux/api/students/courses';
 import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 import { Tooltip } from '@mui/material';
 
 const Courses: FC = () => {
-	const { data } = useGetStudentsCourseQuery();
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(8);
 	const [openPart, setOpenPart] = useState(1);
 	const [openPage, setOpenPage] = useState(8);
 	const [saveItem, setSaveItem] = useState('');
-
+	const [searchParams, setSearchParams] = useSearchParams();
 	const navigate = useNavigate();
 
-	const handlePageChangeC = (
-		_e: React.ChangeEvent<unknown>,
-		page: number
-	): void => {
-		setCurrentPage(page);
+	const handleOpenPage = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('page', valueString);
+		setSearchParams(searchParams);
+		navigate(`/instructor/course?${searchParams.toString()}`);
+	};
+	const handleOpenSize = (value: number) => {
+		const valueString = value.toString();
+		searchParams.set('size', valueString);
+		setSearchParams(searchParams);
+		navigate(`/instructor/course?${searchParams.toString()}`);
 	};
 
-	const openPartFunc = () => {
-		if (openPart >= 1) {
-			setRowsPerPage(8);
-			setOpenPage(8);
-			setCurrentPage(openPart);
-		}
-	};
-	const openPartPage = () => {
-		if (rowsPerPage > 8) {
-			setCurrentPage(1);
-		}
-	};
-
-	const handleAppend = (event: KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
-			const newOpenPage = parseInt(event.currentTarget.value);
-			if (newOpenPage > 8) {
-				setRowsPerPage(newOpenPage);
-				setOpenPart(1);
-				setCurrentPage(1);
-				openPartFunc();
-			} else {
-				setRowsPerPage(8);
-			}
-		}
+	const { data } = useGetStudentsCourseQuery();
+	const handleChangePage = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
+		setOpenPage(value);
+		handleOpenPage(value);
 	};
 
 	localStorage.setItem('item', saveItem);
@@ -161,18 +146,19 @@ const Courses: FC = () => {
 							type="text"
 							value={openPart}
 							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartFunc();
+							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+								if (e.key === 'Enter') {
+									handleOpenPage(openPart);
+								}
 							}}
 						/>
 					</div>
 					<div className={scss.stack}>
 						<Stack direction="row" spacing={2}>
 							<Pagination
-								// count={Math.ceil(data!.length / rowsPerPage)}
-								page={currentPage}
-								onChange={handlePageChangeC}
+								count={data?.totalPages}
+								page={openPart}
+								onChange={handleChangePage}
 								shape="rounded"
 								variant="outlined"
 							/>
@@ -188,8 +174,9 @@ const Courses: FC = () => {
 							value={openPage}
 							onChange={(e) => setOpenPage(+e.target.value)}
 							onKeyDown={(e) => {
-								handleAppend(e);
-								openPartPage();
+								if (e.key === 'Enter') {
+									handleOpenSize(openPage);
+								}
 							}}
 						/>
 					</div>

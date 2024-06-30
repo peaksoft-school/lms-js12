@@ -10,10 +10,17 @@ namespace ANNOUNCEMENT {
 		isPublished: true;
 	};
 	type GetAnnouncementResponse = {
+		page: number;
+		size: number;
+		totalPages: number;
+		totalObjects: number;
 		message?: string;
 		objects: Table[];
 	};
-	type GetAnnouncementRequest = void;
+	type GetAnnouncementRequest = {
+		page: string;
+		size: string;
+	};
 	type PostAnnouncementPropsResponse = {
 		announcementContent: string;
 		expirationDate: string;

@@ -6,8 +6,8 @@ export const api = index.injectEndpoints({
 			ANNOUNCEMENT.GetAnnouncementResponse,
 			ANNOUNCEMENT.GetAnnouncementRequest
 		>({
-			query: () => ({
-				url: '/api/announcement/search',
+			query: ({ page, size }) => ({
+				url: `/api/announcement/search?${page}&${size}`,
 				method: 'GET'
 			}),
 			providesTags: ['announcement']

@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace InstructorCourses {
 	type CoursesResponse = {
+		page: number;
+		size: number;
+		totalPages: number;
+		totalObjects: number;
 		objects: {
 			id: number;
 			title: string;
@@ -9,11 +13,11 @@ namespace InstructorCourses {
 			image: string;
 		}[];
 	};
-	type CoursesRequest = void;
 	type CoursesRequest = {
 		page: number;
-		size: string;
+		size: number;
 	};
+
 	type CoursesRequest = void;
 	type CreateCourseResponse = {
 		title: string;

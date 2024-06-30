@@ -13,29 +13,38 @@ const Link = () => {
 	}
 
 	return (
-		<div className={scss.card}>
-			{data && (
-				<div className={scss.cards}>
-					<div className={scss.title}>
-						<div className={scss.text}>
-							<Tooltip title={data.title}>
-								<p
-									style={{
-										width: '100%',
-										maxWidth: '200px',
-										textOverflow: 'ellipsis',
-										overflow: 'hidden'
-									}}
-								>
-									<a href={data.url} target="_blank" rel="noopener noreferrer">
-										{data.title}
-									</a>
-								</p>
-							</Tooltip>
+		<div className={scss.link_section}>
+			<div className={scss.container}>
+				<div className={scss.card}>
+					{data && (
+						<div className={scss.cards}>
+							<div className={scss.title}>
+								<div className={scss.text}>
+									<Tooltip title={data.title}>
+										<p
+											style={{
+												width: '100%',
+												maxWidth: '200px',
+												textOverflow: 'ellipsis',
+												overflow: 'hidden'
+											}}
+										>
+											<a
+												href={data.url}
+												className={scss.link}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												{data.title}
+											</a>
+										</p>
+									</Tooltip>
+								</div>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
-			)}
+			</div>
 		</div>
 	);
 };
