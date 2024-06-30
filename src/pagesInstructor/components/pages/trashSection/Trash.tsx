@@ -76,7 +76,7 @@ const Trash: FC = () => {
 	return (
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
-				{data?.objects.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<h1>Корзина</h1>
 					</>
@@ -89,7 +89,7 @@ const Trash: FC = () => {
 				>
 					<Box>
 						<div style={{ minHeight: '64vh' }}>
-							{data?.objects.length === 0 ? (
+							{data === undefined ? (
 								<>
 									<NotCreatedWithoutButton
 										name="Корзина"
@@ -192,53 +192,57 @@ const Trash: FC = () => {
 					</Box>
 				</ScrollArea>
 
-				<div className={scss.pagination}>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
+				{data !== undefined && (
+					<>
+						<div className={scss.pagination}>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Перейти на страницу</p>
+								<div className={scss.pagination_element}>
+									<IconBook stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPart}
+									onChange={(e) => setOpenPart(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPage(openPart);
+										}
+									}}
+								/>
+							</div>
+							<div className={scss.stack}>
+								<Stack direction="row" spacing={2}>
+									<Pagination
+										count={data?.totalPages}
+										page={openPart}
+										onChange={handleChangePage}
+										shape="rounded"
+										variant="outlined"
+									/>
+								</Stack>
+							</div>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Показать</p>
+								<div className={scss.pagination_element}>
+									<IconArticle stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPage}
+									onChange={(e) => setOpenPage(+e.target.value)}
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') {
+											if (data?.totalObjects && data.totalObjects >= openPage) {
+												handleInputValuePaginationSize(openPage);
+											}
+										}
+									}}
+								/>
+							</div>
 						</div>
-						<input
-							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleOpenPage(openPart);
-								}
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								count={data?.totalPages}
-								page={openPart}
-								onChange={handleChangePage}
-								shape="rounded"
-								variant="outlined"
-							/>
-						</Stack>
-					</div>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								if (e.key === 'Enter') {
-									if (data?.totalObjects && data.totalObjects >= openPage) {
-										handleInputValuePaginationSize(openPage);
-									}
-								}
-							}}
-						/>
-					</div>
-				</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

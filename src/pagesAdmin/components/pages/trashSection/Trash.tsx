@@ -81,12 +81,12 @@ const Trash: FC = () => {
 		<div className={scss.trash_parent}>
 			<div className={scss.container}>
 				<ToastContainer />
-				{data?.objects?.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<h1>Корзина</h1>
 					</>
 				) : null}
-				{data?.objects?.length === 0 ? (
+				{data === undefined ? (
 					<>
 						<NotCreatedWithoutButton name="Корзина" text="Корзина пусто !" />
 					</>

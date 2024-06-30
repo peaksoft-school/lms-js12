@@ -50,10 +50,10 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		setIsLoading(true);
-		const { link } = data;
+		const { email } = data;
 		const newData = {
-			link: link
-			// Здесь возможно нужно будет изменить структуру данных
+			email: email,
+			link: 'http://localhost:5173/auth/newPassword'
 		};
 		try {
 			await forgotPasswordMutation(newData).unwrap();
@@ -99,14 +99,14 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 
 						<div className={scss.input}>
 							<Controller
-								name="link"
+								name="email"
 								control={control}
 								defaultValue=""
 								rules={{
-									required: 'Ссылка обязательна для заполнения',
+									required: 'Email обязателен для заполнения',
 									pattern: {
-										value: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/,
-										message: 'Введите действительную ссылку'
+										value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+										message: 'Введите действительный email адрес'
 									}
 								}}
 								render={({ field }) => (

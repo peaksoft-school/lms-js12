@@ -66,7 +66,7 @@ const Course: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.objects?.length === 0 ? (
+					{data === undefined ? (
 						<>
 							<NotCreatedWithoutButton
 								name="Мои курсы"

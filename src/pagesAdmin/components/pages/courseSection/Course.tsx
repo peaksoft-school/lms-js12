@@ -73,7 +73,7 @@ const Courses: FC = () => {
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.objects.length !== 0 ? (
+					{data !== undefined ? (
 						<>
 							<div className={scss.course_button_modal}>
 								<Button
@@ -91,7 +91,7 @@ const Courses: FC = () => {
 							<h1 className={scss.title}>Курсы</h1>
 						</>
 					) : null}
-					{data?.objects.length === 0 ? (
+					{data === undefined ? (
 						<NotCreated
 							text="Вы пока не создали курсы!"
 							name="Курсы"
@@ -117,6 +117,7 @@ const Courses: FC = () => {
 													<div>
 														<div
 															onClick={() => {
+																localStorage.setItem('item', item.title);
 																setTimeout(() => {
 																	navigate(`/admin/courses/${item.id}/teacher`);
 																}, 1000);
@@ -243,7 +244,7 @@ const Courses: FC = () => {
 						</ScrollArea>
 					)}
 				</div>
-				{data?.objects.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.Inputs}>

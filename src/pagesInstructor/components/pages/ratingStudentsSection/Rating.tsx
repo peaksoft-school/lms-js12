@@ -35,7 +35,6 @@ const Rating = () => {
 	const [deleteExamId, setDeleteExamId] = useState<null | number>(null);
 	const { data: resultTask } = useGetResultRatingQuery(resultTaskStudent);
 	console.log(resultTask);
-
 	const navigate = useNavigate();
 	const [updateExamPoint] = useUpdateExamPointMutation();
 

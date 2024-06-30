@@ -82,7 +82,7 @@ const CoursesTeacher = () => {
 		<div className={scss.teacher}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.objects.length !== 0 ? (
+					{data !== undefined ? (
 						<>
 							<BasicBreadcrumbs />
 							<div className={scss.buttons}>
@@ -95,7 +95,7 @@ const CoursesTeacher = () => {
 									<div className={scss.icon}>
 										<IconPlus stroke={2} />
 									</div>
-									<span style={{ textTransform: ' none ' }}>
+									<span style={{ textTransform: 'none' }}>
 										Назначить учителя
 									</span>
 								</Button>
@@ -111,7 +111,7 @@ const CoursesTeacher = () => {
 					>
 						<Box>
 							<div>
-								{data?.objects.length == 0 ? (
+								{data === undefined ? (
 									<>
 										<NotCreated
 											name="Учителя"
@@ -206,7 +206,7 @@ const CoursesTeacher = () => {
 						deleteById={deleteById}
 					/>
 				</div>
-				{data?.objects.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>

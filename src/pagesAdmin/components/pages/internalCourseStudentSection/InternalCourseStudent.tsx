@@ -61,7 +61,7 @@ const InternalCourses = () => {
 		<div className={scss.internal_student}>
 			<div className={scss.container}>
 				<div className={scss.content_table}>
-					{data?.objects?.length !== 0 ? (
+					{data !== undefined ? (
 						<>
 							<h1 className={scss.title}>Студенты</h1>
 						</>
@@ -74,7 +74,7 @@ const InternalCourses = () => {
 					>
 						<Box>
 							<div>
-								{data?.objects.length === 0 ? (
+								{data === undefined ? (
 									<>
 										<NotCreatedWithoutButton
 											name="Студенты"
@@ -186,7 +186,7 @@ const InternalCourses = () => {
 						</Box>
 					</ScrollArea>
 				</div>
-				{data?.objects?.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>

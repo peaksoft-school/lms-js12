@@ -128,7 +128,7 @@ const Materials: FC = () => {
 			<div className={scss.container}>
 				<DragDropContext onDragEnd={handleDragEnd}>
 					<div style={{ minHeight: '76vh' }}>
-						{data?.objects?.length !== 0 && (
+						{data !== undefined && (
 							<>
 								<div className={scss.button_title_elements}>
 									<Button
@@ -148,7 +148,7 @@ const Materials: FC = () => {
 							</>
 						)}
 
-						{data?.objects?.length === 0 ? (
+						{data === undefined ? (
 							<>
 								<NotCreated
 									text="Вы еще не создали урок"

@@ -6,8 +6,8 @@ const api = index.injectEndpoints({
 			MATERIALS.MaterialsGetResponse,
 			MATERIALS.MaterialsGetRequest
 		>({
-			query: (course) => ({
-				url: `/api/lessons/all/${course}`,
+			query: ({ course, page, size }) => ({
+				url: `/api/lessons/all/${course}?${page}&${size}`,
 				method: 'GET'
 			}),
 			providesTags: ['material']

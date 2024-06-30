@@ -14,5 +14,8 @@ namespace STUDENTSCOURSES {
 		totalObjects: number;
 		objects: Course[];
 	};
-	type GetStudentsRequest = void;
+	type GetStudentsRequest = {
+		page: string;
+		size: string;
+	};
 }
