@@ -5,7 +5,6 @@ namespace INSTRUCTOR {
 		id: number;
 		name: string;
 		dateOfDelete: string;
-
 	}
 
 	type GetCardsResponse = {

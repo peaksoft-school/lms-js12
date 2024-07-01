@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from './Rating.module.scss';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
 	useGetRatingStudentsForStudentQuery,
 	useGetYourRatingStudentQuery
@@ -15,7 +15,7 @@ const Rating: React.FC = () => {
 	const { data: students } = useGetRatingStudentsForStudentQuery(test);
 	const { data } = useGetYourRatingStudentQuery(test);
 	const { data: exam = [] } = useGetExamInstructorQuery(test);
-	console.log(exam, 'sanjar');
+	const navigate = useNavigate();
 
 	const truncateString = (str: string, num: number) => {
 		if (!str || str.trim() === '') {
@@ -53,27 +53,12 @@ const Rating: React.FC = () => {
 													<p>{lesson.title}</p>
 												</th>
 											))}
-											{/* //! this place map exama */}
-
-											{/* //! 1 variant */}
-											{/* {exam[0].exams.map((item, index) => (
-										<th key={index} rowSpan={2}>
-											<p>{item.examTitle}</p>
-										</th>
-									))} */}
-
-											{/* //! 2 variant */}
-											{exam.map((el) =>
-												el.exams.map((item) => (
-													<>
-														<th key={item.examId}>{item.examTitle}</th>
-													</>
-												))
-											)}
-
-											{/* //! this place map exama */}
-											<th rowSpan={2}>Экзамен </th>
-											<th rowSpan={2}>Итого </th>
+											{exam[0]?.exams.map((item) => (
+												<th rowSpan={2} key={item.examId}>
+													{item.examTitle}
+												</th>
+											))}
+											<th rowSpan={2}>Итого</th>
 										</tr>
 										<tr>
 											{data?.lessonRatingResponses.map((lesson) => (
@@ -104,25 +89,46 @@ const Rating: React.FC = () => {
 												<td>{data.fullName}</td>
 												{data.lessonRatingResponses.map((lesson) => (
 													<React.Fragment key={lesson.id}>
-														{lesson.taskRatingResponses.length === 0 ? (
-															<td>---</td>
+														{lesson.taskRatingResponses.length === 0 ||
+														lesson.taskRatingResponses.every(
+															(el) => el.answerTaskRatingResponses.id === null
+														) ? (
+															<td key={lesson.id} style={{ color: 'black' }}>
+																0
+															</td>
 														) : (
-															lesson.taskRatingResponses.map((task) => (
-																<td key={task.id}>
-																	{task.answerTaskRatingResponses ? (
-																		<Link to={``}>
-																			{task.answerTaskRatingResponses.point}
-																		</Link>
-																	) : (
-																		'0'
-																	)}
+															lesson.taskRatingResponses.map((el) => (
+																<td
+																	key={el.id}
+																	style={{
+																		cursor: 'pointer',
+																		color: 'blue'
+																	}}
+																	onClick={() => {
+																		navigate(
+																			`/courses/${coursesId}/materials/${lesson.id}/lesson/${el.id}`
+																		);
+																	}}
+																>
+																	{el.answerTaskRatingResponses?.point}
 																</td>
 															))
 														)}
 													</React.Fragment>
 												))}
-												<td>{data.totalScore | data.completionPercentage}</td>
-												<td>{data.totalScore | data.completionPercentage} %</td>
+												{exam[0]?.exams.map((item) => (
+													<td rowSpan={2} key={item.examId}>
+														{item.point}
+													</td>
+												))}
+												{/* <td>{data.totalScore | data.completionPercentage}</td> */}
+												<td
+													style={{
+														height: '40px'
+													}}
+												>
+													{Math.ceil(data.completionPercentage)} %
+												</td>
 											</tr>
 										)}
 									</tbody>
@@ -164,50 +170,48 @@ const Rating: React.FC = () => {
 								</thead>
 								<tbody>
 									{students?.studentsRatingResponseList.map((item, index) => (
-										<>
-											<tr key={item.id} className={scss.TableContainerSecond}>
-												<td
-													className={scss.rating}
-													style={
-														index % 2
-															? {
-																	textAlign: 'center',
-																	background: '#eff0f4',
-																	height: '40px'
-																}
-															: { textAlign: 'center' }
-													}
-												>
-													{index + 1}
-												</td>
-												<td
-													style={
-														index % 2
-															? {
-																	textAlign: 'start',
-																	background: '#eff0f4',
-																	height: '40px'
-																}
-															: { textAlign: 'start' }
-													}
-												>
-													{item.fullName}
-												</td>
-												<td
-													style={
-														index % 2
-															? {
-																	textAlign: 'center',
-																	background: '#eff0f4',
-																	height: '40px'
-																}
-															: { textAlign: 'center' }
-													}
-												>
-													{item.completionPercentage}
-												</td>
-											</tr>
-										</>
+										<tr key={item.id} className={scss.TableContainerSecond}>
+											<td
+												className={scss.rating}
+												style={
+													index % 2
+														? {
+																textAlign: 'center',
+																background: '#eff0f4',
+																height: '40px'
+															}
+														: { textAlign: 'center' }
+												}
+											>
+												{index + 1}
+											</td>
+											<td
+												style={
+													index % 2
+														? {
+																textAlign: 'start',
+																background: '#eff0f4',
+																height: '40px'
+															}
+														: { textAlign: 'start' }
+												}
+											>
+												{item.fullName}
+											</td>
+											<td
+												style={
+													index % 2
+														? {
+																textAlign: 'center',
+																background: '#eff0f4',
+																height: '40px'
+															}
+														: { textAlign: 'center' }
+												}
+											>
+												{Math.ceil(item.completionPercentage)}%
+											</td>
+										</tr>
 									))}
 								</tbody>
 							</table>

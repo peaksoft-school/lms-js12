@@ -39,7 +39,7 @@ const Presentation = () => {
 		setOpen1(open1State);
 		setOpenEdit(openEditState);
 		setOpenDelete(openDeleteState);
-		setOpenPresentation(openPresentationState); 
+		setOpenPresentation(openPresentationState);
 		if (presentationModalState) {
 			setPresentationModal(Number(presentationModalState));
 		}
@@ -49,7 +49,7 @@ const Presentation = () => {
 		localStorage.setItem('open1', open1.toString());
 		localStorage.setItem('openEdit', openEdit.toString());
 		localStorage.setItem('openDelete', openDelete.toString());
-		localStorage.setItem('openPresentation', openPresentation.toString()); 
+		localStorage.setItem('openPresentation', openPresentation.toString());
 		if (presentationModal !== null) {
 			localStorage.setItem('presentationModal', presentationModal.toString());
 		} else {

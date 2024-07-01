@@ -305,7 +305,7 @@ const Student: React.FC = () => {
 						</Box>
 					</ScrollArea>
 				</div>
-				{data?.objects.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>

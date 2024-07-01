@@ -362,6 +362,7 @@ const SupHeaderMobile = () => {
 					</Menu>
 				</div>
 			)}
+
 			<ExitModal openExit={openExit} handleClose={() => setOpenExit(false)} />
 		</div>
 	);

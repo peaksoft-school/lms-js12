@@ -34,6 +34,10 @@ const NewPassword: FC = () => {
 			confirm: data.confirmPassword,
 			uuid
 		};
+
+		if (data.password !== data.confirmPassword) {
+			alert('password is not correct');
+		}
 		await createPassword(newData as any);
 		reset();
 	};
@@ -113,7 +117,7 @@ const NewPassword: FC = () => {
 											)}
 										/>
 										{errors.password && (
-											<span style={{ color: 'red' }}>
+											<span className={scss.error_password}>
 												{errors.password.message}
 											</span>
 										)}
@@ -160,7 +164,7 @@ const NewPassword: FC = () => {
 											)}
 										/>
 										{errors.confirmPassword && (
-											<span style={{ color: 'red' }}>
+											<span className={scss.error_comfirm}>
 												{errors.confirmPassword.message}
 											</span>
 										)}

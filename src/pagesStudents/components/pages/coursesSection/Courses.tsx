@@ -20,16 +20,15 @@ const Courses: FC = () => {
 		const valueString = value.toString();
 		searchParams.set('page', valueString);
 		setSearchParams(searchParams);
-		navigate(`/instructor/course?${searchParams.toString()}`);
+		navigate(`/courses?${searchParams.toString()}`);
 	};
 	const handleOpenSize = (value: number) => {
 		const valueString = value.toString();
 		searchParams.set('size', valueString);
 		setSearchParams(searchParams);
-		navigate(`/instructor/course?${searchParams.toString()}`);
+		navigate(`/courses?${searchParams.toString()}`);
 	};
 
-	const { data } = useGetStudentsCourseQuery();
 	const handleChangePage = (
 		event: React.ChangeEvent<unknown>,
 		value: number
@@ -38,13 +37,17 @@ const Courses: FC = () => {
 		handleOpenPage(value);
 	};
 
+	const { data } = useGetStudentsCourseQuery({
+		page: searchParams.toString(),
+		size: searchParams.toString()
+	});
 	localStorage.setItem('item', saveItem);
 
 	return (
 		<div className={scss.course}>
 			<div className={scss.content}>
 				<div className={scss.container}>
-					{data?.objects.length === 0 ? (
+					{data === undefined ? (
 						<>
 							<NotCreatedWithoutButton
 								text="У вас еще нет курсы !"
@@ -138,51 +141,55 @@ const Courses: FC = () => {
 						</>
 					)}
 				</div>
-				<div className={scss.pagination}>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Перейти на страницу</p>
-						<div className={scss.pagination_element}>
-							<IconBook stroke={2} />
+				{data !== undefined && (
+					<>
+						<div className={scss.pagination}>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Перейти на страницу</p>
+								<div className={scss.pagination_element}>
+									<IconBook stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPart}
+									onChange={(e) => setOpenPart(+e.target.value)}
+									onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+										if (e.key === 'Enter') {
+											handleOpenPage(openPart);
+										}
+									}}
+								/>
+							</div>
+							<div className={scss.stack}>
+								<Stack direction="row" spacing={2}>
+									<Pagination
+										count={data?.totalPages}
+										page={openPart}
+										onChange={handleChangePage}
+										shape="rounded"
+										variant="outlined"
+									/>
+								</Stack>
+							</div>
+							<div className={scss.Inputs}>
+								<p className={scss.text}>Показать</p>
+								<div className={scss.pagination_element}>
+									<IconArticle stroke={2} />
+								</div>
+								<input
+									type="text"
+									value={openPage}
+									onChange={(e) => setOpenPage(+e.target.value)}
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') {
+											handleOpenSize(openPage);
+										}
+									}}
+								/>
+							</div>
 						</div>
-						<input
-							type="text"
-							value={openPart}
-							onChange={(e) => setOpenPart(+e.target.value)}
-							onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-								if (e.key === 'Enter') {
-									handleOpenPage(openPart);
-								}
-							}}
-						/>
-					</div>
-					<div className={scss.stack}>
-						<Stack direction="row" spacing={2}>
-							<Pagination
-								count={data?.totalPages}
-								page={openPart}
-								onChange={handleChangePage}
-								shape="rounded"
-								variant="outlined"
-							/>
-						</Stack>
-					</div>
-					<div className={scss.Inputs}>
-						<p className={scss.text}>Показать</p>
-						<div className={scss.pagination_element}>
-							<IconArticle stroke={2} />
-						</div>
-						<input
-							type="text"
-							value={openPage}
-							onChange={(e) => setOpenPage(+e.target.value)}
-							onKeyDown={(e) => {
-								if (e.key === 'Enter') {
-									handleOpenSize(openPage);
-								}
-							}}
-						/>
-					</div>
-				</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

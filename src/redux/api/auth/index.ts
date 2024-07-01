@@ -17,10 +17,7 @@ const api = index.injectEndpoints({
 			query: (newData) => ({
 				url: `/api/auth/forgotPassword?email=${encodeURIComponent(newData.email)}&link=${encodeURIComponent(newData.link)}`,
 				method: 'PUT',
-				body: newData,
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-				}
+				body: newData
 			}),
 			invalidatesTags: ['auth']
 		}),
@@ -31,10 +28,7 @@ const api = index.injectEndpoints({
 			query: (newData) => ({
 				url: `/api/auth/createPassword?password=${encodeURIComponent(newData.password)}&confirm=${encodeURIComponent(newData.confirm)}&uuid=${encodeURIComponent(newData.uuid)}`,
 				method: 'POST',
-				body: newData,
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`
-				}
+				body: newData
 			}),
 			invalidatesTags: ['auth']
 		})

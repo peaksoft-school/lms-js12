@@ -103,7 +103,7 @@ const Announcements = () => {
 			<div className={scss.main_container}>
 				<div>
 					<div className={scss.add_button_name}>
-						{data?.objects.length !== 0 ? (
+						{data !== undefined ? (
 							<>
 								<div className={scss.course_button_modal}>
 									<Button
@@ -127,7 +127,7 @@ const Announcements = () => {
 						) : null}
 					</div>
 					<div>
-						{data?.objects.length === 0 ? (
+						{data === undefined ? (
 							<>
 								<NotCreated
 									text="Вы пока не добавили объявление!"
@@ -289,7 +289,7 @@ const Announcements = () => {
 						)}
 					</div>
 				</div>
-				{data?.objects.length !== 0 ? (
+				{data !== undefined ? (
 					<>
 						<div className={scss.pagination}>
 							<div className={scss.inputs}>

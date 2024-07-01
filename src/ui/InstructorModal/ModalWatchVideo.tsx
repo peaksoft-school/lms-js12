@@ -11,10 +11,7 @@ interface ModalWatchVideoProps {
 	handleClose: () => void;
 }
 
-const ModalWatchVideo: FC<ModalWatchVideoProps> = ({
-	open,
-	handleClose
-}) => {
+const ModalWatchVideo: FC<ModalWatchVideoProps> = ({ open, handleClose }) => {
 	const [searchParams, _] = useSearchParams();
 	const style = {
 		position: 'absolute',

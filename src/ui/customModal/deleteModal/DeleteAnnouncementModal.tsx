@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import ButtonCancel from '../../customButton/ButtonCancel';
 import { useDeleteAnnouncementTableMutation } from '@/src/redux/api/admin/announcement';
 import ButtonDelete from '../../customButton/ButtonDelete';
-import { message } from 'antd'; 
+import { message } from 'antd';
 
 interface DeleteProps {
 	openModalDelete: boolean;

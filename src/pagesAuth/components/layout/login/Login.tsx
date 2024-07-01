@@ -139,11 +139,11 @@ const Login: FC = () => {
 											/>
 										)}
 									/>
-								{errors.login && (
-									<span className={scss.error_gmail}>
-										{errors.login.message}
-									</span>
-								)}
+									{errors.login && (
+										<span className={scss.error_gmail}>
+											{errors.login.message}
+										</span>
+									)}
 								</div>
 								<div className={scss.Element_inputs_password}>
 									<InputLabel htmlFor="outlined-adornment-password">

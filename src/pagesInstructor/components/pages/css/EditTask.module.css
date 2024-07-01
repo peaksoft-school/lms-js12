@@ -1,1 +1,102 @@
-.addTask{padding-inline:20px;padding-top:60px}.addTask h1{padding-bottom:24px}.addTask .container{margin-bottom:20px;width:100%;background:#fff;padding-inline:20px;padding-top:20px;padding:10px;border-radius:10px}.addTask .container .main_task{display:flex;flex-direction:column;gap:8px}.addTask .container .main_task .save_file{display:flex;justify-content:flex-end;align-items:center}.addTask .container .main_task button{display:flex;gap:20px;align-items:center}.addTask .container .main_task .input_part{display:flex;align-items:flex-end;height:66px;gap:30px}.addTask .container .main_task .input_part .bold{font-weight:bold}.addTask .container .main_task .secon_part{padding-top:40px}.addTask .container .main_task .secon_part .editor .editorInput{width:100%;border:none !important;display:flex;flex-direction:column;border-top:none}.addTask .container .main_task .secon_part .second_icon{height:60px;display:flex;align-items:flex-end;padding-left:43px;gap:28px}.addTask .container .main_task .secon_part .second_icon button{background:none;border:none;cursor:pointer}.addTask .container .main_task .secon_part .text_input{display:flex;align-items:center;gap:10px;padding-block:10px}.addTask .calendar{background:#fff;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:60px;padding-inline:20px;padding:10px}@media(max-width: 760px){.addTask .calendar{display:flex;flex-direction:column;align-items:flex-end}}.addTask .calendar .dataInput{display:flex;align-items:center;gap:15px}.addTask .calendar .dataInput input{padding-block:14px;padding-inline:5px}:global .ql-editor{height:100%;min-height:200px}:global .ql-blan{height:auto;min-height:700px}
+.addTask {
+	padding-inline: 20px;
+	padding-top: 60px;
+}
+.addTask h1 {
+	padding-bottom: 24px;
+}
+.addTask .container {
+	margin-bottom: 20px;
+	width: 100%;
+	background: #fff;
+	padding-inline: 20px;
+	padding-top: 20px;
+	padding: 10px;
+	border-radius: 10px;
+}
+.addTask .container .main_task {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.addTask .container .main_task .save_file {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.addTask .container .main_task button {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+.addTask .container .main_task .input_part {
+	display: flex;
+	align-items: flex-end;
+	height: 66px;
+	gap: 30px;
+}
+.addTask .container .main_task .input_part .bold {
+	font-weight: bold;
+}
+.addTask .container .main_task .secon_part {
+	padding-top: 40px;
+}
+.addTask .container .main_task .secon_part .editor .editorInput {
+	width: 100%;
+	border: none !important;
+	display: flex;
+	flex-direction: column;
+	border-top: none;
+}
+.addTask .container .main_task .secon_part .second_icon {
+	height: 60px;
+	display: flex;
+	align-items: flex-end;
+	padding-left: 43px;
+	gap: 28px;
+}
+.addTask .container .main_task .secon_part .second_icon button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+.addTask .container .main_task .secon_part .text_input {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding-block: 10px;
+}
+.addTask .calendar {
+	background: #fff;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 60px;
+	padding-inline: 20px;
+	padding: 10px;
+}
+@media (max-width: 760px) {
+	.addTask .calendar {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+}
+.addTask .calendar .dataInput {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+.addTask .calendar .dataInput input {
+	padding-block: 14px;
+	padding-inline: 5px;
+}
+:global .ql-editor {
+	height: 100%;
+	min-height: 200px;
+}
+:global .ql-blan {
+	height: auto;
+	min-height: 700px;
+}
