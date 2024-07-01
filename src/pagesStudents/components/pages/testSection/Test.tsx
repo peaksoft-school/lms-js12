@@ -6,6 +6,8 @@ import { Button, Tooltip } from '@mui/material';
 const Test = () => {
 	const navigate = useNavigate();
 	const { coursesId, lessonId } = useParams();
+	console.log(coursesId);
+
 	const lesson = Number(lessonId);
 	const { data } = useGetStudentTestQuery(lesson);
 
@@ -43,11 +45,12 @@ const Test = () => {
 							<Button
 								variant="contained"
 								size="small"
-								onClick={() =>
+								onClick={() => {
+									localStorage.setItem('hwTask', question.title);
 									navigate(
 										`/courses/${coursesId}/materials/${lessonId}/${question.testId}/showTest`
-									)
-								}
+									);
+								}}
 							>
 								Начать тест
 							</Button>

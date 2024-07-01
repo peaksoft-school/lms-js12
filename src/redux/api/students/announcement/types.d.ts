@@ -16,6 +16,5 @@ namespace ANNOUNCEMENT {
 	type GetAnnouncementStudentRequest = {
 		size: string;
 		page: string;
-		isView: boolean;
 	};
 }

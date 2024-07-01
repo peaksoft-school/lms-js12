@@ -66,6 +66,10 @@
 					max-width: 540px;
 					padding: 20px;
 					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 5px;
+					position: relative;
 					.Element_inputs_login {
 						margin-top: 54px;
 						display: flex;
@@ -80,6 +84,12 @@
 						.InputMedia {
 							max-width: 540px;
 						}
+						.error_gmail {
+							color: red;
+							position: absolute;
+							top: 166px;
+							left: 20px;
+						}
 					}
 					.Element_inputs_password {
 						display: flex;
@@ -91,6 +101,13 @@
 							font-weight: 400;
 							font-size: 16px;
 							color: #6a6a6a;
+						}
+
+						.error_password {
+							position: absolute;
+							top: 280px;
+							left: 20px;
+							color: red;
 						}
 					}
 				}
