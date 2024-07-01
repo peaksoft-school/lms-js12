@@ -10,6 +10,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
 import { useCreatePasswordMutation } from '@/src/redux/api/auth';
+import { notification } from 'antd';
 
 interface FormData {
 	password: string;
@@ -36,9 +37,17 @@ const NewPassword: FC = () => {
 		};
 
 		if (data.password !== data.confirmPassword) {
-			alert('password is not correct');
+			notification.error({
+				message: 'Ошибка',
+				description: 'Пароли не совпадают'
+			});
+			return;
 		}
 		await createPassword(newData as any);
+		notification.success({
+			message: 'Успех',
+			description: 'Пароль успешно создан'
+		});
 		reset();
 	};
 
@@ -47,7 +56,6 @@ const NewPassword: FC = () => {
 		event: React.MouseEvent<HTMLButtonElement>
 	) => event.preventDefault();
 
-	// ! second input
 	const handleClickShowSecondPassword = () =>
 		setShowSecondPassword((show) => !show);
 	const handleMouseDownSecondPassword1 = (
@@ -64,12 +72,11 @@ const NewPassword: FC = () => {
 					</div>
 				</div>
 
-				{/* //! White */}
 				<div className={scss.LoginElementsWhite}>
 					<div className={scss.LoginWhiteElements}>
 						<h1 className={scss.CreatePassword}>Создать пароль</h1>
 						<form
-							style={{ maxWidth: '540px', width: '100%' }}
+							style={{ maxWidth: '540px', width: '100%', position: 'relative' }}
 							onSubmit={handleSubmit(onSubmit)}
 						>
 							<div className={scss.Parent_element_inputs}>
@@ -117,11 +124,16 @@ const NewPassword: FC = () => {
 											)}
 										/>
 										{errors.password && (
-											<span className={scss.error_password}>
+											<span
+												style={{
+													color: 'red',
+													position: 'absolute',
+													bottom: '345px'
+												}}
+											>
 												{errors.password.message}
 											</span>
 										)}
-										{/* //! second input */}
 										<InputLabel htmlFor="outlined-adornment-password">
 											<p>Подтверждение: </p>
 										</InputLabel>
@@ -164,7 +176,13 @@ const NewPassword: FC = () => {
 											)}
 										/>
 										{errors.confirmPassword && (
-											<span className={scss.error_comfirm}>
+											<span
+												style={{
+													color: 'red',
+													position: 'absolute',
+													bottom: '227px'
+												}}
+											>
 												{errors.confirmPassword.message}
 											</span>
 										)}
