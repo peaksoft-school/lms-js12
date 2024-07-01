@@ -115,7 +115,7 @@ const Login: FC = () => {
 							в <span className={scss.title_red}>PEAKSOFT LMS</span>!
 						</h1>
 						<form
-							style={{ maxWidth: '540px', width: '100%' }}
+							style={{ maxWidth: '540px', width: '100%', position: 'relative' }}
 							onSubmit={handleSubmit(onSubmit)}
 						>
 							<div className={scss.Parent_element_inputs}>
@@ -140,7 +140,15 @@ const Login: FC = () => {
 										)}
 									/>
 									{errors.login && (
-										<span style={{ color: 'red' }}>{errors.login.message}</span>
+										<span
+											style={{
+												color: 'red',
+												position: 'absolute',
+												bottom: '332px'
+											}}
+										>
+											{errors.login.message}
+										</span>
 									)}
 								</div>
 								<div className={scss.Element_inputs_password}>
@@ -182,7 +190,7 @@ const Login: FC = () => {
 										)}
 									/>
 									{errors.password && (
-										<span style={{ color: 'red' }}>
+										<span style={{ color: 'red', position: 'absolute' }}>
 											{errors.password.message}
 										</span>
 									)}
@@ -210,7 +218,7 @@ const Login: FC = () => {
 									disabled={isLoading}
 									onClick={() => {}}
 								>
-									{isLoading ? 'Загрузка...' : 'Войти'}
+									{isLoading ? 'Вход...' : 'Войти'}
 								</ButtonSave>
 								<ModalPassword open={open} handleClose={handleClose} />
 							</div>

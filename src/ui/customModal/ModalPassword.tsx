@@ -1,11 +1,6 @@
 import scss from './ModalPassword.module.scss';
 import React, { FC, useState } from 'react';
-import {
-	Controller,
-	FieldValues,
-	SubmitHandler,
-	useForm
-} from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -32,27 +27,31 @@ interface ModalPasswordProps {
 	handleClose: () => void;
 }
 
+interface FormData {
+	email: string;
+}
+
 const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
-	const [inputvalue, setInputValue] = useState<string>('');
+	const [inputValue, setInputValue] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const {
 		control,
 		handleSubmit,
 		reset,
 		formState: { errors }
-	} = useForm();
+	} = useForm<FormData>();
 
 	const [forgotPasswordMutation] = useForgotPasswordMutation();
 
-	const handleInputChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
 	};
 
-	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+	const onSubmit: SubmitHandler<FormData> = async (data) => {
 		setIsLoading(true);
 		const { email } = data;
 		const newData = {
-			email: email,
+			email,
 			link: 'http://localhost:5173/auth/newPassword'
 		};
 		try {
@@ -60,7 +59,7 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 			reset();
 			handleClose();
 			notification.success({
-				message: 'Успех',
+				message: 'Успешно',
 				description: 'Ссылка была успешно отправлена.'
 			});
 		} catch (error) {
@@ -115,17 +114,17 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 											size="medium"
 											{...field}
 											type="text"
-											value={inputvalue}
+											value={inputValue}
 											width="100%"
-											placeholder="Введите вашу ссылку"
+											placeholder="Введите ваш email"
 											onChange={(e) => {
 												field.onChange(e);
-												handleInputChange1(e);
+												handleInputChange(e);
 											}}
 										/>
-										{errors.link && (
+										{errors.email && (
 											<span style={{ color: 'red' }}>
-												{errors.link.message}
+												{errors.email.message}
 											</span>
 										)}
 									</>
@@ -137,7 +136,7 @@ const ModalPassword: FC<ModalPasswordProps> = ({ open, handleClose }) => {
 								onClick={handleSubmit(onSubmit)}
 								type="submit"
 								width="100%"
-								disabled={isLoading || !inputvalue}
+								disabled={isLoading || !inputValue}
 							>
 								{isLoading ? 'Загрузка...' : 'Отправить'}
 							</ButtonSave>
