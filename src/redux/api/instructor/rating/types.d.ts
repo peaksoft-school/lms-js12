@@ -15,6 +15,14 @@ namespace RATING {
 						point: number;
 					};
 				}[];
+				testRatingResponses: {
+					testId: number;
+					testTitle: string;
+					studentTestRatingResponse: {
+						resultTestId: number;
+						point: number;
+					};
+				};
 			}[];
 			totalScore: number;
 			completionPercentage: number;

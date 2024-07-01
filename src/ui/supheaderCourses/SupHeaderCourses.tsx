@@ -304,7 +304,10 @@ const SupHeaderCourses = () => {
 						}}
 					>
 						<MenuItem
-							onClick={handleClose}
+							onClick={() => {
+								setOpenExit(true);
+								handleClose();
+							}}
 							style={{
 								display: 'flex',
 								gap: '10px',

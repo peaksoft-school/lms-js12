@@ -163,9 +163,7 @@ const EditTest: React.FC = () => {
 									<label>
 										<input
 											{...field}
-											checked={data.questionResponseList.map((item) =>
-												item.optionResponses.map((el) => el.isTrue === true)
-											)}
+											checked={option.isTrue}
 											style={{ cursor: 'pointer' }}
 											type="checkbox"
 										/>
@@ -182,6 +180,7 @@ const EditTest: React.FC = () => {
 									<label>
 										<input
 											{...field}
+											checked={option.isTrue}
 											style={{ cursor: 'pointer' }}
 											type="radio"
 											name={`option_${questionIndex}`}

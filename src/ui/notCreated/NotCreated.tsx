@@ -21,7 +21,7 @@ const NotCreated: FC<NotCreatedProps> = ({
 		<div className={scss.mainNot}>
 			<h2>{name}</h2>
 			<div className={scss.not_created}>
-					<img className={scss.img} src={notCreated} alt="" />
+				<img className={scss.img} src={notCreated} alt="" />
 				<div>
 					<h3>{text}</h3>
 				</div>

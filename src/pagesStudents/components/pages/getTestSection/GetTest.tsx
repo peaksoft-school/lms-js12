@@ -4,7 +4,10 @@ import { Box, ScrollArea } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetInsideTestQuery } from '@/src/redux/api/instructor/test';
 import ButtonSave from '@/src/ui/customButton/ButtonSave';
-import { usePostTestResultStudentsMutation } from '@/src/redux/api/students/test';
+import {
+	useGetTestResultStudentsQuery,
+	usePostTestResultStudentsMutation
+} from '@/src/redux/api/students/test';
 import { Checkbox, Radio } from '@mui/material';
 
 function GetTest() {
@@ -13,7 +16,17 @@ function GetTest() {
 	const [testIdSave, setTestIdSave] = useState<number[]>([]);
 	const [remainingTime, setRemainingTime] = useState<string | null>(null);
 	const test = Number(testId);
+	const { data: testData } = useGetTestResultStudentsQuery(test);
+	console.log(testData);
+
 	console.log(testIdSave);
+	useEffect(() => {
+		if (testData?.testId) {
+			navigate(
+				`/courses/${coursesId}/materials/${lessonId}/${testId}/resultTest`
+			);
+		}
+	});
 
 	const sendTestResult = async () => {
 		const newData = {

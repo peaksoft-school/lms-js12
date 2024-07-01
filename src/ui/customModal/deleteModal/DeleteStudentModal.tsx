@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import { message } from 'antd'; 
+import { message } from 'antd';
 import { useDeleteStudentTableMutation } from '@/src/redux/api/admin/student';
 import ButtonCancel from '@/src/ui/customButton/ButtonCancel';
 import ButtonDelete from '@/src/ui/customButton/ButtonDelete';

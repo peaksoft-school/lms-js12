@@ -228,7 +228,7 @@ const EditSendTask = () => {
 						}}
 					>
 						<ButtonSave
-							disabled={loading} 
+							disabled={loading}
 							onClick={addTask}
 							width="117px"
 							type="button"

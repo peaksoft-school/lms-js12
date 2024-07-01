@@ -27,6 +27,19 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 		}
 	}, [pathname]);
 
+	const handleNavigate = () => {
+		if (pathname.startsWith(`/admin`)) {
+			navigate(`/admin/analytics`);
+		} else if (pathname.startsWith(`/instructor`)) {
+			navigate(`/instructor/course`);
+		} else if (
+			pathname.startsWith(`/courses`) ||
+			pathname === `/announcements`
+		) {
+			navigate(`/courses`);
+		}
+	};
+
 	return (
 		<header
 			className={isOpen ? `${scss.SaidBar} ${scss.active}` : `${scss.SaidBar}`}
@@ -50,8 +63,7 @@ const Header: FC<LayoutProps> = ({ isOpen, setIsOpen }) => {
 					<IconAlignLeft style={{ cursor: 'pointer' }} stroke={2} />
 				</button>
 				<ul>
-					<div className={scss.peaksoft_img}>
-						
+					<div className={scss.peaksoft_img} onClick={handleNavigate}>
 						<img
 							className={
 								isOpen

@@ -59,7 +59,7 @@ const LayoutInstructor = () => {
 						<Header isOpen={isOpen} setIsOpen={setIsOpen} />
 					</>
 				)}
-				<main style={{ width: '100%', overflowY: 'auto' }}>
+				<main style={{ width: '100%', overflowY: 'auto', }}>
 					{!isMobile && (
 						<>
 							<Routes>

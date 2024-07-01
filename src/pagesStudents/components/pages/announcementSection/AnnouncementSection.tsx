@@ -4,6 +4,7 @@ import { Pagination, Stack, Tooltip } from '@mui/material';
 import { useGetAnnouncementStudentQuery } from '@/src/redux/api/students/announcement';
 import { IconArticle, IconBook } from '@tabler/icons-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import NotCreatedWithoutButton from '@/src/ui/notCreated/NotCreatedWithoutButton';
 
 const AnnouncementSection = () => {
 	const [openPart, setOpenPart] = useState(1);
@@ -37,37 +38,48 @@ const AnnouncementSection = () => {
 
 	return (
 		<div className={scss.section_announcement}>
-			<h1>Объявление</h1>
+			{data !== undefined && <h1>Объявление</h1>}
 			<div style={{ minHeight: '75vh' }}>
-				<div className={scss.announce_card}>
-					{data?.objects.map((item) => (
-						<li key={item.announcementId} className={scss.announce_list}>
-							<div className={scss.announcement_owners}>
-								<p className={scss.announcement_owner}>
-									<span className={scss.announc_user}>Кем создан:</span>
-									{item.author}
-								</p>
-							</div>
-							<p className={scss.announce_contents}>
-								<span className={scss.announce_content}>Текст:</span>
-								<Tooltip title={item.content}>
-									<p
-										style={{
-											width: '100%',
-											maxWidth: '250px',
-											textOverflow: 'ellipsis',
-											overflow: 'hidden',
-											whiteSpace: 'nowrap',
-											cursor: 'pointer'
-										}}
-									>
-										{item.content}
+				{data !== undefined ? (
+					<>
+						<div className={scss.announce_card}>
+							{data?.objects.map((item) => (
+								<li key={item.announcementId} className={scss.announce_list}>
+									<div className={scss.announcement_owners}>
+										<p className={scss.announcement_owner}>
+											<span className={scss.announc_user}>Кем создан:</span>
+											{item.author}
+										</p>
+									</div>
+									<p className={scss.announce_contents}>
+										<span className={scss.announce_content}>Текст:</span>
+										<Tooltip title={item.content}>
+											<p
+												style={{
+													width: '100%',
+													maxWidth: '250px',
+													textOverflow: 'ellipsis',
+													overflow: 'hidden',
+													whiteSpace: 'nowrap',
+													cursor: 'pointer'
+												}}
+											>
+												{item.content}
+											</p>
+										</Tooltip>
 									</p>
-								</Tooltip>
-							</p>
-						</li>
-					))}
-				</div>
+								</li>
+							))}
+						</div>
+					</>
+				) : (
+					<>
+						<NotCreatedWithoutButton
+							text="Объявление пусто!"
+							name="Объявление"
+						/>
+					</>
+				)}
 			</div>
 			<div className={scss.pagination}>
 				<div className={scss.inputs}>

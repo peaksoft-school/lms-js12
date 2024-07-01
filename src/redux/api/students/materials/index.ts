@@ -25,7 +25,4 @@ const api = index.injectEndpoints({
 	})
 });
 
-export const {
-	useGetStudentMaterialsQuery,
-	useGetOneTaskNameQuery
-} = api;
+export const { useGetStudentMaterialsQuery, useGetOneTaskNameQuery } = api;

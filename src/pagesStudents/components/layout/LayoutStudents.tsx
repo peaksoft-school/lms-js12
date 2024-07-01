@@ -88,6 +88,10 @@ const LayoutStudents = () => {
 								path="/courses/:coursesId/materials/:lessonId/lesson/:getTaskId/*"
 								element={<BasicBreadcrumbs />}
 							/>
+							<Route
+								path="/courses/:coursesId/materials/:lessonId/:testId/*"
+								element={<BasicBreadcrumbs />}
+							/>
 						</Routes>
 					</div>
 					<Routes>
